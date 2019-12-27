@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'themes';
+
+@import '~@nebular/theme/styles/globals';
+
+@include nb-install() {
+  @include nb-theme-global();
+};
+
+body {
+  font-family: nb-theme(font-family-primary);
+  color: nb-theme(text-basic-color);
+}

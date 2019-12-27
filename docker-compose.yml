@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+
+    # RUN
+    run_amblema_backoffice:
+        container_name: running_amblema_backoffice
+        image: devbinaural/angular:8.0.0
+        ports:
+            - 4200:4200
+        volumes:
+            - .:/app
+        networks: 
+            - amblema_web
+
+    # BUILD
+    build_amblema_backoffice: 
+        container_name: build_amblema_backoffice
+        image: devbinaural/angular
+        command: ng build --prod
+        ports: 
+            - 4200:4200
+        volumes: 
+            - .:/app
+        networks: 
+            - amblema_web
+
+    # UNIT TEST
+    test_amblema_backoffice:
+        container_name: test_amblema_backoffice
+        image: devbinaural/angular
+        ports: 
+            - 4200:4200 
+        volumes: 
+            - .:/app
+        networks: 
+            - amblema_web
+    
+    # LINKING NGINX
+    linking_amblema_nginx:
+        container_name: nginx-amblema
+        image: devbinaural/nginx
+        ports:
+            - 24000:24000
+        volumes: 
+
+            # SHARE THE BUILT PROJECT
+            - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
+            
+            # SERVER FILES CONFIGURATION
+            - ./server/:/etc/nginx/
+        networks: 
+            - amblema_web
+
+networks:
+    amblema_web:
+        driver: bridge
+
+volumes:
+    amblema:

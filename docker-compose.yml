@@ -16,8 +16,9 @@ services:
     # BUILD
     build_amblema_backoffice: 
         container_name: build_amblema_backoffice
-        image: devbinaural/angular
-        command: ng build --prod
+        image: devbinaural/angular:8.0.0
+        command: bash -c "ng build --prod --build-optimizer && usermod -u 1008 node &&
+                chown -R node:node node_modules/ && chown -R node:node dist/"
         ports: 
             - 4200:4200
         volumes: 
@@ -28,7 +29,8 @@ services:
     # UNIT TEST
     test_amblema_backoffice:
         container_name: test_amblema_backoffice
-        image: devbinaural/angular
+        image: devbinaural/angular:8.0.0
+        command: ng test --browsers ChromeHeadlessNoSandbox --watch=false
         ports: 
             - 4200:4200 
         volumes: 

@@ -5,7 +5,7 @@ import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-l
 import { ProfileComponent } from './layouts/profile/profile.component';
 
 const routes: Routes = [
-    { 
+    {
         path: '',
         component: PagesComponent,
         children: [
@@ -13,11 +13,11 @@ const routes: Routes = [
                 path: '',
                 component: DashboardLayoutComponent
             },
-            { 
+            {
                 path: 'dashboard',
                 component: DashboardLayoutComponent
             },
-            { 
+            {
                 path: 'profile',
                 component: ProfileComponent
             }

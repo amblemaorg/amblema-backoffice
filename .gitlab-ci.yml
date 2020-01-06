@@ -57,7 +57,7 @@ deploy-qa-environment:
   stage: qa
   image: devbinaural/angular:8.0.0
   script:
-    - ng build --prod --build-optimizer
+    - npm install && ng build --prod --build-optimizer
   tags:
     - amblema-angular
   only:

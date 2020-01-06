@@ -56,7 +56,7 @@ services:
 
 networks:
     amblema_net:
-        driver: amblema-driver
+        driver: bridge
 
 volumes:
     amblema:

@@ -15,17 +15,12 @@ variables:
   PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
 
 before_script: 
-  - echo $PATH_FOLDER_QA
-  - echo $PATH_PROJECT_QA
-  - pwd
   
   # Folder do not exist then clone
   - if ! [ -d $PATH_PROJECT_QA ]; then
   -   cd $PATH_FOLDER_QA
   -   git clone -b franklin --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
   - fi
-
-  - cd $PATH_PROJECT_QA
 
   # Git access
   - git config user.email "franklin@binauraldev.com"

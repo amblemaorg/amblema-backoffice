@@ -14,17 +14,13 @@ variables:
   PATH_FOLDER_STAGING: /home/amblema/amblema---backoffice/staging
   PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
 
-before_script: 
+# before_script: 
 
-  # Folder do not exist then clone
-  - if ! [ -d $PATH_PROJECT_QA ]; then
-  -   cd $PATH_FOLDER_QA
-  -   git clone -b franklin --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
-  - fi
-
-  # Git access
-  - git config user.email "franklin@binauraldev.com"
-  - git config user.name "franklinp"
+#   # Folder do not exist then clone
+#   - if ! [ -d $PATH_PROJECT_QA ]; then
+#   -   cd $PATH_FOLDER_QA
+#   -   git clone -b franklin --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
+#   - fi
 
 # after_script: 
 #   # Stop container and clear
@@ -37,6 +33,8 @@ update-qa-environment:
   stage: qa
   script:
     - cd $PATH_PROJECT_QA 
+    - git config user.email "franklin@binauraldev.com"
+    - git config user.name "franklinp"
     - git stash
     - git pull $CI_REPOSITORY_URL qaestable
   tags:

@@ -46,7 +46,7 @@ update-qa-environment:
   only:
     - qaestable
 
-run-tests-qa:
+run-tests-qa: 
   image: devbinaural/angular:8.0.0
   stage: qa
   script:

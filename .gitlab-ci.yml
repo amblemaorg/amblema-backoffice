@@ -52,7 +52,7 @@ run-tests-qa:
   script:
     - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
   tags:
-    - amblema
+    - amblema-angular
   only:
     - franklin
   when: manual

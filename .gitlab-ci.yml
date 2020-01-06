@@ -14,10 +14,8 @@ variables:
   PATH_FOLDER_STAGING: /home/amblema/amblema---backoffice/staging
   PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
 
-before_script: 
-  - pwd
-  - cd ..
-  - pwd
+#before_script: 
+
 #   # Folder do not exist then clone
 #   - if ! [ -d $PATH_PROJECT_QA ]; then
 #   -   cd $PATH_FOLDER_QA
@@ -59,10 +57,12 @@ deploy-qa-environment:
   stage: qa
   image: devbinaural/angular:8.0.0
   script:
-    - echo "despliegue"
-    #- npm install && ng build --prod --build-optimizer
+    - cd $PATH_PROJECT_QA 
+    - git config user.email "franklin@binauraldev.com"
+    - git config user.name "franklinp"
+    - docker-compose up build_amblema_backoffice
   tags:
-    - amblema-angular
+    - amblema
   only:
     - franklin  
 

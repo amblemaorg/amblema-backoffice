@@ -15,7 +15,6 @@ variables:
   PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
 
 before_script: 
-  - cd $PATH_PROJECT_QA
 
   # Folder do not exist then clone
   - if ! [ -d $PATH_PROJECT_QA ]; then
@@ -53,19 +52,18 @@ run-tests-qa:
   tags:
     - amblema-angular
   only:
-    - franklin
+    - qaestable
   when: manual
 
 deploy-qa-environment:
   stage: qa
+  image: devbinaural/angular:8.0.0
   script:
-   - cd $PATH_PROJECT_QA
-   - docker-compose up build_amblema_backoffice
-   - docker restart nginx-amblema
+    - ng build --prod --build-optimizer
   tags:
-    - amblema
+    - amblema-angular
   only:
-    - qaestable  
+    - franklin  
 
 # deploy-qa-environment:
 #   stage: qa

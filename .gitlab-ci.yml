@@ -16,21 +16,20 @@ variables:
 
 before_script: 
   
-#   # Folder do not exist then clone
-#   - if ![ -d $PATH_FOLDER_QA ]; then
-#   -   cd $PATH_FOLDER_QA
-#   -   git clone -b qaestable --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
-#   - fi
+  # Folder do not exist then clone
+  - if ![ -d $PATH_FOLDER_QA ]; then
+  -   cd $PATH_FOLDER_QA
+  -   git clone -b franklin --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
+  - fi
 
-#   # Git access
-#   - git config user.email "franklin@binauraldev.com"
-#   - git config user.name "Franklin"
+  # Git access
+  - git config user.email "franklin@binauraldev.com"
+  - git config user.name "franklinp"
 
 after_script:
   # Stop container and clear
   - docker-compose stop build_amblema_backoffice && docker-compose stop test_amblema_backoffice
   - docker container stop build_amblema_backoffice test_amblema_backoffice && docker container rm build_amblema_backoffice test_amblema_backoffice
-
 
 # Jobs for QA enviroment
 
@@ -39,17 +38,20 @@ update-qa-environment:
   script:
     - cd $PATH_PROJECT_QA 
     - git stash
-    - git pull $CI_REPOSITORY_URL qaestable
+    - git pull $CI_REPOSITORY_URL franklin
   tags:
     - amblema
   only:
-    - qaestable
+    - franklin
 
 run-tests-qa:
+  image: devbinaural/angular:8.0.0
   stage: qa
   script:
-    - cd $PATH_PROJECT_QA
-    - docker-compose up test_amblema_backoffice
+    #- cd $PATH_PROJECT_QA
+    #- cd ../../../ && pwd
+    #- docker-compose up test_amblema_backoffice
+    - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
   tags:
     - amblema
   only:
@@ -60,13 +62,13 @@ deploy-qa-environment:
   stage: qa
   script:
    - cd $PATH_PROJECT_QA
-   - echo $CI_REPOSITORY_URL
    - docker-compose up build_amblema_backoffice
    - docker restart nginx-amblema
   tags:
     - amblema
   only:
     - qaestable  
+
 # deploy-qa-environment:
 #   stage: qa
 #   script:

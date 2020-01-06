@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MENU_ITEMS } from './pages-menu';
+import { NbAuthService } from '@nebular/auth';
 
 @Component({
     selector: 'app-pages',
@@ -11,7 +12,9 @@ export class PagesComponent implements OnInit {
     // Call menu options
     menu = MENU_ITEMS;
 
-    constructor() {
+    constructor( private authService: NbAuthService ) {
+    
+        console.log(this.authService.getToken());
     }
 
     ngOnInit() { }

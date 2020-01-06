@@ -1,0 +1,210 @@
+stages:
+  - test
+  - qa
+  - staging
+
+variables:
+  CONTAINER_SERVER: "nginx-amblema"
+  
+  # Path to QA
+  PATH_FOLDER_QA: /home/amblema/amblema---backoffice/qa
+  PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema---backoffice
+
+  # Path to staging
+  PATH_FOLDER_STAGING: /home/amblema/amblema---backoffice/staging
+  PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
+
+before_script: 
+  
+#   # Folder do not exist then clone
+#   - if ![ -d $PATH_FOLDER_QA ]; then
+#   -   cd $PATH_FOLDER_QA
+#   -   git clone -b qaestable --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
+#   - fi
+
+#   # Git access
+#   - git config user.email "franklin@binauraldev.com"
+#   - git config user.name "Franklin"
+
+after_script:
+  # Stop container and clear
+  - docker-compose stop build_amblema_backoffice && docker-compose stop test_amblema_backoffice
+  - docker container stop build_amblema_backoffice test_amblema_backoffice && docker container rm build_amblema_backoffice test_amblema_backoffice
+
+
+# Jobs for QA enviroment
+
+update-qa-environment:
+  stage: qa
+  script:
+    - cd $PATH_PROJECT_QA 
+    - git stash
+    - git pull $CI_REPOSITORY_URL qaestable
+  tags:
+    - amblema
+  only:
+    - qaestable
+
+run-tests-qa:
+  stage: qa
+  script:
+    - cd $PATH_PROJECT_QA
+    - docker-compose up test_amblema_backoffice
+  tags:
+    - amblema
+  only:
+    - qaestable
+  when: manual
+
+deploy-qa-environment:
+  stage: qa
+  script:
+   - cd $PATH_PROJECT_QA
+   - echo $CI_REPOSITORY_URL
+   - docker-compose up build_amblema_backoffice
+   - docker restart nginx-amblema
+  tags:
+    - amblema
+  only:
+    - qaestable  
+# deploy-qa-environment:
+#   stage: qa
+#   script:
+#    - cd $PATH_PROJECT_QA
+#    - docker-compose up angular_deploy_fixerfriend
+#    - docker restart nginx-fixerfriend
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - qa-stable
+
+# turn-off-qa:
+#   stage: qa
+#   script:
+#     - cd $PATH_PROJECT_QA
+#     - rm -rf dist/
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - qa-stable
+#   when: manual
+
+# stages:
+#   - prebuild
+#   - join
+#   - test
+#   - qa
+#   - staging
+
+# variables:
+#   CONTAINER: "service_nginx"  
+#   # For QA
+#   PATH_FOLDER_QA: /home/fixerfriend/FixerFriend/qa
+#   PATH_PROJECT_QA:  $PATH_FOLDER_QA/FixerFriend
+#   # For staging
+#   PATH_FOLDER_STAGING: /home/fixerfriend/FixerFriend/staging
+#   PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/FixerFriend
+
+# before_script:
+#   # Folder do not exist, then clone folder, enviroment QA
+#   - if ! [ -d $PATH_PROJECT_QA ]; then
+#   -    cd $PATH_FOLDER_QA
+#   -    git clone -b qa-stable --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
+#   - fi
+
+#   # Folder do not exist, then clone folder, enviroment Staging
+#   - if ! [ -d $PATH_PROJECT_STAGING ]; then
+#   -    cd $PATH_FOLDER_STAGING
+#   -    git clone -b staging-stable --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
+#   - fi
+
+#   # Stop containers and remove all services angular
+#   - cd $PATH_PROJECT_QA 
+#   - docker-compose stop angular_deploy_fixerfriend && docker-compose stop angular_testing_fixerfriend
+#   - docker container stop angular-fixerfriend && docker container rm angular-fixerfriend
+
+#   # Git access
+#   - git config user.email "franklin@binauraldev.com"
+#   - git config user.name "Franklin"
+
+# update-qa-environment:
+#   stage: test
+#   script:
+#     - cd $PATH_PROJECT_QA 
+#     - git stash
+#     - git pull $CI_REPOSITORY_URL qa-stable
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - qa-stable
+
+# run-tests-qa:
+#   stage: test
+#   script:
+#     - cd $PATH_PROJECT_QA
+#     - docker-compose up angular_testing_fixerfriend
+#     - docker restart nginx-fixerfriend
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - qa-stable
+#   when: manual
+
+# deploy-qa-environment:
+#   stage: qa
+#   script:
+#    - cd $PATH_PROJECT_QA
+#    - docker-compose up angular_deploy_fixerfriend
+#    - docker restart nginx-fixerfriend
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - qa-stable
+
+# turn-off-qa:
+#   stage: qa
+#   script:
+#     - cd $PATH_PROJECT_QA
+#     - rm -rf dist/
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - qa-stable
+#   when: manual
+
+# # Jobs for Staging enviroment
+
+# update-staging-environment:
+#   stage: test
+#   script:
+#     - cd $PATH_PROJECT_STAGING
+#     - pwd
+#     - git pull $CI_REPOSITORY_URL staging-stable
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - staging-stable
+
+# deploy-staging-environment:
+#   stage: staging
+#   script:
+#    - cd $PATH_PROJECT_STAGING
+#    - pwd
+#    - docker-compose up angular_deploy_fixerfriend
+#    - docker restart nginx-fixerfriend
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - staging-stable
+
+# turn-off-staging:
+#   stage: staging
+#   script:
+#     - cd $PATH_PROJECT_STAGING
+#     - pwd
+#     - rm -rf dist/
+#   tags:
+#     - fixerfriend-angular
+#   only:
+#     - staging-stable
+#   when: manual

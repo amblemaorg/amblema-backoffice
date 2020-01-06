@@ -30,7 +30,7 @@ services:
     test_amblema_backoffice:
         container_name: test_amblema_backoffice
         image: devbinaural/angular:8.0.0
-        command: ng test --browsers ChromeHeadlessNoSandbox --watch=false
+        command: bash -c "npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false"
         ports: 
             - 4200:4200 
         volumes: 

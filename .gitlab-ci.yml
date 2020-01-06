@@ -42,7 +42,7 @@ update-qa-environment:
   tags:
     - amblema
   only:
-    - franklin
+    - qaestable
 
 run-tests-qa: 
   stage: qa
@@ -52,7 +52,7 @@ run-tests-qa:
   tags:
     - amblema-angular
   only:
-    - qaestable
+    - franklin
   when: manual
 
 deploy-qa-environment:

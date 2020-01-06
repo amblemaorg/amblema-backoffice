@@ -52,7 +52,7 @@ run-tests-qa:
   image: devbinaural/angular:8.0.0
   stage: qa
   script:
-    - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
+    - echo "Ejecutando prueba test"
   tags:
     - amblema-angular
   only:

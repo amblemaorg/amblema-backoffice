@@ -47,7 +47,7 @@ services:
         volumes: 
 
             # SHARE THE BUILT PROJECT
-            - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
+            - /home/amblema/amblema---backoffice/qa/amblema---backoffice/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
 
             # SERVER FILES CONFIGURATION
             - ./server/:/etc/nginx/

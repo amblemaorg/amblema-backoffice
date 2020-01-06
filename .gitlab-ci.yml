@@ -15,7 +15,7 @@ variables:
   PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
 
 before_script: 
-  
+
   # Folder do not exist then clone
   - if ! [ -d $PATH_PROJECT_QA ]; then
   -   cd $PATH_FOLDER_QA
@@ -44,17 +44,17 @@ update-qa-environment:
   tags:
     - amblema
   only:
-    - qaestable
+    - franklin
 
 run-tests-qa: 
-  image: devbinaural/angular:8.0.0
   stage: qa
+  image: devbinaural/angular:8.0.0
   script:
     - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
   tags:
     - amblema-angular
   only:
-    - franklin
+    - qaestable
   when: manual
 
 deploy-qa-environment:

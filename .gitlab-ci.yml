@@ -28,7 +28,7 @@ before_script:
   - git config user.email "franklin@binauraldev.com"
   - git config user.name "franklinp"
 
-# after_script:
+# after_script: 
 #   # Stop container and clear
 #   - docker-compose stop build_amblema_backoffice && docker-compose stop test_amblema_backoffice
 #   - docker container stop build_amblema_backoffice test_amblema_backoffice && docker container rm build_amblema_backoffice test_amblema_backoffice

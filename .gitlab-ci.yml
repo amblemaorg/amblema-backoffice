@@ -15,7 +15,8 @@ variables:
   PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
 
 before_script: 
-  - pwd
+  - cd $PATH_PROJECT_QA
+
   # Folder do not exist then clone
   - if ! [ -d $PATH_PROJECT_QA ]; then
   -   cd $PATH_FOLDER_QA

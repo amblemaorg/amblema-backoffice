@@ -22,7 +22,7 @@ before_script:
   -   git clone -b franklin --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
   - fi
 
-  cd $PATH_PROJECT_QA
+  - cd $PATH_PROJECT_QA
 
   # Git access
   - git config user.email "franklin@binauraldev.com"

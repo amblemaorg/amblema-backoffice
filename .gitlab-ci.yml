@@ -17,6 +17,7 @@ variables:
 before_script: 
   - echo $PATH_FOLDER_QA
   - echo $PATH_PROJECT_QA
+  - pwd
   
   # Folder do not exist then clone
   - if ! [ -d $PATH_PROJECT_QA ]; then
@@ -24,7 +25,6 @@ before_script:
   -   git clone -b franklin --single-branch http://$GITLAB_USER_LOGIN:3EZD9runSxQ-QHr27Sq9@dev.binaural.com.ve/$CI_PROJECT_PATH
   - fi
 
-  - pwd
   - cd $PATH_PROJECT_QA
 
   # Git access

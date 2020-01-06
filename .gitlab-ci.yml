@@ -40,24 +40,21 @@ update-qa-environment:
   script:
     - cd $PATH_PROJECT_QA 
     - git stash
-    - git pull $CI_REPOSITORY_URL franklin
+    - git pull $CI_REPOSITORY_URL qaestable
   tags:
     - amblema
   only:
-    - franklin
+    - qaestable
 
 run-tests-qa:
   image: devbinaural/angular:8.0.0
   stage: qa
   script:
-    #- cd $PATH_PROJECT_QA
-    #- cd ../../../ && pwd
-    #- docker-compose up test_amblema_backoffice
     - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
   tags:
     - amblema
   only:
-    - qaestable
+    - franklin
   when: manual
 
 deploy-qa-environment:

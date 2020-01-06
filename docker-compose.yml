@@ -11,7 +11,7 @@ services:
         volumes:
             - .:/app
         networks: 
-            - default
+            - amblema_net
 
     # BUILD
     build_amblema_backoffice: 
@@ -24,7 +24,7 @@ services:
         volumes: 
             - .:/app
         networks: 
-            - default
+            - amblema_net
 
     # UNIT TEST
     test_amblema_backoffice:
@@ -36,7 +36,7 @@ services:
         volumes: 
             - .:/app
         networks: 
-            - default
+            - amblema_net
     
     # LINKING NGINX
     linking_amblema_nginx:
@@ -52,12 +52,11 @@ services:
             # SERVER FILES CONFIGURATION
             - ./server/:/etc/nginx/
         networks: 
-            - default
+            - amblema_net
 
 networks:
-    default:
-        driver: amblema
-
+    amblema_net:
+        driver: amblema-driver
 
 volumes:
     amblema:

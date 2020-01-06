@@ -61,10 +61,22 @@ deploy-qa-environment:
     - git config user.email "franklin@binauraldev.com"
     - git config user.name "franklinp"
     - docker-compose up build_amblema_backoffice
+    - docker restart nginx-amblema
   tags:
     - amblema
   only:
-    - franklin  
+    - qaestable  
+
+turn-off-qa:
+  stage: qa
+  script:
+    - cd $PATH_PROJECT_QA
+    - rm -rf dist/
+  tags:
+    - amblema
+  only:
+    - qaestable
+  when: manual
 
 # deploy-qa-environment:
 #   stage: qa

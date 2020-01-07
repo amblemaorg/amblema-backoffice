@@ -13,8 +13,7 @@ export class PagesComponent implements OnInit {
     menu = MENU_ITEMS;
 
     constructor( private authService: NbAuthService ) {
-    
-        console.log(this.authService.getToken());
+
     }
 
     ngOnInit() { }

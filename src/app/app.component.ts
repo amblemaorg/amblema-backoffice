@@ -9,7 +9,7 @@ import { Role } from './models/auth.model';
 export class AppComponent {
   title = 'Amblema-BackOffice';
 
-  role: Role; 
+  role: Role;
 
   constructor() {  }
 

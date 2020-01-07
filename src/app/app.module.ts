@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbMenuModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './guards/auth.guard';
 import { NbAuthModule } from '@nebular/auth';
@@ -22,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     NbLayoutModule,
     NbEvaIconsModule,
     NbAuthModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    NbMenuModule.forRoot()
   ],
   providers: [
     AuthGuard

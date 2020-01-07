@@ -3,7 +3,14 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './pages-routing.module';
 import { NbTokenStorage, NbTokenLocalStorage, NbAuthModule } from '@nebular/auth';
 import { HttpClientModule } from '@angular/common/http';
-import { NbLayoutModule, NbSidebarModule, NbIconModule, NbActionsModule, NbUserModule, NbMenuModule } from '@nebular/theme';
+import {
+  NbLayoutModule,
+  NbSidebarModule,
+  NbIconModule,
+  NbActionsModule,
+  NbUserModule,
+  NbMenuModule,
+  NbContextMenuModule } from '@nebular/theme';
 import { HeaderComponent } from './components/header/header.component';
 
 import { RouterModule } from '@angular/router';
@@ -30,7 +37,8 @@ import { ProfileComponent } from './layouts/profile/profile.component';
     NbIconModule,
     NbActionsModule,
     NbUserModule,
-    NbMenuModule.forRoot()
+    NbMenuModule.forRoot(),
+    NbContextMenuModule
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },

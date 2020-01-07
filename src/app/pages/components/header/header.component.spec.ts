@@ -1,7 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
-import { NbIconModule, NbActionsModule, NbSidebarModule, NbSidebarService, NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import {
+  NbIconModule,
+  NbActionsModule,
+  NbSidebarModule,
+  NbSidebarService,
+  NbThemeModule,
+  NbLayoutModule,
+  NbContextMenuModule,
+  NbMenuService } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 describe('HeaderComponent', () => {
@@ -17,10 +25,12 @@ describe('HeaderComponent', () => {
          NbEvaIconsModule,
          NbThemeModule.forRoot({ name: 'default' }),
          NbSidebarModule,
-         NbLayoutModule
+         NbLayoutModule,
+         NbContextMenuModule
        ],
        providers: [
          NbSidebarService,
+         NbMenuService
        ]
      })
      .compileComponents();

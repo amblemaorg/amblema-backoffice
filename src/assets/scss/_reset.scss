@@ -2,8 +2,27 @@
 
 /* Reset theme */
 
-// nb-sidebar {
-//   @include transition(width 150ms ease-in-out);
-// }
+// Animation side bar
+
+// .nb-theme-default nb-sidebar.compacted nb-menu .menu-item a.active::before
+
+nb-sidebar {
+    @include transition(width 150ms ease-in-out);
+    
+    nb-menu {
+        .menu-item {
+            a {
+                .menu-title {
+                    animation: fadeIn 150ms ease-in-out;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
 
 /* Reset bootstrap */

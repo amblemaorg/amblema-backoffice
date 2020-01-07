@@ -12,7 +12,7 @@ variables:
 
   # Path to staging
   PATH_FOLDER_STAGING: /home/amblema/amblema---backoffice/staging
-  PATH_PROJECT_STAGING: $PATH_FOLDER_QA/amblema---backoffice
+  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/amblema---backoffice
 
 # Jobs for QA environment
 

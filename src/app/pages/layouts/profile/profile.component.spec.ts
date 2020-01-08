@@ -4,6 +4,7 @@ import { ProfileComponent } from './profile.component';
 import { NbCardModule } from '@nebular/theme';
 import { UserFormComponent } from '../../forms/user-form/user-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IdentificationDocumentComponent } from '../../forms/components/identification-document/identification-document.component';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -12,6 +13,7 @@ describe('ProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        IdentificationDocumentComponent,
         UserFormComponent,
         ProfileComponent ],
       imports: [

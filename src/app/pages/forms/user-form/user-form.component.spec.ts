@@ -2,14 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserFormComponent } from './user-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IdentificationDocumentComponent } from '../components/identification-document/identification-document.component';
 
-fdescribe('UserFormComponent', () => {
+describe('UserFormComponent', () => {
   let component: UserFormComponent;
   let fixture: ComponentFixture<UserFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserFormComponent ],
+      declarations: [
+        IdentificationDocumentComponent,
+        UserFormComponent ],
       imports: [
         FormsModule,
         ReactiveFormsModule,

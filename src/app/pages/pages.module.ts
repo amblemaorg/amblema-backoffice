@@ -11,7 +11,9 @@ import {
   NbUserModule,
   NbMenuModule,
   NbContextMenuModule,
-  NbCardModule} from '@nebular/theme';
+  NbCardModule,
+  NbInputModule,
+  NbSelectModule} from '@nebular/theme';
 import { HeaderComponent } from './components/header/header.component';
 
 import { RouterModule } from '@angular/router';
@@ -20,6 +22,7 @@ import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-l
 import { ProfileComponent } from './layouts/profile/profile.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserFormComponent } from './forms/user-form/user-form.component';
+import { IdentificationDocumentComponent } from './forms/components/identification-document/identification-document.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { UserFormComponent } from './forms/user-form/user-form.component';
     DashboardLayoutComponent,
     ProfileComponent,
     UserFormComponent,
+    IdentificationDocumentComponent,
   ],
   imports: [
     RouterModule,
@@ -41,6 +45,8 @@ import { UserFormComponent } from './forms/user-form/user-form.component';
     NbCardModule,
     NbIconModule,
     NbActionsModule,
+    NbInputModule,
+    NbSelectModule,
     NbUserModule,
     NbMenuModule.forRoot(),
     NbContextMenuModule,

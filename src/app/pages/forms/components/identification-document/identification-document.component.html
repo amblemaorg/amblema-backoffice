@@ -1,0 +1,25 @@
+<form class="row" [formGroup]="form">
+    <div class="col">
+        <nb-select fullWidth formControlName="documentType">
+            <nb-option *ngFor="let item of type" [value]="item.value">{{ item.value }}</nb-option>
+        </nb-select>
+    </div>
+    <div class="col-8">
+        <input type="text" nbInput fieldSize="giant" fullWidth status="basic" class="form-control form-group"
+            placeholder="Documento de identidad" formControlName="documentNumber">
+        <div class="alert alert-primary" role="alert" *ngIf="submitted && f.documentNumber.errors">
+            <strong *ngIf="f.documentNumber.errors.required">{{ messages.textRequired }}</strong>
+            <strong
+                *ngIf="(f.documentNumber.errors.pattern || 
+                f.documentNumber.errors.minlength || 
+                f.documentNumber.errors.maxlength) && ( f.documentType.value == 'V' )">{{ messages.errorDocument }}</strong>
+            <strong *ngIf="(f.documentNumber.errors.pattern || 
+                f.documentNumber.errors.minlength || 
+                f.documentNumber.errors.maxlength) && ( f.documentType.value == 'J' )">{{ messages.errorRIF }}</strong>
+            <strong
+                *ngIf="(f.documentNumber.errors.pattern || 
+                f.documentNumber.errors.minlength || 
+                f.documentNumber.errors.maxlength) && ( f.documentType.value == 'E' )">{{ messages.errorPassport }}</strong>
+        </div>
+    </div>
+</form>

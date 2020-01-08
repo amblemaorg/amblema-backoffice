@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" nbInput class="form-control form-group" id="name" placeholder="Nombre" name="name" formControlName="name">
+        <div class="alert alert-primary" role="alert" *ngIf="submitted && f.name.errors">
+            <strong *ngIf="f.name.errors.required">{{ message.textRequired }}</strong>
+            <strong *ngIf="f.name.errors.pattern">{{ message.textName }}</strong>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="lastName">Apellido</label>
+        <input type="text" nbInput class="form-control form-group" id="lastName" placeholder="Apellido" name="lastName" formControlName="lastName">
+        <div class="alert alert-primary" role="alert" *ngIf="submitted && f.lastName.errors">
+            <strong *ngIf="f.lastName.errors.required">{{ message.textRequired }}</strong>
+            <strong *ngIf="f.lastName.errors.pattern">{{ message.textLastName }}</strong>
+        </div>
+    </div>
+    
+
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

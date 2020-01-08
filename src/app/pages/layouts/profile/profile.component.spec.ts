@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
+import { NbCardModule } from '@nebular/theme';
+import { UserFormComponent } from '../../forms/user-form/user-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -8,7 +11,14 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
+      declarations: [
+        UserFormComponent,
+        ProfileComponent ],
+      imports: [
+        NbCardModule,
+        FormsModule,
+        ReactiveFormsModule
+      ]
     })
     .compileComponents();
   }));

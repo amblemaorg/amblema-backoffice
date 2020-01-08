@@ -10,13 +10,16 @@ import {
   NbActionsModule,
   NbUserModule,
   NbMenuModule,
-  NbContextMenuModule } from '@nebular/theme';
+  NbContextMenuModule,
+  NbCardModule} from '@nebular/theme';
 import { HeaderComponent } from './components/header/header.component';
 
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { ProfileComponent } from './layouts/profile/profile.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UserFormComponent } from './forms/user-form/user-form.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { ProfileComponent } from './layouts/profile/profile.component';
     DashboardLayoutComponent,
     DashboardLayoutComponent,
     ProfileComponent,
+    UserFormComponent,
   ],
   imports: [
     RouterModule,
@@ -34,11 +38,14 @@ import { ProfileComponent } from './layouts/profile/profile.component';
     NbLayoutModule,
     NbSidebarModule.forRoot(),
     NbAuthModule.forRoot({}),
+    NbCardModule,
     NbIconModule,
     NbActionsModule,
     NbUserModule,
     NbMenuModule.forRoot(),
-    NbContextMenuModule
+    NbContextMenuModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },

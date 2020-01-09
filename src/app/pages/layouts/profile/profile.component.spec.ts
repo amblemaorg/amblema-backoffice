@@ -1,10 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
-import { NbCardModule } from '@nebular/theme';
-import { UserFormComponent } from '../../forms/user-form/user-form.component';
+import { NbCardModule, NbSelectModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IdentificationDocumentComponent } from '../../forms/components/identification-document/identification-document.component';
+import {
+  IdDocumentComponent } from '../../forms/reactive-form-components/id-document/id-document.component';
+import { TestFormComponent } from '../../forms/test-form/test-form.component';
+import { ReactiveInputComponent } from '../../forms/reactive-form-components/reactive-input/reactive-input.component';
+import { ReactiveValidationComponent } from '../../forms/reactive-form-components/reactive-validation/reactive-validation.component';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -13,13 +16,16 @@ describe('ProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        IdentificationDocumentComponent,
-        UserFormComponent,
+        IdDocumentComponent,
+        TestFormComponent,
+        ReactiveInputComponent,
+        ReactiveValidationComponent,
         ProfileComponent ],
       imports: [
         NbCardModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NbSelectModule
       ]
     })
     .compileComponents();

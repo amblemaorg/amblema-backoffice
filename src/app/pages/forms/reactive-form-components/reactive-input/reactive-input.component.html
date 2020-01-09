@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label [for]="label" class="label text-muted" *ngIf="label != ''"> {{ label }} </label>
+    <input 
+        [id]='fieldId'
+        [type]='type'
+        [formControl]="control"
+        [autocomplete]="'off'" 
+        class="form-control form-group" />
+    <app-reactive-validation [patternMessage]='patternMessage' [validationErrors]="validationErrors"></app-reactive-validation>
+</div>

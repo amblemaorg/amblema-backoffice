@@ -1,11 +1,36 @@
-<form class="row" [formGroup]="form">
+<div class="form-group">
+    <div class="form-row">
+
+        <div class="col">
+            <label [for]="label" class="label text-muted" *ngIf="label != ''">Tipo</label>
+            <select [formControl]='controlSelect' class="form-control" (change)='this.changeDocument($event.target.value)'>
+                <option *ngFor='let item of types' [value]='item.value' >{{ item.value }}</option>
+            </select>
+        </div>
+
+        <div class="col-7">
+            <label [for]="label" class="label text-muted" *ngIf="label != ''"> {{ label }} </label>
+            <input 
+                [id]='fieldId'
+                [type]='type'
+                [formControl]="control"
+                [autocomplete]="'off'"
+                class="form-control form-group" />
+            <app-reactive-validation [patternMessage]='message' [validationErrors]="validationErrors">
+            </app-reactive-validation>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div [formGroup]="form" class="row">
     <div class="col">
         <nb-select fullWidth formControlName="documentType">
             <nb-option *ngFor="let item of type" [value]="item.value">{{ item.value }}</nb-option>
         </nb-select>
     </div>
     <div class="col-8">
-        <input type="text" nbInput fieldSize="giant" fullWidth status="basic" class="form-control form-group"
+        <input type="text" nbInput fullWidth status="basic" class="form-control form-group"
             placeholder="Documento de identidad" formControlName="documentNumber">
         <div class="alert alert-primary" role="alert" *ngIf="submitted && f.documentNumber.errors">
             <strong *ngIf="f.documentNumber.errors.required">{{ messages.textRequired }}</strong>
@@ -22,4 +47,4 @@
                 f.documentNumber.errors.maxlength) && ( f.documentType.value == 'E' )">{{ messages.errorPassport }}</strong>
         </div>
     </div>
-</form>
+</div> -->

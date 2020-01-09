@@ -34,4 +34,18 @@ nb-sidebar {
     100%   { width: 4px; }
 }
 
+// Select
+
+.nb-theme-default {
+	nb-select {
+		&.appearance-outline {
+			&.size-medium {
+                // Align to inputs
+                .select-button {
+					padding: 0.328125rem 1.125rem!important;
+				}
+			}
+		}
+	}
+}
 /* Reset bootstrap */

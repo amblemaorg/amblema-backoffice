@@ -21,8 +21,12 @@ import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { ProfileComponent } from './layouts/profile/profile.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { UserFormComponent } from './forms/user-form/user-form.component';
-import { IdentificationDocumentComponent } from './forms/components/identification-document/identification-document.component';
+import {
+  IdDocumentComponent
+} from './forms/reactive-form-components/id-document/id-document.component';
+import { ReactiveInputComponent } from './forms/reactive-form-components/reactive-input/reactive-input.component';
+import { ReactiveValidationComponent } from './forms/reactive-form-components/reactive-validation/reactive-validation.component';
+import { TestFormComponent } from './forms/test-form/test-form.component';
 
 @NgModule({
   declarations: [
@@ -31,8 +35,10 @@ import { IdentificationDocumentComponent } from './forms/components/identificati
     DashboardLayoutComponent,
     DashboardLayoutComponent,
     ProfileComponent,
-    UserFormComponent,
-    IdentificationDocumentComponent,
+    IdDocumentComponent,
+    ReactiveInputComponent,
+    ReactiveValidationComponent,
+    TestFormComponent,
   ],
   imports: [
     RouterModule,

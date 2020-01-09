@@ -3,7 +3,6 @@ import { Validators, AbstractControl } from '@angular/forms';
 import { AbstractReactiveComponent } from '../abstract-reactive.component';
 import { MESSAGES } from '../../shared/constant/validation-messages-list';
 
-
 @Component({
   selector: 'app-id-document',
   templateUrl: './id-document.component.html',

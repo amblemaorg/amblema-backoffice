@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReactiveInputComponent } from './reactive-input.component';
 import { NbSelectModule } from '@nebular/theme';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, ControlContainer } from '@angular/forms';
 import { ReactiveValidationComponent } from '../reactive-validation/reactive-validation.component';
-import { NORMAL_TEXT_PATTERN } from '../../shared/constant/validation-patterns-list';
+import { NORMAL_TEXT_PATTERN, EMAIL_PATTERN } from '../../shared/constant/validation-patterns-list';
 
 describe('ReactiveInputComponent', () => {
   let component: ReactiveInputComponent;
@@ -53,6 +53,21 @@ describe('ReactiveInputComponent', () => {
     component.submitted = true;
 
     expect(component.control.valid).toBeTruthy();
+    fixture.detectChanges();
+  });
+
+  it('TestCase#2044 - should validate that the email field corresponds to the format xxxxxxx@xxxxxxxxxxxx.com', () => {
+
+    const form: FormGroup = new FormGroup({
+      email: new FormControl(null, [Validators.pattern(EMAIL_PATTERN)])
+    });
+
+    component.control = form.get('email');
+    component.control.setValue('example@gmail.com');
+    component.label = 'email';
+    component.submitted = true;
+
+    expect( component.control.valid ).toBeTruthy();
     fixture.detectChanges();
   });
 });

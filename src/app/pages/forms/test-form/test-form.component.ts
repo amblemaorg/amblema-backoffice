@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../shared/services/validation.service';
-import { NAME_MESSAGE, LAST_NAME_MESSAGE } from '../shared/constant/validation-messages-list';
-import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN } from '../shared/constant/validation-patterns-list';
+import { MESSAGES } from '../shared/constant/validation-messages-list';
+import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN, EMAIL_PATTERN } from '../shared/constant/validation-patterns-list';
 
 @Component({
   selector: 'app-test-form',
@@ -11,25 +11,25 @@ import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN } from '../shared/constant/validati
 })
 export class TestFormComponent implements OnInit {
 
-  readonly NAME_MESSAGE = NAME_MESSAGE;
-  readonly LAST_NAME_MESSAGE = LAST_NAME_MESSAGE;
+  readonly MESSAGES = MESSAGES;
 
   submitted = false;
 
   form: FormGroup = new FormGroup({
-    name: new FormControl(null, [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN) ]),
-    lastName : new FormControl(null, [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
+    name: new FormControl(null, [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
+    lastName: new FormControl(null, [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
     type: new FormControl('V'),
-    document : new FormControl(null, [
+    document: new FormControl(null, [
       Validators.required,
       Validators.minLength(7),
       Validators.maxLength(8),
-      Validators.pattern(NUMBER_PATTERN)])
+      Validators.pattern(NUMBER_PATTERN)]),
+    email: new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)])
   });
 
-  constructor( private validationService: ValidationService ) { }
+  constructor(private validationService: ValidationService) { }
 
-  ngOnInit() {  }
+  ngOnInit() { }
 
   onSubmit(): void {
 

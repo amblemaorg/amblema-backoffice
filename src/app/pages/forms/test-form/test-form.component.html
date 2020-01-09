@@ -12,14 +12,14 @@
                                   [label]="'Nombre'"
                                   [control]="form.get('name')"
                                   [submitted]="submitted"
-                                  [patternMessage]="NAME_MESSAGE"
+                                  [patternMessage]="MESSAGES.NAME_MESSAGE"
                                   >
               </app-reactive-input>            
               <app-reactive-input
                                   [label]="'Apellido'"
                                   [control]="form.get('lastName')"
                                   [submitted]="submitted"
-                                  [patternMessage]="LAST_NAME_MESSAGE"
+                                  [patternMessage]="MESSAGES.LAST_NAME_MESSAGE"
                                   >
               </app-reactive-input>            
               <app-id-document
@@ -29,6 +29,14 @@
                                   [control]="form.get('document')"
               >
               </app-id-document>
+
+              <app-reactive-input
+                [patternMessage]="MESSAGES.EMAIL_MESSAGE"
+                [submitted]="submitted"
+                [label]="'Correo'"
+                [control]="form.get('email')"></app-reactive-input
+                >
+
 
             </div>
           </div>

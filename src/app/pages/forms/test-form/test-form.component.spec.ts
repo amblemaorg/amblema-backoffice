@@ -4,7 +4,7 @@ import { TestFormComponent } from './test-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputComponent } from '../reactive-form-components/reactive-input/reactive-input.component';
 import { ReactiveValidationComponent } from '../reactive-form-components/reactive-validation/reactive-validation.component';
-import { idDocumentComponent } from '../reactive-form-components/id-document/id-document.component';
+import { IdDocumentComponent } from '../reactive-form-components/id-document/id-document.component';
 
 describe('TestFormComponent', () => {
   let component: TestFormComponent;
@@ -15,7 +15,7 @@ describe('TestFormComponent', () => {
       declarations: [
         ReactiveInputComponent,
         ReactiveValidationComponent,
-        idDocumentComponent,
+        IdDocumentComponent,
         TestFormComponent],
       imports: [
         FormsModule,

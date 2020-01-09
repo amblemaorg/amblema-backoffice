@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { idDocumentComponent } from './id-document.component';
+import { IdDocumentComponent } from './id-document.component';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveValidationComponent } from '../reactive-validation/reactive-validation.component';
 import { NUMBER_PATTERN } from '../../shared/constant/validation-patterns-list';
 
-describe('idDocumentComponent', () => {
-  let component: idDocumentComponent;
-  let fixture: ComponentFixture<idDocumentComponent>;
+describe('IdDocumentComponent', () => {
+  let component: IdDocumentComponent;
+  let fixture: ComponentFixture<IdDocumentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReactiveValidationComponent,
-        idDocumentComponent],
+        IdDocumentComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -24,7 +24,7 @@ describe('idDocumentComponent', () => {
 
   beforeEach(() => {
 
-    fixture = TestBed.createComponent(idDocumentComponent);
+    fixture = TestBed.createComponent(IdDocumentComponent);
     component = fixture.componentInstance;
   });
 

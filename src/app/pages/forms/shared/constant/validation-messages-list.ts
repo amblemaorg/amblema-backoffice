@@ -6,7 +6,7 @@ export const DOCUMENT_MESSAGE = 'Cédula inválida, ingresa una cédula correcta
 export const RIF_MESSAGE = 'RIF inválido, ingresa un RIF correcto';
 export const PASSPORT_MESSAGE = 'Pasaporte inválido, ingresa un pasaporte correcto';
 
-export const EMAIL_MESSAGE = "El correo electrónico no corresponde a un formato correcto";
+export const EMAIL_MESSAGE = 'El correo electrónico no corresponde a un formato correcto';
 
 export const MESSAGES = {
     REQUIRED_MESSAGE : 'Este campos es requerido',
@@ -17,7 +17,7 @@ export const MESSAGES = {
     RIF_MESSAGE : 'RIF inválido, ingresa un RIF correcto',
     PASSPORT_MESSAGE : 'Pasaporte inválido, ingresa un pasaporte correcto',
 
-    EMAIL_MESSAGE : "El correo electrónico no corresponde a un formato correcto",
-}
+    EMAIL_MESSAGE : 'El correo electrónico no corresponde a un formato correcto',
+};
 
 

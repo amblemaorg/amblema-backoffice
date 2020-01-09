@@ -39,7 +39,7 @@ export abstract class AbstractReactiveComponent implements DoCheck {
     validationErrors: object = null;
 
     ngDoCheck() {
-        
+
         /**
          * Show the messages after submit
          */

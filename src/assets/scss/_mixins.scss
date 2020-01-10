@@ -3,30 +3,8 @@
 /* Screens */
 
 @mixin screen($size) {
-    @if $size == 'extra-small' {
-      @media screen and (min-width: $breakpoint-xs) {
-          @content;
-      }
-    }
-    @if $size == 'small' {
-        @media screen and (min-width: $breakpoint-sm) {
-            @content;
-        }
-    }
-    @if size == 'med' {
-        @media screen and (min-width: $breakpoint-md) {
-           @content; 
-        }
-    }
-    @if size == 'large' {
-        @media screen and (min-width: $breakpoint-lg) {
-            @content;       
-        }
-    }
-    @if size == 'extra-large' {
-        @media screen and (min-width: $breakpoint-xl) {
-            @content;
-        }
+    @media screen and (min-width: $size) {
+        @content;
     }
 }
 

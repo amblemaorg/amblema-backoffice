@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NbIconLibraries } from '@nebular/theme';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +10,6 @@ export class AppComponent {
   title = 'Amblema-BackOffice';
 
   constructor( private iconLibraries: NbIconLibraries ) {
-
     /**
      * -- NOTE --
      * This code is for changing the icon pack to
@@ -21,6 +19,5 @@ export class AppComponent {
      * this.iconLibraries.registerFontPack('all', { packClass: 'fas', iconClassPrefix: 'fa'});
      * this.iconLibraries.setDefaultPack('all');
      */
-
   }
 }

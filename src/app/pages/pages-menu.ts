@@ -49,7 +49,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Profile',
-    icon: 'user',
+
     link: '/pages/profile'
   },
 ];

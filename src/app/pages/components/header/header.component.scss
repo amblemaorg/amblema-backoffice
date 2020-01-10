@@ -38,12 +38,14 @@
       white-space: nowrap;
       text-decoration: none;
 
-      @include screen(extra-small) {
+
+      @include screen($breakpoint-xs) {
         font-size: 1.20rem;
       }
-      @include screen(small) {
+      
+      @include screen($breakpoint-sm) {
         font-size: 1.75rem;
-      }
+      }   
     }
   }
 }

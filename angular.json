@@ -32,7 +32,9 @@
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+            ]
           },
           "configurations": {
             "production": {

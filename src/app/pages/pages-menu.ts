@@ -8,11 +8,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'USERS',
-    group: true,
-  },
-  {
     title: 'Roles y permisos',
+    icon: 'unlock-outline',
     children: [
       { title: 'Administrar' },
       { title: 'Roles' }
@@ -20,6 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Usuarios',
+    icon: 'person-outline',
     children: [
       { title: 'Coordinadores' }, 
       { title: 'Padrinos' }, 
@@ -28,6 +26,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Contenido',
+    icon: 'browser-outline',
     children: [
       { title: 'Web' }, 
       { title: 'Pasos' },
@@ -36,18 +35,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    icon: 'email-outline',
     title: 'Correos'
   },
   {
+    icon: 'edit-outline',
     title: 'Ver escuelas'
   },
 
   {
+    icon: 'file-text-outline',
     title: 'Reportes'
   },
   {
     title: 'Profile',
-    icon: 'people-outline',
+    icon: 'user',
     link: '/pages/profile'
   },
 ];

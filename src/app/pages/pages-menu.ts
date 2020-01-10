@@ -19,16 +19,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Usuarios',
     icon: 'person-outline',
     children: [
-      { title: 'Coordinadores' }, 
-      { title: 'Padrinos' }, 
-      { title: 'Escuelas' }, 
+      { title: 'Coordinadores' },
+      { title: 'Padrinos' },
+      { title: 'Escuelas' },
     ]
   },
   {
     title: 'Contenido',
     icon: 'browser-outline',
     children: [
-      { title: 'Web' }, 
+      { title: 'Web' },
       { title: 'Pasos' },
       { title: 'Módulos de aprendizaje' },
       { title: 'Configuración del Peca' }

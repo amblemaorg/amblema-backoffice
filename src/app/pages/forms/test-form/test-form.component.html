@@ -1,55 +1,36 @@
 <div class="container">
-    <div class="card">
-      <div class="card-header">
-        Formulario
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Campos basicos</h5>
-        <form [formGroup]="form">
-          <div class="form-row">
-            <div class="col-md">
-               <app-reactive-input
-                                  [label]="'Nombre'"
-                                  [control]="form.get('name')"
-                                  [submitted]="submitted"
-                                  [patternMessage]="MESSAGES.NAME_MESSAGE"
-                                  >
-              </app-reactive-input>            
-              <app-reactive-input
-                                  [label]="'Apellido'"
-                                  [control]="form.get('lastName')"
-                                  [submitted]="submitted"
-                                  [patternMessage]="MESSAGES.LAST_NAME_MESSAGE"
-                                  >
-              </app-reactive-input>            
-              <app-id-document
-                                  [controlSelect]="form.get('type')"
-                                  [submitted]='submitted'
-                                  [label]="'Documento de identidad'"
-                                  [control]="form.get('document')"
-              >
-              </app-id-document>
+  <div class="card">
+    <div class="card-header">
+      Formulario
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Campos basicos</h5>
+      <form [formGroup]="form">
+        <div class="form-row">
+          <div class="col-md">
+            <app-reactive-input [label]="'Nombre'" [control]="form.get('name')" [submitted]="submitted"
+              [patternMessage]="MESSAGES.NAME_MESSAGE">
+            </app-reactive-input>
 
-              <app-reactive-input
-                [patternMessage]="MESSAGES.EMAIL_MESSAGE"
-                [submitted]="submitted"
-                [label]="'Correo'"
-                [control]="form.get('email')"></app-reactive-input
-                >
+            <app-reactive-input [label]="'Apellido'" [control]="form.get('lastName')" [submitted]="submitted"
+              [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
+            </app-reactive-input>
 
-
-            </div>
+            <app-id-document [controlSelect]="form.get('type')" [submitted]='submitted'
+              [label]="'Documento de identidad'" [control]="form.get('document')">
+            </app-id-document>
+            
+            <app-reactive-input [patternMessage]="MESSAGES.EMAIL_MESSAGE" [submitted]="submitted" [label]="'Correo'"
+              [control]="form.get('email')"></app-reactive-input>
           </div>
-  
-          <p>Form developing is to be continued ...</p>
-  
-          <button class="btn btn-block btn-primary mt-2"
-                  type="submit"
-                  (click)="onSubmit()">
-            Guardar
-          </button>
-        </form>
-      </div>
+        </div>
+
+        <p>Form developing is to be continued ...</p>
+
+        <button class="btn btn-block btn-primary mt-2" type="submit" (click)="onSubmit()">
+          Guardar
+        </button>
+      </form>
     </div>
   </div>
-  
+</div>

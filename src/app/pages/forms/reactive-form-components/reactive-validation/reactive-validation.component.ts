@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input } from '@angular/core';
-import { REQUIRED_MESSAGE } from '../../shared/constant/validation-messages-list';
+import { MESSAGES } from '../../shared/constant/validation-messages-list';
 
 @Component({
   selector: 'app-reactive-validation',
@@ -31,7 +31,7 @@ export class ReactiveValidationComponent implements OnChanges {
     const errors: any = this.validationErrors;
 
     if (errors) {
-      return errors.required ? REQUIRED_MESSAGE :
+      return errors.required ? MESSAGES.REQUIRED_MESSAGE :
              (errors.pattern || errors.minlength || errors.maxlength) ? this.patternMessage :
              null;
     }

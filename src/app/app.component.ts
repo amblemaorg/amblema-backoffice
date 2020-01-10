@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Role } from './models/auth.model';
 import { NbIconLibraries } from '@nebular/theme';
 
 
@@ -11,8 +10,17 @@ import { NbIconLibraries } from '@nebular/theme';
 export class AppComponent {
   title = 'Amblema-BackOffice';
 
-  constructor( private iconLibraries: NbIconLibraries ) { 
-    //this.iconLibraries.registerFontPack('all', { packClass: 'fas', iconClassPrefix: 'fa'});
-    //this.iconLibraries.setDefaultPack('all');
+  constructor( private iconLibraries: NbIconLibraries ) {
+
+    /**
+     * -- NOTE --
+     * This code is for changing the icon pack to
+     * fontawesome. By default eva icons is installed.
+     * Remove or add this code in production
+     *
+     * this.iconLibraries.registerFontPack('all', { packClass: 'fas', iconClassPrefix: 'fa'});
+     * this.iconLibraries.setDefaultPack('all');
+     */
+
   }
 }

@@ -24,7 +24,10 @@ export class TestFormComponent implements OnInit {
       Validators.minLength(7),
       Validators.maxLength(8),
       Validators.pattern(NUMBER_PATTERN)]),
-    email: new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)])
+    email: new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
+    phone: new FormControl(null, [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
+    password: new FormControl(null, [Validators.required, Validators.maxLength(8)]),
+    charge: new FormControl(null, [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)])
   });
 
   constructor(private validationService: ValidationService) { }

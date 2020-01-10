@@ -45,7 +45,7 @@ import { HttpClientModule } from '@angular/common/http';
             endpoint: '/auth/login',
             method: 'post',
             redirect: {
-              success: '/pages',
+              success: '/pages/dashboard',
               failure: null
             }
           },

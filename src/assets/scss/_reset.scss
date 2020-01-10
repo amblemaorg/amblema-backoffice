@@ -6,23 +6,10 @@
 // Animation side bar
 
 nb-sidebar {
-    @include transition(width 150ms ease-in-out);
-    nb-menu {
-        .menu-item {
-            a {
-                .menu-title {
-                    animation: fadeIn 150ms ease-in-out;
-                }
-            }
-
-            // Compact
-            a.active {
-                &::before {
-                    animation: growWidth 200ms ease-in-out;
-                }
-            }
-        }
-    }
+    // @include transition(width 150ms ease-in-out);
+    // * {
+    //     @include transition(all 150ms ease-in-out);    
+    // }
 }
 
 // Select

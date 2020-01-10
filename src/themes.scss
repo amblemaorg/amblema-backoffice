@@ -3,6 +3,8 @@
 
 @import './assets/scss/index';
 
+$nb-enable-css-custom-properties: true;
+
 $nb-themes: nb-register-theme((
 
   // add your variables here like:
@@ -18,7 +20,6 @@ $nb-themes: nb-register-theme((
   color-primary-900: #091c7a,
 
 ), default, default);
-
 
 // Personal Theme
 

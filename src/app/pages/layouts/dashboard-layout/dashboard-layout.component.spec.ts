@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardLayoutComponent } from './dashboard-layout.component';
+import { NbCardModule } from '@nebular/theme';
 
 describe('DashboardLayoutComponent', () => {
   let component: DashboardLayoutComponent;
@@ -8,7 +9,10 @@ describe('DashboardLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardLayoutComponent ]
+      declarations: [ DashboardLayoutComponent ],
+      imports: [
+        NbCardModule
+      ]
     })
     .compileComponents();
   }));

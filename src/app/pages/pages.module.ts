@@ -27,6 +27,12 @@ import {
 import { ReactiveInputComponent } from './forms/reactive-form-components/reactive-input/reactive-input.component';
 import { ReactiveValidationComponent } from './forms/reactive-form-components/reactive-validation/reactive-validation.component';
 import { TestFormComponent } from './forms/test-form/test-form.component';
+import { AdminUsersLayoutComponent } from './layouts/admin-users-layout/admin-users-layout.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
+import { TableBaseComponent } from './components/table/table-base/table-base.component';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 
 @NgModule({
   declarations: [
@@ -39,6 +45,9 @@ import { TestFormComponent } from './forms/test-form/test-form.component';
     ReactiveInputComponent,
     ReactiveValidationComponent,
     TestFormComponent,
+    AdminUsersLayoutComponent,
+    ModalComponent,
+    TableBaseComponent,
   ],
   imports: [
     RouterModule,
@@ -57,7 +66,9 @@ import { TestFormComponent } from './forms/test-form/test-form.component';
     NbMenuModule.forRoot(),
     NbContextMenuModule,
     ReactiveFormsModule,
-    FormsModule
+    Ng2TableModule, 
+    FormsModule,
+    Ng2SmartTableModule,
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },

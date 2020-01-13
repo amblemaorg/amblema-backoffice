@@ -11,7 +11,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Roles y permisos',
     icon: 'unlock-outline',
     children: [
-      { title: 'Administrar' },
+      {
+        title: 'Administrar',
+        link: '/pages/admin-users',
+      },
       { title: 'Roles' }
     ]
   },

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { ProfileComponent } from './layouts/profile/profile.component';
+import { AdminUsersLayoutComponent } from './layouts/admin-users-layout/admin-users-layout.component';
 
 const routes: Routes = [
     {
@@ -16,6 +17,10 @@ const routes: Routes = [
             {
                 path: 'dashboard',
                 component: DashboardLayoutComponent
+            },
+            {
+                path: 'admin-users',
+                component: AdminUsersLayoutComponent,
             },
             {
                 path: 'profile',

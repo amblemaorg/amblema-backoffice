@@ -34,6 +34,7 @@
     "bootstrap": "^4.4.1",
     "eva-icons": "^1.1.2",
     "express": "^4.15.2",
+    "jw-paginate": "^1.0.4",
     "nebular-icons": "^1.1.0",
     "ng2-completer": "^3.0.3",
     "ng2-smart-table": "^1.5.0",

@@ -33,6 +33,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { TableBaseComponent } from './components/table/table-base/table-base.component';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { JwtPaginationComponent } from './components/jwt-pagination/jwt-pagination.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
     AdminUsersLayoutComponent,
     ModalComponent,
     TableBaseComponent,
+    JwtPaginationComponent,
   ],
   imports: [
     RouterModule,
@@ -66,7 +68,7 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
     NbMenuModule.forRoot(),
     NbContextMenuModule,
     ReactiveFormsModule,
-    Ng2TableModule, 
+    Ng2TableModule,
     FormsModule,
     Ng2SmartTableModule,
   ],

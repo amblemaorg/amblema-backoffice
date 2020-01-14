@@ -1,17 +1,57 @@
-<table class="table table-striped table-bordered dataTable" role="grid" style="width: 100%;">
-    <thead>
-        <tr role="row">
-            <th *ngFor="let column of columns" [ngTableSorting]="config" [column]="column"
-                (sortChanged)="onChangeTable($event)">
-                {{column.title}}
-                <i *ngIf="config && column.sort" class="pull-right fa"
-                    [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"></i>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let row of rows">
-            <td *ngFor="let column of columns">{{getData(row, column.name)}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+
+            <!-- Column -->
+            <tr>
+                <th scope="col">Acciones</th>
+                <th scope="col" class="cursor-pointer filter-column" *ngFor="let item of column; let i = index;"
+                    [ngClass]="{'selected': item.selected != false}" (click)='orderBy(item.name, i)'>
+                    {{ item.title }}
+                </th>
+            </tr>
+
+            <!-- Filters -->
+            <tr>
+                <th></th>
+                <th scope="col" *ngFor="let item of column" class="md-form">
+                    <input fullWidth='true' nbInput class="form-control form-control-sm" [id]="item.title" #Input
+                        (input)="onSearch( Input.value, item.name )" [placeholder]="item.title">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Print data -->
+            <tr *ngFor="let element of data; let i = index" (click)='onRow(element)'>
+
+                <!-- Actions -->
+                <td *ngIf="i < 10" class="p-0 position-relative" style="min-width: 120px;">
+                    <div class="action position-absolute w-100 h-100">
+                        <div class="border-0 d-flex h-100 h5">
+                            <div (click)="onView(element)"
+                                class="item p-0 border-right justify-content-center col h-100 d-flex align-items-center">
+                                <i class="far fa-eye"></i>
+                            </div>
+                            <div (click)="onEdit(element)"
+                                class="item p-0 border-right justify-content-center col h-100 d-flex align-items-center">
+                                <i class="nb-edit"></i>
+                            </div>
+                            <div (click)="onDelete(element)"
+                                class="item p-0 justify-content-center col h-100 d-flex align-items-center">
+                                <i class="nb-trash"></i>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td *ngFor="let item of column">
+                    {{ element[item.name] }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="w-100 text-center d-flex justify-content-center">
+        <app-jwt-pagination [items]="pageData" (changePage)="onChangePage($event)" ></app-jwt-pagination>
+    </div>
+</div>

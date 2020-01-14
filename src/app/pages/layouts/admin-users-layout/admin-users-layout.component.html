@@ -5,12 +5,15 @@
             <nb-card-body>
                 <div class="mb-3">
                     <button class="btn btn-primary mr-2">Registrar</button>
-                    <button class="btn btn-info">Refrescar</button>
                 </div> 
                 <div class="table-responsive">
-                    <ng2-smart-table *ngIf="true" [source]='data' [settings]="settings"></ng2-smart-table>
-                </div>
+                    <ng2-smart-table *ngIf="true" (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+                </div>  
+<!-- 
+                <app-table-base></app-table-base>  -->
+
             </nb-card-body>
         </nb-card>
+        
     </div>
 </div>

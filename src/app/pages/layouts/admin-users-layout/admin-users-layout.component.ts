@@ -10,44 +10,23 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AdminUsersLayoutComponent implements OnInit {
 
   settings = {
-    mode: 'external', 
+    mode: 'external',
     actions: {
       columnTitle: 'Acciones',
       add: false,
       edit: false,
       delete: false,
       custom: [
-        { name: 'a', title: '<i class="far fa-eye" style="    padding: 0.875rem 1.25rem;"></i>' },
-
-        { name: 'a', title: '<i class="far fa-eye"></i>' },
-
-        { name: 'a', title: '<i class="far fa-eye"></i>' },
-       
+        { name: 'view', title: '<i class="far fa-eye fa-sm"></i>' },
+        { name: 'edit', title: '<i class="nb-edit"></i>' }, 
+        { name: 'trash', title: '<i class="nb-trash"></i>' }
       ]
     },
-     edit: {
-       editButtonContent: '<i class="nb-edit"></i>',
-       saveButtonContent: '<i class="nb-checkmark"></i>',
-       cancelButtonContent: '<i class="nb-close"></i>',
-     },
-     delete: {
-       deleteButtonContent: '<i class="nb-trash"></i>',
-       confirmDelete: true,
-     },
     pager: {
       display: true,
       perPage: 10
     },
     columns: {
-      // more: {
-      //   title: '',
-      //   type: 'html',
-      //   filter: false,
-      //   width: '5%',
-      //   valuePrepareFunction:(cell,row)=>{
-      //     return  this._sanitizer.bypassSecurityTrustHtml(`<i class="far fa-eye fa-2x" (click)='onClean()'></i>`)
-      //   },
-      // },
       id: {
         title: 'ID'
       },
@@ -68,36 +47,42 @@ export class AdminUsersLayoutComponent implements OnInit {
     { name: 'name' },
     { name: 'username' },
     { name: 'email' }
-  ]
+  ];
 
   data = [
     {
       id: 1,
-      name: "Leanne Graham",
-      username: "Bret",
-      email: "Sincere@april.biz"
+      name: 'Leanne Graham',
+      username: 'Bret',
+      email: 'Sincere@april.biz'
     },
     {
       id: 2,
-      name: "Ervin Howell",
-      username: "Antonette",
-      email: "Shanna@melissa.tv"
+      name: 'Ervin Howell',
+      username: 'Antonette',
+      email: 'Shanna@melissa.tv'
     },
-    
+
     // ... list of items
-    
+
     {
       id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
+      name: 'Nicholas DuBuque',
+      username: 'Nicholas.Stanton',
+      email: 'Rey.Padberg@rosamond.biz'
+    },
+    {
+      id: 11,
+      name: 'Nicholas DuBuque',
+      username: 'Nicholas.Stanton',
+      email: 'Rey.Padberg@rosamond.biz'
     }
   ];
 
-  source : LocalDataSource;
+  source: LocalDataSource;
 
 
-  constructor( private _sanitizer: DomSanitizer ) {
+  constructor(private sanitizer: DomSanitizer) {
     this.source = new LocalDataSource(this.data);
 
   }
@@ -107,10 +92,19 @@ export class AdminUsersLayoutComponent implements OnInit {
   }
 
 
-  onSearch(text: string, column:string) {
-    
-    //console.log(this.data.some( item => item[column] == text ));
+  onSearch(text: string, column: string) {
+    // console.log(this.data.some( item => item[column] == text ));
+  }
 
-} 
-
+  onAction( event: any ) {
+ 
+    switch(event.action) {
+      case '' : 
+        break;
+      case '' :
+        break; 
+      case '' :
+        break;
+    }  
+  }
 }

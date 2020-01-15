@@ -6,10 +6,10 @@
 // Animation side bar
 
 nb-sidebar {
-    // @include transition(width 150ms ease-in-out);
-    // * {
-    //     @include transition(all 150ms ease-in-out);    
-    // }
+    //@include transition(width 150ms ease-in-out);
+    //* {
+    //    @include transition(all 150ms ease-in-out);    
+    //}
 }
 
 // Select
@@ -26,5 +26,18 @@ nb-sidebar {
 		}
     }
 }
+
+// Smart table
+
+.ng2-smart-actions {
+    height: 100%!important;
+    ng2-st-tbody-custom { 
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        display: flex; }
+}
+
 
 /* Reset bootstrap */

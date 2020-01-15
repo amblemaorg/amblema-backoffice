@@ -31,10 +31,6 @@ import { AdminUsersLayoutComponent } from './layouts/admin-users-layout/admin-us
 import { ModalComponent } from './components/modal/modal.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
-import { TableBaseComponent } from './components/table/table-base/table-base.component';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
-import { JwtPaginationComponent } from './components/jwt-pagination/jwt-pagination.component';
-
 @NgModule({
   declarations: [
     PagesComponent,
@@ -48,8 +44,6 @@ import { JwtPaginationComponent } from './components/jwt-pagination/jwt-paginati
     TestFormComponent,
     AdminUsersLayoutComponent,
     ModalComponent,
-    TableBaseComponent,
-    JwtPaginationComponent,
   ],
   imports: [
     RouterModule,
@@ -68,7 +62,6 @@ import { JwtPaginationComponent } from './components/jwt-pagination/jwt-paginati
     NbMenuModule.forRoot(),
     NbContextMenuModule,
     ReactiveFormsModule,
-    Ng2TableModule,
     FormsModule,
     Ng2SmartTableModule,
   ],

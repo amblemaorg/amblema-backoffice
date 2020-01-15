@@ -18,7 +18,7 @@ export class AdminUsersLayoutComponent implements OnInit {
       delete: false,
       custom: [
         { name: 'view', title: '<i class="far fa-eye fa-sm"></i>' },
-        { name: 'edit', title: '<i class="nb-edit"></i>' }, 
+        { name: 'edit', title: '<i class="nb-edit"></i>' },
         { name: 'trash', title: '<i class="nb-trash"></i>' }
       ]
     },
@@ -97,14 +97,14 @@ export class AdminUsersLayoutComponent implements OnInit {
   }
 
   onAction( event: any ) {
- 
-    switch(event.action) {
-      case '' : 
-        break;
-      case '' :
-        break; 
+
+    switch (event.action) {
       case '' :
         break;
-    }  
+      case '' :
+        break;
+      case '' :
+        break;
+    }
   }
 }

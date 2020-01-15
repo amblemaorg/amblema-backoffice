@@ -1,3 +1,9 @@
+<!-- Btn register -->
+<div class="mb-3">
+    <button class="btn btn-primary mr-2 col-12 col-md-auto" data-toggle="modal"
+        [attr.data-target]="'#'+'modal-admin-user-form'">Registrar</button>
+</div>
 <div class="table-responsive">
     <ng2-smart-table *ngIf="true" (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
-</div>  
+</div>
+<app-admin-user-form [ID]="idModal" [title]="title" [size]="'lg'"></app-admin-user-form>

@@ -6,17 +6,23 @@ import { AdminUsersLayoutComponent } from './admin-users-layout.component';
 import { NbCardModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AdminUserTableComponent } from './admin-user-table/admin-user-table.component';
+import { AdminUserFormComponent } from './admin-user-form/admin-user-form.component';
+import { SharedComponentsModule } from '../../components/shared-components.module';
+import { SharedFormsModule } from '../../forms/shared-forms.module';
 
 @NgModule({
   declarations: [
     AdminUsersLayoutComponent,
     AdminUserTableComponent,
+    AdminUserFormComponent,
   ],
   imports: [
     NbCardModule,
     CommonModule,
     Ng2SmartTableModule,
     AdminUsersLayoutRoutingModule,
+    SharedComponentsModule,
+    SharedFormsModule, 
   ]
 })
 export class AdminUsersLayoutModule { }

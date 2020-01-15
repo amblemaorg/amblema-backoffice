@@ -36,6 +36,8 @@ export abstract class AbstractReactiveComponent implements DoCheck {
      */
     @Input() type: string | null = 'text';
 
+    @Input() placeholder: string | null = '';
+
     validationErrors: object = null;
 
     ngDoCheck() {

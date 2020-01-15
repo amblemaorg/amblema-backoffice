@@ -1,6 +1,10 @@
 <div class="form-group">
-    <label [for]="label" class="label text-muted" *ngIf="label != ''"> {{ label }} </label>
+    <label [for]="label" *ngIf="label != ''" class="label">{{ label }} </label>
     <input 
+        nbInput
+        fullWidth 
+        status="basic" 
+        [placeholder]='placeholder'
         [id]='fieldId'
         [type]='type'
         [formControl]="control"

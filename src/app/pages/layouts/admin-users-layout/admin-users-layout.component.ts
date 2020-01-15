@@ -7,9 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminUsersLayoutComponent implements OnInit {
 
-
   constructor() { }
-
-
+  
   ngOnInit() { }
 }

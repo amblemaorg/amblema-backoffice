@@ -9,6 +9,11 @@ import { type } from 'os';
 })
 export class AdminUserTableComponent implements OnInit {
 
+  title = 'Registro de usuario';
+  btnMsg = 'Guardar';  
+  isRegister = true;
+  idModal = 'modal-admin-user-form';
+
   settings = {
     noDataMessage: 'No hay registros',
     mode: 'external',

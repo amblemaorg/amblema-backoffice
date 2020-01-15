@@ -20,13 +20,7 @@ import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { ProfileComponent } from './layouts/profile/profile.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import {
-  IdDocumentComponent
-} from './forms/reactive-form-components/id-document/id-document.component';
-import { ReactiveInputComponent } from './forms/reactive-form-components/reactive-input/reactive-input.component';
-import { ReactiveValidationComponent } from './forms/reactive-form-components/reactive-validation/reactive-validation.component';
-import { TestFormComponent } from './forms/test-form/test-form.component';
+
 @NgModule({
   declarations: [
     PagesComponent,
@@ -34,10 +28,6 @@ import { TestFormComponent } from './forms/test-form/test-form.component';
     DashboardLayoutComponent,
     DashboardLayoutComponent,
     ProfileComponent,
-    IdDocumentComponent,
-    ReactiveInputComponent,
-    ReactiveValidationComponent,
-    TestFormComponent,
   ],
   imports: [
     RouterModule,
@@ -55,8 +45,6 @@ import { TestFormComponent } from './forms/test-form/test-form.component';
     NbUserModule,
     NbMenuModule.forRoot(),
     NbContextMenuModule,
-    ReactiveFormsModule,
-    FormsModule,
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },

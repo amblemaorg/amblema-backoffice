@@ -83,7 +83,7 @@ describe('IdDocumentComponent', () => {
     fixture.detectChanges();
   });
 
-  it('TestCase#2027 - should validate the number of characters for the document type E', () => {
+  it('TestCase#2029 - should validate the number of characters for the document type E', () => {
     const form: FormGroup = new FormGroup({
       document: new FormControl(null),
       select: new FormControl('V')

@@ -20,7 +20,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Usuarios',
-    icon: 'person-outline',
+    icon: 'people-outline',
     children: [
       { title: 'Coordinadores' },
       { title: 'Padrinos' },

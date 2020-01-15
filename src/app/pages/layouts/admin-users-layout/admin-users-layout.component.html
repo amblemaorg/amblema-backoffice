@@ -6,11 +6,8 @@
                 <div class="mb-3">
                     <button class="btn btn-primary mr-2">Registrar</button>
                 </div> 
-                <div class="table-responsive">
-                    <ng2-smart-table *ngIf="true" (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
-                </div>  
-<!-- 
-                <app-table-base></app-table-base>  -->
+
+                <app-admin-user-table></app-admin-user-table>
 
             </nb-card-body>
         </nb-card>

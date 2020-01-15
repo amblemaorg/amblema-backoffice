@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminUsersLayoutComponent } from './admin-users-layout.component';
+import { NbCardModule } from '@nebular/theme';
+import { AdminUserTableComponent } from './admin-user-table/admin-user-table.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 describe('AdminUsersLayoutComponent', () => {
   let component: AdminUsersLayoutComponent;
@@ -8,7 +11,13 @@ describe('AdminUsersLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminUsersLayoutComponent ]
+      declarations: [
+        AdminUserTableComponent,
+        AdminUsersLayoutComponent ],
+      imports: [
+        NbCardModule,
+        Ng2SmartTableModule
+      ]
     })
     .compileComponents();
   }));

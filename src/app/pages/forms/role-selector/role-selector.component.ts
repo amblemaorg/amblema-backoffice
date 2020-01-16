@@ -7,7 +7,7 @@ import { AbstractReactiveComponent } from '../reactive-form-components/abstract-
   styleUrls: ['./role-selector.component.scss']
 })
 export class RoleSelectorComponent extends AbstractReactiveComponent {
-  
-  roleList: any = [{ name: 'Gerente' }, { name: 'administrador' }]
+
+  roleList: any = [{ name: 'Gerente' }, { name: 'administrador' }];
 }
 

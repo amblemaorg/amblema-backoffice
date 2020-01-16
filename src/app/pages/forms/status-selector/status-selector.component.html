@@ -1,7 +1,7 @@
 <div class="form-group">
     <label [for]="label" *ngIf="label != ''" class="label">{{ label }} </label>
     <select class="form-control form-group" [formControl]="control">
-        <option *ngFor="let item of roleList" [value]="item.name">{{ item.name }}</option>
+        <option *ngFor="let item of statusList" [value]="item.value">{{ item.value }}</option>
     </select>
     <app-reactive-validation [validationErrors]="validationErrors">
     </app-reactive-validation>

@@ -4,7 +4,7 @@ import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   imports: [
-    CommonModule, 
+    CommonModule,
   ],
   declarations: [
     ModalComponent,

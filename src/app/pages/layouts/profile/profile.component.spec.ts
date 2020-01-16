@@ -5,7 +5,6 @@ import { NbCardModule, NbSelectModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   IdDocumentComponent } from '../../forms/reactive-form-components/id-document/id-document.component';
-import { TestFormComponent } from '../../forms/test-form/test-form.component';
 import { ReactiveInputComponent } from '../../forms/reactive-form-components/reactive-input/reactive-input.component';
 import { ReactiveValidationComponent } from '../../forms/reactive-form-components/reactive-validation/reactive-validation.component';
 
@@ -17,7 +16,6 @@ describe('ProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         IdDocumentComponent,
-        TestFormComponent,
         ReactiveInputComponent,
         ReactiveValidationComponent,
         ProfileComponent ],

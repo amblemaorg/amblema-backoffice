@@ -9,5 +9,4 @@ import { AbstractModalComponent } from './abstract.modal.component';
 export class ModalComponent extends AbstractModalComponent implements OnInit {
 
   ngOnInit() { }
-
 }

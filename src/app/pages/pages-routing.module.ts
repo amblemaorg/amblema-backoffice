@@ -22,6 +22,10 @@ const routes: Routes = [
                 loadChildren: () => import('./layouts/admin-users-layout/admin-users-layout.module').then(m => m.AdminUsersLayoutModule)
             },
             {
+                path: 'permissions',
+                loadChildren: () => import('./layouts/permissions-layout/permissions-layout.module').then(m => m.PermissionsLayoutModule)
+            },
+            {
                 path: 'profile',
                 component: ProfileComponent
             }

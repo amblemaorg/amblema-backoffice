@@ -1,0 +1,23 @@
+<form [formGroup]="formRole" action="">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <app-reactive-input
+            [placeholder]="'rol'"
+            [control]="formRole.get('role')"
+            [submitted]="submitted"></app-reactive-input>
+        </div>
+
+        <div class="col-12 col-lg">
+            <app-status-selector 
+                [control]="formRole.get('status')"
+                [submitted]='submitted'>
+            </app-status-selector>
+        </div>
+        <div class="col-12 col-lg">
+            <button class="btn btn-primary btn-block mb-3" (click)="onSubmit()">
+                <span *ngIf="mode == ACTION.CREATE">Guardar</span>
+                <span *ngIf="mode == ACTION.EDIT">Actualizar</span>
+            </button>
+        </div>
+    </div>
+</form>

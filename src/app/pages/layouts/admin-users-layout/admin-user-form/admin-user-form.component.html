@@ -1,63 +1,47 @@
-<div class="modal fade" [id]="ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document"
-        [ngClass]="{'modal-lg': size == 'lg', 'modal-sm' : size == 'sm'}">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
+
+    <!-- Main content -->
+    <form [formGroup]="formUser" content>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formUser.get('name')"
+                    [submitted]="submitted" [patternMessage]="MESSAGES.NAME_MESSAGE">
+                </app-reactive-input>
+
+                <app-reactive-input [label]="'Apellido'" [placeholder]="'Apellido'" [control]="formUser.get('lastName')"
+                    [submitted]="submitted" [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
+                </app-reactive-input>
+
+                <app-reactive-input [label]="'Cargo'" [placeholder]="'Cargo'" [control]="formUser.get('position')"
+                    [submitted]="submitted" [patternMessage]="MESSAGES.TEXT_MESSAGE">
+                </app-reactive-input>
+
+                <app-role-selector [submitted]="submitted" [label]="'Rol'" [control]="formUser.get('role')">
+                </app-role-selector>
             </div>
-            <form [formGroup]="formUser" (ngSubmit)='onSubmit()'>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'"
-                                [control]="formUser.get('name')" [submitted]="submitted"
-                                [patternMessage]="MESSAGES.NAME_MESSAGE">
-                            </app-reactive-input>
+            <div class="col-12 col-lg-6">
 
-                            <app-reactive-input [label]="'Apellido'" [placeholder]="'Apellido'"
-                                [control]="formUser.get('lastName')" [submitted]="submitted"
-                                [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
-                            </app-reactive-input>
+                <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
+                    [submitted]="submitted" [label]="'Télefono'" [control]="formUser.get('phone')">
+                </app-reactive-input>
 
-                            <app-reactive-input [label]="'Cargo'" [placeholder]="'Cargo'"
-                                [control]="formUser.get('position')" [submitted]="submitted"
-                                [patternMessage]="MESSAGES.TEXT_MESSAGE">
-                            </app-reactive-input>
+                <app-id-document [placeholder]="'Documento de identidad'" [controlSelect]="formUser.get('type')"
+                    [submitted]='submitted' [label]="'Documento de identidad'" [control]="formUser.get('document')">
+                </app-id-document>
 
-                            <app-role-selector [submitted]="submitted" [label]="'Rol'" [control]="formUser.get('role')">
-                            </app-role-selector>
-                        </div>
-                        <div class="col-12 col-lg-6">
+                <app-reactive-input [type]="'email'" [placeholder]="'Correo'" [patternMessage]="MESSAGES.EMAIL_MESSAGE"
+                    [submitted]="submitted" [label]="'Correo'" [control]="formUser.get('email')"></app-reactive-input>
 
-                            <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
-                                [submitted]="submitted" [label]="'Télefono'" [control]="formUser.get('phone')">
-                            </app-reactive-input>
-
-                            <!-- ID document -->
-                            <app-id-document [placeholder]="'Documento de identidad'"
-                                [controlSelect]="formUser.get('type')" [submitted]='submitted'
-                                [label]="'Documento de identidad'" [control]="formUser.get('document')">
-                            </app-id-document>
-
-                            <app-reactive-input [type]="'email'" [placeholder]="'Correo'"
-                                [patternMessage]="MESSAGES.EMAIL_MESSAGE" [submitted]="submitted" [label]="'Correo'"
-                                [control]="formUser.get('email')"></app-reactive-input>
-
-                            <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
-                                [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted"
-                                [label]="'Contraseña'" [control]="formUser.get('password')"></app-reactive-input>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-center justify-content-md-end flex-nowrap">
-                    <button type="button" class="btn btn-secondary col-6 col-md-auto"
-                        data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary col-6 col-md-auto">Guardar</button>
-                </div>
-            </form>
+                <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
+                    [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
+                    [control]="formUser.get('password')"></app-reactive-input>
+            </div>
         </div>
-    </div>
-</div>
+    </form>
+
+    <!-- Footer content -->
+    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
+        <span *ngIf="mode == ACTION.CREATE">Guardar</span>
+        <span *ngIf="mode == ACTION.EDIT">Editar</span>
+    </button>
+</app-modal>

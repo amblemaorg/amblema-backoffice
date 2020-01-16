@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RoleSelectorComponent } from './role-selector.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveValidationComponent } from '../reactive-form-components/reactive-validation/reactive-validation.component';
+import { ReactiveInputComponent } from '../reactive-form-components/reactive-input/reactive-input.component';
 
 describe('RoleSelectorComponent', () => {
   let component: RoleSelectorComponent;
@@ -8,7 +11,14 @@ describe('RoleSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RoleSelectorComponent ]
+      declarations: [
+        ReactiveInputComponent,
+        ReactiveValidationComponent,
+        RoleSelectorComponent ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+      ]
     })
     .compileComponents();
   }));
@@ -16,7 +26,12 @@ describe('RoleSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoleSelectorComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
+    /**
+     * Fixture must call only to test form
+     * fixture.detectChanges();
+     *
+     */
   });
 
   it('should create', () => {

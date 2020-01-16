@@ -4,6 +4,9 @@ import { AdminUsersLayoutComponent } from './admin-users-layout.component';
 import { NbCardModule } from '@nebular/theme';
 import { AdminUserTableComponent } from './admin-user-table/admin-user-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { AdminUserFormComponent } from './admin-user-form/admin-user-form.component';
+import { SharedFormsModule } from '../../forms/shared-forms.module';
+import { SharedComponentsModule } from '../../components/shared-components.module';
 
 describe('AdminUsersLayoutComponent', () => {
   let component: AdminUsersLayoutComponent;
@@ -13,10 +16,15 @@ describe('AdminUsersLayoutComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AdminUserTableComponent,
-        AdminUsersLayoutComponent ],
+        AdminUsersLayoutComponent,
+        AdminUserFormComponent ],
       imports: [
         NbCardModule,
-        Ng2SmartTableModule
+        Ng2SmartTableModule,
+        SharedFormsModule,
+        SharedComponentsModule
+      ],
+      providers: [
       ]
     })
     .compileComponents();

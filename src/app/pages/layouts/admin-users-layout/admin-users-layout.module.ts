@@ -22,7 +22,7 @@ import { SharedFormsModule } from '../../forms/shared-forms.module';
     Ng2SmartTableModule,
     AdminUsersLayoutRoutingModule,
     SharedComponentsModule,
-    SharedFormsModule, 
+    SharedFormsModule,
   ]
 })
 export class AdminUsersLayoutModule { }

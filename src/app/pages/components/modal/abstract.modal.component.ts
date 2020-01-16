@@ -1,19 +1,22 @@
-import { Input } from '@angular/core';
+import { Input, Output } from '@angular/core';
 
 export abstract class AbstractModalComponent {
 
     /**
      * Identity
      */
-    @Input('ID') ID: string;
+    @Input() ID: string;
 
     /**
-     * Type modal 
+     * Type modal
      */
     @Input() size: string | null = '';
 
     // Title
     @Input() title: string | null = 'Modal';
 
-
+    /**
+     * Render another button in the footer
+     */
+    @Input() extra: boolean | null = false;
 }

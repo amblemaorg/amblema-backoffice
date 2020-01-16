@@ -6,6 +6,7 @@ import { IdDocumentComponent } from './reactive-form-components/id-document/id-d
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NbInputModule } from '@nebular/theme';
 import { RoleSelectorComponent } from './role-selector/role-selector.component';
+import { StatusSelectorComponent } from './status-selector/status-selector.component';
 
 @NgModule({
   imports: [
@@ -16,17 +17,19 @@ import { RoleSelectorComponent } from './role-selector/role-selector.component';
   ],
   declarations: [
     ReactiveInputComponent,
-    ReactiveValidationComponent, 
+    ReactiveValidationComponent,
     IdDocumentComponent,
-    RoleSelectorComponent
+    RoleSelectorComponent,
+    StatusSelectorComponent
   ],
   exports: [
     ReactiveInputComponent,
     ReactiveValidationComponent,
     IdDocumentComponent,
-    RoleSelectorComponent, 
+    RoleSelectorComponent,
+    StatusSelectorComponent,
     ReactiveFormsModule,
-    FormsModule 
+    FormsModule
   ]
 })
 export class SharedFormsModule { }

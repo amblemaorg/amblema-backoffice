@@ -1,5 +1,6 @@
 @import './mixins'; 
 @import './animations';
+@import './extends';
 
 /* Reset theme */
 
@@ -39,21 +40,21 @@ ng2-smart-table {
         height: 100%!important;
         ng2-st-tbody-custom { 
             position: absolute;
-            width: 100%;
-            height: 100%;
             top: 0;
             display: flex;
+
+            @extend .max-hw; 
             a {
                 &:hover { color: $color-primary-800!important; }
             }
         }
     }
 }
+
 /* Reset bootstrap */
 
 select { 
-    background-color: #f7f9fc!important;
-    border-color: #e4e9f2!important;
-    padding-top: 0px!important;
-    padding-bottom: 0px!important;
+    background-color: $color-secondary-100!important;
+    border-color: $color-secondary-200!important;
+    @extend .clear-padding-y; 
     height: 36.5px!important; }

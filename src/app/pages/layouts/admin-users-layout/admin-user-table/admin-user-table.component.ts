@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { type } from 'os';
+import { ACTION } from '../../../../helpers/text-crud';
+import { DomSanitizer } from '@angular/platform-browser';
+
+declare var $: any;
 
 @Component({
   selector: 'app-admin-user-table',
@@ -9,10 +12,10 @@ import { type } from 'os';
 })
 export class AdminUserTableComponent implements OnInit {
 
-  title = 'Registro de usuario';
-  btnMsg = 'Guardar';  
-  isRegister = true;
-  idModal = 'modal-admin-user-form';
+  // Form settings
+  ID_FORM = 'modal-admin-user-form';
+  ACTION = ACTION;
+  mode;
 
   settings = {
     noDataMessage: 'No hay registros',
@@ -23,9 +26,9 @@ export class AdminUserTableComponent implements OnInit {
       edit: false,
       delete: false,
       custom: [
-        { name: 'view', title: '<i class="far fa-eye fa-sm"></i>' },
-        { name: 'edit', title: '<i class="nb-edit"></i>' },
-        { name: 'trash', title: '<i class="nb-trash"></i>' }
+        { name: ACTION.VIEW, title: '<i class="far fa-eye fa-sm"></i>' },
+        { name: ACTION.EDIT, title: `<i class="nb-edit"></i>` },
+        { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' }
       ]
     },
     pager: {
@@ -145,21 +148,28 @@ export class AdminUserTableComponent implements OnInit {
 
   source: LocalDataSource;
 
-  constructor() {
+  constructor( private sanitizer: DomSanitizer ) {
     this.source = new LocalDataSource(this.data);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { console.warn('# Problema de seguridad del dom del jquery'); }
 
   onAction( event: any ) {
     switch (event.action) {
-      case '' :
+      case ACTION.VIEW :
+        // Call view modal
         break;
-      case '' :
-        break;
-      case '' :
+      case ACTION.EDIT :
+          // Change mode purpose
+          this.mode = ACTION.EDIT;
+          $(`#${this.ID_FORM}`).modal('show');
+          break;
+      case ACTION.DELETE :
+        // Call delete modal
         break;
     }
   }
+
+  newData( event: any ) {  }
+  updateData( event: any ) {}
 }

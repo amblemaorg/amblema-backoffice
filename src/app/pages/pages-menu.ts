@@ -15,7 +15,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Administrar',
         link: '/pages/admin-users',
       },
-      { title: 'Roles' }
+      { title: 'Roles',
+        link: '/pages/permissions'
+      }
     ]
   },
   {

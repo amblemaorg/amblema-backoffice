@@ -1,4 +1,4 @@
-@import '../../../../themes.scss';
+@import '../../../../assets/scss/mixins';
 
 img {
     @include screen($breakpoint-xs) {

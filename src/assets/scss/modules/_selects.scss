@@ -1,0 +1,9 @@
+@import '../variables';
+@import '../placeholders';
+
+select { 
+    background-color: $bg-secondary-color!important;
+    border-color: $border-primary-color!important;
+    @extend %clear-padding-y; 
+    height: 36.5px!important; // <-- To align others inputs
+}

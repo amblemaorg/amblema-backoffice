@@ -1,8 +1,6 @@
 @import '~@nebular/theme/styles/theming';
 @import '~@nebular/theme/styles/themes/default';
 
-@import './assets/scss/index';
-
 $nb-enable-css-custom-properties: true;
 
 $nb-themes: nb-register-theme((

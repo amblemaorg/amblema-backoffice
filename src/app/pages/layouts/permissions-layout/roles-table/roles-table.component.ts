@@ -32,7 +32,7 @@ export class RolesTableComponent implements OnInit {
     },
     columns: {
       role: {
-        title: 'Roles',
+        title: 'Rol',
         type: 'string'
       },
       status: {
@@ -60,7 +60,7 @@ export class RolesTableComponent implements OnInit {
       case ACTION.EDIT :
           // Change mode purpose
           this.mode = ACTION.EDIT;
-          this.router.navigate(['/pages/permissions/actions']).then( e =>  { console.log(e); } );
+          this.router.navigate(['/pages/permissions/actions']);
           break;
       case ACTION.DELETE :
         // Call delete modal

@@ -1,0 +1,30 @@
+@import './placeholders'; 
+@import './animations';
+@import './variables';
+
+// Smart table
+
+ng2-smart-table {
+    td {
+        &:first-child { min-width: 150px; }
+    }
+    .ng2-smart-actions {
+        ng2-st-tbody-custom { 
+            position: absolute;
+            top: 0;
+            display: flex;
+            @extend %max-hw; 
+            a {
+                &:hover { color: $color-primary-hover!important; }
+            }
+        }
+    }
+}
+
+
+.custom-control-label::before, 
+.custom-control-label::after {
+
+    // width: 1.25rem;
+    // height: 1.25rem;
+}

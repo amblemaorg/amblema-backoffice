@@ -12,13 +12,14 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 @NgModule({
-  declarations: [PermissionsLayoutComponent, RolesTableComponent, RolesFormComponent, RolesActionsComponent],
+  declarations: [
+    PermissionsLayoutComponent, RolesTableComponent, RolesFormComponent, RolesActionsComponent],
   imports: [
     CommonModule,
     NbCardModule,
     PermissionsLayoutRoutingModule,
     SharedFormsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
   ]
 })
 export class PermissionsLayoutModule { }

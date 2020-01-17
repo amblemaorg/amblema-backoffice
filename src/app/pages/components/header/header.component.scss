@@ -1,5 +1,6 @@
 
 @import '../../../../themes';
+@import '../../../../assets/scss/mixins';
 
 @include nb-install-component() {
   display: flex;

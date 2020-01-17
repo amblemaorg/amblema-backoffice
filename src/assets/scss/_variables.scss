@@ -1,11 +1,26 @@
+// Breakpoint
+
 $breakpoint-xs: 0px;
 $breakpoint-sm: 540px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
-$color-primary-800: #598bff;
-$color-primary-900: #3366ff; 
+// Colors
 
-$color-secondary-100: #f7f9fc;
-$color-secondary-200: #e4e9f2; 
+$color-primary: #3366ff;
+$color-secondary: #f7f9fc;
+
+// Hover color
+
+$color-primary-hover: #598bff;
+$color-secondary-hover: #e4e9f2;
+
+// Border color
+
+$border-primary-color: #e4e9f2; 
+
+// Background color
+  
+$bg-primary-color: $color-primary;
+$bg-secondary-color: $color-secondary;

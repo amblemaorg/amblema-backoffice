@@ -1,5 +1,7 @@
-
 <div>
-    <p class="font-weight-bold" >Edición de roles</p>
-     <app-roles-form [mode]="mode"></app-roles-form>
+    <p class="font-weight-bold">Actualización de rol</p>
+    <app-roles-form [mode]="mode"></app-roles-form>
+    <hr>
+    <p class="font-weight-bold">Lista de acciones</p>
+    <ng2-smart-table [source]='data' [settings]="settings"></ng2-smart-table>
 </div>

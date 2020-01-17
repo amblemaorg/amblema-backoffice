@@ -1,6 +1,6 @@
 @import './variables';
 
-/* Screens */
+/* Screens resolutions */
 
 @mixin screen($size) {
     @media screen and (min-width: $size) {

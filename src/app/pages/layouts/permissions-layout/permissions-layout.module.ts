@@ -6,7 +6,7 @@ import { PermissionsLayoutComponent } from './permissions-layout.component';
 import { RolesTableComponent } from './roles-table/roles-table.component';
 import { RolesFormComponent } from './roles-form/roles-form.component';
 import { RolesActionsComponent } from './roles-actions/roles-actions.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { SharedFormsModule } from '../../forms/shared-forms.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
@@ -20,6 +20,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     PermissionsLayoutRoutingModule,
     SharedFormsModule,
     Ng2SmartTableModule,
+    NbIconModule
   ]
 })
 export class PermissionsLayoutModule { }

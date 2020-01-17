@@ -9,5 +9,6 @@ import { AbstractReactiveComponent } from '../reactive-form-components/abstract-
 export class RoleSelectorComponent extends AbstractReactiveComponent {
 
   roleList: any = [{ name: 'Gerente' }, { name: 'administrador' }];
+
 }
 

@@ -34,25 +34,26 @@ export class RolesActionsComponent {
         title: 'Estatus',
         filter: false,
         type: 'html',
+        width: '150px',
         valuePrepareFunction: (value) => {
           return this.sanitizer.bypassSecurityTrustHtml(`
           <div class="custom-control custom-switch text-center">
           <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
           <label class="custom-control-label" for="customSwitch1"></label>
         </div>
-          `)
+          `);
         },
 
       },
     }
   };
 
-  source: LocalDataSource;  
+  source: LocalDataSource;
 
   data: any = [
     { action: 'Borrar', status: 'activo' },
     { action: 'Crear', status: 'activo' }
-  ]
+  ];
 
   constructor( private sanitizer: DomSanitizer ) {
     this.source = new LocalDataSource(this.data);

@@ -13,7 +13,7 @@ import {
   NbContextMenuModule,
   NbCardModule,
   NbInputModule,
-  NbSelectModule,} from '@nebular/theme';
+  NbSelectModule, } from '@nebular/theme';
 import { HeaderComponent } from './components/header/header.component';
 
 import { RouterModule } from '@angular/router';
@@ -46,6 +46,7 @@ import { ProfileComponent } from './layouts/profile/profile.component';
     NbMenuModule.forRoot(),
     NbContextMenuModule,
   ],
+  exports: [ NbIconModule ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
   ]

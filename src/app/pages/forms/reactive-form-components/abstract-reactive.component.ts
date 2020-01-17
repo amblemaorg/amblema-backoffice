@@ -45,6 +45,9 @@ export abstract class AbstractReactiveComponent implements DoCheck {
         /**
          * Show the messages after submit
          */
-        this.validationErrors = this.submitted && (this.control.touched || this.control.invalid) ? this.control.errors : null;
+
+        if ( this.control ) {
+            this.validationErrors = this.submitted && (this.control.touched || this.control.invalid) ? this.control.errors : null;
+        }
     }
 }

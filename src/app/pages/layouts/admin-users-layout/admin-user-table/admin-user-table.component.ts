@@ -170,6 +170,6 @@ export class AdminUserTableComponent implements OnInit {
     }
   }
 
-  newData( event: any ) {  }
+  newData( event: any ) {}
   updateData( event: any ) {}
 }

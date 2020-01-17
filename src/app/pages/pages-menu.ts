@@ -24,7 +24,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Usuarios',
     icon: 'people-outline',
     children: [
-      { title: 'Coordinadores' },
+      { 
+        title: 'Coordinadores',
+        link: '/pages/coordinators-users'
+      },
       { title: 'Padrinos' },
       { title: 'Escuelas' },
     ]

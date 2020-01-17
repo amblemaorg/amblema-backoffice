@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
-import { ProfileComponent } from './layouts/profile/profile.component';
 
 const routes: Routes = [
     {
@@ -26,9 +25,9 @@ const routes: Routes = [
                 loadChildren: () => import('./layouts/permissions-layout/permissions-layout.module').then(m => m.PermissionsLayoutModule)
             },
             {
-                path: 'profile',
-                component: ProfileComponent
-            }
+                path: 'coordinators-users',
+                loadChildren: () => import('./layouts/coordinators-users-layouts/coordinators-users-layouts.module').then(m => m.CoordinatorsUsersLayoutsModule)
+            },
         ]
     },
     { path: '', redirectTo: '', pathMatch: 'full' },

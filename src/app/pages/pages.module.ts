@@ -19,7 +19,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
-import { ProfileComponent } from './layouts/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { ProfileComponent } from './layouts/profile/profile.component';
     HeaderComponent,
     DashboardLayoutComponent,
     DashboardLayoutComponent,
-    ProfileComponent,
   ],
   imports: [
     RouterModule,

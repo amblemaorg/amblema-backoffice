@@ -26,7 +26,8 @@ const routes: Routes = [
             },
             {
                 path: 'coordinators-users',
-                loadChildren: () => import('./layouts/coordinators-users-layouts/coordinators-users-layouts.module').then(m => m.CoordinatorsUsersLayoutsModule)
+                loadChildren: () => import('./layouts/coordinators-users-layouts/coordinators-users-layouts.module')
+                .then(m => m.CoordinatorsUsersLayoutsModule)
             },
         ]
     },

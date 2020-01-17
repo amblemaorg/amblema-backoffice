@@ -61,87 +61,81 @@ export class AdminUserTableComponent implements OnInit {
 
   data: any = [
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Jesus',
+      lastName: 'Medina',
+      charge: 'Administrador',
+      role: 'Administrador',
+      status: 'Activo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Carlos',
+      lastName: 'Gomez',
+      charge: 'Administrador',
+      role: 'Administrador',
+      status: 'Activo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Jack',
+      lastName: 'Nicolson',
+      charge: 'Administrador',
+      role: 'Administrador',
+      status: 'Activo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Laura',
+      lastName: 'Jimenez',
+      charge: 'Coordinadora',
+      role: 'Superadmin',
+      status: 'Activo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Carla',
+      lastName: 'Nore',
+      charge: 'Coordinadora',
+      role: 'Superadmin',
+      status: 'Activo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Sebas',
+      lastName: 'Santos',
+      charge: 'CEO',
+      role: 'Superadmin',
+      status: 'Activo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Colbyn',
+      lastName: 'Medinas',
+      charge: 'CEO',
+      role: 'Superadmin',
+      status: 'Inactivo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Luis',
+      lastName: 'Medinas',
+      charge: 'Gerente',
+      role: 'Superadmin',
+      status: 'Inactivo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Daniel',
+      lastName: 'Mohan',
+      charge: 'Gerente',
+      role: 'Normal',
+      status: 'Inactivo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
+      name: 'Yorman',
+      lastName: 'Gaez',
+      charge: 'Gerente',
+      role: 'Normal',
+      status: 'Inactivo'
     },
     {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      role: 'administrador',
-      status: 'Sigue tronando'
-    },
-    {
-      name: 'Pedro',
-      lastName: 'Infante',
-      charge: 'Canta',
-      status: 'Sigue tronando'
+      name: 'Elsa',
+      lastName: 'Gomez',
+      charge: 'Gerente',
+      role: 'Normal',
+      status: 'Inactivo'
     },
   ];
 

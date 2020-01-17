@@ -1,7 +1,6 @@
 import { ACTION } from './text-crud';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
-export class TableBase implements Actions {
+export class TableBase {
 
     settings = {
         noDataMessage: 'No hay registros',
@@ -24,12 +23,11 @@ export class TableBase implements Actions {
         columns: {
 
         }
-    };   
-
-    newData(data: any) { }
+    };
 }
 
-interface Actions {
-    newData(data:any): void;
-    
+export interface TableActions {
+    newData?: (data: any) => void;
+    update?: (data: any) => void;
+    onAction?: (event: any) => void;
 }

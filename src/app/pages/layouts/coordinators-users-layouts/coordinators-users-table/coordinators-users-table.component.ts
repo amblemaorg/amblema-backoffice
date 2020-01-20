@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TableBase, TableActions } from 'src/app/helpers/base-table';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ACTION } from '../../../../helpers/text-crud'; 
+import { ACTION } from '../../../../helpers/text-crud';
 
 @Component({
   selector: 'app-coordinators-users-table',
@@ -10,11 +10,11 @@ import { ACTION } from '../../../../helpers/text-crud';
 })
 export class CoordinatorsUsersTableComponent extends TableBase implements OnInit, TableActions {
 
-  ACTION = ACTION; 
+  ACTION = ACTION;
   source: LocalDataSource = new LocalDataSource();
-  data: any = []; 
+  data: any = [];
 
-  constructor() { 
+  constructor() {
     super();
     this.source = new LocalDataSource(this.data);
   }
@@ -41,7 +41,7 @@ export class CoordinatorsUsersTableComponent extends TableBase implements OnInit
 
   }
 
-  update(data:any) {
+  update(data: any) {
 
   }
 

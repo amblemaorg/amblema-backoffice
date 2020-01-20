@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TableBase, TableActions } from 'src/app/helpers/base-table';
+import { TableBase, TableActions } from '../../shared/base-table';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ACTION } from '../../../../helpers/text-crud';
 
@@ -10,28 +10,57 @@ import { ACTION } from '../../../../helpers/text-crud';
 })
 export class CoordinatorsUsersTableComponent extends TableBase implements OnInit, TableActions {
 
-  ACTION = ACTION;
   source: LocalDataSource = new LocalDataSource();
-  data: any = [];
+
+  data: any = [{
+    name: 'Luis',
+    lastName: 'Lopez',
+    document: '324234',
+    phone: '324234324',
+    status: 'Activo'
+  }];
 
   constructor() {
-    super();
-    this.source = new LocalDataSource(this.data);
+    super('form-coordinators');
+
+    // Custom columns
+    this.settings.columns = {
+      name: {
+        title: 'Nombre',
+        type: 'string'
+      },
+      lastName: {
+        title: 'Apellido',
+        type: 'string'
+      },
+      document: {
+        title: 'Cédula / Rif',
+        type: 'string'
+      },
+      phone: {
+        title: 'Teléfono',
+        type: 'string'
+      },
+      status: {
+        title: 'Estatus',
+        type: 'string'
+      }
+    };
   }
 
   ngOnInit() {  }
 
-  onAction( event: any ) {
+  onAction(event: any) {
     switch (event.action) {
-      case ACTION.VIEW :
+      case ACTION.VIEW:
         // Call view modal
         break;
-      case ACTION.EDIT :
-          // Change mode purpose
-          // this.mode = ACTION.EDIT;
-          // $(`#${this.ID_FORM}`).modal('show');
-          break;
-      case ACTION.DELETE :
+      case ACTION.EDIT:
+        // Change mode purpose
+        // this.mode = ACTION.EDIT;
+        // $(`#${this.ID_FORM}`).modal('show');
+        break;
+      case ACTION.DELETE:
         // Call delete modal
         break;
     }

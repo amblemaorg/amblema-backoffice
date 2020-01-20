@@ -24,12 +24,18 @@ export class AdminUserTableComponent implements OnInit {
       columnTitle: 'Acciones',
       add: false,
       edit: false,
-      delete: false,
+      //  Fake column
+      delete: true,
       custom: [
         { name: ACTION.VIEW, title: '<i class="far fa-eye fa-sm"></i>' },
         { name: ACTION.EDIT, title: `<i class="nb-edit"></i>` },
         { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' }
       ]
+    },
+    //  Fake column
+    delete: {
+      deleteButtonContent: '<i class="ion-trash-a"></i>',
+      confirmDelete: true
     },
     pager: {
       display: true,
@@ -60,83 +66,83 @@ export class AdminUserTableComponent implements OnInit {
   };
 
   data: any = [
-    {
-      name: 'Jesus',
-      lastName: 'Medina',
-      charge: 'Administrador',
-      role: 'Administrador',
-      status: 'Activo'
-    },
-    {
-      name: 'Carlos',
-      lastName: 'Gomez',
-      charge: 'Administrador',
-      role: 'Administrador',
-      status: 'Activo'
-    },
-    {
-      name: 'Jack',
-      lastName: 'Nicolson',
-      charge: 'Administrador',
-      role: 'Administrador',
-      status: 'Activo'
-    },
-    {
-      name: 'Laura',
-      lastName: 'Jimenez',
-      charge: 'Coordinadora',
-      role: 'Superadmin',
-      status: 'Activo'
-    },
-    {
-      name: 'Carla',
-      lastName: 'Nore',
-      charge: 'Coordinadora',
-      role: 'Superadmin',
-      status: 'Activo'
-    },
-    {
-      name: 'Sebas',
-      lastName: 'Santos',
-      charge: 'CEO',
-      role: 'Superadmin',
-      status: 'Activo'
-    },
-    {
-      name: 'Colbyn',
-      lastName: 'Medinas',
-      charge: 'CEO',
-      role: 'Superadmin',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Luis',
-      lastName: 'Medinas',
-      charge: 'Gerente',
-      role: 'Superadmin',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Daniel',
-      lastName: 'Mohan',
-      charge: 'Gerente',
-      role: 'Normal',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Yorman',
-      lastName: 'Gaez',
-      charge: 'Gerente',
-      role: 'Normal',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Elsa',
-      lastName: 'Gomez',
-      charge: 'Gerente',
-      role: 'Normal',
-      status: 'Inactivo'
-    },
+     {
+       name: 'Jesus',
+       lastName: 'Medina',
+       charge: 'Administrador',
+       role: 'Administrador',
+       status: 'Activo'
+     },
+     {
+       name: 'Carlos',
+       lastName: 'Gomez',
+       charge: 'Administrador',
+       role: 'Administrador',
+       status: 'Activo'
+     },
+     {
+       name: 'Jack',
+       lastName: 'Nicolson',
+       charge: 'Administrador',
+       role: 'Administrador',
+       status: 'Activo'
+     },
+     {
+       name: 'Laura',
+       lastName: 'Jimenez',
+       charge: 'Coordinadora',
+       role: 'Superadmin',
+       status: 'Activo'
+     },
+     {
+       name: 'Carla',
+       lastName: 'Nore',
+       charge: 'Coordinadora',
+       role: 'Superadmin',
+       status: 'Activo'
+     },
+     {
+       name: 'Sebas',
+       lastName: 'Santos',
+       charge: 'CEO',
+       role: 'Superadmin',
+       status: 'Activo'
+     },
+     {
+       name: 'Colbyn',
+       lastName: 'Medinas',
+       charge: 'CEO',
+       role: 'Superadmin',
+       status: 'Inactivo'
+     },
+     {
+       name: 'Luis',
+       lastName: 'Medinas',
+       charge: 'Gerente',
+       role: 'Superadmin',
+       status: 'Inactivo'
+     },
+     {
+       name: 'Daniel',
+       lastName: 'Mohan',
+       charge: 'Gerente',
+       role: 'Normal',
+       status: 'Inactivo'
+     },
+     {
+       name: 'Yorman',
+       lastName: 'Gaez',
+       charge: 'Gerente',
+       role: 'Normal',
+       status: 'Inactivo'
+     },
+     {
+       name: 'Elsa',
+       lastName: 'Gomez',
+       charge: 'Gerente',
+       role: 'Normal',
+       status: 'Inactivo'
+     },
   ];
 
 

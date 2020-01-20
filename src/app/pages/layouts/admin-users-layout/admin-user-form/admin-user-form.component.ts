@@ -4,26 +4,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN, EMAIL_PATTERN } from 'src/app/pages/forms/shared/constant/validation-patterns-list';
 import { ValidationService } from 'src/app/pages/forms/shared/services/validation.service';
 import { ACTION } from 'src/app/helpers/text-crud';
+import { FormBase } from '../../shared/base-form';
 
 @Component({
   selector: 'app-admin-user-form',
   templateUrl: './admin-user-form.component.html',
   styleUrls: ['./admin-user-form.component.scss']
 })
-export class AdminUserFormComponent implements OnChanges {
-
-  @Input() ID: string | null = null;
-  @Input() mode: string  | null = null;
-
-  // To set data
-  @Output() edit = new EventEmitter<any>();
-  @Output() create = new EventEmitter<any>();
-
-  // General modal and form settings
-  title = 'Registrar usuario';
-  ACTION = ACTION;
-  readonly MESSAGES = MESSAGES;
-  submitted = false;
+export class AdminUserFormComponent extends FormBase implements OnChanges {
 
   formUser: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
@@ -44,16 +32,7 @@ export class AdminUserFormComponent implements OnChanges {
     role: new FormControl('', [Validators.required])
   });
 
-  constructor( private validationService: ValidationService ) { }
-
-  ngOnChanges(): void {
-    // Mutation form
-    if ( this.mode === ACTION.EDIT ) {
-      this.title = 'Editar usuario';
-    } else if ( this.mode === ACTION.CREATE ) {
-      this.title = 'Registrar usuario';
-    }
-  }
+  constructor( private validationService: ValidationService ) { super();  }
 
   onSubmit() {
     this.submitted = true;

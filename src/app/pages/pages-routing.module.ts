@@ -26,9 +26,14 @@ const routes: Routes = [
             },
             {
                 path: 'coordinators-users',
-                loadChildren: () => import('./layouts/coordinators-users-layouts/coordinators-users-layouts.module')
+                loadChildren: () => import('./layouts/coordinators-users-layout/coordinators-users-layouts.module')
                 .then(m => m.CoordinatorsUsersLayoutsModule)
             },
+            {
+                path: 'sponsors-users',
+                loadChildren: () => import('./layouts/sponsors-users-layout/sponsors-users-layout.module').
+                then(m => m.SponsorsUsersLayoutModule)
+            }
         ]
     },
     { path: '', redirectTo: '', pathMatch: 'full' },

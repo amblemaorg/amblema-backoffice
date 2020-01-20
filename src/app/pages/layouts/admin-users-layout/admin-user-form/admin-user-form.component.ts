@@ -1,5 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { MESSAGES } from '../../../forms/shared/constant/validation-messages-list';
+import { Component, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN, EMAIL_PATTERN } from 'src/app/pages/forms/shared/constant/validation-patterns-list';
 import { ValidationService } from 'src/app/pages/forms/shared/services/validation.service';

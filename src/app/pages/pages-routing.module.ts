@@ -38,6 +38,18 @@ const routes: Routes = [
                 path: 'schools-users',
                 loadChildren: () => import('./layouts/schools-users-layout/schools-users-layout.module').
                 then(m => m.SchoolsUsersLayoutModule)
+            },
+            {
+                path: 'content',
+                loadChildren: () => import('./main-content/main-content.module').
+                then(m => m.MainContentModule),
+                children: [
+                    {
+                        path: 'web',
+                        loadChildren: () => import('./main-content/web-content/web-content.module').
+                        then(m => m.WebContentModule)
+                    }
+                ]
             }
         ]
     },

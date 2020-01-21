@@ -42,10 +42,43 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Contenido',
     icon: 'browser-outline',
     children: [
-      { title: 'Web' },
-      { title: 'Pasos' },
-      { title: 'Módulos de aprendizaje' },
-      { title: 'Configuración del Peca' }
+      {
+        title: 'Web',
+        icon: 'globe-outline',
+        children: [
+          {
+            title: 'Inicio',
+            link: '/pages/content/web'
+          },
+          {
+            title: 'Nosotros'
+          },
+          {
+            title: 'Padrinos'
+          },
+          {
+            title: 'Coordinadores'
+          },
+          {
+            title: 'Escuelas'
+          },
+          {
+            title: 'Blog'
+          },
+        ]
+      },
+      {
+        title: 'Pasos',
+        icon: 'trending-up-outline'
+      },
+      {
+        title: 'Módulos de aprendizaje',
+        icon: 'book-open-outline'
+      },
+      {
+        title: 'Configuración del Peca',
+        icon: 'settings-2-outline'
+      }
     ]
   },
   {

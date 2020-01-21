@@ -3,57 +3,80 @@
     <!-- Main content -->
     <form [formGroup]="formCoordinators" (keydown.enter)="onSubmit()" content>
 
-
         <!-- Personal data -->
         <div class="row">
-            <div class="col-12 col-lg-6">
-                <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formCoordinators.get('name')"
-                    [submitted]="submitted" [patternMessage]="MESSAGES.NAME_MESSAGE">
-                </app-reactive-input>
-
-                <app-reactive-input [label]="'Apellido'" [placeholder]="'Apellido'"
-                    [control]="formCoordinators.get('lastName')" [submitted]="submitted"
-                    [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
-                </app-reactive-input>
-
-                <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
-                    [submitted]="submitted" [label]="'Télefono'" [control]="formCoordinators.get('phone')">
-                </app-reactive-input>
+            <div class="col-12">
+                <legend class="font-weight-bold h6 text-info mb-0">Datos personales</legend>
+                <hr>
             </div>
-            <div class="col-12 col-lg-6">
-                <app-id-document [placeholder]="'Identidad'" [controlSelect]="formCoordinators.get('type')"
-                    [submitted]='submitted' [label]="'Identidad'" [control]="formCoordinators.get('document')">
-                </app-id-document>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'"
+                            [control]="formCoordinators.get('name')" [submitted]="submitted"
+                            [patternMessage]="MESSAGES.NAME_MESSAGE">
+                        </app-reactive-input>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-reactive-input [label]="'Apellido'" [placeholder]="'Apellido'"
+                            [control]="formCoordinators.get('lastName')" [submitted]="submitted"
+                            [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
+                        </app-reactive-input>
+                    </div>
+                </div>
 
-                <app-reactive-input [type]="'email'" [placeholder]="'Correo'" [patternMessage]="MESSAGES.EMAIL_MESSAGE"
-                    [submitted]="submitted" [label]="'Correo'" [control]="formCoordinators.get('email')">
-                </app-reactive-input>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
 
-                <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
-                    [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
-                    [control]="formCoordinators.get('password')"></app-reactive-input>
+                        <app-reactive-input [type]="'email'" [placeholder]="'Correo'"
+                            [patternMessage]="MESSAGES.EMAIL_MESSAGE" [submitted]="submitted" [label]="'Correo'"
+                            [control]="formCoordinators.get('email')">
+                        </app-reactive-input>
+
+                        <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
+                            [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
+                            [control]="formCoordinators.get('password')"></app-reactive-input>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-id-document [placeholder]="'Identidad'" [controlSelect]="formCoordinators.get('type')"
+                            [submitted]='submitted' [label]="'Identidad'" [control]="formCoordinators.get('document')">
+                        </app-id-document>
+                        <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
+                            [submitted]="submitted" [label]="'Télefono'" [control]="formCoordinators.get('phone')">
+                        </app-reactive-input>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Address data -->
-        <div class="row">
+        <div class="row mt-3">
 
-            <app-regional-addresses [label]="'Dirección'" [state]="formCoordinators.get('state')"
-                [municipality]="formCoordinators.get('municipality')" [placeholder]="'Dirección'" class="col-12">
+            <div class="col-12">
+                <legend class="font-weight-bold h6 text-info mb-0">Dirección</legend>
+                <hr>
+            </div>
+
+            <app-regional-addresses [state]="formCoordinators.get('state')"
+                [municipality]="formCoordinators.get('municipality')" class="col-12">
             </app-regional-addresses>
 
             <div class="col-12 col-lg-6">
-                <app-reactive-input [type]="'text'" [placeholder]="'Dirección'" [submitted]="submitted"
-                    [label]="'Dirección'" [control]="formCoordinators.get('street')">
+                <app-reactive-input [type]="'text'" [placeholder]="'Calles / Carreras'" [submitted]="submitted"
+                    [label]="'Calles / Carreras'" [control]="formCoordinators.get('street')">
                 </app-reactive-input>
             </div>
-
-            <div class="col-12 col-lg-6">
-                <app-status-selector [label]="'Estatus'" [control]="formCoordinators.get('status')"
-                    [submitted]="submitted"></app-status-selector>
-            </div>
         </div>
-
+        
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12 col-lg-6">
+                <app-status-selector [label]="'Estatus'" [control]="formCoordinators.get('status')" [submitted]="submitted">
+                </app-status-selector>
+            </div>                 
+        </div>
     </form>
 
     <!-- Footer content -->

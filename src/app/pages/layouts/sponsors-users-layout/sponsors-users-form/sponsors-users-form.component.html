@@ -60,13 +60,13 @@
                 <hr>
             </div>
 
-            <app-regional-addresses [label]="'Dirección'" [state]="formSponsor.get('state')"
-                [municipality]="formSponsor.get('municipality')" [placeholder]="'Dirección'" class="col-12">
+            <app-regional-addresses [state]="formSponsor.get('state')"
+                [municipality]="formSponsor.get('municipality')" class="col-12">
             </app-regional-addresses>
 
             <div class="col-12 col-lg-6">
-                <app-reactive-input [type]="'text'" [placeholder]="'Dirección'" [submitted]="submitted"
-                    [label]="'Dirección'" [control]="formSponsor.get('street')">
+                <app-reactive-input [type]="'text'" [placeholder]="'Calles / Carreras'" [submitted]="submitted"
+                    [label]="'Calles / Carreras'" [control]="formSponsor.get('street')">
                 </app-reactive-input>
             </div>
         </div>

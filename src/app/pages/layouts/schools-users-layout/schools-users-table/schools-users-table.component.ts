@@ -5,39 +5,38 @@ import { TableBase, TableActions } from '../../shared/base-table';
 declare var $: any;
 
 @Component({
-  selector: 'app-coordinators-users-table',
-  templateUrl: './coordinators-users-table.component.html',
-  styleUrls: ['./coordinators-users-table.component.scss']
+  selector: 'app-schools-users-table',
+  templateUrl: './schools-users-table.component.html',
+  styleUrls: ['./schools-users-table.component.scss']
 })
-export class CoordinatorsUsersTableComponent extends TableBase implements OnInit, TableActions {
+export class SchoolsUsersTableComponent extends TableBase implements TableActions, OnInit {
+
 
   data: any = [{
-    name: 'Luis',
-    lastName: 'Lopez',
-    document: '324234',
-    phone: '324234324',
-    status: 'Activo'
+    name: 'La escuelita',
+    id: '234234DD',
+    email: 'escuela@gmail.com',
+    address: 'Lara',
+    status: 'Activa'
   }];
 
   constructor() {
-    super('form-coordinators');
-
-    // Custom columns
+    super('form-schools');
     this.settings.columns = {
       name: {
         title: 'Nombre',
         type: 'string'
       },
-      lastName: {
-        title: 'Apellido',
+      id: {
+        title: 'Código',
         type: 'string'
       },
-      document: {
-        title: 'Cédula / Rif',
+      email: {
+        title: 'Correo',
         type: 'string'
       },
-      phone: {
-        title: 'Teléfono',
+      address: {
+        title: 'Dirección',
         type: 'string'
       },
       status: {
@@ -47,7 +46,8 @@ export class CoordinatorsUsersTableComponent extends TableBase implements OnInit
     };
   }
 
-  ngOnInit() {  }
+  ngOnInit() {
+  }
 
   onAction(event: any) {
     switch (event.action) {

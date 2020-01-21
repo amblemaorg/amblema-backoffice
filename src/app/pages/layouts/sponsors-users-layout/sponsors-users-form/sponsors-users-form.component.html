@@ -1,55 +1,55 @@
 <app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
 
     <!-- Main content -->
-    <form [formGroup]="formCoordinators" (keydown.enter)="onSubmit()" content>
+    <form [formGroup]="formSponsor" (keydown.enter)="onSubmit()" content>
 
 
         <!-- Personal data -->
         <div class="row">
             <div class="col-12 col-lg-6">
-                <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formCoordinators.get('name')"
+                <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formSponsor.get('name')"
                     [submitted]="submitted" [patternMessage]="MESSAGES.NAME_MESSAGE">
                 </app-reactive-input>
 
                 <app-reactive-input [label]="'Apellido'" [placeholder]="'Apellido'"
-                    [control]="formCoordinators.get('lastName')" [submitted]="submitted"
+                    [control]="formSponsor.get('lastName')" [submitted]="submitted"
                     [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
                 </app-reactive-input>
 
                 <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
-                    [submitted]="submitted" [label]="'Télefono'" [control]="formCoordinators.get('phone')">
+                    [submitted]="submitted" [label]="'Télefono'" [control]="formSponsor.get('phone')">
                 </app-reactive-input>
             </div>
             <div class="col-12 col-lg-6">
-                <app-id-document [placeholder]="'Identidad'" [controlSelect]="formCoordinators.get('type')"
-                    [submitted]='submitted' [label]="'Identidad'" [control]="formCoordinators.get('document')">
+                <app-id-document [placeholder]="'Identidad'" [controlSelect]="formSponsor.get('type')"
+                    [submitted]='submitted' [label]="'Identidad'" [control]="formSponsor.get('document')">
                 </app-id-document>
 
                 <app-reactive-input [type]="'email'" [placeholder]="'Correo'" [patternMessage]="MESSAGES.EMAIL_MESSAGE"
-                    [submitted]="submitted" [label]="'Correo'" [control]="formCoordinators.get('email')">
+                    [submitted]="submitted" [label]="'Correo'" [control]="formSponsor.get('email')">
                 </app-reactive-input>
 
                 <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
                     [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
-                    [control]="formCoordinators.get('password')"></app-reactive-input>
+                    [control]="formSponsor.get('password')"></app-reactive-input>
             </div>
         </div>
 
         <!-- Address data -->
         <div class="row">
 
-            <app-regional-addresses [label]="'Dirección'" [state]="formCoordinators.get('state')"
-                [municipality]="formCoordinators.get('municipality')" [placeholder]="'Dirección'" class="col-12">
+            <app-regional-addresses [label]="'Dirección'" [state]="formSponsor.get('state')"
+                [municipality]="formSponsor.get('municipality')" [placeholder]="'Dirección'" class="col-12">
             </app-regional-addresses>
 
             <div class="col-12 col-lg-6">
                 <app-reactive-input [type]="'text'" [placeholder]="'Dirección'" [submitted]="submitted"
-                    [label]="'Dirección'" [control]="formCoordinators.get('street')">
+                    [label]="'Dirección'" [control]="formSponsor.get('street')">
                 </app-reactive-input>
             </div>
 
             <div class="col-12 col-lg-6">
-                <app-status-selector [label]="'Estatus'" [control]="formCoordinators.get('status')"
+                <app-status-selector [label]="'Estatus'" [control]="formSponsor.get('status')"
                     [submitted]="submitted"></app-status-selector>
             </div>
         </div>

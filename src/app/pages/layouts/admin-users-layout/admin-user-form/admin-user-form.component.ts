@@ -28,10 +28,14 @@ export class AdminUserFormComponent extends FormBase implements OnChanges {
     email: new FormControl('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
     phone: new FormControl('', [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
     password: new FormControl('', [Validators.required, Validators.maxLength(8)]),
-    role: new FormControl('', [Validators.required])
+    role: new FormControl('', [Validators.required]), 
+    status: new FormControl('', [Validators.required]),
+    state: new FormControl('', [Validators.required]),
+    municipality: new FormControl('', [Validators.required]),
+    street: new FormControl('', [Validators.required])
   });
 
-  constructor( private validationService: ValidationService ) { super();  }
+  constructor( private validationService: ValidationService ) { super(); }
 
   onSubmit() {
     this.submitted = true;

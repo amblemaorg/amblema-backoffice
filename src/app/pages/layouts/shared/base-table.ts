@@ -1,4 +1,5 @@
 import { ACTION } from '../../../helpers/text-crud';
+import { LocalDataSource } from 'ng2-smart-table';
 
 export class TableBase {
 
@@ -10,6 +11,8 @@ export class TableBase {
     mode;
 
     // Settings table
+    source: LocalDataSource = new LocalDataSource();
+
     settings = {
         noDataMessage: 'No hay registros',
         mode: 'external',
@@ -42,7 +45,7 @@ export class TableBase {
         }
     };
 
-    constructor(ID_FORM: string) {
+    constructor(ID_FORM?: string) {
         this.ID_FORM = ID_FORM;
     }
 }

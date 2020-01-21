@@ -11,7 +11,8 @@ export abstract class FormBase implements OnChanges {
     @Input() mode: string | null = null;
 
     ACTION = ACTION;
-    title = 'Registrar usuario';
+    title = '';
+    object = '';
 
     /**
      * Event emitter the data
@@ -23,15 +24,16 @@ export abstract class FormBase implements OnChanges {
     readonly MESSAGES = MESSAGES;
     submitted = false;
 
+    constructor(object?: string) { this.object = object ? object : 'Usuario'; }
 
     /**
      * Change behavior
      */
     ngOnChanges(): void {
         if ( this.mode === ACTION.EDIT ) {
-            this.title = 'Editar usuario';
+            this.title = `Editar ${this.object}`;
         } else if ( this.mode === ACTION.CREATE ) {
-            this.title = 'Registrar usuario';
+            this.title = `Registrar ${this.object}`;
         }
     }
 }

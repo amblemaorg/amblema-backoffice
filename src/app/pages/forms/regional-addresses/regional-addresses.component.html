@@ -1,0 +1,18 @@
+<div class="row">
+    <!-- State -->
+    <div class="col-12 col-lg-6 form-group">
+        <label [for]="label" class="label">Estados</label>
+        <select fullWidth hero [formControl]='state' class="form-control">
+            <option *ngFor='let item of statesData' [value]='item.value'>{{ item.value }}</option>
+        </select>
+        <!-- <small class="font-weight-bold text-info">Agregar nuevo +</small> -->
+    </div>
+
+    <!-- Municipality -->
+    <div class="col-12 col-lg-6 form-group">
+        <label [for]="label" class="label">Municipios</label>
+        <select fullWidth hero [formControl]='municipality' class="form-control">
+            <option *ngFor='let item of municipalityData' [value]='item.value'>{{ item.value }}</option>
+        </select>
+    </div>
+</div>

@@ -7,6 +7,9 @@ import { NbCardModule } from '@nebular/theme';
 import { CoordinatorsUsersTableComponent } from './coordinators-users-table/coordinators-users-table.component';
 import { CoordinatorsUsersFormComponent } from './coordinators-users-form/coordinators-users-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { SharedComponentsModule } from '../../components/shared-components.module';
+import { SharedFormsModule } from '../../forms/shared-forms.module';
+import { RegionalAddressesModule } from '../../forms/regional-addresses.module';
 
 @NgModule({
   declarations: [CoordinatorsUsersLayoutsComponent, CoordinatorsUsersTableComponent, CoordinatorsUsersFormComponent],
@@ -14,7 +17,10 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     CommonModule,
     CoordinatorsUsersLayoutsRoutingModule,
     NbCardModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    SharedComponentsModule,
+    SharedFormsModule,
+    RegionalAddressesModule
   ]
 })
 export class CoordinatorsUsersLayoutsModule { }

@@ -28,8 +28,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Coordinadores',
         link: '/pages/coordinators-users'
       },
-      { title: 'Padrinos' },
-      { title: 'Escuelas' },
+      {
+        title: 'Padrinos',
+        link: '/pages/sponsors-users'
+      },
+      {
+        title: 'Escuelas',
+        link: '/pages/schools-users'
+      },
     ]
   },
   {

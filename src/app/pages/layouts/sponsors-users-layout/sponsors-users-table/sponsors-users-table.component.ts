@@ -5,11 +5,11 @@ import { TableBase, TableActions } from '../../shared/base-table';
 declare var $: any;
 
 @Component({
-  selector: 'app-coordinators-users-table',
-  templateUrl: './coordinators-users-table.component.html',
-  styleUrls: ['./coordinators-users-table.component.scss']
+  selector: 'app-sponsors-users-table',
+  templateUrl: './sponsors-users-table.component.html',
+  styleUrls: ['./sponsors-users-table.component.scss']
 })
-export class CoordinatorsUsersTableComponent extends TableBase implements OnInit, TableActions {
+export class SponsorsUsersTableComponent extends TableBase implements TableActions, OnInit {
 
   data: any = [{
     name: 'Luis',
@@ -20,7 +20,8 @@ export class CoordinatorsUsersTableComponent extends TableBase implements OnInit
   }];
 
   constructor() {
-    super('form-coordinators');
+
+    super('form-sponsors');
 
     // Custom columns
     this.settings.columns = {
@@ -47,7 +48,8 @@ export class CoordinatorsUsersTableComponent extends TableBase implements OnInit
     };
   }
 
-  ngOnInit() {  }
+  ngOnInit() {
+  }
 
   onAction(event: any) {
     switch (event.action) {
@@ -72,5 +74,6 @@ export class CoordinatorsUsersTableComponent extends TableBase implements OnInit
   update(data: any) {
 
   }
+
 
 }

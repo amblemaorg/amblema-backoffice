@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBase } from '../../shared/base-form';
 import { ValidationService } from 'src/app/pages/forms/shared/services/validation.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN, EMAIL_PATTERN } from 'src/app/pages/forms/shared/constant/validation-patterns-list';
+import { FormBase } from '../../shared/base-form';
+import { NORMAL_TEXT_PATTERN, EMAIL_PATTERN, NUMBER_PATTERN } from 'src/app/pages/forms/shared/constant/validation-patterns-list';
 
 @Component({
-  selector: 'app-coordinators-users-form',
-  templateUrl: './coordinators-users-form.component.html',
-  styleUrls: ['./coordinators-users-form.component.scss']
+  selector: 'app-sponsors-users-form',
+  templateUrl: './sponsors-users-form.component.html',
+  styleUrls: ['./sponsors-users-form.component.scss']
 })
-export class CoordinatorsUsersFormComponent extends FormBase implements OnInit {
+export class SponsorsUsersFormComponent extends FormBase implements OnInit {
 
-  formCoordinators: FormGroup = new FormGroup({
+  formSponsor: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
     lastName: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
     email: new FormControl('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
@@ -30,7 +30,8 @@ export class CoordinatorsUsersFormComponent extends FormBase implements OnInit {
   });
 
   constructor(private validationService: ValidationService) {
-    super('un coordinador');
+    super('un padrino');
+    
   }
 
   ngOnInit() {
@@ -39,7 +40,7 @@ export class CoordinatorsUsersFormComponent extends FormBase implements OnInit {
   onSubmit() {
     this.submitted = true;
     // Working on your validated form data
-    if (this.formCoordinators.valid) {
+    if (this.formSponsor.valid) {
       // Define act
       if ( this.mode === this.ACTION.CREATE ) {
 
@@ -50,7 +51,8 @@ export class CoordinatorsUsersFormComponent extends FormBase implements OnInit {
       }
     } else {
       // Call error messages
-      this.validationService.markAllFormFieldsAsTouched(this.formCoordinators);
+      this.validationService.markAllFormFieldsAsTouched(this.formSponsor);
     }
   }
+
 }

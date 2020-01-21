@@ -1,7 +1,7 @@
 <app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
 
     <!-- Main content -->
-    <form [formGroup]="formUser" content>
+    <form [formGroup]="formUser" (keydown.enter)="onSubmit()" content>
         <div class="row">
             <div class="col-12 col-lg-6">
                 <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formUser.get('name')"
@@ -35,6 +35,25 @@
                 <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
                     [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
                     [control]="formUser.get('password')"></app-reactive-input>
+            </div>
+        </div>
+
+        <!-- Address data -->
+        <div class="row">
+
+            <app-regional-addresses [label]="'Dirección'" [state]="formUser.get('state')"
+                [municipality]="formUser.get('municipality')" [placeholder]="'Dirección'" class="col-12">
+            </app-regional-addresses>
+
+            <div class="col-12 col-lg-6">
+                <app-reactive-input [type]="'text'" [placeholder]="'Dirección'" [submitted]="submitted"
+                    [label]="'Dirección'" [control]="formUser.get('street')">
+                </app-reactive-input>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <app-status-selector [label]="'Estatus'" [control]="formUser.get('status')"
+                    [submitted]="submitted"></app-status-selector>
             </div>
         </div>
     </form>

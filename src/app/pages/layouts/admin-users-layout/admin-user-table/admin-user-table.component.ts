@@ -152,7 +152,7 @@ export class AdminUserTableComponent implements OnInit {
     this.source = new LocalDataSource(this.data);
   }
 
-  ngOnInit() { console.warn('# Problema de seguridad del dom del jquery'); }
+  ngOnInit() {  }
 
   onAction( event: any ) {
     switch (event.action) {

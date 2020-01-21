@@ -1,0 +1,106 @@
+<app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
+
+    <!-- Main content -->
+    <form [formGroup]="formSchool" (keydown.enter)="onSubmit()" content>
+
+        <!-- Data -->
+
+        <div class="row">
+            <div class="col-12">
+                <legend class="text-info h6 font-weight-bold mb-0">Datos de la escuela</legend>
+                <hr>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formSchool.get('name')"
+                    [submitted]="submitted" [patternMessage]="MESSAGES.NAME_MESSAGE">
+                </app-reactive-input>
+                <app-reactive-input [type]="'email'" [placeholder]="'Correo'" [patternMessage]="MESSAGES.EMAIL_MESSAGE"
+                    [submitted]="submitted" [label]="'Correo'" [control]="formSchool.get('email')"></app-reactive-input>
+                <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
+                    [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
+                    [control]="formSchool.get('password')"></app-reactive-input>
+            </div>
+            <div class="col-12 col-lg-6">
+                <app-reactive-input [label]="'Código del plantel'" [placeholder]="'Código del plantel'"
+                    [control]="formSchool.get('campusCode')" [submitted]="submitted"
+                    [patternMessage]="MESSAGES.NAME_MESSAGE">
+                </app-reactive-input>
+
+                <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
+                    [submitted]="submitted" [label]="'Télefono'" [control]="formSchool.get('phone')">
+                </app-reactive-input>
+            </div>
+        </div>
+
+        <!-- Data address -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <legend class="text-info h6 font-weight-bold mb-0">Dirección</legend>
+                <hr>
+            </div>
+
+            <app-regional-addresses [state]="formSchool.get('state')" [municipality]="formSchool.get('municipality')"
+                class="col-12">
+            </app-regional-addresses>
+
+            <div class="col-12 col-lg-6">
+                <app-reactive-input [type]="'text'" [placeholder]="'Calles / Carreras'" [submitted]="submitted"
+                    [label]="'Calles / Carreras'" [control]="formSchool.get('street')">
+                </app-reactive-input>
+            </div>
+        </div>
+
+        <!-- Data contact -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <legend class="text-info h6 font-weight-bold mb-0">Contacto</legend>
+                <hr>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-reactive-input [patternMessage]="MESSAGES.LAST_NAME_MESSAGE" [placeholder]="'Nombre'"
+                            [submitted]="submitted" [label]="'Nombre'" [control]="formSchool.get('nameContact')">
+                        </app-reactive-input>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-reactive-input [patternMessage]="MESSAGES.LAST_NAME_MESSAGE" [placeholder]="'Apellido'"
+                            [submitted]="submitted" [label]="'Apellido'" [control]="formSchool.get('lastNameContact')">
+                        </app-reactive-input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-reactive-input [type]="'email'" [placeholder]="'Correo'"
+                            [patternMessage]="MESSAGES.EMAIL_MESSAGE" [submitted]="submitted" [label]="'Correo'"
+                            [control]="formSchool.get('emailContact')">
+                        </app-reactive-input>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
+                            [submitted]="submitted" [label]="'Télefono'" [control]="formSchool.get('phoneContact')">
+                        </app-reactive-input>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12 col-lg-6">
+                <app-status-selector [label]="'Estatus'" [control]="formSchool.get('status')" [submitted]="submitted">
+                </app-status-selector>
+            </div>
+        </div>
+    </form>
+
+    <!-- Footer content -->
+    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
+        <span *ngIf="mode == ACTION.CREATE">Guardar</span>
+        <span *ngIf="mode == ACTION.EDIT">Editar</span>
+    </button>
+</app-modal>

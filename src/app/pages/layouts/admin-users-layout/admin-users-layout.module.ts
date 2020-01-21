@@ -9,6 +9,7 @@ import { AdminUserTableComponent } from './admin-user-table/admin-user-table.com
 import { AdminUserFormComponent } from './admin-user-form/admin-user-form.component';
 import { SharedComponentsModule } from '../../components/shared-components.module';
 import { SharedFormsModule } from '../../forms/shared-forms.module';
+import { RegionalAddressesModule } from '../../forms/regional-addresses.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SharedFormsModule } from '../../forms/shared-forms.module';
     AdminUsersLayoutRoutingModule,
     SharedComponentsModule,
     SharedFormsModule,
+    RegionalAddressesModule
   ]
 })
 export class AdminUsersLayoutModule { }

@@ -33,6 +33,11 @@ const routes: Routes = [
                 path: 'sponsors-users',
                 loadChildren: () => import('./layouts/sponsors-users-layout/sponsors-users-layout.module').
                 then(m => m.SponsorsUsersLayoutModule)
+            },
+            {
+                path: 'schools-users',
+                loadChildren: () => import('./layouts/schools-users-layout/schools-users-layout.module').
+                then(m => m.SchoolsUsersLayoutModule)
             }
         ]
     },

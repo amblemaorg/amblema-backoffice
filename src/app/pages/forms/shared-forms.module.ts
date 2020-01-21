@@ -22,7 +22,7 @@ import { RoleSelectorNormalComponent } from './role-selector/role.selector.norma
     IdDocumentComponent,
     RoleSelectorComponent,
     StatusSelectorComponent,
-    RoleSelectorNormalComponent
+    RoleSelectorNormalComponent,
   ],
   exports: [
     ReactiveInputComponent,

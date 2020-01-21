@@ -31,7 +31,7 @@ export class SponsorsUsersFormComponent extends FormBase implements OnInit {
 
   constructor(private validationService: ValidationService) {
     super('un padrino');
-    
+
   }
 
   ngOnInit() {

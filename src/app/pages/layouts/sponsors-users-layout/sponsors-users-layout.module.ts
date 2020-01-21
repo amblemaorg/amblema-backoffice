@@ -20,7 +20,7 @@ import { RegionalAddressesModule } from '../../forms/regional-addresses.module';
     NbCardModule,
     Ng2SmartTableModule,
     SharedComponentsModule,
-    SharedFormsModule, 
+    SharedFormsModule,
     RegionalAddressesModule
   ]
 })

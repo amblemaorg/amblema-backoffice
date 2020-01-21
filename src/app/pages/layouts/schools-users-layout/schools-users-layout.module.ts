@@ -21,7 +21,7 @@ import { RegionalAddressesModule } from '../../forms/regional-addresses.module';
     CommonModule,
     SchoolsUsersLayoutRoutingModule,
     NbCardModule,
-    Ng2SmartTableModule, 
+    Ng2SmartTableModule,
     SharedFormsModule,
     SharedComponentsModule,
     RegionalAddressesModule

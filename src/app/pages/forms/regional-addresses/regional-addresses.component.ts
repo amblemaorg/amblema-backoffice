@@ -11,7 +11,7 @@ export class RegionalAddressesComponent extends AbstractReactiveComponent {
 
   @Input() state: AbstractControl | null = null;
   @Input() municipality: AbstractControl | null = null;
-  
+
   // Data test
   statesData: any = [
     { value: 'Lara' },

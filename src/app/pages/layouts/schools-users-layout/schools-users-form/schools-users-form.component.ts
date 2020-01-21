@@ -22,7 +22,7 @@ export class SchoolsUsersFormComponent extends FormBase implements OnInit {
     state: new FormControl('', [Validators.required]),
     municipality: new FormControl('', [Validators.required]),
     street: new FormControl('', [Validators.required]),
- 
+
     // Contact
     nameContact: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
     lastNameContact: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
@@ -35,7 +35,7 @@ export class SchoolsUsersFormComponent extends FormBase implements OnInit {
 
   constructor(private validationService: ValidationService) {
     super('una escuela');
-    
+
   }
 
   ngOnInit() {

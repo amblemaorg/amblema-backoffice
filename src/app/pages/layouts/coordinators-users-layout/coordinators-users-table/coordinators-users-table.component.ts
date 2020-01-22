@@ -69,7 +69,7 @@ export class CoordinatorsUsersTableComponent extends TableBase implements OnInit
 
   }
 
-  updateData(data: any) : void {
+  updateData(data: any): void {
 
   }
 

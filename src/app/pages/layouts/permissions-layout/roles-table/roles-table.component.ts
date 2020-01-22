@@ -69,6 +69,6 @@ export class RolesTableComponent implements TableActions,  OnInit {
     }
   }
 
-  newData( data:any ): void {}
+  newData( data: any ): void {}
   updateData(data: any): void {}
 }

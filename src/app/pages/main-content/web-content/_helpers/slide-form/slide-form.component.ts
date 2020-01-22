@@ -10,7 +10,7 @@ export class SlideFormComponent {
 
   formSlide: FormGroup = new FormGroup({
     description: new FormControl('')
-  })
+  });
 
   constructor() { }
 }

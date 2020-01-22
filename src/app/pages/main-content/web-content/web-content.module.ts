@@ -10,13 +10,13 @@ import { SchoolsComponent } from './schools/schools.component';
 import { BlogComponent } from './blog/blog.component';
 
 @NgModule({
-  declarations: [ 
-    WebContentComponent, 
-    AboutUsComponent, 
-    SponsorsComponent, 
-    CoordinatorsComponent, 
-    SchoolsComponent, 
-    BlogComponent, 
+  declarations: [
+    WebContentComponent,
+    AboutUsComponent,
+    SponsorsComponent,
+    CoordinatorsComponent,
+    SchoolsComponent,
+    BlogComponent,
   ],
   imports: [
     CommonModule,

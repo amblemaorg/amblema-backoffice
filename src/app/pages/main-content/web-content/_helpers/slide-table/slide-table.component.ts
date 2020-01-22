@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TableBase } from 'src/app/helpers/base-table';
+import { TableBase, TableActions } from 'src/app/helpers/base-table';
 
 @Component({
   selector: 'app-slide-table',
   templateUrl: './slide-table.component.html',
   styleUrls: ['./slide-table.component.scss']
 })
-export class SlideTableComponent extends TableBase {
+export class SlideTableComponent extends TableBase implements TableActions {
 
   // Data
   data: any = [{
@@ -43,4 +43,10 @@ export class SlideTableComponent extends TableBase {
       }
     };
   }
+
+  onAction(data: any) : void {
+
+  }
+
+  newData(data: any) : void { }
 }

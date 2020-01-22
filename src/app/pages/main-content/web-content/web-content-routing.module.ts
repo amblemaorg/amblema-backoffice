@@ -19,7 +19,8 @@ const routes: Routes = [
       },
       {
         path: 'about-us',
-        component: AboutUsComponent
+        loadChildren: () => import('./about-us/about-us.module').
+        then(m => m.AboutUsModule)
       },
       {
         path: 'sponsors',

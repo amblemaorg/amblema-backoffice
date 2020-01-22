@@ -9,10 +9,6 @@ const routes: Routes = [
         component: PagesComponent,
         children: [
             {
-                path: '',
-                component: DashboardLayoutComponent
-            },
-            {
                 path: 'dashboard',
                 component: DashboardLayoutComponent
             },
@@ -48,8 +44,13 @@ const routes: Routes = [
                         path: 'web',
                         loadChildren: () => import('./main-content/web-content/web-content.module').
                         then(m => m.WebContentModule)
-                    }
+                    },
                 ]
+            },
+            // Redirect To
+            {
+                path: '',
+                redirectTo: 'dashboard'
             }
         ]
     },

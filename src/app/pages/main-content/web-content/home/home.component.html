@@ -1,37 +1,49 @@
 <div class="row">
-    <div class="col-12">
-      <nb-card>
-          <nb-card-header>Página de inicio</nb-card-header>
-          <nb-card-body>    
-            
-            <div class="row">
-              
-              <!-- Form slide and table -->
-              <div class="col-12">
-                <app-slide-form></app-slide-form>
-              </div>
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>Página de inicio</nb-card-header>
+      <nb-card-body>
 
-              <!-- About text area -->
-              <div class="col-12">
+        <div class="row">
 
-              </div>
+          <!-- Form slide and table -->
+          <div class="col-12 form-group">
+            <app-slide-form></app-slide-form>
+          </div>
 
-              <!-- Pillars -->
-              <div class="col-12">
+          <!-- About text area -->
+          <div class="col-12">
+            <hr>
+            <p class="font-weight-bold">Texto acerca de nosotros</p>
+            <app-text-area-description [ID]="'about-us'" [label]="'Acerca de nosotros'"></app-text-area-description>
+          </div>
 
-              </div>
+          <!-- Pillars -->
+          <div class="col-12">
+            <hr>
+            <p class="font-weight-bold">Pilares fundamentales</p>
+            <app-pillars></app-pillars>
+          </div>
 
-              <!-- Awards -->
-              <div class="col-12">
+          <!-- Awards -->
+          <div class="col-12 form-group">
+            <hr>
+            <p class="font-weight-bold">Testimonio de los fundadores</p>
+            <app-founders-form></app-founders-form>
+          </div>
 
-              </div>
+          <!-- Table awards -->
+          <div class="col-12 form-group">
+            <app-founders-table></app-founders-table>
+          </div>
 
-              <!-- Table awards -->
-              <div class="col-12">
-
-              </div>
-            </div>
-          </nb-card-body>
-      </nb-card>
-    </div>
+          <!-- Save -->
+          <div class="col-12 text-right">
+            <hr>
+            <div class="btn btn-success col-12 col-lg-auto">Guardar cambios</div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
   </div>
+</div>

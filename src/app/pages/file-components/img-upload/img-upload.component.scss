@@ -6,8 +6,8 @@
 	opacity: 0;
 	overflow: hidden;
 	position: absolute;
-	z-index: -1;
-  + .js-labelFile {
+  z-index: -1;
+  + label {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -15,6 +15,9 @@
     width: 10rem;
     height: 10rem;
     background-color: $color-secondary;
+  
+    position: relative!important;
+
     &:hover { background-color: $color-secondary-hover; }
     svg { @include center(both) }
     cursor: pointer;

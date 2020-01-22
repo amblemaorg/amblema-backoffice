@@ -5,20 +5,25 @@ import { FileComponentsModule } from 'src/app/pages/file-components/file-compone
 import { SharedFormsModule } from 'src/app/pages/forms/shared-forms.module';
 import { SlideTableComponent } from './slide-table/slide-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { TextAreaDescriptionComponent } from './text-area-description/text-area-description.component';
+import { NbInputModule } from '@nebular/theme';
 
 @NgModule({
     declarations: [
         SlideFormComponent,
-        SlideTableComponent
+        SlideTableComponent,
+        TextAreaDescriptionComponent
     ],
     imports: [
         CommonModule,
         FileComponentsModule,
         SharedFormsModule,
-        Ng2SmartTableModule
+        Ng2SmartTableModule,
+        NbInputModule
     ],
     exports: [
         SlideFormComponent,
+        TextAreaDescriptionComponent
     ]
 })
 export class HelperModule { }

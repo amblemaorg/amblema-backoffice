@@ -3,7 +3,7 @@
 <!-- Title form -->
 <p class="font-weight-bold">Diapositiva</p>
 
-<div class="row align-items-center">
+<div class="row align-items-center form-group">
 
     <!-- Img input -->
     <div class="col-12 col-lg form-group">
@@ -15,9 +15,11 @@
 
             <!-- Description input -->
             <div class="col-12">
-                <app-reactive-input [type]="'text'" [placeholder]="'Descripción'" [submitted]="'false'"
+                
+            <app-text-area-description [ID]="'description'" [label]="'Descripción'"></app-text-area-description>
+                <!-- <app-reactive-input [type]="'text'" [placeholder]="'Descripción'" [submitted]="'false'"
                     [label]="'Descripción'" [control]="formSlide.get('description')">
-                </app-reactive-input>
+                </app-reactive-input> -->
             </div>
 
             <!-- Add -->
@@ -29,6 +31,4 @@
 </div>
 
 <!-- Slide table -->
-<hr>
-<p class="font-weight-bold">Lista de diapositivas</p>
 <app-slide-table></app-slide-table>

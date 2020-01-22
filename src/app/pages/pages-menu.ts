@@ -48,22 +48,27 @@ export const MENU_ITEMS: NbMenuItem[] = [
         children: [
           {
             title: 'Inicio',
-            link: '/pages/content/web'
+            link: '/pages/content/web/home'
           },
           {
-            title: 'Nosotros'
+            title: 'Nosotros',
+            link: '/pages/content/web/about-us'
           },
           {
-            title: 'Padrinos'
+            title: 'Padrinos',
+            link: '/pages/content/web/sponsors'
           },
           {
-            title: 'Coordinadores'
+            title: 'Coordinadores',
+            link: '/pages/content/web/coordinators'
           },
           {
-            title: 'Escuelas'
+            title: 'Escuelas',
+            link: '/pages/content/web/schools'
           },
           {
-            title: 'Blog'
+            title: 'Blog',
+            link: '/pages/content/web/blog'
           },
         ]
       },

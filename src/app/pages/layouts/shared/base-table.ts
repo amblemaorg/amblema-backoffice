@@ -53,6 +53,6 @@ export class TableBase {
 // Normal actions CRUD users
 export interface TableActions {
     newData?: (data: any) => void;
-    update?: (data: any) => void;
+    updateData?: (data: any) => void;
     onAction?: (event: any) => void;
 }

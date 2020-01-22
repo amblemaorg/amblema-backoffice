@@ -7,7 +7,7 @@ import { NORMAL_TEXT_PATTERN, EMAIL_PATTERN, NUMBER_PATTERN } from 'src/app/page
 @Component({
   selector: 'app-sponsors-users-form',
   templateUrl: './sponsors-users-form.component.html',
-  styleUrls: ['./sponsors-users-form.component.scss']
+  styleUrls: ['./sponsors-users-form.component.scss'],
 })
 export class SponsorsUsersFormComponent extends FormBase implements OnInit {
 

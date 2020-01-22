@@ -69,7 +69,7 @@ export class SchoolsUsersTableComponent extends TableBase implements TableAction
 
   }
 
-  update(data: any) {
+  updateData(data: any) {
 
   }
 

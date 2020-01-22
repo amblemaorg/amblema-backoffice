@@ -1,4 +1,4 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN, EMAIL_PATTERN } from 'src/app/pages/forms/shared/constant/validation-patterns-list';
 import { ValidationService } from 'src/app/pages/forms/shared/services/validation.service';
@@ -11,6 +11,9 @@ import { FormBase } from '../../shared/base-form';
   styleUrls: ['./admin-user-form.component.scss']
 })
 export class AdminUserFormComponent extends FormBase implements OnChanges {
+
+  @Output() edit = new EventEmitter<any>();
+  @Output() create = new EventEmitter<any>();
 
   formUser: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),

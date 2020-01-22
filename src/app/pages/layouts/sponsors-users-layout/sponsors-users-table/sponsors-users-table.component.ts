@@ -71,7 +71,7 @@ export class SponsorsUsersTableComponent extends TableBase implements TableActio
 
   }
 
-  update(data: any) {
+  updateData(data: any) {
 
   }
 

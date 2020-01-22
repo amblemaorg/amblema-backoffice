@@ -10,13 +10,13 @@ export class FoundersTableComponent extends TableBase {
 
   data: any = [
     {
-      name: 'Pedro', 
-      lastName: 'Perez', 
-      position: 'Fundador', 
-      description: 'Lorem ipsum dolor', 
+      name: 'Pedro',
+      lastName: 'Perez',
+      position: 'Fundador',
+      description: 'Lorem ipsum dolor',
       status: 'Activo'
     }
-  ]
+  ];
 
     constructor() {
 

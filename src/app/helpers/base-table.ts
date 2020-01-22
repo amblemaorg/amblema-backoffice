@@ -1,4 +1,4 @@
-import { ACTION } from '../../../helpers/text-crud';
+import { ACTION } from './text-crud';
 import { LocalDataSource } from 'ng2-smart-table';
 
 export class TableBase {

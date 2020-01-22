@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TableBase, TableActions } from '../../shared/base-table';
+import { TableBase, TableActions } from '../../../../helpers/base-table';
 
 // JQuery call
 declare var $: any;

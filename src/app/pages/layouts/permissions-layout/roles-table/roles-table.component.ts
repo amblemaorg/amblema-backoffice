@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-crud';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
-import { TableActions } from '../../shared/base-table';
+import { TableActions } from '../../../../helpers/base-table';
 
 @Component({
   selector: 'app-roles-table',

@@ -1,0 +1,27 @@
+<!-- Title form -->
+<p class="font-weight-bold">Slider</p>
+
+<div class="row align-items-center">
+
+    <!-- Img input -->
+    <div class="col-12 col-lg form-group">
+        <app-img-upload></app-img-upload>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="row">
+
+            <!-- Description input -->
+            <div class="col-12">
+                <app-reactive-input [type]="'text'" [placeholder]="'Descripción'" [submitted]="'false'"
+                    [label]="'Descripción'" [control]="formSlide.get('description')">
+                </app-reactive-input>
+            </div>
+
+            <!-- Add -->
+            <div class="col-12 text-right">
+                <button class="btn btn-primary col-12 col-lg-auto">Registrar</button>
+            </div>
+        </div>
+    </div>
+</div>

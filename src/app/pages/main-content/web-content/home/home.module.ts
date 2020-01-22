@@ -4,18 +4,17 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { NbCardModule } from '@nebular/theme';
-import { SlideFormComponent } from './slide-form/slide-form.component';
-
+import { HelperModule } from '../_helpers/helper.module';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    SlideFormComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    NbCardModule
+    NbCardModule,
+    HelperModule
   ]
 })
 export class HomeModule { }

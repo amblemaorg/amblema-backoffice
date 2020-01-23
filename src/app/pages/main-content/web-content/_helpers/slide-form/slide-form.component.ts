@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -8,9 +8,27 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class SlideFormComponent {
 
+  @Input() data: any = []; // <!-- To update slider
+
+  mode = 'CREATE'; // <-- Use a constant
+
   formSlide: FormGroup = new FormGroup({
-    description: new FormControl('')
+    description: new FormControl('', [])
+    // slider <-- Form Control when you have it
   });
 
-  constructor() { }
+  onSubmit() {
+
+    //  Create
+    if (this.mode) {
+
+      // Save state data
+
+    } else { // <-- Edit
+
+      // Save state data
+
+    }
+
+  }
 }

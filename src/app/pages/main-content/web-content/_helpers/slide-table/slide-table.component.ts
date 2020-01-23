@@ -8,7 +8,7 @@ import { TableBase, TableActions } from 'src/app/helpers/base-table';
 })
 export class SlideTableComponent extends TableBase implements TableActions {
 
-  // Data
+  // Data testing
   data: any = [{
     image: 'Imagen de muestra',
     description: 'Descripcion de la imagen',
@@ -44,9 +44,9 @@ export class SlideTableComponent extends TableBase implements TableActions {
     };
   }
 
-  onAction(data: any) : void {
+  onAction(event: any): void { }
 
-  }
+  newData(data: any): void { }
 
-  newData(data: any) : void { }
+  updateData(data: any): void { }
 }

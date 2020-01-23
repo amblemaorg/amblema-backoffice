@@ -1,34 +1,26 @@
-<!-- Slide form -->
+<form [formGroup]="formSlide">
+    <p class="font-weight-bold">Diapositiva</p>
 
-<!-- Title form -->
-<p class="font-weight-bold">Diapositiva</p>
+    <div class="row align-items-center form-group">
 
-<div class="row align-items-center form-group">
+        <div class="col-12 col-lg form-group">
+            <app-input-img></app-input-img>
+        </div>
 
-    <!-- Img input -->
-    <div class="col-12 col-lg form-group">
-        <app-img-upload></app-img-upload>
-    </div>
+        <div class="col-12 col-lg-9">
+            <div class="row">
+                <div class="col-12">
+                    <app-text-area-description [control]="formSlide.get('description')"></app-text-area-description>
+                </div>
 
-    <div class="col-12 col-lg-9">
-        <div class="row">
-
-            <!-- Description input -->
-            <div class="col-12">
-                
-            <app-text-area-description [ID]="'description'" [label]="'Descripción'"></app-text-area-description>
-                <!-- <app-reactive-input [type]="'text'" [placeholder]="'Descripción'" [submitted]="'false'"
-                    [label]="'Descripción'" [control]="formSlide.get('description')">
-                </app-reactive-input> -->
-            </div>
-
-            <!-- Add -->
-            <div class="col-12 text-right">
-                <button class="btn btn-primary col-12 col-lg-auto">Registrar</button>
+                <div class="col-12 text-right">
+                    <button class="btn btn-success col-12 col-lg-auto">Registrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+
 
 <!-- Slide table -->
 <app-slide-table></app-slide-table>

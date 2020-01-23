@@ -12,7 +12,7 @@ import { HelperModule } from '../_helpers/helper.module';
   ],
   imports: [
     CommonModule,
-    AboutUsRoutingModule, 
+    AboutUsRoutingModule,
     NbCardModule,
     HelperModule
   ]

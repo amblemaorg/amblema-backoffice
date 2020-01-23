@@ -60,5 +60,5 @@ export class FoundersTableComponent extends TableBase implements TableActions {
 
   }
 
-  newData(data: any) : void {}
+  newData(data: any): void {}
 }

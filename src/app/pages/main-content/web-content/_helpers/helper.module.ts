@@ -1,29 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SlideFormComponent } from './slide-form/slide-form.component';
-import { FileComponentsModule } from 'src/app/pages/file-components/file-components.module';
 import { SharedFormsModule } from 'src/app/pages/forms/shared-forms.module';
 import { SlideTableComponent } from './slide-table/slide-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { TextAreaDescriptionComponent } from './text-area-description/text-area-description.component';
-import { NbInputModule } from '@nebular/theme';
+import { ReactiveInputFileModule } from 'src/app/pages/forms/reactive-input-file/reactive-input-file.module';
+import { ContentTextComponent } from './content-text/content-text.component';
 
 @NgModule({
     declarations: [
         SlideFormComponent,
         SlideTableComponent,
-        TextAreaDescriptionComponent
+        ContentTextComponent,
     ],
     imports: [
         CommonModule,
-        FileComponentsModule,
+        ReactiveInputFileModule,
         SharedFormsModule,
         Ng2SmartTableModule,
-        NbInputModule
     ],
     exports: [
         SlideFormComponent,
-        TextAreaDescriptionComponent
+        ContentTextComponent
     ]
 })
 export class HelperModule { }

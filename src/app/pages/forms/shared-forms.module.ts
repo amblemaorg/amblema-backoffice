@@ -9,6 +9,13 @@ import { RoleSelectorComponent } from './role-selector/role-selector.component';
 import { StatusSelectorComponent } from './status-selector/status-selector.component';
 import { RoleSelectorNormalComponent } from './role-selector/role.selector.normal.component';
 
+import { TextAreaDescriptionComponent } from './reactive-text-area/text-area-description';
+import { TextAreaAboutComponent } from './reactive-text-area/text-area-about';
+import { TextAreaEnviromentComponent } from './reactive-text-area/text-area-enviroment';
+import { TextAreaMathComponent } from './reactive-text-area/text-area-math';
+import { TextAreaReadingComponent } from './reactive-text-area/text-area-reading';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -23,6 +30,13 @@ import { RoleSelectorNormalComponent } from './role-selector/role.selector.norma
     RoleSelectorComponent,
     StatusSelectorComponent,
     RoleSelectorNormalComponent,
+
+    // Text area
+    TextAreaDescriptionComponent,
+    TextAreaAboutComponent,
+    TextAreaEnviromentComponent,
+    TextAreaMathComponent,
+    TextAreaReadingComponent,
   ],
   exports: [
     ReactiveInputComponent,
@@ -32,7 +46,14 @@ import { RoleSelectorNormalComponent } from './role-selector/role.selector.norma
     StatusSelectorComponent,
     ReactiveFormsModule,
     FormsModule,
-    RoleSelectorNormalComponent
+    RoleSelectorNormalComponent,
+
+    // Text area
+    TextAreaDescriptionComponent,
+    TextAreaAboutComponent,
+    TextAreaEnviromentComponent,
+    TextAreaMathComponent,
+    TextAreaReadingComponent,
   ]
 })
 export class SharedFormsModule { }

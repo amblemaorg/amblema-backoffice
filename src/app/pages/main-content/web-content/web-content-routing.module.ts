@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { WebContentComponent } from './web-content.component';
-import { AboutUsComponent } from './about-us/about-us.component';
-import { SponsorsComponent } from './sponsors/sponsors.component';
 import { CoordinatorsComponent } from './coordinators/coordinators.component';
 import { SchoolsComponent } from './schools/schools.component';
 import { BlogComponent } from './blog/blog.component';
@@ -24,7 +22,8 @@ const routes: Routes = [
       },
       {
         path: 'sponsors',
-        component: SponsorsComponent
+        loadChildren: () => import('./sponsors/sponsors.module').
+        then(m => m.SponsorsModule)
       },
       {
         path: 'coordinators',

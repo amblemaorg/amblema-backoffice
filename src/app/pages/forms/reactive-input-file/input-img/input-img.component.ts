@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-input-img',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./input-img.component.scss']
 })
 export class InputImgComponent implements OnInit {
+
+  @Input() align: string | null = 'center';
 
   constructor() { }
 

@@ -5,16 +5,24 @@ import { AboutUsRoutingModule } from './about-us-routing.module';
 import { NbCardModule } from '@nebular/theme';
 import { AboutUsComponent } from './about-us.component';
 import { HelperModule } from '../_helpers/helper.module';
+import { AboutFormComponent } from './about-form/about-form.component';
+import { ReactiveInputFileModule } from 'src/app/pages/forms/reactive-input-file/reactive-input-file.module';
+import { SharedFormsModule } from 'src/app/pages/forms/shared-forms.module';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   declarations: [
-    AboutUsComponent
+    AboutUsComponent,
+    AboutFormComponent
   ],
   imports: [
     CommonModule,
     AboutUsRoutingModule,
     NbCardModule,
-    HelperModule
+    HelperModule,
+    ReactiveInputFileModule,
+    SharedFormsModule,
+    Ng2SmartTableModule
   ]
 })
 export class AboutUsModule { }

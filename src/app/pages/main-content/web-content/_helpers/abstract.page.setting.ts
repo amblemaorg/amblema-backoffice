@@ -11,5 +11,4 @@ export abstract class PageSetting {
         reading: '',
         math: ''
     };
-
 }

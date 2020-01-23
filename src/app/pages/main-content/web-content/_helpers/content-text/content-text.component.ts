@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-content-text',
-  templateUrl: './app-content-text.component.html',
+  templateUrl: './content-text.component.html',
 })
 export class ContentTextComponent {
 

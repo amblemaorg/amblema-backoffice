@@ -6,12 +6,16 @@ import { SlideTableComponent } from './slide-table/slide-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputFileModule } from 'src/app/pages/forms/reactive-input-file/reactive-input-file.module';
 import { ContentTextComponent } from './content-text/content-text.component';
+import { GenericFormComponent } from './generic-form/generic-form.component';
+import { GenericTableComponent } from './generic-table/generic-table.component';
 
 @NgModule({
     declarations: [
         SlideFormComponent,
         SlideTableComponent,
         ContentTextComponent,
+        GenericFormComponent,
+        GenericTableComponent,
     ],
     imports: [
         CommonModule,
@@ -21,7 +25,8 @@ import { ContentTextComponent } from './content-text/content-text.component';
     ],
     exports: [
         SlideFormComponent,
-        ContentTextComponent
+        ContentTextComponent,
+        GenericFormComponent
     ]
 })
 export class HelperModule { }

@@ -1,5 +1,5 @@
 import { Input, DoCheck } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 
 export abstract class AbstractReactive implements DoCheck {
@@ -14,7 +14,7 @@ export abstract class AbstractReactive implements DoCheck {
      * 'control' is a reactive form validator/value controller
      *    ---REQUIRED PROPERTY---
      */
-    @Input() control: AbstractControl | null = null;
+    @Input() control: AbstractControl | null = new FormControl(); // <-- Set form control if null
 
     /**
      * Add label or not

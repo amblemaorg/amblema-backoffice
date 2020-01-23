@@ -14,6 +14,7 @@ import { TextAreaAboutComponent } from './reactive-text-area/text-area-about';
 import { TextAreaEnviromentComponent } from './reactive-text-area/text-area-enviroment';
 import { TextAreaMathComponent } from './reactive-text-area/text-area-math';
 import { TextAreaReadingComponent } from './reactive-text-area/text-area-reading';
+import { InputCustomComponent } from './reactive-form-components/input-custom';
 
 
 @NgModule({
@@ -31,6 +32,9 @@ import { TextAreaReadingComponent } from './reactive-text-area/text-area-reading
     StatusSelectorComponent,
     RoleSelectorNormalComponent,
 
+    // Input
+    InputCustomComponent,
+
     // Text area
     TextAreaDescriptionComponent,
     TextAreaAboutComponent,
@@ -47,6 +51,9 @@ import { TextAreaReadingComponent } from './reactive-text-area/text-area-reading
     ReactiveFormsModule,
     FormsModule,
     RoleSelectorNormalComponent,
+
+    // Input
+    InputCustomComponent,
 
     // Text area
     TextAreaDescriptionComponent,

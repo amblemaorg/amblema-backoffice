@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TableBase, TableActions } from 'src/app/helpers/base-table';
+import { AbstractPageTable } from '../abstract.page.table';
 
 @Component({
-  selector: 'app-founders-table',
-  templateUrl: './founders-table.component.html',
-  styleUrls: ['./founders-table.component.scss']
+  selector: 'app-generic-table',
+  templateUrl: './generic-table.component.html',
 })
-export class FoundersTableComponent extends TableBase implements TableActions {
+export class GenericTableComponent extends AbstractPageTable implements OnInit {
 
   data: any = [
     {
@@ -19,17 +18,7 @@ export class FoundersTableComponent extends TableBase implements TableActions {
   ];
 
   constructor() {
-
-    super('');
-
-    // Chage button actions
-    this.settings.actions.custom = [
-      { name: this.ACTION.EDIT, title: `<i class="nb-edit"></i>` },
-      { name: this.ACTION.DELETE, title: '<i class="nb-trash"></i>' }
-    ];
-
-    // Max display
-    this.settings.pager.perPage = 5;
+    super();
 
     // Custome
     this.settings.columns = {
@@ -56,9 +45,7 @@ export class FoundersTableComponent extends TableBase implements TableActions {
     };
   }
 
-  onAction(event: any) {
-
+  ngOnInit() {
   }
 
-  newData(data: any): void {}
 }

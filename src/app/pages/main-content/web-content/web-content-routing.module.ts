@@ -27,7 +27,8 @@ const routes: Routes = [
       },
       {
         path: 'coordinators',
-        component: CoordinatorsComponent
+        loadChildren: () => import('./coordinators/coordinators.module').
+        then(m => m.CoordinatorsModule)
       },
       {
         path: 'schools',

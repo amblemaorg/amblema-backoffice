@@ -9,7 +9,7 @@ import { ACTION } from '../../../../../helpers/text-crud';
 })
 export class BlogFormComponent implements OnInit {
 
-  ACTION = ACTION; 
+  ACTION = ACTION;
 
   @Input() ID: string;
   @Input() MODE: string | null = 'CREATE'; // <-- Create or edit
@@ -22,10 +22,10 @@ export class BlogFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(data:any) {
+  onSubmit(data: any) {
 
     // Valid form
-    if(this.formBlog.valid) {
+    if (this.formBlog.valid) {
 
     } else {
     // Show error

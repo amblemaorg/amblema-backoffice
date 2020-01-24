@@ -42,7 +42,7 @@ import { TextAreaCustomComponent } from './reactive-text-area/text-area-custom';
     TextAreaEnviromentComponent,
     TextAreaMathComponent,
     TextAreaReadingComponent,
-    TextAreaCustomComponent, 
+    TextAreaCustomComponent,
   ],
   exports: [
     ReactiveInputComponent,

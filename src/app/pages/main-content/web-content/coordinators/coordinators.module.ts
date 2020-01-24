@@ -17,7 +17,7 @@ import { SharedFormsModule } from 'src/app/pages/forms/shared-forms.module';
     CommonModule,
     CoordinatorsRoutingModule,
     NbCardModule,
-    HelperModule, 
+    HelperModule,
     SharedFormsModule,
     ReactiveInputFileModule
   ]

@@ -13,33 +13,33 @@ export class SchoolsComponent extends AbstractPageTable implements OnInit {
   data: any = [
     {
       name: 'Escula maestra altagracia de garcia',
-      content:  "Primer component"
+      content:  'Primer component'
     },
     {
-      name: "Antonio Jose de Sucre",
-      content:  "Segundo content"
+      name: 'Antonio Jose de Sucre',
+      content:  'Segundo content'
     },
     {
-      name: "Ruiz Pineda",
-      content:  "Segundo content"
+      name: 'Ruiz Pineda',
+      content:  'Segundo content'
     }
-  ]
+  ];
 
   ngOnInit() {
-  
+
     this.settings.columns = {
       name: {
         title: 'Nombre de la escuela',
-        type: 'string'     
-      }, 
+        type: 'string'
+      },
       content: {
         title: 'Contenido web',
         filter: false,
         sort: false,
-        type: 'custom', 
+        type: 'custom',
         renderComponent: SchoolSettingsComponent
       }
-    }
+    };
   }
 
 }

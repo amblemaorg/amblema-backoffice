@@ -13,14 +13,14 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 @NgModule({
   declarations: [
     SponsorsComponent,
-    SponsorFormComponent, 
+    SponsorFormComponent,
   ],
   imports: [
     CommonModule,
     SponsorsRoutingModule,
     NbCardModule,
     HelperModule,
-    SharedFormsModule, 
+    SharedFormsModule,
     Ng2SmartTableModule,
     ReactiveInputFileModule,
   ]

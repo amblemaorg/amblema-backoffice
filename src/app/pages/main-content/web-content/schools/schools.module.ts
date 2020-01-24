@@ -10,17 +10,17 @@ import { SchoolSettingsComponent } from './school-settings/school-settings.compo
 @NgModule({
   entryComponents: [
     SchoolSettingsComponent
-  
-  ], 
+
+  ],
   declarations: [
     SchoolsComponent,
-    
+
     SchoolSettingsComponent
   ],
   imports: [
     CommonModule,
-    SchoolsRoutingModule, 
-    Ng2SmartTableModule, 
+    SchoolsRoutingModule,
+    Ng2SmartTableModule,
     NbCardModule
   ]
 })

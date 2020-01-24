@@ -18,11 +18,11 @@ import { SharedFormsModule } from 'src/app/pages/forms/shared-forms.module';
   ],
   imports: [
     CommonModule,
-    BlogRoutingModule, 
-    NbCardModule, 
-    NbInputModule, 
+    BlogRoutingModule,
+    NbCardModule,
+    NbInputModule,
     NbIconModule,
-    SharedComponentsModule, 
+    SharedComponentsModule,
     SharedFormsModule,
     ReactiveInputFileModule,
   ]

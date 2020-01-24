@@ -35,4 +35,6 @@ export class AboutFormComponent extends AbstractPageTable implements OnInit {
     };
   }
 
+  onAction(event: any) {}
+
 }

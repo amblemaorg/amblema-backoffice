@@ -22,7 +22,7 @@ export class BlogFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(data: any) {
+  onSubmit() {
 
     // Valid form
     if (this.formBlog.valid) {

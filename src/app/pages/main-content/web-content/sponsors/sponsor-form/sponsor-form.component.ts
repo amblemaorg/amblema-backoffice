@@ -43,4 +43,7 @@ export class SponsorFormComponent extends AbstractPageTable implements OnInit {
 
   }
 
+  onAction(event: any) {}
+
+
 }

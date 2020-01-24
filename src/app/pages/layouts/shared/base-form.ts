@@ -1,5 +1,5 @@
 import { Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { MESSAGES } from '../../forms/shared/constant/validation-messages-list';
+import { MESSAGES } from '../../components/form-components/shared/constant/validation-messages-list';
 import { ACTION } from '../../../helpers/text-crud';
 
 export abstract class FormBase implements OnChanges {

@@ -8,8 +8,8 @@ import { SponsorsUsersTableComponent } from './sponsors-users-table/sponsors-use
 import { NbCardModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SharedComponentsModule } from '../../components/shared-components.module';
-import { SharedFormsModule } from '../../forms/shared-forms.module';
-import { RegionalAddressesModule } from '../../forms/regional-addresses.module';
+import { SharedFormsModule } from '../../components/form-components/shared-forms.module';
+import { RegionalAddressesModule } from '../../components/form-components/regional-addresses.module';
 
 
 @NgModule({

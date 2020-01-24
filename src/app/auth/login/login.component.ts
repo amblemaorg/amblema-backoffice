@@ -7,6 +7,8 @@ import { NbLoginComponent } from '@nebular/auth';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent extends NbLoginComponent implements OnInit {
+
+  // To hide somes links
   extraSetting = {
     signUp: false,
     forgotPassword: false

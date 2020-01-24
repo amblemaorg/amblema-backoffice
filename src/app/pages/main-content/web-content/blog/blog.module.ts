@@ -7,8 +7,8 @@ import { NbCardModule, NbInputModule, NbIconModule } from '@nebular/theme';
 import { BlogCardComponent } from './blog-card/blog-card.component';
 import { BlogFormComponent } from './blog-form/blog-form.component';
 import { SharedComponentsModule } from 'src/app/pages/components/shared-components.module';
-import { ReactiveInputFileModule } from 'src/app/pages/forms/reactive-input-file/reactive-input-file.module';
-import { SharedFormsModule } from 'src/app/pages/forms/shared-forms.module';
+import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
+import { SharedFormsModule } from 'src/app/pages/components/form-components/shared-forms.module';
 
 @NgModule({
   declarations: [

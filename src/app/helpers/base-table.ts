@@ -3,12 +3,10 @@ import { LocalDataSource } from 'ng2-smart-table';
 
 export class TableBase {
 
-    // Forms attr
-    ID_FORM: string;
-    ACTION = ACTION;
+    ID_FORM: string; // <-- To relate it to some form
+    ACTION = ACTION; // <-- Attr: CREATE, EDIT, VIEW and EDIT
 
-    // Create or update
-    mode;
+    MODE; // <-- Create or update mode
 
     // Settings table
     source: LocalDataSource = new LocalDataSource();
@@ -20,7 +18,7 @@ export class TableBase {
             columnTitle: 'Acciones',
             add: false,
             edit: false,
-            //  Fake column
+            //  Fake action
             delete: true,
             custom: [
                 { name: ACTION.VIEW, title: '<i class="far fa-eye fa-sm"></i>' },
@@ -28,10 +26,7 @@ export class TableBase {
                 { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' }
             ]
         },
-        /**
-         * This fake columns is cuz the td footer,
-         * not complete the row. Bug s front plugin.
-         */
+        // Fake column cuz a bug
         delete: {
             deleteButtonContent: '<i class="ion-trash-a"></i>',
             confirmDelete: true
@@ -52,6 +47,7 @@ export class TableBase {
 
 // Normal actions CRUD users
 export interface TableActions {
+    deleteData?: (data: any) => void;
     newData?: (data: any) => void;
     updateData?: (data: any) => void;
     onAction?: (event: any) => void;

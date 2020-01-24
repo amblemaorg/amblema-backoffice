@@ -8,8 +8,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AdminUserTableComponent } from './admin-user-table/admin-user-table.component';
 import { AdminUserFormComponent } from './admin-user-form/admin-user-form.component';
 import { SharedComponentsModule } from '../../components/shared-components.module';
-import { SharedFormsModule } from '../../forms/shared-forms.module';
-import { RegionalAddressesModule } from '../../forms/regional-addresses.module';
+import { SharedFormsModule } from '../../components/form-components/shared-forms.module';
+import { RegionalAddressesModule } from '../../components/form-components/regional-addresses.module';
 
 @NgModule({
   declarations: [

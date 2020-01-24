@@ -1,7 +1,10 @@
 import { Component, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN, EMAIL_PATTERN } from 'src/app/pages/forms/shared/constant/validation-patterns-list';
-import { ValidationService } from 'src/app/pages/forms/shared/services/validation.service';
+import {
+  NORMAL_TEXT_PATTERN,
+  NUMBER_PATTERN,
+  EMAIL_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { ACTION } from 'src/app/helpers/text-crud';
 import { FormBase } from '../../shared/base-form';
 

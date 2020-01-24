@@ -56,7 +56,7 @@ export class SchoolsUsersTableComponent extends TableBase implements TableAction
         break;
       case this.ACTION.EDIT:
         // Change mode purpose
-        this.mode = this.ACTION.EDIT;
+        this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
         break;
       case this.ACTION.DELETE:

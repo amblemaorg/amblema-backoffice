@@ -48,4 +48,10 @@ export class GenericTableComponent extends AbstractPageTable implements OnInit {
   ngOnInit() {
   }
 
+  onAction(event: any) {
+
+  }
+
+
+
 }

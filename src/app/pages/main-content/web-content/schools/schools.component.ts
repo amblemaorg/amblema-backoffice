@@ -42,4 +42,6 @@ export class SchoolsComponent extends AbstractPageTable implements OnInit {
     };
   }
 
+  onAction(event: any) {}
+
 }

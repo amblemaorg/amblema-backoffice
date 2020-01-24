@@ -1,7 +1,7 @@
 <!-- Button register -->
 <div class="mb-3">
-    <button class="btn btn-primary col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
-        (click)='mode=ACTION.CREATE'>Registrar</button>
+    <button class="btn btn-success col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
+        (click)='MODE=ACTION.CREATE'>Registrar</button>
 </div>
 
 <!-- Table -->
@@ -9,10 +9,6 @@
     <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
 </div>
 
-<!-- modal form --> 
-<app-admin-user-form 
-    [ID]='ID_FORM' 
-    [mode]='mode' 
-    (create)="newData($event)" 
-    (edit)="updateData($event)">
+<!-- modal form -->
+<app-admin-user-form [ID]='ID_FORM' [MODE]='MODE' (create)="newData($event)" (edit)="updateData($event)">
 </app-admin-user-form>

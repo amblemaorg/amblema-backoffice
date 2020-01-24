@@ -1,7 +1,7 @@
 import { ACTION } from './text-crud';
 import { LocalDataSource } from 'ng2-smart-table';
 
-export class TableBase {
+export class BaseTable {
 
     ID_FORM: string; // <-- To relate it to some form
     ACTION = ACTION; // <-- Attr: CREATE, EDIT, VIEW and EDIT

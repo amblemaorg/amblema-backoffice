@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RoleSelectorComponent } from './role-selector.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ReactiveValidationComponent } from '../reactive-form-components/reactive-validation/reactive-validation.component';
+import { ReactiveValidationComponent } from '../../reactive-validation/reactive-validation.component';
 import { ReactiveInputComponent } from '../reactive-form-components/reactive-input/reactive-input.component';
 
 describe('RoleSelectorComponent', () => {

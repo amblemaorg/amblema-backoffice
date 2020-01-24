@@ -1,6 +1,5 @@
 import { Component, OnChanges, Input } from '@angular/core';
-import { MESSAGES } from '../../shared/constant/validation-messages-list';
-
+import { MESSAGES } from '../../../shared/constant/validation-messages-list';
 @Component({
   selector: 'app-reactive-validation',
   templateUrl: './reactive-validation.component.html',

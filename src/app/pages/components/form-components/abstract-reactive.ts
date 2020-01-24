@@ -27,8 +27,9 @@ export abstract class AbstractReactive implements DoCheck {
 
     @Input() placeholder: string | null = '';
 
-    // Type validation
+    @Input() isvalidation: boolean | null = true; // <-- Show or not the messages
 
+    @Input() submitted: boolean | null = true; // <-- Must be in false to react it after submit
 
     validationErrors: object = null;
 
@@ -36,8 +37,8 @@ export abstract class AbstractReactive implements DoCheck {
         /**
          * Show the messages after submit
          */
-        if ( this.control ) {
-            this.validationErrors = (this.control.touched || this.control.invalid) ? this.control.errors : null;
+        if ( this.control && this.isvalidation ) {
+            this.validationErrors = this.submitted && (this.control.touched || this.control.invalid) ? this.control.errors : null;
         }
     }
 

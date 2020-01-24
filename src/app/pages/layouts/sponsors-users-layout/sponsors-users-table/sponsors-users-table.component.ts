@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TableBase, TableActions } from '../../../../helpers/base-table';
+import { BaseTable, TableActions } from '../../../../helpers/base-table';
 
 // JQuery call
 declare var $: any;
@@ -9,7 +9,7 @@ declare var $: any;
   templateUrl: './sponsors-users-table.component.html',
   styleUrls: ['./sponsors-users-table.component.scss']
 })
-export class SponsorsUsersTableComponent extends TableBase implements TableActions, OnInit {
+export class SponsorsUsersTableComponent extends BaseTable implements TableActions, OnInit {
 
   data: any = [{
     name: 'Luis',

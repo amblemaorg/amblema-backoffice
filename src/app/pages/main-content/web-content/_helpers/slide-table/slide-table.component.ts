@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TableBase, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 
 @Component({
   selector: 'app-slide-table',
   templateUrl: './slide-table.component.html',
   styleUrls: ['./slide-table.component.scss']
 })
-export class SlideTableComponent extends TableBase implements TableActions {
+export class SlideTableComponent extends BaseTable implements TableActions {
 
   // Data testing
   data: any = [{

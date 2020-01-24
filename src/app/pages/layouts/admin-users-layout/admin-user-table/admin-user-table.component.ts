@@ -1,47 +1,101 @@
-import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { ACTION } from '../../../../helpers/text-crud';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { BaseTable, TableActions } from '../../../../helpers/base-table';
 
+// To control the bootstrap modal
 declare var $: any;
 
 @Component({
   selector: 'app-admin-user-table',
   templateUrl: './admin-user-table.component.html',
-  styleUrls: ['./admin-user-table.component.scss']
 })
-export class AdminUserTableComponent implements OnInit {
+export class AdminUserTableComponent extends BaseTable implements TableActions {
 
-  // Form settings
-  ID_FORM = 'modal-admin-user-form';
-  ACTION = ACTION;
-  mode;
+  data: any = [
+    {
+      name: 'Jesus',
+      lastName: 'Medina',
+      charge: 'Administrador',
+      role: 'Administrador',
+      status: 'Activo'
+    },
+    {
+      name: 'Carlos',
+      lastName: 'Gomez',
+      charge: 'Administrador',
+      role: 'Administrador',
+      status: 'Activo'
+    },
+    {
+      name: 'Jack',
+      lastName: 'Nicolson',
+      charge: 'Administrador',
+      role: 'Administrador',
+      status: 'Activo'
+    },
+    {
+      name: 'Laura',
+      lastName: 'Jimenez',
+      charge: 'Coordinadora',
+      role: 'Superadmin',
+      status: 'Activo'
+    },
+    {
+      name: 'Carla',
+      lastName: 'Nore',
+      charge: 'Coordinadora',
+      role: 'Superadmin',
+      status: 'Activo'
+    },
+    {
+      name: 'Sebas',
+      lastName: 'Santos',
+      charge: 'CEO',
+      role: 'Superadmin',
+      status: 'Activo'
+    },
+    {
+      name: 'Colbyn',
+      lastName: 'Medinas',
+      charge: 'CEO',
+      role: 'Superadmin',
+      status: 'Inactivo'
+    },
+    {
+      name: 'Luis',
+      lastName: 'Medinas',
+      charge: 'Gerente',
+      role: 'Superadmin',
+      status: 'Inactivo'
+    },
+    {
+      name: 'Daniel',
+      lastName: 'Mohan',
+      charge: 'Gerente',
+      role: 'Normal',
+      status: 'Inactivo'
+    },
+    {
+      name: 'Yorman',
+      lastName: 'Gaez',
+      charge: 'Gerente',
+      role: 'Normal',
+      status: 'Inactivo'
+    },
+    {
+      name: 'Elsa',
+      lastName: 'Gomez',
+      charge: 'Gerente',
+      role: 'Normal',
+      status: 'Inactivo'
+    },
+  ];
 
-  settings = {
-    noDataMessage: 'No hay registros',
-    mode: 'external',
-    actions: {
-      columnTitle: 'Acciones',
-      add: false,
-      edit: false,
-      //  Fake column
-      delete: true,
-      custom: [
-        { name: ACTION.VIEW, title: '<i class="far fa-eye fa-sm"></i>' },
-        { name: ACTION.EDIT, title: `<i class="nb-edit"></i>` },
-        { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' }
-      ]
-    },
-    //  Fake column
-    delete: {
-      deleteButtonContent: '<i class="ion-trash-a"></i>',
-      confirmDelete: true
-    },
-    pager: {
-      display: true,
-      perPage: 10
-    },
-    columns: {
+
+  constructor() {
+    super('form-admin-user');
+
+    // Costumers columns
+    this.settings.columns = {
       name: {
         title: 'Nombre',
         type: 'string'
@@ -63,113 +117,25 @@ export class AdminUserTableComponent implements OnInit {
         type: 'string'
       }
     }
-  };
-
-  data: any = [
-     {
-       name: 'Jesus',
-       lastName: 'Medina',
-       charge: 'Administrador',
-       role: 'Administrador',
-       status: 'Activo'
-     },
-     {
-       name: 'Carlos',
-       lastName: 'Gomez',
-       charge: 'Administrador',
-       role: 'Administrador',
-       status: 'Activo'
-     },
-     {
-       name: 'Jack',
-       lastName: 'Nicolson',
-       charge: 'Administrador',
-       role: 'Administrador',
-       status: 'Activo'
-     },
-     {
-       name: 'Laura',
-       lastName: 'Jimenez',
-       charge: 'Coordinadora',
-       role: 'Superadmin',
-       status: 'Activo'
-     },
-     {
-       name: 'Carla',
-       lastName: 'Nore',
-       charge: 'Coordinadora',
-       role: 'Superadmin',
-       status: 'Activo'
-     },
-     {
-       name: 'Sebas',
-       lastName: 'Santos',
-       charge: 'CEO',
-       role: 'Superadmin',
-       status: 'Activo'
-     },
-     {
-       name: 'Colbyn',
-       lastName: 'Medinas',
-       charge: 'CEO',
-       role: 'Superadmin',
-       status: 'Inactivo'
-     },
-     {
-       name: 'Luis',
-       lastName: 'Medinas',
-       charge: 'Gerente',
-       role: 'Superadmin',
-       status: 'Inactivo'
-     },
-     {
-       name: 'Daniel',
-       lastName: 'Mohan',
-       charge: 'Gerente',
-       role: 'Normal',
-       status: 'Inactivo'
-     },
-     {
-       name: 'Yorman',
-       lastName: 'Gaez',
-       charge: 'Gerente',
-       role: 'Normal',
-       status: 'Inactivo'
-     },
-     {
-       name: 'Elsa',
-       lastName: 'Gomez',
-       charge: 'Gerente',
-       role: 'Normal',
-       status: 'Inactivo'
-     },
-  ];
-
-
-  source: LocalDataSource;
-
-  constructor( private sanitizer: DomSanitizer ) {
-    this.source = new LocalDataSource(this.data);
   }
 
-  ngOnInit() {  }
-
-  onAction( event: any ) {
+  onAction(event: any) {
     switch (event.action) {
-      case ACTION.VIEW :
+      case this.ACTION.VIEW:
         // Call view modal
         break;
-      case ACTION.EDIT :
-          // Change mode purpose
-          this.mode = ACTION.EDIT;
-          $(`#${this.ID_FORM}`).modal('show');
-          break;
-      case ACTION.DELETE :
+      case this.ACTION.EDIT:
+        // Change mode purpose
+        this.MODE = this.ACTION.EDIT;
+        $(`#${this.ID_FORM}`).modal('show');
+        break;
+      case this.ACTION.DELETE:
         // Call delete modal
         break;
     }
   }
 
-  newData( event: any ) {}
-  updateData( event: any ) {}
+  newData(event: any) { }
+  updateData(event: any) { }
+  deleteData(event: any) { }
 }

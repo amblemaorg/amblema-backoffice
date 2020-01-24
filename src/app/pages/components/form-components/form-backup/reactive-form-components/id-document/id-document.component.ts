@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Validators, AbstractControl } from '@angular/forms';
 import { AbstractReactiveComponent } from '../abstract-reactive.component';
-import { MESSAGES } from '../../shared/constant/validation-messages-list';
+import { MESSAGES } from '../../../shared/constant/validation-messages-list';
 
 @Component({
   selector: 'app-id-document',

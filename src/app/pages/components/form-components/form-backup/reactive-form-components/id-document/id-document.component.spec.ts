@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IdDocumentComponent } from './id-document.component';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ReactiveValidationComponent } from '../reactive-validation/reactive-validation.component';
-import { NUMBER_PATTERN } from '../../shared/constant/validation-patterns-list';
+import { ReactiveValidationComponent } from '../../../reactive-validation/reactive-validation.component';
+import { NUMBER_PATTERN } from '../../../shared/constant/validation-patterns-list';
 
 describe('IdDocumentComponent', () => {
   let component: IdDocumentComponent;

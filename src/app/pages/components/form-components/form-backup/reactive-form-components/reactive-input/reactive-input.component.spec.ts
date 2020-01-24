@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveInputComponent } from './reactive-input.component';
 import { NbSelectModule } from '@nebular/theme';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, ControlContainer } from '@angular/forms';
-import { ReactiveValidationComponent } from '../reactive-validation/reactive-validation.component';
-import { NORMAL_TEXT_PATTERN, EMAIL_PATTERN, NUMBER_PATTERN } from '../../shared/constant/validation-patterns-list';
+import { ReactiveValidationComponent } from '../../../reactive-validation/reactive-validation.component';
+import { NORMAL_TEXT_PATTERN, EMAIL_PATTERN, NUMBER_PATTERN } from '../../../shared/constant/validation-patterns-list';
 
 describe('ReactiveInputComponent', () => {
   let component: ReactiveInputComponent;

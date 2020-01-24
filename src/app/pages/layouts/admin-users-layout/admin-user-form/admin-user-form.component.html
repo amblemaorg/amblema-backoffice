@@ -12,25 +12,18 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formUser.get('name')"
-                            [submitted]="submitted" [patternMessage]="MESSAGES.NAME_MESSAGE">
-                        </app-reactive-input>
+                        <app-input-name [control]="formUser.get('name')" [submitted]="submitted"></app-input-name>
                     </div>
-
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [label]="'Apellido'" [placeholder]="'Apellido'"
-                            [control]="formUser.get('lastName')" [submitted]="submitted"
-                            [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
-                        </app-reactive-input>
+                        <app-input-last-name [control]="formUser.get('lastName')" [submitted]="submitted">
+                        </app-input-last-name>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [label]="'Cargo'" [placeholder]="'Cargo'"
-                            [control]="formUser.get('position')" [submitted]="submitted"
-                            [patternMessage]="MESSAGES.TEXT_MESSAGE">
-                        </app-reactive-input>
+                        <app-input-position [control]="formUser.get('position')" [submitted]="submitted">
+                        </app-input-position>
 
                         <app-role-selector [submitted]="submitted" [label]="'Rol'" [control]="formUser.get('role')">
                         </app-role-selector>
@@ -66,8 +59,8 @@
                 <hr>
             </div>
 
-            <app-regional-addresses [state]="formUser.get('state')"
-                [municipality]="formUser.get('municipality')" class="col-12">
+            <app-regional-addresses [state]="formUser.get('state')" [municipality]="formUser.get('municipality')"
+                class="col-12">
             </app-regional-addresses>
 
             <div class="col-12 col-lg-6">
@@ -82,16 +75,16 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-status-selector [label]="'Estatus'" [control]="formUser.get('status')"
-                    [submitted]="submitted">
+                <app-status-selector [label]="'Estatus'" [control]="formUser.get('status')" [submitted]="submitted">
                 </app-status-selector>
             </div>
         </div>
     </form>
 
     <!-- Footer content -->
-    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
-        <span *ngIf="mode == ACTION.CREATE">Guardar</span>
-        <span *ngIf="mode == ACTION.EDIT">Editar</span>
+    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+        [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
+        <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
+        <span *ngIf="MODE == ACTION.EDIT">Editar</span>
     </button>
 </app-modal>

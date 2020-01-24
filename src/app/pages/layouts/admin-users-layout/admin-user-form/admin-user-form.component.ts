@@ -1,4 +1,4 @@
-import { Component, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   NORMAL_TEXT_PATTERN,
@@ -11,26 +11,19 @@ import { FormBase } from '../../shared/base-form';
 @Component({
   selector: 'app-admin-user-form',
   templateUrl: './admin-user-form.component.html',
-  styleUrls: ['./admin-user-form.component.scss']
 })
 export class AdminUserFormComponent extends FormBase implements OnChanges {
 
-  @Output() edit = new EventEmitter<any>();
-  @Output() create = new EventEmitter<any>();
-
   formUser: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
-    lastName: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
+    name: new FormControl(),
+    lastName: new FormControl(),
     type: new FormControl('V'),
     document: new FormControl('', [
       Validators.required,
       Validators.minLength(7),
       Validators.maxLength(8),
       Validators.pattern(NUMBER_PATTERN)]),
-    position: new FormControl('', [
-      Validators.required,
-      Validators.pattern(NORMAL_TEXT_PATTERN),
-    ]),
+    position: new FormControl(),
     email: new FormControl('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
     phone: new FormControl('', [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
     password: new FormControl('', [Validators.required, Validators.maxLength(8)]),
@@ -48,7 +41,7 @@ export class AdminUserFormComponent extends FormBase implements OnChanges {
     // Working on your validated form data
     if (this.formUser.valid) {
       // Define act
-      if ( this.mode === ACTION.CREATE ) {
+      if ( this.MODE === ACTION.CREATE ) {
 
         this.create.emit('');
 

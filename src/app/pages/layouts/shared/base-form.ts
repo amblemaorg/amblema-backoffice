@@ -8,11 +8,11 @@ export abstract class FormBase implements OnChanges {
      * Behavior form
      */
     @Input() ID: string | null = null;
-    @Input() mode: string | null = null;
+    @Input() MODE: string | null = ACTION.CREATE;
 
     ACTION = ACTION;
     title = '';
-    object = '';
+    object = ''; // <-- Title modal object
 
     /**
      * Event emitter the data
@@ -20,8 +20,7 @@ export abstract class FormBase implements OnChanges {
     @Output() edit = new EventEmitter<any>();
     @Output() create = new EventEmitter<any>();
 
-    // Base messages
-    readonly MESSAGES = MESSAGES;
+    readonly MESSAGES = MESSAGES; // <-- To customer inputs
     submitted = false;
 
     constructor(object?: string) { this.object = object ? object : 'Usuario'; }
@@ -30,9 +29,9 @@ export abstract class FormBase implements OnChanges {
      * Change behavior
      */
     ngOnChanges(): void {
-        if ( this.mode === ACTION.EDIT ) {
+        if ( this.MODE === ACTION.EDIT ) {
             this.title = `Editar ${this.object}`;
-        } else if ( this.mode === ACTION.CREATE ) {
+        } else if ( this.MODE === ACTION.CREATE ) {
             this.title = `Registrar ${this.object}`;
         }
     }

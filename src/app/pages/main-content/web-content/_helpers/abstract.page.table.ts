@@ -1,7 +1,7 @@
-import { TableBase } from 'src/app/helpers/base-table';
+import { BaseTable } from 'src/app/helpers/base-table';
 
 
-export abstract class AbstractPageTable extends TableBase {
+export abstract class AbstractPageTable extends BaseTable {
 
     constructor() {
         super();

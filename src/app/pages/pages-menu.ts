@@ -99,9 +99,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'file-text-outline',
     title: 'Reportes'
   },
-  {
-    title: 'Profile',
-
-    link: '/pages/profile'
-  },
 ];

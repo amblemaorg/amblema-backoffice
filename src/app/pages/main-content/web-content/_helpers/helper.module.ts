@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SlideFormComponent } from './slide-form/slide-form.component';
-import { SharedFormsModule } from 'src/app/pages/components/form-components/shared-forms.module';
+import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 import { SlideTableComponent } from './slide-table/slide-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
@@ -20,7 +20,7 @@ import { GenericTableComponent } from './generic-table/generic-table.component';
     imports: [
         CommonModule,
         ReactiveInputFileModule,
-        SharedFormsModule,
+        FormComponentModule,
         Ng2SmartTableModule,
     ],
     exports: [

@@ -7,7 +7,7 @@ import { NbCardModule } from '@nebular/theme';
 import { HelperModule } from '../_helpers/helper.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { SponsorFormComponent } from './sponsor-form/sponsor-form.component';
-import { SharedFormsModule } from 'src/app/pages/components/form-components/shared-forms.module';
+import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
@@ -20,7 +20,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     SponsorsRoutingModule,
     NbCardModule,
     HelperModule,
-    SharedFormsModule,
+    FormComponentModule,
     Ng2SmartTableModule,
     ReactiveInputFileModule,
   ]

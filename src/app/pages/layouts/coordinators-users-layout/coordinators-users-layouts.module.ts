@@ -8,7 +8,7 @@ import { CoordinatorsUsersTableComponent } from './coordinators-users-table/coor
 import { CoordinatorsUsersFormComponent } from './coordinators-users-form/coordinators-users-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SharedComponentsModule } from '../../components/shared-components.module';
-import { SharedFormsModule } from '../../components/form-components/shared-forms.module';
+import { FormComponentModule } from '../../components/form-components/form-component.module';
 import { RegionalAddressesModule } from '../../components/form-components/regional-addresses.module';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { RegionalAddressesModule } from '../../components/form-components/region
     NbCardModule,
     Ng2SmartTableModule,
     SharedComponentsModule,
-    SharedFormsModule,
+    FormComponentModule,
     RegionalAddressesModule
   ]
 })

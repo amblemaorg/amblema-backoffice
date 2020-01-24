@@ -1,7 +1,6 @@
 import { Input, DoCheck } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 
-
 export abstract class AbstractReactive implements DoCheck {
 
     /**
@@ -27,6 +26,9 @@ export abstract class AbstractReactive implements DoCheck {
     @Input() patternMsg: string | null = 'Formato no valido';
 
     @Input() placeholder: string | null = '';
+
+    // Type validation
+
 
     validationErrors: object = null;
 

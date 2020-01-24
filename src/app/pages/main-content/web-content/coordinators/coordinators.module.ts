@@ -6,7 +6,7 @@ import { NbCardModule } from '@nebular/theme';
 import { CoordinatorsComponent } from './coordinators.component';
 import { HelperModule } from '../_helpers/helper.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
-import { SharedFormsModule } from 'src/app/pages/components/form-components/shared-forms.module';
+import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { SharedFormsModule } from 'src/app/pages/components/form-components/shar
     CoordinatorsRoutingModule,
     NbCardModule,
     HelperModule,
-    SharedFormsModule,
+    FormComponentModule,
     ReactiveInputFileModule
   ]
 })

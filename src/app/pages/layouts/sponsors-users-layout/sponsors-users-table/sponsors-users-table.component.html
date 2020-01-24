@@ -1,7 +1,7 @@
 <!-- Register -->
 <div class="mb-3">
     <button class="btn btn-primary col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
-        (click)='mode=ACTION.CREATE'>Registrar</button>
+        (click)='MODE=ACTION.CREATE'>Registrar</button>
 </div>
 
 <!-- Table -->
@@ -12,6 +12,6 @@
 <!-- Modal -->
 <app-sponsors-users-form 
     [ID]="ID_FORM"
-    [mode]="mode"
+    [mode]="MODE"
     (create)="newData($event)"
     (edit)="updateData($event)"></app-sponsors-users-form>

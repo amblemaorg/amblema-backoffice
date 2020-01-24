@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RegionalAddressesComponent } from './regional-addresses/regional-addresses.component';
 import { CommonModule } from '@angular/common';
-import { SharedFormsModule } from './shared-forms.module';
+import { FormComponentModule } from './form-component.module';
 import { NbInputModule } from '@nebular/theme';
 
 @NgModule({
     imports: [
         CommonModule,
-        SharedFormsModule,
+        FormComponentModule,
         NbInputModule
     ],
     exports: [

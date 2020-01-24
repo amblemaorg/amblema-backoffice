@@ -5,12 +5,11 @@ import { WebContentRoutingModule } from './web-content-routing.module';
 import { WebContentComponent } from './web-content.component';
 import { BlogComponent } from './blog/blog.component';
 import { NbCardModule } from '@nebular/theme';
-import { SchoolsComponent } from './schools/schools.component';
 
 @NgModule({
   declarations: [
     WebContentComponent,
-    SchoolsComponent,
+  
     BlogComponent,
   ],
   imports: [

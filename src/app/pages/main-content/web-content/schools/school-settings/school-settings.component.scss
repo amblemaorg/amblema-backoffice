@@ -1,0 +1,12 @@
+@import '../../../../../../assets/scss/variables';
+
+ul {
+    .list-group-item {
+        background-color: transparent!important;
+        border-left: 0;
+        border-right: 0;
+        border-color: $border-primary-color!important;
+        &:last-child { border-bottom: 0; }
+        &:first-child { border-top: 0; }
+    }
+}

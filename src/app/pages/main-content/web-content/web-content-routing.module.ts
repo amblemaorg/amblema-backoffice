@@ -32,7 +32,8 @@ const routes: Routes = [
       },
       {
         path: 'schools',
-        component: SchoolsComponent
+        loadChildren: () => import('./schools/schools.module').
+        then(m => m.SchoolsModule)
       },
       {
         path: 'blog',

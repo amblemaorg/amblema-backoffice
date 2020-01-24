@@ -22,7 +22,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     HelperModule,
     SharedFormsModule, 
     Ng2SmartTableModule,
-    ReactiveInputFileModule
+    ReactiveInputFileModule,
   ]
 })
 export class SponsorsModule { }

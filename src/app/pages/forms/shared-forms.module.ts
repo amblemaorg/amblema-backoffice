@@ -15,6 +15,7 @@ import { TextAreaEnviromentComponent } from './reactive-text-area/text-area-envi
 import { TextAreaMathComponent } from './reactive-text-area/text-area-math';
 import { TextAreaReadingComponent } from './reactive-text-area/text-area-reading';
 import { InputCustomComponent } from './reactive-form-components/input-custom';
+import { TextAreaCustomComponent } from './reactive-text-area/text-area-custom';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { InputCustomComponent } from './reactive-form-components/input-custom';
     TextAreaEnviromentComponent,
     TextAreaMathComponent,
     TextAreaReadingComponent,
+    TextAreaCustomComponent, 
   ],
   exports: [
     ReactiveInputComponent,
@@ -61,6 +63,7 @@ import { InputCustomComponent } from './reactive-form-components/input-custom';
     TextAreaEnviromentComponent,
     TextAreaMathComponent,
     TextAreaReadingComponent,
+    TextAreaCustomComponent
   ]
 })
 export class SharedFormsModule { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ACTION } from '../../../../helpers/text-crud';
 
 @Component({
   selector: 'app-blog',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlogComponent implements OnInit {
 
+  // Form settings
+  ID_FORM = 'modal-form-blog';
+  ACTION = ACTION;
+  MODE;
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }

@@ -8,14 +8,15 @@
                         <div class="input-group mb-3">
                             <input type="text" nbInput placeholder="Buscar" fullWidth class="col border-right-0">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-info" type="button"
-                                    id="button-addon2">
-                                    <nb-icon icon="search-outline"></nb-icon></button>
+                                <button class="btn btn-outline-info" type="button" id="button-addon2">
+                                    <nb-icon icon="search-outline"></nb-icon>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 text-right">
-                        <button class="col-12 col-lg-auto btn btn-success">Registrar</button>
+                        <button class="col-12 col-lg-auto btn btn-success" data-toggle="modal"
+                            [attr.data-target]="'#'+ID_FORM" (click)='MODE=ACTION.CREATE'>Registrar</button>
                     </div>
                 </div>
             </nb-card-body>
@@ -24,23 +25,25 @@
 </div>
 
 <div class="row">
-    <div class="col-3">
+    <div class="col-lg-6 col-xl-4">
         <app-blog-card></app-blog-card>
     </div>
 
-    <div class="col-3">
+    <div class="col-lg-6 col-xl-4">
         <app-blog-card></app-blog-card>
     </div>
 
-    <div class="col-3">
+    <div class="col-lg-6 col-xl-4">
         <app-blog-card></app-blog-card>
     </div>
 
-    <div class="col-3">
+    <div class="col-lg-6 col-xl-4">
         <app-blog-card></app-blog-card>
     </div>
 
-    <div class="col-3">
+    <div class="col-lg-6 col-xl-4">
         <app-blog-card></app-blog-card>
     </div>
 </div>
+
+<app-blog-form [ID]="ID_FORM" [MODE]="MODE"></app-blog-form>

@@ -8,22 +8,22 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
   template: `
     <div class="form-group">
       <label for='name' class="label">Nombre</label>
-      <input 
+      <input
         nbInput
-        fullWidth 
-        status="basic" 
+        fullWidth
+        status="basic"
         placeholder="Nombre"
         id='name'
         name='name'
         type='text'
-        [formControl]="control" 
+        [formControl]="control"
         autocomplete='off'
         class="form-control form-group" />
       <app-reactive-validation [patternMessage]='MESSAGES.NAME_MESSAGE' [validationErrors]="validationErrors"></app-reactive-validation>
     </div>
   `
 })
-export class InputNameComponent extends AbstractReactiveInput implements OnInit { 
+export class InputNameComponent extends AbstractReactiveInput implements OnInit {
   ngOnInit(): void {
     this.control.setValidators([Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]);
   }

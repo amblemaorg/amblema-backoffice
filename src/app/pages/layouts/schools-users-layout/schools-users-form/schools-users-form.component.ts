@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
-import { FormBase } from '../../shared/base-form';
+import { BaseForm } from '../../shared/base-form';
 import {
   NORMAL_TEXT_PATTERN,
   EMAIL_PATTERN,
@@ -12,28 +12,28 @@ import {
   templateUrl: './schools-users-form.component.html',
   styleUrls: ['./schools-users-form.component.scss']
 })
-export class SchoolsUsersFormComponent extends FormBase implements OnInit {
+export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
 
   formSchool: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
+    name: new FormControl(),
     campusCode: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
-    phone: new FormControl('', [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
-    password: new FormControl('', [Validators.required, Validators.maxLength(8)]),
+    email: new FormControl(),
+    phone: new FormControl(),
+    password: new FormControl(),
 
     // Address
-    state: new FormControl('', [Validators.required]),
-    municipality: new FormControl('', [Validators.required]),
+    state: new FormControl(),
+    municipality: new FormControl(),
     street: new FormControl('', [Validators.required]),
 
     // Contact
-    nameContact: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
-    lastNameContact: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
-    emailContact: new FormControl('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
-    phoneContact: new FormControl('', [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
+    nameContact: new FormControl(),
+    lastNameContact: new FormControl(),
+    emailContact: new FormControl(),
+    phoneContact: new FormControl(),
 
     // Status
-    status: new FormControl('', [Validators.required]),
+    status: new FormControl(),
   });
 
   constructor(private validationService: ValidationService) {
@@ -49,7 +49,7 @@ export class SchoolsUsersFormComponent extends FormBase implements OnInit {
     // Working on your validated form data
     if (this.formSchool.valid) {
       // Define act
-      if ( this.mode === this.ACTION.CREATE ) {
+      if ( this.MODE === this.ACTION.CREATE ) {
 
         this.create.emit('');
 

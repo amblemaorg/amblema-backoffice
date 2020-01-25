@@ -1,0 +1,12 @@
+<div class="row">
+
+    <!-- Type document -->
+    <div class="col">
+        <app-select-type [control]='controlSelect' [submitted]="submitted" (onselected)='onChangeDocument($event)'></app-select-type>
+    </div>
+
+    <!-- Document number -->
+    <div class="col-7">
+        <app-input-document [control]='control' [submitted]="submitted" [patternMsg]="message"></app-input-document>
+    </div>
+</div>

@@ -9,7 +9,6 @@ import { CoordinatorsUsersFormComponent } from './coordinators-users-form/coordi
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SharedComponentsModule } from '../../components/shared-components.module';
 import { FormComponentModule } from '../../components/form-components/form-component.module';
-import { RegionalAddressesModule } from '../../components/form-components/regional-addresses.module';
 
 @NgModule({
   declarations: [CoordinatorsUsersLayoutsComponent, CoordinatorsUsersTableComponent, CoordinatorsUsersFormComponent],
@@ -20,7 +19,6 @@ import { RegionalAddressesModule } from '../../components/form-components/region
     Ng2SmartTableModule,
     SharedComponentsModule,
     FormComponentModule,
-    RegionalAddressesModule
   ]
 })
 export class CoordinatorsUsersLayoutsModule { }

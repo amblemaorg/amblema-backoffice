@@ -1,36 +1,28 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  NORMAL_TEXT_PATTERN,
-  NUMBER_PATTERN,
-  EMAIL_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { ACTION } from 'src/app/helpers/text-crud';
-import { FormBase } from '../../shared/base-form';
+import { BaseForm } from '../../shared/base-form';
 
 @Component({
   selector: 'app-admin-user-form',
   templateUrl: './admin-user-form.component.html',
 })
-export class AdminUserFormComponent extends FormBase implements OnChanges {
+export class AdminUserFormComponent extends BaseForm {
 
   formUser: FormGroup = new FormGroup({
     name: new FormControl(),
     lastName: new FormControl(),
-    type: new FormControl('V'),
-    document: new FormControl('', [
-      Validators.required,
-      Validators.minLength(7),
-      Validators.maxLength(8),
-      Validators.pattern(NUMBER_PATTERN)]),
+    type: new FormControl(),
+    document: new FormControl(),
     position: new FormControl(),
-    email: new FormControl('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
-    phone: new FormControl('', [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
-    password: new FormControl('', [Validators.required, Validators.maxLength(8)]),
-    role: new FormControl('', [Validators.required]),
-    status: new FormControl('', [Validators.required]),
-    state: new FormControl('', [Validators.required]),
-    municipality: new FormControl('', [Validators.required]),
+    email: new FormControl(),
+    phone: new FormControl(),
+    password: new FormControl(),
+    role: new FormControl(),
+    status: new FormControl(),
+    state: new FormControl(),
+    municipality: new FormControl(),
     street: new FormControl('', [Validators.required])
   });
 

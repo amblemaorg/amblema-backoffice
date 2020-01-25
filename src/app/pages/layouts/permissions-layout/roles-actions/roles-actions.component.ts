@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class RolesActionsComponent {
 
-  mode = ACTION.EDIT;
+  MODE = ACTION.EDIT;
 
   settings = {
     noDataMessage: 'No hay registros',

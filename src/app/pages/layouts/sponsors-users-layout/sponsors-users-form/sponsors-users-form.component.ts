@@ -1,34 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { FormBase } from '../../shared/base-form';
-import {
-  NORMAL_TEXT_PATTERN,
-  EMAIL_PATTERN,
-  NUMBER_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { BaseForm } from '../../shared/base-form';
 
 @Component({
   selector: 'app-sponsors-users-form',
   templateUrl: './sponsors-users-form.component.html',
   styleUrls: ['./sponsors-users-form.component.scss'],
 })
-export class SponsorsUsersFormComponent extends FormBase implements OnInit {
+export class SponsorsUsersFormComponent extends BaseForm implements OnInit {
 
   formSponsor: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
-    lastName: new FormControl('', [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
-    email: new FormControl('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
-    phone: new FormControl('', [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
-    type: new FormControl('V'),
-    document: new FormControl('', [
-      Validators.required,
-      Validators.minLength(7),
-      Validators.maxLength(8),
-      Validators.pattern(NUMBER_PATTERN)]),
-    password: new FormControl('', [Validators.required, Validators.maxLength(8)]),
-    status: new FormControl('', [Validators.required]),
-    state: new FormControl('', [Validators.required]),
-    municipality: new FormControl('', [Validators.required]),
+    name: new FormControl(),
+    lastName: new FormControl(),
+    email: new FormControl(),
+    phone: new FormControl(),
+    type: new FormControl(),
+    document: new FormControl(),
+    password: new FormControl(),
+    status: new FormControl(),
+    state: new FormControl(),
+    municipality: new FormControl(),
     street: new FormControl('', [Validators.required])
   });
 
@@ -45,7 +37,7 @@ export class SponsorsUsersFormComponent extends FormBase implements OnInit {
     // Working on your validated form data
     if (this.formSponsor.valid) {
       // Define act
-      if ( this.mode === this.ACTION.CREATE ) {
+      if (this.MODE === this.ACTION.CREATE) {
 
         this.create.emit('');
 

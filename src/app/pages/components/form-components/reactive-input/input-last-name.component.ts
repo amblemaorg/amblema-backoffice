@@ -8,18 +8,20 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
   template: `
     <div class="form-group">
       <label for='last-name' class="label">Apellido</label>
-      <input 
+      <input
         nbInput
-        fullWidth 
-        status="basic" 
+        fullWidth
+        status="basic"
         placeholder="Apellido"
         id='last-name'
         name='last-name'
         type='text'
-        [formControl]="control" 
+        [formControl]="control"
         autocomplete='off'
         class="form-control form-group" />
-      <app-reactive-validation [patternMessage]='MESSAGES.LAST_NAME_MESSAGE' [validationErrors]="validationErrors"></app-reactive-validation>
+      <app-reactive-validation
+        [patternMessage]='MESSAGES.LAST_NAME_MESSAGE'
+        [validationErrors]="validationErrors"></app-reactive-validation>
     </div>
   `
 })

@@ -12,24 +12,19 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'" [control]="formSchool.get('name')"
-                    [submitted]="submitted" [patternMessage]="MESSAGES.NAME_MESSAGE">
-                </app-reactive-input>
-                <app-reactive-input [type]="'email'" [placeholder]="'Correo'" [patternMessage]="MESSAGES.EMAIL_MESSAGE"
-                    [submitted]="submitted" [label]="'Correo'" [control]="formSchool.get('email')"></app-reactive-input>
-                <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
-                    [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
-                    [control]="formSchool.get('password')"></app-reactive-input>
+                    <app-input-name [control]="formSchool.get('name')" [submitted]="submitted"></app-input-name>
+
+                <app-input-email [control]="formSchool.get('email')" [submitted]="submitted"></app-input-email>
+                <app-input-password [control]="formSchool.get('password')" [submitted]="submitted">
+                </app-input-password>
             </div>
             <div class="col-12 col-lg-6">
-                <app-reactive-input [label]="'Código del plantel'" [placeholder]="'Código del plantel'"
+                <app-input-custom [label]="'Código del plantel'" [placeholder]="'Código del plantel'"
                     [control]="formSchool.get('campusCode')" [submitted]="submitted"
-                    [patternMessage]="MESSAGES.NAME_MESSAGE">
-                </app-reactive-input>
+                    [patternMsg]="MESSAGES.NAME_MESSAGE">
+                </app-input-custom>
 
-                <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
-                    [submitted]="submitted" [label]="'Télefono'" [control]="formSchool.get('phone')">
-                </app-reactive-input>
+                <app-input-phone [control]="formSchool.get('phone')" [submitted]="submitted"></app-input-phone>
             </div>
         </div>
 
@@ -39,15 +34,9 @@
                 <p class="text-info font-weight-bold mb-0">Dirección</p>
                 <hr>
             </div>
-
-            <app-regional-addresses [state]="formSchool.get('state')" [municipality]="formSchool.get('municipality')"
-                class="col-12">
-            </app-regional-addresses>
-
-            <div class="col-12 col-lg-6">
-                <app-reactive-input [type]="'text'" [placeholder]="'Calles / Carreras'" [submitted]="submitted"
-                    [label]="'Calles / Carreras'" [control]="formSchool.get('street')">
-                </app-reactive-input>
+            <div class="col-12">
+                <app-form-regional-address [state]="formSchool.get('state')" [municipality]="formSchool.get('municipality')"
+                    [control]="formSchool.get('street')" [submitted]="submitted"></app-form-regional-address>
             </div>
         </div>
 
@@ -59,28 +48,24 @@
             </div>
             <div class="col-12">
                 <div class="row">
+
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [patternMessage]="MESSAGES.LAST_NAME_MESSAGE" [placeholder]="'Nombre'"
-                            [submitted]="submitted" [label]="'Nombre'" [control]="formSchool.get('nameContact')">
-                        </app-reactive-input>
+                        <app-input-name [control]="formSchool.get('nameContact')" [submitted]="submitted">
+                        </app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [patternMessage]="MESSAGES.LAST_NAME_MESSAGE" [placeholder]="'Apellido'"
-                            [submitted]="submitted" [label]="'Apellido'" [control]="formSchool.get('lastNameContact')">
-                        </app-reactive-input>
+                        <app-input-last-name [control]="formSchool.get('lastNameContact')" [submitted]="submitted">
+                        </app-input-last-name>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [type]="'email'" [placeholder]="'Correo'"
-                            [patternMessage]="MESSAGES.EMAIL_MESSAGE" [submitted]="submitted" [label]="'Correo'"
-                            [control]="formSchool.get('emailContact')">
-                        </app-reactive-input>
+                        <app-input-email [control]="formSchool.get('emailContact')" [submitted]="submitted">
+                        </app-input-email>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
-                            [submitted]="submitted" [label]="'Télefono'" [control]="formSchool.get('phoneContact')">
-                        </app-reactive-input>
+                        <app-input-phone [control]="formSchool.get('phoneContact')" [submitted]="submitted">
+                        </app-input-phone>
                     </div>
                 </div>
             </div>
@@ -92,15 +77,16 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-status-selector [label]="'Estatus'" [control]="formSchool.get('status')" [submitted]="submitted">
-                </app-status-selector>
+                <app-select-status [control]="formSchool.get('status')" [submitted]="submitted">
+                </app-select-status>
             </div>
         </div>
     </form>
 
     <!-- Footer content -->
-    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
-        <span *ngIf="mode == ACTION.CREATE">Guardar</span>
-        <span *ngIf="mode == ACTION.EDIT">Editar</span>
+    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+        [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
+        <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
+        <span *ngIf="MODE == ACTION.EDIT">Editar</span>
     </button>
 </app-modal>

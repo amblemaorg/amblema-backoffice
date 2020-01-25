@@ -14,38 +14,25 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [label]="'Nombre'" [placeholder]="'Nombre'"
-                            [control]="formSponsor.get('name')" [submitted]="submitted"
-                            [patternMessage]="MESSAGES.NAME_MESSAGE">
-                        </app-reactive-input>
+                        <app-input-name [control]="formSponsor.get('name')" [submitted]="submitted"></app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-reactive-input [label]="'Apellido'" [placeholder]="'Apellido'"
-                            [control]="formSponsor.get('lastName')" [submitted]="submitted"
-                            [patternMessage]="MESSAGES.LAST_NAME_MESSAGE">
-                        </app-reactive-input>
+                        <app-input-last-name [control]="formSponsor.get('lastName')" [submitted]="submitted">
+                        </app-input-last-name>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-
-                        <app-reactive-input [type]="'email'" [placeholder]="'Correo'"
-                            [patternMessage]="MESSAGES.EMAIL_MESSAGE" [submitted]="submitted" [label]="'Correo'"
-                            [control]="formSponsor.get('email')">
-                        </app-reactive-input>
-
-                        <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
-                            [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
-                            [control]="formSponsor.get('password')"></app-reactive-input>
+                        <app-input-email [control]="formSponsor.get('email')" [submitted]="submitted"></app-input-email>
+                        <app-input-password [control]="formSponsor.get('password')" [submitted]="submitted">
+                        </app-input-password>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-id-document [placeholder]="'Identidad'" [controlSelect]="formSponsor.get('type')"
-                            [submitted]='submitted' [label]="'Identidad'" [control]="formSponsor.get('document')">
-                        </app-id-document>
-                        <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
-                            [submitted]="submitted" [label]="'Télefono'" [control]="formSponsor.get('phone')">
-                        </app-reactive-input>
+                        <app-form-document [submitted]="submitted" [control]="formSponsor.get('document')"
+                            [controlSelect]="formSponsor.get('type')"></app-form-document>
+                        <app-input-phone [control]="formSponsor.get('phone')" [submitted]="submitted"></app-input-phone>
+
                     </div>
                 </div>
             </div>
@@ -59,32 +46,27 @@
                 <p class="font-weight-bold text-info mb-0">Dirección</p>
                 <hr>
             </div>
-
-            <app-regional-addresses [state]="formSponsor.get('state')"
-                [municipality]="formSponsor.get('municipality')" class="col-12">
-            </app-regional-addresses>
-
-            <div class="col-12 col-lg-6">
-                <app-reactive-input [type]="'text'" [placeholder]="'Calles / Carreras'" [submitted]="submitted"
-                    [label]="'Calles / Carreras'" [control]="formSponsor.get('street')">
-                </app-reactive-input>
+            <div class="col-12">
+                <app-form-regional-address [state]="formSponsor.get('state')" [municipality]="formSponsor.get('municipality')"
+                    [control]="formSponsor.get('street')" [submitted]="submitted"></app-form-regional-address>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-12">
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-status-selector [label]="'Estatus'" [control]="formSponsor.get('status')" [submitted]="submitted">
-                </app-status-selector>
-            </div>                 
+                <app-select-status [control]="formSponsor.get('status')" [submitted]="submitted">
+                </app-select-status>
+            </div>
         </div>
     </form>
 
     <!-- Footer content -->
-    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
-        <span *ngIf="mode == ACTION.CREATE">Guardar</span>
-        <span *ngIf="mode == ACTION.EDIT">Editar</span>
+    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+        [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
+        <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
+        <span *ngIf="MODE == ACTION.EDIT">Editar</span>
     </button>
 </app-modal>

@@ -24,49 +24,32 @@
                     <div class="col-12 col-lg-6">
                         <app-input-position [control]="formUser.get('position')" [submitted]="submitted">
                         </app-input-position>
+                        <app-select-role [control]="formUser.get('role')" [submitted]="submitted"></app-select-role>
+                        <app-input-phone [control]="formUser.get('phone')" [submitted]="submitted"></app-input-phone>
 
-                        <app-role-selector [submitted]="submitted" [label]="'Rol'" [control]="formUser.get('role')">
-                        </app-role-selector>
-
-                        <app-reactive-input [patternMessage]="MESSAGES.PHONE_MESSAGE" [placeholder]="'Teléfono'"
-                            [submitted]="submitted" [label]="'Télefono'" [control]="formUser.get('phone')">
-                        </app-reactive-input>
                     </div>
                     <div class="col-12 col-lg-6">
 
-                        <app-id-document [placeholder]="'Identidad'" [controlSelect]="formUser.get('type')"
-                            [submitted]='submitted' [label]="'Identidad'" [control]="formUser.get('document')">
-                        </app-id-document>
+                        <app-form-document [submitted]="submitted" [control]="formUser.get('document')"
+                            [controlSelect]="formUser.get('type')"></app-form-document>
 
-                        <app-reactive-input [type]="'email'" [placeholder]="'Correo'"
-                            [patternMessage]="MESSAGES.EMAIL_MESSAGE" [submitted]="submitted" [label]="'Correo'"
-                            [control]="formUser.get('email')"></app-reactive-input>
-
-                        <app-reactive-input [type]="'password'" [placeholder]="'Contraseña'"
-                            [patternMessage]="MESSAGES.MAX_PW_MESSAGE" [submitted]="submitted" [label]="'Contraseña'"
-                            [control]="formUser.get('password')"></app-reactive-input>
+                        <app-input-email [control]="formUser.get('email')" [submitted]="submitted"></app-input-email>
+                        <app-input-password [control]="formUser.get('password')" [submitted]="submitted">
+                        </app-input-password>
                     </div>
                 </div>
             </div>
         </div>
 
-
         <!-- Address data -->
         <div class="row mt-3">
-
             <div class="col-12">
                 <p class="font-weight-bold text-info mb-0">Dirección</p>
                 <hr>
             </div>
-
-            <app-regional-addresses [state]="formUser.get('state')" [municipality]="formUser.get('municipality')"
-                class="col-12">
-            </app-regional-addresses>
-
-            <div class="col-12 col-lg-6">
-                <app-reactive-input [type]="'text'" [placeholder]="'Calles / Carreras'" [submitted]="submitted"
-                    [label]="'Calles / Carreras'" [control]="formUser.get('street')">
-                </app-reactive-input>
+            <div class="col-12">
+                <app-form-regional-address [state]="formUser.get('state')" [municipality]="formUser.get('municipality')"
+                    [control]="formUser.get('street')" [submitted]="submitted"></app-form-regional-address>
             </div>
         </div>
 
@@ -75,8 +58,8 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-status-selector [label]="'Estatus'" [control]="formUser.get('status')" [submitted]="submitted">
-                </app-status-selector>
+                <app-select-status [control]="formUser.get('status')" [submitted]="submitted">
+                </app-select-status>
             </div>
         </div>
     </form>

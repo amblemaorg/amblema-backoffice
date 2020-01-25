@@ -11,7 +11,7 @@ import { STATUS } from 'src/app/helpers/status';
 })
 export class RolesFormComponent {
 
-  @Input() mode: string | null = ACTION.CREATE;
+  @Input() MODE: string | null = ACTION.CREATE;
   @Input() data: any;
 
   @Output() edit = new EventEmitter<any>();

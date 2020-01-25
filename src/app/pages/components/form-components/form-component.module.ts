@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveInputComponent } from './form-backup/reactive-form-components/reactive-input/reactive-input.component';
+
 import { ReactiveValidationComponent } from './reactive-validation/reactive-validation.component';
-import { IdDocumentComponent } from './form-backup/reactive-form-components/id-document/id-document.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NbInputModule } from '@nebular/theme';
-import { RoleSelectorComponent } from './form-backup/role-selector/role-selector.component';
-import { StatusSelectorComponent } from './form-backup/status-selector/status-selector.component';
-import { RoleSelectorNormalComponent } from './form-backup/role-selector/role.selector.normal.component';
 
 // Text Area
 import { TextAreaDescriptionComponent } from './reactive-text-area/text-area-description';
@@ -17,11 +13,23 @@ import { TextAreaMathComponent } from './reactive-text-area/text-area-math';
 import { TextAreaReadingComponent } from './reactive-text-area/text-area-reading';
 import { TextAreaCustomComponent } from './reactive-text-area/text-area-custom';
 
-// Inputs
+// Input
 import { InputNameComponent } from './reactive-input/input-name.component';
 import { InputLastNameComponent } from './reactive-input/input-last-name.component';
-import { InputCostumeComponent } from './reactive-input/input-costume.component';
 import { InputPositionComponent } from './reactive-input/input-position.component';
+import { InputDocumentComponent } from './reactive-input/input-document.component';
+import { InputPhoneComponent } from './reactive-input/input-phone.component';
+
+// Select
+import { SelectRoleComponent } from './reactive-select/select-role.component';
+import { SelectTypeComponent } from './reactive-select/select-type.component';
+import { SelectStatusComponent } from './reactive-select/select-status.component';
+
+import { FormDocumentComponent } from './shared-form/form-document/form-document.component';
+import { InputEmailComponent } from './reactive-input/input-email.component';
+import { InputPasswordComponent } from './reactive-input/input-password.component';
+import { FormRegionalAddressComponent } from './shared-form/form-regional-address/form-regional-address.component';
+import { InputCustomComponent } from './reactive-input/input-custom.component';
 
 @NgModule({
   imports: [
@@ -31,18 +39,26 @@ import { InputPositionComponent } from './reactive-input/input-position.componen
     NbInputModule
   ],
   declarations: [
-    ReactiveInputComponent,
     ReactiveValidationComponent,
-    IdDocumentComponent,
-    RoleSelectorComponent,
-    StatusSelectorComponent,
-    RoleSelectorNormalComponent,
+
+    // Forms
+    FormDocumentComponent,
+    FormRegionalAddressComponent,
 
     // Input
     InputNameComponent,
     InputLastNameComponent,
     InputPositionComponent,
-    InputCostumeComponent,
+    InputCustomComponent,
+    InputDocumentComponent,
+    InputEmailComponent,
+    InputPhoneComponent,
+    InputPasswordComponent,
+
+    // Select
+    SelectTypeComponent,
+    SelectRoleComponent,
+    SelectStatusComponent,
 
     // Text area
     TextAreaDescriptionComponent,
@@ -53,20 +69,28 @@ import { InputPositionComponent } from './reactive-input/input-position.componen
     TextAreaCustomComponent,
   ],
   exports: [
-    ReactiveInputComponent,
     ReactiveValidationComponent,
-    IdDocumentComponent,
-    RoleSelectorComponent,
-    StatusSelectorComponent,
     ReactiveFormsModule,
     FormsModule,
-    RoleSelectorNormalComponent,
+
+    // Forms
+    FormDocumentComponent,
+    FormRegionalAddressComponent,
 
     // Input
     InputNameComponent,
     InputLastNameComponent,
     InputPositionComponent,
-    InputCostumeComponent,
+    InputCustomComponent,
+    InputDocumentComponent,
+    InputEmailComponent,
+    InputPhoneComponent,
+    InputPasswordComponent,
+
+    // Select
+    SelectTypeComponent,
+    SelectRoleComponent,
+    SelectStatusComponent,
 
     // Text area
     TextAreaDescriptionComponent,

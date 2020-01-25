@@ -1,6 +1,6 @@
 <!-- Register -->
 <div class="mb-3">
-    <button class="btn btn-primary col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
+    <button class="btn btn-success col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
         (click)='MODE=ACTION.CREATE'>Registrar</button>
 </div>
 
@@ -12,6 +12,6 @@
 <!-- Modal -->
 <app-coordinators-users-form 
     [ID]="ID_FORM"
-    [mode]="MODE"
+    [MODE]="MODE"
     (create)="newData($event)"
     (edit)="updateData($event)"></app-coordinators-users-form>

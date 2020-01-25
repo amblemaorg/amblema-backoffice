@@ -1,5 +1,6 @@
 import { Input, DoCheck } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
+import { MESSAGES } from './shared/constant/validation-messages-list';
 
 export abstract class AbstractReactive implements DoCheck {
 
@@ -32,6 +33,9 @@ export abstract class AbstractReactive implements DoCheck {
     @Input() submitted: boolean | null = true; // <-- Must be in false to react it after submit
 
     validationErrors: object = null;
+
+    // Get messages by defect
+    MESSAGES = MESSAGES;
 
     ngDoCheck() {
         /**

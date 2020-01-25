@@ -94,7 +94,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
   constructor() {
     super('form-admin-user');
 
-    // Costumers columns
+    // customers columns
     this.settings.columns = {
       name: {
         title: 'Nombre',
@@ -116,7 +116,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         title: 'Estatus',
         type: 'string'
       }
-    }
+    };
   }
 
   onAction(event: any) {

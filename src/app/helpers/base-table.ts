@@ -7,7 +7,7 @@ export class BaseTable {
     ACTION = ACTION; // <-- Attr: CREATE, EDIT, VIEW and EDIT
     MODE; // <-- Create or update mode
 
-    
+
     // Settings
     source: LocalDataSource = new LocalDataSource();
     settings = {

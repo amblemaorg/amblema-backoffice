@@ -24,7 +24,7 @@ export class SelectStatusComponent extends AbstractReactiveSelect {
     readonly status: any = [{ value: 'Activo' }, { value: 'Activo' }];
 
     constructor() {
-        super(); 
+        super();
         this.control.setValidators([Validators.required]);
         this.control.setValue(this.status[0].value);
     }

@@ -2,10 +2,10 @@ import { Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { MESSAGES } from '../../components/form-components/shared/constant/validation-messages-list';
 import { ACTION } from '../../../helpers/text-crud';
 
-export abstract class BaseForm implements OnChanges {   
-    
+export abstract class BaseForm implements OnChanges {
 
-    // Behavior form    
+
+    // Behavior form
     @Input() ID: string | null = null;
     @Input() MODE: string | null = ACTION.CREATE;
     @Output() edit = new EventEmitter<any>();

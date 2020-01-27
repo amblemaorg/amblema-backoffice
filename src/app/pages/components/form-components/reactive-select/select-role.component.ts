@@ -24,7 +24,7 @@ export class SelectRoleComponent extends AbstractReactiveSelect {
     readonly roleList: any = [{ value: 'Gerente' }, { value: 'administrador' }];
 
     constructor() {
-        super(); 
+        super();
         this.control.setValidators([Validators.required]);
         this.control.setValue(this.roleList[0].value);
     }

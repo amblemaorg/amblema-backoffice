@@ -45,6 +45,11 @@ const routes: Routes = [
                         loadChildren: () => import('./main-content/web-content/web-content.module').
                         then(m => m.WebContentModule)
                     },
+                    {
+                        path: 'steps',
+                        loadChildren: () => import('./main-content/steps/steps.module').
+                        then(m => m.StepsModule)
+                    }
                 ]
             },
             // Redirect To

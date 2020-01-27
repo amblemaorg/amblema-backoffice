@@ -74,7 +74,25 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Pasos',
-        icon: 'trending-up-outline'
+        icon: 'trending-up-outline',
+        children: [
+          {
+            title: 'Generales',
+            link: '/pages/content/steps/generals'
+          },
+          {
+            title: 'Padrino',
+            link: ''
+          },
+          {
+            title: 'Coordinador',
+            link: ''
+          },
+          {
+            title: 'Escuela',
+            link: ''
+          },
+        ]
       },
       {
         title: 'Módulos de aprendizaje',

@@ -1,0 +1,20 @@
+<nb-card>
+    <nb-card-header>Generales</nb-card-header>
+    <nb-card-body>
+
+        <div class="row">
+            <div class="col">
+                <app-text-area-custom label="Encontrar una escuela" placeholder="Encontrar una escuela">
+                </app-text-area-custom>
+            </div>
+            <div class="col-auto pt-4" style="display: -webkit-box;">
+                <app-toggle [id]="'find-schools'" value="true" class="d-block mx-2"></app-toggle>
+                <div>
+                    <button class="btn btn-primary">
+                        <nb-icon icon="edit-outline"></nb-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

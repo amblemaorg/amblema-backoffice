@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StepsRoutingModule } from './steps-routing.module';
 import { StepsComponent } from './steps.component';
+import { NbIconModule } from '@nebular/theme';
 
 
 @NgModule({

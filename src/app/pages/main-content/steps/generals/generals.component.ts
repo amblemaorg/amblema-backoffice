@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-generals',
-  template: `
-    <h1>Pasos generales</h1>
-  `,
-  styles: []
+  templateUrl: './generals.component.html'
 })
 export class GeneralsComponent implements OnInit {
 

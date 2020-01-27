@@ -1,39 +1,29 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { ACTION } from 'src/app/helpers/text-crud';
-import { BaseForm } from '../../shared/base-form';
+import { DetailsForm } from '../../shared/details-form';
 
 @Component({
   selector: 'app-admin-user-form',
   templateUrl: './admin-user-form.component.html',
 })
-export class AdminUserFormComponent extends BaseForm {
+export class AdminUserFormComponent extends DetailsForm implements OnInit {
 
-  formUser: FormGroup = new FormGroup({
-    name: new FormControl(),
-    lastName: new FormControl(),
-    type: new FormControl(),
-    document: new FormControl(),
-    position: new FormControl(),
-    email: new FormControl(),
-    phone: new FormControl(),
-    password: new FormControl(),
-    role: new FormControl(),
-    status: new FormControl(),
-    state: new FormControl(),
-    municipality: new FormControl(),
-    street: new FormControl('', [Validators.required])
-  });
+  constructor(private validationService: ValidationService) { super(); }
 
-  constructor( private validationService: ValidationService ) { super(); }
+  ngOnInit(): void {
+    // Add news form control
+    this.form.addControl('position', new FormControl());
+    this.form.addControl('role', new FormControl());
+  }
 
   onSubmit() {
     this.submitted = true;
     // Working on your validated form data
-    if (this.formUser.valid) {
+    if (this.form.valid) {
       // Define act
-      if ( this.MODE === ACTION.CREATE ) {
+      if (this.MODE === ACTION.CREATE) {
 
         this.create.emit('');
 
@@ -42,7 +32,7 @@ export class AdminUserFormComponent extends BaseForm {
       }
     } else {
       // Call error messages
-      this.validationService.markAllFormFieldsAsTouched(this.formUser);
+      this.validationService.markAllFormFieldsAsTouched(this.form);
     }
   }
 }

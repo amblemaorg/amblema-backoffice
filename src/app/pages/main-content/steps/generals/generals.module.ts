@@ -6,6 +6,7 @@ import { GeneralsComponent } from './generals.component';
 import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 import { SharedComponentsModule } from 'src/app/pages/components/shared-components.module';
+import { HelpersModule } from '../_helpers/helpers.module';
 
 @NgModule({
   declarations: [GeneralsComponent],
@@ -16,6 +17,7 @@ import { SharedComponentsModule } from 'src/app/pages/components/shared-componen
     FormComponentModule,
     NbIconModule,
     SharedComponentsModule,
+    HelpersModule
   ]
 })
 export class GeneralsModule { }

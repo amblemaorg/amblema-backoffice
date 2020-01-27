@@ -1,7 +1,7 @@
 <app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
 
     <!-- Main content -->
-    <form [formGroup]="formUser" (keydown.enter)="onSubmit()" content>
+    <form [formGroup]="form" (keydown.enter)="onSubmit()" content>
 
         <!-- Personal data -->
         <div class="row">
@@ -12,29 +12,29 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-name [control]="formUser.get('name')" [submitted]="submitted"></app-input-name>
+                        <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-last-name [control]="formUser.get('lastName')" [submitted]="submitted">
+                        <app-input-last-name [control]="form.get('lastName')" [submitted]="submitted">
                         </app-input-last-name>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-position [control]="formUser.get('position')" [submitted]="submitted">
+                        <app-input-position [control]="form.get('position')" [submitted]="submitted">
                         </app-input-position>
-                        <app-select-role [control]="formUser.get('role')" [submitted]="submitted"></app-select-role>
-                        <app-input-phone [control]="formUser.get('phone')" [submitted]="submitted"></app-input-phone>
+                        <app-select-role [control]="form.get('role')" [submitted]="submitted"></app-select-role>
+                        <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
 
                     </div>
                     <div class="col-12 col-lg-6">
 
-                        <app-form-document [submitted]="submitted" [control]="formUser.get('document')"
-                            [controlSelect]="formUser.get('type')"></app-form-document>
+                        <app-form-document [submitted]="submitted" [control]="form.get('document')"
+                            [controlSelect]="form.get('type')"></app-form-document>
 
-                        <app-input-email [control]="formUser.get('email')" [submitted]="submitted"></app-input-email>
-                        <app-input-password [control]="formUser.get('password')" [submitted]="submitted">
+                        <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
+                        <app-input-password [control]="form.get('password')" [submitted]="submitted">
                         </app-input-password>
                     </div>
                 </div>
@@ -48,8 +48,8 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-form-regional-address [state]="formUser.get('state')" [municipality]="formUser.get('municipality')"
-                    [control]="formUser.get('street')" [submitted]="submitted"></app-form-regional-address>
+                <app-form-regional-address [state]="form.get('state')" [municipality]="form.get('municipality')"
+                    [control]="form.get('street')" [submitted]="submitted"></app-form-regional-address>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-select-status [control]="formUser.get('status')" [submitted]="submitted">
+                <app-select-status [control]="form.get('status')" [submitted]="submitted">
                 </app-select-status>
             </div>
         </div>

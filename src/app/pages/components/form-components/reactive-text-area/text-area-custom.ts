@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { AbstractReactive } from '../abstract-reactive';
 
 @Component({
@@ -19,4 +19,14 @@ import { AbstractReactive } from '../abstract-reactive';
     `
 })
 
-export class TextAreaCustomComponent extends AbstractReactive {}
+export class TextAreaCustomComponent extends AbstractReactive implements OnChanges {
+    @Input() state: boolean | null = false;
+
+    // This method listen changes, enable or disabled text area.
+    ngOnChanges(): void {
+        if (this.state)
+            this.control.disable();
+        else
+            this.control.enable();
+    }
+}

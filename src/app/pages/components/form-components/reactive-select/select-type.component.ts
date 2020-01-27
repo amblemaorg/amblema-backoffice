@@ -24,6 +24,6 @@ export class SelectTypeComponent extends AbstractReactiveSelect implements OnIni
     readonly types: any = [{ value: 'V' }, { value: 'J' }, { value: 'E' }]; // <-- Default values
     ngOnInit(): void {
         this.control.setValidators([Validators.required]);
-        this.control.setValue(this.types[0].value);    
+        this.control.setValue(this.types[0].value);
     }
 }

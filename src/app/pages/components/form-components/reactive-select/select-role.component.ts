@@ -26,6 +26,6 @@ export class SelectRoleComponent extends AbstractReactiveSelect implements OnIni
     ngOnInit(): void {
         this.control.setValidators([Validators.required]);
         this.control.setValue(this.roleList[0].value);
-        
+
     }
 }

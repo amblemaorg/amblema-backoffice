@@ -11,7 +11,7 @@ export class StepComponent implements OnInit {
   @Input() label: string;
   @Input() status: boolean; // <-- Content active
 
-  enableTextArea: boolean = true;
+  enableTextArea = true;
 
   constructor() { }
 

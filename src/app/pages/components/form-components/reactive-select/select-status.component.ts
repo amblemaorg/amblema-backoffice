@@ -25,6 +25,6 @@ export class SelectStatusComponent extends AbstractReactiveSelect implements OnI
     ngOnInit(): void {
         this.control.setValidators([Validators.required]);
         this.control.setValue(this.status[0].value);
-        
+
     }
 }

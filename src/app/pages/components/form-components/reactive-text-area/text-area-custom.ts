@@ -14,7 +14,8 @@ import { AbstractReactive } from '../abstract-reactive';
                 rows="5"
                 [formControl]="control"
                 [placeholder]="placeholder"></textarea>
-            <app-reactive-validation [patternMessage]='patternMsg' [validationErrors]="validationErrors"></app-reactive-validation>
+            <app-reactive-validation [patternMessage]='patternMsg'
+            [validationErrors]="validationErrors"></app-reactive-validation>
         </div>
     `
 })
@@ -24,9 +25,10 @@ export class TextAreaCustomComponent extends AbstractReactive implements OnChang
 
     // This method listen changes, enable or disabled text area.
     ngOnChanges(): void {
-        if (this.state)
+        if (this.state) {
             this.control.disable();
-        else
+        } else {
             this.control.enable();
+        }
     }
 }

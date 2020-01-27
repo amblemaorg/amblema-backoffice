@@ -6,7 +6,7 @@ const routes: Routes = [
     path: 'web',
     loadChildren: () => import('./web-content/web-content.module').
     then(m => m.WebContentModule)
-  }, 
+  },
   {
     path: 'steps',
     loadChildren: () => import('./steps/steps.module').

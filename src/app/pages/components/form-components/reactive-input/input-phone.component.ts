@@ -28,6 +28,6 @@ import { NUMBER_PATTERN } from '../shared/constant/validation-patterns-list';
 
 export class InputPhoneComponent extends AbstractReactiveInput implements OnInit {
     ngOnInit(): void {
-        this.control.setValidators([Validators.required, Validators.pattern(NUMBER_PATTERN)]);    
+        this.control.setValidators([Validators.required, Validators.pattern(NUMBER_PATTERN)]);
     }
 }

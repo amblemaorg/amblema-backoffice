@@ -14,11 +14,11 @@ const routes: Routes = [
         then(m => m.GeneralsModule)
       },
       {
-        path: 'sponsor' 
+        path: 'sponsor'
       },
       {
         path: 'coordinator'
-      }, 
+      },
       {
         path: 'school'
       }

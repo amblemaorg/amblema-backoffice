@@ -24,6 +24,6 @@ import { Validators } from '@angular/forms';
 
 export class InputCustomComponent  extends AbstractReactiveInput implements OnInit {
     ngOnInit(): void {
-        this.control.setValidators([Validators.required]);    
+        this.control.setValidators([Validators.required]);
     }
 }

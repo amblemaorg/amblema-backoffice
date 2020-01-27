@@ -25,6 +25,6 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
 })
 export class InputNameComponent extends AbstractReactiveInput implements OnInit {
   ngOnInit(): void {
-    this.control.setValidators([Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]);  
+    this.control.setValidators([Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]);
   }
 }

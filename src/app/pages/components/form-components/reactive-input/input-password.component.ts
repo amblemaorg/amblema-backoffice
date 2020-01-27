@@ -27,7 +27,7 @@ import { Validators } from '@angular/forms';
 })
 
 export class InputPasswordComponent extends AbstractReactiveInput implements OnInit {
-    ngOnInit() : void {
+    ngOnInit(): void {
         this.control.setValidators([Validators.required, Validators.maxLength(8)]);
     }
 }

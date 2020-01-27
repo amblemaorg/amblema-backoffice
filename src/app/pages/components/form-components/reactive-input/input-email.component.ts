@@ -30,6 +30,6 @@ import { EMAIL_PATTERN } from '../shared/constant/validation-patterns-list';
 
 export class InputEmailComponent extends AbstractReactiveInput implements OnInit {
     ngOnInit(): void {
-        this.control.setValidators([Validators.required, Validators.pattern(EMAIL_PATTERN)]);    
+        this.control.setValidators([Validators.required, Validators.pattern(EMAIL_PATTERN)]);
     }
 }

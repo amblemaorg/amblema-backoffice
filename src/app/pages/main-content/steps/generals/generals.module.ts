@@ -12,7 +12,7 @@ import { HelpersModule } from '../_helpers/helpers.module';
   declarations: [GeneralsComponent],
   imports: [
     CommonModule,
-    GeneralsRoutingModule, 
+    GeneralsRoutingModule,
     NbCardModule,
     FormComponentModule,
     NbIconModule,

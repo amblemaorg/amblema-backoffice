@@ -5,7 +5,7 @@ import { AbstractReactive } from '../../form-components/abstract-reactive';
   selector: 'app-toggle',
   template: `
     <div class="custom-control custom-switch">
-      <input type="checkbox" class="custom-control-input" 
+      <input type="checkbox" class="custom-control-input"
         [formControl]="control"
         [checked]="value"
         [id]="id"

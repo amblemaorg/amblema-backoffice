@@ -11,7 +11,7 @@ export class SlideFormComponent {
   @Input() data: any = []; // <!-- To update slider
 
   mode = 'CREATE'; // <-- Use a constant
-  
+
   formSlide: FormGroup = new FormGroup({
     description: new FormControl('', [])
     // slider <-- Form Control when you have it

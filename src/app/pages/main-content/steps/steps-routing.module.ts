@@ -14,7 +14,9 @@ const routes: Routes = [
         then(m => m.GeneralsModule)
       },
       {
-        path: 'sponsor'
+        path: 'sponsor',
+        loadChildren: () => import('./sponsor/sponsor.module').
+        then(m => m.SponsorModule)
       },
       {
         path: 'coordinator'

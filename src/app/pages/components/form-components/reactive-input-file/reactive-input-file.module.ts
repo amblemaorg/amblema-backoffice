@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputImgComponent } from './input-img/input-img.component';
+import { InputFileComponent } from './input-file/input-file.component';
+import { NbIconModule } from '@nebular/theme';
 
 @NgModule({
-  declarations: [ InputImgComponent ],
+  declarations: [ InputImgComponent, InputFileComponent ],
   imports: [
-    CommonModule
+    CommonModule,
+    NbIconModule
   ],
   exports: [
-    InputImgComponent
+    InputImgComponent,
+    InputFileComponent
   ]
 })
 export class ReactiveInputFileModule { }

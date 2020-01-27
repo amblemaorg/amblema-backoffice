@@ -1,31 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AbstractStep } from '../abstract-step';
 
 @Component({
   selector: 'app-step',
   templateUrl: './step.component.html',
   styles: []
 })
-export class StepComponent implements OnInit {
+export class StepComponent extends AbstractStep implements OnInit {
 
-  @Input() id: string;
-  @Input() label: string;
-  @Input() status: boolean; // <-- Content active
-
-  enableTextArea = true;
-
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
   }
 
   onClick() {
-
     this.enableTextArea = !this.enableTextArea;
-    // False save
-
-    //  True edit
-
   }
-
-
 }

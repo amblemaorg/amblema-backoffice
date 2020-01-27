@@ -82,7 +82,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
           },
           {
             title: 'Padrino',
-            link: ''
+            link: '/pages/content/steps/sponsor'
           },
           {
             title: 'Coordinador',

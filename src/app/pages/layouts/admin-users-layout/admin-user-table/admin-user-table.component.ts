@@ -109,7 +109,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         type: 'string'
       },
       role: {
-        title: 'Role',
+        title: 'Rol',
         type: 'string'
       },
       status: {

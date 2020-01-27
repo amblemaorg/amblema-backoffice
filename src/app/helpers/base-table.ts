@@ -5,12 +5,11 @@ export class BaseTable {
 
     ID_FORM: string; // <-- To relate it to some form
     ACTION = ACTION; // <-- Attr: CREATE, EDIT, VIEW and EDIT
-
     MODE; // <-- Create or update mode
 
-    // Settings table
+    
+    // Settings
     source: LocalDataSource = new LocalDataSource();
-
     settings = {
         noDataMessage: 'No hay registros',
         mode: 'external',

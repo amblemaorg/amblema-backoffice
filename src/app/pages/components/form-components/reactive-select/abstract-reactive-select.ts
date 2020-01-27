@@ -4,8 +4,6 @@ import { Output, EventEmitter } from '@angular/core';
 export class AbstractReactiveSelect extends AbstractReactive {
     @Output() onselected = new EventEmitter<any>(); // <-- Event emitter
 
-    // OnSelected value
-    onChange(value: any) {
-        this.onselected.emit(value); } // <-- Emitter value if change
+    onChange(value: any) { this.onselected.emit(value); } // <-- Emitter value if change
 }
 

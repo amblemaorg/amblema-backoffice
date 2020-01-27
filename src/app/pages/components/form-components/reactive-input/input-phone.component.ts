@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
 import { Validators } from '@angular/forms';
 import { NUMBER_PATTERN } from '../shared/constant/validation-patterns-list';
@@ -26,9 +26,9 @@ import { NUMBER_PATTERN } from '../shared/constant/validation-patterns-list';
     `
 })
 
-export class InputPhoneComponent extends AbstractReactiveInput implements OnInit {
-
-    ngOnInit() {
+export class InputPhoneComponent extends AbstractReactiveInput {
+    constructor() {
+        super();
         this.control.setValidators([Validators.required, Validators.pattern(NUMBER_PATTERN)]);
     }
 }

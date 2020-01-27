@@ -4,7 +4,18 @@ import { AbstractControl, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-form-document',
-    templateUrl: './form-document.component.html'
+    template: `
+    <div class="row">
+
+        <div class="col">
+            <app-select-type [control]='controlSelect' [submitted]="submitted" (onselected)='onChangeDocument($event)'></app-select-type>
+        </div>
+
+        <div class="col-7">
+            <app-input-document [control]='control' [submitted]="submitted" [patternMsg]="message"></app-input-document>
+        </div>
+    </div>
+    `
 })
 export class FormDocumentComponent extends AbstractReactive {
     @Input() controlSelect: AbstractControl | null = new FormControl();

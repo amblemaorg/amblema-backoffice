@@ -3,8 +3,13 @@ import { MESSAGES } from '../shared/constant/validation-messages-list';
 
 @Component({
   selector: 'app-reactive-validation',
-  templateUrl: './reactive-validation.component.html',
-  styleUrls: ['./reactive-validation.component.scss']
+  template: `
+    <ng-container *ngIf="errorMessage">
+      <div class="alert alert-primary">
+        <strong> {{errorMessage}} </strong>
+      </div>
+    </ng-container>
+  `
 })
 export class ReactiveValidationComponent implements OnChanges {
 

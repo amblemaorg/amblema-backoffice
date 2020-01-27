@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
 import { Validators } from '@angular/forms';
 
@@ -22,8 +22,9 @@ import { Validators } from '@angular/forms';
         </div>`
 })
 
-export class InputCustomComponent  extends AbstractReactiveInput implements OnInit {
-    ngOnInit(): void {
+export class InputCustomComponent  extends AbstractReactiveInput {
+    constructor() {
+        super();
         this.control.setValidators([Validators.required]);
     }
 }

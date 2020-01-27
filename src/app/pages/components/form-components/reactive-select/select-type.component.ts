@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
 import { Validators } from '@angular/forms';
 
@@ -20,10 +20,11 @@ import { Validators } from '@angular/forms';
         </div>
     `
 })
-export class SelectTypeComponent extends AbstractReactiveSelect implements OnInit  {
+export class SelectTypeComponent extends AbstractReactiveSelect  {
     readonly types: any = [{ value: 'V' }, { value: 'J' }, { value: 'E' }]; // <-- Default values
 
-    ngOnInit(): void {
+    constructor() {
+        super();
         this.control.setValidators([Validators.required]);
         this.control.setValue(this.types[0].value);
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
 import { Validators } from '@angular/forms';
 import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list';
@@ -25,8 +25,9 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
     </div>
   `
 })
-export class InputLastNameComponent extends AbstractReactiveInput implements OnInit {
-    ngOnInit(): void {
+export class InputLastNameComponent extends AbstractReactiveInput {
+    constructor() {
+      super();
       this.control.setValidators([Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]);
     }
 }

@@ -1,11 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { BaseForm } from '../../shared/base-form';
-import {
-  NORMAL_TEXT_PATTERN,
-  EMAIL_PATTERN,
-  NUMBER_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 
 @Component({
   selector: 'app-schools-users-form',

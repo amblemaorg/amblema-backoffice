@@ -23,6 +23,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     ];
 
     ngOnInit(): void {
+        // Init values.
         this.state.setValue(this.statesData[0].value);
         this.municipality.setValue(this.municipalityData[0].value);
     }

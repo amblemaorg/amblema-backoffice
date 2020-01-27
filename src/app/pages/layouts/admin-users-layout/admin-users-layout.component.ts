@@ -16,6 +16,4 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class AdminUsersLayoutComponent {
-
-}
+export class AdminUsersLayoutComponent {}

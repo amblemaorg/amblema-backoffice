@@ -49,6 +49,11 @@ const routes: Routes = [
                         path: 'steps',
                         loadChildren: () => import('./main-content/steps/steps.module').
                         then(m => m.StepsModule)
+                    },
+                    {
+                        path: 'learning',
+                        loadChildren: () => import('./main-content/learning/learning.module').
+                        then(m => m.LearningModule)
                     }
                 ]
             },

@@ -20,3 +20,10 @@ ng2-smart-table {
         }
     }
 }
+
+// Reset bootstrap button
+button {
+    &:focus {
+        outline: none!important;
+    }
+}

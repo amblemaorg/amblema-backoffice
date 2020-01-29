@@ -96,7 +96,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Módulos de aprendizaje',
-        icon: 'book-open-outline'
+        icon: 'book-open-outline',
+        link: '/pages/content/learning'
       },
       {
         title: 'Configuración del Peca',

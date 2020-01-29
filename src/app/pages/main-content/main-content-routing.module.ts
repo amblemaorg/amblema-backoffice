@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('./steps/steps.module').
     then(m => m.StepsModule)
   },
+  {
+    path: 'learning',
+    loadChildren: () => import('./learning/learning.module').
+    then(m => m.LearningModule)
+  },
 ];
 
 @NgModule({

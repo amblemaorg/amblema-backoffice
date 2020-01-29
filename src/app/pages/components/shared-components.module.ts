@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from './shared/modal/modal.component';
 import { ToggleComponent } from './shared/toggle/toggle.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalStepperComponent } from './shared/modal-stepper/modal-stepper.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ModalComponent,
     ToggleComponent,
+    ModalStepperComponent,
   ],
   exports: [
     ModalComponent,
@@ -20,7 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
     // Temporal calls
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ModalStepperComponent
   ]
 })
 export class SharedComponentsModule { }

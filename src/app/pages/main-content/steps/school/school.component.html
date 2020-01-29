@@ -1,0 +1,13 @@
+<nb-card>
+    <nb-card-header>Escuela</nb-card-header>
+    <nb-card-body>
+        <app-step [label]="'Presentación del padrino'" [id]="'presentation-sponsor'"></app-step>
+        <app-step [label]="'Rellenar ficha del padrino'" [id]="'full-form'"></app-step>
+        <app-step [label]="'Convenio Padrino - Escuela'" [id]="'agreement-sponsor-school'"></app-step>
+        <app-step-file [label]="'Convenio Escuela - Fundación'" [id]="'agreement-school-fundation'"></app-step-file>
+        <app-step-file [label]="'Conformación de AmbleMa'" [id]="amblema-education"></app-step-file>
+    </nb-card-body>
+    <nb-card-footer class="text-right">
+        <button class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
+    </nb-card-footer>
+</nb-card>

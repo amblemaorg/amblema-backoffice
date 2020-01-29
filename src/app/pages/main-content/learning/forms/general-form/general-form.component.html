@@ -1,0 +1,29 @@
+<form>
+    <div class="row form-group">
+        <div class="col-12">
+            <app-input-custom [label]="'Titulo del módulo'" [placeholder]="'Titulo del módulo'" [submitted]="submitted">
+            </app-input-custom>
+        </div>
+        <div class="col-12">
+            <app-text-area-custom [label]="'Descripción general'" [placeholder]="'Descripción general'"
+                [submitted]="submitted"></app-text-area-custom>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <!-- <app-input-custom [label]="'Timer'" [placeholder]="'Timer'" [submitted]="submitted"></app-input-custom> -->
+            <label for="">Timer</label>
+            <input type="time" class="form-control">
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <app-input-custom [label]="'Puntuación'" [placeholder]="'Puntuación'" [submitted]="submitted">
+            </app-input-custom>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <app-input-custom [label]="'Objetivos'" [placeholder]="'Objetivos'" [submitted]="submitted">
+            </app-input-custom>
+        </div>
+
+    </div>
+</form>

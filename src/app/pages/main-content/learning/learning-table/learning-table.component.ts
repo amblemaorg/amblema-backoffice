@@ -6,7 +6,7 @@ declare var $: any;
 @Component({
   selector: 'app-learning-table',
   templateUrl: './learning-table.component.html',
-  styles: []
+  styles: [``]
 })
 export class LearningTableComponent extends BaseTable implements TableActions {
 

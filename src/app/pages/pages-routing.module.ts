@@ -54,6 +54,11 @@ const routes: Routes = [
                         path: 'learning',
                         loadChildren: () => import('./main-content/learning/learning.module').
                         then(m => m.LearningModule)
+                    },
+                    {
+                        path: 'peca-setting',
+                        loadChildren: () => import('./main-content/peca-setting/peca-setting.module').
+                        then(m => m.PecaSettingModule)
                     }
                 ]
             },

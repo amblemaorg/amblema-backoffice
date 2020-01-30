@@ -95,14 +95,55 @@ export const MENU_ITEMS: NbMenuItem[] = [
         ]
       },
       {
+        title: 'Ajustes del Peca',
+        icon: 'settings-2-outline',
+        children: [
+          {
+            title: 'Lapso 1',
+            children: [
+              {
+                title: 'Taller inicial',
+                link: '/pages/content/peca-setting/workshop'
+              },
+              { title: 'Planificación del lapso' },
+              { title: 'Venezuela megadiversa' },
+              { title: 'AmbLeMonedas' },
+              { title: 'Convención anual' },
+            ]
+          },
+          {
+            title: 'Lapso 2',
+            children: [
+              { title: 'Taller inicial' },
+              { title: 'Planificación del lapso' },
+              { title: 'Venezuela megadiversa' },
+              { title: 'AmbLeMonedas' },
+              { title: 'Convención anual' },
+            ]
+          },
+          {
+            title: 'Lapso 3',
+            children: [
+              { title: 'Taller inicial' },
+              { title: 'Planificación del lapso' },
+              { title: 'Venezuela megadiversa' },
+              { title: 'AmbLeMonedas' },
+              { title: 'Convención anual' },
+            ]
+          },
+          {
+            title: 'Estrategias de actividades'
+          },
+          {
+            title: 'Administración de opciones y año escolar'
+          }
+        ],
+      },
+      {
         title: 'Módulos de aprendizaje',
         icon: 'book-open-outline',
         link: '/pages/content/learning'
       },
-      {
-        title: 'Configuración del Peca',
-        icon: 'settings-2-outline'
-      }
     ]
   },
   {

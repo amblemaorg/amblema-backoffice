@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ReactiveValidationComponent } from './reactive-validation/reactive-validation.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NbInputModule } from '@nebular/theme';
+import { NbInputModule, NbIconModule } from '@nebular/theme';
 
 // Text Area
 import { TextAreaDescriptionComponent } from './reactive-text-area/text-area-description';
@@ -33,6 +33,9 @@ import { InputCustomComponent } from './reactive-input/input-custom.component';
 import { FormSliderComponent } from './shared-form/form-slider/form-slider.component';
 import { ReactiveInputFileModule } from './reactive-input-file/reactive-input-file.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FormSimpleStepComponent } from './shared-form/form-step/form-simple-step/form-simple-step.component';
+import { FormFileStepComponent } from './shared-form/form-step/form-file-step/form-file-step.component';
+import { SharedComponentsModule } from '../shared-components.module';
 
 @NgModule({
   imports: [
@@ -41,7 +44,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     FormsModule,
     NbInputModule,
     ReactiveInputFileModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    SharedComponentsModule,
+    NbIconModule
   ],
   declarations: [
     ReactiveValidationComponent,
@@ -50,6 +55,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     FormDocumentComponent,
     FormRegionalAddressComponent,
     FormSliderComponent,
+    FormSimpleStepComponent,
+    FormFileStepComponent,
 
     // Input
     InputNameComponent,
@@ -83,6 +90,10 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     FormDocumentComponent,
     FormRegionalAddressComponent,
     FormSliderComponent,
+    FormSimpleStepComponent,
+    FormFileStepComponent,
+    FormSimpleStepComponent,
+    FormFileStepComponent,
 
     // Input
     InputNameComponent,

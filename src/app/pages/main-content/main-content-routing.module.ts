@@ -17,6 +17,11 @@ const routes: Routes = [
     loadChildren: () => import('./learning/learning.module').
     then(m => m.LearningModule)
   },
+  {
+    path: 'setting',
+    loadChildren: () => import('./peca-setting/peca-setting.module').
+    then(m => m.PecaSettingModule)
+  }
 ];
 
 @NgModule({

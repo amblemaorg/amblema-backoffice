@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class QuizzFormComponent implements OnInit {
 
   submitted = false;
-  
+
   constructor() { }
 
   ngOnInit() {

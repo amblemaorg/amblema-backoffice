@@ -4,12 +4,13 @@ import { ModalComponent } from './shared/modal/modal.component';
 import { ToggleComponent } from './shared/toggle/toggle.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalStepperComponent } from './shared/modal-stepper/modal-stepper.component';
+import { NbIconModule } from '@nebular/theme';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   declarations: [
     ModalComponent,

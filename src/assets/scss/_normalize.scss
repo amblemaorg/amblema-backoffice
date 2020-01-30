@@ -2,12 +2,27 @@
 @import './animations';
 @import './variables';
 
+// Menu
+
+nb-menu {
+    a {
+        span {
+            // Break line
+            &:only-child {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
 // Smart table
 
 ng2-smart-table {
     td {
         &:first-child { min-width: 150px; }
     }
+    // This is for adapta the custom actions
     .ng2-smart-actions {
         ng2-st-tbody-custom { 
             position: absolute;
@@ -22,6 +37,7 @@ ng2-smart-table {
 }
 
 // Reset bootstrap button
+// Remove focus outline
 button {
     &:focus {
         outline: none!important;
@@ -29,6 +45,7 @@ button {
 }
 
 // Stepper component 
+// Content the content components
 .step-content { 
     position: relative;
     overflow: auto;

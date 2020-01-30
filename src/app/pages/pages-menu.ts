@@ -1,4 +1,5 @@
 import { NbMenuItem } from '@nebular/theme';
+import { link } from 'fs';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -15,7 +16,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Administrar',
         link: '/pages/admin-users',
       },
-      { title: 'Roles',
+      {
+        title: 'Roles',
         link: '/pages/permissions'
       }
     ]
@@ -105,34 +107,67 @@ export const MENU_ITEMS: NbMenuItem[] = [
                 title: 'Taller inicial',
                 link: '/pages/content/peca-setting/workshop'
               },
-              { title: 'Planificación del lapso' },
+              {
+                title: 'Planificación del lapso',
+                link: '/pages/content/peca-setting/lapse'
+              },
               { title: 'Venezuela megadiversa' },
-              { title: 'AmbLeMonedas' },
-              { title: 'Convención anual' },
+              {
+                title: 'AmbLeMonedas',
+                link: '/pages/content/peca-setting/coins'
+              },
+              {
+                title: 'Convención anual',
+                link: '/pages/content/peca-setting/convention'
+              },
             ]
           },
           {
             title: 'Lapso 2',
             children: [
-              { title: 'Taller inicial' },
-              { title: 'Planificación del lapso' },
+              {
+                title: 'Taller inicial',
+                link: '/pages/content/peca-setting/workshop'
+              },
+              {
+                title: 'Planificación del lapso',
+                link: '/pages/content/peca-setting/lapse'
+              },
               { title: 'Venezuela megadiversa' },
-              { title: 'AmbLeMonedas' },
-              { title: 'Convención anual' },
+              {
+                title: 'AmbLeMonedas',
+                link: '/pages/content/peca-setting/coins'
+              },
+              {
+                title: 'Convención anual',
+                link: '/pages/content/peca-setting/convention'
+              },
             ]
           },
           {
             title: 'Lapso 3',
             children: [
-              { title: 'Taller inicial' },
-              { title: 'Planificación del lapso' },
+              {
+                title: 'Taller inicial',
+                link: '/pages/content/peca-setting/workshop-2'
+              },
+              { title: 'Planificación del lapso',
+                link: '/pages/content/peca-setting/lapse-2'
+              },
               { title: 'Venezuela megadiversa' },
-              { title: 'AmbLeMonedas' },
-              { title: 'Convención anual' },
+              {
+                title: 'AmbLeMonedas',
+                link: '/pages/content/peca-setting/coins-2'
+              },
+              {
+                title: 'Convención anual',
+                link: '/pages/content/peca-setting/convention-2'
+              },
             ]
           },
           {
-            title: 'Estrategias de actividades'
+            title: 'Estrategias de actividades',
+            link: '/pages/content/peca-setting/activity-strategies',
           },
           {
             title: 'Administración de opciones y año escolar'

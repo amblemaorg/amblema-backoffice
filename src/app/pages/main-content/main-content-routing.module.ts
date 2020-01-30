@@ -18,10 +18,10 @@ const routes: Routes = [
     then(m => m.LearningModule)
   },
   {
-    path: 'setting',
+    path: 'peca-setting',
     loadChildren: () => import('./peca-setting/peca-setting.module').
     then(m => m.PecaSettingModule)
-  }
+  },
 ];
 
 @NgModule({

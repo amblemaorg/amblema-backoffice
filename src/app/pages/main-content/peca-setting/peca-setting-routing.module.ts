@@ -12,6 +12,26 @@ const routes: Routes = [
         loadChildren: () => import('./workshop/workshop.module').
         then(m => m.WorkshopModule)
       },
+      {
+        path: 'lapse',
+        loadChildren: () => import('./lapse/lapse.module').
+        then(m => m.LapseModule)
+      },
+      {
+        path: 'coins',
+        loadChildren: () => import('./coins/coins.module').
+        then(m => m.CoinsModule)
+      },
+      {
+        path: 'convention',
+        loadChildren: () => import('./convention/convention.module').
+        then(m => m.ConventionModule)
+      },
+      {
+        path: 'activity-strategies',
+        loadChildren: () => import('./activity-strategies/activity-strategies.module').
+        then(m => m.ActivityStrategiesModule)
+      }
     ]
   }
 ];

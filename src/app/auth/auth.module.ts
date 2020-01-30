@@ -47,7 +47,9 @@ import { HttpClientModule } from '@angular/common/http';
             redirect: {
               success: '/pages/dashboard',
               failure: null
-            }
+            },
+            defaultErrors: ['La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente.'],
+            defaultMessages: ['Has ingresado exitosamente.'],
           },
         })
       ],

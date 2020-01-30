@@ -8,18 +8,15 @@
             <app-text-area-custom [label]="'Descripción general'" [placeholder]="'Descripción general'"
                 [submitted]="submitted"></app-text-area-custom>
         </div>
-
-        <div class="col-12 col-lg-6">
-            <!-- <app-input-custom [label]="'Timer'" [placeholder]="'Timer'" [submitted]="submitted"></app-input-custom> -->
-            <label for="">Timer</label>
-            <input type="time" class="form-control">
+        <div class="col-12 col-lg-6 form-group">
+            <label class="label">Timer</label>
+            <input type="text" class="form-control" fullWidth nbInput mask="99:99" placeholder="HH:MM"
+                aria-label="Telephone number 10 digits only">
         </div>
-
         <div class="col-12 col-lg-6">
             <app-input-custom [label]="'Puntuación'" [placeholder]="'Puntuación'" [submitted]="submitted">
             </app-input-custom>
         </div>
-
         <div class="col-12 col-lg-6">
             <app-input-custom [label]="'Objetivos'" [placeholder]="'Objetivos'" [submitted]="submitted">
             </app-input-custom>

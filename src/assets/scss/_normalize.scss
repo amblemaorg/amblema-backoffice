@@ -27,3 +27,9 @@ button {
         outline: none!important;
     }
 }
+
+// Stepper component 
+.step-content { 
+    position: relative;
+    overflow: auto;
+    width: 100%; }

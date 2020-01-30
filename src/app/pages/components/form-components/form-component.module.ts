@@ -30,13 +30,18 @@ import { InputEmailComponent } from './reactive-input/input-email.component';
 import { InputPasswordComponent } from './reactive-input/input-password.component';
 import { FormRegionalAddressComponent } from './shared-form/form-regional-address/form-regional-address.component';
 import { InputCustomComponent } from './reactive-input/input-custom.component';
+import { FormSliderComponent } from './shared-form/form-slider/form-slider.component';
+import { ReactiveInputFileModule } from './reactive-input-file/reactive-input-file.module';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NbInputModule
+    NbInputModule,
+    ReactiveInputFileModule,
+    Ng2SmartTableModule
   ],
   declarations: [
     ReactiveValidationComponent,
@@ -44,6 +49,7 @@ import { InputCustomComponent } from './reactive-input/input-custom.component';
     // Forms
     FormDocumentComponent,
     FormRegionalAddressComponent,
+    FormSliderComponent,
 
     // Input
     InputNameComponent,
@@ -76,6 +82,7 @@ import { InputCustomComponent } from './reactive-input/input-custom.component';
     // Forms
     FormDocumentComponent,
     FormRegionalAddressComponent,
+    FormSliderComponent,
 
     // Input
     InputNameComponent,

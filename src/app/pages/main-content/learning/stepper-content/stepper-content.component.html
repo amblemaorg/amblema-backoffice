@@ -1,31 +1,32 @@
-<nb-stepper orientation="horizontal" disableStepNavigation>
-    
+<nb-stepper [orientation]="orientation" disableStepNavigation>
+
     <!-- Fist step -->
     <nb-step [label]="labelOne">
         <ng-template #labelOne>
-            <div class="text-center">
+            <div class="text-center" *ngIf="titleStep">
                 Información<br> general <br>del módulo
             </div>
         </ng-template>
-        <app-general-form>
-            
-        </app-general-form>
+        <h4 *ngIf="!titleStep">Información general del módulo</h4>
+        <hr *ngIf="!titleStep">
+        <app-general-form></app-general-form>
         <div class="text-center">
-            <button class="next-button btn-success btn col-12 col-lg-auto" nbButton nbStepperNext>Siguiente
+            <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>Siguiente
                 <nb-icon icon="arrow-forward-outline"></nb-icon>
             </button>
         </div>
     </nb-step> <!-- / End -->
 
-
+    <!-- Second step -->
     <nb-step [label]="labelTwo">
-        <ng-template #labelTwo>Contenido multimedia principal</ng-template>
-        <h4>Step content #2</h4>
-        <p class="lorem">
-            Lorizzle ipsum dolizzle stuff fizzle, consectetuer adipiscing break it down.
-            Nullizzle sapien velizzle, my shizz pimpin', shizzle my nizzle crocodizzle shut the shizzle up,
-            gravida vizzle, dang.
-        </p>
+        <ng-template #labelTwo>
+            <div *ngIf="titleStep">
+                Contenido multimedia principal
+            </div>
+        </ng-template>
+        <h4 *ngIf="!titleStep">Contenido multimedia principal</h4>
+        <hr *ngIf="!titleStep">
+        <app-general-media-form></app-general-media-form>
         <div class="text-center row d-flex justify-content-center">
             <div class="col-6 col-lg-auto">
                 <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
@@ -34,46 +35,48 @@
                 </button>
             </div>
             <div class="col-6 col-lg-auto">
-                <button class="next-button" class="btn-block btn btn-success" nbButton nbStepperNext>Siguiente
+                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>Siguiente
                     <nb-icon icon="arrow-forward-outline"></nb-icon>
                 </button>
             </div>
         </div>
-    </nb-step>
-    <nb-step [label]="labelThree">
-        <ng-template #labelThree>Titulo secundario</ng-template>
-        <p class="lorem">
-            Lorizzle ipsum dolizzle stuff fizzle, consectetuer adipiscing break it down.
-            Nullizzle sapien velizzle, my shizz pimpin', shizzle my nizzle crocodizzle shut the shizzle up,
-            gravida vizzle, dang.
-        </p>
-        <div class="text-center row d-flex justify-content-center">
-            <div class="col-6 col-lg-auto">
-                <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
-                    <nb-icon icon="arrow-back-outline"></nb-icon>
-                    Atrás
-                </button>
-            </div>
-            <div class="col-6 col-lg-auto">
-                <button class="next-button" class="btn-block btn btn-success" nbButton nbStepperNext>Siguiente
-                    <nb-icon icon="arrow-forward-outline"></nb-icon>
-                </button>
-            </div>
-        </div>
-    </nb-step>
+    </nb-step><!-- / End -->
 
+    <!-- Three step -->
+    <nb-step [label]="labelThree">
+        <ng-template #labelThree>
+            <div *ngIf="titleStep">
+                Titulo secundario
+            </div>
+        </ng-template>
+        <h4 *ngIf="!titleStep">Titulo secundario</h4>
+        <hr *ngIf="!titleStep">
+        <app-secondary-form></app-secondary-form>
+        <div class="text-center row d-flex justify-content-center">
+            <div class="col-6 col-lg-auto">
+                <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
+                    <nb-icon icon="arrow-back-outline"></nb-icon>
+                    Atrás
+                </button>
+            </div>
+            <div class="col-6 col-lg-auto">
+                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>Siguiente
+                    <nb-icon icon="arrow-forward-outline"></nb-icon>
+                </button>
+            </div>
+        </div>
+    </nb-step><!-- / End -->
+
+    <!-- Four step -->
     <nb-step [label]="labelFour">
         <ng-template #labelFour>
-            <div class="text-center">
+            <div class="text-center" *ngIf="titleStep">
                 Contenido multimedia secundario
             </div>
         </ng-template>
-        <h4>Step content #4</h4>
-        <p class="lorem">
-            Lorizzle ipsum dolizzle stuff fizzle, consectetuer adipiscing break it down.
-            Nullizzle sapien velizzle, my shizz pimpin', shizzle my nizzle crocodizzle shut the shizzle up,
-            gravida vizzle, dang.
-        </p>
+        <h4 *ngIf="!titleStep">Contenido multimedia secundario</h4>
+        <hr *ngIf="!titleStep">
+        <app-secondary-media-form></app-secondary-media-form>
         <div class="text-center row d-flex justify-content-center">
             <div class="col-6 col-lg-auto">
                 <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
@@ -82,21 +85,41 @@
                 </button>
             </div>
             <div class="col-6 col-lg-auto">
-                <button class="next-button" class="btn-block btn btn-success" nbButton nbStepperNext>Siguiente
+                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>Siguiente
                     <nb-icon icon="arrow-forward-outline"></nb-icon>
                 </button>
             </div>
         </div>
-    </nb-step>
+    </nb-step><!-- / End -->
 
+    <!-- Five step -->
     <nb-step [label]="labelFive">
         <ng-template #labelFive>
-            <div class="text-center">Quizz</div>
+            <div class="text-center" *ngIf="titleStep">Quizz</div>
         </ng-template>
-        <div class="text-center">
-            <button class="next-button btn-success btn col-12 col-lg-auto" nbButton nbStepperNext>Guardar
-                <nb-icon icon="save-outline"></nb-icon>
-            </button>
+        <h4 *ngIf="!titleStep">Quizz</h4>
+        <hr *ngIf="!titleStep">
+        <app-quizz-form></app-quizz-form>
+        <div class="text-center row d-flex justify-content-center">
+            <div class="col-6 col-lg-auto">
+                <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
+                    <nb-icon icon="arrow-back-outline"></nb-icon>
+                    Atrás
+                </button>
+            </div>
+            <div class="col-6 col-lg-auto">
+                <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>Guardar
+                    <nb-icon icon="save-outline"></nb-icon>
+                </button>
+            </div>
         </div>
-    </nb-step>
+    </nb-step><!-- / End -->
+
+    <!-- Final step -->
+    <nb-step [hidden]="true">
+        <div class="step-container text-center">
+            <h3>Registro guardado exitosamente</h3>
+            <button class="btn btn btn-primary">Finalizar realizar </button>
+        </div>
+    </nb-step><!-- / End -->
 </nb-stepper>

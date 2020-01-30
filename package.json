@@ -39,6 +39,7 @@
     "nebular-icons": "^1.1.0",
     "ng2-completer": "^3.0.3",
     "ng2-smart-table": "^1.5.0",
+    "ngx-mask": "^8.1.7",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

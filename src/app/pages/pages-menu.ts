@@ -170,7 +170,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
             link: '/pages/content/peca-setting/activity-strategies',
           },
           {
-            title: 'Administración de opciones y año escolar'
+            title: 'Administración de lapsos y de años escolares',
+            icon: 'options-2-outline',
+            children: [
+              {
+                title: 'Lapsos',
+                link: ''
+              },
+              {
+                title: 'Años escolares',
+                link: '/pages/content/peca-setting/admin-year',
+              }
+            ]
           }
         ],
       },

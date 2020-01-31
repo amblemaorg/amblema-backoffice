@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractReactive } from '../../form-components/abstract-reactive';
 
 @Component({

@@ -31,6 +31,11 @@ const routes: Routes = [
         path: 'activity-strategies',
         loadChildren: () => import('./activity-strategies/activity-strategies.module').
         then(m => m.ActivityStrategiesModule)
+      },
+      {
+        path: 'admin-year',
+        loadChildren: () => import('./admin-year-lapses/admin-year/admin-year.module').
+        then(m => m.AdminYearModule)
       }
     ]
   }

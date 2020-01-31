@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
 import { Validators } from '@angular/forms';
+import { STATUS } from 'src/app/helpers/status';
 
 @Component({
     selector: 'app-select-status',
@@ -20,7 +21,8 @@ import { Validators } from '@angular/forms';
     `
 })
 export class SelectStatusComponent extends AbstractReactiveSelect implements OnInit {
-    readonly status: any = [{ value: 'Activo' }, { value: 'Activo' }];
+
+    readonly status: any = [{ value: STATUS.ACTIVE }, { value: STATUS.INACTIVE }];
 
     ngOnInit(): void {
         this.control.setValidators([Validators.required]);

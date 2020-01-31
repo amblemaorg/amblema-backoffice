@@ -7,18 +7,18 @@ declare var $: any;
 @Component({
   selector: 'app-schools-users-table',
   templateUrl: './schools-users-table.component.html',
-  styleUrls: ['./schools-users-table.component.scss']
 })
 export class SchoolsUsersTableComponent extends BaseTable implements TableActions, OnInit {
 
-
-  data: any = [{
-    name: 'La escuelita',
-    id: '234234DD',
-    email: 'escuela@gmail.com',
-    address: 'Lara',
-    status: 'Activa'
-  }];
+  data: any = [
+    {
+      name: 'La escuelita',
+      id: '234234DD',
+      email: 'escuela@gmail.com',
+      address: 'Lara',
+      status: 'Activa'
+    }
+  ];
 
   constructor() {
     super('form-schools');
@@ -64,13 +64,7 @@ export class SchoolsUsersTableComponent extends BaseTable implements TableAction
         break;
     }
   }
-
-  newData(data: any) {
-
-  }
-
-  updateData(data: any) {
-
-  }
-
+  newData(data: any): void {}
+  updateData(data: any): void {}
+  deleteData(data: any): void {}
 }

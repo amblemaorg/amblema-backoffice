@@ -16,14 +16,9 @@ export abstract class AbstractReactive implements DoCheck {
      */
     @Input() control: AbstractControl | null = new FormControl(); // <-- Set form control if null
 
-    /**
-     * Add label or not
-     */
     @Input() label: string | null =  '';
 
-    /**
-     * Custom message pattern
-     */
+    // Custom pattern message
     @Input() patternMsg: string | null = 'Formato no valido';
 
     @Input() placeholder: string | null = '';

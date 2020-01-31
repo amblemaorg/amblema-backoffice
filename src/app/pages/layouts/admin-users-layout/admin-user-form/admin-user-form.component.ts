@@ -20,18 +20,19 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
     // Working on your validated form data
     if (this.form.valid) {
-      // Define act
+
+      // Mode
       if (this.MODE === ACTION.CREATE) {
-
         this.create.emit('');
-
       } else {
         this.edit.emit('');
       }
     } else {
-      // Call error messages
+
+      // call error
       this.validationService.markAllFormFieldsAsTouched(this.form);
     }
   }

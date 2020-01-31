@@ -20,9 +20,9 @@ export class ReactiveValidationComponent implements OnChanges {
    */
   @Input() validationErrors: object | null = null;
 
-  //
   @Input() patternMessage: string | null = null;
 
+  // Message error return
   errorMessage: string | null = null;
 
   /**

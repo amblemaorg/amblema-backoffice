@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
         <nb-card>
           <nb-card-header>Usuarios administradores</nb-card-header>
           <nb-card-body>
-              <!-- Table -->
               <app-admin-user-table></app-admin-user-table>
           </nb-card-body>
         </nb-card>

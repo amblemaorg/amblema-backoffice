@@ -7,7 +7,6 @@ declare var $: any;
 @Component({
   selector: 'app-coordinators-users-table',
   templateUrl: './coordinators-users-table.component.html',
-  styleUrls: ['./coordinators-users-table.component.scss']
 })
 export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit, TableActions {
 
@@ -47,9 +46,9 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
     };
   }
 
-  ngOnInit() {  }
+  ngOnInit(): void {  }
 
-  onAction(event: any) {
+  onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
@@ -65,12 +64,8 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
     }
   }
 
-  newData(data: any) {
-
-  }
-
-  updateData(data: any): void {
-
-  }
+  newData(data: any): void {}
+  updateData(data: any): void {}
+  deleteData(data: any): void {}
 
 }

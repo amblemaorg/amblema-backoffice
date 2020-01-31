@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-coordinators-users-layouts',
-  templateUrl: './coordinators-users-layouts.component.html',
-  styleUrls: ['./coordinators-users-layouts.component.scss']
+  template: `
+    <div class="row">
+      <div class="col-12">
+          <nb-card>
+            <nb-card-header>Coordinadores</nb-card-header>
+            <nb-card-body>
+              <app-coordinators-users-table></app-coordinators-users-table>
+            </nb-card-body>
+          </nb-card>
+      </div>
+    </div>
+  `
 })
-export class CoordinatorsUsersLayoutsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class CoordinatorsUsersLayoutsComponent {
+  constructor() {}
 }

@@ -92,7 +92,8 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
 
 
   constructor() {
-    super('form-admin-user');
+
+    super('form-admin-user'); // <-- Send ID
 
     // customers columns
     this.settings.columns = {

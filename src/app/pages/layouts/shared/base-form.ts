@@ -5,6 +5,12 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 export abstract class BaseForm implements OnChanges {
 
+    /**
+     * NOTE: Create a function to clear the form and
+     * add values to selects
+     */
+
+    // General form
     form: FormGroup = new FormGroup({
         name: new FormControl(),
         email: new FormControl(),
@@ -13,7 +19,7 @@ export abstract class BaseForm implements OnChanges {
         status: new FormControl(),
         state: new FormControl(),
         municipality: new FormControl(),
-        street: new FormControl('', [Validators.required])
+        street: new FormControl('', [Validators.required]) // Custom control
     });
 
     // Behavior form
@@ -22,7 +28,7 @@ export abstract class BaseForm implements OnChanges {
     @Output() edit = new EventEmitter<any>();
     @Output() create = new EventEmitter<any>();
 
-    readonly ACTION = ACTION;
+    readonly ACTION = ACTION; // To actions
     readonly MESSAGES = MESSAGES; // <-- To customer inputs
 
     title = '';
@@ -31,12 +37,12 @@ export abstract class BaseForm implements OnChanges {
 
     constructor(who?: string) { this.who = who ? who : 'Usuario'; }
 
-    // Change behavior and change the title
+    // To change the title mode
     ngOnChanges(): void {
         if (this.MODE === ACTION.EDIT) {
             this.title = `Editar ${this.who}`;
         } else if (this.MODE === ACTION.CREATE) {
             this.title = `Registrar ${this.who}`;
-        }
+ }
     }
 }

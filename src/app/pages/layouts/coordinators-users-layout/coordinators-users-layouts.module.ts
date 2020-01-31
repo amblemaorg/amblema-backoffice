@@ -11,7 +11,10 @@ import { SharedComponentsModule } from '../../components/shared-components.modul
 import { FormComponentModule } from '../../components/form-components/form-component.module';
 
 @NgModule({
-  declarations: [CoordinatorsUsersLayoutsComponent, CoordinatorsUsersTableComponent, CoordinatorsUsersFormComponent],
+  declarations: [
+    CoordinatorsUsersLayoutsComponent,
+    CoordinatorsUsersTableComponent,
+    CoordinatorsUsersFormComponent],
   imports: [
     CommonModule,
     CoordinatorsUsersLayoutsRoutingModule,

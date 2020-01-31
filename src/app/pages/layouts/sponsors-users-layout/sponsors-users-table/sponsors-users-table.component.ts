@@ -6,8 +6,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-sponsors-users-table',
-  templateUrl: './sponsors-users-table.component.html',
-  styleUrls: ['./sponsors-users-table.component.scss']
+  templateUrl: './sponsors-users-table.component.html'
 })
 export class SponsorsUsersTableComponent extends BaseTable implements TableActions, OnInit {
 
@@ -51,7 +50,7 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
   ngOnInit() {
   }
 
-  onAction(event: any) {
+  onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
@@ -67,13 +66,8 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
     }
   }
 
-  newData(data: any) {
-
-  }
-
-  updateData(data: any) {
-
-  }
-
+  newData(data: any): void {}
+  updateData(data: any): void {}
+  deleteData(data: any): void {}
 
 }

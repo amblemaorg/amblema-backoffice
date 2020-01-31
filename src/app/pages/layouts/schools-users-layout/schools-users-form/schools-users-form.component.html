@@ -1,7 +1,7 @@
 <app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
 
     <!-- Main content -->
-    <form [formGroup]="formSchool" (keydown.enter)="onSubmit()" content>
+    <form [formGroup]="form" (keydown.enter)="onSubmit()" content>
 
         <!-- Data -->
 
@@ -12,19 +12,19 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                    <app-input-name [control]="formSchool.get('name')" [submitted]="submitted"></app-input-name>
+                    <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
 
-                <app-input-email [control]="formSchool.get('email')" [submitted]="submitted"></app-input-email>
-                <app-input-password [control]="formSchool.get('password')" [submitted]="submitted">
+                <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
+                <app-input-password [control]="form.get('password')" [submitted]="submitted">
                 </app-input-password>
             </div>
             <div class="col-12 col-lg-6">
                 <app-input-custom [label]="'Código del plantel'" [placeholder]="'Código del plantel'"
-                    [control]="formSchool.get('campusCode')" [submitted]="submitted"
+                    [control]="form.get('campusCode')" [submitted]="submitted"
                     [patternMsg]="MESSAGES.NAME_MESSAGE">
                 </app-input-custom>
 
-                <app-input-phone [control]="formSchool.get('phone')" [submitted]="submitted"></app-input-phone>
+                <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
             </div>
         </div>
 
@@ -35,8 +35,8 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-form-regional-address [state]="formSchool.get('state')" [municipality]="formSchool.get('municipality')"
-                    [control]="formSchool.get('street')" [submitted]="submitted"></app-form-regional-address>
+                <app-form-regional-address [state]="form.get('state')" [municipality]="form.get('municipality')"
+                    [control]="form.get('street')" [submitted]="submitted"></app-form-regional-address>
             </div>
         </div>
 
@@ -50,21 +50,21 @@
                 <div class="row">
 
                     <div class="col-12 col-lg-6">
-                        <app-input-name [control]="formSchool.get('nameContact')" [submitted]="submitted">
+                        <app-input-name [control]="form.get('nameContact')" [submitted]="submitted">
                         </app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-last-name [control]="formSchool.get('lastNameContact')" [submitted]="submitted">
+                        <app-input-last-name [control]="form.get('lastNameContact')" [submitted]="submitted">
                         </app-input-last-name>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-email [control]="formSchool.get('emailContact')" [submitted]="submitted">
+                        <app-input-email [control]="form.get('emailContact')" [submitted]="submitted">
                         </app-input-email>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-phone [control]="formSchool.get('phoneContact')" [submitted]="submitted">
+                        <app-input-phone [control]="form.get('phoneContact')" [submitted]="submitted">
                         </app-input-phone>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-select-status [control]="formSchool.get('status')" [submitted]="submitted">
+                <app-select-status [control]="form.get('status')" [submitted]="submitted">
                 </app-select-status>
             </div>
         </div>

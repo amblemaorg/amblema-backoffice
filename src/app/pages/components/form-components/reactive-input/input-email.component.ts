@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
 import { Validators } from '@angular/forms';
 import { EMAIL_PATTERN } from '../shared/constant/validation-patterns-list';
@@ -31,9 +31,15 @@ import { EMAIL_PATTERN } from '../shared/constant/validation-patterns-list';
     `
 })
 
-export class InputEmailComponent extends AbstractReactiveInput implements OnInit {
-    ngOnInit(): void {
+export class InputEmailComponent extends AbstractReactiveInput implements AfterViewInit {
+    constructor(private cd: ChangeDetectorRef) { super(); }
+
+    ngAfterViewInit(): void {
         this.control.setValidators([Validators.required, Validators.pattern(EMAIL_PATTERN)]);
+        this.control.updateValueAndValidity();
         this.id = this.id === '' ? 'email' : this.id;
+
+        this.cd.detectChanges();
     }
+
 }

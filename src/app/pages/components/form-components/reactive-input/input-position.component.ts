@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
 import { Validators } from '@angular/forms';
 import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list';
@@ -26,9 +26,15 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
     </div>
   `
 })
-export class InputPositionComponent extends AbstractReactiveInput implements OnInit {
+export class InputPositionComponent extends AbstractReactiveInput implements AfterViewInit {
+  constructor( private cd: ChangeDetectorRef ) {
+    super();
+  }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.control.setValidators([Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]);
+    this.control.updateValueAndValidity();
+
+    this.cd.detectChanges();
   }
 }

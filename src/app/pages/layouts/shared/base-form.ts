@@ -33,7 +33,7 @@ export abstract class BaseForm implements OnChanges {
 
     title = '';
     who = ''; // <-- Title modal who
-    submitted = false;
+    submitted = true;
 
     constructor(who?: string) { this.who = who ? who : 'Usuario'; }
 

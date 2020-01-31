@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
 import { Validators } from '@angular/forms';
 
@@ -25,8 +25,14 @@ import { Validators } from '@angular/forms';
         </div>`
 })
 
-export class InputCustomComponent  extends AbstractReactiveInput implements OnInit {
-    ngOnInit(): void {
+export class InputCustomComponent  extends AbstractReactiveInput implements AfterViewInit {
+
+    constructor( private cd: ChangeDetectorRef ) {super(); }
+
+    ngAfterViewInit(): void {
         this.control.setValidators([Validators.required]);
+        this.control.updateValueAndValidity();
+
+        this.cd.detectChanges();
     }
 }

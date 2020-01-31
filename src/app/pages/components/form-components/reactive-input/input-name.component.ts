@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
 import { Validators } from '@angular/forms';
 import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list';
@@ -18,7 +18,7 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
         type='text'
         [formControl]="control"
         autocomplete='off'
-        [ngClass]="{ 'is-valid' : control.valid && submitted,
+        [ngClass]="{ 'is-valid' : control.valid,
         'is-invalid' : control.invalid && submitted}"
         [status]=" control.valid && submitted ? 'success' : control.invalid && submitted ? 'danger' : 'basic' "
         class="form-control form-group" />
@@ -26,10 +26,17 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
     </div>
   `
 })
-export class InputNameComponent extends AbstractReactiveInput implements OnInit {
+export class InputNameComponent extends AbstractReactiveInput implements AfterViewInit {
 
-  ngOnInit(): void {
+  constructor( private cd: ChangeDetectorRef ) { super(); }
+
+  ngAfterViewInit(): void {
+    // Valid
     this.control.setValidators([Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]);
+    this.control.updateValueAndValidity();
+
+
     this.id = this.id === '' ? 'name' : this.id;
+    this.cd.detectChanges(); // <!-- Control change
   }
 }

@@ -18,6 +18,9 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
         type='text'
         [formControl]="control"
         autocomplete='off'
+        [ngClass]="{ 'is-valid' : control.valid && submitted,
+        'is-invalid' : control.invalid && submitted}"
+        [status]=" control.valid && submitted ? 'success' : control.invalid && submitted ? 'danger' : 'basic' "
         class="form-control form-group" />
       <app-reactive-validation
         [patternMessage]='MESSAGES.LAST_NAME_MESSAGE'

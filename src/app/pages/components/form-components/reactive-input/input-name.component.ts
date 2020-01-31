@@ -13,18 +13,23 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
         fullWidth
         status="basic"
         placeholder="Nombre"
-        id='name'
-        name='name'
+        [id]='id'
+        [name]='id'
         type='text'
         [formControl]="control"
         autocomplete='off'
+        [ngClass]="{ 'is-valid' : control.valid && submitted,
+        'is-invalid' : control.invalid && submitted}"
+        [status]=" control.valid && submitted ? 'success' : control.invalid && submitted ? 'danger' : 'basic' "
         class="form-control form-group" />
       <app-reactive-validation [patternMessage]='MESSAGES.NAME_MESSAGE' [validationErrors]="validationErrors"></app-reactive-validation>
     </div>
   `
 })
 export class InputNameComponent extends AbstractReactiveInput implements OnInit {
+
   ngOnInit(): void {
     this.control.setValidators([Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]);
+    this.id = this.id === '' ? 'name' : this.id;
   }
 }

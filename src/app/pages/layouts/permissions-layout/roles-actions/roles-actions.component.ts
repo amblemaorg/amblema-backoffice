@@ -1,31 +1,25 @@
 import { Component } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-crud';
-import { LocalDataSource } from 'ng2-smart-table';
 import { DomSanitizer } from '@angular/platform-browser';
+import { BaseTable } from 'src/app/helpers/base-table';
 
 @Component({
   selector: 'app-roles-actions',
   templateUrl: './roles-actions.component.html',
-  styleUrls: ['./roles-actions.component.scss']
 })
-export class RolesActionsComponent {
+export class RolesActionsComponent extends BaseTable {
 
   MODE = ACTION.EDIT;
 
-  settings = {
-    noDataMessage: 'No hay registros',
-    mode: 'external',
-    actions: {
-      columnTitle: 'Acciones',
-      add: false,
-      edit: false,
-      delete: false,
-    },
-    pager: {
-      display: true,
-      perPage: 10
-    },
-    columns: {
+  data: any = [
+    { action: 'Borrar', status: 'activo' },
+    { action: 'Crear', status: 'activo' }
+  ];
+
+  constructor(private sanitizer: DomSanitizer) {
+    super('form-role-action');
+
+    this.settings.columns = {
       action: {
         title: 'Acción',
         type: 'string'
@@ -43,19 +37,13 @@ export class RolesActionsComponent {
         </div>
           `);
         },
-
       },
-    }
-  };
+    }; // End column
 
-  source: LocalDataSource;
-
-  data: any = [
-    { action: 'Borrar', status: 'activo' },
-    { action: 'Crear', status: 'activo' }
-  ];
-
-  constructor( private sanitizer: DomSanitizer ) {
-    this.source = new LocalDataSource(this.data);
+    // Remove view action
+    this.settings.actions.custom = [
+      { name: ACTION.EDIT, title: `<i class="nb-edit"></i>` },
+      { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' }
+    ];
   }
 }

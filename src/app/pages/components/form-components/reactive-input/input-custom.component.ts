@@ -17,6 +17,9 @@ import { Validators } from '@angular/forms';
                 [type]='type'
                 autocomplete='off'
                 [formControl]="control"
+                [ngClass]="{ 'is-valid' : control.valid && submitted,
+                'is-invalid' : control.invalid && submitted}"
+                [status]=" control.valid && submitted ? 'success' : control.invalid && submitted ? 'danger' : 'basic' "
                 class="form-control form-group" />
             <app-reactive-validation [patternMessage]='patternMsg' [validationErrors]="validationErrors"></app-reactive-validation>
         </div>`

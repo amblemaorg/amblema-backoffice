@@ -3,30 +3,26 @@
     <!-- Main content -->
     <form [formGroup]="form" (keydown.enter)="onSubmit()" content>
 
-        <!-- Data -->
-
+        <!-- Personal data -->
         <div class="row">
             <div class="col-12">
                 <p class="font-weight-bold text-info mb-0">Datos de la escuela</p>
                 <hr>
             </div>
-
             <div class="col-12 col-lg-6">
-                    <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
-
+                <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
                 <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
                 <app-input-password [control]="form.get('password')" [submitted]="submitted">
                 </app-input-password>
             </div>
             <div class="col-12 col-lg-6">
                 <app-input-custom [label]="'Código del plantel'" [placeholder]="'Código del plantel'"
-                    [control]="form.get('campusCode')" [submitted]="submitted"
-                    [patternMsg]="MESSAGES.NAME_MESSAGE">
+                    [control]="form.get('campusCode')" [submitted]="submitted" [patternMsg]="MESSAGES.NAME_MESSAGE">
                 </app-input-custom>
 
                 <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
             </div>
-        </div>
+        </div><!-- / End personal data -->
 
         <!-- Data address -->
         <div class="row mt-3">
@@ -38,7 +34,7 @@
                 <app-form-regional-address [state]="form.get('state')" [municipality]="form.get('municipality')"
                     [control]="form.get('street')" [submitted]="submitted"></app-form-regional-address>
             </div>
-        </div>
+        </div><!-- / End data address -->
 
         <!-- Data contact -->
         <div class="row mt-3">
@@ -50,7 +46,7 @@
                 <div class="row">
 
                     <div class="col-12 col-lg-6">
-                        <app-input-name [control]="form.get('nameContact')" [submitted]="submitted">
+                        <app-input-name [control]="form.get('nameContact')" [submitted]="submitted" [id]="'nameContact'">
                         </app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
@@ -60,17 +56,16 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-email [control]="form.get('emailContact')" [submitted]="submitted">
+                        <app-input-email [control]="form.get('emailContact')" [submitted]="submitted" [id]="'emailContact'">
                         </app-input-email>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-phone [control]="form.get('phoneContact')" [submitted]="submitted">
+                        <app-input-phone [control]="form.get('phoneContact')" [submitted]="submitted" [id]="'phoneContact'">
                         </app-input-phone>
                     </div>
                 </div>
             </div>
-
-        </div>
+        </div><!-- / End data contact -->
 
         <div class="row">
             <div class="col-12">
@@ -81,7 +76,7 @@
                 </app-select-status>
             </div>
         </div>
-    </form>
+    </form><!-- / End main content -->
 
     <!-- Footer content -->
     <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"

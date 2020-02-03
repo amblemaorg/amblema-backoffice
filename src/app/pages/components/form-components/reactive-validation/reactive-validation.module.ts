@@ -5,7 +5,7 @@ import { ReactiveValidationComponent } from './reactive-validation.component';
 @NgModule({
   imports: [
     CommonModule,
-  ], 
+  ],
   exports: [
     ReactiveValidationComponent
   ],

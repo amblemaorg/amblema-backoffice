@@ -17,7 +17,7 @@ import { NbInputModule } from '@nebular/theme';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        ReactiveValidationModule, 
+        ReactiveValidationModule,
         NbInputModule
     ],
     exports: [
@@ -38,7 +38,7 @@ import { NbInputModule } from '@nebular/theme';
         InputNameComponent,
         InputPasswordComponent,
         InputPhoneComponent,
-        InputPositionComponent, 
+        InputPositionComponent,
     ]
 })
 export class ReactiveInputModule { }

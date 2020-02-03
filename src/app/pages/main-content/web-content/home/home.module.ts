@@ -5,9 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { NbCardModule } from '@nebular/theme';
 import { HelperModule } from '../_helpers/helper.module';
-import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 
 @NgModule({
   declarations: [
@@ -18,9 +16,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
     HomeRoutingModule,
     NbCardModule,
     HelperModule,
-    ReactiveInputFileModule,
-    FormComponentModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule, 
   ]
 })
 export class HomeModule { }

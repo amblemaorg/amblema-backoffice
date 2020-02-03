@@ -8,6 +8,7 @@ import { TextAreaMathComponent } from './text-area-math';
 import { TextAreaReadingComponent } from './text-area-reading';
 import { NbInputModule } from '@nebular/theme';
 import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   exports: [
@@ -29,6 +30,8 @@ import { ReactiveValidationModule } from '../reactive-validation/reactive-valida
   imports: [
     CommonModule,
     NbInputModule,
+    FormsModule,
+    ReactiveFormsModule,
     ReactiveValidationModule
   ]
 })

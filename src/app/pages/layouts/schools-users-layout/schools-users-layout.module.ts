@@ -7,8 +7,12 @@ import { SchoolsUsersFormComponent } from './schools-users-form/schools-users-fo
 import { SchoolsUsersTableComponent } from './schools-users-table/schools-users-table.component';
 import { NbCardModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { FormComponentModule } from '../../components/form-components/form-component.module';
-import { SharedComponentsModule } from '../../components/shared-components.module';
+import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
+import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { FormRegionalAddressModule } from '../../components/form-components/shared-form/form-regional-address/form-regional-address.module';
+import { FormDocumentModule } from '../../components/form-components/shared-form/form-document/form-document.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,8 +25,14 @@ import { SharedComponentsModule } from '../../components/shared-components.modul
     SchoolsUsersLayoutRoutingModule,
     NbCardModule,
     Ng2SmartTableModule,
-    FormComponentModule,
-    SharedComponentsModule,
+    ReactiveFormsModule,
+
+    // Add custom modules
+    ReactiveInputModule,
+    ReactiveSelectModule,
+    ModalModule, 
+    FormRegionalAddressModule, 
+    FormDocumentModule, 
   ]
 })
 export class SchoolsUsersLayoutModule { }

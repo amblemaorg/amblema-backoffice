@@ -8,7 +8,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AdminUserTableComponent } from './admin-user-table/admin-user-table.component';
 import { AdminUserFormComponent } from './admin-user-form/admin-user-form.component';
 
-import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module'; 
+import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { FormDocumentModule } from '../../components/form-components/shared-form/form-document/form-document.module';
@@ -24,14 +24,14 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     NbCardModule,
     CommonModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     Ng2SmartTableModule,
     AdminUsersLayoutRoutingModule,
 
     // Custom module
     ReactiveInputModule,
     ReactiveSelectModule,
-    ModalModule, 
+    ModalModule,
     FormDocumentModule,
     FormRegionalAddressModule
   ]

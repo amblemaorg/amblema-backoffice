@@ -14,9 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    PermissionsLayoutComponent, 
-    RolesTableComponent, 
-    RolesFormComponent, 
+    PermissionsLayoutComponent,
+    RolesTableComponent,
+    RolesFormComponent,
     RolesActionsComponent
   ],
   imports: [
@@ -24,8 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NbCardModule,
     PermissionsLayoutRoutingModule,
     Ng2SmartTableModule,
-    NbIconModule, 
-    ReactiveFormsModule, 
+    NbIconModule,
+    ReactiveFormsModule,
 
     // Custom module
     ReactiveInputModule,

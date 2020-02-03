@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AboutUsRoutingModule } from './about-us-routing.module';
 import { NbCardModule } from '@nebular/theme';
 import { AboutUsComponent } from './about-us.component';
 import { HelperModule } from '../_helpers/helper.module';
 import { AboutFormComponent } from './about-form/about-form.component';
-import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
-import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { AboutUsRoutingModule } from './about-us-routing.module';
 
 @NgModule({
   declarations: [
@@ -20,9 +18,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     AboutUsRoutingModule,
     NbCardModule,
     HelperModule,
-    ReactiveInputFileModule,
-    FormComponentModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule, 
   ]
 })
 export class AboutUsModule { }

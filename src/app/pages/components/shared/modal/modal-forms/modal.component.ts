@@ -3,7 +3,7 @@ import { AbstractModalComponent } from '../abstract.modal.component';
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',  
+  templateUrl: './modal.component.html',
 })
 export class ModalComponent extends AbstractModalComponent implements OnInit {
 

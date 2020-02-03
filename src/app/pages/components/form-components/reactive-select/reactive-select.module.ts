@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ReactiveValidationModule, 
+    ReactiveValidationModule,
   ]
 })
 export class ReactiveSelectModule { }

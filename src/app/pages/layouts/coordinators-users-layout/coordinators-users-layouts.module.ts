@@ -7,8 +7,12 @@ import { NbCardModule } from '@nebular/theme';
 import { CoordinatorsUsersTableComponent } from './coordinators-users-table/coordinators-users-table.component';
 import { CoordinatorsUsersFormComponent } from './coordinators-users-form/coordinators-users-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { SharedComponentsModule } from '../../components/shared-components.module';
-import { FormComponentModule } from '../../components/form-components/form-component.module';
+import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
+import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
+import { FormDocumentModule } from '../../components/form-components/shared-form/form-document/form-document.module';
+import { FormRegionalAddressModule } from '../../components/form-components/shared-form/form-regional-address/form-regional-address.module';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,8 +24,14 @@ import { FormComponentModule } from '../../components/form-components/form-compo
     CoordinatorsUsersLayoutsRoutingModule,
     NbCardModule,
     Ng2SmartTableModule,
-    SharedComponentsModule,
-    FormComponentModule,
+    ReactiveFormsModule,
+
+    // Custom module
+    ReactiveInputModule,
+    ReactiveSelectModule,
+    ModalModule,
+    FormDocumentModule,
+    FormRegionalAddressModule,
   ]
 })
 export class CoordinatorsUsersLayoutsModule { }

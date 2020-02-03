@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from './shared/modal/modal.component';
 import { ToggleComponent } from './shared/toggle/toggle.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalStepperComponent } from './shared/modal-stepper/modal-stepper.component';
-import { NbIconModule } from '@nebular/theme';
+import { ModalStepperComponent } from './shared/modal/modal-stepper/modal-stepper.component';
 
 @NgModule({
   imports: [
@@ -13,12 +11,10 @@ import { NbIconModule } from '@nebular/theme';
     FormsModule,
   ],
   declarations: [
-    ModalComponent,
     ToggleComponent,
     ModalStepperComponent,
   ],
   exports: [
-    ModalComponent,
     ToggleComponent,
 
     // Temporal calls

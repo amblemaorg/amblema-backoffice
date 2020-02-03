@@ -1,5 +1,4 @@
 import { NbMenuItem } from '@nebular/theme';
-import { link } from 'fs';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -175,7 +174,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             children: [
               {
                 title: 'Lapsos',
-                link: ''
+                link: '/pages/content/peca-setting/admin-lapses'
               },
               {
                 title: 'Años escolares',

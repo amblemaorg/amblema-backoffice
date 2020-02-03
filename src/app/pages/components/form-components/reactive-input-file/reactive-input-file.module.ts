@@ -5,7 +5,10 @@ import { InputFileComponent } from './input-file/input-file.component';
 import { NbIconModule } from '@nebular/theme';
 
 @NgModule({
-  declarations: [ InputImgComponent, InputFileComponent ],
+  declarations: [ 
+    InputImgComponent,
+    InputFileComponent
+  ],
   imports: [
     CommonModule,
     NbIconModule

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractModalComponent } from '../modal/abstract.modal.component';
+import { AbstractModalComponent } from '../abstract.modal.component';
 
 @Component({
   selector: 'app-modal-stepper',

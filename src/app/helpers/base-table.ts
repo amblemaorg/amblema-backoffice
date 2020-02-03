@@ -7,10 +7,9 @@ export class BaseTable {
     ACTION = ACTION; // <-- Attr: CREATE, EDIT, VIEW and EDIT
     MODE; // <-- Create or update mode
 
-
     // Settings
     source: LocalDataSource = new LocalDataSource();
-    settings = {
+    settings: any = {
         noDataMessage: 'No hay registros',
         mode: 'external',
         actions: {
@@ -34,9 +33,7 @@ export class BaseTable {
             display: true,
             perPage: 10
         },
-        columns: {
-
-        }
+        columns: {}
     };
 
     constructor(ID_FORM?: string) {

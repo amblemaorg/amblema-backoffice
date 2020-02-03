@@ -14,7 +14,7 @@ import {
   NbCardModule,
   NbInputModule,
   NbSelectModule, } from '@nebular/theme';
-import { HeaderComponent } from './components/shared/header/header.component';
+import { HeaderComponent } from './components/layouts/header/header.component';
 
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';

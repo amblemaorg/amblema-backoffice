@@ -10,6 +10,12 @@ const routes: Routes = [
   },
   {
     path: 'pages',
+
+    /**
+     * -- NOTE: When you have all the role 
+     * and the user can be logged. Remove the commentary 
+     * in the guard
+     */
     // canActivate: [AuthGuard],
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
   },

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-crud';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
@@ -7,7 +7,6 @@ import { STATUS } from 'src/app/helpers/status';
 @Component({
   selector: 'app-roles-form',
   templateUrl: './roles-form.component.html',
-  styleUrls: ['./roles-form.component.scss']
 })
 export class RolesFormComponent {
 

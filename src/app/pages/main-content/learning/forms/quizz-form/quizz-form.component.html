@@ -1,13 +1,16 @@
 <form>
     <div class="row form-group">
         <div class="col-12">
-            <app-input-custom [label]="'Pregunta'" [placeholder]="'Pregunta'" [submitted]="submitted">
-            </app-input-custom>
+            <app-text-area-custom [label]="'Respuesta A(Respuesta correcta)'" [placeholder]="'Respuesta'"></app-text-area-custom>
         </div>
-
         <div class="col-12">
-            <app-input-custom [label]="'Pregunta A'" [placeholder]="'Pregunta A'" [submitted]="submitted">
-            </app-input-custom>
+            <app-text-area-custom [label]="'Respuesta B'" [placeholder]="'Respuesta'"></app-text-area-custom>
+        </div>
+        <div class="col-12">
+            <app-text-area-custom [label]="'Respuesta C'" [placeholder]="'Respuesta'"></app-text-area-custom>    
+        </div>
+        <div class="col-12">
+            <app-text-area-custom [label]="'Respuesta D'" [placeholder]="'Respuesta'"></app-text-area-custom>    
         </div>
     </div>
 </form>

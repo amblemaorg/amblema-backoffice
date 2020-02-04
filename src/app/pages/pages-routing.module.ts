@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
+import { DashboardLayoutComponent } from './registrations-and-permits/dashboard-layout/dashboard-layout.component';
 
 const routes: Routes = [
     {
@@ -14,25 +14,27 @@ const routes: Routes = [
             },
             {
                 path: 'admin-users',
-                loadChildren: () => import('./layouts/admin-users-layout/admin-users-layout.module').then(m => m.AdminUsersLayoutModule)
+                loadChildren: () => import('./registrations-and-permits/admin-users-layout/admin-users-layout.module').
+                then(m => m.AdminUsersLayoutModule)
             },
             {
                 path: 'permissions',
-                loadChildren: () => import('./layouts/permissions-layout/permissions-layout.module').then(m => m.PermissionsLayoutModule)
+                loadChildren: () => import('./registrations-and-permits/permissions-layout/permissions-layout.module').
+                then(m => m.PermissionsLayoutModule)
             },
             {
                 path: 'coordinators-users',
-                loadChildren: () => import('./layouts/coordinators-users-layout/coordinators-users-layouts.module')
+                loadChildren: () => import('./registrations-and-permits/coordinators-users-layout/coordinators-users-layouts.module')
                 .then(m => m.CoordinatorsUsersLayoutsModule)
             },
             {
                 path: 'sponsors-users',
-                loadChildren: () => import('./layouts/sponsors-users-layout/sponsors-users-layout.module').
+                loadChildren: () => import('./registrations-and-permits/sponsors-users-layout/sponsors-users-layout.module').
                 then(m => m.SponsorsUsersLayoutModule)
             },
             {
                 path: 'schools-users',
-                loadChildren: () => import('./layouts/schools-users-layout/schools-users-layout.module').
+                loadChildren: () => import('./registrations-and-permits/schools-users-layout/schools-users-layout.module').
                 then(m => m.SchoolsUsersLayoutModule)
             },
             {

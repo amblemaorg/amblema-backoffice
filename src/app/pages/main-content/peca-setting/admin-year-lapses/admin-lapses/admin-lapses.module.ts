@@ -6,13 +6,18 @@ import { AdminLapsesComponent } from './admin-lapses.component';
 import { NbCardModule, NbAccordionModule } from '@nebular/theme';
 import { ActivityBoardComponent } from './activity-board/activity-board.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { SharedComponentsModule } from 'src/app/pages/components/shared-components.module';
 import { ToggleComponent } from 'src/app/pages/components/shared/toggle/toggle.component';
+import { ToggleModule } from 'src/app/pages/components/shared/toggle/toggle.module';
 
 
 @NgModule({
-  declarations: [AdminLapsesComponent, ActivityBoardComponent],
-  entryComponents: [ToggleComponent],
+  declarations: [
+    AdminLapsesComponent,
+    ActivityBoardComponent
+  ],
+  entryComponents: [
+    ToggleComponent,
+  ],
   imports: [
     CommonModule,
     NbCardModule,
@@ -20,7 +25,9 @@ import { ToggleComponent } from 'src/app/pages/components/shared/toggle/toggle.c
     NbAccordionModule,
     NbCardModule,
     Ng2SmartTableModule,
-    SharedComponentsModule
+
+    // Call custom module
+    ToggleModule
   ]
 })
 export class AdminLapsesModule { }

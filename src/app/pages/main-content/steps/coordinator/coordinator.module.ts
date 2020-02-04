@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { CoordinatorRoutingModule } from './coordinator-routing.module';
 import { CoordinatorComponent } from './coordinator.component';
 import { NbCardModule } from '@nebular/theme';
-import { HelpersModule } from '../_helpers/helpers.module';
+import { FormFileStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-file-step/form-file-step.module';
+import { FormSimpleStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-simple-step/form-simple-step.module';
 
 
 @NgModule({
@@ -13,7 +14,10 @@ import { HelpersModule } from '../_helpers/helpers.module';
     CommonModule,
     CoordinatorRoutingModule,
     NbCardModule,
-    HelpersModule,
+
+    // Add custom module
+    FormFileStepModule,
+    FormSimpleStepModule
   ]
 })
 export class CoordinatorModule { }

@@ -11,8 +11,8 @@ import { AdminUserFormComponent } from './admin-user-form/admin-user-form.compon
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
-import { FormDocumentModule } from '../../components/form-components/shared-form/form-document/form-document.module';
-import { FormRegionalAddressModule } from '../../components/form-components/shared-form/form-regional-address/form-regional-address.module';
+import { FormDocumentModule } from '../../components/form-components/forms/form-document/form-document.module';
+import { FormRegionalAddressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({

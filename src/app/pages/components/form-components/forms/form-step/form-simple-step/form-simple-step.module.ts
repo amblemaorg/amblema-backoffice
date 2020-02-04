@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormSimpleStepComponent } from './form-simple-step.component';
 import { ReactiveTextAreaModule } from '../../../reactive-text-area/reactive-text-area.module';
-import { SharedComponentsModule } from 'src/app/pages/components/shared-components.module';
 import { NbIconModule } from '@nebular/theme';
+import { ToggleModule } from 'src/app/pages/components/shared/toggle/toggle.module';
 
 @NgModule({
   declarations: [
@@ -15,8 +15,8 @@ import { NbIconModule } from '@nebular/theme';
   imports: [
     CommonModule,
     ReactiveTextAreaModule,
-    SharedComponentsModule,
     NbIconModule,
+    ToggleModule
   ]
 })
 export class FormSimpleStepModule { }

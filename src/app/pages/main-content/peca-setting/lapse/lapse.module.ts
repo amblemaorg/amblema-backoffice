@@ -6,8 +6,8 @@ import { LapseComponent } from './lapse.component';
 import { NbCardModule } from '@nebular/theme';
 import {
   FormSimpleStepModule
-} from 'src/app/pages/components/form-components/shared-form/form-step/form-simple-step/form-simple-step.module';
-import { FormFileStepModule } from 'src/app/pages/components/form-components/shared-form/form-step/form-file-step/form-file-step.module';
+} from 'src/app/pages/components/form-components/forms/form-step/form-simple-step/form-simple-step.module';
+import { FormFileStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-file-step/form-file-step.module';
 
 
 @NgModule({

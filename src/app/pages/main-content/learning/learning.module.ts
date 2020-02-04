@@ -16,7 +16,7 @@ import { QuizzFormComponent } from './forms/quizz-form/quizz-form.component';
 import { ReactiveTextAreaModule } from '../../components/form-components/reactive-text-area/reactive-text-area.module';
 import { ModalStepperModule } from '../../components/shared/modal/modal-stepper/modal-stepper.module';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
-import { FormSliderModule } from '../../components/form-components/shared-form/form-slider/form-slider.module';
+import { FormSliderModule } from '../../components/form-components/forms/form-slider/form-slider.module';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 
 @NgModule({

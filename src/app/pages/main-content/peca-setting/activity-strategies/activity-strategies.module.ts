@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivityStrategiesRoutingModule } from './activity-strategies-routing.module';
 import { ActivityStrategiesComponent } from './activity-strategies.component';
 import { NbCardModule } from '@nebular/theme';
-import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
+import { FormSliderModule } from 'src/app/pages/components/form-components/shared-form/form-slider/form-slider.module';
 
 @NgModule({
   declarations: [ActivityStrategiesComponent],
@@ -12,7 +12,9 @@ import { FormComponentModule } from 'src/app/pages/components/form-components/fo
     CommonModule,
     ActivityStrategiesRoutingModule,
     NbCardModule,
-    FormComponentModule
+
+    // Add custom module
+    FormSliderModule,
   ]
 })
 export class ActivityStrategiesModule { }

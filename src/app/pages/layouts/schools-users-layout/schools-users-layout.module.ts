@@ -30,9 +30,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     // Add custom modules
     ReactiveInputModule,
     ReactiveSelectModule,
-    ModalModule, 
-    FormRegionalAddressModule, 
-    FormDocumentModule, 
+    ModalModule,
+    FormRegionalAddressModule,
+    FormDocumentModule,
   ]
 })
 export class SchoolsUsersLayoutModule { }

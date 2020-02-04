@@ -9,6 +9,9 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
 import { SponsorFormComponent } from './sponsor-form/sponsor-form.component';
 import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
+import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
+import { ReactiveSelectModule } from 'src/app/pages/components/form-components/reactive-select/reactive-select.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,12 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     FormComponentModule,
     Ng2SmartTableModule,
     ReactiveInputFileModule,
+
+    // Add custom module
+    ReactiveTextAreaModule,
+    ReactiveInputModule,
+    ReactiveInputFileModule,
+    ReactiveSelectModule
   ]
 })
 export class SponsorsModule { }

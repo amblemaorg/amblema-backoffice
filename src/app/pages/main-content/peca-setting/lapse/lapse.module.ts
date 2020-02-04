@@ -3,8 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { LapseRoutingModule } from './lapse-routing.module';
 import { LapseComponent } from './lapse.component';
-import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
 import { NbCardModule } from '@nebular/theme';
+import {
+  FormSimpleStepModule
+} from 'src/app/pages/components/form-components/shared-form/form-step/form-simple-step/form-simple-step.module';
+import { FormFileStepModule } from 'src/app/pages/components/form-components/shared-form/form-step/form-file-step/form-file-step.module';
 
 
 @NgModule({
@@ -12,8 +15,11 @@ import { NbCardModule } from '@nebular/theme';
   imports: [
     CommonModule,
     LapseRoutingModule,
-    FormComponentModule,
-    NbCardModule
+    NbCardModule,
+
+    // Add custom module
+    FormSimpleStepModule,
+    FormFileStepModule,
   ]
 })
 export class LapseModule { }

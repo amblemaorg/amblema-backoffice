@@ -25,7 +25,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
         Ng2SmartTableModule,
         FormsModule,
         ReactiveFormsModule,
-        
+
         // Add custom module
         ReactiveInputModule,
         ReactiveSelectModule,

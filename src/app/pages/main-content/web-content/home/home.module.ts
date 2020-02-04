@@ -16,7 +16,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     HomeRoutingModule,
     NbCardModule,
     HelperModule,
-    Ng2SmartTableModule, 
+    Ng2SmartTableModule,
   ]
 })
 export class HomeModule { }

@@ -9,6 +9,7 @@ import { AbstractReactive } from '../../../abstract-reactive';
 export class FormSimpleStepComponent extends AbstractReactive implements OnInit {
 
   ngOnInit() {
+
   }
 
 }

@@ -12,7 +12,6 @@ import { ModalStepperComponent } from './shared/modal/modal-stepper/modal-steppe
   ],
   declarations: [
     ToggleComponent,
-    ModalStepperComponent,
   ],
   exports: [
     ToggleComponent,
@@ -20,7 +19,6 @@ import { ModalStepperComponent } from './shared/modal/modal-stepper/modal-steppe
     // Temporal calls
     ReactiveFormsModule,
     FormsModule,
-    ModalStepperComponent
   ]
 })
 export class SharedComponentsModule { }

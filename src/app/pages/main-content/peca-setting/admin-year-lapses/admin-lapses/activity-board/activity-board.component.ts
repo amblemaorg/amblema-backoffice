@@ -53,8 +53,8 @@ export class ActivityBoardComponent extends BaseTable implements TableActions {
     };
   }
 
-  onAction(): void {}
-  newData(): void {}
-  updateData(): void {}
-  deleteData(): void {}
+  onAction(event: any): void {}
+  newData(event: any): void {}
+  updateData(event: any): void {}
+  deleteData(event: any): void {}
 }

@@ -5,9 +5,10 @@ import { CoordinatorsRoutingModule } from './coordinators-routing.module';
 import { NbCardModule } from '@nebular/theme';
 import { CoordinatorsComponent } from './coordinators.component';
 import { HelperModule } from '../_helpers/helper.module';
+import { ReactiveSelectModule } from 'src/app/pages/components/form-components/reactive-select/reactive-select.module';
+import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
+import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
-import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
-
 
 @NgModule({
   declarations: [
@@ -18,7 +19,11 @@ import { FormComponentModule } from 'src/app/pages/components/form-components/fo
     CoordinatorsRoutingModule,
     NbCardModule,
     HelperModule,
-    FormComponentModule,
+
+    // Add custom module
+    ReactiveTextAreaModule,
+    ReactiveInputModule,
+    ReactiveSelectModule,
     ReactiveInputFileModule
   ]
 })

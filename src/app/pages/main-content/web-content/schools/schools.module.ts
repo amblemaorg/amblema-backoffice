@@ -14,7 +14,6 @@ import { SchoolSettingsComponent } from './school-settings/school-settings.compo
   ],
   declarations: [
     SchoolsComponent,
-
     SchoolSettingsComponent
   ],
   imports: [

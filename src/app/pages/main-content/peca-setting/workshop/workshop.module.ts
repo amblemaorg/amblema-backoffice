@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { WorkshopRoutingModule } from './workshop-routing.module';
 import { WorkshopComponent } from './workshop.component';
 import { NbCardModule } from '@nebular/theme';
-import { FormComponentModule } from 'src/app/pages/components/form-components/form-component.module';
+import { FormFileStepModule } from 'src/app/pages/components/form-components/shared-form/form-step/form-file-step/form-file-step.module';
 
 @NgModule({
   declarations: [WorkshopComponent],
@@ -12,7 +12,9 @@ import { FormComponentModule } from 'src/app/pages/components/form-components/fo
     CommonModule,
     WorkshopRoutingModule,
     NbCardModule,
-    FormComponentModule
+
+    // Add custom module
+    FormFileStepModule
   ]
 })
 export class WorkshopModule { }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
-import { ToggleComponent } from 'src/app/pages/components/shared/toggle/toggle.component';
+import { SpecialToggleComponent } from '../special-toggle/special-toggle.component';
 
 @Component({
   selector: 'app-activity-board',
@@ -46,9 +46,12 @@ export class ActivityBoardComponent extends BaseTable implements TableActions {
       status: {
         title: 'Estatus',
         type: 'custom',
-        renderComponent: ToggleComponent,
+        renderComponent: SpecialToggleComponent,
         sort: true,
-        filter: false
+        filter: false,
+        onComponentInitFunction(instance) {
+          instance.save.subscribe();
+        }
       }
     };
   }

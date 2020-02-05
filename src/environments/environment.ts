@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://157.245.131.248:10507/',
+  api: 'http://157.245.131.248:10507/',
   // urlStaging: 'http://157.245.131.248:10508'
 };
 

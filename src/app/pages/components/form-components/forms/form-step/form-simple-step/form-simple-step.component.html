@@ -3,7 +3,9 @@
         <app-text-area-custom [id]="id" [label]="label" [placeholder]="placeholder">
         </app-text-area-custom>
     </div>
-    <div class="col-12 col-md-auto pt-0 pt-md-4 order-0 order-md-12 form-group justify-content-between d-flex" style="display: -webkit-box;">
+    <div class="col-12 col-md-auto pt-0 pt-md-4 order-0 order-md-12 form-group justify-content-between d-flex"
+    [ngClass]="{'pt-md-4': label}"
+    style="display: -webkit-box;">
         <app-toggle [id]="id+'toggle'" value="true" class="d-block mx-2"></app-toggle>
         <div>
             <button class="btn btn-primary" >

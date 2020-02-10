@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { AddressService } from 'src/app/services/address.service';
-import { State } from '../../../../../models/address.model';
+import { State, Municipality } from '../../../../../models/address.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,22 +12,29 @@ import { Subscription } from 'rxjs';
 
 export class FormRegionalAddressComponent extends AbstractReactive implements OnInit, OnDestroy {
 
+    // Parse from form
     @Input() state: AbstractControl | null = new FormControl();
     @Input() municipality: AbstractControl | null = new FormControl();
 
     todo: Subscription;
+
+    // Models
     states: State[];
+    municipalities: Municipality[];
 
     constructor( private stateService: AddressService ) {
         super();
     
         // Get suscription and data
-        this.todo = this.stateService.getState().subscribe( (value) => { 
-            this.states = value.records as State[];
-           
+        this.todo = this.stateService.getStates().subscribe( (value) => { 
+            this.states = value;
+
             // Init values
             this.state.setValue(this.states[0].id);
-            this.municipality.setValue(this.municipalityData[0].value);
+            //this.municipality.setValue(this.municipalityData[0].value);
+    
+            // Get update list municipalities
+            
         });
     }
 
@@ -39,13 +46,11 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
     // Event change state
     onSelectState( value: any ) {   
-        
-        // Save state in the form
-        this.state.setValue(value);
+        this.state.setValue(value); // <-- Save state in the form
     }
 
-    municipalityData: any = [
-        { value: 'Iribarren' },
-        { value: 'Bolivar' }
-    ];
+    onSelectMunicipality(value: any) {
+        this.municipality.setValue(value); // <-- Save municipalities in the form
+    }
+
 }

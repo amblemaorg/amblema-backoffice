@@ -1,12 +1,14 @@
 <div class="row">
-    
+
+    <!-- State -->
     <div class="col-12 col-lg-6 form-group">
         <label for="state" class="label">Estados</label>
-        <select fullWidth name="state" id="state" hero [formControl]='state' class="form-control">
-            <option *ngFor='let item of statesData' [value]='item.value'>{{ item.value }}</option>
+        <select fullWidth name="state" id="state" hero [formControl]='state' class="form-control" (change)="onSelectState($event.target.value)">
+        <option *ngFor='let item of states' [value]="item.id">{{ item.name }}</option>
         </select>
     </div>
 
+    <!-- Municipality -->
     <div class="col-12 col-lg-6 form-group">
         <label for="municipality" class="label">Municipios</label>
         <select fullWidth name="municipality" id="municipality" hero [formControl]='municipality' class="form-control">
@@ -14,7 +16,9 @@
         </select>
     </div>
 
+    <!-- Type street -->
     <div class="col-12 col-lg-6 form-group">
-        <app-input-custom [id]="'street'" [placeholder]="'Calles / Carrera'" [label]="'Calles / Carrera'" [control]="control" [submitted]="submitted"></app-input-custom>
+        <app-input-custom [id]="'street'" [placeholder]="'Calles / Carrera'" [label]="'Calles / Carrera'"
+            [control]="control" [submitted]="submitted"></app-input-custom>
     </div>
 </div>

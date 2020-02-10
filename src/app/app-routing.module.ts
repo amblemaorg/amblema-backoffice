@@ -16,7 +16,7 @@ const routes: Routes = [
      * and the user can be logged. Remove the commentary
      * in the guard
      */
-    // canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
   },
   {

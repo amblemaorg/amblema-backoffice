@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  api: 'http://157.245.131.248:10507/',
   // urlStaging: 'http://157.245.131.248:10508'
 };
 

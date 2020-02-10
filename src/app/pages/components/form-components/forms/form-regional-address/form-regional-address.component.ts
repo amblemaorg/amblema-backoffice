@@ -24,17 +24,17 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
     constructor( private stateService: AddressService ) {
         super();
-    
+
         // Get suscription and data
-        this.todo = this.stateService.getStates().subscribe( (value) => { 
+        this.todo = this.stateService.getStates().subscribe( (value) => {
             this.states = value;
 
             // Init values
             this.state.setValue(this.states[0].id);
-            //this.municipality.setValue(this.municipalityData[0].value);
-    
+            // this.municipality.setValue(this.municipalityData[0].value);
+
             // Get update list municipalities
-            
+
         });
     }
 
@@ -45,7 +45,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     }
 
     // Event change state
-    onSelectState( value: any ) {   
+    onSelectState( value: any ) {
         this.state.setValue(value); // <-- Save state in the form
     }
 

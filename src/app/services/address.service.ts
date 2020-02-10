@@ -18,21 +18,21 @@ export class AddressService {
   getStates(): Observable<State[]> {
     return this.httpClient.get<State[]>(`${environment.api}${this.STATE}`)
       .pipe(
-        map((data: any) => { return data.records })
+        map((data: any) => data.records)
       );
   }
 
   getMunicipalities(): Observable<Municipality[]> {
     return this.httpClient.get<Municipality[]>(`${environment.api}${this.MUNICIPALITY}`)
       .pipe(
-        map((data: any) => { return data.records })
+        map((data: any) => data.records)
       );
   }
 
   getMunicipality(id: string): Observable<Municipality> {
     return this.httpClient.get<Municipality>(`${environment.api}${this.MUNICIPALITY}`)
       .pipe(
-        map((data: any) => { return data.records })
+        map((data: any) => data.records)
       );
   }
 }

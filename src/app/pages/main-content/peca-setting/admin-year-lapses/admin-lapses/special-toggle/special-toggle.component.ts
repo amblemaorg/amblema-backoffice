@@ -16,7 +16,7 @@ export class SpecialToggleComponent implements OnInit {
   }
 
   onclick() {
-    alert('Hizo click')
+    alert('Hizo click');
   }
 
 }

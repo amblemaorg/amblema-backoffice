@@ -1,6 +1,6 @@
 export interface State {
     id: string;
-    name: string;   
+    name: string;
 }
 
 export interface Municipality {

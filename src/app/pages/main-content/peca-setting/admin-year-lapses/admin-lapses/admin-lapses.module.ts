@@ -27,7 +27,7 @@ import { SpecialToggleComponent } from './special-toggle/special-toggle.componen
     Ng2SmartTableModule,
 
     // Call custom module
-    
+
   ]
 })
 export class AdminLapsesModule { }

@@ -22,6 +22,10 @@ export class AddressService {
       );
   }
 
+  /**
+   * MUNICIPALITY
+   */
+
   getMunicipalities(): Observable<Municipality[]> {
     return this.httpClient.get<Municipality[]>(`${environment.api}${this.MUNICIPALITY}`)
       .pipe(
@@ -30,9 +34,25 @@ export class AddressService {
   }
 
   getMunicipality(id: string): Observable<Municipality> {
-    return this.httpClient.get<Municipality>(`${environment.api}${this.MUNICIPALITY}`)
+    return this.httpClient.get<Municipality>(`${environment.api}${this.MUNICIPALITY}?state=${id}`)
       .pipe(
         map((data: any) => data.records)
       );
   }
+
+  deleteMunicipality(id: string) {
+  }
+
+  setMunicipality(data: DataMunicipality): Observable<DataMunicipality> {
+    return this.httpClient.post<DataMunicipality>(`${environment.api}${this.MUNICIPALITY}`, data);
+  }
+
+  updateMunicipality(id: string) {
+
+  }
+}
+
+export interface DataMunicipality {
+  state: string;
+  name: string;
 }

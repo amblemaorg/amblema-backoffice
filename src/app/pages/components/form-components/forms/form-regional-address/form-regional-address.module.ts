@@ -4,6 +4,7 @@ import { FormRegionalAddressComponent } from './form-regional-address.component'
 import { ReactiveInputModule } from '../../reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../reactive-select/reactive-select.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NbIconModule, NbTooltipModule } from '@nebular/theme';
 
 @NgModule({
   exports: [
@@ -17,7 +18,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveInputModule,
     ReactiveSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
+    NbIconModule,
+    NbTooltipModule,
   ]
 })
 export class FormRegionalAddressModule { }

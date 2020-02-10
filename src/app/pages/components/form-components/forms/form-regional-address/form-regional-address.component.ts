@@ -1,56 +1,85 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { AddressService } from 'src/app/services/address.service';
+import { AddressService, DataMunicipality } from 'src/app/services/address.service';
 import { State, Municipality } from '../../../../../models/address.model';
 import { Subscription } from 'rxjs';
+import { ACTION } from '../../../../../helpers/text-crud';
 
 @Component({
     selector: 'app-form-regional-address',
     templateUrl: './form-regional-address.component.html'
 })
 
-export class FormRegionalAddressComponent extends AbstractReactive implements OnInit, OnDestroy {
+export class FormRegionalAddressComponent extends AbstractReactive implements OnDestroy {
 
-    // Parse from form
+    // Parse to form
     @Input() state: AbstractControl | null = new FormControl();
     @Input() municipality: AbstractControl | null = new FormControl();
 
-    todo: Subscription;
+    MODE = 'NORMAL';
+    CRUD = ACTION;
+    inputCRUD: AbstractControl = new FormControl();
+
+    todo: Subscription; // <-- Unsubscribe services
 
     // Models
     states: State[];
     municipalities: Municipality[];
 
-    constructor( private stateService: AddressService ) {
+    constructor(private addressService: AddressService) {
         super();
-
-        // Get suscription and data
-        this.todo = this.stateService.getStates().subscribe( (value) => {
-            this.states = value;
-
-            // Init values
-            this.state.setValue(this.states[0].id);
-            // this.municipality.setValue(this.municipalityData[0].value);
-
-            // Get update list municipalities
-
-        });
+        this.initAddress();
     }
-
-    ngOnInit(): void { }
 
     ngOnDestroy(): void {
         this.todo.unsubscribe(); // <-- Free memory
     }
 
-    // Event change state
-    onSelectState( value: any ) {
+    onSelectState(value: any) {
         this.state.setValue(value); // <-- Save state in the form
+        this.resetForm();
     }
 
     onSelectMunicipality(value: any) {
         this.municipality.setValue(value); // <-- Save municipalities in the form
     }
 
+    private initAddress(): void {
+        // Get suscription and data
+        this.todo = this.addressService.getStates().subscribe((value) => {
+            this.states = value;
+
+            // Init
+            this.state.setValue(null);
+            this.municipality.setValue(null);
+        });
+    }
+
+    private resetForm() {
+        this.MODE = 'NORMAL';
+        this.inputCRUD.reset();
+    }
+
+    onConfirm() {
+
+        // Prepare data
+        const data: DataMunicipality = {
+            state: this.state.value,
+            name: this.inputCRUD.value
+        };
+
+        switch (this.MODE) {
+            case this.CRUD.CREATE:
+                this.addressService.setMunicipality(data).subscribe((response: any) => {
+
+                });
+                break;
+            case this.CRUD.EDIT:
+
+                break;
+            case this.CRUD.DELETE:
+                break;
+        }
+    }
 }

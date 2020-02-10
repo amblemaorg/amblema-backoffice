@@ -12,7 +12,7 @@
     <div class="col-12 col-lg-6 form-group">
         <label for="municipality" class="label">Municipios</label>
         <select fullWidth name="municipality" id="municipality" hero [formControl]='municipality' class="form-control">
-            <option *ngFor='let item of municipalityData' [value]='item.value'>{{ item.value }}</option>
+            <option *ngFor='let item of municipalities' [value]='item.value'>{{ item.value }}</option>
         </select>
     </div>
 

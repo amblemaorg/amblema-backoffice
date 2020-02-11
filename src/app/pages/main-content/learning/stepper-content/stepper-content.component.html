@@ -1,4 +1,4 @@
-<nb-stepper [orientation]="orientation" disableStepNavigation>
+<nb-stepper #stepper [orientation]="orientation" disableStepNavigation>
 
     <!-- Fist step -->
     <nb-step [label]="labelOne">
@@ -118,8 +118,17 @@
     <!-- Final step -->
     <nb-step [hidden]="true">
         <div class="step-container text-center">
-            <h3>Registro guardado exitosamente</h3>
-            <button class="btn btn btn-primary">Finalizar realizar </button>
+            <h3 class="mb-4">Registro guardado exitosamente</h3>
+
+            <div class="text-center row d-flex justify-content-center">
+                <div class="col-6 col-lg-auto">
+                    <button class="btn btn-primary" (click)="stepper.reset()">Nuevo registro</button>
+                </div>
+                <div class="col-6 col-lg-auto">
+                    <button class="btn btn-outline-secondary">Finalizar</button>
+
+                </div>
+            </div>
         </div>
     </nb-step><!-- / End -->
 </nb-stepper>

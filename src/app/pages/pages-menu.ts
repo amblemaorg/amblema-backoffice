@@ -169,8 +169,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             link: '/pages/content/peca-setting/activity-strategies',
           },
           {
-            title: 'Administración de lapsos y de años escolares',
-            icon: 'options-2-outline',
+            title: 'Período académico',
             children: [
               {
                 title: 'Lapsos',
@@ -185,7 +184,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         ],
       },
       {
-        title: 'Módulos de aprendizaje',
+        title: 'Módulos de formación',
         icon: 'book-open-outline',
         link: '/pages/content/learning'
       },

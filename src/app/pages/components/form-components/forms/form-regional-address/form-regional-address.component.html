@@ -3,22 +3,27 @@
     <!-- State -->
     <div class="col-12 col-lg-6 form-group">
         <label for="state" class="label">Estados</label>
-        <select fullWidth name="state" id="state" hero [formControl]='state' class="form-control"
+        <select fullWidth name="state" id="state" hero [formControl]='state' class="form-control form-group"
             (change)="onSelectState($event.target.value)">
             <option disabled [value]="null">- Seleccione un estado -</option>
             <option *ngFor='let item of states' [value]="item.id">{{ item.name }}</option>
         </select>
+        <div class="alert alert-primary" *ngIf="submitted && !state.value">
+            <strong> Selección requerida </strong>
+        </div>
     </div>
 
     <!-- Municipality -->
     <div class="col-12 col-lg-6">
         <div class="row">
+
+            <!-- Fields -->
             <div class="col">
                 <label for="municipality" class="label">Municipios</label>
 
                 <!-- Select -->
-                <select *ngIf="MODE == 'NORMAL'" fullWidth name="municipality" id="municipality"
-                    hero [formControl]='municipality' class="form-control w-100 form-group"
+                <select *ngIf="MODE == 'NORMAL'" fullWidth name="municipality" id="municipality" hero
+                    [formControl]='municipality' class="form-control w-100 form-group"
                     (change)="onSelectMunicipality($event.target.value)">
                     <option disabled [value]="null">- Seleccione un municipio -</option>
                     <option *ngFor='let item of municipalities' [value]='item.id'>{{ item.name }}</option>
@@ -29,29 +34,31 @@
                     [placeholder]="'Municipio'" [control]="inputCRUD" [submitted]="submitted"></app-input-custom>
 
                 <!-- Only read - Delete -->
-                <input *ngIf="MODE == CRUD.DELETE" type="text" readonly class="form-control form-group" nbInput [value]="inputCRUD.value">
+                <input *ngIf="MODE == CRUD.DELETE" type="text" readonly class="form-control form-group" nbInput
+                    [value]="inputCRUD.value">
             </div>
 
             <!-- CRUD Button group -->
             <div class="col-auto d-flex align-content-end align-items-end form-group">
-                <div class="btn-group" role="group"
-                    aria-label="Basic example" *ngIf="MODE == 'NORMAL'">
-                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-info" nbTooltip="Registrar municipio"
-                        (click)="MODE = CRUD.CREATE; inputCRUD.reset();">
+                <div class="btn-group" role="group" aria-label="Basic example" *ngIf="MODE == 'NORMAL'">
+                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-info"
+                        nbTooltip="Registrar municipio" (click)="MODE = CRUD.CREATE; inputCRUD.reset();">
                         <nb-icon icon="plus-outline"></nb-icon>
                     </button>
-                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-info" nbTooltip="Editar municipio" (click)="MODE = CRUD.EDIT">
+                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-info"
+                        nbTooltip="Editar municipio" (click)="MODE = CRUD.EDIT; inputCRUD.setValue(nameMuni)">
                         <nb-icon icon="edit-outline"></nb-icon>
                     </button>
-                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-danger" nbTooltip="Eliminar municipio"
-                        (click)="MODE = CRUD.DELETE;">
+                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-danger"
+                        nbTooltip="Eliminar municipio" (click)="MODE = CRUD.DELETE;">
                         <nb-icon icon="trash-2-outline"></nb-icon>
                     </button>
                 </div>
 
                 <!-- Confirm actions -->
                 <div class="btn-group" role="group" aria-label="Basic example" *ngIf="MODE != 'NORMAL'">
-                    <button class="btn btn-outline-info" [attr.disabled]="inputCRUD.value ? null : true" nbTooltip="Confirmar" (click)="onConfirm()">
+                    <button class="btn btn-outline-info" [attr.disabled]="inputCRUD.value ? null : true"
+                        nbTooltip="Confirmar" (click)="onConfirm()">
                         Confirmar
                     </button>
                     <button class="btn btn-outline-danger" nbTooltip="Cancelar" (click)="MODE = 'NORMAL'">
@@ -59,6 +66,13 @@
                     </button>
                 </div>
 
+            </div>
+
+            <!-- Message -->
+            <div class="col-12">
+                <div class="alert alert-primary" *ngIf="submitted && !municipality.value">
+                    <strong> Selección requerida </strong>
+                </div>                
             </div>
         </div>
     </div>

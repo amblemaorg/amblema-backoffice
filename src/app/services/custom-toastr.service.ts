@@ -37,4 +37,13 @@ export class CustomToastrService {
       duration: this.duration
     });
   }
+
+  error(title: string, content: string): void {
+    this.toastrService.danger( content, title, {
+      position: this.position,
+      iconPack: 'eva',
+      icon: 'alert-triangle-outline',
+      duration: this.duration
+    });
+  }
 }

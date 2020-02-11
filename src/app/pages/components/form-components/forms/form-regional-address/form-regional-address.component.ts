@@ -18,6 +18,8 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     @Input() state: AbstractControl | null = new FormControl();
     @Input() municipality: AbstractControl | null = new FormControl();
 
+    @Input() submitted: boolean;
+
     MODE = 'NORMAL';
     CRUD = ACTION;
     inputCRUD: AbstractControl = new FormControl(); // <-- To update
@@ -27,6 +29,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     // Models
     states: State[];
     municipalities: Municipality[];
+    nameMuni: string;
 
     constructor(private addressService: AddressService, private toastr: CustomToastrService) {
         super();
@@ -47,12 +50,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
                 this.municipalities = response as Municipality[];
                 this.municipality.setValue(this.municipalities[0].id);
 
-                // This is for fill the input to update
-                this.municipalities.forEach((value, key, map) => {
-                    if (value.id === this.municipality.value) {
-                        this.inputCRUD.setValue(value.name);
-                    }
-                });
+                this.fillValuesMunicipality(this.municipality.value);
             } else {
                 // Clear municipalities when is empty
                 this.municipality.setValue(null);
@@ -65,13 +63,19 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
     onSelectMunicipality(id: any) {
         this.municipality.setValue(id); // <-- Save municipalities in the form
+        this.fillValuesMunicipality(id);
+    }
+
+    private fillValuesMunicipality(id: string): void {
 
         // This is for fill the input to update
         this.municipalities.forEach((value, key, map) => {
             if (value.id === id) {
                 this.inputCRUD.setValue(value.name);
+                this.nameMuni = value.name;
             }
         });
+
     }
 
     private initAddress(): void {
@@ -109,6 +113,8 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
                     this.municipalities.push(response as any); // <-- Add in the list
                     this.toastr.registerSuccess('Registro', 'Municipio registrado');
                     this.resetForm();
+                }, (err: any) => {
+                    this.toastr.error('Error', 'Se esta duplicando el municipio');
                 });
                 break;
             case this.CRUD.EDIT:

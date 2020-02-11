@@ -1,16 +1,36 @@
 <form>
     <div class="row form-group">
         <div class="col-12">
-            <app-input-custom [label]="'Respuesta A (Respuesta correcta)'" [placeholder]="'Respuesta'"></app-input-custom>
+            <app-input-custom [label]="'Pregunta'" [placeholder]="'Pregunta'">
+            </app-input-custom>
+        </div>
+        <div class="col-12">
+            <app-input-custom [label]="'Respuesta A (Respuesta correcta)'" [placeholder]="'Respuesta'">
+            </app-input-custom>
         </div>
         <div class="col-12">
             <app-input-custom [label]="'Respuesta B'" [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom [label]="'Respuesta C'" [placeholder]="'Respuesta'"></app-input-custom>    
+            <app-input-custom [label]="'Respuesta C'" [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom [label]="'Respuesta D'" [placeholder]="'Respuesta'"></app-input-custom>    
+            <app-input-custom [label]="'Respuesta D'" [placeholder]="'Respuesta'"></app-input-custom>
+        </div>
+        <div class="col-12 text-right">
+            <button class="btn btn-success col-12 col-lg-auto">Registrar</button>
         </div>
     </div>
 </form>
+<div class="form-group">
+    <hr>
+</div>
+<div class="row form-group">
+    <!-- Table -->
+    <div class="col-12 form-group">
+        <p class="font-weight-bold">Lista de Quizzes</p>
+        <div class="table-responsive">
+            <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+        </div>
+    </div>
+</div>

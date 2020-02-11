@@ -1,7 +1,7 @@
 <form>
     <div class="row form-group">
         <div class="col-12 col-lg">
-            <app-input-custom [label]="'URL del video'" [placeholder]="'URL del video'" >
+            <app-input-custom [label]="'URL del video'" [placeholder]="'URL del video'">
             </app-input-custom>
         </div>
         <div class="col-12 col-lg">
@@ -10,6 +10,13 @@
         </div>
         <div class="col-12 col-lg-auto">
             <button class="btn btn-success col-12 col-lg-autp mt-lg-4">Registrar</button>
+        </div>
+
+        <!-- Table -->
+        <div class="col-12 form-group">
+            <div class="table-responsive">
+                <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+            </div>
         </div>
     </div>
     <div>

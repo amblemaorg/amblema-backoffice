@@ -33,22 +33,23 @@ export class AddressService {
       );
   }
 
-  getMunicipality(id: string): Observable<Municipality> {
-    return this.httpClient.get<Municipality>(`${environment.api}${this.MUNICIPALITY}?state=${id}`)
+  getMunicipalityByState(id: string): Observable<Municipality[]> {
+    return this.httpClient.get<Municipality[]>(`${environment.api}${this.MUNICIPALITY}?state=${id}`)
       .pipe(
         map((data: any) => data.records)
       );
   }
 
-  deleteMunicipality(id: string) {
+  deleteMunicipality(id: string): Observable<string> {
+    return this.httpClient.delete<string>(`${environment.api}${this.MUNICIPALITY}/${id}`);
   }
 
   setMunicipality(data: DataMunicipality): Observable<DataMunicipality> {
     return this.httpClient.post<DataMunicipality>(`${environment.api}${this.MUNICIPALITY}`, data);
   }
 
-  updateMunicipality(id: string) {
-
+  updateMunicipality(id: string, data: DataMunicipality): Observable<Municipality> {
+    return this.httpClient.put<Municipality>(`${environment.api}${this.MUNICIPALITY}/${id}`, data);
   }
 }
 

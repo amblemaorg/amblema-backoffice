@@ -13,12 +13,14 @@ import {
   NbContextMenuModule,
   NbCardModule,
   NbInputModule,
-  NbSelectModule, } from '@nebular/theme';
+  NbSelectModule,
+  NbToastrModule, } from '@nebular/theme';
 import { HeaderComponent } from './components/layouts/header/header.component';
 
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './registrations-and-permits/dashboard-layout/dashboard-layout.component';
+import { CustomToastrService } from '../services/custom-toastr.service';
 
 @NgModule({
   declarations: [
@@ -43,9 +45,12 @@ import { DashboardLayoutComponent } from './registrations-and-permits/dashboard-
     NbUserModule,
     NbMenuModule.forRoot(),
     NbContextMenuModule,
+
+    NbToastrModule.forRoot()
   ],
   exports: [ NbIconModule ],
   providers: [
+    CustomToastrService,
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
   ]
 })

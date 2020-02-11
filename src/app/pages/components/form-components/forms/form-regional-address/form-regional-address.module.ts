@@ -22,7 +22,7 @@ import { NbIconModule, NbTooltipModule } from '@nebular/theme';
 
     NbIconModule,
     NbTooltipModule,
-  ]
+  ],
 })
 export class FormRegionalAddressModule { }
 

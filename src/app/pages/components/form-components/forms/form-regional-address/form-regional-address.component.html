@@ -5,7 +5,7 @@
         <label for="state" class="label">Estados</label>
         <select fullWidth name="state" id="state" hero [formControl]='state' class="form-control"
             (change)="onSelectState($event.target.value)">
-            <option  disabled [value]="null">- Seleccione un estado -</option>
+            <option disabled [value]="null">- Seleccione un estado -</option>
             <option *ngFor='let item of states' [value]="item.id">{{ item.name }}</option>
         </select>
     </div>
@@ -17,33 +17,41 @@
                 <label for="municipality" class="label">Municipios</label>
 
                 <!-- Select -->
-                <select *ngIf="MODE == 'NORMAL' || MODE == CRUD.DELETE" fullWidth name="municipality" id="municipality"
-                    hero [formControl]='municipality' class="form-control w-100 form-group">
-                    <option *ngFor='let item of municipalities' [value]='item.value'>{{ item.value }}</option>
+                <select *ngIf="MODE == 'NORMAL'" fullWidth name="municipality" id="municipality"
+                    hero [formControl]='municipality' class="form-control w-100 form-group"
+                    (change)="onSelectMunicipality($event.target.value)">
+                    <option disabled [value]="null">- Seleccione un municipio -</option>
+                    <option *ngFor='let item of municipalities' [value]='item.id'>{{ item.name }}</option>
                 </select>
 
                 <!-- Input -->
                 <app-input-custom *ngIf="MODE == CRUD.CREATE || MODE == CRUD.EDIT" [id]="'municipalityCRUD'"
                     [placeholder]="'Municipio'" [control]="inputCRUD" [submitted]="submitted"></app-input-custom>
+
+                <!-- Only read - Delete -->
+                <input *ngIf="MODE == CRUD.DELETE" type="text" readonly class="form-control form-group" nbInput [value]="inputCRUD.value">
             </div>
 
             <!-- CRUD Button group -->
             <div class="col-auto d-flex align-content-end align-items-end form-group">
-                <div class="btn-group" role="group" aria-label="Basic example" *ngIf="MODE == 'NORMAL'">
-                    <button class="btn btn-outline-info" nbTooltip="Registrar municipio" (click)="MODE = CRUD.CREATE">
+                <div class="btn-group" role="group"
+                    aria-label="Basic example" *ngIf="MODE == 'NORMAL'">
+                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-info" nbTooltip="Registrar municipio"
+                        (click)="MODE = CRUD.CREATE; inputCRUD.reset();">
                         <nb-icon icon="plus-outline"></nb-icon>
                     </button>
-                    <button class="btn btn-outline-info" nbTooltip="Editar municipio" (click)="MODE = CRUD.EDIT">
+                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-info" nbTooltip="Editar municipio" (click)="MODE = CRUD.EDIT">
                         <nb-icon icon="edit-outline"></nb-icon>
                     </button>
-                    <button class="btn btn-outline-danger" nbTooltip="Eliminar municipio" (click)="MODE = CRUD.DELETE">
+                    <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-danger" nbTooltip="Eliminar municipio"
+                        (click)="MODE = CRUD.DELETE;">
                         <nb-icon icon="trash-2-outline"></nb-icon>
                     </button>
                 </div>
 
                 <!-- Confirm actions -->
                 <div class="btn-group" role="group" aria-label="Basic example" *ngIf="MODE != 'NORMAL'">
-                    <button class="btn btn-outline-info" nbTooltip="Confirmar" (click)="onConfirm()">
+                    <button class="btn btn-outline-info" [attr.disabled]="inputCRUD.value ? null : true" nbTooltip="Confirmar" (click)="onConfirm()">
                         Confirmar
                     </button>
                     <button class="btn btn-outline-danger" nbTooltip="Cancelar" (click)="MODE = 'NORMAL'">

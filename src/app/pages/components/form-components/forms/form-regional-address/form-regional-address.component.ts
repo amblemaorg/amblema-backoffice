@@ -5,10 +5,11 @@ import { AddressService, DataMunicipality } from 'src/app/services/address.servi
 import { State, Municipality } from '../../../../../models/address.model';
 import { Subscription } from 'rxjs';
 import { ACTION } from '../../../../../helpers/text-crud';
+import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 
 @Component({
     selector: 'app-form-regional-address',
-    templateUrl: './form-regional-address.component.html'
+    templateUrl: './form-regional-address.component.html',
 })
 
 export class FormRegionalAddressComponent extends AbstractReactive implements OnDestroy {
@@ -19,7 +20,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
     MODE = 'NORMAL';
     CRUD = ACTION;
-    inputCRUD: AbstractControl = new FormControl();
+    inputCRUD: AbstractControl = new FormControl(); // <-- To update
 
     todo: Subscription; // <-- Unsubscribe services
 
@@ -27,7 +28,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     states: State[];
     municipalities: Municipality[];
 
-    constructor(private addressService: AddressService) {
+    constructor(private addressService: AddressService, private toastr: CustomToastrService) {
         super();
         this.initAddress();
     }
@@ -36,16 +37,45 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
         this.todo.unsubscribe(); // <-- Free memory
     }
 
-    onSelectState(value: any) {
-        this.state.setValue(value); // <-- Save state in the form
+    onSelectState(id: any) {
+        this.state.setValue(id); // <-- Save state in the form
+
+        // Filter and get data
+        this.addressService.getMunicipalityByState(this.state.value).subscribe(response => {
+
+            if (response.length > 0) {
+                this.municipalities = response as Municipality[];
+                this.municipality.setValue(this.municipalities[0].id);
+
+                // This is for fill the input to update
+                this.municipalities.forEach((value, key, map) => {
+                    if (value.id === this.municipality.value) {
+                        this.inputCRUD.setValue(value.name);
+                    }
+                });
+            } else {
+                // Clear municipalities when is empty
+                this.municipality.setValue(null);
+                this.municipalities = [];
+            }
+        });
+
         this.resetForm();
     }
 
-    onSelectMunicipality(value: any) {
-        this.municipality.setValue(value); // <-- Save municipalities in the form
+    onSelectMunicipality(id: any) {
+        this.municipality.setValue(id); // <-- Save municipalities in the form
+
+        // This is for fill the input to update
+        this.municipalities.forEach((value, key, map) => {
+            if (value.id === id) {
+                this.inputCRUD.setValue(value.name);
+            }
+        });
     }
 
     private initAddress(): void {
+
         // Get suscription and data
         this.todo = this.addressService.getStates().subscribe((value) => {
             this.states = value;
@@ -61,6 +91,10 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
         this.inputCRUD.reset();
     }
 
+    /**
+     * CRUD API
+     */
+
     onConfirm() {
 
         // Prepare data
@@ -71,14 +105,39 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
         switch (this.MODE) {
             case this.CRUD.CREATE:
-                this.addressService.setMunicipality(data).subscribe((response: any) => {
-
+                this.addressService.setMunicipality(data).subscribe(response => {
+                    this.municipalities.push(response as any); // <-- Add in the list
+                    this.toastr.registerSuccess('Registro', 'Municipio registrado');
+                    this.resetForm();
                 });
                 break;
             case this.CRUD.EDIT:
 
+                // Parse id and rename this.inputCRUD.value
+                this.addressService.updateMunicipality(this.municipality.value, { name: this.inputCRUD.value, state: this.state.value })
+                    .subscribe(response => {
+
+                        // Refresh the updated data.
+                        this.municipalities.forEach((value, key, map) => {
+                            if (value.id === response.id) {
+                                this.municipalities[key] = response;
+                            }
+                        });
+
+                        this.toastr.updateSuccess('Actualización', 'Municipio actualizado');
+                        this.resetForm();
+                    });
                 break;
             case this.CRUD.DELETE:
+                this.addressService.deleteMunicipality(this.municipality.value).subscribe(response => {
+
+                    // Delete and refresh the list
+                    this.municipalities.splice(this.municipalities.indexOf(this.municipality.value), 1);
+                    this.municipality.setValue(this.municipalities[0].id);
+
+                    this.toastr.deleteRegister('Eliminación', 'Se ha eliminado el municipio seleccionado');
+                    this.resetForm();
+                });
                 break;
         }
     }

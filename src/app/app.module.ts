@@ -23,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     NbEvaIconsModule,
     NbAuthModule.forRoot(),
     HttpClientModule,
-    NbMenuModule.forRoot()
+    NbMenuModule.forRoot(),
   ],
   providers: [
     AuthGuard

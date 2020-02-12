@@ -11,7 +11,8 @@
         <hr *ngIf="!titleStep">
         <app-general-form></app-general-form>
         <div class="text-center">
-            <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>Siguiente
+            <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>
+                <span class="d-none d-sm-inline">Siguiente</span>
                 <nb-icon icon="arrow-forward-outline"></nb-icon>
             </button>
         </div>
@@ -31,11 +32,12 @@
             <div class="col-6 col-lg-auto">
                 <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
                     <nb-icon icon="arrow-back-outline"></nb-icon>
-                    Atrás
+                    <span class="d-none d-sm-inline">Atrás</span>
                 </button>
             </div>
             <div class="col-6 col-lg-auto">
-                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>Siguiente
+                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>
+                    <span class="d-none d-sm-inline">Siguiente</span>
                     <nb-icon icon="arrow-forward-outline"></nb-icon>
                 </button>
             </div>
@@ -56,11 +58,12 @@
             <div class="col-6 col-lg-auto">
                 <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
                     <nb-icon icon="arrow-back-outline"></nb-icon>
-                    Atrás
+                    <span class="d-none d-sm-inline">Atrás</span>
                 </button>
             </div>
             <div class="col-6 col-lg-auto">
-                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>Siguiente
+                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>
+                    <span class="d-none d-sm-inline">Siguiente</span>
                     <nb-icon icon="arrow-forward-outline"></nb-icon>
                 </button>
             </div>
@@ -81,11 +84,12 @@
             <div class="col-6 col-lg-auto">
                 <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
                     <nb-icon icon="arrow-back-outline"></nb-icon>
-                    Atrás
+                    <span class="d-none d-sm-inline">Atrás</span>
                 </button>
             </div>
             <div class="col-6 col-lg-auto">
-                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>Siguiente
+                <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>
+                    <span class="d-none d-sm-inline">Siguiente</span>
                     <nb-icon icon="arrow-forward-outline"></nb-icon>
                 </button>
             </div>
@@ -104,11 +108,12 @@
             <div class="col-6 col-lg-auto">
                 <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
                     <nb-icon icon="arrow-back-outline"></nb-icon>
-                    Atrás
+                    <span class="d-none d-sm-inline">Atrás</span>
                 </button>
             </div>
             <div class="col-6 col-lg-auto">
-                <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>Guardar
+                <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>
+                    <span class="d-none d-sm-inline">Guardar</span>
                     <nb-icon icon="save-outline"></nb-icon>
                 </button>
             </div>
@@ -122,11 +127,10 @@
 
             <div class="text-center row d-flex justify-content-center">
                 <div class="col-6 col-lg-auto">
-                    <button class="btn btn-primary" (click)="stepper.reset()">Nuevo registro</button>
+                    <button class="btn btn-primary col-12 col-lg-auto" (click)="stepper.reset()">Nuevo registro</button>
                 </div>
                 <div class="col-6 col-lg-auto">
-                    <button class="btn btn-outline-secondary">Finalizar</button>
-
+                    <button class="btn btn-outline-secondary col-12 col-lg-auto">Finalizar</button>
                 </div>
             </div>
         </div>

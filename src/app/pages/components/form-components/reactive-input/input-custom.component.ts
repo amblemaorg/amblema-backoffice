@@ -34,5 +34,6 @@ export class InputCustomComponent  extends AbstractReactiveInput implements Afte
         this.control.updateValueAndValidity();
 
         this.cd.detectChanges();
+
     }
 }

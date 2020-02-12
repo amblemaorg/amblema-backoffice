@@ -5,7 +5,7 @@ import { MESSAGES } from '../shared/constant/validation-messages-list';
   selector: 'app-reactive-validation',
   template: `
     <ng-container *ngIf="errorMessage">
-      <div class="alert alert-primary">
+      <div class="alert alert-danger">
         <strong> {{errorMessage}} </strong>
       </div>
     </ng-container>

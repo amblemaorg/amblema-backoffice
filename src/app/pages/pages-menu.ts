@@ -96,7 +96,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         ]
       },
       {
-        title: 'Ajustes del Peca',
+        title: 'Ajustes del PECA',
         icon: 'settings-2-outline',
         children: [
           {
@@ -184,7 +184,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         ],
       },
       {
-        title: 'Módulos de formación',
+        title: 'Módulos de estudio',
         icon: 'book-open-outline',
         link: '/pages/content/learning'
       },

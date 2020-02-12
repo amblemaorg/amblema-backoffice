@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/
 @Component({
   selector: 'app-stepper-content',
   templateUrl: './stepper-content.component.html',
-  styles: []
+  styles: ['./stepper-content.component.scss']
 })
 export class StepperContentComponent implements OnInit {
 

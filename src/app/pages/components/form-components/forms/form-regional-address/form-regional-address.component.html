@@ -31,7 +31,7 @@
 
                 <!-- Input -->
                 <app-input-custom *ngIf="MODE == CRUD.CREATE || MODE == CRUD.EDIT" [id]="'municipalityCRUD'"
-                    [placeholder]="'Municipio'" [control]="inputCRUD"></app-input-custom>
+                    [placeholder]="'Municipio'" [control]="inputCRUD" [submitted]="submitted"></app-input-custom>
 
                 <!-- Only read - Delete -->
                 <input *ngIf="MODE == CRUD.DELETE" type="text" readonly class="form-control form-group" nbInput
@@ -50,7 +50,7 @@
                         <nb-icon icon="edit-outline"></nb-icon>
                     </button>
                     <button [attr.disabled]="municipality.value ? null : true" class="btn btn-outline-danger"
-                        nbTooltip="Eliminar municipio" (click)="MODE = CRUD.DELETE;">
+                        nbTooltip="Eliminar municipio" (click)="MODE = CRUD.DELETE; inputCRUD.setValue(nameMuni)">
                         <nb-icon icon="trash-2-outline"></nb-icon>
                     </button>
                 </div>

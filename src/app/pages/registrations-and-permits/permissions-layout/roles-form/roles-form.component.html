@@ -15,7 +15,7 @@
             </app-select-status>
         </div>
         <div class="col-12 col-lg">
-            <button class="btn btn-success btn-block mt-0 mt-lg-4"
+            <button class="btn btn-success btn-block m-inline-parcial"
             [ngClass]="{'btn-success': MODE == ACTION.CREATE, 'btn-primary': MODE == ACTION.EDIT}"
             (click)="onSubmit()">
                 <span *ngIf="MODE == ACTION.CREATE">Guardar</span>

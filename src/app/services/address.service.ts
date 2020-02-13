@@ -10,8 +10,8 @@ import { map } from 'rxjs/operators';
 })
 export class AddressService {
 
-  private readonly STATE = 'states';
-  private readonly MUNICIPALITY = 'municipalities';
+  private readonly STATE: string = 'states';
+  private readonly MUNICIPALITY: string = 'municipalities';
 
   constructor(private httpClient: HttpClient) { }
 

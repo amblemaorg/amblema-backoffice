@@ -1,27 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-crud';
-import { LocalDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 import { TableActions, BaseTable } from '../../../../helpers/base-table';
+import { Role } from 'src/app/models/permission.model';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { RolesState } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-roles-table',
   templateUrl: './roles-table.component.html',
 })
-export class RolesTableComponent extends BaseTable implements TableActions, OnInit {
+export class RolesTableComponent extends BaseTable implements TableActions {
 
-  data: any = [
-    { role: 'oficinista', status: 'Activo' },
-    { role: 'Administrador', status: 'Inactivo' },
-  ];
+  @Select(RolesState.roles) data$: Observable<Role[]>;
 
-  constructor(private router: Router) {
+  data: boolean;
+
+
+  constructor(
+    private router: Router) {
+
+    // Related with the form
     super('form-role');
 
     this.MODE = this.ACTION.CREATE;
 
     this.settings.columns = {
-      role: {
+      name: {
         title: 'Rol',
         type: 'string'
       },
@@ -38,17 +44,18 @@ export class RolesTableComponent extends BaseTable implements TableActions, OnIn
     ];
   }
 
-  ngOnInit() {
-  }
-
   onAction(event: any) {
     switch (event.action) {
       case ACTION.EDIT:
+
         // Change mode purpose
         this.MODE = ACTION.EDIT;
         this.router.navigate(['/pages/permissions/actions']);
+        this.data = true;
+        console.log(event.data);
         break;
       case ACTION.DELETE:
+
         // Call delete modal
         break;
     }

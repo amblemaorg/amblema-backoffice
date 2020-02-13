@@ -3,10 +3,9 @@ import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { AddressService, DataMunicipality } from 'src/app/services/address.service';
 import { State, Municipality } from '../../../../../models/address.model';
-import { Subscription } from 'rxjs';
 import { ACTION } from '../../../../../helpers/text-crud';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
-
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-form-regional-address',
@@ -25,7 +24,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     CRUD = ACTION;
     inputCRUD: AbstractControl = new FormControl(); // <-- To update
 
-    todo: Subscription; // <-- Unsubscribe services
+    subscribe: Subscription;
 
     // Models
     states: State[];
@@ -38,14 +37,16 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     }
 
     ngOnDestroy(): void {
-        this.todo.unsubscribe(); // <-- Free memory
+        if (this.subscribe) {
+            this.subscribe.unsubscribe();
+        }
     }
 
     onSelectState(id: any) {
         this.state.setValue(id); // <-- Save state in the form
 
         // Filter and get data
-        this.addressService.getMunicipalityByState(this.state.value).subscribe(response => {
+        this.subscribe = this.addressService.getMunicipalityByState(this.state.value).subscribe(response => {
 
             if (response.length > 0) {
                 this.municipalities = response as Municipality[];
@@ -82,7 +83,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     private initAddress(): void {
 
         // Get suscription and data
-        this.todo = this.addressService.getStates().subscribe((value) => {
+        this.subscribe = this.addressService.getStates().subscribe((value) => {
             this.states = value;
 
             // Init
@@ -120,7 +121,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
                 break;
             case this.CRUD.EDIT:
 
-                // Parse id and rename this.inputCRUD.value
+                // Parse id and rename
                 this.addressService.updateMunicipality(this.municipality.value, { name: this.inputCRUD.value, state: this.state.value })
                     .subscribe(response => {
 

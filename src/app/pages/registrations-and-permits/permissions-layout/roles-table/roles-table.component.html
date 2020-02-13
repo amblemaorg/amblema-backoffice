@@ -1,10 +1,10 @@
 <!-- Create a role -->
 <p class="font-weight-bold">Registrar roles</p>
-<app-roles-form [MODE]="MODE"></app-roles-form>
+<app-roles-form [MODE]="MODE" [DATA]="data"></app-roles-form>
 <hr>
 
 <!-- List roles -->
 <p class="font-weight-bold">Lista de roles</p>
 <div class="table-responsive">
-    <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+    <ng2-smart-table (custom)="onAction($event)" [source]='data$ | async' [settings]="settings"></ng2-smart-table>
 </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-crud';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
@@ -8,6 +8,7 @@ import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { SetRole } from 'src/app/store/role.action';
+import { ActivatedRoute } from '@angular/router';
 import { Role } from 'src/app/models/permission.model';
 
 @Component({
@@ -16,16 +17,16 @@ import { Role } from 'src/app/models/permission.model';
 })
 export class RolesFormComponent implements OnDestroy, OnChanges {
 
-  @Input() DATA: boolean | null = false;
   @Input() MODE: string | null = ACTION.CREATE;
+  @Input() DATA: any | null = {};
 
-  @Output() edit = new EventEmitter<any>();
-  @Output() create = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<string>();
 
   submitted = false;
   ACTION = ACTION;
-
   subscribe: Subscription;
+
+  role: Role; // <-- To update the data
 
   formRole: FormGroup = new FormGroup({
     role: new FormControl('', [Validators.required]),
@@ -38,18 +39,20 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
     private validationService: ValidationService,
     private toastr: CustomToastrService) { }
 
+
   ngOnDestroy(): void {
-    if (this.subscribe)
+    if (this.subscribe) {
       this.subscribe.unsubscribe();
+    }
   }
 
   ngOnChanges(): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-    console.log(this.MODE);
-    console.log(this.DATA);
+
+    if (this.MODE === this.ACTION.EDIT) {
+      this.formRole.controls.role.setValue(this.DATA.name);
+    }
   }
-  
+
   onSubmit() {
     this.submitted = true;
 
@@ -63,7 +66,7 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
           this.store.dispatch(new SetRole(response));
           this.toastr.registerSuccess('Registro rol', 'Nuevo rol registrado');
         });
-      } else { // <!-- Update the role 
+      } else { // <!-- Update the role
 
       }
     } else {

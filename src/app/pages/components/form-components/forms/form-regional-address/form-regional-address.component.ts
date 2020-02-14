@@ -6,6 +6,7 @@ import { State, Municipality } from '../../../../../models/address.model';
 import { ACTION } from '../../../../../helpers/text-crud';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { Subscription } from 'rxjs';
+import { errorMessages } from 'src/app/helpers/error-manager';
 
 @Component({
     selector: 'app-form-regional-address',
@@ -116,7 +117,9 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
                     this.toastr.registerSuccess('Registro', 'Municipio registrado');
                     this.resetForm();
                 }, (err: any) => {
-                    this.toastr.error('Error', 'Se esta duplicando el municipio');
+                    if (Number(err.error.name[0].status) === errorMessages.duplicated.status) {
+                        this.toastr.error('Error', errorMessages.duplicated.msg);
+                    }
                 });
                 break;
             case this.CRUD.EDIT:
@@ -134,6 +137,10 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
                         this.toastr.updateSuccess('Actualización', 'Municipio actualizado');
                         this.resetForm();
+                    }, (err: any) => {
+                        if (Number(err.error.name[0].status) === errorMessages.duplicated.status) {
+                            this.toastr.error('Error', errorMessages.duplicated.msg);
+                        }
                     });
                 break;
             case this.CRUD.DELETE:

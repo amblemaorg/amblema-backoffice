@@ -10,8 +10,8 @@
 
     <!-- Update -->
     <p class="font-weight-bold">Actualización de rol</p>
-    <app-select-role></app-select-role>
-    <app-roles-form [MODE]="MODE"></app-roles-form>
+    <app-select-role [control]="control" (onselected)="onSelected($event)"></app-select-role>
+    <app-roles-form [MODE]="MODE" [DATA]="role"></app-roles-form>
     <hr>
 
     <!-- List actions -->

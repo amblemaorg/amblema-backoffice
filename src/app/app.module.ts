@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { RolesState } from './store/role.action';
+import { RolesState, RoleState } from './store/role.action';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,10 @@ import { RolesState } from './store/role.action';
     NbMenuModule.forRoot(),
 
     // NGXS
-    NgxsModule.forRoot([RolesState], { developmentMode: true }),
+    NgxsModule.forRoot( [
+      RolesState,
+      RoleState
+    ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
   ],
   providers: [

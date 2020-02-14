@@ -21,9 +21,6 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    console.log(this.form.value);
-
-    // Working on your validated form data
     if (this.form.valid) {
 
       // Mode

@@ -3,9 +3,9 @@ import { ACTION } from '../../../../helpers/text-crud';
 import { Router } from '@angular/router';
 import { TableActions, BaseTable } from '../../../../helpers/base-table';
 import { Role } from 'src/app/models/permission.model';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { RolesState } from 'src/app/store/role.action';
+import { RolesState, UpdateRole } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-roles-table',
@@ -15,17 +15,14 @@ export class RolesTableComponent extends BaseTable implements TableActions {
 
   @Select(RolesState.roles) data$: Observable<Role[]>;
 
-  data: boolean;
-
-
   constructor(
+    private store: Store,
     private router: Router) {
 
-    // Related with the form
-    super('form-role');
-
+    super('form-role'); // Related form
     this.MODE = this.ACTION.CREATE;
 
+    // Custom columns
     this.settings.columns = {
       name: {
         title: 'Rol',
@@ -47,20 +44,12 @@ export class RolesTableComponent extends BaseTable implements TableActions {
   onAction(event: any) {
     switch (event.action) {
       case ACTION.EDIT:
-
-        // Change mode purpose
-        this.MODE = ACTION.EDIT;
         this.router.navigate(['/pages/permissions/actions']);
-        this.data = true;
-        console.log(event.data);
+        this.store.dispatch( new UpdateRole(event.data) );
         break;
       case ACTION.DELETE:
-
         // Call delete modal
         break;
     }
   }
-
-  newData(data: any): void { }
-  updateData(data: any): void { }
 }

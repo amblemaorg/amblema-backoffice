@@ -24,4 +24,12 @@ export class PermissionService {
   setRole( data: Role ): Observable<Role> {
     return this.httpClient.post<Role>(`${environment.api}${this.ROLE}/`, data);
   }
+
+  updateRole(id: string, data: Role ): Observable<Role> {
+    return this.httpClient.put<Role>(`${environment.api}${this.ROLE}/${id}`, data);
+  }
+
+  deleteRole( id: string ): Observable<string> {
+    return this.httpClient.delete<string>( `${environment.api}${this.ROLE}/${id}` );
+  }
 }

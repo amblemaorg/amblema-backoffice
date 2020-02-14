@@ -1,3 +1,5 @@
+import { STATUS } from '../helpers/status';
+
 export interface Action {
     name: string;
     label: string;
@@ -15,4 +17,5 @@ export interface Role {
     id?: string;
     name: string;
     permissions?: Permission[];
+    status?: any;
 }

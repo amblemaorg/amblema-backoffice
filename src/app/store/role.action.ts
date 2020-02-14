@@ -2,6 +2,7 @@ import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
 import { Role } from '../models/permission.model';
 import { NgZone } from '@angular/core';
 import { PermissionService } from '../services/permission.service';
+import { Utility } from '../helpers/utility';
 
 /**
  * Define Roles actions
@@ -22,7 +23,7 @@ export class SetRole {
 
 export class UpdateRole {
     static readonly type = '[Role] Update Role';
-    constructor( public payload: Role ) { }
+    constructor(public payload: Role) { }
 }
 
 /**
@@ -46,6 +47,7 @@ export class RolesState implements NgxsOnInit {
     }
 
     constructor(
+        private helper: Utility,
         private ngZone: NgZone,
         private permissionsService: PermissionService,
     ) { }
@@ -58,6 +60,7 @@ export class RolesState implements NgxsOnInit {
     getRoles(ctx: StateContext<Role[]>) {
         return this.permissionsService.getRoles()
             .subscribe(response => {
+                response = this.helper.readlyStatus(response);
                 ctx.setState(response);
             });
     }
@@ -65,7 +68,11 @@ export class RolesState implements NgxsOnInit {
     @Action(SetRole)
     setRoles(ctx: StateContext<Role[]>, action: SetRole) {
         const value = ctx.getState();
-        ctx.setState(value.concat(action.payload));
+        ctx.setState(value.concat(this.helper.readlyStatus([action.payload])));
+    }
+
+    @Action(UpdateRole)
+    updateRoles(ctx: StateContext<Role[]>, action: UpdateRole) {
     }
 }
 
@@ -87,7 +94,7 @@ export class RoleState {
     }
 
     @Action(UpdateRole)
-    updateRole( ctx: StateContext<Role>, action: UpdateRole ) {
+    updateRole(ctx: StateContext<Role>, action: UpdateRole) {
         ctx.setState(action.payload);
     }
 }

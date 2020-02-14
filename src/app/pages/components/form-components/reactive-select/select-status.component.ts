@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
 import { Validators } from '@angular/forms';
 import { STATUS } from 'src/app/helpers/status';
+import { Utility } from 'src/app/helpers/utility';
 
 @Component({
     selector: 'app-select-status',
@@ -14,19 +15,22 @@ import { STATUS } from 'src/app/helpers/status';
                 class="form-control form-group"
                 [formControl]="control"
                 (change)="onChange($event.target.value)">
-                <option *ngFor="let item of status" [value]="item.value">{{ item.value }}</option>
+                <option *ngFor="let item of status" [value]="item.value">{{ item.name }}</option>
             </select>
             <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation>
         </div>
     `
 })
-export class SelectStatusComponent extends AbstractReactiveSelect implements OnInit {
+export class SelectStatusComponent extends AbstractReactiveSelect {
 
-    readonly status: any = [{ value: STATUS.ACTIVE }, { value: STATUS.INACTIVE }];
+    readonly status: any = [
+        {
+            name: STATUS.ACTIVE,
+            value: '1'
+        }, {
+            name: STATUS.INACTIVE,
+            value: '2'
+        }];
 
-    ngOnInit(): void {
-        this.control.setValidators([Validators.required]);
-        this.control.setValue(this.status[0].value);
-
-    }
+    constructor( private helper: Utility ) { super(); }
 }

@@ -7,8 +7,7 @@ import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { SetRole } from 'src/app/store/role.action';
-import { ActivatedRoute } from '@angular/router';
+import { SetRole, GetRoles, UpdateRole } from 'src/app/store/role.action';
 import { Role } from 'src/app/models/permission.model';
 
 @Component({
@@ -50,7 +49,8 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
 
     if (this.MODE === this.ACTION.EDIT) {
       this.formRole.controls.role.setValue(this.DATA.name);
-    }
+      this.formRole.controls.status.setValue( this.DATA.status === STATUS.ACTIVE ? '1' : '2' );
+    } else { this.formRole.controls.status.setValue('1'); }
   }
 
   onSubmit() {
@@ -58,16 +58,33 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
 
     // Validate the form
     if (this.formRole.valid) {
-
       if (this.MODE === ACTION.CREATE) {
 
-        this.subscribe = this.permissionsService.setRole({ name: this.formRole.controls.role.value }).subscribe(response => {
+        this.subscribe = this.permissionsService.setRole(
+          {
+            name: this.formRole.controls.role.value,
+            status: this.formRole.controls.status.value,
+          }
+        ).subscribe(response => {
           this.resetForm();
           this.store.dispatch(new SetRole(response));
           this.toastr.registerSuccess('Registro rol', 'Nuevo rol registrado');
         });
       } else { // <!-- Update the role
+        this.subscribe = this.permissionsService.updateRole(
+          this.DATA.id,
+          {
+            name: this.formRole.controls.role.value,
+            status: this.formRole.controls.status.value,
+          }
+        ).subscribe( response => {
+          this.submitted = false;
 
+          // YOUT NEED TO IMPROVE THIS CODE
+
+          this.store.dispatch( new GetRoles() );
+          this.toastr.updateSuccess('Actualizar', 'Rol actualizado');
+        });
       }
     } else {
 

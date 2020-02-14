@@ -13,6 +13,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { RolesState, RoleState } from './store/role.action';
+import { Utility } from './helpers/utility';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,10 @@ import { RolesState, RoleState } from './store/role.action';
     NgxsStoragePluginModule.forRoot(),
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+
+    // Custom helper
+    Utility
   ],
   bootstrap: [AppComponent]
 })

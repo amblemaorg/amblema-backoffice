@@ -9,13 +9,7 @@
         </ng-template>
         <h4 *ngIf="!titleStep">Información general del módulo</h4>
         <hr *ngIf="!titleStep">
-        <app-general-form></app-general-form>
-        <div class="text-center">
-            <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>
-                <span class="d-none d-sm-inline">Siguiente</span>
-                <nb-icon icon="arrow-forward-outline"></nb-icon>
-            </button>
-        </div>
+        <app-general-form [MODE]="MODE"></app-general-form>
     </nb-step> <!-- / End -->
 
     <!-- Second step -->

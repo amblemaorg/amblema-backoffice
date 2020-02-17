@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
-import { ACTION } from 'src/app/helpers/text-crud';
+import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { DetailsForm } from '../../shared/details-form';
 
 @Component({

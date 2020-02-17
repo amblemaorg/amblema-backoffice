@@ -14,6 +14,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { RolesState, RoleState } from './store/role.action';
 import { Utility } from './helpers/utility';
+import { LearningState } from './store/learning.action';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,12 @@ import { Utility } from './helpers/utility';
 
     // NGXS
     NgxsModule.forRoot( [
+      // RECUERDA REFACTORIZAR EL
+      // MANEJADOR DE ESTADO DE ROLES
       RolesState,
-      RoleState
+      RoleState,
+
+      LearningState,
     ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
   ],

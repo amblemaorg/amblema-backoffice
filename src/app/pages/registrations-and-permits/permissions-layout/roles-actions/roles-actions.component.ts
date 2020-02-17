@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ACTION } from '../../../../helpers/text-crud';
+import { ACTION } from '../../../../helpers/text-content/text-crud';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { Select } from '@ngxs/store';

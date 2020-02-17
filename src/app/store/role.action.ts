@@ -4,9 +4,12 @@ import { NgZone } from '@angular/core';
 import { PermissionService } from '../services/permission.service';
 import { Utility } from '../helpers/utility';
 
-/**
- * Define Roles actions
+/*
+ * NOTA: IMPORTANTE REFACTORIZAR ESTE CODIGO
+ * UN SOLO STATE MODEL,  "RolesStateModel"
  */
+
+// Role actions
 
 export class GetRoles {
     static readonly type = '[Roles] Get Roles';
@@ -26,9 +29,7 @@ export class UpdateRole {
     constructor(public payload: Role) { }
 }
 
-/**
- * Roles State
- */
+// Role State
 
 @State<Role[]>({
     name: 'roles',

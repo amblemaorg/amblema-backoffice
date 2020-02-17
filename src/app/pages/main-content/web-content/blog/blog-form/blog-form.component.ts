@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ACTION } from '../../../../../helpers/text-crud';
+import { ACTION } from '../../../../../helpers/text-content/text-crud';
 
 @Component({
   selector: 'app-blog-form',

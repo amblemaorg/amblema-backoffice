@@ -1,32 +1,38 @@
 import { Inject } from '@angular/core';
-import { STATUS } from './status';
+import { STATUS } from './text-content/status';
 
 @Inject('root')
 export class Utility {
 
-    public readlyStatus(object?: any[]): any[]  {
+    public readlyStatus(object?: any[]): any[] {
         object.forEach((value, key) => {
-
-            if (Number(value.status) === 1) {
-                value.status = STATUS.ACTIVE as string;
+            if (value.status === STATUS.ACTIVE.CODE) {
+                value.status = STATUS.ACTIVE.MSG as string;
             } else {
-                value.status = STATUS.INACTIVE;
+                value.status = STATUS.INACTIVE.MSG as string;
             }
-
         });
         return object;
     }
 
     public incodeStatus(object: any[]): any[] {
         object.forEach((value, key) => {
-
-            if (String(value.status) === STATUS.ACTIVE) {
-                value.status = 1;
+            if (String(value.status) === STATUS.ACTIVE.MSG) {
+                value.status = STATUS.ACTIVE.CODE;
             } else {
-                value.status = 2;
+                value.status = STATUS.INACTIVE.CODE;
             }
-
         });
         return object;
+    }
+
+    /** To filter array json by ID, return a value */
+
+    public filter(object: any[], id: string): any {
+        return object.filter(value => {
+            if (value.id === id) {
+                return value;
+            }
+        });
     }
 }

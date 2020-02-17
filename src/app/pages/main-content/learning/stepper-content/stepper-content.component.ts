@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, Input } from '@angular/core';
 
 @Component({
   selector: 'app-stepper-content',
@@ -6,6 +6,8 @@ import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/
   styles: ['./stepper-content.component.scss']
 })
 export class StepperContentComponent implements OnInit {
+
+  @Input() MODE: string;
 
   @Output() edit = new EventEmitter<any>();
   @Output() create = new EventEmitter<any>();

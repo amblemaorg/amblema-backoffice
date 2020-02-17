@@ -18,6 +18,7 @@ import { ModalStepperModule } from '../../components/shared/modal/modal-stepper/
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { FormSliderModule } from '../../components/form-components/forms/form-slider/form-slider.module';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,8 @@ import { ReactiveInputFileModule } from '../../components/form-components/reacti
     NbIconModule,
     NgxMaskModule.forRoot(),
     NbInputModule,
+    FormsModule,
+    ReactiveFormsModule,
 
     // Add custom module
     ReactiveTextAreaModule,

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { LearningService } from 'src/app/services/learning.service';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 
@@ -20,8 +22,14 @@ export class LearningTableComponent extends BaseTable implements TableActions {
     }
   ];
 
-  constructor() {
+  subscription: Subscription;
+
+  constructor(
+    private learningService: LearningService
+  ) {
     super('form-learning-module');
+
+    this.MODE = this.ACTION.CREATE;
 
     // Add colummns
     this.settings.columns = {
@@ -49,14 +57,9 @@ export class LearningTableComponent extends BaseTable implements TableActions {
   onAction(event: any) {
     switch (event.action) {
       case this.ACTION.EDIT:
-        // Change mode purpose
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
         break;
     }
   }
-
-  deleteData() {}
-  newData() {}
-  updateData() {}
 }

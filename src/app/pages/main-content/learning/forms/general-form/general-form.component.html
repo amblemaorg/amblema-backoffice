@@ -1,26 +1,62 @@
-<form>
+<form [formGroup]="form">
     <div class="row form-group">
         <div class="col-12">
-            <app-input-custom [label]="'Titulo del módulo'" [placeholder]="'Titulo del módulo'" [submitted]="submitted">
+            <app-input-custom 
+            [control]="form.get('title')"
+            [id]="'title-module'" 
+            [label]="'Titulo del módulo'" 
+            [placeholder]="'Titulo del módulo'" 
+            [submitted]="submitted">
             </app-input-custom>
         </div>
         <div class="col-12">
-            <app-text-area-custom [label]="'Descripción general'" [placeholder]="'Descripción general'"
+            <app-text-area-custom 
+                [control]="form.get('description')"
+                [id]="'description-module'" 
+                [label]="'Descripción general'"
+                [placeholder]="'Descripción general'"
                 [submitted]="submitted"></app-text-area-custom>
         </div>
         <div class="col-12 col-lg-6 form-group">
             <label class="label">Timer</label>
-            <input type="text" class="form-control" fullWidth nbInput mask="99:99" placeholder="HH:MM"
-                aria-label="Telephone number 10 digits only">
+            <input 
+                type="text" 
+                class="form-control" 
+                fullWidth nbInput 
+                mask="00:00" 
+                placeholder="HH:MM"
+                formControlName="duration">
         </div>
         <div class="col-12 col-lg-6">
-            <app-input-custom [label]="'Puntuación'" [placeholder]="'Puntuación'" [submitted]="submitted">
+            <app-input-custom 
+            [id]="'score'" 
+            [label]="'Puntuación'" 
+            [placeholder]="'Puntuación'" 
+            [submitted]="submitted"
+            [control]="form.get('point')">
             </app-input-custom>
         </div>
         <div class="col-12 col-lg-6">
-            <app-input-custom [label]="'Objetivos'" [placeholder]="'Objetivos'" [submitted]="submitted">
+            <app-input-custom 
+            [id]="'objectives'" 
+            [label]="'Objetivos'" 
+            [placeholder]="'Objetivos'" 
+            [submitted]="submitted">
             </app-input-custom>
         </div>
+    </div>
+    <div class="text-center">
+        <!-- <button [attr.disabled]="form.invalid ? true : null" class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>
+            <span class="d-none d-sm-inline">Siguiente</span>
+            <nb-icon icon="arrow-forward-outline"></nb-icon>
+        </button> -->
 
+        <button 
+            (click)="sendStepOne()"
+            [attr.disabled]="form.invalid ? true : null" 
+            class="next-button btn-primary btn col-12 col-lg-auto">
+            <span class="d-none d-sm-inline">Siguiente</span>
+            <nb-icon icon="arrow-forward-outline"></nb-icon>
+        </button>
     </div>
 </form>

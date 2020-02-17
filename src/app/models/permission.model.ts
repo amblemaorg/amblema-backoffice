@@ -1,4 +1,4 @@
-import { STATUS } from '../helpers/status';
+import { STATUS } from '../helpers/text-content/status';
 
 export interface Action {
     name: string;

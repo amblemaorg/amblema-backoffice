@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  // urlStaging: 'http://157.245.131.248:10508'
 };
 
 /*

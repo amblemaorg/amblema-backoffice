@@ -3,10 +3,10 @@ import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { AddressService, DataMunicipality } from 'src/app/services/address.service';
 import { State, Municipality } from '../../../../../models/address.model';
-import { ACTION } from '../../../../../helpers/text-crud';
+import { ACTION } from '../../../../../helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { Subscription } from 'rxjs';
-import { errorMessages } from 'src/app/helpers/error-manager';
+import { errorMessages } from 'src/app/helpers/text-content/error-manager';
 
 @Component({
     selector: 'app-form-regional-address',
@@ -86,7 +86,6 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
         // Get suscription and data
         this.subscribe = this.addressService.getStates().subscribe((value) => {
             this.states = value;
-
             // Init
             this.state.setValue(null);
             this.municipality.setValue(null);

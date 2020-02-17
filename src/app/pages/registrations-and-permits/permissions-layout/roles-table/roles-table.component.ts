@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ACTION } from '../../../../helpers/text-crud';
+import { ACTION } from '../../../../helpers/text-content/text-crud';
 import { Router } from '@angular/router';
 import { TableActions, BaseTable } from '../../../../helpers/base-table';
 import { Role } from 'src/app/models/permission.model';

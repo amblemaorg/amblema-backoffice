@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-12 col-lg">
+        <app-input-custom 
+            [id]="'url-video'" 
+            [label]="'URL del video'" 
+            [placeholder]="'URL del video'">
+        </app-input-custom>
+    </div>
+    <div class="col-12 col-lg">
+        <app-text-area-custom [id]="'video-description'" [label]="'Descripción'" [placeholder]="'Descripción'">
+        </app-text-area-custom>
+    </div>
+    <div class="col-12 col-lg-auto">
+        <button class="btn btn-success col-12 col-lg-autp mt-lg-4">Registrar</button>
+    </div>
+
+    <!-- Table -->
+    <div class="col-12 form-group">
+        <div class="table-responsive">
+            <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+        </div>
+    </div>
+</div>

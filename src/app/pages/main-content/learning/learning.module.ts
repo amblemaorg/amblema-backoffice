@@ -19,6 +19,7 @@ import { ReactiveInputModule } from '../../components/form-components/reactive-i
 import { FormSliderModule } from '../../components/form-components/forms/form-slider/form-slider.module';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormVideoModule } from '../../components/form-components/forms/form-video/form-video.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveInputModule,
     ReactiveInputFileModule,
     FormSliderModule,
+    FormVideoModule,
     ModalStepperModule,
   ]
 })

@@ -17,43 +17,61 @@
         </div>
         <div class="col-12 col-lg-6">
             <app-input-custom [id]="'score'" [label]="'Puntuación'" [placeholder]="'Puntuación'" [submitted]="submitted"
-                [control]="form.get('point')">
+                [control]="form.get('points')">
             </app-input-custom>
         </div>
         <div class="col-12 form-group">
             <div class="row">
-                <div class="col">             
-                    <app-input-custom 
-                        [id]="'objectives'" 
-                        [label]="'Objetivos'"   
-                        [control]="form.get('objective')"
-                        [placeholder]="'Objetivos'"
-                        [submitted]="submitted">
+                <div class="col">
+                    <app-input-custom [id]="'objectives'" [label]="'Objetivos'" [control]="form.get('objectives')"
+                        [placeholder]="'Objetivos'" [submitted]="submitted">
                     </app-input-custom>
                 </div>
                 <div class="col-auto">
-                    <button (click)="addObjective()" class="btn btn-outline-info m-inline-parcial">
+                    <button *ngIf="MODE_LIST === ACTION.CREATE"
+                        [attr.disabled]="!form.controls['objectives'].value ? true : null" (click)="addObjective()"
+                        class="btn btn-outline-info m-inline-parcial">
                         <nb-icon icon="plus"></nb-icon>
                     </button>
+
+                    <div class="btn-group m-inline-parcial" role="group" *ngIf="MODE_LIST === ACTION.EDIT">
+                        <button type="button" class="btn btn-outline-info" (click)="confirmAction()" >
+                            Confirmar
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-outline-danger" 
+                            (click)="MODE_LIST = ACTION.CREATE; 
+                            form.controls['objectives'].enable();
+                            form.controls['objectives'].reset();">
+                            Cancelar
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
-
         <div class="col-12 form-group">
             <nb-list>
-                <nb-list-item *ngFor="let item of objectives">
-                  {{ item }}
+                <nb-list-item *ngFor="let item of objectives; let i = index;"
+                    class="d-flex w-100 justify-content-between">
+                    <span>{{ item }}</span>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-outline-info" (click)="onEditObjective(i)">
+                            <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" (click)="onDeleteObjective(i)">
+                            <nb-icon icon="trash-2-outline"></nb-icon>
+                        </button>
+                    </div>
                 </nb-list-item>
-              </nb-list>
+            </nb-list>
         </div>
     </div>
     <div class="text-center">
-        <!-- <button [attr.disabled]="form.invalid ? true : null" class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>
-            <span class="d-none d-sm-inline">Siguiente</span>
-            <nb-icon icon="arrow-forward-outline"></nb-icon>
-        </button> -->
-
-        <button (click)="sendStepOne()" [attr.disabled]="form.invalid ? true : null"
+        <button (click)="sendStepOne()"
+            nbStepperNext
+            [attr.disabled]="form.invalid ? true : null"
             class="next-button btn-primary btn col-12 col-lg-auto">
             <span class="d-none d-sm-inline">Siguiente</span>
             <nb-icon icon="arrow-forward-outline"></nb-icon>

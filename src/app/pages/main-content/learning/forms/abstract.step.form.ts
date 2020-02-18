@@ -11,6 +11,8 @@ export abstract class AbtractStepForm {
         description: new FormControl('', [Validators.required])
     });
 
+    ACTION = ACTION;
+
     // Behavior form
     @Input() MODE: string | null = ACTION.CREATE;
 }

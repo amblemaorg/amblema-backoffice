@@ -12,14 +12,14 @@ export interface Quizze {
 
 export interface Learning {
     id?: string;
-    title: string;
-    description: string;
-    secondaryTitle: string;
-    secondaryDescription: string;
-    objetives: string[];
-    images: Image[];
-    videos: Video[];
-    duration: string;
-    points: string;
-    quizzes: Quizze[];
+    title?: string;
+    description?: string;
+    secondaryTitle?: string;
+    secondaryDescription?: string;
+    objectives?: string[];
+    images?: Image[];
+    videos?: Video[];
+    duration?: string;
+    points?: string;
+    quizzes?: Quizze[];
 }

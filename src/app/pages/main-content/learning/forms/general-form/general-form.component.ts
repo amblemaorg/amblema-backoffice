@@ -6,6 +6,7 @@ import { LearningState, SetLearningOne } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
 import { Learning } from 'src/app/models/learning.model';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 
 @Component({
   selector: 'app-general-form',
@@ -21,7 +22,12 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
   submitted = false;
 
+  // This is for list objectives
+  MODE_LIST = ACTION.CREATE;
+  ID_ITEM: number;
+
   constructor(
+    private toastr: CustomToastrService,
     private store: Store) {
     super();
   }
@@ -30,13 +36,16 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
     // Add new controls
     this.form.addControl('duration', new FormControl(' ', [Validators.required]));
-    this.form.addControl('point', new FormControl('', [Validators.required]));
-    this.form.addControl('objective', new FormControl());
+    this.form.addControl('points', new FormControl('', [Validators.required]));
+    this.form.addControl('objectives', new FormControl());
 
     // Fill data form, register in stage
     this.subscription = this.data$.subscribe(response => {
+
       if (response !== null) {
         this.form.patchValue(response);
+        this.form.controls.objectives.reset(); // <-- Clear form
+        this.objectives = response.objectives as string[]; // <-- To print the list
       }
     });
   }
@@ -60,14 +69,39 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   }
 
   sendStepOne() {
-    this.form.controls['objective'].setValue( this.objectives ); 
-    this.store.dispatch(new SetLearningOne(this.form.value));
+    const prepareData: Learning = this.form.value;
+    prepareData.objectives = this.objectives;
+    this.store.dispatch(new SetLearningOne(prepareData));
   }
 
   addObjective() {
-    this.objectives.push(this.form.controls['objective'].value );
-    this.form.controls['objective'].reset();
+    this.objectives = Object.assign([], this.objectives);
+    if (this.objectives.length < 5) {
+      this.objectives.push(this.form.controls.objectives.value);
+      this.form.controls.objectives.reset();
+    } else { this.toastr.error('Limite de registro', 'Solo se pueden registrar 5 objectivos'); }
+  }
 
-    console.log(this.objectives); 
+  onEditObjective(index: number): void {
+    this.MODE_LIST = ACTION.EDIT;
+    this.ID_ITEM = index;
+    this.form.controls.objectives.setValue(this.objectives[index]);
+  }
+
+  onDeleteObjective(index: number): void {
+    this.ID_ITEM = index;
+    this.objectives = this.objectives.filter(e => e !== this.objectives[this.ID_ITEM]);
+    this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
+  }
+
+  confirmAction() {
+    this.objectives = Object.assign([], this.objectives);
+
+    if (this.MODE_LIST === ACTION.EDIT) {
+      this.objectives[this.ID_ITEM] = this.form.controls.objectives.value;
+    }
+
+    this.MODE_LIST = ACTION.CREATE;
+    this.form.controls.objectives.reset();
   }
 }

@@ -1,4 +1,5 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
+import { patch, append, removeItem, insertItem, updateItem } from '@ngxs/store/operators';
 import { Learning } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
@@ -32,9 +33,11 @@ export class SetLearningOne {
 @State<LearningStateModel>({
     name: 'Learning',
     defaults: {
-        learning: null,
+        learning: {
+        },
         learnings: []
     }
+
 })
 export class LearningState implements NgxsOnInit {
 
@@ -56,7 +59,7 @@ export class LearningState implements NgxsOnInit {
     // Get all Learnings
 
     @Action(GetLearnings)
-    getLearnings(ctx: LearningStateModel) {
+    getLearnings(ctx: StateContext<LearningStateModel>) {
 
     }
 
@@ -65,22 +68,9 @@ export class LearningState implements NgxsOnInit {
     // ------------------------------------------
 
     @Action(SetLearningOne)
-    setLearningOne( ctx: StateContext<LearningStateModel>, action: SetLearningOne ) {
+    setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
         ctx.setState({
             learning: action.payload,
         });
-    }
-
-    setObjective( ctx: StateContext<LearningStateModel>, action: string[]) {
-        const model = ctx.getState();
-        const newData = action;
-
-        let value = Object.assign(model, newData);
-        
-        console.log( value );                
-
-        // ctx.patchState(
-        //     ...ctx.getState(),
-        // )
     }
 }

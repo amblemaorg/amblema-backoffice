@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LearningRoutingModule } from './learning-routing.module';
 import { LearningComponent } from './learning.component';
-import { NbCardModule, NbStepperModule, NbIconModule, NbInputModule } from '@nebular/theme';
+import { NbCardModule, NbStepperModule, NbIconModule, NbInputModule, NbListModule } from '@nebular/theme';
 import { LearningTableComponent } from './learning-table/learning-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { StepperContentComponent } from './stepper-content/stepper-content.component';
@@ -42,6 +42,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbInputModule,
     FormsModule,
     ReactiveFormsModule,
+    NbListModule,
 
     // Add custom module
     ReactiveTextAreaModule,

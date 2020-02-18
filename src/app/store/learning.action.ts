@@ -6,8 +6,8 @@ import { LearningService } from '../services/learning.service';
 // State Model
 
 interface LearningStateModel {
-    learning: Learning;
-    learnings: Learning[];
+    learning?: Learning;
+    learnings?: Learning[];
 }
 
 // Actions
@@ -61,14 +61,26 @@ export class LearningState implements NgxsOnInit {
     }
 
     // ------------------------------------------
-    // CRUD Step one
+    // CRUD Step one                            -
     // ------------------------------------------
 
     @Action(SetLearningOne)
     setLearningOne( ctx: StateContext<LearningStateModel>, action: SetLearningOne ) {
         ctx.setState({
             learning: action.payload,
-            learnings: ctx.getState().learnings
         });
+    }
+
+    setObjective( ctx: StateContext<LearningStateModel>, action: string[]) {
+        const model = ctx.getState();
+        const newData = action;
+
+        let value = Object.assign(model, newData);
+        
+        console.log( value );                
+
+        // ctx.patchState(
+        //     ...ctx.getState(),
+        // )
     }
 }

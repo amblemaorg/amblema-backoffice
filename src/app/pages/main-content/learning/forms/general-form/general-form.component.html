@@ -1,48 +1,50 @@
 <form [formGroup]="form">
     <div class="row form-group">
         <div class="col-12">
-            <app-input-custom 
-            [control]="form.get('title')"
-            [id]="'title-module'" 
-            [label]="'Titulo del módulo'" 
-            [placeholder]="'Titulo del módulo'" 
-            [submitted]="submitted">
+            <app-input-custom [control]="form.get('title')" [id]="'title-module'" [label]="'Titulo del módulo'"
+                [placeholder]="'Titulo del módulo'" [submitted]="submitted">
             </app-input-custom>
         </div>
         <div class="col-12">
-            <app-text-area-custom 
-                [control]="form.get('description')"
-                [id]="'description-module'" 
-                [label]="'Descripción general'"
-                [placeholder]="'Descripción general'"
-                [submitted]="submitted"></app-text-area-custom>
+            <app-text-area-custom [control]="form.get('description')" [id]="'description-module'"
+                [label]="'Descripción general'" [placeholder]="'Descripción general'" [submitted]="submitted">
+            </app-text-area-custom>
         </div>
         <div class="col-12 col-lg-6 form-group">
             <label class="label">Timer</label>
-            <input 
-                type="text" 
-                class="form-control" 
-                fullWidth nbInput 
-                mask="00:00" 
-                placeholder="HH:MM"
+            <input type="text" class="form-control" fullWidth nbInput mask="00:00" placeholder="HH:MM"
                 formControlName="duration">
         </div>
         <div class="col-12 col-lg-6">
-            <app-input-custom 
-            [id]="'score'" 
-            [label]="'Puntuación'" 
-            [placeholder]="'Puntuación'" 
-            [submitted]="submitted"
-            [control]="form.get('point')">
+            <app-input-custom [id]="'score'" [label]="'Puntuación'" [placeholder]="'Puntuación'" [submitted]="submitted"
+                [control]="form.get('point')">
             </app-input-custom>
         </div>
-        <div class="col-12 col-lg-6">
-            <app-input-custom 
-            [id]="'objectives'" 
-            [label]="'Objetivos'" 
-            [placeholder]="'Objetivos'" 
-            [submitted]="submitted">
-            </app-input-custom>
+        <div class="col-12 form-group">
+            <div class="row">
+                <div class="col">             
+                    <app-input-custom 
+                        [id]="'objectives'" 
+                        [label]="'Objetivos'"   
+                        [control]="form.get('objective')"
+                        [placeholder]="'Objetivos'"
+                        [submitted]="submitted">
+                    </app-input-custom>
+                </div>
+                <div class="col-auto">
+                    <button (click)="addObjective()" class="btn btn-outline-info m-inline-parcial">
+                        <nb-icon icon="plus"></nb-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 form-group">
+            <nb-list>
+                <nb-list-item *ngFor="let item of objectives">
+                  {{ item }}
+                </nb-list-item>
+              </nb-list>
         </div>
     </div>
     <div class="text-center">
@@ -51,9 +53,7 @@
             <nb-icon icon="arrow-forward-outline"></nb-icon>
         </button> -->
 
-        <button 
-            (click)="sendStepOne()"
-            [attr.disabled]="form.invalid ? true : null" 
+        <button (click)="sendStepOne()" [attr.disabled]="form.invalid ? true : null"
             class="next-button btn-primary btn col-12 col-lg-auto">
             <span class="d-none d-sm-inline">Siguiente</span>
             <nb-icon icon="arrow-forward-outline"></nb-icon>

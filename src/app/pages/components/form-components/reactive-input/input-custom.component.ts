@@ -25,15 +25,7 @@ import { Validators } from '@angular/forms';
         </div>`
 })
 
-export class InputCustomComponent  extends AbstractReactiveInput implements AfterViewInit {
+export class InputCustomComponent  extends AbstractReactiveInput {
 
     constructor( private cd: ChangeDetectorRef ) {super(); }
-
-    ngAfterViewInit(): void {
-        this.control.setValidators([Validators.required]);
-        this.control.updateValueAndValidity();
-
-        this.cd.detectChanges();
-
-    }
 }

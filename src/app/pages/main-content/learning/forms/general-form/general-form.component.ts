@@ -17,6 +17,8 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   @Select(LearningState.learning) data$: Observable<Learning>;
   subscription: Subscription;
 
+  objectives: string[] = []; // Objective list
+
   submitted = false;
 
   constructor(
@@ -29,9 +31,10 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
     // Add new controls
     this.form.addControl('duration', new FormControl(' ', [Validators.required]));
     this.form.addControl('point', new FormControl('', [Validators.required]));
+    this.form.addControl('objective', new FormControl());
 
+    // Fill data form, register in stage
     this.subscription = this.data$.subscribe(response => {
-
       if (response !== null) {
         this.form.patchValue(response);
       }
@@ -39,11 +42,12 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.unsubscribe(); // <-- Free memory
   }
 
   ngOnChanges(): void {
 
+    // Fill data form to update the data
     this.subscription = this.data$.subscribe(response => {
       if (this.MODE === ACTION.CREATE) {
         if (response !== null) {
@@ -56,6 +60,14 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   }
 
   sendStepOne() {
+    this.form.controls['objective'].setValue( this.objectives ); 
     this.store.dispatch(new SetLearningOne(this.form.value));
+  }
+
+  addObjective() {
+    this.objectives.push(this.form.controls['objective'].value );
+    this.form.controls['objective'].reset();
+
+    console.log(this.objectives); 
   }
 }

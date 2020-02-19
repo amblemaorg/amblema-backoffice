@@ -2,12 +2,12 @@
 @import './animations';
 @import './variables';
 
-// Menu
+/* Menu */
 
 nb-menu {
     a {
         span {
-            // Break line
+            /* Break line */
             &:only-child {
                 display: block;
                 width: 100%;
@@ -16,15 +16,17 @@ nb-menu {
     }
 }
 
-// Smart table
+/* Smart table */
 
+$value: auto;
 ng2-smart-table {
     td {
         &:first-child { min-width: 150px; }
     }
     // This is for adapt the custom actions columns
-    .ng2-smart-actions {
-        ng2-st-tbody-custom { 
+    .ng2-smart-actions {    
+
+        ng2-st-tbody-custom {
             position: absolute;
             top: 0;
             display: flex;
@@ -33,30 +35,36 @@ ng2-smart-table {
                 &:hover { color: $color-primary-hover!important; }
             }
         }
+        // > ng2-st-tbody-custom { 
+        //     position: absolute;
+        //     top: 0;
+        //     display: flex;
+        //     @extend %max-hw; 
+        //     a {
+        //         &:hover { color: $color-primary-hover!important; }
+        //     }
+        // }
     }
 }
 
-// Reset bootstrap button
+/* Reset bootstrap button */
 
-// Remove focus outline
 button {
     &:focus {
         outline: none!important;
     }
 }
 
-// Stepper component 
+/* Stepper component */
 
-// Content the components
 .step-content { 
     position: relative;
     overflow: auto;
-    width: 100%; }
+    width: 100%;
+}
 
 /* Nb Tooltip Module */
 
 .cdk-overlay-pane { z-index: 1800!important; }
-
 .nb-theme-default .cdk-overlay-container { z-index: 1800!important; }
-
 a { outline: none!important; }

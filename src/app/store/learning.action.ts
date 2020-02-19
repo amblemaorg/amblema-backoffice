@@ -3,6 +3,8 @@ import { patch, append, removeItem, insertItem, updateItem } from '@ngxs/store/o
 import { Learning } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
+import { ACTION } from '../helpers/text-content/text-crud';
+import { Video } from '../models/media.model';
 
 // State Model
 
@@ -28,6 +30,10 @@ export class SetLearningOne {
     constructor(public payload: Learning) { }
 }
 
+export class SetVideos {
+    static readonly type = '[Learning] Set Learning Videos';
+    constructor(public payload: Video[]) { }
+}
 // Init state
 
 @State<LearningStateModel>({
@@ -72,5 +78,9 @@ export class LearningState implements NgxsOnInit {
         ctx.setState({
             learning: action.payload,
         });
+    }
+
+    @Action(SetVideos)
+    setVideos(ctx: StateContext<LearningStateModel>, action: SetVideos) {
     }
 }

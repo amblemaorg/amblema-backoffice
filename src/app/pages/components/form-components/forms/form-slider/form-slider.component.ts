@@ -1,22 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { Slider } from 'src/app/models/web/web-home.model';
+import { Observable } from 'rxjs';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngxs/store';
+import { SetSlider } from 'src/app/store/web-home.action';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-form-slider',
   templateUrl: './form-slider.component.html',
   styleUrls: ['./form-slider.component.scss']
 })
-export class FormSliderComponent extends BaseTable implements TableActions {
+export class FormSliderComponent extends BaseTable implements TableActions, OnInit {
 
-  data: any = [{
-    image: 'Imagen de muestra',
-    description: 'Descripcion de la imagen',
-    status: 'activo'
-  }];
+  @Input() slide: Observable<Slider[]>; 
+  @Output() register = new EventEmitter<Slider>();
 
-  constructor() {
+  form: FormGroup; 
+
+  MODE = this.ACTION.CREATE; 
+
+  constructor( 
+    private store: Store,
+    private formBuilder: FormBuilder ) {
     super('');
-
     // Chage button actions
     this.settings.actions.custom = [
       { name: this.ACTION.EDIT, title: `<i class="nb-edit"></i>` },
@@ -36,15 +44,32 @@ export class FormSliderComponent extends BaseTable implements TableActions {
         title: 'Descripción',
         type: 'string'
       },
-      status: {
-        title: 'Estatus',
-        type: 'string'
-      }
     };
   }
 
-  onAction(event: any): void { }
-  newData(): void { }
-  updateData(): void { }
-  deleteData(): void { }
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      image: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required])
+    }); 
+  }
+
+  onAction(event: any): void {  
+    switch( event.action ) {
+
+      case this.ACTION.EDIT: 
+        break;
+      case this.ACTION.DELETE: 
+        break;
+    }
+  }
+
+  onSubmit() { 
+
+    if ( this.MODE === this.ACTION.CREATE ) {
+
+    this.register.emit( this.form.value );
+    }
+
+  }
 }

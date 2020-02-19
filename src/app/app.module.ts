@@ -15,6 +15,7 @@ import { NgxsModule } from '@ngxs/store';
 import { RolesState, RoleState } from './store/role.action';
 import { Utility } from './helpers/utility';
 import { LearningState } from './store/learning.action';
+import { WebHomeState } from './store/web-home.action';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { LearningState } from './store/learning.action';
       RolesState,
       RoleState,
 
+      // REFACTORIZACION DE FACTO
       LearningState,
+      WebHomeState
     ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
   ],

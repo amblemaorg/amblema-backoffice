@@ -5,7 +5,7 @@ export interface Image {
 }
 
 export interface Video {
-    id?: string;
+    id?: string | number;
     url: string;
     description: string;
 }

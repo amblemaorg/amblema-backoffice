@@ -14,14 +14,23 @@
     padding: 0 10px;
     width: 10rem;
     height: 10rem;
-    background-color: $color-secondary;
     position: relative!important;
-
-    &:hover { background-color: $color-secondary-hover; }
+    &:hover { 
+      &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: #f7f9fc2e;
+      }
+      background-color: $color-secondary-hover; }
     svg { @include center(both) }
     cursor: pointer;
     .icon:before {
       //font-awesome
+
+      z-index: 3;
       content: "\f093";
     }
     &.has-file {
@@ -33,3 +42,6 @@
     }
   }
 }
+
+
+img { object-fit: cover; }

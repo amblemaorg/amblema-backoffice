@@ -1,23 +1,47 @@
-<div class="row">
+<form [formGroup]="form" class="row" (ngSubmit)="registerVideo()">
     <div class="col-12 col-lg">
         <app-input-custom 
             [id]="'url-video'" 
             [label]="'URL del video'" 
-            [placeholder]="'URL del video'">
+            [placeholder]="'URL del video'"
+            [control]="form.get('url')"
+            [submitted]="false">
         </app-input-custom>
     </div>
     <div class="col-12 col-lg">
-        <app-text-area-custom [id]="'video-description'" [label]="'Descripción'" [placeholder]="'Descripción'">
+        <app-text-area-custom 
+            [id]="'video-description'" 
+            [label]="'Descripción'"
+            [control]="form.get('description')"
+            [submitted]="false" 
+            [placeholder]="'Descripción'">
         </app-text-area-custom>
     </div>
-    <div class="col-12 col-lg-auto">
-        <button class="btn btn-success col-12 col-lg-autp mt-lg-4">Registrar</button>
+    <div class="col-12 col-lg-auto form-group">
+        <div class="btn-group m-inline-form" *ngIf="MODE === ACTION.EDIT">
+            <button 
+                (click)="onEditVideo()"
+                type="button" 
+                class="btn btn-outline-info">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+        </div>
+        
+        <button
+            *ngIf="MODE === ACTION.CREATE"
+            [attr.disabled]="form.invalid ? true : null"
+            type="submit" 
+            class="btn btn-success col-12 col-lg-autp mt-lg-4">Registrar</button
+            >
     </div>
 
     <!-- Table -->
     <div class="col-12 form-group">
         <div class="table-responsive">
-            <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+            <ng2-smart-table 
+                (custom)="onAction($event)"
+                [source]='videos' 
+                [settings]="settings"></ng2-smart-table>
         </div>
     </div>
-</div>
+</form>

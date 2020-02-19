@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { NbCardModule } from '@nebular/theme';
 import { HelperModule } from '../_helpers/helper.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FormSliderModule } from 'src/app/pages/components/form-components/forms/form-slider/form-slider.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbCardModule,
     HelperModule,
     Ng2SmartTableModule,
+
+    FormSliderModule,
   ]
 })
 export class HomeModule { }

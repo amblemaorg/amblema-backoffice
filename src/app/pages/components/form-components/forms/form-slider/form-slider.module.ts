@@ -5,6 +5,7 @@ import { ReactiveInputFileModule } from '../../reactive-input-file/reactive-inpu
 import { ReactiveValidationModule } from '../../reactive-validation/reactive-validation.module';
 import { ReactiveTextAreaModule } from '../../reactive-text-area/reactive-text-area.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     ReactiveValidationModule,
     ReactiveTextAreaModule,
     Ng2SmartTableModule,
+
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class FormSliderModule { }

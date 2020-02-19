@@ -48,3 +48,7 @@ export interface TableActions {
     updateData?: (data: any) => void;
     onAction?: (event: any) => void;
 }
+
+export class SmartTable {
+
+}

@@ -70,6 +70,8 @@
     </div>
     <div class="text-center">
         <button (click)="sendStepOne()"
+            type="submit"
+            nbButton
             nbStepperNext
             [attr.disabled]="form.invalid ? true : null"
             class="next-button btn-primary btn col-12 col-lg-auto">

@@ -1,5 +1,6 @@
 <form>
-    <app-form-video></app-form-video>
+    <app-form-video 
+        [videos]="learning.videos" (sendvideos)="getVideos($event)" ></app-form-video>
     <div>
         <hr class="w-100">
         <app-form-slider class="w-100"></app-form-slider>
@@ -15,7 +16,7 @@
                     </button>
                 </div>
                 <div class="col-6 col-lg-auto">
-                    <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>
+                    <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext  (click)="onSaveStepTwo()">
                         <span class="d-none d-sm-inline">Siguiente</span>
                         <nb-icon icon="arrow-forward-outline"></nb-icon>
                     </button>

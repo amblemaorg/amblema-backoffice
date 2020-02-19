@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { AbstractControl, FormControl } from '@angular/forms';
 
@@ -39,6 +39,7 @@ export class InputImgComponent implements OnInit {
   ngOnInit() {
     this.pictureBase64 = this.url ? this.url : this.pictureBase64;
   }
+
 
   onLoadPicture(event: any) {
 

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { WebHomeState } from 'src/app/store/web-home.action';
+import { Select, Store } from '@ngxs/store';
+import { WebHomeState, SetSlider } from 'src/app/store/web-home.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebHome } from 'src/app/models/web/web-home.model';
+import { WebHome, Slider } from 'src/app/models/web/web-home.model';
 
 @Component({
   selector: 'app-home',
@@ -13,18 +13,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   @Select( WebHomeState.webHome ) data$: Observable<WebHome>;
   subscription: Subscription;
 
-  constructor() { }
+  sliders : Slider[];
+
+  constructor( private store: Store ) { }
 
   ngOnInit() {
     this.subscription = this.data$.subscribe( response => {
-      console.log(response);
-    } )
-
+      this.sliders = response.slider; // <-- Get sliders, show on the table
+    });
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  
+  onRegisterSlider( slider: Slider ) {
+    this.store.dispatch( new SetSlider( slider ) );
+  }
 }

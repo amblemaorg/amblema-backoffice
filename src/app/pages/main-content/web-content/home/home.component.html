@@ -8,7 +8,9 @@
 
           <!-- Slides -->
           <div class="col-12 form-group">
-            <app-form-slider [slide]="data$.slide | async"></app-form-slider>
+            <app-form-slider 
+              (register)="onRegisterSlider($event)"
+              [sliders]="sliders"></app-form-slider>
           </div>
 
           <!-- Content-->

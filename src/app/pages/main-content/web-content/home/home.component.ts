@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { WebHomeState, SetSliderWebHome, UpdateSliderWebHome, DeleteSliderWebHome } from 'src/app/store/web-home.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebHome, Slider } from 'src/app/models/web/web-home.model';
+import { WebHome, Slider, Testimonial } from 'src/app/models/web/web-home.model';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +14,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   sliders : Slider[];
+  testimonials: Testimonial[];
 
   constructor( private store: Store ) { }
 
   ngOnInit() {
     this.subscription = this.data$.subscribe( response => {
       this.sliders = response.slider; // <-- Get sliders, show on the table
+      this.testimonials = response.testimonials; // <-- Get testimonials show on the table
+      console.log(this.testimonials); 
     });
   }
 
@@ -37,5 +40,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onDeleteSlider( slider:Slider ) {
     this.store.dispatch( new DeleteSliderWebHome( slider ) );
+  }
+
+  onRegisterTestimonial( testimonial: Testimonial ) {
+
+
+  }
+
+  onEditTestimonial( testimonial : any []) {
+    
+    console.log( testimonial );
+  }
+
+  onDeleteTestimonial( testimonial: Testimonial ) {
+    
+    console.log( testimonial );
   }
 }

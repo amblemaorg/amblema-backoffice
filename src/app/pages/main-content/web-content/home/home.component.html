@@ -25,7 +25,12 @@
             <hr>
             <p class="font-weight-bold">Testimonio de los fundadores</p>
           </div>
-          <app-generic-form class="col-12"></app-generic-form>
+          <app-generic-form 
+            (delete)="onDeleteTestimonial($event)"
+            (edit)="onEditTestimonial($event)"
+            (register)="onRegisterTestimonial($event)"
+            [testimonials]="testimonials"
+            class="col-12"></app-generic-form>
 
           <!-- Save changes -->
           <div class="col-12 text-right">

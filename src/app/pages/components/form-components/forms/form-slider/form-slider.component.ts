@@ -20,7 +20,7 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
 
   form: FormGroup; 
   MODE = this.ACTION.CREATE; 
-  oldSlider: Slider; // <-- For update the slider
+  oldSlider: Slider; // <-- For update slider
 
   constructor(
     private _sanitizer: DomSanitizer,

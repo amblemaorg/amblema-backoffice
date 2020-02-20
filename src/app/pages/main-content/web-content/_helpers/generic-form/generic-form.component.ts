@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Testimonial } from 'src/app/models/web/web-home.model';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 
 @Component({
   selector: 'app-generic-form',
@@ -19,7 +20,9 @@ export class GenericFormComponent extends BaseTable implements OnInit, TableActi
   MODE = this.ACTION.CREATE;
   oldTestimonials : Testimonial; // <-- For update testimonials array
   
-  constructor( private formBuilder:FormBuilder ) {
+  constructor( 
+    private toast: CustomToastrService,
+    private formBuilder:FormBuilder ) {
     super('form-testimonial');
 
     this.form = this.formBuilder.group({
@@ -63,8 +66,12 @@ export class GenericFormComponent extends BaseTable implements OnInit, TableActi
   onAction( event:any ) : void {
     switch( event.action ) {
       case this.ACTION.EDIT: 
+        this.MODE = this.ACTION.EDIT;
+        this.oldTestimonials = event.data;
+        this.form.patchValue( event.data ); 
         break;
       case this.ACTION.DELETE: 
+        this.delete.emit( event.data );
         break;
     }
   }
@@ -73,6 +80,22 @@ export class GenericFormComponent extends BaseTable implements OnInit, TableActi
 
     this.submitted = true;
 
-  }
+    // Error messages
+    if( this.form.controls['image'].invalid ) {
+      if( this.MODE === this.ACTION.CREATE ) {
+        this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de un testimonio');
+      } else if ( this.MODE === this.ACTION.EDIT ) {
+        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de un testimonio');  
+      }
+    }
 
+    if( this.form.valid ) {
+      this.register.emit( this.form.value );
+      this.form.reset();
+    } else {
+      this.edit.emit([ this.oldTestimonials, this.form.value ]); 
+      this.form.reset();
+      this.MODE = this.ACTION.CREATE; 
+    }
+  }
 }

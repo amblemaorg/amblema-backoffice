@@ -6,6 +6,7 @@ import { GeneralsComponent } from './generals.component';
 import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { FormSimpleStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-simple-step/form-simple-step.module';
 import { FormFileStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-file-step/form-file-step.module';
+import { FormVideoStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-video-step/form-video-step.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FormFileStepModule } from 'src/app/pages/components/form-components/for
     // Add custom modal
     FormSimpleStepModule,
     FormFileStepModule,
+    FormVideoStepModule, 
   ]
 })
 export class GeneralsModule { }

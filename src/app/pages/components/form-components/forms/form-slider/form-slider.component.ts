@@ -12,13 +12,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class FormSliderComponent extends BaseTable implements TableActions, OnInit {
 
-  @Input() sliders: Slider[]; 
+  @Input() sliders: Slider[];
+   
   @Output() register = new EventEmitter<Slider>();
   @Output() edit = new EventEmitter<Slider[]>();
+  @Output() delete = new EventEmitter<Slider>();
 
   form: FormGroup; 
   MODE = this.ACTION.CREATE; 
-
   oldSlider: Slider;
 
   constructor(
@@ -68,7 +69,8 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
         this.oldSlider = event.data; 
         this.form.patchValue( event.data );
         break;
-      case this.ACTION.DELETE: 
+      case this.ACTION.DELETE:
+        this.delete.emit( event.data );
         break;
     }
   }
@@ -78,7 +80,9 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
       this.register.emit( this.form.value );
       this.form.reset();
     } else {  
-      this.edit.emit([this.oldSlider, this.form.value])
+      this.edit.emit([this.oldSlider, this.form.value]); 
+      this.form.reset();
+      this.MODE = this.ACTION.CREATE; 
     }
   }
 }

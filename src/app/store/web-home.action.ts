@@ -1,7 +1,7 @@
 import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
 import { WebHome, Slider } from '../models/web/web-home.model';
 import { WebHomeService } from '../services/web-home.service';
-import { patch, append, updateItem } from '@ngxs/store/operators';
+import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
 
 export class GetWebHome {
@@ -13,14 +13,19 @@ export class SetWebHome {
     constructor( public payload: WebHome ) {}
 }
 
-export class SetSlider {
+export class SetSliderWebHome {
     static readonly type = '[Slider] Set Slider';
     constructor( public payload: Slider ) {}
 }
 
-export class UpdateSlider {
+export class UpdateSliderWebHome {
     static readonly type = '[Slider] Update Slider'; 
     constructor( public oldSlider: Slider,  public newSlider: Slider ) {}
+}
+
+export class DeleteSliderWebHome {
+    static readonly type = '[Slider] Delete Slider';
+    constructor( public payload: Slider ) {}
 }
 
 @State<WebHome>({
@@ -65,8 +70,8 @@ export class WebHomeState implements NgxsOnInit {
         ctx.setState( action.payload );
     }
 
-    @Action(SetSlider)
-    setSlider( ctx: StateContext<WebHome>, action: SetSlider ) {
+    @Action(SetSliderWebHome)
+    setSlider( ctx: StateContext<WebHome>, action: SetSliderWebHome ) {
         ctx.setState(
             patch({
                 slider: append([action.payload])
@@ -74,12 +79,21 @@ export class WebHomeState implements NgxsOnInit {
         )
     }
 
-    @Action( UpdateSlider )
-    updateSlider( ctx: StateContext<WebHome>, action: UpdateSlider ) {
+    @Action( UpdateSliderWebHome )
+    updateSlider( ctx: StateContext<WebHome>, action: UpdateSliderWebHome ) {
         ctx.setState(
             patch({
                 slider: updateItem<Slider>( slider => slider === action.oldSlider, action.newSlider )
             })
         )
+    } 
+
+    @Action( DeleteSliderWebHome )
+    deleteSlider( ctx: StateContext<WebHome>, action: DeleteSliderWebHome ) {
+        ctx.setState(
+            patch({
+                slider: removeItem<Slider>( slider => slider === action.payload )
+            })
+        );
     } 
 }

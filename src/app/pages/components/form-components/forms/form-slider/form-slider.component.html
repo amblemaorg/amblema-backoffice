@@ -15,7 +15,18 @@
                     <button 
                         [attr.disabled]="form.invalid ? true : null"
                         type="submit" 
-                        class="btn btn-success col-12 col-xl-auto">Registrar</button>
+                        [ngClass]="{    
+                            'btn-success': MODE === ACTION.CREATE, 
+                            'btn-primary' : MODE === ACTION.EDIT}"
+                        class="btn col-12 col-xl-auto mr-xl-3">
+                        <span *ngIf="MODE === ACTION.CREATE">Registrar</span>
+                        <span *ngIf="MODE === ACTION.EDIT">Actualizar</span>
+                    </button>
+
+                    <button
+                        (click)="form.reset(); MODE = ACTION.CREATE"
+                        *ngIf="MODE === ACTION.EDIT" 
+                        class="btn btn-outline-secondary col-12 col-xl-auto mt-3 mt-xl-0">Cancelar</button>
                 </div>
             </div>
         </div>

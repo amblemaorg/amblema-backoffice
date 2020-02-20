@@ -9,6 +9,7 @@
           <!-- Slides -->
           <div class="col-12 form-group">
             <app-form-slider 
+              (delete)="onDeleteSlider($event)"
               (edit)="onEditSlider($event)"
               (register)="onRegisterSlider($event)"
               [sliders]="sliders"></app-form-slider>

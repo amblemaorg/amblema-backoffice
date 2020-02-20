@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { WebHomeState, SetSlider, UpdateSlider } from 'src/app/store/web-home.action';
+import { WebHomeState, SetSliderWebHome, UpdateSliderWebHome, DeleteSliderWebHome } from 'src/app/store/web-home.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebHome, Slider } from 'src/app/models/web/web-home.model';
 
@@ -28,10 +28,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onRegisterSlider( slider: Slider ) {
-    this.store.dispatch( new SetSlider( slider ) );
+    this.store.dispatch( new SetSliderWebHome( slider ) );
   }
 
   onEditSlider(slider: any []) {
-    this.store.dispatch( new UpdateSlider( slider[0], slider[1] ) );
+    this.store.dispatch( new UpdateSliderWebHome( slider[0], slider[1] ) );
+  }
+
+  onDeleteSlider( slider:Slider ) {
+    this.store.dispatch( new DeleteSliderWebHome( slider ) );
   }
 }

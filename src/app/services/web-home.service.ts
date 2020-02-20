@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { WebHome } from '../models/web/web-home.model';
+import { WebHome, HomePages } from '../models/web/web-home.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 
@@ -14,14 +14,14 @@ export class WebHomeService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getContentWebHome(): Observable<WebHome> {
-    return this.httpClient.get<WebHome>(`${environment.api}${this.WEB_HOME}`)
+  getContentWebHome(): Observable<HomePages> {
+    return this.httpClient.get<HomePages>(`${environment.api}${this.WEB_HOME}`)
       .pipe(
-        map( (data: any) => data.records )
+        map( (data: any) =>  data.homePage )
       );
   }
 
-  setContentWebHome( data: WebHome ): Observable<WebHome> {
-    return this.httpClient.post<WebHome>(`${environment.api}${this.WEB_HOME}`, data);
+  setContentWebHome( data: HomePages ): Observable<HomePages> {
+    return this.httpClient.post<HomePages>(`${environment.api}${this.WEB_HOME}`, data);
   }
 }

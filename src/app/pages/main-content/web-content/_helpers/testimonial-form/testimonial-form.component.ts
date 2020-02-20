@@ -27,9 +27,9 @@ export class TestimonialFormComponent extends BaseTable implements OnInit, Table
 
     this.form = this.formBuilder.group({
       image: new FormControl('', [Validators.required]),
-      name: new FormControl(),
+      firstName: new FormControl(),
       lastName: new FormControl(),
-      position: new FormControl(),
+      function: new FormControl(),
       description: new FormControl('', [Validators.required])
     });
 
@@ -41,7 +41,7 @@ export class TestimonialFormComponent extends BaseTable implements OnInit, Table
     this.settings.pager.perPage = 5;
 
     this.settings.columns = {
-      name: {
+      firstName: {
         title: 'Nombre',
         type: 'string'
       },
@@ -49,7 +49,7 @@ export class TestimonialFormComponent extends BaseTable implements OnInit, Table
         title: 'Apellido',
         type: 'string'
       },
-      position: {
+      function: {
         title: 'Cargo',
         type: 'string'
       },

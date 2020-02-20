@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbMenuModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbMenuModule, NbToastrModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './guards/auth.guard';
 import { NbAuthModule } from '@nebular/auth';
@@ -16,7 +16,7 @@ import { RolesState, RoleState } from './store/role.action';
 import { Utility } from './helpers/utility';
 import { LearningState } from './store/learning.action';
 import { WebHomeState } from './store/web-home.action';
-
+import { CustomToastrService } from './services/custom-toastr.service';
 @NgModule({
   declarations: [
     AppComponent
@@ -44,12 +44,13 @@ import { WebHomeState } from './store/web-home.action';
       WebHomeState
     ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
+    NbToastrModule.forRoot()
   ],
   providers: [
+    CustomToastrService,
     AuthGuard,
-
     // Custom helper
-    Utility
+    Utility,
   ],
   bootstrap: [AppComponent]
 })

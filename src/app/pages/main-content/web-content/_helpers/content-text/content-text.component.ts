@@ -1,22 +1,21 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-content-text',
   templateUrl: './content-text.component.html',
 })
-export class ContentTextComponent {
+export class ContentTextComponent implements OnInit {
 
-  @Input() data: any = []; // <-- To update
+  @Input() data: any = {}; // <-- To update
+  @Input() form: FormGroup;
 
-  @Output() get = new EventEmitter<any>(); // <-- Get data content text
+  ngOnInit(): void {
 
-  formContentText: FormGroup = new FormGroup({
-    about: new FormControl(),
-    enviroment: new FormControl(),
-    reading: new FormControl(),
-    math: new FormControl()
-  });
+    if ( this.data ) {
+      this.form.patchValue(this.data);
+    }
+  }
 
-  constructor() { }
+  constructor( private formBuilder: FormBuilder ) { }
 }

@@ -2,6 +2,7 @@ import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
 import { WebHome, Slider, Testimonial } from '../models/web/web-home.model';
 import { WebHomeService } from '../services/web-home.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { CustomToastrService } from '../services/custom-toastr.service';
 
 // Web Home class action
 
@@ -67,6 +68,7 @@ export class WebHomeState implements NgxsOnInit {
     }
 
     constructor(
+        private toastr: CustomToastrService,
         private webHomeService: WebHomeService
     ) {}
 
@@ -78,10 +80,10 @@ export class WebHomeState implements NgxsOnInit {
     getWebHome( ctx: StateContext<WebHome>) {
         return this.webHomeService.getContentWebHome()
             .subscribe( response => {
-
                 // Void null object
                 if ( response ) {
-                    ctx.setState( response );
+                    const webHome: any  = response;
+                    ctx.setState( webHome );
                 }
             });
     }
@@ -90,7 +92,12 @@ export class WebHomeState implements NgxsOnInit {
 
     @Action(SetWebHome)
     setWebHome( ctx: StateContext<WebHome>, action: SetWebHome ) {
-        ctx.setState( action.payload );
+        ctx.patchState( action.payload );
+
+        this.webHomeService.setContentWebHome( { homePage: ctx.getState() } ).subscribe( response => {
+            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página de inicio guardado.');
+
+        });
     }
 
     // Slider actions

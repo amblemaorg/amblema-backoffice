@@ -20,3 +20,7 @@ export interface WebHome {
     mathText: string;
     testimonials: Testimonial[];
 }
+
+export interface HomePages {
+    homePage: WebHome;
+}

@@ -10,8 +10,10 @@ import {
   DeleteTestimonialWebHome,
   SetWebHome} from 'src/app/store/web-home.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebHome, Slider, Testimonial } from 'src/app/models/web/web-home.model';
+import { WebHome } from 'src/app/models/web/web-home.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Slider } from 'src/app/models/web/sldier.model';
+import { Testimonial } from 'src/app/models/web/testimonial.model';
 
 @Component({
   selector: 'app-home',

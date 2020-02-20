@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-about-us',
@@ -7,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutUsComponent implements OnInit {
 
+  form: FormGroup = new FormGroup({
+    aboutUsText: new FormControl(''),
+    environmentText: new FormControl(''),
+    readingText: new FormControl(''),
+    mathText: new FormControl('')
+  });
 
   constructor() { }
 

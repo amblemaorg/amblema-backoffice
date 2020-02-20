@@ -2,7 +2,6 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { Slider } from 'src/app/models/web/web-home.model';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Store } from '@ngxs/store';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -24,8 +23,7 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
 
   constructor(
     private sanitizer: DomSanitizer,
-    private store: Store,
-    private formBuilder: FormBuilder ) {
+    private formBuilder: FormBuilder) {
     super('form-slider');
 
     this.settings.actions.custom = [
@@ -42,7 +40,7 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
         title: 'Imagen',
         type: 'html',
         valuePrepareFunction: (value) => {
-          return this.sanitizer.bypassSecurityTrustHtml('<img src="' + value + '" style="width:100px;">');
+          return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
         },
         filter: false,
         sort: false
@@ -63,21 +61,21 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
 
   onAction(event: any): void {
 
-    switch ( event.action ) {
+    switch (event.action) {
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
         this.oldSlider = event.data;
-        this.form.patchValue( event.data );
+        this.form.patchValue(event.data);
         break;
       case this.ACTION.DELETE:
-        this.delete.emit( event.data );
+        this.delete.emit(event.data);
         break;
     }
   }
 
   onSubmit() {
-    if ( this.MODE === this.ACTION.CREATE ) {
-      this.register.emit( this.form.value );
+    if (this.MODE === this.ACTION.CREATE) {
+      this.register.emit(this.form.value);
       this.form.reset();
     } else {
       this.edit.emit([this.oldSlider, this.form.value]);
@@ -85,4 +83,5 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
       this.MODE = this.ACTION.CREATE;
     }
   }
+
 }

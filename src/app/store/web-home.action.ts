@@ -1,8 +1,10 @@
 import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
-import { WebHome, Slider, Testimonial } from '../models/web/web-home.model';
-import { WebHomeService } from '../services/web-home.service';
+import { WebHome } from '../models/web/web-home.model';
+import { WebHomeService } from '../services/web-content/web-home.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 import { CustomToastrService } from '../services/custom-toastr.service';
+import { Slider } from '../models/web/sldier.model';
+import { Testimonial } from '../models/web/testimonial.model';
 
 // Web Home class action
 
@@ -12,41 +14,41 @@ export class GetWebHome {
 
 export class SetWebHome {
     static readonly type = '[WebHome] Set Web Home';
-    constructor( public payload: WebHome ) {}
+    constructor(public payload: WebHome) { }
 }
 
 // Slider class action
 
 export class SetSliderWebHome {
     static readonly type = '[Slider] Set Slider';
-    constructor( public payload: Slider ) {}
+    constructor(public payload: Slider) { }
 }
 
 export class UpdateSliderWebHome {
     static readonly type = '[Slider] Update Slider';
-    constructor( public oldSlider: Slider,  public newSlider: Slider ) {}
+    constructor(public oldSlider: Slider, public newSlider: Slider) { }
 }
 
 export class DeleteSliderWebHome {
     static readonly type = '[Slider] Delete Slider';
-    constructor( public payload: Slider ) {}
+    constructor(public payload: Slider) { }
 }
 
 // Testimonial class action
 
 export class SetTestimonialWebHome {
     static readonly type = '[Testimonial] Set Testimonial';
-    constructor( public payload: Testimonial ) {}
+    constructor(public payload: Testimonial) { }
 }
 
 export class UpdateTestimonialWebHome {
     static readonly type = '[Testimonial] Update Testimonial';
-    constructor( public oldTestimonial: Testimonial, public newTestimonial: Testimonial ) {}
+    constructor(public oldTestimonial: Testimonial, public newTestimonial: Testimonial) { }
 }
 
 export class DeleteTestimonialWebHome {
     static readonly type = '[Testimonial] Delete Testimonial';
-    constructor( public payload: Testimonial ) {}
+    constructor(public payload: Testimonial) { }
 }
 
 @State<WebHome>({
@@ -63,27 +65,27 @@ export class DeleteTestimonialWebHome {
 export class WebHomeState implements NgxsOnInit {
 
     @Selector()
-    static webHome( state: WebHome ): WebHome | null {
+    static webHome(state: WebHome): WebHome | null {
         return state;
     }
 
     constructor(
         private toastr: CustomToastrService,
         private webHomeService: WebHomeService
-    ) {}
+    ) { }
 
-    ngxsOnInit( ctx: StateContext<WebHome> ) {
-        ctx.dispatch( new GetWebHome() );
+    ngxsOnInit(ctx: StateContext<WebHome>) {
+        ctx.dispatch(new GetWebHome());
     }
 
-    @Action( GetWebHome )
-    getWebHome( ctx: StateContext<WebHome>) {
+    @Action(GetWebHome)
+    getWebHome(ctx: StateContext<WebHome>) {
         return this.webHomeService.getContentWebHome()
-            .subscribe( response => {
+            .subscribe(response => {
                 // Void null object
-                if ( response ) {
-                    const webHome: any  = response;
-                    ctx.setState( webHome );
+                if (response) {
+                    const webHome: any = response;
+                    ctx.setState(webHome);
                 }
             });
     }
@@ -91,10 +93,10 @@ export class WebHomeState implements NgxsOnInit {
     // Web Home actions
 
     @Action(SetWebHome)
-    setWebHome( ctx: StateContext<WebHome>, action: SetWebHome ) {
-        ctx.patchState( action.payload );
+    setWebHome(ctx: StateContext<WebHome>, action: SetWebHome) {
+        ctx.patchState(action.payload);
 
-        this.webHomeService.setContentWebHome( { homePage: ctx.getState() } ).subscribe( response => {
+        this.webHomeService.setContentWebHome({ homePage: ctx.getState() }).subscribe(response => {
             this.toastr.updateSuccess('Actualizacion', 'Contenido de la página de inicio guardado.');
 
         });
@@ -103,7 +105,7 @@ export class WebHomeState implements NgxsOnInit {
     // Slider actions
 
     @Action(SetSliderWebHome)
-    setSliderWebHome( ctx: StateContext<WebHome>, action: SetSliderWebHome ) {
+    setSliderWebHome(ctx: StateContext<WebHome>, action: SetSliderWebHome) {
         ctx.setState(
             patch({
                 slider: append([action.payload])
@@ -111,20 +113,20 @@ export class WebHomeState implements NgxsOnInit {
         );
     }
 
-    @Action( UpdateSliderWebHome )
-    updateSliderWebHome( ctx: StateContext<WebHome>, action: UpdateSliderWebHome ) {
+    @Action(UpdateSliderWebHome)
+    updateSliderWebHome(ctx: StateContext<WebHome>, action: UpdateSliderWebHome) {
         ctx.setState(
             patch({
-                slider: updateItem<Slider>( slider => slider === action.oldSlider, action.newSlider )
+                slider: updateItem<Slider>(slider => slider === action.oldSlider, action.newSlider)
             })
         );
     }
 
-    @Action( DeleteSliderWebHome )
-    deleteSliderWebHome( ctx: StateContext<WebHome>, action: DeleteSliderWebHome ) {
+    @Action(DeleteSliderWebHome)
+    deleteSliderWebHome(ctx: StateContext<WebHome>, action: DeleteSliderWebHome) {
         ctx.setState(
             patch({
-                slider: removeItem<Slider>( slider => slider === action.payload )
+                slider: removeItem<Slider>(slider => slider === action.payload)
             })
         );
     }
@@ -132,7 +134,7 @@ export class WebHomeState implements NgxsOnInit {
     // Testimonial actions
 
     @Action(SetTestimonialWebHome)
-    setTestimonialWebHome( ctx: StateContext<WebHome>, action: SetTestimonialWebHome ) {
+    setTestimonialWebHome(ctx: StateContext<WebHome>, action: SetTestimonialWebHome) {
         ctx.setState(
             patch({
                 testimonials: append([action.payload])
@@ -140,20 +142,20 @@ export class WebHomeState implements NgxsOnInit {
         );
     }
 
-    @Action( UpdateTestimonialWebHome )
-    updateTestimonialWebHome( ctx: StateContext<WebHome>, action: UpdateTestimonialWebHome ) {
+    @Action(UpdateTestimonialWebHome)
+    updateTestimonialWebHome(ctx: StateContext<WebHome>, action: UpdateTestimonialWebHome) {
         ctx.setState(
             patch({
-                testimonials: updateItem<Testimonial>( testimonial => testimonial === action.oldTestimonial, action.newTestimonial )
+                testimonials: updateItem<Testimonial>(testimonial => testimonial === action.oldTestimonial, action.newTestimonial)
             })
         );
     }
 
-    @Action( DeleteTestimonialWebHome )
-    deleteTestimonialWebHome( ctx: StateContext<WebHome>, action: DeleteTestimonialWebHome ) {
+    @Action(DeleteTestimonialWebHome)
+    deleteTestimonialWebHome(ctx: StateContext<WebHome>, action: DeleteTestimonialWebHome) {
         ctx.setState(
             patch({
-                testimonials: removeItem<Testimonial>( testimonial => testimonial === action.payload )
+                testimonials: removeItem<Testimonial>(testimonial => testimonial === action.payload)
             })
         );
     }

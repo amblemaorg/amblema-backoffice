@@ -1,16 +1,5 @@
-export interface Slider {
-    id?: number;
-    image: string;
-    description: string;
-}
-
-export interface Testimonial {
-    firstName: string;
-    lastName: string;
-    image: string;
-    function: string;
-    description: string;
-}
+import { Slider } from './sldier.model';
+import { Testimonial } from './testimonial.model';
 
 export interface WebHome {
     slider: Slider[];

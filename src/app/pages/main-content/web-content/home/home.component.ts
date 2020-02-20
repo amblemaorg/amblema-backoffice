@@ -1,6 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { WebHomeState, SetSliderWebHome, UpdateSliderWebHome, DeleteSliderWebHome } from 'src/app/store/web-home.action';
+import {
+  WebHomeState,
+  SetSliderWebHome,
+  UpdateSliderWebHome,
+  DeleteSliderWebHome,
+  SetTestimonialWebHome,
+  UpdateTestimonialWebHome,
+  DeleteTestimonialWebHome } from 'src/app/store/web-home.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebHome, Slider, Testimonial } from 'src/app/models/web/web-home.model';
 
@@ -13,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @Select( WebHomeState.webHome ) data$: Observable<WebHome>;
   subscription: Subscription;
 
-  sliders : Slider[];
+  sliders: Slider[];
   testimonials: Testimonial[];
 
   constructor( private store: Store ) { }
@@ -22,7 +29,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription = this.data$.subscribe( response => {
       this.sliders = response.slider; // <-- Get sliders, show on the table
       this.testimonials = response.testimonials; // <-- Get testimonials show on the table
-      console.log(this.testimonials); 
     });
   }
 
@@ -38,22 +44,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.store.dispatch( new UpdateSliderWebHome( slider[0], slider[1] ) );
   }
 
-  onDeleteSlider( slider:Slider ) {
+  onDeleteSlider( slider: Slider ) {
     this.store.dispatch( new DeleteSliderWebHome( slider ) );
   }
 
   onRegisterTestimonial( testimonial: Testimonial ) {
-
-
+    this.store.dispatch( new SetTestimonialWebHome( testimonial ) );
   }
 
-  onEditTestimonial( testimonial : any []) {
-    
-    console.log( testimonial );
+  onEditTestimonial( testimonial: any []) {
+    this.store.dispatch( new UpdateTestimonialWebHome( testimonial[0], testimonial[1] ) );
   }
 
   onDeleteTestimonial( testimonial: Testimonial ) {
-    
-    console.log( testimonial );
+    this.store.dispatch( new DeleteTestimonialWebHome(testimonial) );
   }
 }

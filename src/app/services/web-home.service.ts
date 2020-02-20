@@ -10,18 +10,18 @@ import { map } from 'rxjs/operators';
 })
 export class WebHomeService {
 
-  private readonly WEB_HOME = 'webcontent?page=homePage'; 
+  private readonly WEB_HOME = 'webcontent?page=homePage';
 
   constructor( private httpClient: HttpClient ) { }
 
-  getContentWebHome() : Observable<WebHome> {
+  getContentWebHome(): Observable<WebHome> {
     return this.httpClient.get<WebHome>(`${environment.api}${this.WEB_HOME}`)
       .pipe(
-        map( (data: any) => data.records ) 
+        map( (data: any) => data.records )
       );
   }
 
-  setContentWebHome( data: WebHome ) : Observable<WebHome> {
+  setContentWebHome( data: WebHome ): Observable<WebHome> {
     return this.httpClient.post<WebHome>(`${environment.api}${this.WEB_HOME}`, data);
-  } 
+  }
 }

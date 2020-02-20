@@ -25,7 +25,7 @@ export class InputImgComponent implements OnInit {
   @Input() align: string | null = 'center';
   @Input() url: string | null = null;
 
-  @Input() id : string | null = String( Math.random() );
+  @Input() id: string | null = String( Math.random() );
 
   // To validate the file
   readonly pattern = /image-*/;
@@ -101,7 +101,7 @@ export class InputImgComponent implements OnInit {
       //  String base 64
       this.pictureBase64 = reader.result;
       this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form
-      
+
       return true;
     };
   }

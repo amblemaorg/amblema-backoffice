@@ -10,26 +10,26 @@ import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 })
 export class GenericFormComponent extends BaseTable implements OnInit, TableActions {
 
-  @Input() testimonials: Testimonial[]; 
+  @Input() testimonials: Testimonial[];
   @Output() register = new EventEmitter<Testimonial>();
   @Output() edit = new EventEmitter<Testimonial[]>();
-  @Output() delete = new EventEmitter<Testimonial>(); 
+  @Output() delete = new EventEmitter<Testimonial>();
 
-  form: FormGroup; 
+  form: FormGroup;
   submitted = false;
   MODE = this.ACTION.CREATE;
-  oldTestimonials : Testimonial; // <-- For update testimonials array
-  
-  constructor( 
+  oldTestimonials: Testimonial; // <-- For update testimonials array
+
+  constructor(
     private toast: CustomToastrService,
-    private formBuilder:FormBuilder ) {
+    private formBuilder: FormBuilder) {
     super('form-testimonial');
 
     this.form = this.formBuilder.group({
       image: new FormControl('', [Validators.required]),
-      name: new FormControl(), 
-      lastName: new FormControl(), 
-      position: new FormControl(), 
+      name: new FormControl(),
+      lastName: new FormControl(),
+      position: new FormControl(),
       description: new FormControl('', [Validators.required])
     });
 
@@ -63,15 +63,15 @@ export class GenericFormComponent extends BaseTable implements OnInit, TableActi
   ngOnInit() {
   }
 
-  onAction( event:any ) : void {
-    switch( event.action ) {
-      case this.ACTION.EDIT: 
+  onAction(event: any): void {
+    switch (event.action) {
+      case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
         this.oldTestimonials = event.data;
-        this.form.patchValue( event.data ); 
+        this.form.patchValue(event.data);
         break;
-      case this.ACTION.DELETE: 
-        this.delete.emit( event.data );
+      case this.ACTION.DELETE:
+        this.delete.emit(event.data);
         break;
     }
   }
@@ -81,21 +81,25 @@ export class GenericFormComponent extends BaseTable implements OnInit, TableActi
     this.submitted = true;
 
     // Error messages
-    if( this.form.controls['image'].invalid ) {
-      if( this.MODE === this.ACTION.CREATE ) {
+    if (this.form.controls.image.invalid) {
+      if (this.MODE === this.ACTION.CREATE) {
         this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de un testimonio');
-      } else if ( this.MODE === this.ACTION.EDIT ) {
-        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de un testimonio');  
+      } else if (this.MODE === this.ACTION.EDIT) {
+        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de un testimonio');
       }
     }
 
-    if( this.form.valid ) {
-      this.register.emit( this.form.value );
-      this.form.reset();
-    } else {
-      this.edit.emit([ this.oldTestimonials, this.form.value ]); 
-      this.form.reset();
-      this.MODE = this.ACTION.CREATE; 
+    if (this.form.valid) {
+      if (this.MODE === this.ACTION.CREATE) {
+        this.register.emit(this.form.value);
+        this.form.reset();
+        this.submitted = false;
+      } else if (this.MODE === this.ACTION.EDIT) {
+        this.edit.emit([this.oldTestimonials, this.form.value]);
+        this.form.reset();
+        this.submitted = false;
+        this.MODE = this.ACTION.CREATE;
+      }
     }
   }
 }

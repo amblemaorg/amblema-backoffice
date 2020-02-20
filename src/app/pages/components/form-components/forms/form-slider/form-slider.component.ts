@@ -13,17 +13,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class FormSliderComponent extends BaseTable implements TableActions, OnInit {
 
   @Input() sliders: Slider[];
-   
+
   @Output() register = new EventEmitter<Slider>();
   @Output() edit = new EventEmitter<Slider[]>();
   @Output() delete = new EventEmitter<Slider>();
 
-  form: FormGroup; 
-  MODE = this.ACTION.CREATE; 
+  form: FormGroup;
+  MODE = this.ACTION.CREATE;
   oldSlider: Slider; // <-- For update slider
 
   constructor(
-    private _sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer,
     private store: Store,
     private formBuilder: FormBuilder ) {
     super('form-slider');
@@ -42,7 +42,7 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
         title: 'Imagen',
         type: 'html',
         valuePrepareFunction: (value) => {
-          return this._sanitizer.bypassSecurityTrustHtml('<img src="'+value+'" style="width:100px;">')
+          return this.sanitizer.bypassSecurityTrustHtml('<img src="' + value + '" style="width:100px;">');
         },
         filter: false,
         sort: false
@@ -61,12 +61,12 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
     });
   }
 
-  onAction(event: any): void { 
+  onAction(event: any): void {
 
-    switch( event.action ) {
-      case this.ACTION.EDIT: 
+    switch ( event.action ) {
+      case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
-        this.oldSlider = event.data; 
+        this.oldSlider = event.data;
         this.form.patchValue( event.data );
         break;
       case this.ACTION.DELETE:
@@ -75,14 +75,14 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
     }
   }
 
-  onSubmit() { 
+  onSubmit() {
     if ( this.MODE === this.ACTION.CREATE ) {
       this.register.emit( this.form.value );
       this.form.reset();
-    } else {  
-      this.edit.emit([this.oldSlider, this.form.value]); 
+    } else {
+      this.edit.emit([this.oldSlider, this.form.value]);
       this.form.reset();
-      this.MODE = this.ACTION.CREATE; 
+      this.MODE = this.ACTION.CREATE;
     }
   }
 }

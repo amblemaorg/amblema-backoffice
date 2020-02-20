@@ -51,12 +51,16 @@ export class FormVideoComponent extends BaseTable implements TableActions {
   onEditVideo(): void {
     this.videos = Object.assign([], this.videos);
 
-    for (let index = 0; index < this.videos.length; index++) {
-      if (this.videos[index].id === this.idVideo) {
-        this.videos[index].url = this.form.controls.url.value;
-        this.videos[index].description = this.form.controls.description.value;
-      }
-    }
+    // for (const index of this.videos) {
+
+    // }
+
+    // for (let index = 0; index < this.videos.length; index++) {
+    //   if (this.videos[index].id === this.idVideo) {
+    //     this.videos[index].url = this.form.controls.url.value;
+    //     this.videos[index].description = this.form.controls.description.value;
+    //   }
+    // }
     this.form.reset();
 
     this.sendvideos.emit( this.videos );

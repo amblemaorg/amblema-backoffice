@@ -49,9 +49,5 @@ export class GenericTableComponent extends AbstractPageTable implements OnInit {
   }
 
   onAction(event: any) {
-
   }
-
-
-
 }

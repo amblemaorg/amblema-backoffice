@@ -5,10 +5,10 @@ import { AbstractReactive } from '../abstract-reactive';
     selector: 'app-text-area-description',
     template: `
         <div class="form-group">
-            <label for='description' class="label">Descripción</label>
+            <label [for]='id' class="label">Descripción</label>
             <textarea
-                id='description'
-                name='description'
+                [id]='id'
+                [name]='id'
                 nbInput
                 fullWidth
                 rows="5"
@@ -19,4 +19,6 @@ import { AbstractReactive } from '../abstract-reactive';
     `
 })
 
-export class TextAreaDescriptionComponent extends AbstractReactive {}
+export class TextAreaDescriptionComponent extends AbstractReactive {
+
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { AbstractControl, FormControl } from '@angular/forms';
 
@@ -9,11 +9,10 @@ import { AbstractControl, FormControl } from '@angular/forms';
       [ngClass]="{'justify-content-lg-start': align == 'left', 'justify-content-lg-center' : align == 'center',
       'justify-content-lg-end' : align == 'right'}">
 
-      <input type="file" name="file" id="file" class="input-file" (change)="onLoadPicture($event)">
       <label for="file" class="btn btn-tertiary js-labelFile
       border border-info d-flex align-items-center justify-content-center">
-
-      <img [src]="pictureBase64" class="img-fluid position-absolute w-100 h-100" alt="">
+        <input type="file" [name]="id" [id]="id" class="input-file" (change)="onLoadPicture($event)">
+      <img [src]="control.value" class="img-fluid position-absolute w-100 h-100" alt="">
         <i class="text-info fa fa-camera fa-2x"></i>
       </label>
     </div>
@@ -25,6 +24,8 @@ export class InputImgComponent implements OnInit {
   @Input() control: AbstractControl | null = new FormControl();
   @Input() align: string | null = 'center';
   @Input() url: string | null = null;
+
+  @Input() id : string | null = String( Math.random() );
 
   // To validate the file
   readonly pattern = /image-*/;
@@ -39,7 +40,6 @@ export class InputImgComponent implements OnInit {
   ngOnInit() {
     this.pictureBase64 = this.url ? this.url : this.pictureBase64;
   }
-
 
   onLoadPicture(event: any) {
 

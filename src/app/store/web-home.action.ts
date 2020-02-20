@@ -1,7 +1,7 @@
 import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
 import { WebHome, Slider } from '../models/web/web-home.model';
 import { WebHomeService } from '../services/web-home.service';
-import { patch, append } from '@ngxs/store/operators';
+import { patch, append, updateItem } from '@ngxs/store/operators';
 
 
 export class GetWebHome {
@@ -16,6 +16,11 @@ export class SetWebHome {
 export class SetSlider {
     static readonly type = '[Slider] Set Slider';
     constructor( public payload: Slider ) {}
+}
+
+export class UpdateSlider {
+    static readonly type = '[Slider] Update Slider'; 
+    constructor( public oldSlider: Slider,  public newSlider: Slider ) {}
 }
 
 @State<WebHome>({
@@ -48,7 +53,7 @@ export class WebHomeState implements NgxsOnInit {
     getWebHome( ctx: StateContext<WebHome>) {
         return this.webHomeService.getContentWebHome()
             .subscribe( response => {       
-                // Only is has something
+                // Void null object
                 if( response ) {
                     ctx.setState( response );
                 }
@@ -68,4 +73,13 @@ export class WebHomeState implements NgxsOnInit {
             })
         )
     }
+
+    @Action( UpdateSlider )
+    updateSlider( ctx: StateContext<WebHome>, action: UpdateSlider ) {
+        ctx.setState(
+            patch({
+                slider: updateItem<Slider>( slider => slider === action.oldSlider, action.newSlider )
+            })
+        )
+    } 
 }

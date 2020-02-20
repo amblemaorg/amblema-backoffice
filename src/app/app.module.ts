@@ -17,6 +17,7 @@ import { Utility } from './helpers/utility';
 import { LearningState } from './store/learning.action';
 import { WebHomeState } from './store/web-home.action';
 import { CustomToastrService } from './services/custom-toastr.service';
+import { WebAboutState } from './store/web-about.action';
 @NgModule({
   declarations: [
     AppComponent
@@ -41,7 +42,8 @@ import { CustomToastrService } from './services/custom-toastr.service';
 
       // REFACTORIZACION DE FACTO
       LearningState,
-      WebHomeState
+      WebHomeState,
+      WebAboutState
     ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
     NbToastrModule.forRoot()

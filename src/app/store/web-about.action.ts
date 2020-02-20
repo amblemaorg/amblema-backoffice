@@ -1,6 +1,6 @@
 import { WebAbout, AboutUsPage } from '../models/web/web-about.model';
 import { Slider } from '../models/web/sldier.model';
-import { State, StateContext, Selector, Action } from '@ngxs/store';
+import { State, StateContext, Selector, Action, NgxsOnInit } from '@ngxs/store';
 import { CustomToastrService } from '../services/custom-toastr.service';
 import { WebAboutService } from '../services/web-content/web-about.service';
 import { append, patch } from '@ngxs/store/operators';
@@ -47,7 +47,7 @@ export class DeleteSliderWebAbout {
         }
     }
 })
-export class WebAboutState {
+export class WebAboutState implements NgxsOnInit {
 
     @Selector()
     static webAbout(state: WebAbout): WebAbout | null {
@@ -61,6 +61,17 @@ export class WebAboutState {
     }
 
     ngxsOnInit(ctx: StateContext<WebAbout>) {
+        ctx.dispatch(new GetWebAbout());
+    }
+
+    @Action(GetWebAbout)
+    getWebAbout(ctx: StateContext<WebAbout>) {
+        return this.webAboutService.getContentWebAbout()
+            .subscribe(response => {
+                if (response.aboutUsPage) {
+                    ctx.setState( { aboutUsPage: response.aboutUsPage } ); 
+                }
+            });
     }
 
     // Slider actions
@@ -68,9 +79,9 @@ export class WebAboutState {
     @Action(SetSliderWebAbout)
     setSliderWebAbout(ctx: StateContext<AboutUsPage>, action: SetSliderWebAbout) {
 
-        ctx.setState( patch({
-            slider : append([action.payload])
-        }) );
+        ctx.setState(patch({
+            slider: append([action.payload])
+        }));
 
         // ctx.setState((ctx) => ({
         //     ...ctx,

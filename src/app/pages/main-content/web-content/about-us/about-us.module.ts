@@ -11,6 +11,7 @@ import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveSelectModule } from 'src/app/pages/components/form-components/reactive-select/reactive-select.module';
+import { FormSliderModule } from 'src/app/pages/components/form-components/forms/form-slider/form-slider.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ReactiveSelectModule } from 'src/app/pages/components/form-components/r
     ReactiveTextAreaModule,
     ReactiveInputModule,
     ReactiveInputFileModule,
-    ReactiveSelectModule
+    ReactiveSelectModule,
+    FormSliderModule
   ]
 })
 export class AboutUsModule { }

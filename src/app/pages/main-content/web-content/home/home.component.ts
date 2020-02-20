@@ -59,4 +59,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   onDeleteTestimonial( testimonial: Testimonial ) {
     this.store.dispatch( new DeleteTestimonialWebHome(testimonial) );
   }
+
+  // Save 
+
+  onSaveWebHome() {
+    
+  }
 }

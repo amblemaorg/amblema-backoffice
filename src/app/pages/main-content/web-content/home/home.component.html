@@ -25,17 +25,19 @@
             <hr>
             <p class="font-weight-bold">Testimonio de los fundadores</p>
           </div>
-          <app-generic-form 
+          <app-testimonial-form 
             (delete)="onDeleteTestimonial($event)"
             (edit)="onEditTestimonial($event)"
             (register)="onRegisterTestimonial($event)"
             [testimonials]="testimonials"
-            class="col-12"></app-generic-form>
+            class="col-12"></app-testimonial-form>
 
           <!-- Save changes -->
           <div class="col-12 text-right">
             <hr>
-            <div class="btn btn-primary col-12 col-lg-auto">Guardar cambios</div>
+            <div 
+              (click)="onSaveWebHome()"
+              class="btn btn-primary col-12 col-lg-auto">Guardar cambios</div>
           </div>
         </div>
       </nb-card-body>

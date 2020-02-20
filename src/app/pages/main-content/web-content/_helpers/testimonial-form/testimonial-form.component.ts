@@ -5,10 +5,10 @@ import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 
 @Component({
-  selector: 'app-generic-form',
-  templateUrl: './generic-form.component.html',
+  selector: 'app-testimonial-form',
+  templateUrl: './testimonial-form.component.html',
 })
-export class GenericFormComponent extends BaseTable implements OnInit, TableActions {
+export class TestimonialFormComponent extends BaseTable implements OnInit, TableActions {
 
   @Input() testimonials: Testimonial[];
   @Output() register = new EventEmitter<Testimonial>();

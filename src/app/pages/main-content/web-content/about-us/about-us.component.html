@@ -14,11 +14,13 @@
                             [sliders]="sliders"></app-form-slider>
                     </div>
 
+                    <!-- Content-->
                     <div class="col-12">
-                        <app-content-text 
-                            [form]="form"></app-content-text>
+                      <app-content-text 
+                        [form]="form"></app-content-text>
                     </div>
 
+                    <!-- Form awards -->
                     <div class="col-12">
                         <hr>
                         <p class="font-weight-bold">Premios y reconocimientos</p>
@@ -32,7 +34,7 @@
 
                     <div class="col-12 text-right">
                         <hr> 
-                        <button class="btn btn-primary col-12 col-lg-auto">Guardar cambios</button>  
+                        <button (click)="onSaveWebAbout()" class="btn btn-primary col-12 col-lg-auto">Guardar cambios</button>  
                     </div>
                 </div>
             </nb-card-body>

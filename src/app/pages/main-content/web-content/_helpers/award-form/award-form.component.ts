@@ -61,7 +61,6 @@ export class AwardFormComponent extends BaseTable implements TableActions {
     switch (event.action) {
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
-        console.log( event.data )
         this.oldAward = event.data;
         this.form.patchValue(event.data);
         break;
@@ -89,7 +88,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
         this.form.reset();
         this.submitted = false;
       } else if (this.MODE === this.ACTION.EDIT) {
-        this.edit.emit([this.awards, this.form.value]);
+        this.edit.emit([this.oldAward, this.form.value]);
         this.form.reset();
         this.submitted = false;
         this.MODE = this.ACTION.CREATE;

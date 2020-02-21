@@ -8,7 +8,8 @@ import {
   DeleteSliderWebAbout, 
   SetAwardWebAbout,
   UpdateAwardWebAbout, 
-  DeleteAwardWebAbout } from 'src/app/store/web-about.action';
+  DeleteAwardWebAbout, 
+  SetWebAbout} from 'src/app/store/web-about.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebAbout, Award } from 'src/app/models/web/web-about.model';
 import { Slider } from 'src/app/models/web/sldier.model';
@@ -39,6 +40,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     this.subscription = this.data$.subscribe( response => {
       this.sliders = response.aboutUsPage.slider;
       this.awards = response.aboutUsPage.awards; 
+      this.form.patchValue(response.aboutUsPage);
     });
   }
 
@@ -67,11 +69,17 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   }
 
   onEditAward( award: any []) {
-    //this.store.dispatch( new UpdateAwardWebAbout( award[0], award[1] ) );
+    this.store.dispatch( new UpdateAwardWebAbout( award[0], award[1] ) );
   }
 
   onDeleteAward( award: Award ) {
     this.store.dispatch( new DeleteAwardWebAbout(award) );
+  }
+
+  // -- Save --
+
+  onSaveWebAbout() {
+    this.store.dispatch( new SetWebAbout( { aboutUsPage: this.form.value } ) );
   }
 
 }

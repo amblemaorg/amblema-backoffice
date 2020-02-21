@@ -4,7 +4,7 @@ import { AbstractReactive } from '../abstract-reactive';
 @Component({
     selector: 'app-text-area-custom',
     template: `
-        <div class="form-group">
+        <div>
             <label [for]='id' class="label">{{label}}</label>
             <textarea
                 [id]='id'

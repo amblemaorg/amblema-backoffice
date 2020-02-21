@@ -95,6 +95,29 @@ export class WebAboutState implements NgxsOnInit {
             });
     }
 
+    @Action(SetWebAbout)
+    setWebAbout(ctx: StateContext<WebAbout>, action: SetWebAbout) {
+        ctx.setState({
+            ...ctx.getState(),
+            aboutUsPage: {
+                ...ctx.getState().aboutUsPage,
+                aboutUsText: action.payload.aboutUsPage.aboutUsText,
+                environmentText: action.payload.aboutUsPage.environmentText,
+                readingText: action.payload.aboutUsPage.readingText,
+                mathText: action.payload.aboutUsPage.mathText,
+            }
+        });  
+
+
+        this.webAboutService.setContentWebAbout(ctx.getState()).subscribe(response => {
+            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');
+        }, (err:any) => {
+            
+            this.toastr.error('Error', 'No se ha completado el registro.')
+
+        });
+    }    
+
     // =================================================
     // Slider's actions
     // =================================================

@@ -13,6 +13,7 @@ import { FormDocumentModule } from '../../components/form-components/forms/form-
 import { FormRegionalAddressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     // Add custom module
     ReactiveInputModule,
     ReactiveSelectModule,
+    ReactiveInputFileModule,
     FormDocumentModule,
     FormRegionalAddressModule,
     ModalModule,

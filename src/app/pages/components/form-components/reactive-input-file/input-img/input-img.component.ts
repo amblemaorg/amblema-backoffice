@@ -9,8 +9,7 @@ import { AbstractControl, FormControl } from '@angular/forms';
     <div class="custom-file h-100 d-flex justify-content-center"
       [ngClass]="{'justify-content-lg-start': align == 'left', 'justify-content-lg-center' : align == 'center',
       'justify-content-lg-end' : align == 'right'}">
-
-      <label for="file" class="btn btn-tertiary js-labelFile
+      <label for="file" class="mb-0 btn btn-tertiary js-labelFile
       border border-info d-flex align-items-center justify-content-center">
         <input type="file"
           [name]="id"
@@ -30,7 +29,6 @@ export class InputImgComponent implements OnInit {
   @Input() control: AbstractControl | null = new FormControl();
   @Input() align: string | null = 'center';
   @Input() url: string | null = null;
-
   @Input() id: string | null = String( Math.random() );
 
   // To validate the file

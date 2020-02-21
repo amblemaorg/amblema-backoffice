@@ -6,8 +6,8 @@ import { AbstractControl, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-input-img',
   template: `
-    <div class="custom-file h-100 d-flex justify-content-center"
-      [ngClass]="{'justify-content-lg-start': align == 'left', 'justify-content-lg-center' : align == 'center',
+    <div style="height: auto;" class="custom-file d-flex justify-content-center"
+       [ngClass]="{'justify-content-lg-start': align == 'left', 'justify-content-lg-center' : align == 'center',
       'justify-content-lg-end' : align == 'right'}">
       <label for="file" class="mb-0 btn btn-tertiary js-labelFile
       border border-info d-flex align-items-center justify-content-center">

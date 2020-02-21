@@ -76,9 +76,9 @@ export class AwardFormComponent extends BaseTable implements TableActions {
 
     if (this.form.controls.image.invalid) {
       if (this.MODE === this.ACTION.CREATE) {
-        this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de un testimonio');
+        this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de premios y reconocimientos');
       } else if (this.MODE === this.ACTION.EDIT) {
-        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de un testimonio');
+        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de premios y reconocimientos');
       }
     }
 

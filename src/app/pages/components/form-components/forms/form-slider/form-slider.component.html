@@ -17,6 +17,7 @@
                         [attr.disabled]="form.invalid ? true : null"
                         type="submit" 
                         [ngClass]="{    
+                            'mr-xl-3' : MODE === ACTION.EDIT,
                             'btn-success': MODE === ACTION.CREATE, 
                             'btn-primary' : MODE === ACTION.EDIT}"
                         class="btn col-12 col-xl-auto mr-xl-3">

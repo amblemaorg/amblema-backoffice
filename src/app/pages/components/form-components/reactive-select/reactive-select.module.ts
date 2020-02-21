@@ -5,12 +5,14 @@ import { SelectStatusComponent } from './select-status.component';
 import { SelectTypeComponent } from './select-type.component';
 import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SelectSexComponent } from './select-sex.component';
 
 @NgModule({
   declarations: [
     SelectRoleComponent,
     SelectStatusComponent,
-    SelectTypeComponent
+    SelectTypeComponent,
+    SelectSexComponent,
   ],
   exports: [
     SelectRoleComponent,

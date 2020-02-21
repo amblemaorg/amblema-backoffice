@@ -24,9 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     CoordinatorsUsersLayoutsRoutingModule,
     NbCardModule,
     Ng2SmartTableModule,
-    ReactiveFormsModule,
 
     // Custom module
+    ReactiveFormsModule,
     ReactiveInputModule,
     ReactiveSelectModule,
     ModalModule,

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
-import { Validators } from '@angular/forms';
 import { Select } from '@ngxs/store';
 import { Role } from 'src/app/models/permission.model';
 import { Observable } from 'rxjs';

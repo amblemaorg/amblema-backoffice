@@ -1,9 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { WebAboutState, SetSliderWebAbout, UpdateSliderWebAbout, DeleteSliderWebAbout } from 'src/app/store/web-about.action';
+import { 
+  WebAboutState, 
+  SetSliderWebAbout, 
+  UpdateSliderWebAbout, 
+  DeleteSliderWebAbout, 
+  SetAwardWebAbout,
+  UpdateAwardWebAbout, 
+  DeleteAwardWebAbout } from 'src/app/store/web-about.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebAbout } from 'src/app/models/web/web-about.model';
+import { WebAbout, Award } from 'src/app/models/web/web-about.model';
 import { Slider } from 'src/app/models/web/sldier.model';
 
 @Component({
@@ -17,6 +24,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   sliders: Slider[];
+  awards: Award[]; 
 
   form: FormGroup = new FormGroup({
     aboutUsText: new FormControl(''),
@@ -28,12 +36,10 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   constructor( private store: Store ) { }
 
   ngOnInit() {
-
     this.subscription = this.data$.subscribe( response => {
       this.sliders = response.aboutUsPage.slider;
-
-    } );
-
+      this.awards = response.aboutUsPage.awards; 
+    });
   }
 
   ngOnDestroy(): void {
@@ -53,4 +59,19 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   onDeleteSlider( slider: Slider ) {
     this.store.dispatch( new DeleteSliderWebAbout( slider ) );
   }
+
+  // -- CRUD Awards --
+
+  onRegisterAward( award: Award ) {
+    this.store.dispatch( new SetAwardWebAbout(award) );
+  }
+
+  onEditAward( award: any []) {
+    //this.store.dispatch( new UpdateAwardWebAbout( award[0], award[1] ) );
+  }
+
+  onDeleteAward( award: Award ) {
+    this.store.dispatch( new DeleteAwardWebAbout(award) );
+  }
+
 }

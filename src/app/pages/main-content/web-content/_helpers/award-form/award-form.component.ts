@@ -58,10 +58,15 @@ export class AwardFormComponent extends BaseTable implements TableActions {
   }
 
   onAction( event: any ) : void {
-    switch( event.action ) {
-      case this.ACTION.EDIT: 
+    switch (event.action) {
+      case this.ACTION.EDIT:
+        this.MODE = this.ACTION.EDIT;
+        console.log( event.data )
+        this.oldAward = event.data;
+        this.form.patchValue(event.data);
         break;
-      case this.ACTION.DELETE: 
+      case this.ACTION.DELETE:
+        this.delete.emit(event.data);
         break;
     }
   }

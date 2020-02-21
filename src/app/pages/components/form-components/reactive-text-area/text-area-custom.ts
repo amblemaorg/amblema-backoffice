@@ -13,6 +13,10 @@ import { AbstractReactive } from '../abstract-reactive';
                 fullWidth
                 rows="5"
                 [formControl]="control"
+                class="form-group"
+                [ngClass]="{ 'is-valid' : control.valid && submitted,
+                'is-invalid' : control.invalid && submitted}"
+                [status]=" control.valid && submitted ? 'success' : control.invalid && submitted ? 'danger' : 'basic' "
                 [placeholder]="placeholder"></textarea>
             <app-reactive-validation [patternMessage]='patternMsg'
             [validationErrors]="validationErrors"></app-reactive-validation>

@@ -35,7 +35,7 @@ export class DeleteSliderWebAbout {
 
 // -- Award's class actions -- 
 
-export class SetTestimonialWebAbout {
+export class SetAwardWebAbout {
     static readonly type = '[Award] Set Award';
     constructor(public payload: Award) { }
 }
@@ -128,6 +128,32 @@ export class WebAboutState implements NgxsOnInit {
 
     // =================================================
     // Award's actions
-    // =================================================
+    // =================================================    
 
+    @Action(SetAwardWebAbout)
+    setAwardWebAbout(ctx : StateContext<WebAbout>, action: SetAwardWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage : patch({
+                awards : append([action.payload])
+            })
+        }));
+    }
+
+    @Action(UpdateAwardWebAbout)
+    updateAwardWebAbout(ctx: StateContext<WebAbout>, action: UpdateAwardWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage : patch({
+                awards : updateItem<Award>(Award => Award === action.oldAward, action.newAward)
+            })
+        }));
+    }
+
+    @Action(DeleteAwardWebAbout)
+    deleteAwardWebAbout(ctx: StateContext<WebAbout>, action: DeleteAwardWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage : patch({
+                awards: removeItem<Award>(Award => Award === action.payload)
+            })
+        }));
+    }
 }

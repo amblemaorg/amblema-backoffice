@@ -30,6 +30,7 @@ import { AwardFormComponent } from './award-form/award-form.component';
     ],
     exports: [
         ContentTextComponent,
+        AwardFormComponent,
         TestimonialFormComponent,
     ]
 })

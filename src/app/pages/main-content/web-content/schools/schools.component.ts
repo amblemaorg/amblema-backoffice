@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractPageTable } from '../_helpers/abstract.page.table';
 import { SchoolSettingsComponent } from './school-settings/school-settings.component';
+import { BaseTable } from 'src/app/helpers/base-table';
 
 @Component({
   selector: 'app-schools',
   templateUrl: './schools.component.html',
   styleUrls: ['./schools.component.scss']
 })
-export class SchoolsComponent extends AbstractPageTable implements OnInit {
+export class SchoolsComponent extends BaseTable implements OnInit {
 
 
   data: any = [

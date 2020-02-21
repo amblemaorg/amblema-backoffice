@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { NbCardModule } from '@nebular/theme';
 import { AboutUsComponent } from './about-us.component';
 import { HelperModule } from '../_helpers/helper.module';
-import { AboutFormComponent } from './about-form/about-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AboutUsRoutingModule } from './about-us-routing.module';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
@@ -16,7 +15,6 @@ import { FormSliderModule } from 'src/app/pages/components/form-components/forms
 @NgModule({
   declarations: [
     AboutUsComponent,
-    AboutFormComponent
   ],
   imports: [
     CommonModule,

@@ -8,11 +8,13 @@ import { ReactiveSelectModule } from 'src/app/pages/components/form-components/r
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
+import { AwardFormComponent } from './award-form/award-form.component';
 
 @NgModule({
     declarations: [
         ContentTextComponent,
         TestimonialFormComponent,
+        AwardFormComponent,
     ],
     imports: [
         CommonModule,

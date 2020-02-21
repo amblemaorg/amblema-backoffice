@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractPageTable } from '../../_helpers/abstract.page.table';
+import { BaseTable } from 'src/app/helpers/base-table';
 
 @Component({
   selector: 'app-about-form',
   templateUrl: './about-form.component.html',
 })
-export class AboutFormComponent extends AbstractPageTable implements OnInit {
+export class AboutFormComponent extends BaseTable implements OnInit {
 
   data: any = [{
     title: 'Honores',

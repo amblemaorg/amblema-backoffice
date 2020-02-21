@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractPageTable } from '../../_helpers/abstract.page.table';
+import { BaseTable } from 'src/app/helpers/base-table';
 
 @Component({
   selector: 'app-sponsor-form',
   templateUrl: './sponsor-form.component.html',
   styles: []
 })
-export class SponsorFormComponent extends AbstractPageTable implements OnInit {
+export class SponsorFormComponent extends BaseTable implements OnInit {
 
   data: any = [{
     name: 'Jose',

@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { WebAboutState, SetSliderWebAbout, UpdateSliderWebAbout, DeleteSliderWebAbout } from 'src/app/store/web-about.action';
 import { Observable, Subscription } from 'rxjs';
-import { AboutUsPage, WebAbout } from 'src/app/models/web/web-about.model';
+import { WebAbout } from 'src/app/models/web/web-about.model';
 import { Slider } from 'src/app/models/web/sldier.model';
 
 @Component({
@@ -18,7 +18,6 @@ export class AboutUsComponent implements OnInit, OnDestroy {
 
   sliders: Slider[];
 
-
   form: FormGroup = new FormGroup({
     aboutUsText: new FormControl(''),
     environmentText: new FormControl(''),
@@ -31,8 +30,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.subscription = this.data$.subscribe( response => {
-
-      console.log(response);
+      this.sliders = response.aboutUsPage.slider;
 
     } );
 
@@ -40,17 +38,19 @@ export class AboutUsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
+  }  
+
+  // -- CRUD Sliders --
 
   onRegisterSlider( slider: Slider ) {
     this.store.dispatch( new SetSliderWebAbout( slider ) );
   }
 
   onEditSlider(slider: any []) {
-    // this.store.dispatch( new UpdateSliderWebAbout( slider[0], slider[1] ) );
+    this.store.dispatch( new UpdateSliderWebAbout( slider[0], slider[1] ) );
   }
 
   onDeleteSlider( slider: Slider ) {
-    // this.store.dispatch( new DeleteSliderWebAbout( slider ) );
+    this.store.dispatch( new DeleteSliderWebAbout( slider ) );
   }
 }

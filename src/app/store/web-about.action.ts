@@ -1,9 +1,9 @@
-import { WebAbout } from '../models/web/web-about.model';
+import { WebAbout, Award } from '../models/web/web-about.model';
 import { Slider } from '../models/web/sldier.model';
 import { State, StateContext, Selector, Action, NgxsOnInit } from '@ngxs/store';
 import { CustomToastrService } from '../services/custom-toastr.service';
 import { WebAboutService } from '../services/web-content/web-about.service';
-import { append, patch } from '@ngxs/store/operators';
+import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
 
 // -- Web about's class actions --
 
@@ -31,6 +31,23 @@ export class UpdateSliderWebAbout {
 export class DeleteSliderWebAbout {
     static readonly type = '[Slider] Delete Slider';
     constructor(public payload: Slider) { }
+}
+
+// -- Award's class actions -- 
+
+export class SetTestimonialWebAbout {
+    static readonly type = '[Award] Set Award';
+    constructor(public payload: Award) { }
+}
+
+export class UpdateAwardWebAbout {
+    static readonly type = '[Award] Update Award';
+    constructor(public oldAward: Award, public newAward: Award) { }
+}
+
+export class DeleteAwardWebAbout {
+    static readonly type = '[Award] Delete Testimonial';
+    constructor(public payload: Award) { }
 }
 
 
@@ -91,21 +108,26 @@ export class WebAboutState implements NgxsOnInit {
         }));
     }
 
-    // @Action(UpdateSliderWebAbout)
-    // updateSliderWebAbout(ctx: StateContext<WebAbout>, action: UpdateSliderWebAbout) {
-    //     ctx.setState(
-    //         patch({
-    //             slider: updateItem<Slider>(slider => slider === action.oldSlider, action.newSlider)
-    //         })
-    //     );
-    // }
+    @Action(UpdateSliderWebAbout)
+    updateSliderWebAbout(ctx: StateContext<WebAbout>, action: UpdateSliderWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage : patch({
+                slider : updateItem<Slider>(slider => slider === action.oldSlider, action.newSlider)
+            })
+        }));
+    }
 
-    // @Action(DeleteSliderWebAbout)
-    // deleteSliderWebAbout(ctx: StateContext<WebAbout>, action: DeleteSliderWebAbout) {
-    //     ctx.setState(
-    //         patch({
-    //             slider: removeItem<Slider>(slider => slider === action.payload)
-    //         })
-    //     );
-    // }
+    @Action(DeleteSliderWebAbout)
+    deleteSliderWebAbout(ctx: StateContext<WebAbout>, action: DeleteSliderWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage : patch({
+                slider: removeItem<Slider>(slider => slider === action.payload)
+            })
+        }));
+    }
+
+    // =================================================
+    // Award's actions
+    // =================================================
+
 }

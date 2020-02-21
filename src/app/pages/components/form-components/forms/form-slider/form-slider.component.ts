@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
-import { Slider } from 'src/app/models/web/web-home.model';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Slider } from 'src/app/models/web/sldier.model';
 
 @Component({
   selector: 'app-form-slider',
@@ -77,10 +77,13 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
     if (this.MODE === this.ACTION.CREATE) {
       this.register.emit(this.form.value);
       this.form.reset();
+
+      this.form.controls.image.setValue(null);
     } else {
       this.edit.emit([this.oldSlider, this.form.value]);
       this.form.reset();
       this.MODE = this.ACTION.CREATE;
+
     }
   }
 

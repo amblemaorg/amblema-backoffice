@@ -1,11 +1,11 @@
-import { WebAbout, AboutUsPage } from '../models/web/web-about.model';
+import { WebAbout } from '../models/web/web-about.model';
 import { Slider } from '../models/web/sldier.model';
 import { State, StateContext, Selector, Action, NgxsOnInit } from '@ngxs/store';
 import { CustomToastrService } from '../services/custom-toastr.service';
 import { WebAboutService } from '../services/web-content/web-about.service';
 import { append, patch } from '@ngxs/store/operators';
 
-// Web about class action
+// -- Web about's class actions --
 
 export class GetWebAbout {
     static readonly type = '[WebAbout] Get Web About';
@@ -16,7 +16,7 @@ export class SetWebAbout {
     constructor(public payload: WebAbout) { }
 }
 
-// Slider class action
+// -- Slider's class actions --
 
 export class SetSliderWebAbout {
     static readonly type = '[Slider] Set Slider';
@@ -64,37 +64,31 @@ export class WebAboutState implements NgxsOnInit {
         ctx.dispatch(new GetWebAbout());
     }
 
+    // =================================================
+    // Web about's actions
+    // =================================================
+
     @Action(GetWebAbout)
     getWebAbout(ctx: StateContext<WebAbout>) {
         return this.webAboutService.getContentWebAbout()
             .subscribe(response => {
                 if (response.aboutUsPage) {
-                    ctx.setState( { aboutUsPage: response.aboutUsPage } ); 
+                    ctx.setState( { aboutUsPage: response.aboutUsPage } );
                 }
             });
     }
 
-    // Slider actions
+    // =================================================
+    // Slider's actions
+    // =================================================
 
     @Action(SetSliderWebAbout)
-    setSliderWebAbout(ctx: StateContext<AboutUsPage>, action: SetSliderWebAbout) {
-
+    setSliderWebAbout(ctx: StateContext<WebAbout>, action: SetSliderWebAbout) {
         ctx.setState(patch({
-            slider: append([action.payload])
+            aboutUsPage : patch({
+                slider : append([action.payload])
+            })
         }));
-
-        // ctx.setState((ctx) => ({
-        //     ...ctx,
-        //     slider: action.payload
-        // }))
-
-        // ctx.setState(patch({
-        //     // aboutUsPage: {
-        //     //     ...ctx.getState().aboutUsPage,
-        //     //     slider: append([action.payload])
-        //     // }
-        //     //...slider: append([action.payload])
-        // }));
     }
 
     // @Action(UpdateSliderWebAbout)

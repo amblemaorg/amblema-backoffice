@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { AbstractControl, FormControl } from '@angular/forms';
 
+
 @Component({
   selector: 'app-input-img',
   template: `
@@ -11,7 +12,12 @@ import { AbstractControl, FormControl } from '@angular/forms';
 
       <label for="file" class="btn btn-tertiary js-labelFile
       border border-info d-flex align-items-center justify-content-center">
-        <input type="file" [name]="id" [id]="id" class="input-file" (change)="onLoadPicture($event)">
+        <input type="file"
+          [name]="id"
+          [id]="id"
+          class="input-file"
+          (change)="onLoadPicture($event)"
+          (click)="onClick($event)">
       <img [src]="control.value" class="img-fluid position-absolute w-100 h-100" alt="">
         <i class="text-info fa fa-camera fa-2x"></i>
       </label>
@@ -39,6 +45,10 @@ export class InputImgComponent implements OnInit {
 
   ngOnInit() {
     this.pictureBase64 = this.url ? this.url : this.pictureBase64;
+  }
+
+  onClick(event) {
+    event.target.value = '';
   }
 
   onLoadPicture(event: any) {

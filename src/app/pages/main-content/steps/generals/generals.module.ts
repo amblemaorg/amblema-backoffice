@@ -21,7 +21,7 @@ import { FormVideoStepModule } from 'src/app/pages/components/form-components/fo
     // Add custom modal
     FormSimpleStepModule,
     FormFileStepModule,
-    FormVideoStepModule, 
+    FormVideoStepModule,
   ]
 })
 export class GeneralsModule { }

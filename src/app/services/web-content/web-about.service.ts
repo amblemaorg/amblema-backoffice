@@ -10,11 +10,11 @@ import { map } from 'rxjs/operators';
 })
 export class WebAboutService {
 
-  private readonly WEB_ABOUT = 'webcontent?page=aboutUsPage'; 
+  private readonly WEB_ABOUT = 'webcontent?page=aboutUsPage';
 
   constructor( private httpClient: HttpClient ) { }
 
-  getContentWebAbout() : Observable<WebAbout> {
+  getContentWebAbout(): Observable<WebAbout> {
     return this.httpClient.get<WebAbout>(`${environment.api}${this.WEB_ABOUT}`)
       .pipe(
         map( ( data: any) => data )

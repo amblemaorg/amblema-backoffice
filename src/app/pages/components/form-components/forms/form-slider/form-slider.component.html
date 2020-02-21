@@ -2,7 +2,8 @@
     <p class="font-weight-bold">Diapositiva</p>
     <div class="row align-items-center form-group">
         <div class="col-12 col-xl form-group">
-            <app-input-img [control]="form.get('image')"></app-input-img>
+            <app-input-img 
+                [control]="form.get('image')"></app-input-img>
         </div>
         <div class="col-12 col-xl-9">
             <div class="row">
@@ -22,7 +23,6 @@
                         <span *ngIf="MODE === ACTION.CREATE">Registrar</span>
                         <span *ngIf="MODE === ACTION.EDIT">Actualizar</span>
                     </button>
-
                     <button
                         (click)="form.reset(); MODE = ACTION.CREATE"
                         *ngIf="MODE === ACTION.EDIT" 

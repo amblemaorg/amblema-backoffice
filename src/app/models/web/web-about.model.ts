@@ -17,5 +17,5 @@ export interface AboutUsPage {
 }
 
 export interface WebAbout {
-    aboutUsPage: AboutUsPage;
+    aboutUsPage?: AboutUsPage;
 }

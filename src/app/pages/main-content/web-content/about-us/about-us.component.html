@@ -3,10 +3,15 @@
         <nb-card>
             <nb-card-header>Nosotros</nb-card-header>
             <nb-card-body>
-
                 <div class="row">
+                    
+                    <!-- Slider -->
                     <div class="col-12 form-group">
-                        <app-form-slider></app-form-slider>
+                        <app-form-slider 
+                            (delete)="onDeleteSlider($event)"
+                            (edit)="onEditSlider($event)"
+                            (register)="onRegisterSlider($event)"
+                            [sliders]="sliders"></app-form-slider>
                     </div>
 
                     <div class="col-12">

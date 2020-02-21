@@ -21,7 +21,7 @@ export class WebAboutService {
       );
   }
 
-  setContentWebAbout( data: WebAbout ) : Observable<WebAbout> {
+  setContentWebAbout( data: WebAbout ): Observable<WebAbout> {
     return this.httpClient.post<WebAbout>(`${environment.api}${this.WEB_ABOUT}`, data);
   }
 }

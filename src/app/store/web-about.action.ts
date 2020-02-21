@@ -33,7 +33,7 @@ export class DeleteSliderWebAbout {
     constructor(public payload: Slider) { }
 }
 
-// -- Award's class actions -- 
+// -- Award's class actions --
 
 export class SetAwardWebAbout {
     static readonly type = '[Award] Set Award';
@@ -106,17 +106,17 @@ export class WebAboutState implements NgxsOnInit {
                 readingText: action.payload.aboutUsPage.readingText,
                 mathText: action.payload.aboutUsPage.mathText,
             }
-        });  
+        });
 
 
         this.webAboutService.setContentWebAbout(ctx.getState()).subscribe(response => {
             this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');
-        }, (err:any) => {
-            
-            this.toastr.error('Error', 'No se ha completado el registro.')
+        }, (err: any) => {
+
+            this.toastr.error('Error', 'No se ha completado el registro.');
 
         });
-    }    
+    }
 
     // =================================================
     // Slider's actions
@@ -151,10 +151,10 @@ export class WebAboutState implements NgxsOnInit {
 
     // =================================================
     // Award's actions
-    // =================================================    
+    // =================================================
 
     @Action(SetAwardWebAbout)
-    setAwardWebAbout(ctx : StateContext<WebAbout>, action: SetAwardWebAbout) {
+    setAwardWebAbout(ctx: StateContext<WebAbout>, action: SetAwardWebAbout) {
         ctx.setState(patch({
             aboutUsPage : patch({
                 awards : append([action.payload])
@@ -166,7 +166,7 @@ export class WebAboutState implements NgxsOnInit {
     updateAwardWebAbout(ctx: StateContext<WebAbout>, action: UpdateAwardWebAbout) {
         ctx.setState(patch({
             aboutUsPage : patch({
-                awards : updateItem<Award>(Award => Award === action.oldAward, action.newAward)
+                awards : updateItem<Award>(award => award === action.oldAward, action.newAward)
             })
         }));
     }
@@ -175,7 +175,7 @@ export class WebAboutState implements NgxsOnInit {
     deleteAwardWebAbout(ctx: StateContext<WebAbout>, action: DeleteAwardWebAbout) {
         ctx.setState(patch({
             aboutUsPage : patch({
-                awards: removeItem<Award>(Award => Award === action.payload)
+                awards: removeItem<Award>(award => award === action.payload)
             })
         }));
     }

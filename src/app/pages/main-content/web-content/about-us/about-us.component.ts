@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { 
-  WebAboutState, 
-  SetSliderWebAbout, 
-  UpdateSliderWebAbout, 
-  DeleteSliderWebAbout, 
+import {
+  WebAboutState,
+  SetSliderWebAbout,
+  UpdateSliderWebAbout,
+  DeleteSliderWebAbout,
   SetAwardWebAbout,
-  UpdateAwardWebAbout, 
-  DeleteAwardWebAbout, 
+  UpdateAwardWebAbout,
+  DeleteAwardWebAbout,
   SetWebAbout} from 'src/app/store/web-about.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebAbout, Award } from 'src/app/models/web/web-about.model';
@@ -25,7 +25,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   sliders: Slider[];
-  awards: Award[]; 
+  awards: Award[];
 
   form: FormGroup = new FormGroup({
     aboutUsText: new FormControl(''),
@@ -39,14 +39,14 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.data$.subscribe( response => {
       this.sliders = response.aboutUsPage.slider;
-      this.awards = response.aboutUsPage.awards; 
+      this.awards = response.aboutUsPage.awards;
       this.form.patchValue(response.aboutUsPage);
     });
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }  
+  }
 
   // -- CRUD Sliders --
 

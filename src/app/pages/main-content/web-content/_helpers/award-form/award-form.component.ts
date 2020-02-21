@@ -19,7 +19,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
   form: FormGroup;
   submitted = false;
   MODE = this.ACTION.CREATE;
-  oldAward: Award; 
+  oldAward: Award;
 
   constructor(
     private toast: CustomToastrService,
@@ -28,13 +28,13 @@ export class AwardFormComponent extends BaseTable implements TableActions {
     super('form-awards');
 
     this.form = this.formBuilder.group({
-      image: new FormControl( '', [Validators.required] ), 
-      title: new FormControl('', [Validators.required]), 
+      image: new FormControl( '', [Validators.required] ),
+      title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       description2: new FormControl('', [Validators.required])
     });
 
-    this.settings.pager.perPage = 5; 
+    this.settings.pager.perPage = 5;
 
     this.settings.actions.custom = [
       { name: this.ACTION.EDIT, title: `<i class="nb-edit"></i>` },
@@ -57,7 +57,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
     };
   }
 
-  onAction( event: any ) : void {
+  onAction( event: any ): void {
     switch (event.action) {
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
@@ -72,7 +72,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
 
   onSubmit() {
 
-    this.submitted = true; 
+    this.submitted = true;
 
     if (this.form.controls.image.invalid) {
       if (this.MODE === this.ACTION.CREATE) {
@@ -93,7 +93,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
         this.submitted = false;
         this.MODE = this.ACTION.CREATE;
       }
-    }    
+    }
 
   }
 }

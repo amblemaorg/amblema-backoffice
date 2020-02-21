@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { DetailsForm } from '../../shared/details-form';
 import { FormControl, Validators } from '@angular/forms';
-import { VIDEO_PATTERN, NUMBER_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 
 @Component({
   selector: 'app-sponsors-users-form',
@@ -11,7 +12,9 @@ import { VIDEO_PATTERN, NUMBER_PATTERN } from 'src/app/pages/components/form-com
 })
 export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
 
-  constructor(private validationService: ValidationService) {
+  constructor(
+    private toast: CustomToastrService, 
+    private validationService: ValidationService) {
     super('un padrino'); // <-- Title modal
   }
 
@@ -22,6 +25,15 @@ export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
+    // Error messages
+    if (this.form.controls.image.invalid) {
+      if (this.MODE === this.ACTION.CREATE) {
+        this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de padrino');
+      } else if (this.MODE === this.ACTION.EDIT) {
+        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de padrino');
+      }
+    }    
 
     // Working on your validated form data
     if (this.form.valid) {

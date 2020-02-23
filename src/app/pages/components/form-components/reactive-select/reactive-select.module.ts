@@ -18,6 +18,7 @@ import { SelectSexComponent } from './select-sex.component';
     SelectRoleComponent,
     SelectStatusComponent,
     SelectTypeComponent,
+    SelectSexComponent
   ],
   imports: [
     CommonModule,

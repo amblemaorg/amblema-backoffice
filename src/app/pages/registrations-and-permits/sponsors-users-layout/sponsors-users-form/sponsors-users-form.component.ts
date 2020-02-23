@@ -13,7 +13,7 @@ import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
 
   constructor(
-    private toast: CustomToastrService, 
+    private toast: CustomToastrService,
     private validationService: ValidationService) {
     super('un padrino'); // <-- Title modal
   }
@@ -33,7 +33,7 @@ export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
       } else if (this.MODE === this.ACTION.EDIT) {
         this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de padrino');
       }
-    }    
+    }
 
     // Working on your validated form data
     if (this.form.valid) {

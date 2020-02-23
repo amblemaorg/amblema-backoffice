@@ -1,6 +1,5 @@
-import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AbstractReactiveInput } from './abstract-reactive-input';
-import { Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-input-custom',

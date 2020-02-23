@@ -1,0 +1,58 @@
+@import '../../../../../../assets/scss/variables';
+
+:host ::ng-deep .ngx-datepicker-container .ngx-datepicker-calendar-container {
+    z-index: 999;
+}
+
+:host ::ng-deep .ngx-datepicker-container .ngx-datepicker-input {
+    width: 100%!important;
+}
+
+:host ::ng-deep input {
+    border-radius: .25rem;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Open Sans, sans-serif;
+    -webkit-appearance: none;
+    transition-duration: 0.15s;
+    transition-property: border,background-color,color,box-shadow;
+    transition-timing-function: ease-in;
+    font-size: .9375rem;
+    line-height: 1.5rem;
+    padding: 0.4375rem 1.125rem!important;
+    background-color: #f7f9fc;
+    border-color: #e4e9f2!important;
+    color: #222b45;
+    &::placeholder {
+        font-size: 1rem!important;
+        color: #8f9bb3!important;
+    }
+}
+
+:host ::ng-deep .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container
+.main-calendar-days .day-unit.is-selected, .ngx-datepicker-container 
+.ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days 
+.year-unit.is-selected, .ngx-datepicker-container .ngx-datepicker-calendar-container 
+.main-calendar-container .main-calendar-years .day-unit.is-selected, 
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container
+.main-calendar-years .year-unit.is-selected {
+    background-color: $color-primary!important;
+}
+
+:host ::ng-deep .ngx-datepicker-container .ngx-datepicker-calendar-container
+.main-calendar-container .main-calendar-days .day-unit.is-today, .ngx-datepicker-container
+.ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit:hover,
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container
+.main-calendar-days .year-unit.is-today, .ngx-datepicker-container .ngx-datepicker-calendar-container
+.main-calendar-container .main-calendar-days .year-unit:hover, .ngx-datepicker-container
+.ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-today,
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years
+.day-unit:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container
+.main-calendar-years .year-unit.is-today, .ngx-datepicker-container .ngx-datepicker-calendar-container
+.main-calendar-container .main-calendar-years .year-unit:hover {
+    background:#6c757d!important;
+}
+
+:host ::ng-deep .ngx-datepicker-position-bottom-right {
+    top: 50px!important;
+}

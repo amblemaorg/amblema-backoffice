@@ -36,11 +36,36 @@
                     </div>
 
                     <div class="col-12 col-lg-6">
-                        <!-- <app-input-date 
-                            [label]="'Fecha de nacimiento'"
-                            [placeholder]="'Fecha de nacimiento'"
-                            [id]="'birth-date'"></app-input-date> -->
+                        <app-datepicker [label]="'Fecha de nacimiento'"></app-datepicker>
                     </div>
+                    <div class="col-12 col-lg-6">
+                        <app-select-sex></app-select-sex>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [submitted]="submitted"
+                            [id]="'phone-room'"
+                            [label]="'Teléfono de habitación'"
+                            [placeholder]="'Teléfono de habitación'"></app-input-custom>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [submitted]="submitted"
+                            [id]="'city'"
+                            [label]="'Ciudad'"
+                            [placeholder]="'Ciudad'"></app-input-custom>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [submitted]="submitted"
+                            [id]="'house-building'"
+                            [label]="'Casa / Edificio'"
+                            [placeholder]="'Casa / Edificio'"></app-input-custom>
+                    </div>
+
 
                 </div>
             </div>

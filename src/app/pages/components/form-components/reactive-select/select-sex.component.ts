@@ -9,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
           name="sex"
           id="sex"
           class="form-control form-group"
-          [formControl]="control"
+
           (change)="onChange($event.target.value)">
+          <option disabled value="- Seleccion el sexo -">- Seleccione el sexo -</option>
           <option value="Masculino">Masculino</option>
           <option value="Femenino">Femenino</option>
           <option value="Otro">Otro</option>
@@ -22,8 +23,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelectSexComponent implements OnInit {
 
+  // RECUERDA AGREGARLO EL CONTROLNAME
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onChange(event: any) {
+
   }
 }

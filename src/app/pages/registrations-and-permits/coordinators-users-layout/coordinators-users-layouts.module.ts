@@ -13,7 +13,7 @@ import { FormDocumentModule } from '../../components/form-components/forms/form-
 import { FormRegionalAddressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ReactiveDateModule } from '../../components/form-components/reactive-date/reactive-date.module';
+import { ReactiveDatepickerModule } from '../../components/form-components/reactive-datepicker/reactive-datepicker.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { ReactiveDateModule } from '../../components/form-components/reactive-da
     Ng2SmartTableModule,
 
     // Custom module
-    //ReactiveDateModule,
+    ReactiveDatepickerModule,
     ReactiveFormsModule,
     ReactiveInputModule,
     ReactiveSelectModule,

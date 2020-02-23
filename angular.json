@@ -28,8 +28,9 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
               "node_modules/nebular-icons/css/nebular-icons.css"
             ],
@@ -100,6 +101,8 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -154,6 +157,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Amblema-BackOffice"
 }

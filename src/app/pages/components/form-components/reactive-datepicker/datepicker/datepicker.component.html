@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label [hidden]="label == ''" class="label">{{ label }} </label>
+    <input 
+        nbInput
+        fullWidth
+        status="basic"
+        type="text"
+        readonly
+        [placeholder]="label"
+        class="form-control"
+        [maxDate]="maxDate"
+        [bsConfig]="{ 
+            adaptivePosition: true,
+            dateInputFormat: 'DD MMM YYYY' }"
+        bsDatepicker>
+</div>

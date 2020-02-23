@@ -46,11 +46,12 @@ import { WebAboutState } from './store/web-about.action';
       WebAboutState
     ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
-    NbToastrModule.forRoot()
+    NbToastrModule.forRoot(),
   ],
   providers: [
     CustomToastrService,
     AuthGuard,
+
     // Custom helper
     Utility,
   ],

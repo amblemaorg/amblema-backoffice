@@ -43,7 +43,5 @@ export class SponsorFormComponent extends BaseTable implements OnInit {
 
   }
 
-  onAction(event: any) {}
-
 
 }

@@ -64,6 +64,27 @@
                         </app-input-phone>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [control]="form.get('nameContact')"
+                            [label]="'Cargo en la escuela'" 
+                            [placeholder]="'Cargo en la escuela'"
+                            [submitted]="submitted" 
+                            [id]="'nameContact'">
+                        </app-input-custom>   
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [control]="form.get('nameContact')"
+                            [label]="'Ciudad'" 
+                            [placeholder]="'Ciudad'"
+                            [submitted]="submitted" 
+                            [id]="'nameContact'">
+                        </app-input-custom>   
+                    </div>
+                </div> 
             </div>
         </div><!-- / End data contact -->
 

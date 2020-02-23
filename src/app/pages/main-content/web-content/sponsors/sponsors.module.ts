@@ -6,7 +6,6 @@ import { SponsorsComponent } from './sponsors.component';
 import { NbCardModule } from '@nebular/theme';
 import { HelperModule } from '../_helpers/helper.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
-import { SponsorFormComponent } from './sponsor-form/sponsor-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
@@ -15,7 +14,7 @@ import { ReactiveSelectModule } from 'src/app/pages/components/form-components/r
 @NgModule({
   declarations: [
     SponsorsComponent,
-    SponsorFormComponent,
+    //SponsorFormComponent,
   ],
   imports: [
     CommonModule,

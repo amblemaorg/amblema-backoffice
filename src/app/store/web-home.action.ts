@@ -6,7 +6,7 @@ import { CustomToastrService } from '../services/custom-toastr.service';
 import { Slider } from '../models/web/sldier.model';
 import { Testimonial } from '../models/web/testimonial.model';
 
-// Web Home class action
+// -- Web Home class action --
 
 export class GetWebHome {
     static readonly type = '[WebHome] Get Web Home';
@@ -17,7 +17,7 @@ export class SetWebHome {
     constructor(public payload: WebHome) { }
 }
 
-// Slider class action
+// -- Slider class action --
 
 export class SetSliderWebHome {
     static readonly type = '[Slider] Set Slider';
@@ -34,7 +34,7 @@ export class DeleteSliderWebHome {
     constructor(public payload: Slider) { }
 }
 
-// Testimonial class action
+// -- Testimonial class action --
 
 export class SetTestimonialWebHome {
     static readonly type = '[Testimonial] Set Testimonial';
@@ -82,15 +82,14 @@ export class WebHomeState implements NgxsOnInit {
     getWebHome(ctx: StateContext<WebHome>) {
         return this.webHomeService.getContentWebHome()
             .subscribe(response => {
-                // Void null object
-                if (response) {
+                if (response) { // <-- Void null object
                     const webHome: any = response;
                     ctx.setState(webHome);
                 }
             });
     }
 
-    // Web Home actions
+    // -- Web Home actions --
 
     @Action(SetWebHome)
     setWebHome(ctx: StateContext<WebHome>, action: SetWebHome) {
@@ -102,7 +101,7 @@ export class WebHomeState implements NgxsOnInit {
         });
     }
 
-    // Slider actions
+    // -- Slider actions --
 
     @Action(SetSliderWebHome)
     setSliderWebHome(ctx: StateContext<WebHome>, action: SetSliderWebHome) {
@@ -131,7 +130,7 @@ export class WebHomeState implements NgxsOnInit {
         );
     }
 
-    // Testimonial actions
+    // -- Testimonial actions --
 
     @Action(SetTestimonialWebHome)
     setTestimonialWebHome(ctx: StateContext<WebHome>, action: SetTestimonialWebHome) {

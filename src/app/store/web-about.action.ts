@@ -81,9 +81,7 @@ export class WebAboutState implements NgxsOnInit {
         ctx.dispatch(new GetWebAbout());
     }
 
-    // =================================================
-    // Web about's actions
-    // =================================================
+    // -- Web about's actions --
 
     @Action(GetWebAbout)
     getWebAbout(ctx: StateContext<WebAbout>) {
@@ -108,7 +106,6 @@ export class WebAboutState implements NgxsOnInit {
             }
         });
 
-
         this.webAboutService.setContentWebAbout(ctx.getState()).subscribe(response => {
             this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');
         }, (err: any) => {
@@ -118,9 +115,7 @@ export class WebAboutState implements NgxsOnInit {
         });
     }
 
-    // =================================================
-    // Slider's actions
-    // =================================================
+    // -- Slider's actions --
 
     @Action(SetSliderWebAbout)
     setSliderWebAbout(ctx: StateContext<WebAbout>, action: SetSliderWebAbout) {
@@ -149,9 +144,7 @@ export class WebAboutState implements NgxsOnInit {
         }));
     }
 
-    // =================================================
-    // Award's actions
-    // =================================================
+    // -- Award's actions --
 
     @Action(SetAwardWebAbout)
     setAwardWebAbout(ctx: StateContext<WebAbout>, action: SetAwardWebAbout) {

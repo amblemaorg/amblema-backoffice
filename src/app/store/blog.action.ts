@@ -32,40 +32,40 @@ export class DeletePost {
 export class PostsState implements NgxsOnInit {
 
     @Selector()
-    static posts(state: Post[ ]) : Post[] | null {
+    static posts(state: Post[ ]): Post[] | null {
         return state;
     }
 
     ngxsOnInit( ctx: StateContext<Post[]> ) {
-        ctx.dispatch(new GetPosts()); 
+        ctx.dispatch(new GetPosts());
     }
 
     constructor(
         private blogService: BlogService
     ) {}
 
-    @Action(GetPosts) 
+    @Action(GetPosts)
     getPosts(ctx: StateContext<Post[]>) {
         return this.blogService.getPosts()
             .subscribe(response => {
-                ctx.setState( response ); 
-            }); 
+                ctx.setState( response );
+            });
     }
 
     @Action(SetPost)
-    setPost( ctx: StateContext<Post[]>, action:  SetPost ) {
+    setPost( ctx: StateContext<Post[]>, action: SetPost ) {
         const value = ctx.getState();
         ctx.setState( value.concat( action.payload ) );
     }
 
     @Action( UpdatePost )
     updatePost(ctx: StateContext<Post[]> ) {
-            
-    }   
+
+    }
 
     @Action( DeletePost )
     deletePost(ctx: StateContext<Post[]> ) {
-    
+
     }
 
 }

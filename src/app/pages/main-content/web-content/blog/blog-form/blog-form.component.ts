@@ -18,21 +18,21 @@ export class BlogFormComponent implements OnInit {
 
   @Output() register = new EventEmitter<Post>();
   @Output() edit = new EventEmitter<Post[]>();
-  
+
   ACTION = ACTION;
 
-  submitted: boolean = false;
+  submitted = false;
   formBlog: FormGroup;
-  oldPost: Post
+  oldPost: Post;
 
-  constructor( 
+  constructor(
     private toast: CustomToastrService,
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private store: Store ) {
       this.formBlog = this.formBuilder.group({
         image : new FormControl('', [Validators.required]),
         image2 : new FormControl('', [Validators.required]),
-        text : new FormControl('', [Validators.required])  
+        text : new FormControl('', [Validators.required])
       }); // <-- Form Blog to create edit
   }
 
@@ -40,8 +40,8 @@ export class BlogFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true; 
-    
+    this.submitted = true;
+
     if (this.formBlog.controls.image.invalid || this.formBlog.controls.image2.invalid) {
       if (this.MODE === this.ACTION.CREATE) {
         this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de premios y reconocimientos');
@@ -54,9 +54,9 @@ export class BlogFormComponent implements OnInit {
     if (this.formBlog.valid) {
 
       if ( this.MODE === this.ACTION.CREATE ) {
-        this.register.emit( this.formBlog.value ); 
+        this.register.emit( this.formBlog.value );
         this.formBlog.reset();
-        this.submitted = false; 
+        this.submitted = false;
       } else if ( this.MODE === this.ACTION.EDIT ) {
 
       }

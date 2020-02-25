@@ -19,10 +19,10 @@ export class BlogComponent implements OnInit {
   ngOnInit() {
   }
 
-  // -- Post actions -- 
+  // -- Post actions --
 
   onRegisterPost( post: Post ) {
-  
+
   }
 
   onEditPost( post: Post[] ) {

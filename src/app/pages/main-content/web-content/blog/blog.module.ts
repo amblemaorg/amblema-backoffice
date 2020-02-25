@@ -22,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     BlogRoutingModule,
     NbCardModule,
     NbInputModule,

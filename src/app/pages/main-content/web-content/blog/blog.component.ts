@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-content/text-crud';
+import { Post } from 'src/app/models/web/blog.model';
 
 @Component({
   selector: 'app-blog',
@@ -16,5 +17,15 @@ export class BlogComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  // -- Post actions -- 
+
+  onRegisterPost( post: Post ) {
+  
+  }
+
+  onEditPost( post: Post[] ) {
+
   }
 }

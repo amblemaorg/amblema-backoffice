@@ -23,7 +23,7 @@ export class DeletePost {
     constructor( public payload: string ) { }
 }
 
-// -- Posts Static --
+// -- Posts State --
 
 @State<Post[]>({
     name: 'posts',

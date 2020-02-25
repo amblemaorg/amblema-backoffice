@@ -38,11 +38,22 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
     }
 
     this.form.addControl('steps', this.steps);
-
-
     this.subscription = this.data$.subscribe( response => {
-      this.testimonials = response.coordinatorPage.testimonials; // Get testimonials array
+      
+      this.testimonials = response.coordinatorPage.testimonials;
+
+      /**
+       * This code is to void reset the input fields background
+       */
+
+      let imageBackUp = this.form.controls['backgroundImage'].value ? 
+      this.form.controls['backgroundImage'].value : null; 
+
       this.form.patchValue(response.coordinatorPage);
+
+      if( imageBackUp ) {
+        this.form.controls['backgroundImage'].setValue(imageBackUp);
+      }
     });
   }
 

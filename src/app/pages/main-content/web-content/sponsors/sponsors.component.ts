@@ -42,7 +42,18 @@ export class SponsorsComponent implements OnInit, OnDestroy {
 
     this.subscription = this.data$.subscribe( response => {
       this.testimonials = response.sponsorPage.testimonials; // Get testimonials array
+      
+      /**
+       * This code is to void reset the input fields background
+       */
+      let imageBackUp = this.formSponsor.controls['backgroundImage'].value ? 
+      this.formSponsor.controls['backgroundImage'].value : null; 
+
       this.formSponsor.patchValue(response.sponsorPage);
+
+      if( imageBackUp ) {
+        this.formSponsor.controls['backgroundImage'].setValue(imageBackUp);
+      }
     });
   }
 

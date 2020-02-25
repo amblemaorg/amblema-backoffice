@@ -42,16 +42,16 @@ export class AboutUsComponent implements OnInit, OnDestroy {
       this.awards = response.aboutUsPage.awards;
 
       if ( response.aboutUsPage.aboutUsText ) {
-        this.form.controls['aboutUsText'].setValue( response.aboutUsPage.aboutUsText );
+        this.form.controls.aboutUsText.setValue( response.aboutUsPage.aboutUsText );
       }
       if ( response.aboutUsPage.environmentText ) {
-        this.form.controls['environmentText'].setValue( response.aboutUsPage.environmentText );
+        this.form.controls.environmentText.setValue( response.aboutUsPage.environmentText );
       }
       if ( response.aboutUsPage.readingText ) {
-        this.form.controls['readingText'].setValue( response.aboutUsPage.readingText );
+        this.form.controls.readingText.setValue( response.aboutUsPage.readingText );
       }
       if ( response.aboutUsPage.mathText ) {
-        this.form.controls['mathText'].setValue( response.aboutUsPage.mathText );
+        this.form.controls.mathText.setValue( response.aboutUsPage.mathText );
       }
     });
   }

@@ -31,13 +31,13 @@ export class DeletePost {
 })
 export class PostsState implements NgxsOnInit {
 
-    ngxsOnInit( ctx : StateContext<Post[]> ) {
-    
+    ngxsOnInit( ctx: StateContext<Post[]> ) {
+
     }
 
     constructor(
         private blog: BlogService
     ) {}
 
-    
+
 }

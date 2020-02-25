@@ -14,22 +14,22 @@ export class BlogService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getPosts() : Observable<Post[]> {
+  getPosts(): Observable<Post[]> {
     return this.httpClient.get<Post[]>(`${environment.api}${this.POST}`)
       .pipe(
         map( (data: any) => data )
       );
   }
 
-  setPost( data: Post ) : Observable<Post> {
+  setPost( data: Post ): Observable<Post> {
     return this.httpClient.post<Post>(`${environment.api}${this.POST}`, data);
   }
 
-  updatePost( id: string, data: Post ) : Observable<Post> {
+  updatePost( id: string, data: Post ): Observable<Post> {
     return this.httpClient.put<Post>(`${environment.api}${this.POST}/id=${id}`, data);
-  } 
+  }
 
-  deletePost( id: string ) :Observable<string> {
+  deletePost( id: string ): Observable<string> {
     return this.httpClient.delete<string>(`${environment.api}${this.POST}/id=${id}`);
   }
 }

@@ -100,7 +100,7 @@ export class WebCoordinatorState implements NgxsOnInit {
             })
         }));
 
-        console.log(ctx.getState()); 
+        console.log(ctx.getState());
     }
 
     @Action(UpdateTestimonialWebCoordinator)

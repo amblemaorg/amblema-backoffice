@@ -6,10 +6,10 @@ import { CustomToastrService } from '../services/custom-toastr.service';
 import { WebSponsorService } from '../services/web-content/web-sponsor.service';
 
 
-// -- Web Sponsor class action -- 
+// -- Web Sponsor class action --
 
 export class GetWebSponsor {
-    static readonly type = '[WebSponsor] Get Web Sponsor'; 
+    static readonly type = '[WebSponsor] Get Web Sponsor';
 }
 
 export class SetWebSponsor {
@@ -46,7 +46,7 @@ export class DeleteTestimonialWebSponsor {
 export class WebSponsorState implements NgxsOnInit {
 
     @Selector()
-    static webSponsor(state: WebSponsor) : WebSponsor | null {
+    static webSponsor(state: WebSponsor): WebSponsor | null {
         return state;
     }
 
@@ -55,22 +55,22 @@ export class WebSponsorState implements NgxsOnInit {
         private webSponsorService: WebSponsorService
     ) {}
 
-    ngxsOnInit() : void {
+    ngxsOnInit(): void {
     }
 
-    // -- Web sponsor's actions -- 
+    // -- Web sponsor's actions --
 
     @Action(GetWebSponsor)
     getWebSponsor(ctx: StateContext<WebSponsor>) {
         return this.webSponsorService.getContentWebSponsor()
             .subscribe( response => {
                 if ( response.sponsorPage ) {
-                    ctx.setState({ sponsorPage : response.sponsorPage }); 
+                    ctx.setState({ sponsorPage : response.sponsorPage });
                 }
-            })
+            });
     }
-    
-    // -- Testimonial actions -- 
+
+    // -- Testimonial actions --
 
     @Action(SetTestimonialWebSponsor)
     setTestimonialWebSponsor(ctx: StateContext<WebSponsor>, action: SetTestimonialWebSponsor) {

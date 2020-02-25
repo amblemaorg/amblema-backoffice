@@ -14,14 +14,14 @@ export class WebSponsorService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getContentWebSponsor() : Observable<WebSponsor> {
+  getContentWebSponsor(): Observable<WebSponsor> {
     return this.httpClient.get<WebSponsor>(`${environment.api}${this.WEB_SPONSOR}`)
     .pipe(
       map( (data: any) => data )
     );
   }
 
-  setContentWebSponsor( data: WebSponsor ) : Observable<WebSponsor> {
+  setContentWebSponsor( data: WebSponsor ): Observable<WebSponsor> {
     return this.httpClient.post<WebSponsor>(`${environment.api}${this.WEB_SPONSOR}`, data);
   }
 }

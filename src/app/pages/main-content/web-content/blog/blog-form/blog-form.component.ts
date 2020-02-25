@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ACTION } from '../../../../../helpers/text-content/text-crud';
 
 @Component({
@@ -9,13 +9,18 @@ import { ACTION } from '../../../../../helpers/text-content/text-crud';
 })
 export class BlogFormComponent implements OnInit {
 
-  ACTION = ACTION;
-
   @Input() ID: string;
   @Input() MODE: string | null = 'CREATE'; // <-- Create or edit
   @Input() DATA: any = []; // <-- To update blog
 
-  formBlog: FormGroup; // <-- Form Blog to create edit
+  formBlog: FormGroup = new FormGroup({
+    mainImage : new FormControl('', [Validators.required]),
+    secondaryImage : new FormControl('', [Validators.required])  
+  }); // <-- Form Blog to create edit
+  
+  ACTION = ACTION;
+  form: FormGroup; 
+
 
   constructor() { }
 

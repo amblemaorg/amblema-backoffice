@@ -8,7 +8,7 @@ import { ACTION } from '../../../../helpers/text-content/text-crud';
 })
 export class BlogComponent implements OnInit {
 
-  // Form settings
+  // -- Form settings --
   ID_FORM = 'modal-form-blog';
   ACTION = ACTION;
   MODE;

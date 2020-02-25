@@ -1,5 +1,5 @@
 import { Post } from '../models/web/blog.model';
-import { NgxsOnInit, StateContext, State } from '@ngxs/store';
+import { NgxsOnInit, StateContext, State, Action, Selector } from '@ngxs/store';
 import { BlogService } from '../services/web-content/blog.service';
 
 // -- Post Actions --
@@ -31,13 +31,41 @@ export class DeletePost {
 })
 export class PostsState implements NgxsOnInit {
 
-    ngxsOnInit( ctx: StateContext<Post[]> ) {
+    @Selector()
+    static posts(state: Post[ ]) : Post[] | null {
+        return state;
+    }
 
+    ngxsOnInit( ctx: StateContext<Post[]> ) {
+        ctx.dispatch(new GetPosts()); 
     }
 
     constructor(
-        private blog: BlogService
+        private blogService: BlogService
     ) {}
 
+    @Action(GetPosts) 
+    getPosts(ctx: StateContext<Post[]>) {
+        return this.blogService.getPosts()
+            .subscribe(response => {
+                ctx.setState( response ); 
+            }); 
+    }
+
+    @Action(SetPost)
+    setPost( ctx: StateContext<Post[]>, action:  SetPost ) {
+        const value = ctx.getState();
+        ctx.setState( value.concat( action.payload ) );
+    }
+
+    @Action( UpdatePost )
+    updatePost(ctx: StateContext<Post[]> ) {
+            
+    }   
+
+    @Action( DeletePost )
+    deletePost(ctx: StateContext<Post[]> ) {
+    
+    }
 
 }

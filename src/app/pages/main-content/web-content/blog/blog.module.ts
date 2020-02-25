@@ -11,6 +11,7 @@ import { ReactiveSelectModule } from 'src/app/pages/components/form-components/r
 import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,8 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule, 
     BlogRoutingModule,
     NbCardModule,
     NbInputModule,

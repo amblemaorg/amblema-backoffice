@@ -1,18 +1,23 @@
 <app-modal [ID]='ID' [size]="'lg'" [title]="'Registrar una noticia'" extra="true">
-    <div class="row" content>
+    <form [formGroup]="form" class="row" content>
         <div class="col-md-6 text-center form-group">
             <label class="label">Imagen principal</label>
-            <app-input-img></app-input-img>
+            <app-input-img 
+                
+                [id]="'main-image'"></app-input-img>
         </div>
         <div class="col-md-6 text-center form-group">
             <label class="label">Imagen secundaria</label>
-            <app-input-img></app-input-img>
+            <app-input-img 
+                [id]="'main-secondary'"></app-input-img>
         </div>
 
         <div class="col-12">
-            <app-text-area-custom placeholder='Contenido' label='Contenido'></app-text-area-custom>
+            <app-text-area-custom 
+                [placeholder]="'Contenido'"
+                [label]="'Contenido'"></app-text-area-custom>
         </div>
-    </div>
+    </form>
 
     <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
         <span *ngIf="MODE == ACTION.CREATE">Guardar</span>

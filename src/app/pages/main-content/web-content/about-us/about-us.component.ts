@@ -40,7 +40,19 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     this.subscription = this.data$.subscribe( response => {
       this.sliders = response.aboutUsPage.slider;
       this.awards = response.aboutUsPage.awards;
-      this.form.patchValue(response.aboutUsPage);
+
+      if ( response.aboutUsPage.aboutUsText ) {
+        this.form.controls['aboutUsText'].setValue( response.aboutUsPage.aboutUsText );
+      }
+      if ( response.aboutUsPage.environmentText ) {
+        this.form.controls['environmentText'].setValue( response.aboutUsPage.environmentText );
+      }
+      if ( response.aboutUsPage.readingText ) {
+        this.form.controls['readingText'].setValue( response.aboutUsPage.readingText );
+      }
+      if ( response.aboutUsPage.mathText ) {
+        this.form.controls['mathText'].setValue( response.aboutUsPage.mathText );
+      }
     });
   }
 

@@ -30,8 +30,8 @@
                         <p class="font-weight-bold">¿Cómo ser un padrino?</p>
                         
                         <app-text-area-custom 
-                            *ngFor="let item of form.controls.steps.controls; let i = index;" 
-                            [control]="form.controls.steps.controls[i]"
+                            *ngFor="let item of form.get('steps').value; let i = index;" 
+                            [control]="form.get('steps').get(''+i)"
                             label='Paso {{i + 1}}' 
                             placeholder='Paso {{i + 1}}' 
                             [submitted]="submitted"

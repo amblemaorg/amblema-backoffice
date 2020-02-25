@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractReactiveSelect } from './abstract-reactive-select';
 
 @Component({
   selector: 'app-select-sex',
@@ -21,11 +22,11 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class SelectSexComponent implements OnInit {
+export class SelectSexComponent extends AbstractReactiveSelect implements OnInit {
 
   // RECUERDA AGREGARLO EL CONTROLNAME
 
-  constructor() { }
+  constructor() { super();  }
 
   ngOnInit() {
   }

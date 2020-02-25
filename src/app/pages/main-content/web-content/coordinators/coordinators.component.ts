@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { WebCoordinatorState, SetTestimonialWebCoordinator, UpdateTestimonialWebCoordinator, DeleteTestimonialWebCoordinator, SetWebCoordinator } from 'src/app/store/web-coordinator.action';
+import {
+  WebCoordinatorState,
+  SetTestimonialWebCoordinator,
+  UpdateTestimonialWebCoordinator,
+  DeleteTestimonialWebCoordinator,
+  SetWebCoordinator } from 'src/app/store/web-coordinator.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebCoordinator } from 'src/app/models/web/web-coordinator.model';
 import { Testimonial } from 'src/app/models/web/testimonial.model';
@@ -11,13 +16,13 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
   templateUrl: './coordinators.component.html',
   styleUrls: ['./coordinators.component.scss']
 })
-export class CoordinatorsComponent implements OnInit {
+export class CoordinatorsComponent implements OnInit, OnDestroy {
 
   @Select( WebCoordinatorState.webCoordinator ) data$: Observable<WebCoordinator>;
-  subscription : Subscription;
+  subscription: Subscription;
 
-  testimonials : Testimonial[];
-  submitted : boolean = false;
+  testimonials: Testimonial[];
+  submitted = false;
 
   form: FormGroup = new FormGroup({
     backgroundImage: new FormControl('', [Validators.required]),
@@ -30,14 +35,14 @@ export class CoordinatorsComponent implements OnInit {
       new FormControl(''),
       new FormControl(''),
     ])
-  });  
+  });
 
   constructor( private store: Store ) { }
 
   ngOnInit() {
     this.subscription = this.data$.subscribe( response => {
       this.testimonials = response.coordinatorPage.testimonials; // Get testimonials array
-      this.form.patchValue(response.coordinatorPage); 
+      this.form.patchValue(response.coordinatorPage);
     });
   }
 

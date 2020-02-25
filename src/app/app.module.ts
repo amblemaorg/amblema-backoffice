@@ -44,7 +44,7 @@ import { WebCoordinatorState } from './store/web-coordinator.action';
 
       // REFACTORIZACION DE FACTO
       LearningState,
-      
+
       WebHomeState,
       WebAboutState,
       WebSponsorState,

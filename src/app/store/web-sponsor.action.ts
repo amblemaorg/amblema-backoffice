@@ -73,16 +73,16 @@ export class WebSponsorState implements NgxsOnInit {
     }
 
     @Action(SetWebSponsor)
-    setWebSponsor(ctx :StateContext<WebSponsor>, action: SetWebSponsor ) {        
+    setWebSponsor(ctx: StateContext<WebSponsor>, action: SetWebSponsor ) {
         ctx.setState({
-            ...ctx.getState(), 
+            ...ctx.getState(),
             sponsorPage: {
-                ...ctx.getState().sponsorPage, 
+                ...ctx.getState().sponsorPage,
                 backgroundImage: action.payload.sponsorPage.backgroundImage,
                 steps: action.payload.sponsorPage.steps
             }
         });
-        
+
         this.webSponsorService.setContentWebSponsor( ctx.getState() ).subscribe( response => {
             this.toastr.updateSuccess('Actualizacion', 'Contenido de la página padrinos guardado.');
         }, (err: any) => {

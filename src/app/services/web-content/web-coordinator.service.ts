@@ -17,11 +17,11 @@ export class WebCoordinatorService {
   getContentWebCoordinator(): Observable<WebCoordinator> {
     return this.httpClient.get<WebCoordinator>(`${environment.api}${this.WEB_COORDINATOR}`)
       .pipe(
-        map( (data : any) => data )
+        map( (data: any) => data )
       );
-  } 
+  }
 
-  setContentWebCoordinator( data: WebCoordinator ) : Observable<WebCoordinator> {
+  setContentWebCoordinator( data: WebCoordinator ): Observable<WebCoordinator> {
     return this.httpClient.post<WebCoordinator>(`${environment.api}${this.WEB_COORDINATOR}`, data);
   }
 }

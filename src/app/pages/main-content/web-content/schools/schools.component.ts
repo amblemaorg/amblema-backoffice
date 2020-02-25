@@ -29,7 +29,7 @@ export class SchoolsComponent extends BaseTable implements TableActions {
     super();
 
     this.settings.actions = false;
-  
+
     this.settings.columns = {
       name: {
         title: 'Nombre de la escuela',

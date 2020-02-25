@@ -8,11 +8,11 @@ import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 // -- Web coordinator class action --
 
 export class GetWebCoordinator {
-    static readonly type = "[WebCoordinator] Get Web Coordinator";
+    static readonly type = '[WebCoordinator] Get Web Coordinator';
 }
 
 export class SetWebCoordinator {
-    static readonly type = "[WebCoordinator] Set Web Coordinator";
+    static readonly type = '[WebCoordinator] Set Web Coordinator';
     constructor( public payload: WebCoordinator ) {}
 }
 
@@ -37,8 +37,8 @@ export class DeleteTestimonialWebCoordinator {
     name: 'webcoordinator',
     defaults: {
         coordinatorPage: {
-            backgroundImage: '', 
-            testimonials: [], 
+            backgroundImage: '',
+            testimonials: [],
             steps: []
         }
     }
@@ -56,9 +56,9 @@ export class WebCoordinatorState implements NgxsOnInit {
     ) {}
 
     ngxsOnInit( ctx: StateContext<WebCoordinator> ) {
-        ctx.dispatch( new GetWebCoordinator() ); 
-    }  
-    
+        ctx.dispatch( new GetWebCoordinator() );
+    }
+
     // -- Web coordinator's actions --
 
     @Action(GetWebCoordinator)
@@ -72,11 +72,11 @@ export class WebCoordinatorState implements NgxsOnInit {
     }
 
     @Action(SetWebCoordinator)
-    setWebCoordinator(ctx :StateContext<WebCoordinator>, action: SetWebCoordinator ) {        
+    setWebCoordinator(ctx: StateContext<WebCoordinator>, action: SetWebCoordinator ) {
         ctx.setState({
-            ...ctx.getState(), 
+            ...ctx.getState(),
             coordinatorPage: {
-                ...ctx.getState().coordinatorPage, 
+                ...ctx.getState().coordinatorPage,
                 backgroundImage: action.payload.coordinatorPage.backgroundImage,
                 steps: action.payload.coordinatorPage.steps
             }

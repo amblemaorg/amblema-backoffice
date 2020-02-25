@@ -19,6 +19,7 @@ import { WebHomeState } from './store/web-home.action';
 import { CustomToastrService } from './services/custom-toastr.service';
 import { WebAboutState } from './store/web-about.action';
 import { WebSponsorState } from './store/web-sponsor.action';
+import { WebCoordinatorState } from './store/web-coordinator.action';
 @NgModule({
   declarations: [
     AppComponent
@@ -43,9 +44,11 @@ import { WebSponsorState } from './store/web-sponsor.action';
 
       // REFACTORIZACION DE FACTO
       LearningState,
+      
       WebHomeState,
       WebAboutState,
       WebSponsorState,
+      WebCoordinatorState
     ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
     NbToastrModule.forRoot(),

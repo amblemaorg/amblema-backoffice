@@ -3,6 +3,7 @@ import { Testimonial } from '../models/web/testimonial.model';
 import { State, NgxsOnInit, StateContext, Selector, Action } from '@ngxs/store';
 import { CustomToastrService } from '../services/custom-toastr.service';
 import { WebCoordinatorService } from '../services/web-content/web-coordinator.service';
+import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
 // -- Web coordinator class action --
 
@@ -45,7 +46,7 @@ export class DeleteTestimonialWebCoordinator {
 export class WebCoordinatorState implements NgxsOnInit {
 
     @Selector()
-    static webSponsor(state: WebCoordinator): WebCoordinator | null {
+    static webCoordinator(state: WebCoordinator): WebCoordinator | null {
         return state;
     }
 
@@ -55,13 +56,13 @@ export class WebCoordinatorState implements NgxsOnInit {
     ) {}
 
     ngxsOnInit( ctx: StateContext<WebCoordinator> ) {
-
+        ctx.dispatch( new GetWebCoordinator() ); 
     }  
     
-    // -- Web sponsor's actions --
+    // -- Web coordinator's actions --
 
     @Action(GetWebCoordinator)
-    getWebSponsor(ctx: StateContext<WebCoordinator>) {
+    getWebCoordinator(ctx: StateContext<WebCoordinator>) {
         return this.webCoordinatorService.getContentWebCoordinator()
             .subscribe(response => {
                 if (response.coordinatorPage) {
@@ -81,8 +82,8 @@ export class WebCoordinatorState implements NgxsOnInit {
             }
         });
 
-        this.webSponsorService.setContentWebSponsor( ctx.getState() ).subscribe( response => {
-            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página padrinos guardado.');
+        this.webCoordinatorService.setContentWebCoordinator( ctx.getState() ).subscribe( response => {
+            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página coordinadores guardado.');
         }, (err: any) => {
             this.toastr.error('Error', 'No se ha completado el registro.');
         });
@@ -90,28 +91,28 @@ export class WebCoordinatorState implements NgxsOnInit {
 
     // -- Testimonial actions --
 
-    @Action(SetTestimonialWebSponsor)
-    setTestimonialWebSponsor(ctx: StateContext<WebSponsor>, action: SetTestimonialWebSponsor) {
+    @Action(SetTestimonialWebCoordinator)
+    setTestimonialWebCoordinator(ctx: StateContext<WebCoordinator>, action: SetTestimonialWebCoordinator) {
         ctx.setState(patch({
-            sponsorPage : patch({
+            coordinatorPage : patch({
                 testimonials: append([action.payload])
             })
         }));
     }
 
-    @Action(UpdateTestimonialWebSponsor)
-    updateTestimonialWebSponsor(ctx: StateContext<WebSponsor>, action: UpdateTestimonialWebSponsor) {
+    @Action(UpdateTestimonialWebCoordinator)
+    updateTestimonialWebCoordinator(ctx: StateContext<WebCoordinator>, action: UpdateTestimonialWebCoordinator) {
         ctx.setState(patch({
-            sponsorPage : patch({
+            coordinatorPage : patch({
                 testimonials: updateItem<Testimonial>(testimonial => testimonial === action.oldTestimonial, action.newTestimonial)
             })
         }));
     }
 
-    @Action(DeleteTestimonialWebSponsor)
-    deleteTestimonialWebSponsor(ctx: StateContext<WebSponsor>, action: DeleteTestimonialWebSponsor) {
+    @Action(DeleteTestimonialWebCoordinator)
+    deleteTestimonialWebCoordinator(ctx: StateContext<WebCoordinator>, action: DeleteTestimonialWebCoordinator) {
         ctx.setState(patch({
-            sponsorPage : patch({
+            coordinatorPage : patch({
                 testimonials: removeItem<Testimonial>(testimonial => testimonial === action.payload)
             })
         }));

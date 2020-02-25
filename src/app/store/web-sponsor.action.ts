@@ -82,7 +82,7 @@ export class WebSponsorState implements NgxsOnInit {
                 steps: action.payload.sponsorPage.steps
             }
         });
-
+        
         this.webSponsorService.setContentWebSponsor( ctx.getState() ).subscribe( response => {
             this.toastr.updateSuccess('Actualizacion', 'Contenido de la página padrinos guardado.');
         }, (err: any) => {

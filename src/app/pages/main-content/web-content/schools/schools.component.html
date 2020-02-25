@@ -5,15 +5,16 @@
             <nb-card-body>
                 <div class="row">
                     
-                    <!-- Table -->
                     <div class="col-12 form-group">
                         <div class="table-responsive table-responsive-xl">
-                            <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings">
+                            <ng2-smart-table 
+                                (custom)="onAction($event)" 
+                                [source]='data' 
+                                [settings]="settings">
                             </ng2-smart-table>
                         </div>
                     </div>
 
-                    <!-- Button save changes -->
                     <div class="col-12 text-right">
                         <hr>
                         <div class="btn btn-primary col-12 col-lg-auto">Guardar cambios</div>

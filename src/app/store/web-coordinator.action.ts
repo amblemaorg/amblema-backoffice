@@ -1,85 +1,83 @@
+import { WebCoordinator } from '../models/web/web-coordinator.model';
 import { Testimonial } from '../models/web/testimonial.model';
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
-import { WebSponsor } from '../models/web/web-sponsor.model';
-import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { State, NgxsOnInit, StateContext, Selector, Action } from '@ngxs/store';
 import { CustomToastrService } from '../services/custom-toastr.service';
-import { WebSponsorService } from '../services/web-content/web-sponsor.service';
+import { WebCoordinatorService } from '../services/web-content/web-coordinator.service';
 
+// -- Web coordinator class action --
 
-// -- Web Sponsor class action --
-
-export class GetWebSponsor {
-    static readonly type = '[WebSponsor] Get Web Sponsor';
+export class GetWebCoordinator {
+    static readonly type = "[WebCoordinator] Get Web Coordinator";
 }
 
-export class SetWebSponsor {
-    static readonly type = '[WebSponsor] Set Web Sponsor';
-    constructor(public payload: WebSponsor) {}
+export class SetWebCoordinator {
+    static readonly type = "[WebCoordinator] Set Web Coordinator";
+    constructor( public payload: WebCoordinator ) {}
 }
 
 // -- Testimonial class action --
 
-export class SetTestimonialWebSponsor {
+export class SetTestimonialWebCoordinator {
     static readonly type = '[Testimonial] Set Testimonial';
     constructor(public payload: Testimonial) { }
 }
 
-export class UpdateTestimonialWebSponsor {
+export class UpdateTestimonialWebCoordinator {
     static readonly type = '[Testimonial] Update Testimonial';
     constructor(public oldTestimonial: Testimonial, public newTestimonial: Testimonial) { }
 }
 
-export class DeleteTestimonialWebSponsor {
+export class DeleteTestimonialWebCoordinator {
     static readonly type = '[Testimonial] Delete Testimonial';
     constructor(public payload: Testimonial) { }
 }
 
-@State<WebSponsor>({
-    name : 'websponsor',
+@State<WebCoordinator>({
+    name: 'webcoordinator',
     defaults: {
-        sponsorPage: {
-            backgroundImage: '',
-            testimonials: [],
+        coordinatorPage: {
+            backgroundImage: '', 
+            testimonials: [], 
             steps: []
         }
     }
 })
-export class WebSponsorState implements NgxsOnInit {
+export class WebCoordinatorState implements NgxsOnInit {
 
     @Selector()
-    static webSponsor(state: WebSponsor): WebSponsor | null {
+    static webSponsor(state: WebCoordinator): WebCoordinator | null {
         return state;
     }
 
     constructor(
         private toastr: CustomToastrService,
-        private webSponsorService: WebSponsorService
+        private webCoordinatorService: WebCoordinatorService
     ) {}
 
-    ngxsOnInit( ctx: StateContext<WebSponsor> ) {
-        ctx.dispatch( new GetWebSponsor() );
-    }
+    ngxsOnInit( ctx: StateContext<WebCoordinator> ) {
 
+    }  
+    
     // -- Web sponsor's actions --
 
-    @Action(GetWebSponsor)
-    getWebSponsor(ctx: StateContext<WebSponsor>) {
-        return this.webSponsorService.getContentWebSponsor()
+    @Action(GetWebCoordinator)
+    getWebSponsor(ctx: StateContext<WebCoordinator>) {
+        return this.webCoordinatorService.getContentWebCoordinator()
             .subscribe(response => {
-                if (response.sponsorPage) {
-                    ctx.setState( { sponsorPage: response.sponsorPage } );
+                if (response.coordinatorPage) {
+                    ctx.setState( { coordinatorPage: response.coordinatorPage } );
                 }
             });
     }
 
-    @Action(SetWebSponsor)
-    setWebSponsor(ctx :StateContext<WebSponsor>, action: SetWebSponsor ) {        
+    @Action(SetWebCoordinator)
+    setWebCoordinator(ctx :StateContext<WebCoordinator>, action: SetWebCoordinator ) {        
         ctx.setState({
             ...ctx.getState(), 
-            sponsorPage: {
-                ...ctx.getState().sponsorPage, 
-                backgroundImage: action.payload.sponsorPage.backgroundImage,
-                steps: action.payload.sponsorPage.steps
+            coordinatorPage: {
+                ...ctx.getState().coordinatorPage, 
+                backgroundImage: action.payload.coordinatorPage.backgroundImage,
+                steps: action.payload.coordinatorPage.steps
             }
         });
 

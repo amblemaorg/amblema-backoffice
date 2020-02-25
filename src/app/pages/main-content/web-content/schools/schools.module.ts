@@ -10,7 +10,6 @@ import { SchoolSettingsComponent } from './school-settings/school-settings.compo
 @NgModule({
   entryComponents: [
     SchoolSettingsComponent
-
   ],
   declarations: [
     SchoolsComponent,

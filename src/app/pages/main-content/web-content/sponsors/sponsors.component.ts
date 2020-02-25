@@ -4,6 +4,7 @@ import { Testimonial } from 'src/app/models/web/testimonial.model';
 import { WebSponsorState, SetTestimonialWebSponsor, UpdateTestimonialWebSponsor, DeleteTestimonialWebSponsor } from 'src/app/store/web-sponsor.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebSponsor } from 'src/app/models/web/web-sponsor.model';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-sponsors',
@@ -16,11 +17,25 @@ export class SponsorsComponent implements OnInit {
   subscription: Subscription;
 
   testimonials : Testimonial[]; 
+  submitted: boolean = false; 
 
+  form: FormGroup = new FormGroup({
+    backgroundImage: new FormControl('', [Validators.required]),
+    steps: new FormArray([
+      new FormControl(''),
+      new FormControl(''),
+      new FormControl(''),
+      new FormControl(''),
+      new FormControl(''),
+      new FormControl(''),
+      new FormControl(''),
+    ])
+  });  
 
   constructor( private store: Store ) { }
 
   ngOnInit() {
+  
     this.subscription = this.data$.subscribe( response => {
       this.testimonials = response.sponsorPage.testimonials; // Get testimonials array
     });

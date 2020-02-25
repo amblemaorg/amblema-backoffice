@@ -9,8 +9,9 @@
                     <div class="col-12 form-group">
                         <p class="font-weight-bold">Sección principal</p>
                         <app-input-img 
+                            [id]="'background-image'"
                             [align]="'left'" 
-                            [control]="form.get('backgroundImage')"></app-input-img>
+                            [control]="formSponsor.get('backgroundImage')"></app-input-img>
                     </div>
 
                     <!-- Testimonial form -->
@@ -28,10 +29,10 @@
                     <div class="col-12">
                         <hr>
                         <p class="font-weight-bold">¿Cómo ser un padrino?</p>
-                        
+                    
                         <app-text-area-custom 
-                            *ngFor="let item of form.get('steps').value; let i = index;" 
-                            [control]="form.get('steps').get(''+i)"
+                            *ngFor="let item of steps.controls; let i = index;" 
+                            [control]="formSponsor.get('steps').get(''+i)"
                             label='Paso {{i + 1}}' 
                             placeholder='Paso {{i + 1}}' 
                             [submitted]="submitted"

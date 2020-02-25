@@ -3,6 +3,7 @@ import { Slider } from './sldier.model';
 export interface Award {
     title: string;
     image: string;
+    image2: 'str (url o base64)';
     description: string;
     description2: string;
 }

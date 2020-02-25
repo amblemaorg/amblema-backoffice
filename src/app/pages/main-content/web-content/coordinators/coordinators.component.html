@@ -29,8 +29,8 @@
                         <hr>
                         <p class="font-weight-bold">¿Cómo ser un coordinador?</p>
                         <app-text-area-custom 
-                            *ngFor="let item of form.get('steps').value; let i = index;" 
-                            [control]="this.form.get('steps').get(''+i)"
+                            *ngFor="let item of steps.controls; let i = index;" 
+                            [control]="form.get('steps').get(''+i)"
                             label='Paso {{i + 1}}' 
                             placeholder='Paso {{i + 1}}' 
                             [submitted]="submitted"

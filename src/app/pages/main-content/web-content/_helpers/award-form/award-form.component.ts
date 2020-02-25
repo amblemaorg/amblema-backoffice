@@ -29,6 +29,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
 
     this.form = this.formBuilder.group({
       image: new FormControl( '', [Validators.required] ),
+      image2: new FormControl( '', [Validators.required] ),
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       description2: new FormControl('', [Validators.required])
@@ -74,7 +75,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
 
     this.submitted = true;
 
-    if (this.form.controls.image.invalid) {
+    if (this.form.controls.image.invalid || this.form.controls.image2.invalid) {
       if (this.MODE === this.ACTION.CREATE) {
         this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de premios y reconocimientos');
       } else if (this.MODE === this.ACTION.EDIT) {

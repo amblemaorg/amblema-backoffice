@@ -24,26 +24,25 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   testimonials: Testimonial[];
   submitted = false;
 
-  form: FormGroup = new FormGroup({
+  steps = new FormArray([]);
+
+  formSponsor: FormGroup = new FormGroup({
     backgroundImage: new FormControl('', [Validators.required]),
-    steps: new FormArray([
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-    ])
   });
 
   constructor( private store: Store ) { }
 
   ngOnInit() {
 
+    for (let index = 0; index < 7; index++) {
+      this.steps.push(new FormControl(''));
+    }
+
+    this.formSponsor.addControl('steps', this.steps);
+
     this.subscription = this.data$.subscribe( response => {
       this.testimonials = response.sponsorPage.testimonials; // Get testimonials array
-      this.form.patchValue(response.sponsorPage);
+      this.formSponsor.patchValue(response.sponsorPage);
     });
   }
 
@@ -68,6 +67,6 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   // Save
 
   onSave() {
-    this.store.dispatch( new SetWebSponsor( { sponsorPage: this.form.value } ) );
+    this.store.dispatch( new SetWebSponsor( { sponsorPage: this.formSponsor.value } ) );
   }
 }

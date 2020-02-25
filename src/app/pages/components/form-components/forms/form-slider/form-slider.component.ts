@@ -77,7 +77,6 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
     if (this.MODE === this.ACTION.CREATE) {
       this.register.emit(this.form.value);
       this.form.reset();
-
       this.form.controls.image.setValue(null);
     } else {
       this.edit.emit([this.oldSlider, this.form.value]);

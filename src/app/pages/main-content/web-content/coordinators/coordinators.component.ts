@@ -24,22 +24,22 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
   testimonials: Testimonial[];
   submitted = false;
 
+  steps = new FormArray([]);
   form: FormGroup = new FormGroup({
     backgroundImage: new FormControl('', [Validators.required]),
-    steps: new FormArray([
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl(''),
-    ])
   });
 
   constructor( private store: Store ) { }
 
   ngOnInit() {
+
+    for (let index = 0; index < 7; index++) {
+      this.steps.push(new FormControl(''));
+    }
+
+    this.form.addControl('steps', this.steps);
+
+
     this.subscription = this.data$.subscribe( response => {
       this.testimonials = response.coordinatorPage.testimonials; // Get testimonials array
       this.form.patchValue(response.coordinatorPage);

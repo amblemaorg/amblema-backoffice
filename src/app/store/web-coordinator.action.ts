@@ -73,6 +73,7 @@ export class WebCoordinatorState implements NgxsOnInit {
 
     @Action(SetWebCoordinator)
     setWebCoordinator(ctx: StateContext<WebCoordinator>, action: SetWebCoordinator ) {
+
         ctx.setState({
             ...ctx.getState(),
             coordinatorPage: {

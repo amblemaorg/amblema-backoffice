@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Testimonial } from 'src/app/models/web/testimonial.model';
 import { WebSponsorState, SetTestimonialWebSponsor, UpdateTestimonialWebSponsor, DeleteTestimonialWebSponsor, SetWebSponsor } from 'src/app/store/web-sponsor.action';
@@ -11,7 +11,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
   templateUrl: './sponsors.component.html',
   styleUrls: ['./sponsors.component.scss']
 })
-export class SponsorsComponent implements OnInit {
+export class SponsorsComponent implements OnInit, OnDestroy {
 
   @Select( WebSponsorState.webSponsor ) data$ : Observable<WebSponsor>;
   subscription: Subscription;
@@ -40,6 +40,10 @@ export class SponsorsComponent implements OnInit {
       this.testimonials = response.sponsorPage.testimonials; // Get testimonials array
       this.form.patchValue(response.sponsorPage); 
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   // -- Testimonials events --

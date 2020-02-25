@@ -3,42 +3,41 @@
         <nb-card>
             <nb-card-header>Coordinadores</nb-card-header>
             <nb-card-body>
-
                 <div class="row">
 
+                    <!-- Image background -->
                     <div class="col-12 form-group">
                         <p class="font-weight-bold">Sección principal</p>
-                        <app-input-img align='left'></app-input-img>
+                        <app-input-img 
+                            [control]="form.get('backgroundImage')"
+                            [align]="'left'"></app-input-img>
                     </div>
 
+                    <!-- Testimonial form -->
                     <div class="col-12 form-group">
                         <hr>
                         <p class="font-weight-bold">Testimonio de los coordinadores</p>
-                        <app-testimonial-form></app-testimonial-form>
+                        <app-testimonial-form 
+                            (delete)="onDeleteTestimonial($event)"
+                            (edit)="onEditTestimonial($event)"
+                            (register)="onRegisterTestimonial($event)"
+                            [testimonials]="testimonials"></app-testimonial-form>
                     </div>
 
+                    <!-- Steps to be a sponsor -->
                     <div class="col-12 form-group">
-                       
                         <hr>
                         <p class="font-weight-bold">¿Cómo ser un coordinador?</p>
-
-                        <app-text-area-custom label='Paso 1' placeholder='Paso 1' id='step-1'></app-text-area-custom>
-
-                        <app-text-area-custom label='Paso 2' placeholder='Paso 2' id='step-2'></app-text-area-custom>
-
-                        <app-text-area-custom label='Paso 3' placeholder='Paso 3' id='step-3'></app-text-area-custom>
-
-                        <app-text-area-custom label='Paso 4' placeholder='Paso 4' id='step-4'></app-text-area-custom>
-
-                        <app-text-area-custom label='Paso 5' placeholder='Paso 5' id='step-5'></app-text-area-custom>
-
-                        <app-text-area-custom label='Paso 6' placeholder='Paso 6' id='step-6'></app-text-area-custom>
-
-
-                        <app-text-area-custom label='Paso 7' placeholder='Paso 7' id='step-7'></app-text-area-custom>
+                        <app-text-area-custom 
+                            *ngFor="let item of form.controls.steps.controls; let i = index;" 
+                            [control]="form.controls.steps.controls[i]"
+                            label='Paso {{i + 1}}' 
+                            placeholder='Paso {{i + 1}}' 
+                            [submitted]="submitted"
+                            id='step-{{i}}'></app-text-area-custom>
                     </div>
 
-
+                    <!-- Save changes -->
                     <div class="col-12 text-right">
                         <hr>
                         <div class="btn btn-primary col-12 col-lg-auto">Guardar cambios</div>

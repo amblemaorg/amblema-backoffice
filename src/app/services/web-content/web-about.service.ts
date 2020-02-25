@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AboutUsPage, WebAbout } from 'src/app/models/web/web-about.model';
+import { WebAbout } from 'src/app/models/web/web-about.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 

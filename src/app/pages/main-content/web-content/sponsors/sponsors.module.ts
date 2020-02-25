@@ -14,7 +14,7 @@ import { ReactiveSelectModule } from 'src/app/pages/components/form-components/r
 @NgModule({
   declarations: [
     SponsorsComponent,
-    //SponsorFormComponent,
+    // SponsorFormComponent,
   ],
   imports: [
     CommonModule,

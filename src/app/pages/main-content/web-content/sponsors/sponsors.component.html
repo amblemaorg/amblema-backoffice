@@ -3,20 +3,26 @@
         <nb-card>
             <nb-card-header>Padrinos</nb-card-header>
             <nb-card-body>
-
                 <div class="row">
-
-                    <div class="col-12 form-group">
+                    
+                    <!-- Image background -->
+                    <div class="col-12 form-group"></div>
                         <p class="font-weight-bold">Sección principal</p>
                         <app-input-img align='left'></app-input-img>
                     </div>
 
+                    <!-- Testimonial form -->
                     <div class="col-12 form-group">
                         <hr>
                         <p class="font-weight-bold">Testimonio de los padrinos</p>
-                        <app-testimonial-form></app-testimonial-form>
+                        <app-testimonial-form 
+                            (delete)="onDeleteTestimonial($event)"
+                            (edit)="onEditTestimonial($event)"
+                            (register)="onRegisterTestimonial($event)"
+                            [testimonials]="testimonials"></app-testimonial-form>
                     </div>
 
+                    <!-- Steps to be a sponsor -->
                     <div class="col-12">
                         <hr>
                         <p class="font-weight-bold">¿Cómo ser un padrino?</p>
@@ -29,6 +35,7 @@
                         <app-text-area-custom label='Paso 7' placeholder='Paso 7' id='step-7'></app-text-area-custom>
                     </div>
 
+                    <!-- Save changes -->
                     <div class="col-12 text-right">
                         <hr>
                         <div class="btn btn-primary col-12 col-lg-auto">Guardar cambios</div>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, Select } from '@ngxs/store';
+import { Testimonial } from 'src/app/models/web/testimonial.model';
+import { WebSponsorState, SetTestimonialWebSponsor, UpdateTestimonialWebSponsor, DeleteTestimonialWebSponsor } from 'src/app/store/web-sponsor.action';
+import { Observable, Subscription } from 'rxjs';
+import { WebSponsor } from 'src/app/models/web/web-sponsor.model';
 
 @Component({
   selector: 'app-sponsors',
@@ -7,9 +12,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SponsorsComponent implements OnInit {
 
-  constructor() { }
+  @Select( WebSponsorState.webSponsor ) data$ : Observable<WebSponsor>;
+  subscription: Subscription;
+
+  testimonials : Testimonial[]; 
+
+
+  constructor( private store: Store ) { }
 
   ngOnInit() {
+    this.subscription = this.data$.subscribe( response => {
+      this.testimonials = response.sponsorPage.testimonials; // Get testimonials array
+    });
+  }
+
+  // -- Testimonials events --
+
+  onRegisterTestimonial( testimonial: Testimonial ) {
+    this.store.dispatch( new SetTestimonialWebSponsor( testimonial ) );
+  }
+
+  onEditTestimonial( testimonial: any []) {
+    this.store.dispatch( new UpdateTestimonialWebSponsor( testimonial[0], testimonial[1] ) );
+  }
+
+  onDeleteTestimonial( testimonial: Testimonial ) {
+    this.store.dispatch( new DeleteTestimonialWebSponsor(testimonial) );
   }
 
 }

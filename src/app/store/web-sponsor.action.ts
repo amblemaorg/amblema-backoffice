@@ -55,7 +55,8 @@ export class WebSponsorState implements NgxsOnInit {
         private webSponsorService: WebSponsorService
     ) {}
 
-    ngxsOnInit(): void {
+    ngxsOnInit( ctx: StateContext<WebSponsor> ) {
+        ctx.dispatch( new GetWebSponsor() );
     }
 
     // -- Web sponsor's actions --
@@ -63,9 +64,9 @@ export class WebSponsorState implements NgxsOnInit {
     @Action(GetWebSponsor)
     getWebSponsor(ctx: StateContext<WebSponsor>) {
         return this.webSponsorService.getContentWebSponsor()
-            .subscribe( response => {
-                if ( response.sponsorPage ) {
-                    ctx.setState({ sponsorPage : response.sponsorPage });
+            .subscribe(response => {
+                if (response.sponsorPage) {
+                    ctx.setState( { sponsorPage: response.sponsorPage } );
                 }
             });
     }

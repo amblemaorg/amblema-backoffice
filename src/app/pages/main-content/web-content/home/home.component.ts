@@ -49,6 +49,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  // -- Testimonials slider --
+
   onRegisterSlider( slider: Slider ) {
     this.store.dispatch( new SetSliderWebHome( slider ) );
   }
@@ -60,6 +62,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   onDeleteSlider( slider: Slider ) {
     this.store.dispatch( new DeleteSliderWebHome( slider ) );
   }
+
+  // -- Testimonials events --
 
   onRegisterTestimonial( testimonial: Testimonial ) {
     this.store.dispatch( new SetTestimonialWebHome( testimonial ) );

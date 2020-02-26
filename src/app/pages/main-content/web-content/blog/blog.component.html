@@ -24,15 +24,12 @@
     </div>
 </div>
 
-<!-- <div class="row">
-    <div *ngFor="let item of data$ | async">
-        <app-blog-card [data]="item"></app-blog-card>
-    </div>
-</div> -->
-
 <div class="columm-post">
     <div class="card-post" *ngFor="let item of data$ | async">
-        <app-blog-card [data]="item"></app-blog-card>
+        <app-blog-card 
+            (edit)="onEditPost($event)"
+            (delete)="onDeletePost($event)"
+            [data]="item"></app-blog-card>
     </div>
 </div>
 

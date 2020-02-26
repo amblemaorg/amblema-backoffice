@@ -9,8 +9,8 @@
     widows: 1;
 
     @include screen($breakpoint-md) {
-        -moz-column-count: 2;
-        column-count: 2;
+        -moz-column-count: 1;
+        column-count: 1;
     }
     @include screen($breakpoint-lg) {
         -moz-column-count: 3;

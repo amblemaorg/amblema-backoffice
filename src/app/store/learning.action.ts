@@ -91,7 +91,6 @@ export class LearningState implements NgxsOnInit {
 
     @Action(SetLearningOne)
     setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
-        console.log(action.payload);
         ctx.setState({
             learning: action.payload,
         });

@@ -7,16 +7,20 @@
             <p>{{ data.text }}</p>
         </section>
     </nb-card-body>
-    <nb-card-footer class="text-right">
-        <button 
+    <nb-card-footer class="d-flex justify-content-between align-items-center">
+        <span>{{data.createdAt | date:'d/MM/yyyy' }}</span>
+        <div>
+            <button 
             (click)="delete.emit(data)"
-            class="col-12 col-lg-auto btn btn-outline-danger mr-lg-2 mb-3 mb-lg-0">
+            class="col-auto col-lg-auto btn btn-outline-danger mr-2">
             <nb-icon icon="trash-2-outline"></nb-icon>
         </button>
         <button 
             (click)="edit.emit(data)"
-            class="col-12 col-lg-auto btn btn-outline-primary">
+            class="col-auto col-lg-auto btn btn-outline-primary">
             <nb-icon icon="edit-outline"></nb-icon>
-        </button>
+        </button>    
+        </div>
+        
     </nb-card-footer>
 </nb-card>

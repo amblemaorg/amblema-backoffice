@@ -41,7 +41,7 @@ import { FormVideoModule } from '../../components/form-components/forms/form-vid
     NbIconModule,
     NgxMaskModule.forRoot(),
     NbInputModule,
-    NbRadioModule, 
+    NbRadioModule,
     FormsModule,
     ReactiveFormsModule,
     NbListModule,

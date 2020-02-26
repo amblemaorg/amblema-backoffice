@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,12 @@ import { WebAboutState } from './store/web-about.action';
 import { WebSponsorState } from './store/web-sponsor.action';
 import { WebCoordinatorState } from './store/web-coordinator.action';
 import { PostsState } from './store/blog.action';
+
+import localeVe from '@angular/common/locales/es-VE';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeVe, 'es-VE');
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -58,7 +64,6 @@ import { PostsState } from './store/blog.action';
   providers: [
     CustomToastrService,
     AuthGuard,
-
     // Custom helper
     Utility,
   ],

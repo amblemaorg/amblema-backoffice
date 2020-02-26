@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class GeneralMediaFormComponent {
 
+  options = [
+    { value: 'image', label: 'Imagen' },
+    { value: 'video', label: 'Video' },
+  ];
+
   onSaveStepTwo(): void {
 
   }

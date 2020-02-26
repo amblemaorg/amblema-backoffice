@@ -1,7 +1,35 @@
 <form>
-    <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo doloremque corrupti excepturi debitis ad, dolores autem consequuntur, maiores quia expedita eos itaque inventore optio provident odio eligendi praesentium? Commodi, magnam.
-    </p>
+    <div class="row">
+        <div class="col-12">
+            <label class="label">Tipo de archivo</label>
+        </div>
+        <div class="col-12 d-inline-flex form-group ">
+            <nb-radio
+                *ngFor="let option of options"
+                [value]="option.value">{{ option.label }}</nb-radio>
+        </div>
+
+        <div class="col-6">
+            <app-input-custom 
+                [id]="'url-video'" 
+                [label]="'URL del video'" 
+                [placeholder]="'URL del video'">
+            </app-input-custom>
+
+            <app-input-img [label]="'Imagen'"></app-input-img>
+        </div>
+
+        <div class="col-6">
+            <app-text-area-description></app-text-area-description>
+        </div>
+
+        <div class="col-12 text-right">
+            <button class="btn btn-success">
+                <span>Registrar</span>
+            </button>
+        </div>
+
+    </div>
 
     <!-- Buttons stepper -->
     <div class="row">

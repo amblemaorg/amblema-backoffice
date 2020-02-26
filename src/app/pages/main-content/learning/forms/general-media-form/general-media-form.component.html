@@ -1,37 +1,53 @@
-<div>
+<form [formGroup]="formMedia">
     <div class="row form-group">
+
+        <!-- Radio media -->
         <div class="col-12">
             <label class="label">Tipo de archivo</label>
         </div>
-        <div class="col-12 form-group">
-            <nb-radio-group [(ngModel)]="option" class="d-inline-flex">
+        <div 
+            class="col-12 form-group">
+            <nb-radio-group formControlName="type" class="d-inline-flex">
                 <nb-radio
                     *ngFor="let option of options"
                     [value]="option.value">{{ option.label }}</nb-radio>
             </nb-radio-group>
         </div>
 
-        <div class="col-12 col-lg-4">
+        <!-- Media fields -->
+        <div 
+            [ngClass]="{
+                'col-lg-5': formMedia.controls['type'].value == options[1].value, 
+                'col-lg-4': formMedia.controls['type'].value == options[0].value}"
+            class="col-12">
             <app-input-custom 
-                *ngIf="option == options[1].value"
+                *ngIf="formMedia.controls['type'].value == options[1].value"
                 [id]="'url-video'" 
                 [label]="'URL del video'"
                 [submitted]="false" 
+                [control]="formMedia.get('url')"
                 [placeholder]="'URL del video'">
             </app-input-custom>
             <label 
-                *ngIf="option == options[0].value"
+                *ngIf="formMedia.controls['type'].value == options[0].value"
                 class="label text-center w-100">Imagen</label>
-            <div *ngIf="option == options[0].value" class="form-group">
+            <div *ngIf="formMedia.controls['type'].value == options[0].value" class="form-group">
                 <app-input-img 
+                    [control]="formMedia.get('url')"
                     [align]="'center'"
-                    *ngIf="option == options[0].value"
+                    *ngIf="formMedia.controls['type'].value == options[0].value"
                     [id]="'image-learning-step-two'"></app-input-img>
             </div>
         </div>
 
-        <div class="col-12 col-lg-8">
-            <app-text-area-description [submitted]="false"></app-text-area-description>
+        <!-- Textarea -->
+        <div class="col-12"
+            [ngClass]="{
+                'col-lg-7': formMedia.controls['type'].value == options[1].value, 
+                'col-lg-8': formMedia.controls['type'].value == options[0].value}">
+            <app-text-area-description 
+                [control]="formMedia.get('description')"
+                [submitted]="false"></app-text-area-description>
         </div>
 
         <!-- Button -->
@@ -45,7 +61,7 @@
 
     <!-- Buttons stepper -->
     <div class="row">
-        <div class="col-12 form-group">
+        <div class="col-12">
             <div class="text-center row d-flex justify-content-center">
                 <div class="col-6 col-lg-auto">
                     <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
@@ -62,4 +78,4 @@
             </div>
         </div>
     </div>
-</div>
+</form>

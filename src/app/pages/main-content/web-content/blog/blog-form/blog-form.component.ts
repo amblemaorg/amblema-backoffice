@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ACTION } from '../../../../../helpers/text-content/text-crud';
 import { Store } from '@ngxs/store';
@@ -10,11 +10,11 @@ import { Post } from 'src/app/models/web/blog.model';
   templateUrl: './blog-form.component.html',
   styles: []
 })
-export class BlogFormComponent implements OnInit {
+export class BlogFormComponent implements OnInit, OnChanges {
 
   @Input() ID: string;
   @Input() MODE: string | null = 'CREATE'; // <-- Create or edit
-  @Input() DATA: any = []; // <-- To update blog
+  @Input() DATA: Post; // <-- To update blog
 
   @Output() register = new EventEmitter<Post>();
   @Output() edit = new EventEmitter<Post[]>();
@@ -36,7 +36,12 @@ export class BlogFormComponent implements OnInit {
       }); // <-- Form Blog to create edit
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngOnChanges(): void {
+    if( this.MODE === ACTION.EDIT ) {
+      this.formBlog.patchValue( this.DATA ); 
+    } else { this.formBlog.reset(); }
   }
 
   onSubmit() {

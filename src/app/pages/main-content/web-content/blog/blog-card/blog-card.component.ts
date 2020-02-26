@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Output, Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { Post } from 'src/app/models/web/blog.model';
 
 @Component({
@@ -9,6 +9,9 @@ import { Post } from 'src/app/models/web/blog.model';
 export class BlogCardComponent implements OnInit {
 
   @Input() data: Post;
+
+  @Output() edit = new EventEmitter<Post>();
+  @Output() delete = new EventEmitter<Post>();
 
   constructor() { }
 

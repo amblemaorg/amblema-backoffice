@@ -35,6 +35,6 @@
 
 <app-blog-form 
     (register)="onRegisterPost($event)"
-    (Edit)="onEditPost($event)"
+    [DATA]="postSelected"
     [ID]="ID_FORM" 
     [MODE]="MODE"></app-blog-form>

@@ -4,6 +4,7 @@ import { Post } from 'src/app/models/web/blog.model';
 import { Select, Store } from '@ngxs/store';
 import { PostsState, SetPost } from 'src/app/store/blog.action';
 import { Observable, Subscription } from 'rxjs';
+declare var $: any;
 
 @Component({
   selector: 'app-blog',
@@ -21,7 +22,8 @@ export class BlogComponent implements OnInit, OnDestroy {
   // -- Form settings --
   ID_FORM = 'modal-form-blog';
   ACTION = ACTION;
-  MODE;
+  MODE = ACTION.CREATE;
+  postSelected: Post;
 
   constructor(
     private store: Store
@@ -43,7 +45,13 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.store.dispatch( new SetPost(post) );
   }
 
-  onEditPost( post: Post[] ) {
+  onEditPost( post: Post ) {
+    this.MODE = ACTION.EDIT; 
+    this.postSelected = post;
+    $('#modal-form-blog').modal('show')
+  }
 
+  onDeletePost( post: Post ) {
+    console.log(post);
   }
 }

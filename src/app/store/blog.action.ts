@@ -3,7 +3,7 @@ import { NgxsOnInit, StateContext, State, Action, Selector } from '@ngxs/store';
 import { BlogService } from '../services/web-content/blog.service';
 import { CustomToastrService } from '../services/custom-toastr.service';
 import { patch } from '@nebular/theme';
-import { append } from '@ngxs/store/operators';
+import { append, updateItem } from '@ngxs/store/operators';
 
 // -- Post Actions --
 
@@ -18,7 +18,7 @@ export class SetPost {
 
 export class UpdatePost {
     static readonly type = '[Post] Update Post';
-    constructor( public payload: string ) { }
+    constructor( public oldPost: Post, public newPost: Post ) { }
 }
 
 export class DeletePost {
@@ -58,19 +58,22 @@ export class PostsState implements NgxsOnInit {
 
     @Action(SetPost)
     setPost( ctx: StateContext<Post[]>, action: SetPost ) {
-        console.log(action.payload); 
         this.blogService.setPost(  action.payload ).subscribe(  response => {
             ctx.setState(append([action.payload]));
             this.toastr.registerSuccess('Registro Post', 'Nuevo post registrado');
         }, (err: any) => {
-            console.log(err); 
             this.toastr.error('Error', 'No se ha completado el registro.');
         });
     }
 
     @Action( UpdatePost )
-    updatePost(ctx: StateContext<Post[]> ) {
-
+    updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
+        this.blogService.updatePost( action.newPost.id, action.newPost ).subscribe( response => {
+            this.toastr.updateSuccess("Actualización", "Post actualizado correctamente");
+            ctx.setState(
+                updateItem<Post>(post => post === action.oldPost, action.newPost)
+            );
+        }, (err: any) => console.log(err)); 
     }
 
     @Action( DeletePost )

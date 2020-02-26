@@ -99,8 +99,6 @@ export class WebCoordinatorState implements NgxsOnInit {
                 testimonials: append([action.payload])
             })
         }));
-
-        console.log(ctx.getState());
     }
 
     @Action(UpdateTestimonialWebCoordinator)

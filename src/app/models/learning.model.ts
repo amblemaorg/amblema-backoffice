@@ -11,6 +11,7 @@ export interface Quizze {
 }
 
 export interface Learning {
+    id?: string;
     title: string;
     description: string;
     secondaryTitle: string;

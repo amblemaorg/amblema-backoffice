@@ -33,7 +33,14 @@
     </div>
 </div>
 
+<nb-card *ngIf="posts.length <= 0">
+    <nb-card-body>
+        No hay registro de posts.
+    </nb-card-body>
+</nb-card>
+
 <app-blog-form 
+    (edit)="onEditPostForm($event)"
     (register)="onRegisterPost($event)"
     [DATA]="postSelected"
     [ID]="ID_FORM" 

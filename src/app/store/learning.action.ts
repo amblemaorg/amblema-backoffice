@@ -49,6 +49,17 @@ export class SetVideos {
     name: 'Learning',
     defaults: {
         learning: {
+            id: '',
+            title: '',
+            description: '',
+            secondaryTitle: '',
+            secondaryDescription: '',
+            objetives: [], 
+            slider: [],
+            images: [],
+            duration: ' ', 
+            points: '',
+            quizzes: []
         },
         learnings: []
     }
@@ -80,6 +91,7 @@ export class LearningState implements NgxsOnInit {
 
     @Action(SetLearningOne)
     setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
+        console.log(action.payload); 
         ctx.setState({
             learning: action.payload,
         });

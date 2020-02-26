@@ -64,9 +64,16 @@ export class BlogFormComponent implements OnInit, OnChanges {
         this.submitted = false;
       } else if ( this.MODE === this.ACTION.EDIT ) {
 
+        let prepareData: Post = {
+          id: this.DATA.id,
+          image: this.formBlog.controls['image'].value,
+          image2: this.formBlog.controls['image2'].value, 
+          text: this.formBlog.controls['text'].value          
+        }
+
+        this.edit.emit( [ this.DATA, prepareData ] )
+        this.submitted = false;
       }
-    } else {
-      // Show error
     }
   }
 }

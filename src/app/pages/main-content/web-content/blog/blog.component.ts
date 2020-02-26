@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-content/text-crud';
 import { Post } from 'src/app/models/web/blog.model';
 import { Select, Store } from '@ngxs/store';
-import { PostsState, SetPost } from 'src/app/store/blog.action';
+import { PostsState, SetPost, UpdatePost } from 'src/app/store/blog.action';
 import { Observable, Subscription } from 'rxjs';
 declare var $: any;
 
@@ -45,6 +45,7 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.store.dispatch( new SetPost(post) );
   }
 
+  // -- Event selected a post --
   onEditPost( post: Post ) {
     this.MODE = ACTION.EDIT; 
     this.postSelected = post;
@@ -52,6 +53,11 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   onDeletePost( post: Post ) {
-    console.log(post);
+   
+  }
+
+  // -- Send post edited -- 
+  onEditPostForm( post: Post[] ) {
+    this.store.dispatch( new UpdatePost( post[0], post[1] ) );
   }
 }

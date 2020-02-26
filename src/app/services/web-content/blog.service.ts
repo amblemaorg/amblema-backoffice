@@ -26,7 +26,7 @@ export class BlogService {
   }
 
   updatePost( id: string, data: Post ): Observable<Post> {
-    return this.httpClient.put<Post>(`${environment.api}${this.POST}/id=${id}`, data);
+    return this.httpClient.put<Post>(`${environment.api}${this.POST}/${id}`, data);
   }
 
   deletePost( id: string ): Observable<string> {

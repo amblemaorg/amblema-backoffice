@@ -6,7 +6,14 @@
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div class="input-group mb-3">
-                            <input type="text" nbInput placeholder="Buscar" fullWidth class="col border-right-0">
+                            <input 
+                                [(ngModel)]="searchText"
+                                autocomplete="off"
+                                type="text" 
+                                nbInput 
+                                placeholder="Buscar" 
+                                fullWidth 
+                                class="col border-right-0">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-info" type="button" id="button-addon2">
                                     <nb-icon icon="search-outline"></nb-icon>
@@ -25,15 +32,17 @@
 </div>
 
 <div class="columm-post">
-    <div class="card-post" *ngFor="let item of data$ | async">
+
+    <div class="card-post" *ngFor="let item of data$ | async | filter:searchText">
         <app-blog-card 
             (edit)="onEditPost($event)"
             (delete)="onDeletePost($event)"
             [data]="item"></app-blog-card>
     </div>
+
 </div>
 
-<nb-card *ngIf="posts.length <= 0">
+<nb-card *ngIf="(posts.length <= 0) || ((data$ | async | filter: searchText).length === 0)">
     <nb-card-body>
         No hay registro de posts.
     </nb-card-body>

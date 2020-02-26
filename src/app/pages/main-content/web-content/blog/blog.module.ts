@@ -12,6 +12,7 @@ import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/m
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbCardModule,
     NbInputModule,
     NbIconModule,
+    Ng2SearchPipeModule,
 
     // Add custom module
     ReactiveInputModule,

@@ -18,6 +18,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   posts: Post[ ];
+  searchText;
 
   // -- Form settings --
   ID_FORM = 'modal-form-blog';

@@ -12,7 +12,7 @@ export class GeneralMediaFormComponent implements OnInit {
     { value: 'video', label: 'Video' },
   ];
 
-  option; 
+  option;
 
   ngOnInit(): void {
     this.option = this.options[0].value;

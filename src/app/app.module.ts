@@ -57,7 +57,13 @@ registerLocaleData(localeVe, 'es-VE');
       WebSponsorState,
       WebCoordinatorState,
       PostsState
-    ], { developmentMode: true }),
+    ], 
+    {
+      compatibility: {
+        strictContentSecurityPolicy: true
+      },
+      developmentMode: false 
+    }),
     NgxsStoragePluginModule.forRoot(),
     NbToastrModule.forRoot(),
   ],

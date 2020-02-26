@@ -51,7 +51,7 @@ import { PostsState } from './store/blog.action';
       WebSponsorState,
       WebCoordinatorState,
       PostsState
-    ], { developmentMode: true }),
+    ], { developmentMode: false }),
     NgxsStoragePluginModule.forRoot(),
     NbToastrModule.forRoot(),
   ],

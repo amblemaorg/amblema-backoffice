@@ -39,8 +39,8 @@ export class BlogFormComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(): void {
-    if( this.MODE === ACTION.EDIT ) {
-      this.formBlog.patchValue( this.DATA ); 
+    if ( this.MODE === ACTION.EDIT ) {
+      this.formBlog.patchValue( this.DATA );
     } else { this.formBlog.reset(); }
   }
 
@@ -64,14 +64,14 @@ export class BlogFormComponent implements OnInit, OnChanges {
         this.submitted = false;
       } else if ( this.MODE === this.ACTION.EDIT ) {
 
-        let prepareData: Post = {
+        const prepareData: Post = {
           id: this.DATA.id,
-          image: this.formBlog.controls['image'].value,
-          image2: this.formBlog.controls['image2'].value, 
-          text: this.formBlog.controls['text'].value          
-        }
+          image: this.formBlog.controls.image.value,
+          image2: this.formBlog.controls.image2.value,
+          text: this.formBlog.controls.text.value
+        };
 
-        this.edit.emit( [ this.DATA, prepareData ] )
+        this.edit.emit( [ this.DATA, prepareData ] );
         this.submitted = false;
       }
     }

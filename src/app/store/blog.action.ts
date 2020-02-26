@@ -69,11 +69,11 @@ export class PostsState implements NgxsOnInit {
     @Action( UpdatePost )
     updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
         this.blogService.updatePost( action.newPost.id, action.newPost ).subscribe( response => {
-            this.toastr.updateSuccess("Actualización", "Post actualizado correctamente");
+            this.toastr.updateSuccess('Actualización', 'Post actualizado correctamente');
             ctx.setState(
                 updateItem<Post>(post => post === action.oldPost, action.newPost)
             );
-        }, (err: any) => console.log(err)); 
+        }, (err: any) => console.log(err));
     }
 
     @Action( DeletePost )

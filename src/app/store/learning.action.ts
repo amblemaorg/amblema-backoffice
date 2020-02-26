@@ -37,7 +37,7 @@ export class UpdateLearningOne {
 
 
 
-// -- Step three -- 
+// -- Step three --
 
 export class SetVideos {
     static readonly type = '[Learning] Set Learning Videos';
@@ -54,10 +54,10 @@ export class SetVideos {
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
-            objetives: [], 
+            objetives: [],
             slider: [],
             images: [],
-            duration: ' ', 
+            duration: ' ',
             points: '',
             quizzes: []
         },
@@ -80,7 +80,7 @@ export class LearningState implements NgxsOnInit {
         ctx.dispatch(new GetLearnings());
     }
 
-    // -- Actions Learning -- 
+    // -- Actions Learning --
 
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
@@ -91,7 +91,7 @@ export class LearningState implements NgxsOnInit {
 
     @Action(SetLearningOne)
     setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
-        console.log(action.payload); 
+        console.log(action.payload);
         ctx.setState({
             learning: action.payload,
         });
@@ -108,6 +108,6 @@ export class LearningState implements NgxsOnInit {
 
     @Action(SetVideos)
     setVideos(ctx: StateContext<LearningStateModel>, action: SetVideos) {
-        
+
     }
 }

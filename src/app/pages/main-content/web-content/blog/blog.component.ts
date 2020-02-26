@@ -47,16 +47,16 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   // -- Event selected a post --
   onEditPost( post: Post ) {
-    this.MODE = ACTION.EDIT; 
+    this.MODE = ACTION.EDIT;
     this.postSelected = post;
-    $('#modal-form-blog').modal('show')
+    $('#modal-form-blog').modal('show');
   }
 
   onDeletePost( post: Post ) {
-   
+
   }
 
-  // -- Send post edited -- 
+  // -- Send post edited --
   onEditPostForm( post: Post[] ) {
     this.store.dispatch( new UpdatePost( post[0], post[1] ) );
   }

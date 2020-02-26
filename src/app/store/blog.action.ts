@@ -44,7 +44,7 @@ export class PostsState implements NgxsOnInit {
     }
 
     constructor(
-        private toastr: CustomToastrService, 
+        private toastr: CustomToastrService,
         private blogService: BlogService
     ) {}
 
@@ -59,12 +59,12 @@ export class PostsState implements NgxsOnInit {
     @Action(SetPost)
     setPost( ctx: StateContext<Post[]>, action: SetPost ) {
         const value = ctx.getState();
-    
+
         this.blogService.setPost(  action.payload ).subscribe(  response => {
             ctx.setState(append([action.payload]));
-            this.toastr.registerSuccess("Registro Post", "Nuevo post registrado");
+            this.toastr.registerSuccess('Registro Post', 'Nuevo post registrado');
         }, (err: any) => {
-            this.toastr.error('Error', 'No se ha completado el registro.');        
+            this.toastr.error('Error', 'No se ha completado el registro.');
         });
     }
 

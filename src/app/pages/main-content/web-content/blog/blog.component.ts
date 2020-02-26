@@ -16,7 +16,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   @Select( PostsState.posts ) data$: Observable<Post[]>;
   subscription: Subscription;
 
-  posts: Post[ ]; 
+  posts: Post[ ];
 
   // -- Form settings --
   ID_FORM = 'modal-form-blog';

@@ -20,6 +20,7 @@ import { CustomToastrService } from './services/custom-toastr.service';
 import { WebAboutState } from './store/web-about.action';
 import { WebSponsorState } from './store/web-sponsor.action';
 import { WebCoordinatorState } from './store/web-coordinator.action';
+import { PostsState } from './store/blog.action';
 @NgModule({
   declarations: [
     AppComponent
@@ -48,7 +49,8 @@ import { WebCoordinatorState } from './store/web-coordinator.action';
       WebHomeState,
       WebAboutState,
       WebSponsorState,
-      WebCoordinatorState
+      WebCoordinatorState,
+      PostsState
     ], { developmentMode: true }),
     NgxsStoragePluginModule.forRoot(),
     NbToastrModule.forRoot(),

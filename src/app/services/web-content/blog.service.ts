@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class BlogService {
 
-  private readonly POST = 'posts';
+  private readonly POST = 'webcontent/posts';
 
   constructor( private httpClient: HttpClient ) { }
 

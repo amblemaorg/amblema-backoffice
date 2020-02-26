@@ -1,6 +1,9 @@
 import { Post } from '../models/web/blog.model';
 import { NgxsOnInit, StateContext, State, Action, Selector } from '@ngxs/store';
 import { BlogService } from '../services/web-content/blog.service';
+import { CustomToastrService } from '../services/custom-toastr.service';
+import { patch } from '@nebular/theme';
+import { append } from '@ngxs/store/operators';
 
 // -- Post Actions --
 
@@ -41,6 +44,7 @@ export class PostsState implements NgxsOnInit {
     }
 
     constructor(
+        private toastr: CustomToastrService, 
         private blogService: BlogService
     ) {}
 
@@ -55,7 +59,14 @@ export class PostsState implements NgxsOnInit {
     @Action(SetPost)
     setPost( ctx: StateContext<Post[]>, action: SetPost ) {
         const value = ctx.getState();
-        ctx.setState( value.concat( action.payload ) );
+    
+        this.blogService.setPost(  action.payload ).subscribe(  response => {
+            ctx.setState(append([action.payload]));
+            this.toastr.registerSuccess("Registro Post", "Nuevo post registrado");
+        }, (err: any) => {
+            console.log(err); 
+            this.toastr.error('Error', 'No se ha completado el registro.');        
+        });
     }
 
     @Action( UpdatePost )

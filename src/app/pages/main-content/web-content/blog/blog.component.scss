@@ -1,3 +1,35 @@
+@import '../../../../../assets/scss/mixins'; 
+
+.columm-post {
+    -moz-column-count: 1;
+    column-count: 1;
+    -moz-column-gap: 1.25rem;
+    column-gap: 1.25rem;
+    orphans: 1;
+    widows: 1;
+
+    @include screen($breakpoint-md) {
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+    @include screen($breakpoint-lg) {
+        -moz-column-count: 3;
+        column-count: 3;
+    }
+
+    .card-post {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        @include screen($breakpoint-lg) {
+            display: inline-block;
+            width: 100%;
+        }
+    }
+}
+
 input {
     border-top-right-radius: 0!important;
     border-bottom-right-radius: 0!important;

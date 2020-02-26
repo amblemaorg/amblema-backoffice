@@ -17,7 +17,7 @@ export class BlogService {
   getPosts(): Observable<Post[]> {
     return this.httpClient.get<Post[]>(`${environment.api}${this.POST}`)
       .pipe(
-        map( (data: any) => data )
+        map( (data: any) => data.records )
       );
   }
 

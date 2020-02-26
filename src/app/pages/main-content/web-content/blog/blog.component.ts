@@ -16,6 +16,8 @@ export class BlogComponent implements OnInit, OnDestroy {
   @Select( PostsState.posts ) data$: Observable<Post[]>;
   subscription: Subscription;
 
+  posts: Post[ ]; 
+
   // -- Form settings --
   ID_FORM = 'modal-form-blog';
   ACTION = ACTION;
@@ -27,7 +29,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.data$.subscribe( response => {
-      
+      this.posts = response;
     });
   }
 

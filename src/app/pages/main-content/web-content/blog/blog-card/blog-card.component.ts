@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Post } from 'src/app/models/web/blog.model';
 
 @Component({
   selector: 'app-blog-card',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class BlogCardComponent implements OnInit {
+
+  @Input() data: Post;
 
   constructor() { }
 

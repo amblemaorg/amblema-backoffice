@@ -24,25 +24,15 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-6 col-xl-4">
-        <app-blog-card></app-blog-card>
+<!-- <div class="row">
+    <div *ngFor="let item of data$ | async">
+        <app-blog-card [data]="item"></app-blog-card>
     </div>
+</div> -->
 
-    <div class="col-lg-6 col-xl-4">
-        <app-blog-card></app-blog-card>
-    </div>
-
-    <div class="col-lg-6 col-xl-4">
-        <app-blog-card></app-blog-card>
-    </div>
-
-    <div class="col-lg-6 col-xl-4">
-        <app-blog-card></app-blog-card>
-    </div>
-
-    <div class="col-lg-6 col-xl-4">
-        <app-blog-card></app-blog-card>
+<div class="columm-post">
+    <div class="card-post" *ngFor="let item of data$ | async">
+        <app-blog-card [data]="item"></app-blog-card>
     </div>
 </div>
 

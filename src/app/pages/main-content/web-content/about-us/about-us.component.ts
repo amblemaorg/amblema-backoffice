@@ -12,7 +12,7 @@ import {
   SetWebAbout} from 'src/app/store/web-about.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebAbout, Award } from 'src/app/models/web/web-about.model';
-import { Slider } from 'src/app/models/web/sldier.model';
+import { Slider } from 'src/app/models/web/slider.model';
 
 @Component({
   selector: 'app-about-us',

@@ -45,7 +45,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
       if (response !== null) {
         this.form.patchValue(response);
         this.form.controls.objectives.reset(); // <-- Clear form
-        this.objectives = response.objectives as string[]; // <-- To print the list
+        this.objectives = response.objetives as string[]; // <-- To print the list
       }
     });
   }
@@ -66,12 +66,6 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
       }
     });
-  }
-
-  sendStepOne() {
-    const prepareData: Learning = this.form.value;
-    prepareData.objectives = this.objectives;
-    this.store.dispatch(new SetLearningOne(prepareData));
   }
 
   addObjective() {
@@ -103,5 +97,11 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
     this.MODE_LIST = ACTION.CREATE;
     this.form.controls.objectives.reset();
+  }
+
+  sendStepOne() {
+    const prepareData: Learning = this.form.value;
+    prepareData.objetives = this.objectives;
+    this.store.dispatch(new SetLearningOne(prepareData));
   }
 }

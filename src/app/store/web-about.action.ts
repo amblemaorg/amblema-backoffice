@@ -1,5 +1,5 @@
 import { WebAbout, Award } from '../models/web/web-about.model';
-import { Slider } from '../models/web/sldier.model';
+import { Slider } from '../models/web/slider.model';
 import { State, StateContext, Selector, Action, NgxsOnInit } from '@ngxs/store';
 import { CustomToastrService } from '../services/custom-toastr.service';
 import { WebAboutService } from '../services/web-content/web-about.service';

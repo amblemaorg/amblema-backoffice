@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Slider } from 'src/app/models/web/sldier.model';
+import { Slider } from 'src/app/models/web/slider.model';
 
 @Component({
   selector: 'app-form-slider',

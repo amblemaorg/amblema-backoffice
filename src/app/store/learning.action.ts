@@ -1,19 +1,17 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { patch, append, removeItem, insertItem, updateItem } from '@ngxs/store/operators';
 import { Learning } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
-import { ACTION } from '../helpers/text-content/text-crud';
 import { Video } from '../models/media.model';
 
-// State Model
+// -- State Model --
 
 interface LearningStateModel {
     learning?: Learning;
     learnings?: Learning[];
 }
 
-// Actions
+// -- Actions --
 
 export class GetLearnings {
     static readonly type = '[Learnings] Get Learnings';
@@ -23,19 +21,30 @@ export class GetLearning {
     static readonly type = '[Learning] Get Learning';
 }
 
-// Actions step one
+// -- Step One --
 
 export class SetLearningOne {
     static readonly type = '[Learning] Set Learning One';
     constructor(public payload: Learning) { }
 }
 
+export class UpdateLearningOne {
+    static readonly type = '[Learning] Update Learning One';
+    constructor(public payload: Learning) {}
+}
+
+// -- Step Two --
+
+
+
+// -- Step three -- 
+
 export class SetVideos {
     static readonly type = '[Learning] Set Learning Videos';
     constructor(public payload: Video[]) { }
 }
-// Init state
 
+// -- Init state --
 @State<LearningStateModel>({
     name: 'Learning',
     defaults: {
@@ -43,7 +52,6 @@ export class SetVideos {
         },
         learnings: []
     }
-
 })
 export class LearningState implements NgxsOnInit {
 
@@ -57,21 +65,18 @@ export class LearningState implements NgxsOnInit {
         private learningService: LearningService
     ) { }
 
-    // Init
     ngxsOnInit(ctx: StateContext<LearningStateModel>) {
         ctx.dispatch(new GetLearnings());
     }
 
-    // Get all Learnings
+    // -- Actions Learning -- 
 
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
 
     }
 
-    // ------------------------------------------
-    // CRUD Step one                            -
-    // ------------------------------------------
+    // -- Step One --
 
     @Action(SetLearningOne)
     setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
@@ -80,7 +85,17 @@ export class LearningState implements NgxsOnInit {
         });
     }
 
+    @Action(UpdateLearningOne)
+    updateLearningOne( ctx: StateContext<LearningStateModel>, action: UpdateLearningOne ) {
+        ctx.patchState({
+            learning: action.payload
+        });
+    }
+
+    // -- Step Two --
+
     @Action(SetVideos)
     setVideos(ctx: StateContext<LearningStateModel>, action: SetVideos) {
+        
     }
 }

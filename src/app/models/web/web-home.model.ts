@@ -1,4 +1,4 @@
-import { Slider } from './sldier.model';
+import { Slider } from './slider.model';
 import { Testimonial } from './testimonial.model';
 
 export interface WebHome {

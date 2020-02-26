@@ -5,7 +5,5 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'learning.component.html'
 })
 export class LearningComponent {
-
-
   constructor() { }
 }

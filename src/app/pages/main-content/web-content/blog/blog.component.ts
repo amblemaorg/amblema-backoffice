@@ -52,8 +52,8 @@ export class BlogComponent implements OnInit, OnDestroy {
     $('#modal-form-blog').modal('show');
   }
 
-  onDeletePost( post: Post ) { 
-    
+  onDeletePost( post: Post ) {
+
     this.store.dispatch( new DeletePost( post ) );
 
   }

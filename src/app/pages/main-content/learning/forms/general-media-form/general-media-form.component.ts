@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class GeneralMediaFormComponent {
 
-  onSaveStepTwo() : void {
+  onSaveStepTwo(): void {
 
   }
 }

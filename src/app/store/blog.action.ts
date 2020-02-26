@@ -2,8 +2,7 @@ import { Post } from '../models/web/blog.model';
 import { NgxsOnInit, StateContext, State, Action, Selector } from '@ngxs/store';
 import { BlogService } from '../services/web-content/blog.service';
 import { CustomToastrService } from '../services/custom-toastr.service';
-import { patch } from '@nebular/theme';
-import { append, updateItem } from '@ngxs/store/operators';
+import { append, updateItem, removeItem, patch } from '@ngxs/store/operators';
 
 // -- Post Actions --
 
@@ -23,7 +22,7 @@ export class UpdatePost {
 
 export class DeletePost {
     static readonly type = '[Post] Delete Post';
-    constructor( public payload: string ) { }
+    constructor( public payload: Post ) { }
 }
 
 // -- Posts State --
@@ -77,8 +76,11 @@ export class PostsState implements NgxsOnInit {
     }
 
     @Action( DeletePost )
-    deletePost(ctx: StateContext<Post[]> ) {
-
+    deletePost(ctx: StateContext<Post[]>, action: DeletePost ) {
+        this.blogService.deletePost( action.payload.id ).subscribe(response => {
+            this.toastr.deleteRegister('Eliminación', 'Post eliminado');
+            ctx.setState(removeItem<Post>( post => post === action.payload ));
+        });
     }
 
 }

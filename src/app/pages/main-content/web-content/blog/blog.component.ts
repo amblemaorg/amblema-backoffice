@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-content/text-crud';
 import { Post } from 'src/app/models/web/blog.model';
 import { Select, Store } from '@ngxs/store';
-import { PostsState, SetPost, UpdatePost } from 'src/app/store/blog.action';
+import { PostsState, SetPost, UpdatePost, DeletePost } from 'src/app/store/blog.action';
 import { Observable, Subscription } from 'rxjs';
 declare var $: any;
 
@@ -52,7 +52,9 @@ export class BlogComponent implements OnInit, OnDestroy {
     $('#modal-form-blog').modal('show');
   }
 
-  onDeletePost( post: Post ) {
+  onDeletePost( post: Post ) { 
+    
+    this.store.dispatch( new DeletePost( post ) );
 
   }
 

@@ -30,6 +30,6 @@ export class BlogService {
   }
 
   deletePost( id: string ): Observable<string> {
-    return this.httpClient.delete<string>(`${environment.api}${this.POST}/id=${id}`);
+    return this.httpClient.delete<string>(`${environment.api}${this.POST}/${id}`);
   }
 }

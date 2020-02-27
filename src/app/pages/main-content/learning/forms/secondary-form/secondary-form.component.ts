@@ -26,7 +26,7 @@ export class SecondaryFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.data$.subscribe( response => {
-      console.log(response);
+      this.form.patchValue(response);
     });
   }
 

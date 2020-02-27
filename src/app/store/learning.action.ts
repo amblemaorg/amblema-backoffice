@@ -3,6 +3,7 @@ import { Learning, SliderMedia } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
+import { Slider } from '../models/web/slider.model';
 
 // -- State Model --
 
@@ -29,8 +30,8 @@ export class SetLearningOne {
 }
 
 export class UpdateLearningOne {
-    static readonly type = '[Learning] Update Learning One';
-    constructor(public payload: Learning) { }
+    static readonly type = '[Learning] Delete Learning One';
+    constructor(public payloaddeletening) { }
 }
 
 // -- Step Two --
@@ -60,6 +61,23 @@ export class UpdateMedia {
 export class SetLearningTwo {
     static readonly type = '[Learning] Set Learning Two';
     constructor( public payload: Learning ) {}
+}
+
+// -- Step Five --
+
+export class SetImage {
+    static readonly type = '[Image] Set Image';
+    constructor( public payload: Slider ) { }
+}
+
+export class UpdateImage {
+    static readonly type = '[Image] Update Image';
+    constructor( public oldImage: Slider, public newImage: Slider ) {}
+}
+
+export class DeleteImage {
+    static readonly type = '[Image] Delete Image';
+    constructor( public payload: Slider ) {}
 }
 
 // -- Init state --
@@ -177,4 +195,41 @@ export class LearningState implements NgxsOnInit {
             })
         }));
     }
+
+    // -- Step Four --
+
+    @Action( SetImage )
+    setImage(ctx: StateContext<LearningStateModel>, action: SetImage) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            learning: patch({
+                ...ctx.getState().learning,
+                images: append([action.payload])
+            })
+        }));
+    }
+
+    @Action( UpdateImage )
+    updateImage( ctx: StateContext<LearningStateModel>, action: UpdateImage ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            learning: patch({
+                ...ctx.getState().learning,
+                images: updateItem<Slider>(image => image === action.oldImage, action.newImage)
+            })
+        }) );
+    }
+
+    @Action( DeleteImage )
+    deleteImage( ctx: StateContext<LearningStateModel>, action: DeleteImage ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            learning: patch({
+                ...ctx.getState().learning,
+                images: removeItem<Slider>(image => image === action.payload)
+            })
+        }) );
+    }
+
+    // -- Step Five --
 }

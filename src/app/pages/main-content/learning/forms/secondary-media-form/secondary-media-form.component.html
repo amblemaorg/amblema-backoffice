@@ -1,5 +1,20 @@
-<form>
-    <div>
-        <app-form-slider class="w-100"></app-form-slider>
+<!-- Slider -->
+<!-- <div class="row">
+    <div class="col-12 form-group">
+        <app-form-slider 
+          (delete)="onDeleteSlider($event)"
+          (edit)="onEditSlider($event)"
+          (register)="onRegisterSlider($event)"
+          [sliders]="sliders"></app-form-slider>
     </div>
-</form>
+</div> -->
+
+<div class="row">
+    <div class="col-12 form-group">
+        <app-form-slider 
+          [sliders]="sliders"
+          (delete)="onDeleteSlider($event)"
+          (edit)="onEditSlider($event)"
+          (register)="onRegisterSlider($event)"></app-form-slider>
+    </div>
+</div>

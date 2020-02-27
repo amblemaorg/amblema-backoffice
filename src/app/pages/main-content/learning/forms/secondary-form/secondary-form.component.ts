@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-secondary-form',
   templateUrl: './secondary-form.component.html',
   styles: []
 })
-export class SecondaryFormComponent implements OnInit {
+export class SecondaryFormComponent  {
 
-  constructor() { }
+  form: FormGroup = new FormGroup({
+    secondaryTitle: new FormControl('', [Validators.required]),
+    secondaryDescription: new FormControl('', [Validators.required])
+  });
 
-  ngOnInit() {
-  }
 
 }

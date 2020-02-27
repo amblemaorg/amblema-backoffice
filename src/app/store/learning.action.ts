@@ -1,5 +1,5 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { Learning, Slider } from '../models/learning.model';
+import { Learning, SliderMedia } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
@@ -37,25 +37,30 @@ export class UpdateLearningOne {
 
 export class SetMedia {
     static readonly type = '[Media] Set Media';
-    constructor(public payload: Slider) { }
+    constructor(public payload: SliderMedia) { }
 }
 
 export class GetMedias {
     static readonly type = '[Media] Get Medias';
-    constructor(public payliad: Slider[]) { }
+    constructor(public payliad: SliderMedia[]) { }
 }
 
 export class DeleteMedia {
     static readonly type = '[Media] Delete Media';
-    constructor(public payload: Slider) { }
+    constructor(public payload: SliderMedia) { }
 }
 
 export class UpdateMedia {
     static readonly type = '[Media] Update Media';
-    constructor(public oldMedia: Slider, public newMedia: Slider) { }
+    constructor(public oldMedia: SliderMedia, public newMedia: SliderMedia) { }
 }
 
-// -- Step three --
+// -- Step Three --
+
+export class SetLearningTwo {
+    static readonly type = '[Learning] Set Learning Two';
+    constructor( public payload: Learning ) {}
+}
 
 // -- Init state --
 @State<LearningStateModel>({
@@ -67,7 +72,7 @@ export class UpdateMedia {
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
-            objetives: [],
+            objectives: [],
             slider: [],
             images: [],
             duration: ' ',
@@ -85,7 +90,7 @@ export class LearningState implements NgxsOnInit {
     }
 
     @Selector()
-    static medias(state: LearningStateModel): Slider[] | null {
+    static medias(state: LearningStateModel): SliderMedia[] | null {
         return state.learning.slider;
     }
 
@@ -116,7 +121,7 @@ export class LearningState implements NgxsOnInit {
                 description: action.payload.description,
                 duration: action.payload.duration,
                 points: action.payload.points,
-                objetives: action.payload.objetives,
+                objectives: action.payload.objectives,
             })
         }));
     }
@@ -145,7 +150,7 @@ export class LearningState implements NgxsOnInit {
         ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
-                slider: removeItem<Slider>( slider => slider === action.payload )
+                slider: removeItem<SliderMedia>( sliderMedia => sliderMedia === action.payload )
             })
         }));
     }
@@ -155,8 +160,15 @@ export class LearningState implements NgxsOnInit {
         ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
-                slider: updateItem<Slider>(slider => slider === action.oldMedia, action.newMedia)
+                slider: updateItem<SliderMedia>(sliderMedia => sliderMedia === action.oldMedia, action.newMedia)
             })
         }));
+    }
+
+    // -- Step Three --
+
+    @Action(SetLearningTwo)
+    setLearningTwo(ctx: StateContext<LearningStateModel>, action: SetLearningTwo) {
+
     }
 }

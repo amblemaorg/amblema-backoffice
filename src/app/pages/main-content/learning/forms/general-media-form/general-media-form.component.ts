@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
-import { Slider } from 'src/app/models/learning.model';
+import { SliderMedia } from 'src/app/models/learning.model';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, SetMedia, DeleteMedia, UpdateMedia } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, OnInit, TableActions {
 
-  @Select(LearningState.medias) data$: Observable<Slider[]>;
+  @Select(LearningState.medias) data$: Observable<SliderMedia[]>;
   subscription: Subscription;
 
   /**
@@ -26,10 +26,10 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
   ];
   option;
 
-  sliders: Slider[]; // <-- To get all sliders
-  slider: Slider;
+  sliders: SliderMedia[]; // <-- To get all sliders
+  slider: SliderMedia;
 
-  sliderBackUp: Slider; // <-- To backup value
+  sliderBackUp: SliderMedia; // <-- To backup value
 
   formMedia: FormGroup = new FormGroup({
     url: new FormControl({ value: '', disabled: false }, [Validators.required]),
@@ -58,7 +58,7 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
         width: '250px',
         filter: false,
         sort: false,
-        valuePrepareFunction: (value, row: Slider) => {
+        valuePrepareFunction: (value, row: SliderMedia) => {
           if (row.type === this.options[0].value) {
             return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
           } else if (row.type === this.options[1].value) {

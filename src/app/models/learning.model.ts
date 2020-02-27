@@ -1,4 +1,4 @@
-import { Image } from './media.model';
+import { Slider } from './web/slider.model';
 
 export interface Quizze {
     id: string;
@@ -16,9 +16,9 @@ export interface Learning {
     description: string;
     secondaryTitle: string;
     secondaryDescription: string;
-    objetives: string[];
-    slider: Slider[];
-    images: Image[];
+    objectives: string[];
+    slider: SliderMedia[];
+    images: Slider[];
     duration: string;
     points: string;
     quizzes: Quizze[];
@@ -28,7 +28,7 @@ export interface Learning {
  * This is a custom slider
  */
 
-export interface Slider {
+export interface SliderMedia {
     url: string;
     description: string;
     type?: string;

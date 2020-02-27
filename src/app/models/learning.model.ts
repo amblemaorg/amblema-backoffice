@@ -31,5 +31,5 @@ export interface Learning {
 export interface Slider {
     url: string;
     description: string;
-    type: string;
+    type?: string;
 }

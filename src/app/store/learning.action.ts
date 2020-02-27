@@ -2,7 +2,7 @@ import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
 import { Learning, Slider } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
-import { patch, append, removeItem } from '@ngxs/store/operators';
+import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 
 // -- State Model --
 
@@ -85,7 +85,7 @@ export class LearningState implements NgxsOnInit {
     }
 
     @Selector()
-    static medias(state: LearningStateModel) : Slider[] | null {
+    static medias(state: LearningStateModel): Slider[] | null {
         return state.learning.slider;
     }
 
@@ -110,12 +110,12 @@ export class LearningState implements NgxsOnInit {
     @Action(SetLearningOne)
     setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
         ctx.setState(patch({
-            ...ctx.getState(),  
+            ...ctx.getState(),
             learning: patch({
                 title: action.payload.title,
                 description: action.payload.description,
-                duration: action.payload.duration, 
-                points: action.payload.points, 
+                duration: action.payload.duration,
+                points: action.payload.points,
                 objetives: action.payload.objetives,
             })
         }));
@@ -146,6 +146,16 @@ export class LearningState implements NgxsOnInit {
             ...ctx.getState(),
             learning: patch({
                 slider: removeItem<Slider>( slider => slider === action.payload )
+            })
+        }));
+    }
+
+    @Action(UpdateMedia)
+    updateMedia(ctx: StateContext<LearningStateModel>, action: UpdateMedia){
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learning: patch({
+                slider: updateItem<Slider>(slider => slider === action.oldMedia, action.newMedia)
             })
         }));
     }

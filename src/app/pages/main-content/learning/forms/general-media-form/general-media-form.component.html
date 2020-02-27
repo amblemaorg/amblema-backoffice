@@ -7,8 +7,12 @@
         </div>
         <div 
             class="col-12 form-group">
-            <nb-radio-group name="disabled" [disabled]="formMedia.controls['url'].valid ? true : null" formControlName="type" class="d-inline-flex">
+            <nb-radio-group 
+                name="disabled" 
+                formControlName="type" 
+                class="d-inline-flex">
                 <nb-radio
+                    (click)="changeTypeFile()"
                     *ngFor="let option of options"
                     [value]="option.value">{{ option.label }}</nb-radio>
             </nb-radio-group>
@@ -53,13 +57,22 @@
         <!-- Button -->
         <div class="col-12 text-right">
             <button 
-                (click)="formMedia.controls['url'].reset();formMedia.controls['description'].reset()"
-                *ngIf="formMedia.controls['url'].valid ? true : null"
+                (click)="   
+                    MODE = ACTION.CREATE; 
+                    fileBackUp = null; 
+                    formMedia.controls['url'].reset();
+                    formMedia.controls['description'].reset()"
+                *ngIf="formMedia.controls['url'].valid || MODE === ACTION.EDIT ? true : null"
                 class="btn btn-outline-info mr-2">
                 <span>Cancelar</span>
             </button>
-            <button (click)="addMedia()" class="btn btn-success" [attr.disabled]="formMedia.invalid ? true : null">
-                <span>Registrar</span>
+            <button 
+                (click)="onMedia()" 
+                class="btn"
+                [ngClass]="{'btn-success': MODE == ACTION.CREATE, 'btn-primary': MODE == ACTION.EDIT}" 
+                [attr.disabled]="formMedia.invalid ? true : null">
+                <span *ngIf="MODE == ACTION.CREATE">Registrar</span>
+                <span *ngIf="MODE == ACTION.EDIT">Editar</span>
             </button>
         </div>
     </div>

@@ -7,7 +7,7 @@
         </div>
         <div 
             class="col-12 form-group">
-            <nb-radio-group formControlName="type" class="d-inline-flex">
+            <nb-radio-group name="disabled" [disabled]="formMedia.controls['url'].valid ? true : null" formControlName="type" class="d-inline-flex">
                 <nb-radio
                     *ngFor="let option of options"
                     [value]="option.value">{{ option.label }}</nb-radio>
@@ -52,13 +52,30 @@
 
         <!-- Button -->
         <div class="col-12 text-right">
-            <button class="btn btn-success">
+            <button 
+                (click)="formMedia.controls['url'].reset();formMedia.controls['description'].reset()"
+                *ngIf="formMedia.controls['url'].valid ? true : null"
+                class="btn btn-outline-info mr-2">
+                <span>Cancelar</span>
+            </button>
+            <button (click)="addMedia()" class="btn btn-success" [attr.disabled]="formMedia.invalid ? true : null">
                 <span>Registrar</span>
             </button>
         </div>
-
     </div>
 
+    <!-- Table -->
+    <div class="row form-group">
+        <div class="col-12 form-group">
+            <div class="table-responsive">
+                <ng2-smart-table 
+                    (custom)="onAction($event)" 
+                    [source]='sliders' 
+                    [settings]="settings"></ng2-smart-table>
+            </div>
+        </div>    
+    </div>
+    
     <!-- Buttons stepper -->
     <div class="row">
         <div class="col-12">

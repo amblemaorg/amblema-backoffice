@@ -1,8 +1,8 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { Learning } from '../models/learning.model';
+import { Learning, Slider } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
-import { Video } from '../models/media.model';
+import { patch, append } from '@ngxs/store/operators';
 
 // -- State Model --
 
@@ -30,19 +30,32 @@ export class SetLearningOne {
 
 export class UpdateLearningOne {
     static readonly type = '[Learning] Update Learning One';
-    constructor(public payload: Learning) {}
+    constructor(public payload: Learning) { }
 }
 
 // -- Step Two --
 
+export class SetMedia {
+    static readonly type = '[Media] Set Media';
+    constructor(public payload: Slider) { }
+}
 
+export class GetMedias {
+    static readonly type = '[Media] Get Medias';
+    constructor(public payliad: Slider[]) { }
+}
+
+export class DeleteMedia {
+    static readonly type = '[Media] Delete Media';
+    constructor(public payload: Slider) { }
+}
+
+export class UpdateMedia {
+    static readonly type = '[Media] Update Media';
+    constructor(public oldMedia: Slider, public newMedia: Slider) { }
+}
 
 // -- Step three --
-
-export class SetVideos {
-    static readonly type = '[Learning] Set Learning Videos';
-    constructor(public payload: Video[]) { }
-}
 
 // -- Init state --
 @State<LearningStateModel>({
@@ -97,7 +110,7 @@ export class LearningState implements NgxsOnInit {
     }
 
     @Action(UpdateLearningOne)
-    updateLearningOne( ctx: StateContext<LearningStateModel>, action: UpdateLearningOne ) {
+    updateLearningOne(ctx: StateContext<LearningStateModel>, action: UpdateLearningOne) {
         ctx.patchState({
             learning: action.payload
         });
@@ -105,8 +118,13 @@ export class LearningState implements NgxsOnInit {
 
     // -- Step Two --
 
-    @Action(SetVideos)
-    setVideos(ctx: StateContext<LearningStateModel>, action: SetVideos) {
-
+    @Action(SetMedia)
+    setMedia(ctx: StateContext<LearningStateModel>, action: SetMedia) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learning: patch({
+                slider: append([action.payload])
+            })
+        }));
     }
 }

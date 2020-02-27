@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,9 +62,9 @@ registerLocaleData(localeVe, 'es-VE');
       compatibility: {
         strictContentSecurityPolicy: true
       },
-      developmentMode: false 
+      developmentMode: true 
     }),
-    NgxsStoragePluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot({}),
     NbToastrModule.forRoot(),
   ],
   providers: [

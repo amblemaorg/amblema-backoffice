@@ -90,23 +90,30 @@ export class LearningState implements NgxsOnInit {
     ) { }
 
     ngxsOnInit(ctx: StateContext<LearningStateModel>) {
-        ctx.dispatch(new GetLearnings());
+        //ctx.dispatch(new GetLearnings());
     }
 
     // -- Actions Learning --
 
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
-
+         
     }
 
     // -- Step One --
 
     @Action(SetLearningOne)
     setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
-        ctx.setState({
-            learning: action.payload,
-        });
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learning: patch({
+                title: action.payload.title,
+                description: action.payload.description,
+                secondaryTitle: action.payload.secondaryTitle,
+                secondaryDescription: action.payload.secondaryDescription,
+                objetives: action.payload.objetives,
+            })
+        }));
     }
 
     @Action(UpdateLearningOne)

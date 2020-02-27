@@ -5,6 +5,7 @@ import { Slider, Learning } from 'src/app/models/learning.model';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, SetMedia } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-general-media-form',
@@ -35,7 +36,8 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
   })
 
   constructor(
-    private store: Store
+    private store: Store, 
+    private sanitizer: DomSanitizer
   ) {
     super('form-media-mixto');
 
@@ -48,7 +50,15 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
     this.settings.columns = {
       url: {
         title: 'Archivo',
-        type: 'string'
+        type: 'html',
+        width: '250px', 
+        valuePrepareFunction: (value, row:Slider) => {
+          if( row.type === this.options[0].value ) {
+            return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
+          }
+          
+          //return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
+        },
       },
       description: {
         title: 'Descripción',
@@ -75,15 +85,24 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
     }
   }
 
-  onSaveStepTwo(): void {
-
-  }
+  onSaveStepTwo(): void {}
 
   onAction(event: any) {
-
+    switch (event.action) {
+      case this.ACTION.EDIT:
+        break;
+      case this.ACTION.DELETE:
+        break;
+    }
   }
 
   addMedia() {
-    this.store.dispatch( new SetMedia( this.formMedia.value ) );
+    if ( this.MODE === this.ACTION.CREATE ) {
+      this.store.dispatch( new SetMedia( this.formMedia.value ) );
+      this.formMedia.controls['url'].reset();
+      this.formMedia.controls['description'].reset()  
+    } else if ( this.MODE === this.ACTION.EDIT ) {
+
+    }
   }
 }

@@ -90,14 +90,14 @@ export class LearningState implements NgxsOnInit {
     ) { }
 
     ngxsOnInit(ctx: StateContext<LearningStateModel>) {
-        //ctx.dispatch(new GetLearnings());
+        // ctx.dispatch(new GetLearnings());
     }
 
     // -- Actions Learning --
 
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
-         
+
     }
 
     // -- Step One --

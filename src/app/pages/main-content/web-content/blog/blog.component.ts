@@ -37,7 +37,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe(); // <-- Destroy
     }
   }

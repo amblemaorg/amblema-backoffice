@@ -68,7 +68,7 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe(); // <-- Free memory
     }
   }

@@ -15,7 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, OnInit, TableActions {
 
   @Select( LearningState.learning ) data$: Observable<Learning>;
-  subscription: Subscription; 
+  subscription: Subscription;
 
   /**
    * Type file manager
@@ -27,16 +27,16 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
   option;
 
   sliders: Slider[]; // <-- To get all sliders
-  slider: Slider; 
+  slider: Slider;
 
   formMedia: FormGroup = new FormGroup({
     url: new FormControl({ value: '', disabled: false }, [Validators.required]),
-    description: new FormControl({ value: '', disabled: false }, [Validators.required]), 
+    description: new FormControl({ value: '', disabled: false }, [Validators.required]),
     type: new FormControl({ value: this.options[0].value, disabled: false })
-  })
+  });
 
   constructor(
-    private store: Store, 
+    private store: Store,
     private sanitizer: DomSanitizer
   ) {
     super('form-media-mixto');
@@ -51,13 +51,13 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
       url: {
         title: 'Archivo',
         type: 'html',
-        width: '250px', 
-        valuePrepareFunction: (value, row:Slider) => {
-          if( row.type === this.options[0].value ) {
+        width: '250px',
+        valuePrepareFunction: (value, row: Slider) => {
+          if ( row.type === this.options[0].value ) {
             return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
           }
-          
-          //return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
+
+          // return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
         },
       },
       description: {
@@ -75,12 +75,12 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
     this.option = this.options[0].value; // <-- Set default value
 
     this.subscription = this.data$.subscribe( response => {
-      this.sliders = response.slider; 
+      this.sliders = response.slider;
     });
   }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe();
     }
   }
@@ -99,8 +99,8 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
   addMedia() {
     if ( this.MODE === this.ACTION.CREATE ) {
       this.store.dispatch( new SetMedia( this.formMedia.value ) );
-      this.formMedia.controls['url'].reset();
-      this.formMedia.controls['description'].reset()  
+      this.formMedia.controls.url.reset();
+      this.formMedia.controls.description.reset();
     } else if ( this.MODE === this.ACTION.EDIT ) {
 
     }

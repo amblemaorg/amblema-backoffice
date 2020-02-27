@@ -52,7 +52,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
   ngOnDestroy(): void {
 
-    if(this.subscription) {
+    if (this.subscription) {
       this.subscription.unsubscribe(); // <-- Free memory
     }
   }

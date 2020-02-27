@@ -169,6 +169,12 @@ export class LearningState implements NgxsOnInit {
 
     @Action(SetLearningTwo)
     setLearningTwo(ctx: StateContext<LearningStateModel>, action: SetLearningTwo) {
-
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learning: patch({
+                secondaryTitle: action.payload.secondaryTitle,
+                secondaryDescription: action.payload.secondaryDescription,
+            })
+        }));
     }
 }

@@ -30,6 +30,7 @@
     </div>
     <div class="col-6 col-lg-auto">
         <button 
+            (click)="onSave()"
             [attr.disabled]="form.invalid ? true : null"
             class="next-button btn-block btn btn-primary" 
             nbButton

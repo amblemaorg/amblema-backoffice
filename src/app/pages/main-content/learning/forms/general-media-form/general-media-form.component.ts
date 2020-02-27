@@ -3,9 +3,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { Slider, Learning } from 'src/app/models/learning.model';
 import { Select, Store } from '@ngxs/store';
-import { LearningState, SetMedia } from 'src/app/store/learning.action';
+import { LearningState, SetMedia, DeleteMedia } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { compose } from '@ngxs/store/operators';
 
 @Component({
   selector: 'app-general-media-form',
@@ -14,15 +15,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, OnInit, TableActions {
 
-  @Select( LearningState.learning ) data$: Observable<Learning>;
+  @Select( LearningState.medias ) data$: Observable<Slider[]>;
   subscription: Subscription;
 
   /**
    * Type file manager
    */
   options = [
-    { value: '1', label: 'Imagen' },
-    { value: '2', label: 'Video' },
+    { value: 'Imagen', label: 'Imagen' },
+    { value: 'Video', label: 'Video' },
   ];
   option;
 
@@ -41,6 +42,8 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
   ) {
     super('form-media-mixto');
 
+    this.MODE = this.ACTION.CREATE; 
+
     this.settings.actions.custom = [
       { name: this.ACTION.EDIT, title: `<i class="nb-edit"></i>` },
       { name: this.ACTION.DELETE, title: '<i class="nb-trash"></i>' }
@@ -52,21 +55,30 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
         title: 'Archivo',
         type: 'html',
         width: '250px',
+        filter: false, 
+        sort: false,
         valuePrepareFunction: (value, row: Slider) => {
           if ( row.type === this.options[0].value ) {
             return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
+          } else if (row.type === this.options[1].value) {
+            return this.sanitizer.bypassSecurityTrustHtml(`<a href="${value}" target="_blank">${value}</a>`);
           }
-
-          // return this.sanitizer.bypassSecurityTrustHtml(`<img src="${value}" style="width:100px;">`);
         },
       },
       description: {
         title: 'Descripción',
-        type: 'string'
+        type: 'string',
       },
       type: {
         title: 'Tipo',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (value) => {
+          if ( value === this.options[0].value ) {
+            return "Imagen";
+          } else if (value === this.options[1].value) {
+            return "Video";
+          } 
+        }
       }
     };
   }
@@ -75,7 +87,7 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
     this.option = this.options[0].value; // <-- Set default value
 
     this.subscription = this.data$.subscribe( response => {
-      this.sliders = response.slider;
+      this.sliders = response;
     });
   }
 
@@ -92,6 +104,7 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
       case this.ACTION.EDIT:
         break;
       case this.ACTION.DELETE:
+          this.store.dispatch( new DeleteMedia( event.data ) );
         break;
     }
   }

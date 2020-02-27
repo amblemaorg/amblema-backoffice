@@ -2,7 +2,7 @@ import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
 import { Learning, Slider } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
-import { patch, append } from '@ngxs/store/operators';
+import { patch, append, removeItem } from '@ngxs/store/operators';
 
 // -- State Model --
 
@@ -84,6 +84,11 @@ export class LearningState implements NgxsOnInit {
         return state.learning;
     }
 
+    @Selector()
+    static medias(state: LearningStateModel) : Slider[] | null {
+        return state.learning.slider;
+    }
+
     constructor(
         private helper: Utility,
         private learningService: LearningService
@@ -105,12 +110,12 @@ export class LearningState implements NgxsOnInit {
     @Action(SetLearningOne)
     setLearningOne(ctx: StateContext<LearningStateModel>, action: SetLearningOne) {
         ctx.setState(patch({
-            ...ctx.getState(),
+            ...ctx.getState(),  
             learning: patch({
                 title: action.payload.title,
                 description: action.payload.description,
-                secondaryTitle: action.payload.secondaryTitle,
-                secondaryDescription: action.payload.secondaryDescription,
+                duration: action.payload.duration, 
+                points: action.payload.points, 
                 objetives: action.payload.objetives,
             })
         }));
@@ -131,6 +136,16 @@ export class LearningState implements NgxsOnInit {
             ...ctx.getState(),
             learning: patch({
                 slider: append([action.payload])
+            })
+        }));
+    }
+
+    @Action(DeleteMedia)
+    deleteMedia(ctx: StateContext<LearningStateModel>, action: DeleteMedia) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learning: patch({
+                slider: removeItem<Slider>( slider => slider === action.payload )
             })
         }));
     }

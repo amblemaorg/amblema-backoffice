@@ -108,7 +108,7 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
         this.formMedia.patchValue(event.data);
         break;
       case this.ACTION.DELETE:
-        this.store.dispatch(new DeleteMedia(event.data)); this
+        this.store.dispatch(new DeleteMedia(event.data));
         break;
     }
   }
@@ -118,9 +118,9 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
       this.store.dispatch(new SetMedia(this.formMedia.value));
       this.formMedia.controls.url.reset();
       this.formMedia.controls.description.reset();
-    } else if (this.MODE === this.ACTION.EDIT) { 
-      this.store.dispatch( new UpdateMedia( this.sliderBackUp, this.formMedia.value ) ); 
-      this.MODE = this.ACTION.CREATE; 
+    } else if (this.MODE === this.ACTION.EDIT) {
+      this.store.dispatch( new UpdateMedia( this.sliderBackUp, this.formMedia.value ) );
+      this.MODE = this.ACTION.CREATE;
       this.formMedia.controls.url.reset();
       this.formMedia.controls.description.reset();
     }
@@ -128,15 +128,15 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
 
   /**
    * This is for to adapt the values
-   * in the files. 
+   * in the files.
    */
 
   changeTypeFile() {
     if (this.MODE === this.ACTION.EDIT) {
-      if (this.formMedia.controls['type'].value !== this.sliderBackUp.type) {
-        this.formMedia.controls['url'].setValue(this.sliderBackUp.url);
+      if (this.formMedia.controls.type.value !== this.sliderBackUp.type) {
+        this.formMedia.controls.url.setValue(this.sliderBackUp.url);
       } else {
-        this.formMedia.controls['url'].reset();
+        this.formMedia.controls.url.reset();
       }
     }
   }

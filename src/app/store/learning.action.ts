@@ -151,7 +151,7 @@ export class LearningState implements NgxsOnInit {
     }
 
     @Action(UpdateMedia)
-    updateMedia(ctx: StateContext<LearningStateModel>, action: UpdateMedia){
+    updateMedia(ctx: StateContext<LearningStateModel>, action: UpdateMedia) {
         ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TableActions, BaseTable } from 'src/app/helpers/base-table';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-quizz-form',
@@ -8,21 +9,22 @@ import { TableActions, BaseTable } from 'src/app/helpers/base-table';
 })
 export class QuizzFormComponent extends BaseTable implements TableActions {
 
+  form: FormGroup = new FormGroup({
+    question: new FormControl('', [Validators.required]),
+    optionA: new FormControl('', [Validators.required]), 
+    optionB: new FormControl('', [Validators.required]),
+    optionC: new FormControl('', [Validators.required]),
+    optionD: new FormControl('', [Validators.required]),
+  });
   submitted = false;
-
-  data: any = [
-    {
-      question: '¿En qué año nacio Simón Bolívar?',
-      answer: '24 de julio de 1783',
-      wrongOne: '17 de julio de 1783',
-      wrongTwo: '24 de julio de 1782',
-      wrongThree: '23 de julio de 1783',
-      status: 'Activo'
-    }
-  ];
 
   constructor() {
     super('form-quizz');
+
+    this.settings.actions.custom = [
+      { name: this.ACTION.EDIT, title: `<i class="nb-edit"></i>` },
+      { name: this.ACTION.DELETE, title: '<i class="nb-trash"></i>' }
+    ];
 
     this.settings.columns = {
       question: {
@@ -53,7 +55,4 @@ export class QuizzFormComponent extends BaseTable implements TableActions {
   }
 
   onAction(event: any): void {}
-  newData(event: any): void {}
-  deleteData(event: any): void {}
-  updateData(event: any): void {}
 }

@@ -1,21 +1,44 @@
-<form>
+<form [formGroup]="form">
     <div class="row form-group">
         <div class="col-12">
-            <app-input-custom [label]="'Pregunta'" [placeholder]="'Pregunta'">
-            </app-input-custom>
+            <app-input-custom 
+                [control]="form.get('question')"
+                [id]="'question'"
+                [submitted]="submitted"        
+                [label]="'Pregunta'" 
+                [placeholder]="'Pregunta'"></app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom [label]="'Respuesta A (Respuesta correcta)'" [placeholder]="'Respuesta'">
-            </app-input-custom>
+            <app-input-custom 
+                [control]="form.get('optionA')"
+                [id]="'a'"
+                [submitted]="submitted"
+                [label]="'Respuesta A (Respuesta correcta)'"
+                [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom [label]="'Respuesta B'" [placeholder]="'Respuesta'"></app-input-custom>
+            <app-input-custom 
+                [control]="form.get('optionB')"
+                [id]="'b'"
+                [submitted]="submitted"
+                [label]="'Respuesta B'"
+                [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom [label]="'Respuesta C'" [placeholder]="'Respuesta'"></app-input-custom>
+            <app-input-custom 
+                [control]="form.get('optionC')"
+                [id]="'c'"
+                [submitted]="submitted"
+                [label]="'Respuesta C'"
+                [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom [label]="'Respuesta D'" [placeholder]="'Respuesta'"></app-input-custom>
+            <app-input-custom 
+                [control]="form.get('optionD')"
+                [id]="'d'"
+                [submitted]="submitted"
+                [label]="'Respuesta D'"
+                [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12 text-right">
             <button class="btn btn-success col-12 col-lg-auto">Registrar</button>
@@ -33,5 +56,21 @@
         <div class="table-responsive">
             <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
         </div>
+    </div>
+</div>
+
+<!-- Button stepper -->
+<div class="text-center row d-flex justify-content-center">
+    <div class="col-6 col-lg-auto">
+        <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
+            <nb-icon icon="arrow-back-outline"></nb-icon>
+            <span class="d-none d-sm-inline">Atrás</span>
+        </button>
+    </div>
+    <div class="col-6 col-lg-auto">
+        <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>
+            <span class="d-none d-sm-inline">Guardar</span>
+            <nb-icon icon="save-outline"></nb-icon>
+        </button>
     </div>
 </div>

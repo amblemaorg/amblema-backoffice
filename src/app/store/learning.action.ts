@@ -1,5 +1,5 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { Learning, SliderMedia } from '../models/learning.model';
+import { Learning, SliderMedia, Quizze } from '../models/learning.model';
 import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
@@ -30,8 +30,8 @@ export class SetLearningOne {
 }
 
 export class UpdateLearningOne {
-    static readonly type = '[Learning] Delete Learning One';
-    constructor(public payloaddeletening) { }
+    static readonly type = '[Learning] Update Learning One';
+    constructor(public payload : Learning) { }
 }
 
 // -- Step Two --
@@ -63,7 +63,7 @@ export class SetLearningTwo {
     constructor( public payload: Learning ) {}
 }
 
-// -- Step Five --
+// -- Step Four --
 
 export class SetImage {
     static readonly type = '[Image] Set Image';
@@ -79,6 +79,24 @@ export class DeleteImage {
     static readonly type = '[Image] Delete Image';
     constructor( public payload: Slider ) {}
 }
+
+// -- Step Five -- 
+
+export class SetQuizze {
+    static readonly type = '[Quizz] Set Quizze'; 
+    constructor( public payload: Quizze ) {}
+}
+
+export class UpdateQuizze {
+    static readonly type = '[Quizz] Update Quizze'; 
+    constructor( public oldQuizze: Quizze, public newQuizze: Quizze ) {}
+}
+
+export class DeleteQuizze {
+    static readonly type = '[Quizz] Delete Quizze'; 
+    constructor( public payload: Quizze ) {}
+}
+
 
 // -- Init state --
 @State<LearningStateModel>({
@@ -110,6 +128,11 @@ export class LearningState implements NgxsOnInit {
     @Selector()
     static medias(state: LearningStateModel): SliderMedia[] | null {
         return state.learning.slider;
+    }
+
+    @Selector()
+    static quizzes(state: LearningStateModel): Quizze[] | null {
+        return state.learning.quizzes;
     }
 
     constructor(
@@ -232,4 +255,38 @@ export class LearningState implements NgxsOnInit {
     }
 
     // -- Step Five --
+
+    @Action( SetQuizze )
+    setQuizze(ctx: StateContext<LearningStateModel>, action: SetQuizze) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            learning: patch({
+                ...ctx.getState().learning,
+                quizzes: append([action.payload])
+            })
+        }));
+    }
+
+    @Action( UpdateQuizze )
+    updateQuizze( ctx: StateContext<LearningStateModel>, action: UpdateQuizze ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            learning: patch({
+                ...ctx.getState().learning,
+                quizzes: updateItem<Quizze>(quizze => quizze === action.oldQuizze, action.newQuizze)
+            })
+        }) );
+    }
+
+    @Action( DeleteQuizze )
+    deleteQuizze( ctx: StateContext<LearningStateModel>, action: DeleteQuizze ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            learning: patch({
+                ...ctx.getState().learning,
+                quizzes: removeItem<Quizze>(quizze => quizze === action.payload)
+            })
+        }) );
+    }
+
 }

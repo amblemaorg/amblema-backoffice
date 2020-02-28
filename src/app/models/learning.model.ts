@@ -20,7 +20,6 @@ export interface Learning {
     slider: SliderMedia[];
     images: Slider[];
     duration: string;
-    points: string;
     quizzes: Quizze[];
 }
 

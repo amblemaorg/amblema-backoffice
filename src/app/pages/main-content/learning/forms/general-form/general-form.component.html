@@ -10,15 +10,10 @@
                 [label]="'Descripción general'" [placeholder]="'Descripción general'" [submitted]="submitted">
             </app-text-area-custom>
         </div>
-        <div class="col-12 col-lg-6 form-group">
+        <div class="col-12 form-group">
             <label class="label">Timer</label>
             <input type="text" class="form-control" fullWidth nbInput mask="00:00" placeholder="HH:MM"
                 formControlName="duration">
-        </div>
-        <div class="col-12 col-lg-6">
-            <app-input-custom [id]="'score'" [label]="'Puntuación'" [placeholder]="'Puntuación'" [submitted]="submitted"
-                [control]="form.get('points')">
-            </app-input-custom>
         </div>
         <div class="col-12 form-group">
             <div class="row">

@@ -112,7 +112,6 @@ export class DeleteQuizze {
             slider: [],
             images: [],
             duration: ' ',
-            points: '',
             quizzes: []
         },
         learnings: []
@@ -161,7 +160,6 @@ export class LearningState implements NgxsOnInit {
                 title: action.payload.title,
                 description: action.payload.description,
                 duration: action.payload.duration,
-                points: action.payload.points,
                 objectives: action.payload.objectives,
             })
         }));

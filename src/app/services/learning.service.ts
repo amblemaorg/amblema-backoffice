@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class LearningService {
 
-  private readonly LEARNING: string = 'learningmodules/';
+  private readonly LEARNING: string = 'learningmodules';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -29,7 +29,7 @@ export class LearningService {
       return this.httpClient.post<Learning>(`${environment.api}${this.LEARNING}`, data );
   }
 
-  deleteLearning() {
-
+  deleteLearning(id:string) : Observable<Learning> {
+    return this.httpClient.delete<Learning>(`${environment.api}${this.LEARNING}/${id}`);
   }
 }

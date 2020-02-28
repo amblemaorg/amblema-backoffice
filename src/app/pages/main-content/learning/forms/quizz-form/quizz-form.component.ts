@@ -124,11 +124,13 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
       this.store.dispatch( new SetQuizze( this.form.value ) );
       this.form.reset();
       this.submitted = false;
+      this.form.controls['correctOption'].value(this.anwers[0].value);
     } else if ( this.MODE === this.ACTION.EDIT && this.form.valid ) {
       this.store.dispatch( new UpdateQuizze( this.oldQuizze, this.form.value ));
       this.form.reset();
       this.submitted = false;
       this.MODE = this.ACTION.CREATE;
+      this.form.controls['correctOption'].value(this.anwers[0].value);
     }
   }
 

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
-import { LearningService } from 'src/app/services/learning.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { LearningState, DeleteLearning } from 'src/app/store/learning.action';
+import { Learning } from 'src/app/models/learning.model';
 
 declare var $: any;
 
@@ -10,22 +12,15 @@ declare var $: any;
   templateUrl: './learning-table.component.html',
   styles: [``]
 })
-export class LearningTableComponent extends BaseTable implements TableActions {
+export class LearningTableComponent extends BaseTable implements OnInit, OnDestroy, TableActions {
 
-  // Data test
-  data: any = [
-    {
-      name: 'Aprendizaje numero 1',
-      estimate: '34 dias',
-      score: '32',
-      status: 'Activo'
-    }
-  ];
-
+  @Select( LearningState.learnings ) learnings$: Observable<Learning[]>;
   subscription: Subscription;
 
+  learnings: Learning[ ]; 
+
   constructor(
-    private learningService: LearningService
+    private store: Store
   ) {
     super('form-learning-module');
 
@@ -33,26 +28,39 @@ export class LearningTableComponent extends BaseTable implements TableActions {
 
     // Add colummns
     this.settings.columns = {
-      name: {
+      title: {
         title: 'Nombre',
         type: 'string'
       },
-      estimate: {
-        title: 'Estimación',
+      description: {
+        title: 'Descripción',
         type: 'string'
       },
-      score: {
-        title: 'Puntuación',
+      duration: {
+        title: 'Duración',
         type: 'string'
       },
-      status: {
-        title: 'Estatus',
+      createdAt: {
+        title: 'Fecha de creación',
         type: 'string'
       }
     };
   }
 
-  // CRUD
+  ngOnInit(): void {    
+
+    this.subscription = this.learnings$.subscribe( response => {
+      this.learnings = response;
+    });
+  }  
+
+  ngOnDestroy(): void {
+    if( this.subscription ) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  // -- CRUD -- 
 
   onAction(event: any) {
     switch (event.action) {
@@ -64,6 +72,7 @@ export class LearningTableComponent extends BaseTable implements TableActions {
         $(`#${this.ID_FORM}`).modal('show');
         break;
       case this.ACTION.DELETE: 
+        this.store.dispatch(new DeleteLearning(event.data));
         break; 
     }
   }

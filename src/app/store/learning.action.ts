@@ -24,6 +24,11 @@ export class addLearning {
     constructor( public payload: Learning ) {}
 }
 
+export class DeleteLearning {
+    static readonly type = '[Learning] Delete Learning'; 
+    constructor( public payload: Learning ) {} 
+}
+
 // -- Step One --
 
 export class SetLearningOne {
@@ -127,6 +132,11 @@ export class LearningState implements NgxsOnInit {
     }
 
     @Selector()
+    static learnings(state: LearningStateModel) : Learning[ ] | null {
+        return state.learnings; 
+    }
+
+    @Selector()
     static medias(state: LearningStateModel): SliderMedia[] | null {
         return state.learning.slider;
     }
@@ -143,14 +153,19 @@ export class LearningState implements NgxsOnInit {
     ) { }
 
     ngxsOnInit(ctx: StateContext<LearningStateModel>) {
-        // ctx.dispatch(new GetLearnings());
+        ctx.dispatch(new GetLearnings());
     }
 
     // -- Actions Learning --
 
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
-
+        this.learningService.getLearnings().subscribe( response => {
+            ctx.setState(patch({
+                ...ctx.getState(),
+                learnings: response
+            })) 
+        }); 
     }
 
     @Action(addLearning)
@@ -159,7 +174,6 @@ export class LearningState implements NgxsOnInit {
             ctx.setState(patch({
                 ...ctx.getState(),
                 learnings: append([action.payload]),
-                ...ctx.getState().learning,
             }));
 
             // -- Clear learning register --
@@ -180,6 +194,18 @@ export class LearningState implements NgxsOnInit {
 
             this.toastr.registerSuccess("Registro", "Modulo de aprendizaje registrado correctamente.");    
         });
+    }
+
+    @Action(DeleteLearning)
+    deleteLearning( ctx : StateContext<LearningStateModel>, action: DeleteLearning ) {
+        this.learningService.deleteLearning( action.payload.id ).subscribe( response => {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                learnings: removeItem<Learning>(learning => learning === action.payload)
+            }) );
+
+            this.toastr.deleteRegister("Eliminación", "Modulo de aprendizaje eliminado");  
+        }, (err:any) => console.log(err)); 
     }
 
     // -- Step One --

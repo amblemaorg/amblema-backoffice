@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableActions, BaseTable } from 'src/app/helpers/base-table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { LearningState, SetQuizze } from 'src/app/store/learning.action';
+import { LearningState, SetQuizze, UpdateQuizze, DeleteQuizze } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
 import { Quizze } from 'src/app/models/learning.model';
 
@@ -17,6 +17,7 @@ export class QuizzFormComponent extends BaseTable implements OnInit, TableAction
   subscription: Subscription;
 
   quizzes: Quizze[ ];
+  oldQuizze: Quizze;
 
   form: FormGroup = new FormGroup({
     question: new FormControl('', [Validators.required]),
@@ -82,9 +83,11 @@ export class QuizzFormComponent extends BaseTable implements OnInit, TableAction
           break;
       case this.ACTION.EDIT:
           this.MODE = this.ACTION.EDIT;
+          this.oldQuizze = event.data;
           this.form.patchValue( event.data );
           break;
       case this.ACTION.DELETE:
+          this.store.dispatch( new DeleteQuizze( event.data ) );
         break;
     }
   }
@@ -97,7 +100,11 @@ export class QuizzFormComponent extends BaseTable implements OnInit, TableAction
       this.store.dispatch( new SetQuizze( this.form.value ) );
       this.form.reset();
       this.submitted = false;
+    } else if ( this.MODE === this.ACTION.EDIT ) {
+      this.store.dispatch( new UpdateQuizze( this.oldQuizze, this.form.value ));
+      this.form.reset();
+      this.submitted = false;
+      this.MODE = this.ACTION.CREATE;
     }
-
   }
 }

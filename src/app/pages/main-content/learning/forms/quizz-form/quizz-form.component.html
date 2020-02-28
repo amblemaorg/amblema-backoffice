@@ -44,11 +44,19 @@
             <button 
                 type="submit" 
                 [ngClass]="{    
+                    'mr-xl-3' : MODE === ACTION.EDIT,
                     'btn-primary': MODE == ACTION.EDIT,
                     'btn-success': MODE == ACTION.CREATE}"
                 class="btn btn-success col-12 col-lg-auto">
                 <span *ngIf="MODE == ACTION.CREATE">Registrar</span>
                 <span *ngIf="MODE == ACTION.EDIT">Actualizar</span>
+            </button>
+
+            <button 
+                (click)="form.reset(); MODE = ACTION.CREATE"
+                *ngIf="MODE == ACTION.EDIT"
+                class="btn btn-outline-secondary col-12 col-xl-auto mt-3 mt-xl-0">
+                Cancelar
             </button>
         </div>
     </div>

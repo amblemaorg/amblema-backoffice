@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { TableActions, BaseTable } from 'src/app/helpers/base-table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, SetQuizze, UpdateQuizze, DeleteQuizze } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
-import { Quizze } from 'src/app/models/learning.model';
+import { Quizze, Learning } from 'src/app/models/learning.model';
 
 @Component({
   selector: 'app-quizz-form',
@@ -14,7 +14,10 @@ import { Quizze } from 'src/app/models/learning.model';
 export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, TableActions {
 
   @Select( LearningState.quizzes ) data$: Observable<Quizze[]>;
+  @Select( LearningState.learning ) learning$: Observable<Learning>;
   subscription: Subscription;
+
+  @Output() senddata = new EventEmitter<Learning>();
 
   quizzes: Quizze[ ];
   oldQuizze: Quizze;
@@ -93,9 +96,7 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
   }
 
   onSubmit() {
-
     this.submitted = true;
-
     if (this.MODE === this.ACTION.CREATE && this.form.valid ) {
       this.store.dispatch( new SetQuizze( this.form.value ) );
       this.form.reset();
@@ -106,5 +107,11 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
       this.submitted = false;
       this.MODE = this.ACTION.CREATE;
     }
+  }
+
+  onSaveAll() {
+    this.subscription = this.learning$.subscribe( response => {
+      this.senddata.emit(response);
+    });
   }
 }

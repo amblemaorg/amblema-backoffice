@@ -1,11 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, HostListener, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, Input, OnChanges } from '@angular/core';
+import { Learning } from 'src/app/models/learning.model';
 
 @Component({
   selector: 'app-stepper-content',
   templateUrl: './stepper-content.component.html',
   styles: ['./stepper-content.component.scss']
 })
-export class StepperContentComponent implements OnInit {
+export class StepperContentComponent implements OnInit, OnChanges {
 
   @Input() MODE: string;
 
@@ -19,6 +20,10 @@ export class StepperContentComponent implements OnInit {
 
   ngOnInit() {
     this.adaptStepper(window.innerWidth);
+  }
+
+  ngOnChanges(): void {
+    //console.log(this.MODE); 
   }
 
   @HostListener('window:resize', ['$event'])
@@ -36,4 +41,8 @@ export class StepperContentComponent implements OnInit {
     }
   }
 
+  onSaveLearning( learning: Learning) {
+    console.log('--------');
+    console.log(learning)
+  }
 }

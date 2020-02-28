@@ -88,6 +88,7 @@
     </div>
     <div class="col-6 col-lg-auto">
         <button 
+            (click)="onSaveAll()"
             [attr.disabled]=" quizzes.length > 0 ? null : true "
             class="next-button btn-primary btn col-12 col-lg-auto" 
             nbButton 

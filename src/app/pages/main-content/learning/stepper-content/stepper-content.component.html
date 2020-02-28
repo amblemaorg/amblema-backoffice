@@ -69,7 +69,7 @@
         </ng-template>
         <h4 *ngIf="!titleStep">Quizz</h4>
         <hr *ngIf="!titleStep">
-        <app-quizz-form></app-quizz-form>
+        <app-quizz-form (senddata)="onSaveLearning($event)"></app-quizz-form>
     </nb-step><!-- / End -->
 
     <!-- Final step -->

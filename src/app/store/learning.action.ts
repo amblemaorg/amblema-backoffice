@@ -4,6 +4,7 @@ import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { Slider } from '../models/web/slider.model';
+import { CustomToastrService } from '../services/custom-toastr.service';
 
 // -- State Model --
 
@@ -137,7 +138,8 @@ export class LearningState implements NgxsOnInit {
 
     constructor(
         private helper: Utility,
-        private learningService: LearningService
+        private learningService: LearningService, 
+        private toastr: CustomToastrService
     ) { }
 
     ngxsOnInit(ctx: StateContext<LearningStateModel>) {
@@ -153,13 +155,31 @@ export class LearningState implements NgxsOnInit {
 
     @Action(addLearning)
     addLearning(ctx: StateContext<LearningStateModel>, action : addLearning ) {
-        ctx.setState(patch({
-            ...ctx.getState(),
-            learnings: append([action.payload])
-        }));
-        
+        this.learningService.setLearning(action.payload).subscribe( response => {
+            ctx.setState(patch({
+                ...ctx.getState(),
+                learnings: append([action.payload]),
+                ...ctx.getState().learning,
+            }));
 
-        console.log(ctx.getState()); 
+            // -- Clear learning register --
+            ctx.patchState({
+                learning: {
+                    id: '',
+                    title: '',
+                    description: '',
+                    secondaryTitle: '',
+                    secondaryDescription: '',
+                    objectives: [],
+                    slider: [],
+                    images: [],
+                    duration: ' ',
+                    quizzes: []
+                }
+            })
+
+            this.toastr.registerSuccess("Registro", "Modulo de aprendizaje registrado correctamente.");    
+        });
     }
 
     // -- Step One --

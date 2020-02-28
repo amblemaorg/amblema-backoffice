@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row form-group">
         <div class="col-12">
             <app-input-custom 
@@ -41,7 +41,15 @@
                 [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12 text-right">
-            <button class="btn btn-success col-12 col-lg-auto">Registrar</button>
+            <button 
+                type="submit" 
+                [ngClass]="{    
+                    'btn-primary': MODE == ACTION.EDIT,
+                    'btn-success': MODE == ACTION.CREATE}"
+                class="btn btn-success col-12 col-lg-auto">
+                <span *ngIf="MODE == ACTION.CREATE">Registrar</span>
+                <span *ngIf="MODE == ACTION.EDIT">Actualizar</span>
+            </button>
         </div>
     </div>
 </form>
@@ -54,7 +62,10 @@
     <div class="col-12 form-group">
         <p class="font-weight-bold">Lista de Quizzes</p>
         <div class="table-responsive">
-            <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+            <ng2-smart-table 
+                (custom)="onAction($event)" 
+                [source]='quizzes' 
+                [settings]="settings"></ng2-smart-table>
         </div>
     </div>
 </div>
@@ -68,7 +79,11 @@
         </button>
     </div>
     <div class="col-6 col-lg-auto">
-        <button class="next-button btn-primary btn col-12 col-lg-auto" nbButton nbStepperNext>
+        <button 
+            [attr.disabled]=" quizzes.length > 0 ? null : true "
+            class="next-button btn-primary btn col-12 col-lg-auto" 
+            nbButton 
+            nbStepperNext>
             <span class="d-none d-sm-inline">Guardar</span>
             <nb-icon icon="save-outline"></nb-icon>
         </button>

@@ -31,7 +31,7 @@ export class SetLearningOne {
 
 export class UpdateLearningOne {
     static readonly type = '[Learning] Update Learning One';
-    constructor(public payload : Learning) { }
+    constructor(public payload: Learning) { }
 }
 
 // -- Step Two --
@@ -80,20 +80,20 @@ export class DeleteImage {
     constructor( public payload: Slider ) {}
 }
 
-// -- Step Five -- 
+// -- Step Five --
 
 export class SetQuizze {
-    static readonly type = '[Quizz] Set Quizze'; 
+    static readonly type = '[Quizz] Set Quizze';
     constructor( public payload: Quizze ) {}
 }
 
 export class UpdateQuizze {
-    static readonly type = '[Quizz] Update Quizze'; 
+    static readonly type = '[Quizz] Update Quizze';
     constructor( public oldQuizze: Quizze, public newQuizze: Quizze ) {}
 }
 
 export class DeleteQuizze {
-    static readonly type = '[Quizz] Delete Quizze'; 
+    static readonly type = '[Quizz] Delete Quizze';
     constructor( public payload: Quizze ) {}
 }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, Input, OnChanges } from '@angular/core';
 import { Learning } from 'src/app/models/learning.model';
+import { Store } from '@ngxs/store';
+import { addLearning } from 'src/app/store/learning.action';
 
 @Component({
   selector: 'app-stepper-content',
@@ -16,7 +18,9 @@ export class StepperContentComponent implements OnInit, OnChanges {
   titleStep = true; // < -- To show or hide titles
   orientation = 'horizontal';
 
-  constructor() { }
+  constructor(
+    private store: Store
+  ) { }
 
   ngOnInit() {
     this.adaptStepper(window.innerWidth);
@@ -42,7 +46,6 @@ export class StepperContentComponent implements OnInit, OnChanges {
   }
 
   onSaveLearning( learning: Learning) {
-    console.log('--------');
-    console.log(learning)
+    this.store.dispatch(new addLearning(learning));
   }
 }

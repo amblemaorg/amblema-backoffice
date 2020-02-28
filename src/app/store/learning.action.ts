@@ -18,8 +18,9 @@ export class GetLearnings {
     static readonly type = '[Learnings] Get Learnings';
 }
 
-export class GetLearning {
-    static readonly type = '[Learning] Get Learning';
+export class addLearning {
+    static readonly type = '[Learning] Add Learning';
+    constructor( public payload: Learning ) {}
 }
 
 // -- Step One --
@@ -148,6 +149,17 @@ export class LearningState implements NgxsOnInit {
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
 
+    }
+
+    @Action(addLearning)
+    addLearning(ctx: StateContext<LearningStateModel>, action : addLearning ) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learnings: append([action.payload])
+        }));
+        
+
+        console.log(ctx.getState()); 
     }
 
     // -- Step One --

@@ -22,12 +22,20 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
   quizzes: Quizze[ ];
   oldQuizze: Quizze;
 
+  anwers :any = [
+    { value: 'optionA', label: 'Opción A' },
+    { value: 'optionB', label: 'Opción B' },
+    { value: 'optionC', label: 'Opción C' },
+    { value: 'optionD', label: 'Opción D' },
+  ];
+
   form: FormGroup = new FormGroup({
     question: new FormControl('', [Validators.required]),
     optionA: new FormControl('', [Validators.required]),
     optionB: new FormControl('', [Validators.required]),
     optionC: new FormControl('', [Validators.required]),
     optionD: new FormControl('', [Validators.required]),
+    correctOption: new FormControl(this.anwers[0].value, [Validators.required])
   });
   submitted = false;
 
@@ -49,7 +57,7 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
         type: 'string'
       },
       optionA: {
-        title: 'Respuesta A (Respuesta correcta)',
+        title: 'Respuesta A',
         type: 'string',
       },
       optionB: {
@@ -64,6 +72,21 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
         title: 'Respuesta D',
         type: 'string',
       },
+      correctOption: {
+        title: "Respuesta",
+        type: 'string', 
+        valuePrepareFunction: (value) => {
+          if (value === this.anwers[0].value) {
+            return 'A';
+          } else if (value === this.anwers[1].value) {
+            return 'B';
+          } else if (value === this.anwers[2].value) {
+            return 'C';
+          } else if (value === this.anwers[3].value) {
+            return 'D';
+          }
+        }
+      }
     };
   }
 

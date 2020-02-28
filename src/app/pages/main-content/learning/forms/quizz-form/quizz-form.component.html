@@ -13,7 +13,7 @@
                 [control]="form.get('optionA')"
                 [id]="'a'"
                 [submitted]="submitted"
-                [label]="'Respuesta A (Respuesta correcta)'"
+                [label]="'Respuesta A'"
                 [placeholder]="'Respuesta'"></app-input-custom>
         </div>
         <div class="col-12">
@@ -40,6 +40,19 @@
                 [label]="'Respuesta D'"
                 [placeholder]="'Respuesta'"></app-input-custom>
         </div>
+
+        <div class="col-12">
+            <label class="label d-block">Respuesta correcta</label>
+            <nb-radio-group 
+                formControlName="correctOption"
+                class="d-inline-flex"
+                [status]="'primary'">
+                <nb-radio
+                    *ngFor="let option of anwers"
+                    [value]="option.value">{{ option.label }}</nb-radio>
+              </nb-radio-group>
+        </div>
+
         <div class="col-12 text-right">
             <button 
                 type="submit" 

@@ -1,5 +1,6 @@
 import { Inject } from '@angular/core';
 import { STATUS } from './text-content/status';
+import { Post } from '../models/web/blog.model';
 
 @Inject('root')
 export class Utility {
@@ -34,5 +35,38 @@ export class Utility {
                 return value;
             }
         });
+    }
+
+    /**
+     * Convert Tags number to string
+     */
+    public convertTagsNumberToString(data: any): Post[] {
+        for (let index = 0; index < data.length; index++) {
+            data[index].tag = data[index].tag === "1" ? "Ambiente" :
+                data[index].tag === "2" ? "Lectura" :
+                    data[index].tag === "3" ? "Matemáticas" : "Otra"
+        }
+        return data;
+    }
+
+    public convertTagStringToNumber(post: Post): Post {
+        post.tag = post.tag === "Ambiente" ? "1" :
+            post.tag === "Lectura" ? "2" :
+                post.tag === "Matemáticas" ? "3" : "4";
+
+        return post; 
+    }
+
+    public convertStatusPostToString( data: any ) : Post[ ] {
+        for (let index = 0; index < data.length; index++) {
+            data[index].status = data[index].status === "1" ? "Publicádo" : "No publicádo"; 
+        }
+        return data;    
+    }
+
+    public convertStatusPostToNumber( post: Post ): Post {
+        post.status = post.status === "Publicádo" ? "1" : "2"
+
+        return post; 
     }
 }

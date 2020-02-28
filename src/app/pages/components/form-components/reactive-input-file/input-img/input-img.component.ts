@@ -17,7 +17,7 @@ import { AbstractControl, FormControl } from '@angular/forms';
           class="input-file"
           (change)="onLoadPicture($event)"
           (click)="onClick($event)">
-      <img [src]="control.value" class="img-fluid position-absolute w-100 h-100" alt="">
+      <img *ngIf="control.value" [src]="control.value" class="img-fluid position-absolute w-100 h-100" alt="">
         <i class="text-info fa fa-camera fa-2x"></i>
       </label>
     </div>

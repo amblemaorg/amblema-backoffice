@@ -56,9 +56,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   onDeletePost( post: Post ) {
-
     this.store.dispatch( new DeletePost( post ) );
-
   }
 
   // -- Send post edited --

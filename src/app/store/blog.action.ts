@@ -3,6 +3,7 @@ import { NgxsOnInit, StateContext, State, Action, Selector } from '@ngxs/store';
 import { BlogService } from '../services/web-content/blog.service';
 import { CustomToastrService } from '../services/custom-toastr.service';
 import { append, updateItem, removeItem, patch } from '@ngxs/store/operators';
+import { Utility } from '../helpers/utility';
 
 // -- Post Actions --
 
@@ -43,6 +44,7 @@ export class PostsState implements NgxsOnInit {
     }
 
     constructor(
+        private helper: Utility,
         private toastr: CustomToastrService,
         private blogService: BlogService
     ) {}
@@ -51,13 +53,21 @@ export class PostsState implements NgxsOnInit {
     getPosts(ctx: StateContext<Post[]>) {
         return this.blogService.getPosts()
             .subscribe(response => {
-                ctx.setState( response );
+                response = this.helper.convertTagsNumberToString(response);
+                response = this.helper.convertStatusPostToString(response);
+                ctx.setState( response ); 
             });
     }
 
     @Action(SetPost)
     setPost( ctx: StateContext<Post[]>, action: SetPost ) {
-        this.blogService.setPost(  action.payload ).subscribe(  response => {
+
+        let data: Post = action.payload; 
+
+        data = this.helper.convertTagStringToNumber(data);
+        data = this.helper.convertStatusPostToNumber(data); 
+
+        this.blogService.setPost(  data ).subscribe(  response => {
             ctx.setState(append([action.payload]));
             this.toastr.registerSuccess('Registro Post', 'Nuevo post registrado');
         }, (err: any) => {
@@ -67,7 +77,12 @@ export class PostsState implements NgxsOnInit {
 
     @Action( UpdatePost )
     updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
-        this.blogService.updatePost( action.newPost.id, action.newPost ).subscribe( response => {
+        let newdata: Post = action.newPost; 
+
+        newdata = this.helper.convertTagStringToNumber(newdata);
+        newdata = this.helper.convertStatusPostToNumber(newdata);         
+
+        this.blogService.updatePost( action.newPost.id, newdata ).subscribe( response => {
             this.toastr.updateSuccess('Actualización', 'Post actualizado correctamente');
             ctx.setState(
                 updateItem<Post>(post => post === action.oldPost, action.newPost)

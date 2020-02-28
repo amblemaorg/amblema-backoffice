@@ -15,6 +15,15 @@
                 [id]="'main-secondary'"></app-input-img>
         </div>
 
+        <div class="col-12 form-group">
+            <app-input-custom 
+                [placeholder]="'Titulo'"
+                [label]="'Titulo'"                    
+                [submitted]="submitted"
+                [control]="formBlog.get('title')"
+                [id]="'post-title'"></app-input-custom>
+        </div>    
+
         <div class="col-12">
             <app-text-area-custom 
                 [submitted]="submitted"
@@ -22,6 +31,19 @@
                 [placeholder]="'Contenido'"
                 [label]="'Contenido'"></app-text-area-custom>
         </div>
+
+        <div class="col-6">
+            <app-select-tag 
+                [submitted]="submitted"
+                [control]="formBlog.get('tag')"></app-select-tag>
+        </div>
+
+        <div class="col-6">
+            <app-select-post-status 
+                [submitted]="submitted"
+                [control]="formBlog.get('status')"></app-select-post-status>
+        </div>
+
     </form>
 
     <button button (click)="onSubmit()" type="submit" class="btn btn-primary col-6 col-md-auto">

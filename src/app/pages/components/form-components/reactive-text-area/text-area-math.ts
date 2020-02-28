@@ -5,7 +5,7 @@ import { AbstractReactive } from '../abstract-reactive';
     selector: 'app-text-area-math',
     template: `
         <div class="form-group">
-            <label for='math' class="label">Matemática</label>
+            <label for='math' class="label">Matemáticas</label>
             <textarea
                 id='math'
                 name='math'
@@ -13,7 +13,7 @@ import { AbstractReactive } from '../abstract-reactive';
                 fullWidth
                 rows="5"
                 [formControl]="control"
-                [placeholder]="'Matemática'"></textarea>
+                [placeholder]="'Matemáticas'"></textarea>
             <app-reactive-validation [patternMessage]='patternMsg' [validationErrors]="validationErrors"></app-reactive-validation>
         </div>
     `

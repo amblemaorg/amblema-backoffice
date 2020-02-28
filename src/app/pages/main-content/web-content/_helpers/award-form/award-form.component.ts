@@ -30,6 +30,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
     this.form = this.formBuilder.group({
       image: new FormControl( '', [Validators.required] ),
       image2: new FormControl( '', [Validators.required] ),
+      image3: new FormControl('', [Validators.required]),
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       description2: new FormControl('', [Validators.required])

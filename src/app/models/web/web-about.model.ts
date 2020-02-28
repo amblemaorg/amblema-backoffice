@@ -3,7 +3,8 @@ import { Slider } from './slider.model';
 export interface Award {
     title: string;
     image: string;
-    image2: 'str (url o base64)';
+    image2: string;
+    image3: string;
     description: string;
     description2: string;
 }

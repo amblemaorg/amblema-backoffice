@@ -1,14 +1,28 @@
 <form [formGroup]="form" class="row form-group" (ngSubmit)="onSubmit()">
-    <div class="col-12 col-lg-auto">
-        <app-input-img 
-            [id]="'award-img'"
-            [control]="form.get('image')"></app-input-img>
-        <div class="mt-3"></div>
-        <app-input-img 
-            [control]="form.get('image2')"
-            [id]="'award-img-2'"></app-input-img>
+    <div class="col-12 form-group">
+        <div class="row">
+            <div class="mb-3 mb-md-0 col-md">
+                <label class="label w-100 text-center">Vista previa</label>
+                <app-input-img 
+                    [id]="'preview'"
+                    [control]="form.get('image')"></app-input-img>
+            </div>
+            <div class="mb-3 mb-md-0 col-md">
+                <label class="label w-100 text-center">Primera imagen</label>
+                <app-input-img 
+                    [control]="form.get('image2')"
+                    [id]="'award-img-2'"></app-input-img>
+
+            </div>
+            <div class="mb-3 mb-md-0 col-md">
+                <label class="label w-100 text-center">Segunda imagen</label>
+                <app-input-img 
+                    [control]="form.get('image3')"
+                    [id]="'award-img-3'"></app-input-img>
+            </div>
+        </div>
     </div>
-    <div class="col-12 col-lg">
+    <div class="col-12">
         <div class="row">
             <div class="col-12 col-lg-12">
                 <app-input-custom 

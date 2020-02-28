@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TableActions, BaseTable } from 'src/app/helpers/base-table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
@@ -11,7 +11,7 @@ import { Quizze } from 'src/app/models/learning.model';
   templateUrl: './quizz-form.component.html',
   styles: []
 })
-export class QuizzFormComponent extends BaseTable implements OnInit, TableActions {
+export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, TableActions {
 
   @Select( LearningState.quizzes ) data$: Observable<Quizze[]>;
   subscription: Subscription;
@@ -88,7 +88,7 @@ export class QuizzFormComponent extends BaseTable implements OnInit, TableAction
           break;
       case this.ACTION.DELETE:
           this.store.dispatch( new DeleteQuizze( event.data ) );
-        break;
+          break;
     }
   }
 
@@ -96,11 +96,11 @@ export class QuizzFormComponent extends BaseTable implements OnInit, TableAction
 
     this.submitted = true;
 
-    if (this.MODE === this.ACTION.CREATE ) {
+    if (this.MODE === this.ACTION.CREATE && this.form.valid ) {
       this.store.dispatch( new SetQuizze( this.form.value ) );
       this.form.reset();
       this.submitted = false;
-    } else if ( this.MODE === this.ACTION.EDIT ) {
+    } else if ( this.MODE === this.ACTION.EDIT && this.form.valid ) {
       this.store.dispatch( new UpdateQuizze( this.oldQuizze, this.form.value ));
       this.form.reset();
       this.submitted = false;

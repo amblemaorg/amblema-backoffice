@@ -2,7 +2,7 @@
 
     <!-- State -->
     <div class="col-12 col-lg-6 form-group">
-        <label for="state" class="label">Estados</label>
+        <label for="state" class="label">Estado</label>
         <select fullWidth name="state" id="state" hero [formControl]='state' class="form-control form-group"
             (change)="onSelectState($event.target.value)">
             <option disabled [value]="null">- Seleccione un estado -</option>
@@ -19,7 +19,7 @@
 
             <!-- Fields -->
             <div class="col">
-                <label for="municipality" class="label">Municipios</label>
+                <label for="municipality" class="label">Municipio</label>
 
                 <!-- Select -->
                 <select *ngIf="MODE == 'NORMAL'" fullWidth name="municipality" id="municipality" hero

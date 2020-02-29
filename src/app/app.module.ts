@@ -29,7 +29,7 @@ registerLocaleData(localeVe, 'es-VE');
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

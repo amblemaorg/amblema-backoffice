@@ -78,7 +78,7 @@ export class PostsState implements NgxsOnInit {
     }
 
     @Action( UpdatePost )
-    updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {        
+    updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
         let data: Post = action.newPost;
 
         data = this.helper.convertTagStringToNumber(data);
@@ -86,7 +86,7 @@ export class PostsState implements NgxsOnInit {
 
         this.blogService.updatePost( action.newPost.id, data ).subscribe( response => {
             this.toastr.updateSuccess('Actualización', 'Post actualizado correctamente');
-            
+
             response = this.helper.convertTagsNumberToString([response])[0];
             response = this.helper.convertStatusPostToString([response])[0];
 

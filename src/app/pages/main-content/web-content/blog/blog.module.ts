@@ -12,9 +12,8 @@ import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/m
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import { SearchPostPipe } from 'src/app/pipes/search-post.pipe';
+import { PaginatorModule } from 'src/app/pages/components/shared/paginator/paginator.module';
 
 @NgModule({
   declarations: [
@@ -33,10 +32,9 @@ import { SearchPostPipe } from 'src/app/pipes/search-post.pipe';
     NbIconModule,
     NbBadgeModule,
     NbAlertModule,
-    Ng2SearchPipeModule,
-    Ng2FilterPipeModule,
 
     // Add custom module
+    PaginatorModule, 
     ReactiveSelectModule,
     ReactiveInputModule,
     ReactiveTextAreaModule,

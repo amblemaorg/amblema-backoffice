@@ -61,7 +61,7 @@ export class Utility {
     public convertStatusPostToString( data: any ): Post[ ] {
         data.forEach( (value, key) => {
             value.status = value.status === '1' ? 'Publicádo' : 'No publicádo';
-            
+
         });
         return data;
     }

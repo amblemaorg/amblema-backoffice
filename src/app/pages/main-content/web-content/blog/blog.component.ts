@@ -18,7 +18,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   posts: Post[ ];
-  searchText;
+  query;
 
   filterPost: any = { tag: '', title: '' };
   // -- Form settings --
@@ -26,6 +26,8 @@ export class BlogComponent implements OnInit, OnDestroy {
   ACTION = ACTION;
   MODE = ACTION.CREATE;
   postSelected: Post;
+
+  pageOfItems: Array<any>;
 
   constructor(
     private store: Store
@@ -63,5 +65,10 @@ export class BlogComponent implements OnInit, OnDestroy {
   // -- Send post edited --
   onEditPostForm( post: Post[] ) {
     this.store.dispatch( new UpdatePost( post[0], post[1] ) );
+  }
+
+  onChangePage(pageOfItems: Array<any>) {
+    // update current page of items
+    this.pageOfItems = pageOfItems;
   }
 }

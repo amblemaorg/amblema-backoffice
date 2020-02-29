@@ -11,7 +11,7 @@
                                 autocomplete="off"
                                 type="text" 
                                 nbInput 
-                                placeholder="Buscar" 
+                                placeholder="Buscar por titulo o etiqueta..." 
                                 fullWidth 
                                 class="col border-right-0">
                             <div class="input-group-append">
@@ -32,7 +32,7 @@
 </div>
 
 <div class="columm-post">
-    <div class="card-post" *ngFor="let item of data$ | async | search: query">
+    <div class="card-post" *ngFor="let item of pageOfItems | search: query">
         <app-blog-card 
             (edit)="onEditPost($event)"
             (delete)="onDeletePost($event)"
@@ -40,9 +40,20 @@
     </div>
 </div>
 
-<nb-card *ngIf="(posts.length <= 0) || ((data$ | async | filter: searchText).length === 0)">
-    <nb-card-body>
+<nb-card *ngIf="(posts.length <= 0) || ((data$ | async | search: query).length === 0)">
+    <nb-card-body class="fadeIn">
         <nb-alert status="warning" class="mb-0">No hay registro de posts.</nb-alert>
+    </nb-card-body>
+</nb-card>
+
+<nb-card [ngClass]="{'d-none': posts.length <= 10}">
+    <nb-card-body class="d-flex justify-content-center">
+        <app-paginator 
+            [initialPage]="1"
+            [maxPages]="5"
+            [pageSize]="10"
+            [items]="data$ | async"
+            (changePage)="onChangePage($event)"></app-paginator>
     </nb-card-body>
 </nb-card>
 

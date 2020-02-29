@@ -34,7 +34,7 @@ import { PaginatorModule } from 'src/app/pages/components/shared/paginator/pagin
     NbAlertModule,
 
     // Add custom module
-    PaginatorModule, 
+    PaginatorModule,
     ReactiveSelectModule,
     ReactiveInputModule,
     ReactiveTextAreaModule,

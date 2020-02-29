@@ -32,14 +32,12 @@
 </div>
 
 <div class="columm-post">
-
-    <div class="card-post" *ngFor="let item of data$ | async | filter:searchText">
+    <div class="card-post" *ngFor="let item of data$ | async | filterBy:tag">
         <app-blog-card 
             (edit)="onEditPost($event)"
             (delete)="onDeletePost($event)"
             [data]="item"></app-blog-card>
     </div>
-
 </div>
 
 <nb-card *ngIf="(posts.length <= 0) || ((data$ | async | filter: searchText).length === 0)">

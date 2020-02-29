@@ -44,7 +44,7 @@
 
 <nb-card *ngIf="(posts.length <= 0) || ((data$ | async | filter: searchText).length === 0)">
     <nb-card-body>
-        No hay registro de posts.
+        <nb-alert status="warning" class="mb-0">No hay registro de posts.</nb-alert>
     </nb-card-body>
 </nb-card>
 

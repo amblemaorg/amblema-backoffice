@@ -17,7 +17,7 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
   @Select( LearningState.learnings ) learnings$: Observable<Learning[]>;
   subscription: Subscription;
 
-  learnings: Learning[ ]; 
+  learnings: Learning[ ];
 
   constructor(
     private store: Store
@@ -47,33 +47,33 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
     };
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
 
     this.subscription = this.learnings$.subscribe( response => {
       this.learnings = response;
     });
-  }  
+  }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe();
     }
   }
 
-  // -- CRUD -- 
+  // -- CRUD --
 
   onAction(event: any) {
     switch (event.action) {
       case this.ACTION.CREATE:
-        this.MODE = this.ACTION.CREATE; 
+        this.MODE = this.ACTION.CREATE;
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
         break;
-      case this.ACTION.DELETE: 
+      case this.ACTION.DELETE:
         this.store.dispatch(new DeleteLearning(event.data));
-        break; 
+        break;
     }
   }
 }

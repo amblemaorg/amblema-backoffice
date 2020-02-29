@@ -22,14 +22,14 @@ import { Validators } from '@angular/forms';
 })
 export class SelectTagComponent extends AbstractReactiveSelect implements OnInit {
   readonly tags = [
-    { value: 'Ambiente', label: 'Ambiente' }, 
+    { value: 'Ambiente', label: 'Ambiente' },
     { value: 'Lectura', label: 'Lectura' },
-    { value: 'Matemáticas', label: 'Matemáticas' }, 
-    { value: 'otra', label: 'otra' }, 
-  ]
+    { value: 'Matemáticas', label: 'Matemáticas' },
+    { value: 'otra', label: 'otra' },
+  ];
 
   constructor() {
-    super()
+    super();
   }
 
   ngOnInit() {

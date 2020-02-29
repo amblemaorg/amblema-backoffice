@@ -23,12 +23,12 @@ import { Validators } from '@angular/forms';
 export class SelectPostStatusComponent extends AbstractReactiveSelect implements OnInit {
 
   readonly tags = [
-    { value: 'Publicádo', label: 'Publicádo' }, 
+    { value: 'Publicádo', label: 'Publicádo' },
     { value: 'No publicádo', label: 'No publicádo' }
-  ]
+  ];
 
   constructor() {
-    super()
+    super();
   }
 
   ngOnInit() {

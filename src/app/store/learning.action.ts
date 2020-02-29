@@ -19,14 +19,14 @@ export class GetLearnings {
     static readonly type = '[Learnings] Get Learnings';
 }
 
-export class addLearning {
+export class AddLearning {
     static readonly type = '[Learning] Add Learning';
     constructor( public payload: Learning ) {}
 }
 
 export class DeleteLearning {
-    static readonly type = '[Learning] Delete Learning'; 
-    constructor( public payload: Learning ) {} 
+    static readonly type = '[Learning] Delete Learning';
+    constructor( public payload: Learning ) {}
 }
 
 // -- Step One --
@@ -132,8 +132,8 @@ export class LearningState implements NgxsOnInit {
     }
 
     @Selector()
-    static learnings(state: LearningStateModel) : Learning[ ] | null {
-        return state.learnings; 
+    static learnings(state: LearningStateModel): Learning[ ] | null {
+        return state.learnings;
     }
 
     @Selector()
@@ -148,7 +148,7 @@ export class LearningState implements NgxsOnInit {
 
     constructor(
         private helper: Utility,
-        private learningService: LearningService, 
+        private learningService: LearningService,
         private toastr: CustomToastrService
     ) { }
 
@@ -164,12 +164,12 @@ export class LearningState implements NgxsOnInit {
             ctx.setState(patch({
                 ...ctx.getState(),
                 learnings: response
-            })) 
-        }); 
+            }));
+        });
     }
 
-    @Action(addLearning)
-    addLearning(ctx: StateContext<LearningStateModel>, action : addLearning ) {
+    @Action(AddLearning)
+    addLearning(ctx: StateContext<LearningStateModel>, action: AddLearning ) {
         this.learningService.setLearning(action.payload).subscribe( response => {
             ctx.setState(patch({
                 ...ctx.getState(),
@@ -190,22 +190,22 @@ export class LearningState implements NgxsOnInit {
                     duration: ' ',
                     quizzes: []
                 }
-            })
+            });
 
-            this.toastr.registerSuccess("Registro", "Modulo de aprendizaje registrado correctamente.");    
+            this.toastr.registerSuccess('Registro', 'Modulo de aprendizaje registrado correctamente.');
         });
     }
 
     @Action(DeleteLearning)
-    deleteLearning( ctx : StateContext<LearningStateModel>, action: DeleteLearning ) {
+    deleteLearning( ctx: StateContext<LearningStateModel>, action: DeleteLearning ) {
         this.learningService.deleteLearning( action.payload.id ).subscribe( response => {
             ctx.setState( patch({
                 ...ctx.getState(),
                 learnings: removeItem<Learning>(learning => learning === action.payload)
             }) );
 
-            this.toastr.deleteRegister("Eliminación", "Modulo de aprendizaje eliminado");  
-        }, (err:any) => console.log(err)); 
+            this.toastr.deleteRegister('Eliminación', 'Modulo de aprendizaje eliminado');
+        }, (err: any) => console.log(err));
     }
 
     // -- Step One --

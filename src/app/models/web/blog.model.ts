@@ -6,6 +6,6 @@ export interface Post {
     image: string;
     image2: string;
     text: string;
-    status: string; 
+    status: string;
     updateAt?: string;
 }

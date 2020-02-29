@@ -22,7 +22,7 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
   quizzes: Quizze[ ];
   oldQuizze: Quizze;
 
-  anwers :any = [
+  anwers: any = [
     { value: 'optionA', label: 'Opción A' },
     { value: 'optionB', label: 'Opción B' },
     { value: 'optionC', label: 'Opción C' },
@@ -73,8 +73,8 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
         type: 'string',
       },
       correctOption: {
-        title: "Respuesta",
-        type: 'string', 
+        title: 'Respuesta',
+        type: 'string',
         valuePrepareFunction: (value) => {
           if (value === this.anwers[0].value) {
             return 'A';
@@ -124,13 +124,13 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
       this.store.dispatch( new SetQuizze( this.form.value ) );
       this.form.reset();
       this.submitted = false;
-      this.form.controls['correctOption'].value(this.anwers[0].value);
+      this.form.controls.correctOption.value(this.anwers[0].value);
     } else if ( this.MODE === this.ACTION.EDIT && this.form.valid ) {
       this.store.dispatch( new UpdateQuizze( this.oldQuizze, this.form.value ));
       this.form.reset();
       this.submitted = false;
       this.MODE = this.ACTION.CREATE;
-      this.form.controls['correctOption'].value(this.anwers[0].value);
+      this.form.controls.correctOption.value(this.anwers[0].value);
     }
   }
 

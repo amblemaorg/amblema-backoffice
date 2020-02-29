@@ -41,32 +41,35 @@ export class Utility {
      * Convert Tags number to string
      */
     public convertTagsNumberToString(data: any): Post[] {
-        for (let index = 0; index < data.length; index++) {
-            data[index].tag = data[index].tag === "1" ? "Ambiente" :
-                data[index].tag === "2" ? "Lectura" :
-                    data[index].tag === "3" ? "Matemáticas" : "Otra"
+
+        for (const index of data) {
+            data[index].tag = data[index].tag === '1' ? 'Ambiente' :
+                data[index].tag === '2' ? 'Lectura' :
+                    data[index].tag === '3' ? 'Matemáticas' : 'Otra';
         }
         return data;
     }
 
     public convertTagStringToNumber(post: Post): Post {
-        post.tag = post.tag === "Ambiente" ? "1" :
-            post.tag === "Lectura" ? "2" :
-                post.tag === "Matemáticas" ? "3" : "4";
+        post.tag = post.tag === 'Ambiente' ? '1' :
+            post.tag === 'Lectura' ? '2' :
+                post.tag === 'Matemáticas' ? '3' : '4';
 
-        return post; 
+        return post;
     }
 
-    public convertStatusPostToString( data: any ) : Post[ ] {
-        for (let index = 0; index < data.length; index++) {
-            data[index].status = data[index].status === "1" ? "Publicádo" : "No publicádo"; 
+    public convertStatusPostToString( data: any ): Post[ ] {
+
+        for (const index of data) {
+            data[index].status = data[index].status === '1' ? 'Publicádo' : 'No publicádo';
+
         }
-        return data;    
+        return data;
     }
 
     public convertStatusPostToNumber( post: Post ): Post {
-        post.status = post.status === "Publicádo" ? "1" : "2"
+        post.status = post.status === 'Publicádo' ? '1' : '2';
 
-        return post; 
+        return post;
     }
 }

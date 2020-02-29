@@ -32,11 +32,11 @@ export class BlogFormComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private store: Store ) {
       this.formBlog = this.formBuilder.group({
-        title: new FormControl(' ', [Validators.required]), 
-        tag: new FormControl("Ambiente",[Validators.required]), 
+        title: new FormControl(' ', [Validators.required]),
+        tag: new FormControl('Ambiente', [Validators.required]),
         image : new FormControl('', [Validators.required]),
         image2 : new FormControl('', [Validators.required]),
-        status: new FormControl("Publicádo",[Validators.required]),
+        status: new FormControl('Publicádo', [Validators.required]),
         text : new FormControl('', [Validators.required])
       }); // <-- Form Blog to create edit
   }
@@ -46,7 +46,11 @@ export class BlogFormComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     if ( this.MODE === ACTION.EDIT ) {
       this.formBlog.patchValue( this.DATA );
-    } else { this.formBlog.reset(); }
+    } else {
+      this.formBlog.reset();
+      this.formBlog.controls.tag.setValue('Ambiente');
+      this.formBlog.controls.status.setValue('Publicádo');
+    }
   }
 
   onSubmit() {
@@ -66,8 +70,8 @@ export class BlogFormComponent implements OnInit, OnChanges {
       if ( this.MODE === this.ACTION.CREATE ) {
         this.register.emit( this.formBlog.value );
         this.formBlog.reset();
-        this.formBlog.controls['tag'].setValue("Ambiente");
-        this.formBlog.controls['status'].setValue("Publicádo");
+        this.formBlog.controls.tag.setValue('Ambiente');
+        this.formBlog.controls.status.setValue('Publicádo');
         this.submitted = false;
       } else if ( this.MODE === this.ACTION.EDIT ) {
 

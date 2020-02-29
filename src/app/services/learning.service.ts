@@ -29,7 +29,7 @@ export class LearningService {
       return this.httpClient.post<Learning>(`${environment.api}${this.LEARNING}`, data );
   }
 
-  deleteLearning(id:string) : Observable<Learning> {
+  deleteLearning(id: string): Observable<Learning> {
     return this.httpClient.delete<Learning>(`${environment.api}${this.LEARNING}/${id}`);
   }
 }

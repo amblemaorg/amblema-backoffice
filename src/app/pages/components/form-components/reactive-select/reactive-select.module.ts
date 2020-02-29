@@ -22,7 +22,7 @@ import { SelectPostStatusComponent } from './select-post-status.component';
     SelectRoleComponent,
     SelectStatusComponent,
     SelectTypeComponent,
-    SelectSexComponent, 
+    SelectSexComponent,
     SelectTagComponent,
     SelectPostStatusComponent
   ],

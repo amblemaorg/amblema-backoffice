@@ -55,20 +55,22 @@ export class PostsState implements NgxsOnInit {
             .subscribe(response => {
                 response = this.helper.convertTagsNumberToString(response);
                 response = this.helper.convertStatusPostToString(response);
-                ctx.setState( response ); 
+                ctx.setState( response );
             });
     }
 
     @Action(SetPost)
     setPost( ctx: StateContext<Post[]>, action: SetPost ) {
 
-        let data: Post = action.payload; 
+        let data: Post = action.payload;
 
         data = this.helper.convertTagStringToNumber(data);
-        data = this.helper.convertStatusPostToNumber(data); 
+        data = this.helper.convertStatusPostToNumber(data);
 
         this.blogService.setPost(  data ).subscribe(  response => {
-            ctx.setState(append([action.payload]));
+            response = this.helper.convertTagsNumberToString([response])[0];
+            response = this.helper.convertStatusPostToString([response])[0];
+            ctx.setState(append([response]));
             this.toastr.registerSuccess('Registro Post', 'Nuevo post registrado');
         }, (err: any) => {
             this.toastr.error('Error', 'No se ha completado el registro.');
@@ -77,15 +79,19 @@ export class PostsState implements NgxsOnInit {
 
     @Action( UpdatePost )
     updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
-        let newdata: Post = action.newPost; 
+        let newdata: Post = action.newPost;
 
         newdata = this.helper.convertTagStringToNumber(newdata);
-        newdata = this.helper.convertStatusPostToNumber(newdata);         
+        newdata = this.helper.convertStatusPostToNumber(newdata);
 
         this.blogService.updatePost( action.newPost.id, newdata ).subscribe( response => {
             this.toastr.updateSuccess('Actualización', 'Post actualizado correctamente');
+
+            response = this.helper.convertTagsNumberToString([response])[0];
+            response = this.helper.convertStatusPostToString([response])[0];
+
             ctx.setState(
-                updateItem<Post>(post => post === action.oldPost, action.newPost)
+                updateItem<Post>(post => post === action.oldPost, response)
             );
         }, (err: any) => console.log(err));
     }

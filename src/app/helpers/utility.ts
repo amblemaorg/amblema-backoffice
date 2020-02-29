@@ -41,8 +41,8 @@ export class Utility {
      * Convert Tags number to string
      */
     public convertTagsNumberToString(data: any): Post[] {
-
-        for (const index of data) {
+        
+        for (let index = 0; index < data.length; index++) {
             data[index].tag = data[index].tag === '1' ? 'Ambiente' :
                 data[index].tag === '2' ? 'Lectura' :
                     data[index].tag === '3' ? 'Matemáticas' : 'Otra';
@@ -59,10 +59,8 @@ export class Utility {
     }
 
     public convertStatusPostToString( data: any ): Post[ ] {
-
-        for (const index of data) {
+        for (let index = 0; index < data.length; index++) {
             data[index].status = data[index].status === '1' ? 'Publicádo' : 'No publicádo';
-
         }
         return data;
     }

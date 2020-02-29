@@ -78,21 +78,22 @@ export class PostsState implements NgxsOnInit {
     }
 
     @Action( UpdatePost )
-    updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
-        let newdata: Post = action.newPost;
+    updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {        
+        let data: Post = action.newPost;
 
-        newdata = this.helper.convertTagStringToNumber(newdata);
-        newdata = this.helper.convertStatusPostToNumber(newdata);
+        data = this.helper.convertTagStringToNumber(data);
+        data = this.helper.convertStatusPostToNumber(data);
 
-        this.blogService.updatePost( action.newPost.id, newdata ).subscribe( response => {
+        this.blogService.updatePost( action.newPost.id, data ).subscribe( response => {
             this.toastr.updateSuccess('Actualización', 'Post actualizado correctamente');
-
+            
             response = this.helper.convertTagsNumberToString([response])[0];
             response = this.helper.convertStatusPostToString([response])[0];
 
             ctx.setState(
-                updateItem<Post>(post => post === action.oldPost, response)
+                updateItem<Post>(post => post.id === action.oldPost.id, response)
             );
+
         }, (err: any) => console.log(err));
     }
 

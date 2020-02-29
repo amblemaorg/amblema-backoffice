@@ -25,7 +25,7 @@ export class SelectTagComponent extends AbstractReactiveSelect implements OnInit
     { value: 'Ambiente', label: 'Ambiente' },
     { value: 'Lectura', label: 'Lectura' },
     { value: 'Matemáticas', label: 'Matemáticas' },
-    { value: 'otra', label: 'otra' },
+    { value: 'Otra', label: 'Otra' },
   ];
 
   constructor() {

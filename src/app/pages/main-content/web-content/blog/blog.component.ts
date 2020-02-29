@@ -61,7 +61,6 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   // -- Send post edited --
   onEditPostForm( post: Post[] ) {
-    console.log(post);
     this.store.dispatch( new UpdatePost( post[0], post[1] ) );
   }
 }

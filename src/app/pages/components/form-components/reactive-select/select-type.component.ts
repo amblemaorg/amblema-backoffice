@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
 import { Validators } from '@angular/forms';
 
@@ -12,6 +12,7 @@ import { Validators } from '@angular/forms';
                 id="type"
                 class="form-control form-group"
                 [formControl]="control"
+                [attr.disabled]="off ? true : null"
                 (change)="onChange($event.target.value)">
                 <option *ngFor="let item of types" [value]="item.value">{{ item.value }}</option>
             </select>
@@ -22,6 +23,7 @@ import { Validators } from '@angular/forms';
 })
 export class SelectTypeComponent extends AbstractReactiveSelect implements OnInit {
 
+    @Input() off: boolean | null = false;
     readonly types: any = [{ value: 'V' }, { value: 'J' }, { value: 'E' }]; // <-- Default values
 
     ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
 
@@ -8,7 +8,11 @@ import { AbstractControl, FormControl, Validators } from '@angular/forms';
     <div class="row">
 
         <div class="col">
-            <app-select-type [control]='controlSelect' [submitted]="submitted" (onselected)='onChangeDocument($event)'></app-select-type>
+            <app-select-type
+                [off]="onlyCompany"
+                [control]='controlSelect'
+                [submitted]="submitted"
+                (onselected)='onChangeDocument($event)'></app-select-type>
         </div>
 
         <div class="col-7">
@@ -17,10 +21,20 @@ import { AbstractControl, FormControl, Validators } from '@angular/forms';
     </div>
     `
 })
-export class FormDocumentComponent extends AbstractReactive {
+export class FormDocumentComponent extends AbstractReactive implements AfterViewInit {
     @Input() controlSelect: AbstractControl | null = new FormControl();
+    @Input() onlyCompany: boolean | null = false;
 
     message =  this.MESSAGES.DOCUMENT_MESSAGE;
+
+    ngAfterViewInit(): void {
+        if ( this.onlyCompany ) {
+            this.controlSelect.setValue('J');
+
+            this.updateDocumentValidation(8, 9);
+            this.message = this.MESSAGES.RIF_MESSAGE;
+        }
+    }
 
     onChangeDocument(value: any) {
 

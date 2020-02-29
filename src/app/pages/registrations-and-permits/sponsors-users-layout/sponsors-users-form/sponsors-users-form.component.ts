@@ -15,10 +15,12 @@ export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
   constructor(
     private toast: CustomToastrService,
     private validationService: ValidationService) {
-    super('un padrino'); // <-- Title modal
+    super('un-padrino'); // <-- Title modal
   }
 
   ngOnInit(): void {
+    this.form.controls.type.setValue('J');
+    this.form.removeControl('lastName');
     this.form.addControl('image', new FormControl('', [Validators.required]));
     this.form.addControl('url', new FormControl('', [Validators.required, Validators.pattern(VIDEO_PATTERN)]));
   }

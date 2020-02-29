@@ -6,7 +6,7 @@
         <!-- Personal data -->
         <div class="row">
             <div class="col-12">
-                <p class="font-weight-bold text-info mb-0">Datos personales</p>
+                <p class="font-weight-bold text-info mb-0">Datos de la empresa</p>
                 <hr>
             </div>
             <div class="col-12">
@@ -29,32 +29,84 @@
                 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
+                        <app-input-custom 
+                            [placeholder]="'Nombre de la empresa'"
+                            [label]="'Nombre de la empresa'"
+                            [control]="form.get('name')" 
+                            [submitted]="submitted"></app-input-custom>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-last-name [control]="form.get('lastName')" [submitted]="submitted">
-                        </app-input-last-name>
+                        <app-form-document 
+                            [onlyCompany]="true"
+                            [submitted]="submitted"
+                            [control]="form.get('document')"
+                            [controlSelect]="form.get('type')"></app-form-document>
                     </div>
                 </div>
 
                 <div class="row">
+
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [submitted]="submitted"
+                            [id]="'type-company'"
+                            [placeholder]="'Tipo de empresa'"
+                            [label]="'Tipo de empresa'"></app-input-custom>
+                    </div>
+                    
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [id]="'contact-name'"
+                            [label]="'Nombre de la persona de contacto'"
+                            [placeholder]="'Nombre de la persona de contacto'"
+                            [submitted]="submitted"></app-input-custom>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [id]="'contact-last-name'"
+                            [label]="'Apellido de la persona de contacto'"
+                            [placeholder]="'Apellido de la persona de contacto'"
+                            [submitted]="submitted"></app-input-custom>
+                    </div>
+        
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [id]="'company-phone'"
+                            [label]="'Teléfono de la empresa'"
+                            [placeholder]="'Teléfono de la empresa'"
+                            [submitted]="submitted"></app-input-custom>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [id]="'personal-phone'"
+                            [label]="'Teléfono personal'"
+                            [placeholder]="'Teléfono personal'"
+                            [submitted]="submitted"></app-input-custom>
+                    </div>
+        
+                    <div class="col-12 col-lg-6">
+                        <app-input-custom 
+                            [id]="'city'"
+                            [label]="'Ciudad'"
+                            [placeholder]="'Ciudad'"
+                            [submitted]="submitted"></app-input-custom>
+                    </div>
+                    
                     <div class="col-12 col-lg-6">
                         <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
                         <app-input-password [control]="form.get('password')" [submitted]="submitted">
                         </app-input-password>
                     </div>
-                    <div class="col-12 col-lg-6">
-                        <app-form-document [submitted]="submitted" [control]="form.get('document')"
-                            [controlSelect]="form.get('type')"></app-form-document>
-                        <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
 
+                    <div class="col-12 col-lg-6">
+                        <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
                     </div>
                 </div>
             </div>
         </div><!-- / End personal data -->
 
         <!-- Company Data -->
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
             <div class="col-12">
                 <p class="font-weight-bold text-info mb-0">Datos de la empresa</p>
                 <hr>
@@ -67,53 +119,7 @@
                     [placeholder]="'RIF de la empresa'"
                     [label]="'RIF de la empresa'"></app-input-custom>
             </div>
-
-            <div class="col-12 col-lg-6">
-                <app-input-custom 
-                    [submitted]="submitted"
-                    [id]="'type-company'"
-                    [placeholder]="'Tipo de empresa'"
-                    [label]="'Tipo de empresa'"></app-input-custom>
-            </div>
-
-            <div class="col-12 col-lg-6">
-                <app-input-custom 
-                    [id]="'contact-name'"
-                    [label]="'Nombre de la persona de contacto'"
-                    [placeholder]="'Nombre de la persona de contacto'"
-                    [submitted]="submitted"></app-input-custom>
-            </div>
-            <div class="col-12 col-lg-6">
-                <app-input-custom 
-                    [id]="'contact-last-name'"
-                    [label]="'Apellido de la persona de contacto'"
-                    [placeholder]="'Apellido de la persona de contacto'"
-                    [submitted]="submitted"></app-input-custom>
-            </div>
-
-            <div class="col-12 col-lg-6">
-                <app-input-custom 
-                    [id]="'company-phone'"
-                    [label]="'Teléfono de la empresa'"
-                    [placeholder]="'Teléfono de la empresa'"
-                    [submitted]="submitted"></app-input-custom>
-            </div>
-            <div class="col-12 col-lg-6">
-                <app-input-custom 
-                    [id]="'personal-phone'"
-                    [label]="'Teléfono personal'"
-                    [placeholder]="'Teléfono personal'"
-                    [submitted]="submitted"></app-input-custom>
-            </div>
-
-            <div class="col-12 col-lg-6">
-                <app-input-custom 
-                    [id]="'city'"
-                    [label]="'Ciudad'"
-                    [placeholder]="'Ciudad'"
-                    [submitted]="submitted"></app-input-custom>
-            </div>
-        </div>
+        </div> -->
 
         <!-- Address data -->
         <div class="row mt-3">

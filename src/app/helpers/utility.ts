@@ -60,14 +60,14 @@ export class Utility {
 
     public convertStatusPostToString( data: any ): Post[ ] {
         data.forEach( (value, key) => {
-            value.status = value.status === '1' ? 'Publicádo' : 'No publicádo';
+            value.status = value.status === '1' ? 'Publicado' : 'No publicado';
 
         });
         return data;
     }
 
     public convertStatusPostToNumber( post: Post ): Post {
-        post.status = post.status === 'Publicádo' ? '1' : '2';
+        post.status = post.status === 'Publicado' ? '1' : '2';
 
         return post;
     }

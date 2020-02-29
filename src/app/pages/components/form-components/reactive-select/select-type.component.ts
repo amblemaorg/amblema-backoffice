@@ -6,7 +6,7 @@ import { Validators } from '@angular/forms';
     selector: 'app-select-type',
     template: `
         <div class="form-group">
-            <label for="type" class="label">Tipo</label>
+            <label [for]="label" [hidden]="label == ''" class="label">{{label}}</label>
             <select
                 name="type"
                 id="type"
@@ -22,7 +22,6 @@ import { Validators } from '@angular/forms';
     `
 })
 export class SelectTypeComponent extends AbstractReactiveSelect implements OnInit {
-
     @Input() off: boolean | null = false;
     readonly types: any = [{ value: 'V' }, { value: 'J' }, { value: 'E' }]; // <-- Default values
 

@@ -7,12 +7,12 @@ import { NUMBER_PATTERN } from '../shared/constant/validation-patterns-list';
     selector: 'app-input-document',
     template: `
         <div class="form-group">
-            <label for='document' class="label">Identidad</label>
+        <label [for]="label" [hidden]="label == ''" class="label">{{label}}</label>
             <input
                 nbInput
                 fullWidth
                 status="basic"
-                placeholder="Identidad"
+                [placeholder]="placeholder"
                 id='document'
                 name='document'
                 type='text'

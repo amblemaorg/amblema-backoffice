@@ -36,7 +36,7 @@ export class BlogFormComponent implements OnInit, OnChanges {
         tag: new FormControl('Ambiente', [Validators.required]),
         image : new FormControl('', [Validators.required]),
         image2 : new FormControl('', [Validators.required]),
-        status: new FormControl('Publicádo', [Validators.required]),
+        status: new FormControl('Publicado', [Validators.required]),
         text : new FormControl('', [Validators.required])
       }); // <-- Form Blog to create edit
   }
@@ -49,7 +49,7 @@ export class BlogFormComponent implements OnInit, OnChanges {
     } else {
       this.formBlog.reset();
       this.formBlog.controls.tag.setValue('Ambiente');
-      this.formBlog.controls.status.setValue('Publicádo');
+      this.formBlog.controls.status.setValue('Publicado');
     }
   }
 
@@ -71,7 +71,7 @@ export class BlogFormComponent implements OnInit, OnChanges {
         this.register.emit( this.formBlog.value );
         this.formBlog.reset();
         this.formBlog.controls.tag.setValue('Ambiente');
-        this.formBlog.controls.status.setValue('Publicádo');
+        this.formBlog.controls.status.setValue('Publicado');
         this.submitted = false;
       } else if ( this.MODE === this.ACTION.EDIT ) {
 

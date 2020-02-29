@@ -20,6 +20,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   posts: Post[ ];
   searchText;
 
+  filterPost: any = { tag: '', title: '' };
   // -- Form settings --
   ID_FORM = 'modal-form-blog';
   ACTION = ACTION;

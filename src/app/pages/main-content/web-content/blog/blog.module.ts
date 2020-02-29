@@ -13,12 +13,15 @@ import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2FilterPipeModule } from 'ng2-filter-pipe';  
+import { SearchPostPipe } from 'src/app/pipes/search-post.pipe';
 
 @NgModule({
   declarations: [
     BlogComponent,
     BlogCardComponent,
-    BlogFormComponent
+    BlogFormComponent,
+    SearchPostPipe
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     NbBadgeModule,
     NbAlertModule,
     Ng2SearchPipeModule,
+    Ng2FilterPipeModule,
 
     // Add custom module
     ReactiveSelectModule,

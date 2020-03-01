@@ -106,12 +106,9 @@ export class WebAboutState implements NgxsOnInit {
             }
         });
 
-        console.log(ctx.getState());
-
         this.webAboutService.setContentWebAbout(ctx.getState()).subscribe(response => {
             this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');
         }, (err: any) => {
-            console.log(err);
             this.toastr.error('Error', 'No se ha completado el registro.');
 
         });

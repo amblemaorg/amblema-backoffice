@@ -41,7 +41,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription = this.data$.subscribe( response => {
       this.sliders = response.slider; // <-- Get sliders, show on the table
       this.testimonials = response.testimonials; // <-- Get testimonials show on the table
-      this.form.patchValue( response );
+      if ( response.aboutUsText ) {
+        this.form.controls.aboutUsText.setValue( response.aboutUsText );
+      }
+      if ( response.environmentText ) {
+        this.form.controls.environmentText.setValue( response.environmentText );
+      }
+      if ( response.readingText ) {
+        this.form.controls.readingText.setValue( response.readingText );
+      }
+      if ( response.mathText ) {
+        this.form.controls.mathText.setValue( response.mathText );
+      }
     });
   }
 

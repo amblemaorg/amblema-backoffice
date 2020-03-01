@@ -25,7 +25,7 @@
                 <div class="col-auto">
                     <button *ngIf="MODE_LIST === ACTION.CREATE"
                         [attr.disabled]="!form.controls['objectives'].value ? true : null" (click)="addObjective()"
-                        class="btn btn-outline-info m-inline-parcial">
+                        class="btn btn-outline-info m-inline-form">
                         <nb-icon icon="plus"></nb-icon>
                     </button>
 

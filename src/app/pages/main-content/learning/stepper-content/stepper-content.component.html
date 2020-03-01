@@ -82,7 +82,9 @@
                     <button class="btn btn-primary col-12 col-lg-auto" (click)="stepper.reset()">Nuevo registro</button>
                 </div>
                 <div class="col-6 col-lg-auto">
-                    <button class="btn btn-outline-secondary col-12 col-lg-auto">Finalizar</button>
+                    <button 
+                        (click)="stepper.reset()"
+                        class="btn btn-outline-secondary col-12 col-lg-auto" >Finalizar</button>
                 </div>
             </div>
         </div>

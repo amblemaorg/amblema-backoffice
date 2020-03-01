@@ -3,6 +3,8 @@ import { Learning } from 'src/app/models/learning.model';
 import { Store } from '@ngxs/store';
 import { AddLearning } from 'src/app/store/learning.action';
 
+declare var $: any;
+
 @Component({
   selector: 'app-stepper-content',
   templateUrl: './stepper-content.component.html',

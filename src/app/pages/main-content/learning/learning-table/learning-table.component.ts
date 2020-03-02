@@ -40,9 +40,9 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
       duration: {
         title: 'Duración HH:MM',
         type: 'string',
-        valuePrepareFunction: (row:string) =>  {
-          let data:string = row.slice(0,2) + ":" + row.slice(2,4); 
-          return data;  
+        valuePrepareFunction: (row: string) =>  {
+          const data: string = row.slice(0, 2) + ':' + row.slice(2, 4);
+          return data;
         }
       },
       createdAt: {
@@ -50,7 +50,7 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
         type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe('es-VE').transform(lastLoginTime, 'M/d/yyyy')
+          return new DatePipe('es-VE').transform(lastLoginTime, 'M/d/yyyy');
         }
       }
     };
@@ -89,8 +89,8 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
 
 
 export const sortDate = (direction: any, a: string, b: string): number => {
-  let first = Number(new DatePipe('es-VE').transform(a, 'yyyyMMdd'));
-  let second = Number(new DatePipe('es-VE').transform(b, 'yyyyMMdd'));
+  const first = Number(new DatePipe('es-VE').transform(a, 'yyyyMMdd'));
+  const second = Number(new DatePipe('es-VE').transform(b, 'yyyyMMdd'));
 
   if (first < second) {
       return -1 * direction;
@@ -99,4 +99,4 @@ export const sortDate = (direction: any, a: string, b: string): number => {
       return direction;
   }
   return 0;
-}
+};

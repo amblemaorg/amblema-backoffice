@@ -23,7 +23,18 @@ import { Validators } from '@angular/forms';
 })
 export class SelectTypeComponent extends AbstractReactiveSelect implements OnInit {
     @Input() off: boolean | null = false;
-    readonly types: any = [{ value: 'V' }, { value: 'J' }, { value: 'E' }]; // <-- Default values
+
+    readonly types: any = [
+        {
+            value: 'V',
+        },
+        {
+            value: 'J',
+        },
+        {
+            value: 'E',
+        },
+    ]; // <-- Default values
 
     ngOnInit(): void {
         this.control.setValidators([Validators.required]);

@@ -24,7 +24,10 @@
                     <div class="col-12 col-lg-6">
                         <app-input-position [control]="form.get('position')" [submitted]="submitted">
                         </app-input-position>
-                        <app-select-role [control]="form.get('role')" [submitted]="submitted"></app-select-role>
+                        <app-select-role 
+                            (onselected)="onselected($event)"
+                            [control]="form.get('role')" 
+                            [submitted]="submitted"></app-select-role>
                         <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
                     </div>
                     <div class="col-12 col-lg-6">

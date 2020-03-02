@@ -1,7 +1,7 @@
 <div class="row">
 
     <!-- State -->
-    <div class="col-12 col-lg-6 form-group">
+    <div class="col-12 col-lg-6">
         <label for="state" class="label">Estado</label>
         <select fullWidth name="state" id="state" hero [formControl]='state' class="form-control form-group"
             (change)="onSelectState($event.target.value)">
@@ -30,8 +30,12 @@
                 </select>
 
                 <!-- Input -->
-                <app-input-custom *ngIf="MODE == CRUD.CREATE || MODE == CRUD.EDIT" [id]="'municipalityCRUD'"
-                    [placeholder]="'Municipio'" [control]="inputCRUD" [submitted]="submitted"></app-input-custom>
+                <app-input-custom 
+                    *ngIf="MODE == CRUD.CREATE || MODE == CRUD.EDIT" 
+                    [id]="'municipalityCRUD'"
+                    [placeholder]="'Municipio'" 
+                    [control]="inputCRUD" 
+                    [submitted]="submitted"></app-input-custom>
 
                 <!-- Only read - Delete -->
                 <input *ngIf="MODE == CRUD.DELETE" type="text" readonly class="form-control form-group" nbInput

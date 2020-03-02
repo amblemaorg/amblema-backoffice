@@ -71,4 +71,9 @@ export class Utility {
 
         return post;
     }
+
+    /**
+     * Convert document type
+     */
+
 }

@@ -24,6 +24,7 @@ import { PostsState } from './store/blog.action';
 
 import localeVe from '@angular/common/locales/es-VE';
 import { registerLocaleData } from '@angular/common';
+import { AdminUserState } from './store/user-store/admin-user.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -42,7 +43,7 @@ registerLocaleData(localeVe, 'es-VE');
     HttpClientModule,
     NbMenuModule.forRoot(),
 
-    // NGXS
+    // -- NGXS --
     NgxsModule.forRoot( [
       // RECUERDA REFACTORIZAR EL
       // MANEJADOR DE ESTADO DE ROLES
@@ -56,7 +57,8 @@ registerLocaleData(localeVe, 'es-VE');
       WebAboutState,
       WebSponsorState,
       WebCoordinatorState,
-      PostsState
+      PostsState,
+      AdminUserState
     ],
     {
       compatibility: {
@@ -70,7 +72,8 @@ registerLocaleData(localeVe, 'es-VE');
   providers: [
     CustomToastrService,
     AuthGuard,
-    // Custom helper
+
+    // -- Custom Helper --
     Utility,
   ],
   bootstrap: [AppComponent]

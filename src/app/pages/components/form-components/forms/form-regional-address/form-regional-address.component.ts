@@ -48,7 +48,6 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
         // Filter and get data
         this.subscribe = this.addressService.getMunicipalityByState(this.state.value).subscribe(response => {
-
             if (response.length > 0) {
                 this.municipalities = response as Municipality[];
                 this.municipality.setValue(this.municipalities[0].id);
@@ -112,6 +111,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
         switch (this.MODE) {
             case this.CRUD.CREATE:
                 this.addressService.setMunicipality(data).subscribe(response => {
+
                     this.municipalities.push(response as any); // <-- Add in the list
                     this.toastr.registerSuccess('Registro', 'Municipio registrado');
                     this.resetForm();
@@ -144,10 +144,12 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
                 break;
             case this.CRUD.DELETE:
                 this.addressService.deleteMunicipality(this.municipality.value).subscribe(response => {
-
                     // Delete and refresh the list
                     this.municipalities.splice(this.municipalities.indexOf(this.municipality.value), 1);
-                    this.municipality.setValue(this.municipalities[0].id);
+
+                    if (this.municipalities.length > 0 ) {
+                        this.municipality.setValue(this.municipalities[0].id);
+                    } else { this.municipality.setValue(null); }
 
                     this.toastr.deleteRegister('Eliminación', 'Se ha eliminado el municipio seleccionado');
                     this.resetForm();

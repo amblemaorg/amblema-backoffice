@@ -21,6 +21,8 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    console.log(this.form.value);
+
     if (this.form.valid) {
 
       // Mode
@@ -35,4 +37,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
       this.validationService.markAllFormFieldsAsTouched(this.form);
     }
   }
+
+  // -- Event selected rol --
+  onselected( event: any ) { this.form.controls.role.setValue(event); }
 }

@@ -21,7 +21,7 @@ import { Utility } from 'src/app/helpers/utility';
         </div>
     `
 })
-export class SelectStatusComponent extends AbstractReactiveSelect {
+export class SelectStatusComponent extends AbstractReactiveSelect implements OnInit {
 
     readonly status: any = [
         {
@@ -33,4 +33,8 @@ export class SelectStatusComponent extends AbstractReactiveSelect {
         }];
 
     constructor( private helper: Utility ) { super(); }
+
+    ngOnInit(): void {
+        this.control.setValue( this.status[0].value );
+    }
 }

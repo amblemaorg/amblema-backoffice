@@ -65,7 +65,6 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
           this.form.patchValue(response);
         }
       } else {
-
       }
     });
   }

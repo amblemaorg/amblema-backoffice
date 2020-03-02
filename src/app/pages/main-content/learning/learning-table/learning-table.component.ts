@@ -4,6 +4,7 @@ import { Subscription, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, DeleteLearning } from 'src/app/store/learning.action';
 import { Learning } from 'src/app/models/learning.model';
+import { DatePipe } from '@angular/common';
 
 declare var $: any;
 
@@ -37,12 +38,20 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
         type: 'string'
       },
       duration: {
-        title: 'Duración',
-        type: 'string'
+        title: 'Duración HH:MM',
+        type: 'string',
+        valuePrepareFunction: (row:string) =>  {
+          let data:string = row.slice(0,2) + ":" + row.slice(2,4); 
+          return data;  
+        }
       },
       createdAt: {
         title: 'Fecha de creación',
-        type: 'string'
+        type: 'string',
+        compareFunction: sortDate,
+        valuePrepareFunction: (lastLoginTime: any) => {
+          return new DatePipe('es-VE').transform(lastLoginTime, 'M/d/yyyy')
+        }
       }
     };
   }
@@ -76,4 +85,18 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
         break;
     }
   }
+}
+
+
+export const sortDate = (direction: any, a: string, b: string): number => {
+  let first = Number(new DatePipe('es-VE').transform(a, 'yyyyMMdd'));
+  let second = Number(new DatePipe('es-VE').transform(b, 'yyyyMMdd'));
+
+  if (first < second) {
+      return -1 * direction;
+  }
+  if (first > second) {
+      return direction;
+  }
+  return 0;
 }

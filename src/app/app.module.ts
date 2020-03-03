@@ -64,7 +64,7 @@ registerLocaleData(localeVe, 'es-VE');
       compatibility: {
         strictContentSecurityPolicy: true
       },
-      developmentMode: true
+      developmentMode: false
     }),
     NgxsStoragePluginModule.forRoot({}),
     NbToastrModule.forRoot(),

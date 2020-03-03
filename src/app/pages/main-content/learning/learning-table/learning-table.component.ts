@@ -63,8 +63,6 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
 
     this.subscription = this.learnings$.subscribe( response => {
       this.learnings = response;
-
-      console.log(response);
     });
   }
 

@@ -5,10 +5,10 @@
             <div class="col-6 form-group">
                 <p class="font-weight-bold text-info">Datos primarios</p>
                 <hr>
-                <p>Titulo: {{ learning.title}}</p>
-                <p>Descripción: {{ learning.description }}</p>
-                <p>Duracion: {{ duration }}(HH:MM)</p>
-                <p>Objectivos:</p>
+                <p> <span class=" font-weight-bold ">Titulo:</span> {{ learning.title}}</p>
+                <p> <span class=" font-weight-bold ">Descripción:</span> {{ learning.description }}</p>
+                <p> <span class=" font-weight-bold ">Duracion:</span> {{ duration }}(HH:MM)</p>
+                <p><span class=" font-weight-bold ">Objectivos:</span></p>
                 <ul>
                     <li *ngFor="let item of learning.objectives">{{item}}</li>
                 </ul>
@@ -16,10 +16,10 @@
             <div class="col-6 form-group">
                 <p class="font-weight-bold text-info">Datos secundario</p>
                 <hr>
-                <p>Titulo secundario: {{ learning.secondaryTitle}}</p>
-                <p>Descripción: {{ learning.secondaryDescription }}</p>
-                <p>Fecha de creación: {{ learning.createdAt | date:'dd/MM/yyyy' }}</p>
-                <p>Última actualización: {{ learning.updatedAt | date:'dd/MM/yyyy' }}</p>
+                <p><span class=" font-weight-bold ">Titulo secundario:</span> {{ learning.secondaryTitle}}</p>
+                <p><span class="font-weight-bold">Descripción:</span> {{ learning.secondaryDescription }}</p>
+                <p><span class="font-weight-bold">Fecha de creación:</span> {{ learning.createdAt | date:'dd/MM/yyyy' }}</p>
+                <p><span class="font-weight-bold">Última actualización:</span> {{ learning.updatedAt | date:'dd/MM/yyyy' }}</p>
             </div>
         </div>
 

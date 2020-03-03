@@ -87,7 +87,7 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
   onAction(event: any) {
 
     switch (event.action) {
-      case this.ACTION.VIEW: 
+      case this.ACTION.VIEW:
         this.store.dispatch( new SelectedLearning( event.data ) );
         $(`#${this.ID_FORM}`).modal('show');
         break;

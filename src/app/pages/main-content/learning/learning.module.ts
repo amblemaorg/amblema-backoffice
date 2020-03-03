@@ -45,7 +45,7 @@ import { ModalModule } from '../../components/shared/modal/modal-forms/modal.mod
     NgxMaskModule.forRoot(),
     NbInputModule,
     NbRadioModule,
-    ModalModule, 
+    ModalModule,
     ReactiveFormsModule,
     NbListModule,
 

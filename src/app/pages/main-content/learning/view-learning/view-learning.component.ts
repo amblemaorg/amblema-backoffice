@@ -11,14 +11,14 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ViewLearningComponent implements OnInit, OnDestroy {
   @Input() learning: Learning;
-  data:Learning;
+  data: Learning;
   @Select( LearningState.learning ) learning$: Observable<Learning>;
   subscription: Subscription;
 
   ngOnInit(): void {
     this.subscription = this.learning$.subscribe( response => {
       this.data = response;
-    } )
+    } );
   }
 
   ngOnDestroy(): void {

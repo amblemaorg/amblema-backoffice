@@ -21,9 +21,10 @@ export class StepperContentComponent implements OnInit, OnChanges {
 
   titleStep = true; // < -- To show or hide titles
   orientation = 'horizontal';
+  ACTION = ACTION; 
 
   constructor(
-    private routeback: Router,
+    public routeback: Router,
     private route: ActivatedRoute,
     private store: Store
   ) {

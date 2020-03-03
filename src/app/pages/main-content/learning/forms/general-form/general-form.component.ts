@@ -28,7 +28,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   ID_ITEM: number;
 
   constructor(
-    private router: Router,
+    public router: Router,
     private toastr: CustomToastrService,
     private store: Store) {
     super();

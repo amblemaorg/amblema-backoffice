@@ -18,8 +18,10 @@ import { ModalStepperModule } from '../../components/shared/modal/modal-stepper/
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { FormSliderModule } from '../../components/form-components/forms/form-slider/form-slider.module';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormVideoModule } from '../../components/form-components/forms/form-video/form-video.module';
+import { ViewLearningComponent } from './view-learning/view-learning.component';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { FormVideoModule } from '../../components/form-components/forms/form-vid
     GeneralMediaFormComponent,
     SecondaryFormComponent,
     SecondaryMediaFormComponent,
-    QuizzFormComponent
+    QuizzFormComponent,
+    ViewLearningComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,7 @@ import { FormVideoModule } from '../../components/form-components/forms/form-vid
     NgxMaskModule.forRoot(),
     NbInputModule,
     NbRadioModule,
-    FormsModule,
+    ModalModule, 
     ReactiveFormsModule,
     NbListModule,
 

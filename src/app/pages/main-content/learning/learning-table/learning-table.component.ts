@@ -25,8 +25,7 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
     private router: Router,
     private store: Store
   ) {
-    super('form-learning-module');
-
+    super('modal-view-learning');
     this.MODE = this.ACTION.CREATE;
 
     // Add colummns
@@ -86,11 +85,15 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
   // -- CRUD --
 
   onAction(event: any) {
+
     switch (event.action) {
+      case this.ACTION.VIEW: 
+        this.store.dispatch( new SelectedLearning( event.data ) );
+        $(`#${this.ID_FORM}`).modal('show');
+        break;
       case this.ACTION.EDIT:
         this.msgAction = 'Actualización del módulo de aprendizaje';
         this.MODE = this.ACTION.EDIT;
-        $(`#${this.ID_FORM}`).modal('show');
         this.store.dispatch( new SelectedLearning( event.data ) );
         this.router.navigate(['pages/content/learning/stepper', { state: this.MODE} ]);
         break;

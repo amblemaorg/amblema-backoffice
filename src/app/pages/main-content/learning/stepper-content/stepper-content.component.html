@@ -80,7 +80,14 @@
     
                 <div class="text-center row d-flex justify-content-center">
                     <div class="col-6 col-lg-auto">
-                        <button class="btn btn-primary col-12 col-lg-auto" (click)="stepper.reset()">Nuevo registro</button>
+                        <button class="btn btn-primary col-12 col-lg-auto" (click)="stepper.reset()">
+                            <span *ngIf="MODE == ACTION.CREATE">
+                                Nuevo registro
+                            </span>
+                            <span *ngIf="MODE != ACTION.CREATE">
+                                Actualizar nuevamente   
+                            </span>
+                        </button>
                     </div>
                     <div class="col-6 col-lg-auto">
                         <button 

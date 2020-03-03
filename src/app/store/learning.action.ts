@@ -9,6 +9,7 @@ import { CustomToastrService } from '../services/custom-toastr.service';
 // -- State Model --
 
 interface LearningStateModel {
+    oldLearning?: Learning;
     learning?: Learning;
     learnings?: Learning[];
 }
@@ -24,9 +25,19 @@ export class AddLearning {
     constructor( public payload: Learning ) {}
 }
 
+export class UpdateLearning { 
+    static readonly type = '[Learning] Update Learning';
+    constructor( public oldLearning: Learning, public newLearning: Learning ) {  }
+}
+
 export class DeleteLearning {
     static readonly type = '[Learning] Delete Learning';
     constructor( public payload: Learning ) {}
+}
+
+export class SelectedLearning {
+    static readonly type = '[Learning] Selected Learning'; 
+    constructor( public payload: Learning ) { }
 }
 
 // -- Step One --
@@ -109,6 +120,18 @@ export class DeleteQuizze {
 @State<LearningStateModel>({
     name: 'Learning',
     defaults: {
+        oldLearning: {
+            id: '',
+            title: '',
+            description: '',
+            secondaryTitle: '',
+            secondaryDescription: '',
+            objectives: [],
+            slider: [],
+            images: [],
+            duration: ' ',
+            quizzes: []
+        },
         learning: {
             id: '',
             title: '',
@@ -168,6 +191,12 @@ export class LearningState implements NgxsOnInit {
         });
     }
 
+
+    @Action( UpdateLearning ) 
+    updateLearning( ctx: StateContext<LearningStateModel>, acton: UpdateLearning ) {
+
+    }
+
     @Action(AddLearning)
     addLearning(ctx: StateContext<LearningStateModel>, action: AddLearning ) {
 
@@ -193,7 +222,7 @@ export class LearningState implements NgxsOnInit {
                 }
             });
             this.toastr.registerSuccess('Registro', 'Modulo de aprendizaje registrado correctamente.');
-        }, (err: any) => { console.log(err); });
+        });
     }
 
     @Action(DeleteLearning)
@@ -205,7 +234,7 @@ export class LearningState implements NgxsOnInit {
             }) );
 
             this.toastr.deleteRegister('Eliminación', 'Modulo de aprendizaje eliminado');
-        }, (err: any) => console.log(err));
+        });
     }
 
     // -- Step One --

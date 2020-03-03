@@ -1,11 +1,64 @@
-<div class="row">
+<div class="row" *ngIf="learning">
     <div class="col-12">
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-6 form-group">
                 <p class="font-weight-bold text-info">Datos primarios</p>
-                <p>Titulo: {{ data.title}}</p>
-                <p></p>
+                <hr>
+                <p>Titulo: {{ learning.title}}</p>
+                <p>Descripción: {{ learning.description }}</p>
+                <p>Duracion: {{ duration }}(HH:MM)</p>
+                <p>Objectivos:</p>
+                <ul>
+                    <li *ngFor="let item of learning.objectives">{{item}}</li>
+                </ul>
+            </div>
+            <div class="col-6 form-group">
+                <p class="font-weight-bold text-info">Datos secundario</p>
+                <hr>
+                <p>Titulo secundario: {{ learning.secondaryTitle}}</p>
+                <p>Descripción: {{ learning.secondaryDescription }}</p>
+                <p>Fecha de creación: {{ learning.createdAt | date:'dd/MM/yyyy' }}</p>
+                <p>Última actualización: {{ learning.updatedAt | date:'dd/MM/yyyy' }}</p>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12">
+                <p class=" font-weight-bold text-info">Contenido multimedia</p>
+                <hr>
+            </div>
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <ng2-smart-table [source]='learning.slider' [settings]="tableMedia"></ng2-smart-table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12">
+                <p class=" font-weight-bold text-info">Contenido multimedia secundario</p>
+                <hr>
+            </div>
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <ng2-smart-table [source]='learning.images' [settings]="tableImage"></ng2-smart-table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12">
+                <p class=" font-weight-bold text-info">Quizzes</p>
+                <hr>
+            </div>
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <ng2-smart-table [source]='learning.quizzes' [settings]="tableQuizzes"></ng2-smart-table>
+                </div>
             </div>
         </div>
     </div>

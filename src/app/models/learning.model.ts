@@ -21,6 +21,8 @@ export interface Learning {
     images: Slider[];
     duration: string;
     quizzes: Quizze[];
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 /**

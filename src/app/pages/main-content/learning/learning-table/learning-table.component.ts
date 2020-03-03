@@ -19,6 +19,8 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
   @Select( LearningState.learnings ) learnings$: Observable<Learning[]>;
   subscription: Subscription;
 
+  data: Learning;
+
   learnings: Learning[ ];
   msgAction = 'Nuevo módulo de aprendizaje';
   constructor(
@@ -51,7 +53,7 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
         type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe('es-VE').transform(lastLoginTime, 'M/d/yyyy');
+          return new DatePipe('es-VE').transform(lastLoginTime, 'M/dd/yyyy');
         }
       }
     };
@@ -61,6 +63,8 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
 
     this.subscription = this.learnings$.subscribe( response => {
       this.learnings = response;
+
+      console.log(response);
     });
   }
 
@@ -88,6 +92,7 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
 
     switch (event.action) {
       case this.ACTION.VIEW:
+        this.data = event.data;
         this.store.dispatch( new SelectedLearning( event.data ) );
         $(`#${this.ID_FORM}`).modal('show');
         break;

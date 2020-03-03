@@ -31,8 +31,10 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-form-regional-address [state]="form.get('state')" [municipality]="form.get('municipality')"
-                    [control]="form.get('street')" [submitted]="submitted"></app-form-regional-address>
+                <app-form-regional-address 
+                    [state]="form.get('addressState')" 
+                    [municipality]="form.get('addressMunicipality')"
+                    [control]="form.get('address')" [submitted]="submitted"></app-form-regional-address>
             </div>
         </div><!-- / End data address -->
 

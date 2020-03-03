@@ -14,8 +14,9 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
 
   ngOnInit(): void {
     // Add news form control
-    this.form.addControl('position', new FormControl());
+    this.form.addControl('function', new FormControl());
     this.form.addControl('role', new FormControl());
+    this.form.removeControl('name');
   }
 
   onSubmit() {

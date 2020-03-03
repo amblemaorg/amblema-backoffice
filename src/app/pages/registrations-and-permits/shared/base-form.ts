@@ -12,14 +12,15 @@ export abstract class BaseForm implements OnChanges {
 
     // General form
     form: FormGroup = new FormGroup({
+        firstName: new FormControl(),
         name: new FormControl(),
         email: new FormControl(),
         phone: new FormControl(),
         password: new FormControl(),
         status: new FormControl(),
-        state: new FormControl(),
-        municipality: new FormControl(),
-        street: new FormControl('', [Validators.required]) // Custom control
+        addressState: new FormControl(),
+        addressMunicipality: new FormControl(),
+        address: new FormControl('', [Validators.required]) // Custom control
     });
 
     // Behavior form

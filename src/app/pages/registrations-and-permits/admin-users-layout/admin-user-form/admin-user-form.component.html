@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
+                        <app-input-name [control]="form.get('firstName')" [submitted]="submitted"></app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
                         <app-input-last-name [control]="form.get('lastName')" [submitted]="submitted">
@@ -22,7 +22,7 @@
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-position [control]="form.get('position')" [submitted]="submitted">
+                        <app-input-position [control]="form.get('function')" [submitted]="submitted">
                         </app-input-position>
                         <app-select-role 
                             (onselected)="onselected($event)"
@@ -31,8 +31,10 @@
                         <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-form-document [submitted]="submitted" [control]="form.get('document')"
-                            [controlSelect]="form.get('type')"></app-form-document>
+                        <app-form-document 
+                            [submitted]="submitted" 
+                            [control]="form.get('cardId')"
+                            [controlSelect]="form.get('cardType')"></app-form-document>
                         <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
                         <app-input-password [control]="form.get('password')" [submitted]="submitted">
                         </app-input-password>
@@ -48,8 +50,11 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-form-regional-address [state]="form.get('state')" [municipality]="form.get('municipality')"
-                    [control]="form.get('street')" [submitted]="submitted"></app-form-regional-address>
+                <app-form-regional-address 
+                    [state]="form.get('addressState')" 
+                    [municipality]="form.get('addressMunicipality')"
+                    [control]="form.get('address')" 
+                    [submitted]="submitted"></app-form-regional-address>
             </div>
         </div><!-- / End address data -->
 

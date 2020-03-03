@@ -19,7 +19,7 @@ export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form.controls.type.setValue('J');
+    this.form.controls.cardType.setValue('J');
     this.form.removeControl('lastName');
     this.form.addControl('image', new FormControl('', [Validators.required]));
     this.form.addControl('url', new FormControl('', [Validators.required, Validators.pattern(VIDEO_PATTERN)]));

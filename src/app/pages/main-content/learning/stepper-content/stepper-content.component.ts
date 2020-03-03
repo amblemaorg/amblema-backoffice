@@ -28,9 +28,7 @@ export class StepperContentComponent implements OnInit, OnChanges {
     this.adaptStepper(window.innerWidth);
   }
 
-  ngOnChanges(): void {
-    // console.log(this.MODE);
-  }
+  ngOnChanges(): void {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -49,5 +47,9 @@ export class StepperContentComponent implements OnInit, OnChanges {
 
   onSaveLearning( learning: Learning) {
     this.store.dispatch(new AddLearning(learning));
+  }
+
+  onFinalize() {
+    $('#form-learning-module').modal('hide');
   }
 }

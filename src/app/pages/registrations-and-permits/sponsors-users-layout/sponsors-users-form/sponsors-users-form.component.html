@@ -39,8 +39,8 @@
                         <app-form-document 
                             [onlyCompany]="true"
                             [submitted]="submitted"
-                            [control]="form.get('document')"
-                            [controlSelect]="form.get('type')"></app-form-document>
+                            [control]="form.get('cardId')"
+                            [controlSelect]="form.get('cardType')"></app-form-document>
                     </div>
                 </div>
 
@@ -128,8 +128,11 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-form-regional-address [state]="form.get('state')" [municipality]="form.get('municipality')"
-                    [control]="form.get('street')" [submitted]="submitted"></app-form-regional-address>
+                <app-form-regional-address 
+                    [state]="form.get('addressState')" 
+                    [municipality]="form.get('addressMunicipality')"
+                    [control]="form.get('address')" 
+                    [submitted]="submitted"></app-form-regional-address>
             </div>
         </div><!-- / End address data -->
 

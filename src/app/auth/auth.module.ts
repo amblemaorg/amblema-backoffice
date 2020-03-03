@@ -7,6 +7,7 @@ import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken } from '@nebular/a
 import { NbAlertModule, NbCheckboxModule, NbButtonModule, NbInputModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [
@@ -36,13 +37,13 @@ import { HttpClientModule } from '@angular/common/http';
       strategies: [
         NbPasswordAuthStrategy.setup({
           name: 'email',
-          baseEndpoint: 'http://157.245.131.248:25012',
+          baseEndpoint: `${environment.api}`,
           token: {
             class: NbAuthJWTToken,
             key: 'access_token'
           },
           login: {
-            endpoint: '/auth/login',
+            endpoint: 'auth/login',
             method: 'post',
             redirect: {
               success: '/pages/dashboard',

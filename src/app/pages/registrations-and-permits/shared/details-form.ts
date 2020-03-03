@@ -6,7 +6,7 @@ export abstract class DetailsForm extends BaseForm {
         super(who);
         // New data related
         this.form.addControl('lastName', new FormControl());
-        this.form.addControl('type', new FormControl());
-        this.form.addControl('document', new FormControl());
+        this.form.addControl('cardType', new FormControl());
+        this.form.addControl('cardId', new FormControl());
     }
 }

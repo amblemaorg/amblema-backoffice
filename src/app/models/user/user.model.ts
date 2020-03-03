@@ -8,6 +8,6 @@ export interface User {
     role: string;
     addressState: string;
     addressMunicipality: string;
-    addressCity: string;
+    addressCity?: string;
     address: string;
 }

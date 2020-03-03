@@ -84,6 +84,6 @@ export class AdminUserState implements NgxsOnInit {
 
     @Action( SetAdminUser )
     setAdminUser( ctx: StateContext<AdminUser>, payload: SetAdminUser ) {
-        
+
     }
 }

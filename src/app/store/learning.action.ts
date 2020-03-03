@@ -25,9 +25,9 @@ export class AddLearning {
     constructor( public payload: Learning ) {}
 }
 
-export class UpdateLearning { 
+export class UpdateLearning {
     static readonly type = '[Learning] Update Learning';
-    constructor( public oldLearning: Learning, public newLearning: Learning ) {  }
+    constructor( public newLearning: Learning ) {  }
 }
 
 export class DeleteLearning {
@@ -35,9 +35,16 @@ export class DeleteLearning {
     constructor( public payload: Learning ) {}
 }
 
+/* Previous selection */
 export class SelectedLearning {
-    static readonly type = '[Learning] Selected Learning'; 
+    static readonly type = '[Learning] Selected Learning';
     constructor( public payload: Learning ) { }
+}
+
+/* Clear state selected */
+export class ClearLearning {
+    static readonly type = '[Learning] Clear Learning';
+    constructor( ) {}
 }
 
 // -- Step One --
@@ -184,6 +191,11 @@ export class LearningState implements NgxsOnInit {
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
         this.learningService.getLearnings().subscribe( response => {
+
+            response.forEach(value => {
+                value.slider = this.helper.mediaNumberToString(value.slider);
+            });
+
             ctx.setState(patch({
                 ...ctx.getState(),
                 learnings: response
@@ -191,16 +203,65 @@ export class LearningState implements NgxsOnInit {
         });
     }
 
+    @Action( SelectedLearning )
+    selectedLearning(ctx: StateContext<LearningStateModel>, action: SelectedLearning) {
+        ctx.setState( {
+            ...ctx.getState(),
+            oldLearning: action.payload,
+            learning: action.payload
+        });
+    }
 
-    @Action( UpdateLearning ) 
-    updateLearning( ctx: StateContext<LearningStateModel>, acton: UpdateLearning ) {
+    @Action( ClearLearning )
+    clearLearning( ctx: StateContext<LearningStateModel> ) {
+        ctx.setState({
+            ...ctx.getState(),
+            oldLearning: {
+                id: '',
+                title: '',
+                description: '',
+                secondaryTitle: '',
+                secondaryDescription: '',
+                objectives: [],
+                slider: [],
+                images: [],
+                duration: ' ',
+                quizzes: []
+            },
+            learning: {
+                id: '',
+                title: '',
+                description: '',
+                secondaryTitle: '',
+                secondaryDescription: '',
+                objectives: [],
+                slider: [],
+                images: [],
+                duration: ' ',
+                quizzes: []
+            }
+        });
+    }
 
+    @Action( UpdateLearning )
+    updateLearning( ctx: StateContext<LearningStateModel>, action: UpdateLearning ) {
+
+        this.learningService.updateLearning( action.newLearning.id, action.newLearning ).subscribe( reponse => {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                learnings: updateItem<Learning>(learning => learning.id === action.newLearning.id, action.newLearning)
+            }) );
+
+            this.toastr.updateSuccess('Actualización', 'Módulo de aprendizaje actualizado.');
+        });
     }
 
     @Action(AddLearning)
     addLearning(ctx: StateContext<LearningStateModel>, action: AddLearning ) {
 
         this.learningService.setLearning(action.payload).subscribe( response => {
+            response.slider = this.helper.mediaNumberToString(response.slider);
+
             ctx.setState(patch({
                 ...ctx.getState(),
                 learnings: append([response]),

@@ -21,8 +21,8 @@ export class LearningService {
       );
   }
 
-  updateLearning() {
-
+  updateLearning( id: string, data: Learning ): Observable<Learning> {
+    return this.httpClient.put<Learning>(`${environment.api}${this.LEARNING}/${id}`, data);
   }
 
   setLearning(data: Learning): Observable<Learning> {

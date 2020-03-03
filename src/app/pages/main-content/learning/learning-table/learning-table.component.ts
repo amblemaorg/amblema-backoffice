@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { Subscription, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import { LearningState, DeleteLearning } from 'src/app/store/learning.action';
+import { LearningState, DeleteLearning, SelectedLearning, ClearLearning } from 'src/app/store/learning.action';
 import { Learning } from 'src/app/models/learning.model';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -19,8 +20,9 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
   subscription: Subscription;
 
   learnings: Learning[ ];
-
+  msgAction = 'Nuevo módulo de aprendizaje';
   constructor(
+    private router: Router,
     private store: Store
   ) {
     super('form-learning-module');
@@ -69,16 +71,28 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
     }
   }
 
+  onRegister() {
+
+
+    if ( this.MODE === this.ACTION.EDIT ) {
+      this.MODE = this.ACTION.CREATE;
+    }
+
+    this.msgAction = 'Nuevo módulo de aprendizaje';
+    this.store.dispatch( new ClearLearning());
+    this.router.navigate(['pages/content/learning/stepper',  {state: this.MODE}]);
+  }
+
   // -- CRUD --
 
   onAction(event: any) {
     switch (event.action) {
-      case this.ACTION.CREATE:
-        this.MODE = this.ACTION.CREATE;
-        break;
       case this.ACTION.EDIT:
+        this.msgAction = 'Actualización del módulo de aprendizaje';
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
+        this.store.dispatch( new SelectedLearning( event.data ) );
+        this.router.navigate(['pages/content/learning/stepper', { state: this.MODE} ]);
         break;
       case this.ACTION.DELETE:
         this.store.dispatch(new DeleteLearning(event.data));

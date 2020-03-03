@@ -63,15 +63,27 @@
             </nb-list>
         </div>
     </div>
-    <div class="text-center">
-        <button (click)="sendStepOne()"
-            type="button"
-            nbButton
-            nbStepperNext
-            [attr.disabled]="form.valid && objectives.length > 0 ? null : true"
-            class="next-button btn-primary btn col-12 col-lg-auto">
-            <span class="d-none d-sm-inline">Siguiente</span>
-            <nb-icon icon="arrow-forward-outline"></nb-icon>
-        </button>
+    <div class="row text-center justify-content-center">
+        <div class="col-6 col-lg-auto">
+            <button 
+                (click)="this.router.navigate(['pages/content/learning']);"
+                nbButton
+                type="button"
+                class="btn btn-outline-secondary mr-2 col-12 col-lg-auto">
+                <nb-icon icon="arrow-back-outline"></nb-icon>
+                <span class="d-none d-sm-inline">Volver a la tabla</span>
+            </button>
+        </div>
+        <div class="col-6 col-lg-auto">
+            <button (click)="sendStepOne()"
+                type="button"
+                nbButton
+                nbStepperNext
+                [attr.disabled]="form.valid && objectives.length > 0 ? null : true"
+                class="next-button btn-primary btn col-12 col-lg-auto">
+                <span class="d-none d-sm-inline">Siguiente</span>
+                <nb-icon icon="arrow-forward-outline"></nb-icon>
+            </button>
+        </div>
     </div>
 </form>

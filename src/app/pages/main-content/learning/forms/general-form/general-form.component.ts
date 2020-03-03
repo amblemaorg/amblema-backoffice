@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Learning } from 'src/app/models/learning.model';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-general-form',
@@ -27,6 +28,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   ID_ITEM: number;
 
   constructor(
+    private router: Router,
     private toastr: CustomToastrService,
     private store: Store) {
     super();

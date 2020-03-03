@@ -1,6 +1,7 @@
 import { Inject } from '@angular/core';
 import { STATUS } from './text-content/status';
 import { Post } from '../models/web/blog.model';
+import { SliderMedia } from '../models/learning.model';
 
 @Inject('root')
 export class Utility {
@@ -72,8 +73,14 @@ export class Utility {
         return post;
     }
 
-    /**
-     * Convert document type
-     */
+    /** To video */
 
+    public mediaNumberToString( media: SliderMedia[] ): SliderMedia[] {
+
+        media.forEach( (value, key) => {
+            value.type = value.type === '1' ? 'Imagen' : 'Video';
+        });
+
+        return media;
+    }
 }

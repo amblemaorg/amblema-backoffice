@@ -1,7 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, HostListener, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Learning } from 'src/app/models/learning.model';
 import { Store } from '@ngxs/store';
-import { AddLearning } from 'src/app/store/learning.action';
+import { AddLearning, UpdateLearning } from 'src/app/store/learning.action';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ACTION } from 'src/app/helpers/text-content/text-crud';
 
 declare var $: any;
 
@@ -21,14 +23,25 @@ export class StepperContentComponent implements OnInit, OnChanges {
   orientation = 'horizontal';
 
   constructor(
+    private routeback: Router,
+    private route: ActivatedRoute,
     private store: Store
-  ) { }
+  ) {
+
+    this.route.paramMap.subscribe( params => {
+      this.MODE = params.get('state');
+    } );
+  }
 
   ngOnInit() {
     this.adaptStepper(window.innerWidth);
+
   }
 
-  ngOnChanges(): void {}
+  ngOnChanges(): void {
+
+
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -46,10 +59,16 @@ export class StepperContentComponent implements OnInit, OnChanges {
   }
 
   onSaveLearning( learning: Learning) {
-    this.store.dispatch(new AddLearning(learning));
+
+    if ( this.MODE === ACTION.CREATE ) {
+      this.store.dispatch(new AddLearning(learning));
+    } else {
+      this.store.dispatch( new UpdateLearning(learning) );
+    }
+
   }
 
   onFinalize() {
-    $('#form-learning-module').modal('hide');
+
   }
 }

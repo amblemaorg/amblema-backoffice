@@ -1,6 +1,6 @@
-<div class="col-12 form-group">
+<div  class="col-12 form-group">
     <button class="btn btn-success col-12 col-lg-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
-        (click)='MODE=ACTION.CREATE'>Agregar nuevo</button>
+        (click)=' MODE=ACTION.CREATE; onRegister(); '>Agregar nuevo</button>
 </div>
 
 <div class="col-12">
@@ -8,9 +8,9 @@
         <ng2-smart-table (custom)="onAction($event)" [source]='learnings' [settings]="settings"></ng2-smart-table>
     </div>
 </div>
-
-<app-modal-stepper [ID]="ID_FORM" [size]="'lg'" [title]="'Nuevo módulo de aprendizaje'">
+<!-- 
+<app-modal-stepper [ID]="ID_FORM" [size]="'lg'" [title]="msgAction">
     <div content>
         <app-stepper-content [MODE]="MODE"></app-stepper-content>
     </div>
-</app-modal-stepper>
+</app-modal-stepper> -->

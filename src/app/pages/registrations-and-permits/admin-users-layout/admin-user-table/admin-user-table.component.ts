@@ -47,7 +47,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions, 
   }
 
   ngOnInit(): void {
-    //this.data$.subscribe( response => console.log(response) );
+    // this.data$.subscribe( response => console.log(response) );
   }
 
   ngOnDestroy(): void {

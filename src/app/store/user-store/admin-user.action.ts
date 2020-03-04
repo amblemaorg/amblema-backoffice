@@ -19,7 +19,7 @@ export class GetAdminUsers {
     constructor() { }
 }
 
-export class SelectedAdminUser { 
+export class SelectedAdminUser {
     static readonly type = '[User] Selected User';
     constructor( public paylaod: AdminUser ) {}
 }
@@ -92,6 +92,9 @@ export class AdminUserState implements NgxsOnInit {
         this.adminUserService.getAdminUsers()
             .subscribe(response => {
                 if (response) {
+
+                    response = this.helper.readlyTypeDocument( response );
+
                     ctx.setState({
                         ...ctx.getState(),
                         adminUsers: response
@@ -110,6 +113,7 @@ export class AdminUserState implements NgxsOnInit {
 
     @Action( SetAdminUser )
     setAdminUser( ctx: StateContext<AdminUserModel>, action: SetAdminUser ) {
+        action.payload = this.helper.readlyTypeDocument( [action.payload] )[0];
         ctx.setState( patch({
             ...ctx.getState(),
             adminUsers: append([action.payload])
@@ -117,14 +121,14 @@ export class AdminUserState implements NgxsOnInit {
     }
 
     @Action( DeleteAdminUser )
-    deleteAdminUser(ctx: StateContext<AdminUserModel>,action: DeleteAdminUser  ) {
+    deleteAdminUser(ctx: StateContext<AdminUserModel>, action: DeleteAdminUser  ) {
 
         this.adminUserService.deleteAdminUser( action.payload.id ).subscribe( response => {
             ctx.setState( patch({
                 ...ctx.getState(),
                 adminUsers: removeItem<AdminUser>( adminUser => adminUser.id === action.payload.id )
             }) );
-            this.toastr.deleteRegister('Eliminación', "Usuario administrador eliminado");
+            this.toastr.deleteRegister('Eliminación', 'Usuario administrador eliminado');
         } );
-    }            
+    }
 }

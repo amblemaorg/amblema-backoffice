@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
@@ -13,16 +13,15 @@ import { STATUS } from 'src/app/helpers/text-content/status';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { SetAdminUser, AdminUserState } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
-import { AdminUser } from 'src/app/models/user/admin-user.model';
 
 @Component({
   selector: 'app-admin-user-form',
   templateUrl: './admin-user-form.component.html',
 })
-export class AdminUserFormComponent extends DetailsForm implements OnInit, OnChanges {
+export class AdminUserFormComponent extends DetailsForm implements OnInit, OnChanges, OnDestroy {
 
   @Select(AdminUserState.adminUser) user$: Observable<any>;
-  subscription: Subscription; 
+  subscription: Subscription;
 
   progress = 0;
 
@@ -44,21 +43,24 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   ngOnChanges(): void {
     if (this.MODE === this.ACTION.EDIT) {
       this.subscription = this.user$.subscribe(response => {
-        //this.form.patchValue(response);
-        this.title = "Actualizar usuario administrador";
-        console.log(response); 
-        this.form.patchValue( response ); 
 
+        // Title modal
+        this.title = 'Actualizar usuario administrador';
+
+        // -- Prepare data in the form to update
+        this.form.patchValue( response );
         this.form.controls.addressState.setValue( response.addressState.id );
-        this.form.controls.cardType.setValue( response.cardType );
-        this.form.controls.role.setValue( response.role.id ); 
-        this.form.controls.addressMunicipality.setValue( response.addressMunicipality.id );
+        this.form.controls.role.setValue( response.role.id );
+        // this.form.controls.addressMunicipality.setValue( response.addressMunicipality.id );
       });
-    } else { this.title = 'Registrar usuario administrador' }
+    } else if ( this.MODE === this.ACTION.CREATE ) {
+      this.restar(); // To restar form
+      // Title modal
+      this.title = 'Registrar usuario administrador';  }
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe(); 
+    this.subscription.unsubscribe();
   }
 
   onSubmit() {
@@ -87,7 +89,6 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
               break;
           }
         }, (err: any) => {
-
           if (String(err.error.email[0].status) === '5') {
             this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
           }
@@ -101,6 +102,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
     }
   }
 
+  // To restar nicely form
   private restar(): void {
     this.form.reset();
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);

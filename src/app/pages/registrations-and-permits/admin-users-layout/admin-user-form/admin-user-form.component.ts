@@ -9,6 +9,8 @@ import { USER_TYPE } from 'src/app/helpers/user-type';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { DOCUMENT_TYPE } from 'src/app/helpers/document-type';
+import { STATUS } from 'src/app/helpers/text-content/status';
 
 @Component({
   selector: 'app-admin-user-form',
@@ -42,8 +44,8 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
       if (this.MODE === ACTION.CREATE) {
 
         this.adminUserService.setAdminUser(data).subscribe(response => {
-          console.log( response );
           this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
+          this.restar();     
         });
       } else {
 
@@ -51,6 +53,14 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
     } else {
       this.validationService.markAllFormFieldsAsTouched(this.form);
     }
+  }
+
+  private restar () : void {
+    this.form.reset(); 
+    this.form.controls.status.setValue( STATUS.ACTIVE.CODE ); 
+    this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE); 
+    this.submitted = false; 
+
   }
 
   // -- Event selected rol --

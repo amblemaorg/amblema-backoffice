@@ -86,11 +86,12 @@ export class AdminUserState implements NgxsOnInit {
 
     @Action( SetAdminUser )
     setAdminUser( ctx: StateContext<AdminUser>, action: SetAdminUser ) {
-        action.payload.cardType = this.helper.encodeTypeDocument( action.payload.cardType );
-        console.log(action.payload);
-        this.adminUserService.setAdminUser( action.payload ).subscribe( response => {
-            console.log(response);
-            this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
-        });
+       
+        // action.payload.cardType = this.helper.encodeTypeDocument( action.payload.cardType );
+        // console.log(action.payload);
+        // this.adminUserService.setAdminUser( action.payload ).subscribe( response => {
+        //     console.log(response);
+        //     this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
+        // });
     }
 }

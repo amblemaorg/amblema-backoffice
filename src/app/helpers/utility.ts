@@ -2,9 +2,15 @@ import { Inject } from '@angular/core';
 import { STATUS } from './text-content/status';
 import { Post } from '../models/web/blog.model';
 import { SliderMedia } from '../models/learning.model';
+import { DOCUMENT_TYPE } from './document-type';
+import { AdminUser } from '../models/user/admin-user.model';
 
 @Inject('root')
 export class Utility {
+
+    /**
+     * Status selector
+     */
 
     public readlyStatus(object?: any[]): any[] {
         object.forEach((value, key) => {
@@ -28,6 +34,24 @@ export class Utility {
         return object;
     }
 
+    /**
+     *  Type document
+     */
+    public encodeTypeDocument( type: string ): string {
+        type = type === DOCUMENT_TYPE.V.VALUE ?  DOCUMENT_TYPE.V.CODE.toString() :
+            type === DOCUMENT_TYPE.J.VALUE ? DOCUMENT_TYPE.J.CODE.toString() : DOCUMENT_TYPE.E.CODE.toString();
+        return type;
+    }
+
+    public readlyTypeDocument( adminUsers: AdminUser[] ): AdminUser[] {
+        adminUsers.forEach( value => {
+            value.cardType = value.cardType === DOCUMENT_TYPE.V.CODE.toString() ?  DOCUMENT_TYPE.V.VALUE :
+            value.cardType === DOCUMENT_TYPE.J.CODE.toString() ? DOCUMENT_TYPE.J.VALUE : DOCUMENT_TYPE.E.VALUE;
+        });
+
+        return adminUsers;
+    }
+
     /** To filter array json by ID, return a value */
 
     public filter(object: any[], id: string): any {
@@ -39,8 +63,10 @@ export class Utility {
     }
 
     /**
-     * Convert Tags number to string
+     * Convert Tags number to string,
+     * aplicate it to blog post, web content.
      */
+
     public convertTagsNumberToString(data: any): Post[] {
 
         data.forEach((value, key) => {
@@ -73,14 +99,17 @@ export class Utility {
         return post;
     }
 
-    /** To video */
+    /**
+     *  Media convert, aplicate to learning
+     *  module
+     */
 
     public mediaNumberToString( media: SliderMedia[] ): SliderMedia[] {
 
         media.forEach( (value, key) => {
             value.type = value.type === '1' ? 'Imagen' : 'Video';
         });
-
         return media;
     }
+
 }

@@ -34,7 +34,7 @@ export class InputPasswordComponent extends AbstractReactiveInput implements Aft
     constructor( private cd: ChangeDetectorRef ) { super(); }
 
     ngAfterViewInit(): void {
-        this.control.setValidators([Validators.required, Validators.maxLength(8)]);
+        this.control.setValidators([Validators.required, Validators.maxLength(8), Validators.minLength(8)]);
         this.control.updateValueAndValidity();
 
         this.cd.detectChanges();

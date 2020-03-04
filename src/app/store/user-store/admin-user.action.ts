@@ -2,6 +2,7 @@ import { State, NgxsOnInit, Action, StateContext } from '@ngxs/store';
 import { AdminUser } from 'src/app/models/user/admin-user.model';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
+import { Utility } from 'src/app/helpers/utility';
 
 // -- State interface --
 
@@ -59,6 +60,7 @@ export class DeleteAdminUser {
 export class AdminUserState implements NgxsOnInit {
 
     constructor(
+        private helper: Utility,
         private toastr: CustomToastrService,
         private adminUserService: AdminUserService
     ) {}
@@ -83,7 +85,12 @@ export class AdminUserState implements NgxsOnInit {
     }
 
     @Action( SetAdminUser )
-    setAdminUser( ctx: StateContext<AdminUser>, payload: SetAdminUser ) {
-
+    setAdminUser( ctx: StateContext<AdminUser>, action: SetAdminUser ) {
+        action.payload.cardType = this.helper.encodeTypeDocument( action.payload.cardType );
+        console.log(action.payload);
+        this.adminUserService.setAdminUser( action.payload ).subscribe( response => {
+            console.log(response);
+            this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
+        });
     }
 }

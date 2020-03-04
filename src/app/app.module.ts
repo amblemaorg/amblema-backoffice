@@ -25,6 +25,7 @@ import { PostsState } from './store/blog.action';
 import localeVe from '@angular/common/locales/es-VE';
 import { registerLocaleData } from '@angular/common';
 import { AdminUserState } from './store/user-store/admin-user.action';
+import { environment } from 'src/environments/environment.prod';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -64,7 +65,7 @@ registerLocaleData(localeVe, 'es-VE');
       compatibility: {
         strictContentSecurityPolicy: true
       },
-      developmentMode: false
+      developmentMode: !environment.production
     }),
     NgxsStoragePluginModule.forRoot({}),
     NbToastrModule.forRoot(),

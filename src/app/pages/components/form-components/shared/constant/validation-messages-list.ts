@@ -9,5 +9,5 @@ export const MESSAGES = {
     DOCUMENT_MESSAGE : 'Cédula inválida, ingresa una cédula correcta',
     RIF_MESSAGE : 'RIF inválido, ingresa un RIF correcto',
     PASSPORT_MESSAGE : 'Pasaporte inválido, ingresa un pasaporte correcto',
-    MAX_PW_MESSAGE : 'La contraseña debe contener un máximo de 8 caracteres'
+    MAX_PW_MESSAGE : 'La contraseña debe contener un máximo y mínimo de 8 caracteres'
 };

@@ -25,24 +25,11 @@ export class AdminUserService {
   }
 
   setAdminUser( data: AdminUser ): Observable<any>  {
-    return this.httpClient.post(`${environment.api}${this.ADMIN_USER}`, data, {
+    return this.httpClient.post<AdminUser>(`${environment.api}${this.ADMIN_USER}`, data, {
       reportProgress: true,
-      observe: 'events',
-     }).pipe(catchError(this.errorMgmt));
+      observe: 'events'  
+     });
   }
-
-  errorMgmt(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    return throwError(errorMessage);
-  }
-
 
   updateAdminUser( id: string, data: AdminUser ): Observable<AdminUser> {
     return this.httpClient.put<AdminUser>(`${environment.api}/${id}${this.USER_TYPE}/`, data);

@@ -9,6 +9,8 @@ export class CustomToastrService {
   private readonly position: any = 'bottom-left';
   private readonly duration: number = 6000;
 
+  public durationInfo: number = 0; 
+
   constructor(private toastrService: NbToastrService) { }
 
   registerSuccess(title: string, content: string): void {
@@ -40,6 +42,16 @@ export class CustomToastrService {
 
   error(title: string, content: string): void {
     this.toastrService.danger( content, title, {
+      position: this.position,
+      iconPack: 'eva',
+      icon: 'alert-triangle-outline',
+      duration: this.duration
+    });
+  }
+
+  info( title: string, content: string ) : void {
+    
+    this.toastrService.info( content, title, {
       position: this.position,
       iconPack: 'eva',
       icon: 'alert-triangle-outline',

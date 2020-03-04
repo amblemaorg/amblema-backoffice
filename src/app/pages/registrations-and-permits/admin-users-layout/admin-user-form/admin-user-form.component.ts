@@ -4,19 +4,21 @@ import { ValidationService } from 'src/app/pages/components/form-components/shar
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { DetailsForm } from '../../shared/details-form';
 import { Store } from '@ngxs/store';
-import { SetAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { USER_TYPE } from 'src/app/helpers/user-type';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { DOCUMENT_TYPE } from 'src/app/helpers/document-type';
 import { STATUS } from 'src/app/helpers/text-content/status';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-user-form',
   templateUrl: './admin-user-form.component.html',
 })
 export class AdminUserFormComponent extends DetailsForm implements OnInit {
+
+  progress = 0;
 
   constructor(
     private store: Store,
@@ -42,10 +44,25 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
       data.cardType = this.helper.encodeTypeDocument(data.cardType);
 
       if (this.MODE === ACTION.CREATE) {
+        this.adminUserService.setAdminUser(data).subscribe((event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              console.log('Request has been made!');
+              break;
+            case HttpEventType.ResponseHeader:
+              console.log('Response header has been received!');
+              break;
+            case HttpEventType.UploadProgress:
+              this.progress = Math.round(event.loaded / event.total * 100);
+              console.log(`Uploaded! ${this.progress}%`);
+              break;
+            case HttpEventType.Response:
+              console.log('User successfully created!', event.body);
+              setTimeout(() => {
+                this.progress = 0;
+              }, 1500);
 
-        this.adminUserService.setAdminUser(data).subscribe(response => {
-          this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
-          this.restar();     
+          }
         });
       } else {
 
@@ -55,12 +72,11 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
     }
   }
 
-  private restar () : void {
-    this.form.reset(); 
-    this.form.controls.status.setValue( STATUS.ACTIVE.CODE ); 
-    this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE); 
-    this.submitted = false; 
-
+  private restar(): void {
+    this.form.reset();
+    this.form.controls.status.setValue( STATUS.ACTIVE.CODE );
+    this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
+    this.submitted = false;
   }
 
   // -- Event selected rol --

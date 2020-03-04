@@ -67,6 +67,8 @@
                 </app-select-status>
             </div>
         </div>
+        <p>progreso: {{progress}}</p>
+
     </form><!-- / End main content -->
 
     <!-- Footer content -->
@@ -75,4 +77,5 @@
         <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
         <span *ngIf="MODE == ACTION.EDIT">Editar</span>
     </button>
+
 </app-modal>

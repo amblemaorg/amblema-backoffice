@@ -3,7 +3,7 @@ import { AdminUser } from 'src/app/models/user/admin-user.model';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/helpers/utility';
-import { append, patch } from '@ngxs/store/operators';
+import { append, patch, removeItem } from '@ngxs/store/operators';
 
 // -- State interface --
 
@@ -97,4 +97,16 @@ export class AdminUserState implements NgxsOnInit {
             adminUsers: append([action.payload])
         }));
     }
+
+    @Action( DeleteAdminUser )
+    deleteAdminUser(ctx: StateContext<AdminUserModel>,action: DeleteAdminUser  ) {
+
+        this.adminUserService.deleteAdminUser( action.payload.id ).subscribe( response => {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                adminUsers: removeItem<AdminUser>( adminUser => adminUser.id === action.payload.id )
+            }) );
+            this.toastr.deleteRegister('Eliminación', "Usuario administrador eliminado");
+        } );
+    }            
 }

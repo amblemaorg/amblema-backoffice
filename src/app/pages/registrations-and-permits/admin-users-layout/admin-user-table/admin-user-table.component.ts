@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
-import { Select } from '@ngxs/store';
-import { AdminUserState } from 'src/app/store/user-store/admin-user.action';
+import { Select, Store } from '@ngxs/store';
+import { AdminUserState, DeleteAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/models/user/admin-user.model';
 
@@ -17,7 +17,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions, 
   @Select( AdminUserState.adminUsers ) data$: Observable<AdminUser[]>;
   subscription: Subscription;
 
-  constructor() {
+  constructor( private store: Store ) {
 
     super('form-admin-user'); // <-- Send ID
 
@@ -47,7 +47,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions, 
   }
 
   ngOnInit(): void {
-    this.data$.subscribe( response => console.log(response) );
+    //this.data$.subscribe( response => console.log(response) );
   }
 
   ngOnDestroy(): void {
@@ -57,15 +57,15 @@ export class AdminUserTableComponent extends BaseTable implements TableActions, 
   onAction(event: any) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        // Call view modal
+        // --
+        
         break;
       case this.ACTION.EDIT:
-        // Change mode purpose
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
         break;
       case this.ACTION.DELETE:
-        // Call delete modal
+        this.store.dispatch( new DeleteAdminUser( event.data ) );
         break;
     }
   }

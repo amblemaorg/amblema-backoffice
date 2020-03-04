@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
 import { Select, Store } from '@ngxs/store';
-import { AdminUserState, DeleteAdminUser } from 'src/app/store/user-store/admin-user.action';
+import { AdminUserState, DeleteAdminUser, SelectedAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/models/user/admin-user.model';
 
@@ -58,11 +58,12 @@ export class AdminUserTableComponent extends BaseTable implements TableActions, 
     switch (event.action) {
       case this.ACTION.VIEW:
         // --
-        
+
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
+        this.store.dispatch( new SelectedAdminUser( event.data ) );
         break;
       case this.ACTION.DELETE:
         this.store.dispatch( new DeleteAdminUser( event.data ) );

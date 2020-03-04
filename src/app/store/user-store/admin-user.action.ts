@@ -19,6 +19,11 @@ export class GetAdminUsers {
     constructor() { }
 }
 
+export class SelectedAdminUser { 
+    static readonly type = '[User] Selected User';
+    constructor( public paylaod: AdminUser ) {}
+}
+
 export class SetAdminUser {
     static readonly type = '[User] Set User';
     constructor(public payload: AdminUser) { }
@@ -65,6 +70,11 @@ export class AdminUserState implements NgxsOnInit {
         return state.adminUsers;
     }
 
+    @Selector()
+    static adminUser( state: AdminUserModel ): AdminUser | null {
+        return state.adminUser;
+    }
+
     constructor(
         private helper: Utility,
         private toastr: CustomToastrService,
@@ -88,6 +98,14 @@ export class AdminUserState implements NgxsOnInit {
                     });
                 }
             });
+    }
+
+    @Action( SelectedAdminUser )
+    selectedAdminUser( ctx: StateContext<AdminUserModel>, action: SelectedAdminUser ) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            adminUser : action.paylaod
+        }));
     }
 
     @Action( SetAdminUser )

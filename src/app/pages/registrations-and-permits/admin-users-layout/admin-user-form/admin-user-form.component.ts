@@ -44,11 +44,12 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
       const data: any = this.form.value;
       data.cardType = this.helper.encodeTypeDocument(data.cardType);
 
-
       if (this.MODE === ACTION.CREATE) {
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
         this.adminUserService.setAdminUser(data).subscribe((event: HttpEvent<any>) => {
+        
+
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
@@ -60,6 +61,12 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
               this.restar();
               break;
           }
+        }, (err:any) => {
+
+          if( err.error.email.status = "5" ) {
+            this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+          }
+          this.progress = 0;
         });
       } else {
 
@@ -73,6 +80,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
     this.form.reset();
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
+    this.form.controls.userType.setValue( USER_TYPE.ADMIN.CODE.toString() ); 
     this.submitted = false;
   }
 

@@ -47,6 +47,7 @@ export class PostsState implements NgxsOnInit {
         private helper: Utility,
         private toastr: CustomToastrService,
         private blogService: BlogService
+
     ) {}
 
     @Action(GetPosts)
@@ -57,6 +58,8 @@ export class PostsState implements NgxsOnInit {
                 response = this.helper.convertStatusPostToString(response);
                 ctx.setState( response );
             });
+
+
     }
 
     @Action(SetPost)

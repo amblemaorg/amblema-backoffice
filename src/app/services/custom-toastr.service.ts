@@ -9,7 +9,7 @@ export class CustomToastrService {
   private readonly position: any = 'bottom-left';
   private readonly duration: number = 6000;
 
-  public durationInfo: number = 0; 
+  public durationInfo = 0;
 
   constructor(private toastrService: NbToastrService) { }
 
@@ -49,8 +49,8 @@ export class CustomToastrService {
     });
   }
 
-  info( title: string, content: string ) : void {
-    
+  info( title: string, content: string ): void {
+
     this.toastrService.info( content, title, {
       position: this.position,
       iconPack: 'eva',

@@ -11,6 +11,7 @@ import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { DOCUMENT_TYPE } from 'src/app/helpers/document-type';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
+import { SetAdminUser } from 'src/app/store/user-store/admin-user.action';
 
 @Component({
   selector: 'app-admin-user-form',
@@ -18,7 +19,7 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
 })
 export class AdminUserFormComponent extends DetailsForm implements OnInit {
 
-  progress: number = 0;
+  progress = 0;
 
   constructor(
     private store: Store,
@@ -48,22 +49,25 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
         this.adminUserService.setAdminUser(data).subscribe((event: HttpEvent<any>) => {
-        
+
+          console.log('respuesta del registro de usuario');
+
 
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
-              //console.log(this.progress);
+              // console.log(this.progress);
               break;
             case HttpEventType.Response:
               this.progress = 0;
+              this.store.dispatch( new SetAdminUser(data) );
               this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
               this.restar();
               break;
           }
-        }, (err:any) => {
+        }, (err: any) => {
 
-          if( err.error.email.status = "5" ) {
+          if ( String(err.error.email[0].status) === '5' ) {
             this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
           }
           this.progress = 0;
@@ -80,7 +84,8 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit {
     this.form.reset();
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
-    this.form.controls.userType.setValue( USER_TYPE.ADMIN.CODE.toString() ); 
+    this.form.controls.userType.setValue( USER_TYPE.ADMIN.CODE.toString() );
+    this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
   }
 

@@ -27,7 +27,7 @@ export class AdminUserService {
   setAdminUser( data: AdminUser ): Observable<any>  {
     return this.httpClient.post<AdminUser>(`${environment.api}${this.ADMIN_USER}`, data, {
       reportProgress: true,
-      observe: 'events'  
+      observe: 'events'
      });
   }
 

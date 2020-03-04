@@ -51,9 +51,7 @@ registerLocaleData(localeVe, 'es-VE');
       RolesState,
       RoleState,
 
-      // REFACTORIZACION DE FACTO
       LearningState,
-
       WebHomeState,
       WebAboutState,
       WebSponsorState,

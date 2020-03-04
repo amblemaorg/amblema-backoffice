@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { Select } from '@ngxs/store';
+import { AdminUserState } from 'src/app/store/user-store/admin-user.action';
+import { Observable, Subscription } from 'rxjs';
+import { AdminUser } from 'src/app/models/user/admin-user.model';
 
 // To control the bootstrap modal
 declare var $: any;
@@ -8,88 +12,10 @@ declare var $: any;
   selector: 'app-admin-user-table',
   templateUrl: './admin-user-table.component.html',
 })
-export class AdminUserTableComponent extends BaseTable implements TableActions {
+export class AdminUserTableComponent extends BaseTable implements TableActions, OnInit, OnDestroy {
 
-  data: any = [
-    {
-      name: 'Jesus',
-      lastName: 'Medina',
-      charge: 'Administrador',
-      role: 'Administrador',
-      status: 'Activo'
-    },
-    {
-      name: 'Carlos',
-      lastName: 'Gomez',
-      charge: 'Administrador',
-      role: 'Administrador',
-      status: 'Activo'
-    },
-    {
-      name: 'Jack',
-      lastName: 'Nicolson',
-      charge: 'Administrador',
-      role: 'Administrador',
-      status: 'Activo'
-    },
-    {
-      name: 'Laura',
-      lastName: 'Jimenez',
-      charge: 'Coordinadora',
-      role: 'Superadmin',
-      status: 'Activo'
-    },
-    {
-      name: 'Carla',
-      lastName: 'Nore',
-      charge: 'Coordinadora',
-      role: 'Superadmin',
-      status: 'Activo'
-    },
-    {
-      name: 'Sebas',
-      lastName: 'Santos',
-      charge: 'CEO',
-      role: 'Superadmin',
-      status: 'Activo'
-    },
-    {
-      name: 'Colbyn',
-      lastName: 'Medinas',
-      charge: 'CEO',
-      role: 'Superadmin',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Luis',
-      lastName: 'Medinas',
-      charge: 'Gerente',
-      role: 'Superadmin',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Daniel',
-      lastName: 'Mohan',
-      charge: 'Gerente',
-      role: 'Normal',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Yorman',
-      lastName: 'Gaez',
-      charge: 'Gerente',
-      role: 'Normal',
-      status: 'Inactivo'
-    },
-    {
-      name: 'Elsa',
-      lastName: 'Gomez',
-      charge: 'Gerente',
-      role: 'Normal',
-      status: 'Inactivo'
-    },
-  ];
-
+  @Select( AdminUserState.adminUsers ) data$: Observable<AdminUser[]>;
+  subscription: Subscription;
 
   constructor() {
 
@@ -97,7 +23,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
 
     // customers columns
     this.settings.columns = {
-      name: {
+      firstName: {
         title: 'Nombre',
         type: 'string'
       },
@@ -105,7 +31,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         title: 'Apellido',
         type: 'string'
       },
-      charge: {
+      function: {
         title: 'Cargo',
         type: 'string'
       },
@@ -118,6 +44,14 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         type: 'string'
       }
     };
+  }
+
+  ngOnInit(): void {
+    this.data$.subscribe( response => console.log(response) );
+  }
+
+  ngOnDestroy(): void {
+
   }
 
   onAction(event: any) {
@@ -135,8 +69,4 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         break;
     }
   }
-
-  newData(event: any) { }
-  updateData(event: any) { }
-  deleteData(event: any) { }
 }

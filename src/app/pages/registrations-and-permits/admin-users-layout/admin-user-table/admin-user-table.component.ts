@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
 import { Select, Store } from '@ngxs/store';
 import { AdminUserState, DeleteAdminUser, SelectedAdminUser } from 'src/app/store/user-store/admin-user.action';
@@ -12,12 +12,12 @@ declare var $: any;
   selector: 'app-admin-user-table',
   templateUrl: './admin-user-table.component.html',
 })
-export class AdminUserTableComponent extends BaseTable implements TableActions, OnInit, OnDestroy {
+export class AdminUserTableComponent extends BaseTable implements TableActions {
 
-  @Select( AdminUserState.adminUsers ) data$: Observable<AdminUser[]>;
+  @Select(AdminUserState.adminUsers) data$: Observable<AdminUser[]>;
   subscription: Subscription;
 
-  constructor( private store: Store ) {
+  constructor(private store: Store) {
 
     super('form-admin-user'); // <-- Send ID
 
@@ -37,21 +37,23 @@ export class AdminUserTableComponent extends BaseTable implements TableActions, 
       },
       role: {
         title: 'Rol',
-        type: 'string'
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filter: true,
+        filterFunction(cell?: any, search?: string): boolean {          
+          let value: string = cell.name.toString(); 
+          value = value.toUpperCase();
+          if (value.search(search.toUpperCase()) !== -1  || search === '') {
+            return true;
+          } else { return false }
+        }
       },
       status: {
         title: 'Estatus',
         type: 'string'
       }
     };
-  }
-
-  ngOnInit(): void {
-    // this.data$.subscribe( response => console.log(response) );
-  }
-
-  ngOnDestroy(): void {
-
   }
 
   onAction(event: any) {
@@ -63,10 +65,10 @@ export class AdminUserTableComponent extends BaseTable implements TableActions, 
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
-        this.store.dispatch( new SelectedAdminUser( event.data ) );
+        this.store.dispatch(new SelectedAdminUser(event.data));
         break;
       case this.ACTION.DELETE:
-        this.store.dispatch( new DeleteAdminUser( event.data ) );
+        this.store.dispatch(new DeleteAdminUser(event.data));
         break;
     }
   }

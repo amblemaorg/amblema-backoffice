@@ -9,6 +9,12 @@
     <ng2-smart-table (custom)="onAction($event)" [source]='data$ | async' [settings]="settings"></ng2-smart-table>
 </div>
 
-<!-- modal form -->
+<!-- Modal form -->
 <app-admin-user-form [ID]='ID_FORM' [MODE]='MODE' (create)="newData($event)" (edit)="updateData($event)">
 </app-admin-user-form>
+
+
+<!-- Modal query -->
+<app-modal [ID]="'view-admin-user'" [size]="'lg'" [title]="'Datos de usuario administrador'"> 
+    <app-admin-user-view content></app-admin-user-view>    
+</app-modal>

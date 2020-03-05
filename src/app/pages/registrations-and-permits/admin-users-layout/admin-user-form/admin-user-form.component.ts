@@ -102,7 +102,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           this.progress = 0;
         });
       } else {
-        console.log( this.form.value ); 
+        console.log( this.form.value );
       }
     } else {
       this.validationService.markAllFormFieldsAsTouched(this.form);

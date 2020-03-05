@@ -19,7 +19,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
   subscription: Subscription;
 
   constructor(
-    private helper: Utility, 
+    private helper: Utility,
     private store: Store) {
 
     super('form-admin-user'); // <-- Send ID
@@ -44,27 +44,27 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
           return row.name;
         },
         filter: true,
-        filterFunction(cell?: any, search?: string): boolean {          
-          let value: string = cell.name.toString(); 
+        filterFunction(cell?: any, search?: string): boolean {
+          let value: string = cell.name.toString();
           value = value.toUpperCase();
           if (value.indexOf(search.toUpperCase()) === 0  || search === '') {
             return true;
-          } else { return false }
+          } else { return false; }
         }
       },
       status: {
         title: 'Estatus',
-        type: 'string', 
+        type: 'string',
         valuePrepareFunction: (row: any) => {
           return this.helper.readlyStatus( [{ status: row }] )[0].status;
         },
-        filterFunction(cell?: any, search?: string): boolean {          
-          
+        filterFunction(cell?: any, search?: string): boolean {
 
-            let value: string = cell === '1' ? 'Activo' : 'Inactivo'; 
 
-            value = value.toUpperCase(); 
-            if( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
+            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+
+            value = value.toUpperCase();
+            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
               return true;
             } else { return false;  }
         }

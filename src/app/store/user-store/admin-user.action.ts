@@ -94,7 +94,7 @@ export class AdminUserState implements NgxsOnInit {
                 if (response) {
 
                     response = this.helper.readlyTypeDocument( response );
-        
+
                     ctx.setState({
                         ...ctx.getState(),
                         adminUsers: response

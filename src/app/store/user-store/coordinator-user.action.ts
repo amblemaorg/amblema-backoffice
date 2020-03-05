@@ -1,4 +1,7 @@
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
+import { State, NgxsOnInit, Selector } from '@ngxs/store';
+import { Utility } from 'src/app/helpers/utility';
+import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -30,4 +33,53 @@ export class DeleteCoordinatorUser {
 export class SelectedCoordinatorUser {
     static readonly type = '[Coordinator User] Selected Coordinator User';
     constructor( public payload: CoordinatorUser ) { }
+}
+
+@State<CoordinatorUserModel>({
+    name: 'coordinatoruser',
+    defaults: {
+        coordinatorUser: {
+            id: '',
+            name: '',
+            email: '',
+            password: '',
+            userType: '',
+            phone: '',
+            role: '',
+            addressState: '',
+            addressMunicipality: '',
+            addressCity: ' ',
+            address: '',
+            firstName: '',
+            lastName: '',
+            cardType: '',
+            cardId: '',
+            birthdate: '',
+            homePhone: '',
+            addressHome: '',
+            status: ''
+        },
+        coordinatorUsers: [ ]
+    }
+})
+export class CoordinatorUserState implements NgxsOnInit {
+
+    @Selector()
+    static coordinatorUsers( state: CoordinatorUserModel ): CoordinatorUser[] | null {
+        return state.coordinatorUsers;
+    }
+
+    @Selector()
+    static coordinatorUser( state: CoordinatorUserModel ): CoordinatorUser | null {
+        return state.coordinatorUser;
+    }
+
+    constructor(
+        private helper: Utility,
+        private toastr: CustomToastrService,
+    ) {}
+
+    ngxsOnInit() {}
+
+
 }

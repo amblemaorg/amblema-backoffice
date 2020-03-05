@@ -51,6 +51,7 @@
             </div>
             <div class="col-12">
                 <app-form-regional-address 
+                    [idState]="idState"
                     [state]="form.get('addressState')" 
                     [municipality]="form.get('addressMunicipality')"
                     [control]="form.get('address')" 

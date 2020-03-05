@@ -24,6 +24,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   subscription: Subscription;
 
   progress = 0;
+  idState: string = ' '; 
 
   constructor(
     private store: Store,
@@ -46,12 +47,16 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
         // Title modal
         this.title = 'Actualizar usuario administrador';
-
         // -- Prepare data in the form to update
         this.form.patchValue( response );
+        this.idState = this.form.controls.addressState.value;
         this.form.controls.addressState.setValue( response.addressState.id );
         this.form.controls.role.setValue( response.role.id );
-        // this.form.controls.addressMunicipality.setValue( response.addressMunicipality.id );
+        this.submitted = false; 
+        
+        // setTimeout(() => {
+        //   this.form.controls.addressMunicipality.setValue( response.addressMunicipality.id );
+        // }, 1);
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
       this.restar(); // To restar form
@@ -83,7 +88,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
               break;
             case HttpEventType.Response:
               this.progress = 0;
-              this.store.dispatch(new SetAdminUser(data));
+              this.store.dispatch(new SetAdminUser(event.body));
               this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
               this.restar();
               break;

@@ -13,13 +13,15 @@ import { errorMessages } from 'src/app/helpers/text-content/error-manager';
     templateUrl: './form-regional-address.component.html',
 })
 
-export class FormRegionalAddressComponent extends AbstractReactive implements OnDestroy {
+export class FormRegionalAddressComponent extends AbstractReactive implements OnDestroy, OnChanges {
 
     // Parse to form
     @Input() state: AbstractControl | null = new FormControl();
     @Input() municipality: AbstractControl | null = new FormControl();
 
     @Input() submitted: boolean;
+    @Input() idState: any | null = '';
+
 
     MODE = 'NORMAL';
     CRUD = ACTION;
@@ -35,6 +37,16 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     constructor(private addressService: AddressService, private toastr: CustomToastrService) {
         super();
         this.initAddress();
+    }
+
+    ngOnChanges() : void  {
+        // This for to clear the selector values
+        if( !this.municipality.value && !this.submitted ) {
+            this.municipalities = [];
+        }
+
+        if( this.idState.id )
+            this.onSelectState( String(this.idState.id) ); 
     }
 
     ngOnDestroy(): void {

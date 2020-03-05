@@ -77,7 +77,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
       case this.ACTION.VIEW:
         // --  Query all data
         $(`#view-admin-user`).modal('show');
-        this.store.dispatch( new SelectedAdminUser( event.data ) ); 
+        this.store.dispatch( new SelectedAdminUser( event.data ) );
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;

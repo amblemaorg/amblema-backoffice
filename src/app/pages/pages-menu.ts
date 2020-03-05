@@ -184,7 +184,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         ],
       },
       {
-        title: 'Módulos de estudio',
+        title: 'Temas del Pensum',
         icon: 'book-open-outline',
         link: '/pages/content/learning'
       },

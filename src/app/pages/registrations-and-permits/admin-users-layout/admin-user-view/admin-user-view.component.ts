@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { AdminUserState } from 'src/app/store/user-store/admin-user.action';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   templateUrl: './admin-user-view.component.html',
   styles: []
 })
-export class AdminUserViewComponent {
+export class AdminUserViewComponent implements OnInit {
   @Select( AdminUserState.adminUser ) data$: Observable<any>;
 
   data: any;
@@ -18,7 +18,7 @@ export class AdminUserViewComponent {
       this.data = response;
 
       this.data = Object.assign( {}, this.data );
-      this.data.status = this.data.status === "1" ? "Activo" : 'Inactivo'; 
-    }); 
+      this.data.status = this.data.status === '1' ? 'Activo' : 'Inactivo';
+    });
   }
 }

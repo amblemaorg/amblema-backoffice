@@ -48,6 +48,7 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
   ngOnChanges(): void {
 
     if (this.MODE === this.ACTION.EDIT) {
+
       this.formRole.controls.role.setValue(this.DATA.name);
       this.formRole.controls.status.setValue( this.DATA.status === STATUS.ACTIVE.MSG ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE );
     } else { this.formRole.controls.status.setValue(STATUS.ACTIVE.CODE); }

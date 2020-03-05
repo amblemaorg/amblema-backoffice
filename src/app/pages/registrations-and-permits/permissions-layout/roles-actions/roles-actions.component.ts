@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterContentInit } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-content/text-crud';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BaseTable } from 'src/app/helpers/base-table';
@@ -61,28 +61,32 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.subscription = this.role$.subscribe( role => {
+    this.subscription = this.role$.subscribe(role => {
       this.role = role;
-      this.control.setValue( role.id ); // Rol pre selected, set in the form
+      setTimeout(() => {
+        this.control.setValue(role.id); // Rol pre selected, set in the form
+
+      });
     });
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe(); // <-- Free memory
     }
   }
 
   // Event select another rol
-  onSelected( id: string ): void {
-    this.subscription = this.roles$.subscribe( response => {
-      this.role = this.filter( response, id )[0];
+  onSelected(id: string): void {
+
+    this.subscription = this.roles$.subscribe(response => {
+      this.role = this.filter(response, id)[0];
     });
   }
 
-  private filter( object: any[], id: string ): any {
-    return object.filter( value => {
-      if ( value.id === id ) {
+  private filter(object: any[], id: string): any {
+    return object.filter(value => {
+      if (value.id === id) {
         return value;
       }
     });

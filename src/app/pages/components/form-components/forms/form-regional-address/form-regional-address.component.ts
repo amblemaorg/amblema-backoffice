@@ -20,8 +20,10 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
     @Input() municipality: AbstractControl | null = new FormControl();
 
     @Input() submitted: boolean;
-    @Input() idState: any | null = '';
 
+    // This is for update data
+    @Input() idState: any | null = '';
+    @Input() idMunicipality: any | null = ' ';
 
     MODE = 'NORMAL';
     CRUD = ACTION;
@@ -39,14 +41,16 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
         this.initAddress();
     }
 
-    ngOnChanges(): void  {
+    ngOnChanges(): void {
         // This for to clear the selector values
-        if ( !this.municipality.value && !this.submitted ) {
+        if (!this.municipality.value && !this.submitted) {
             this.municipalities = [];
         }
 
-        if ( this.idState.id ) {
-            this.onSelectState( String(this.idState.id) );
+        if (this.idState) {
+            if (this.idState.id) {
+                this.onSelectState(String(this.idState.id));
+            }
         }
     }
 
@@ -157,11 +161,14 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
                 break;
             case this.CRUD.DELETE:
                 this.addressService.deleteMunicipality(this.municipality.value).subscribe(response => {
-                    // Delete and refresh the list
-                    this.municipalities.splice(this.municipalities.indexOf(this.municipality.value), 1);
+                    // Remove the array's item
+                    this.municipalities = this.municipalities.filter(item => item.id !== this.municipality.value);
 
-                    if (this.municipalities.length > 0 ) {
+                    // Void if the array is empty
+                    if (this.municipalities.length > 0) {
                         this.municipality.setValue(this.municipalities[0].id);
+
+                        this.fillValuesMunicipality(this.municipalities[0].id);
                     } else { this.municipality.setValue(null); }
 
                     this.toastr.deleteRegister('Eliminación', 'Se ha eliminado el municipio seleccionado');

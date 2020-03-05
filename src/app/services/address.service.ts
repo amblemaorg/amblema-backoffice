@@ -54,6 +54,7 @@ export class AddressService {
 }
 
 export interface DataMunicipality {
+  id?: string;
   state: string;
   name: string;
 }

@@ -25,6 +25,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
   progress = 0;
   idState = ' ';
+  idMunicipality = '';
 
   constructor(
     private store: Store,
@@ -50,22 +51,20 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         // -- Prepare data in the form to update
         this.form.patchValue( response );
         this.idState = this.form.controls.addressState.value;
+        this.idMunicipality = this.form.controls.addressMunicipality.value;
         this.form.controls.addressState.setValue( response.addressState.id );
         this.form.controls.role.setValue( response.role.id );
         this.submitted = false;
-
-        // setTimeout(() => {
-        //   this.form.controls.addressMunicipality.setValue( response.addressMunicipality.id );
-        // }, 1);
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
+      this.idState = null;
       this.restar(); // To restar form
       // Title modal
       this.title = 'Registrar usuario administrador';  }
   }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe();
     }
   }
@@ -81,6 +80,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
       if (this.MODE === ACTION.CREATE) {
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
+
         this.adminUserService.setAdminUser(data).subscribe((event: HttpEvent<any>) => {
 
           switch (event.type) {
@@ -102,6 +102,8 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           this.progress = 0;
         });
       } else {
+
+        console.log( this.form.value ); 
 
       }
     } else {

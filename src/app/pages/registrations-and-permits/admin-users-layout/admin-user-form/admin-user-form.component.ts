@@ -24,7 +24,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   subscription: Subscription;
 
   progress = 0;
-  idState: string = ' '; 
+  idState = ' ';
 
   constructor(
     private store: Store,
@@ -52,8 +52,8 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.idState = this.form.controls.addressState.value;
         this.form.controls.addressState.setValue( response.addressState.id );
         this.form.controls.role.setValue( response.role.id );
-        this.submitted = false; 
-        
+        this.submitted = false;
+
         // setTimeout(() => {
         //   this.form.controls.addressMunicipality.setValue( response.addressMunicipality.id );
         // }, 1);
@@ -65,7 +65,9 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if( this.subscription ) {
+      this.subscription.unsubscribe();
+    }
   }
 
   onSubmit() {

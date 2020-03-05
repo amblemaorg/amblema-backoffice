@@ -39,14 +39,15 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
         this.initAddress();
     }
 
-    ngOnChanges() : void  {
+    ngOnChanges(): void  {
         // This for to clear the selector values
-        if( !this.municipality.value && !this.submitted ) {
+        if ( !this.municipality.value && !this.submitted ) {
             this.municipalities = [];
         }
 
-        if( this.idState.id )
-            this.onSelectState( String(this.idState.id) ); 
+        if ( this.idState.id ) {
+            this.onSelectState( String(this.idState.id) );
+        }
     }
 
     ngOnDestroy(): void {

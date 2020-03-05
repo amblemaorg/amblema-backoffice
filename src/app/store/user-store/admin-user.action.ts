@@ -113,7 +113,7 @@ export class AdminUserState implements NgxsOnInit {
 
     @Action( SetAdminUser )
     setAdminUser( ctx: StateContext<AdminUserModel>, action: SetAdminUser ) {
-        
+
         action.payload = this.helper.readlyTypeDocument( [action.payload] )[0];
         ctx.setState( patch({
             ...ctx.getState(),

@@ -6,7 +6,7 @@
 
 <!-- Table -->
 <div class="table-responsive">
-    <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+    <ng2-smart-table (custom)="onAction($event)" [source]='data$ | async' [settings]="settings"></ng2-smart-table>
 </div>
 
 <!-- Modal -->

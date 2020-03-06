@@ -5,6 +5,13 @@ import { FormControl, Validators } from '@angular/forms';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { DOCUMENT_TYPE } from 'src/app/helpers/convention/document-type';
 import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
+import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
+import { Utility } from 'src/app/helpers/utility';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { Store } from '@ngxs/store';
+import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
+import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 
 @Component({
   selector: 'app-coordinators-users-form',
@@ -12,7 +19,14 @@ import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 })
 export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit {
 
-  constructor(private validationService: ValidationService) {
+  progress = 0;
+
+  constructor(
+    private toastr: CustomToastrService,
+    private store: Store,
+    private helper: Utility,
+    private coordinatorUserService: CoordinatorUserService,
+    private validationService: ValidationService) {
     super('un coordinador');
   }
 
@@ -31,14 +45,36 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
   onSubmit() {
     this.submitted = true;
 
-    console.log( this.form.value );
-
     // Working on your validated form data
     if (this.form.valid) {
 
       // Mode
       if (this.MODE === this.ACTION.CREATE) {
-        this.create.emit('');
+        const data: CoordinatorUser = this.form.value;
+        data.cardType = this.helper.encodeTypeDocument( data.cardType );
+        data.userType = USER_TYPE.COORDINATOR.CODE.toString();
+        this.toastr.info('Guardando', 'Enviando información, espere...');
+        this.progress = 1;
+
+        this.coordinatorUserService.setCoordinatorUser( data ).subscribe( (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              this.progress = Math.round(event.loaded / event.total * 100);
+              // console.log(this.progress);
+              break;
+            case HttpEventType.Response:
+              this.progress = 0;
+              this.store.dispatch(new SetCoordinatorUser(event.body));
+              this.toastr.registerSuccess('Registro', 'Usuario coordinador registrado');
+              this.restar();
+              break;
+          }
+        }, (err: any) => {
+          this.progress = 0;
+
+          console.log( err );
+        });
+
       } else {
         this.edit.emit('');
       }
@@ -54,7 +90,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     this.form.reset();
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
-    this.form.controls.userType.setValue(USER_TYPE.ADMIN.CODE.toString());
+    // this.form.controls.userType.setValue(USER_TYPE.COORDINATOR.CODE.toString());
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
   }

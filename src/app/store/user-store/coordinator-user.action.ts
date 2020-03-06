@@ -1,8 +1,9 @@
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
-import { State, NgxsOnInit, Selector } from '@ngxs/store';
+import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
+import { patch, append } from '@ngxs/store/operators';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -82,5 +83,31 @@ export class CoordinatorUserState implements NgxsOnInit {
         private coordinatorUserService: CoordinatorUserService
     ) {}
 
-    ngxsOnInit() {}
+    ngxsOnInit(ctx: StateContext<CoordinatorUserModel>) {
+        ctx.dispatch( new GetCoordinatorUsers() );
+    }
+
+    @Action( GetCoordinatorUsers )
+    getCoordinatorUsers( ctx: StateContext<CoordinatorUserModel>, action: GetCoordinatorUsers) {
+        this.coordinatorUserService.getCoordinatorUsers().subscribe( response => {
+
+            if ( response ) {
+                ctx.setState( patch({
+                    ...ctx.getState(),
+                    coordinatorUsers: response
+                }) );
+            }
+
+        });
+    }
+
+    @Action( SetCoordinatorUser )
+    setCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: SetCoordinatorUser ) {
+
+        action.payload = this.helper.readlyTypeDocument( [action.payload] )[0];
+        ctx.setState( patch({
+            ...ctx.getState(),
+            coordinatorUsers: append([action.payload])
+        }));
+    }
 }

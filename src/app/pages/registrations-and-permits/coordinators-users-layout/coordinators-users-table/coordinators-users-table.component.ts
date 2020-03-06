@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.action';
+import { Select } from '@ngxs/store';
+import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
+import { Observable } from 'rxjs';
+import { Utility } from 'src/app/helpers/utility';
 
 // JQuery call
 declare var $: any;
@@ -10,20 +15,16 @@ declare var $: any;
 })
 export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit, TableActions {
 
-  data: any = [{
-    name: 'Luis',
-    lastName: 'Lopez',
-    document: '324234',
-    phone: '324234324',
-    status: 'Activo'
-  }];
+  @Select(CoordinatorUserState.coordinatorUsers) data$: Observable<CoordinatorUser[]>;
 
-  constructor() {
+  constructor(
+    private helper: Utility
+  ) {
     super('form-coordinators');
 
     // Custom columns
     this.settings.columns = {
-      name: {
+      firstName: {
         title: 'Nombre',
         type: 'string'
       },
@@ -31,7 +32,7 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
         title: 'Apellido',
         type: 'string'
       },
-      document: {
+      cardId: {
         title: 'Cédula / Rif',
         type: 'string'
       },
@@ -41,7 +42,20 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
       },
       status: {
         title: 'Estatus',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (row: any) => {
+          return this.helper.readlyStatus( [{ status: row }] )[0].status;
+        },
+        filterFunction(cell?: any, search?: string): boolean {
+
+
+            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+
+            value = value.toUpperCase();
+            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
+              return true;
+            } else { return false;  }
+        }
       }
     };
   }
@@ -63,9 +77,4 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
         break;
     }
   }
-
-  newData(data: any): void {}
-  updateData(data: any): void {}
-  deleteData(data: any): void {}
-
 }

@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-name [control]="form.get('name')" [submitted]="submitted">
+                        <app-input-name [control]="form.get('firstName')" [submitted]="submitted">
                         </app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
@@ -114,9 +114,12 @@
     </form><!-- / End main content -->
 
     <!-- Footer content -->
-    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+    <button 
+        [attr.disabled]="progress != 0 ? true: null"
+        [nbSpinner]="progress == 0 ? null : true" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
         [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
-        <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
-        <span *ngIf="MODE == ACTION.EDIT">Editar</span>
+        <span *ngIf="MODE == ACTION.CREATE && progress == 0">Guardar</span>
+        <span *ngIf="progress != 0">Guardando...</span>
+        <span *ngIf="MODE == ACTION.EDIT && progress == 0">Editar</span>
     </button>
 </app-modal>

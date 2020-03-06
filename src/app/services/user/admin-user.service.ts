@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { USER_TYPE } from 'src/app/helpers/user-type';
+import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { map, catchError } from 'rxjs/operators';

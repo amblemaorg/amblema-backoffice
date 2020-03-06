@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { USER_TYPE } from 'src/app/helpers/user-type';
+import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 import { Observable } from 'rxjs';
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 import { environment } from 'src/environments/environment.prod';

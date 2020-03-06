@@ -4,11 +4,11 @@ import { ValidationService } from 'src/app/pages/components/form-components/shar
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { DetailsForm } from '../../shared/details-form';
 import { Store, Select } from '@ngxs/store';
-import { USER_TYPE } from 'src/app/helpers/user-type';
+import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
-import { DOCUMENT_TYPE } from 'src/app/helpers/document-type';
+import { DOCUMENT_TYPE } from 'src/app/helpers/convention/document-type';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { SetAdminUser, AdminUserState, UpdateAdminUser } from 'src/app/store/user-store/admin-user.action';

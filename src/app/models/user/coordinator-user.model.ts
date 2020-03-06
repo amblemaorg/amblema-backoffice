@@ -43,6 +43,7 @@ export interface CoordinatorUser extends User {
     birthdate: string;
     homePhone: string;
     addressHome: string;
+    gender: string;
     projects?: Project[];
     learning?: Learning[];
     nCoins?: string;

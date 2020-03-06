@@ -3,8 +3,8 @@ import { ValidationService } from 'src/app/pages/components/form-components/shar
 import { DetailsForm } from '../../shared/details-form';
 import { FormControl, Validators } from '@angular/forms';
 import { STATUS } from 'src/app/helpers/text-content/status';
-import { DOCUMENT_TYPE } from 'src/app/helpers/document-type';
-import { USER_TYPE } from 'src/app/helpers/user-type';
+import { DOCUMENT_TYPE } from 'src/app/helpers/convention/document-type';
+import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 
 @Component({
   selector: 'app-coordinators-users-form',
@@ -18,11 +18,19 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
   ngOnInit(): void {
     this.form.addControl('role', new FormControl());
+
+    this.form.addControl('addressCity', new FormControl('', [Validators.required]));
+    this.form.addControl('addressHome', new FormControl('', [Validators.required]));
+
     this.form.addControl('birthdate', new FormControl('', [Validators.required]));
+    this.form.addControl('homePhone', new FormControl( '', [Validators.required]));
+    this.form.addControl('addressHome', new FormControl('', [Validators.required]));
+    this.form.addControl('gender', new FormControl('', [Validators.required]));
   }
 
   onSubmit() {
     this.submitted = true;
+
     console.log( this.form.value );
 
     // Working on your validated form data

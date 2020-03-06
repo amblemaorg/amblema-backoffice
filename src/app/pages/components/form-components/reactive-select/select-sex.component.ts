@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
+import { SEX } from '../../../../helpers/convention/sex-type';
 
 @Component({
   selector: 'app-select-sex',
@@ -10,12 +11,9 @@ import { AbstractReactiveSelect } from './abstract-reactive-select';
           name="sex"
           id="sex"
           class="form-control form-group"
-
-          (change)="onChange($event.target.value)">
-          <option disabled value="- Seleccion el sexo -">- Seleccione el sexo -</option>
-          <option value="Masculino">Masculino</option>
-          <option value="Femenino">Femenino</option>
-          <option value="Otro">Otro</option>
+          [formControl]="control">
+            <option disabled value="null">- Seleccione el sexo -</option>
+            <option *ngFor="let item of data" [value]="item.value">{{ item.data }}</option>
         </select>
       <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation>
     </div>
@@ -24,14 +22,15 @@ import { AbstractReactiveSelect } from './abstract-reactive-select';
 })
 export class SelectSexComponent extends AbstractReactiveSelect implements OnInit {
 
-  // RECUERDA AGREGARLO EL CONTROLNAME
+  data = [
+    { value: SEX.MALE.CODE, data: SEX.MALE.MGS },
+    { value: SEX.FEMALE.CODE, data: SEX.FEMALE.MGS }
+  ];
 
   constructor() { super();  }
 
   ngOnInit() {
+    this.control.setValue(null);
   }
 
-  onChange(event: any) {
-
-  }
 }

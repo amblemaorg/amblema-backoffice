@@ -17,10 +17,8 @@ export class DatepickerComponent extends AbstractReactive implements OnInit {
     super();
   }
 
-
   ngOnInit(): void {
     defineLocale('es', esLocale);
     this.localService.use('es');
   }
-
 }

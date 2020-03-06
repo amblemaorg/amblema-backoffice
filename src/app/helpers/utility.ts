@@ -2,7 +2,7 @@ import { Inject } from '@angular/core';
 import { STATUS } from './text-content/status';
 import { Post } from '../models/web/blog.model';
 import { SliderMedia } from '../models/learning.model';
-import { DOCUMENT_TYPE } from './document-type';
+import { DOCUMENT_TYPE } from './convention/document-type';
 import { AdminUser } from '../models/user/admin-user.model';
 
 @Inject('root')

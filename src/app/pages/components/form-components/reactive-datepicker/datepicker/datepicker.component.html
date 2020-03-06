@@ -8,10 +8,11 @@
         readonly
         [formControl]="control"
         [placeholder]="label"
-        class="form-control"
+        class="form-control form-group"
         [maxDate]="maxDate"
         [bsConfig]="{ 
             adaptivePosition: true,
             dateInputFormat: 'DD MMM YYYY' }"
         bsDatepicker>
+    <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation>
 </div>

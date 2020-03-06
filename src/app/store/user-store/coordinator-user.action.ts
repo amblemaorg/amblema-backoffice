@@ -51,6 +51,7 @@ export class SelectedCoordinatorUser {
             addressMunicipality: '',
             addressCity: ' ',
             address: '',
+            gender: '',
             firstName: '',
             lastName: '',
             cardType: '',

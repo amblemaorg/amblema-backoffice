@@ -2,6 +2,7 @@ import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 import { State, NgxsOnInit, Selector } from '@ngxs/store';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -77,9 +78,8 @@ export class CoordinatorUserState implements NgxsOnInit {
     constructor(
         private helper: Utility,
         private toastr: CustomToastrService,
+        private coordinatorUserService: CoordinatorUserService
     ) {}
 
     ngxsOnInit() {}
-
-
 }

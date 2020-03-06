@@ -12,6 +12,7 @@ export class DatepickerComponent extends AbstractReactive implements OnInit {
 
   maxDate = new Date();
 
+
   constructor( private localService: BsLocaleService ) {
     super();
   }

@@ -11,8 +11,9 @@ import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { DOCUMENT_TYPE } from 'src/app/helpers/document-type';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
-import { SetAdminUser, AdminUserState } from 'src/app/store/user-store/admin-user.action';
+import { SetAdminUser, AdminUserState, UpdateAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
+import { AdminUser } from 'src/app/models/user/admin-user.model';
 
 @Component({
   selector: 'app-admin-user-form',
@@ -26,6 +27,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   progress = 0;
   idState = ' ';
   idMunicipality = '';
+  backupOldData: AdminUser;
 
   constructor(
     private store: Store,
@@ -55,8 +57,17 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.form.controls.addressState.setValue( response.addressState.id );
         this.form.controls.role.setValue( response.role.id );
         this.submitted = false;
+
+        this.backupOldData = response;
+        this.form.get('password').setValidators([]);
+        this.form.get('password').updateValueAndValidity();
+
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
+
+      this.form.get('password').setValidators([Validators.required]);
+      this.form.get('password').updateValueAndValidity();
+
       this.idState = null;
       this.restar(); // To restar form
       // Title modal
@@ -102,7 +113,32 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           this.progress = 0;
         });
       } else {
-        console.log( this.form.value );
+
+        /** Update admin user data */
+
+        const updateData: any = this.form.value;
+        updateData.cardType = this.helper.encodeTypeDocument(updateData.cardType);
+        this.progress = 1;
+        this.backupOldData = Object.assign({}, this.backupOldData);
+        this.backupOldData.cardType = this.helper.encodeTypeDocument(this.backupOldData.cardType);
+
+        this.toastr.info('Actualización', 'Enviando información, espere...');
+
+        this.adminUserService.updateAdminUser( this.backupOldData.id, updateData ).subscribe( (event: HttpEvent<any> ) => {
+          console.log('respuesta del backend');
+          console.log(event);
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              this.progress = Math.round(event.loaded / event.total * 100);
+              break;
+            case HttpEventType.Response:
+              this.progress = 0;
+              this.store.dispatch( new UpdateAdminUser( this.backupOldData, event.body ) );
+              this.toastr.updateSuccess('Actualización', 'Usuario administrador registrado');
+              break;
+          }
+        });
+
       }
     } else {
       this.validationService.markAllFormFieldsAsTouched(this.form);

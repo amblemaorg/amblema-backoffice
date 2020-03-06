@@ -36,7 +36,16 @@
                     </div>
 
                     <div class="col-12 col-lg-6">
-                        <app-datepicker [label]="'Fecha de nacimiento'"></app-datepicker>
+                        <app-select-role 
+                            (onselected)="onselected($event)"
+                            [control]="form.get('role')" 
+                            [submitted]="submitted"></app-select-role>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-datepicker 
+                            [control]="form.get('birthdate')"
+                            [label]="'Fecha de nacimiento'"></app-datepicker>
                     </div>
                     <div class="col-12 col-lg-6">
                         <app-select-sex></app-select-sex>

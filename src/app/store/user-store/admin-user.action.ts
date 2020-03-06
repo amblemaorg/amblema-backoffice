@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, Action, StateContext, Select, Selector } from '@ngxs/store';
+import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { AdminUser } from 'src/app/models/user/admin-user.model';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
@@ -119,6 +119,12 @@ export class AdminUserState implements NgxsOnInit {
             ...ctx.getState(),
             adminUsers: append([action.payload])
         }));
+    }
+
+    @Action( UpdateAdminUser )
+    updateAdminUser( ctx: StateContext<UpdateAdminUser>, action: UpdateAdminUser ) {
+        console.log('Se estan enviando los datos');
+        console.log( action );
     }
 
     @Action( DeleteAdminUser )

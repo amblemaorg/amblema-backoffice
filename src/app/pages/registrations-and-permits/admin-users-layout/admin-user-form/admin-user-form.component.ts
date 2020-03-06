@@ -125,8 +125,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.toastr.info('Actualización', 'Enviando información, espere...');
 
         this.adminUserService.updateAdminUser( this.backupOldData.id, updateData ).subscribe( (event: HttpEvent<any> ) => {
-          console.log('respuesta del backend');
-          console.log(event);
+          
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);

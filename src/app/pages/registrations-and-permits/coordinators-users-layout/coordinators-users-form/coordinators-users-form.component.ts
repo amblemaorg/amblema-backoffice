@@ -19,7 +19,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
   ngOnInit(): void {
     this.form.addControl('role', new FormControl());
     this.form.addControl('birthdate', new FormControl('', [Validators.required]));
-    console.log( this.form.value );
   }
 
   onSubmit() {

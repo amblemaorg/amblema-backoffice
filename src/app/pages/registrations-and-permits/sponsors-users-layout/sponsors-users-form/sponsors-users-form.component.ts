@@ -15,7 +15,7 @@ export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
   constructor(
     private toast: CustomToastrService,
     private validationService: ValidationService) {
-    super('un-padrino'); // <-- Title modal
+    super('un padrino'); // <-- Title modal
   }
 
   ngOnInit(): void {

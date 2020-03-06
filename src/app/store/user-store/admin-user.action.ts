@@ -122,7 +122,7 @@ export class AdminUserState implements NgxsOnInit {
     }
 
     @Action( UpdateAdminUser )
-    updateAdminUser( ctx: StateContext<UpdateAdminUser>, action: UpdateAdminUser ) {
+    updateAdminUser( ctx: StateContext<AdminUserModel>, action: UpdateAdminUser ) {
         console.log('Se estan enviando los datos');
         console.log( action );
     }

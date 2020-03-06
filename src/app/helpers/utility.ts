@@ -43,7 +43,7 @@ export class Utility {
         return type;
     }
 
-    public readlyTypeDocument( adminUsers: AdminUser[] ): AdminUser[] {
+    public readlyTypeDocument( adminUsers: any[] ): any[] {
         adminUsers.forEach( value => {
             value.cardType = value.cardType === DOCUMENT_TYPE.V.CODE.toString() ?  DOCUMENT_TYPE.V.VALUE :
             value.cardType === DOCUMENT_TYPE.J.CODE.toString() ? DOCUMENT_TYPE.J.VALUE : DOCUMENT_TYPE.E.VALUE;

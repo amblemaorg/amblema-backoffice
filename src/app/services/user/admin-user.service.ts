@@ -32,7 +32,7 @@ export class AdminUserService {
   }
 
   updateAdminUser( id: string, data: AdminUser ): Observable<any> {
-    return this.httpClient.put<AdminUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}/`, data);
+    return this.httpClient.put<AdminUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data);
   }
 
   deleteAdminUser(id: string): Observable<string> {

@@ -29,6 +29,8 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   idMunicipality = '';
   backupOldData: AdminUser;
 
+  mode = '';
+
   constructor(
     private store: Store,
     private helper: Utility,
@@ -50,6 +52,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
         // Title modal
         this.title = 'Actualizar usuario administrador';
+
         // -- Prepare data in the form to update
         this.form.patchValue( response );
         this.idState = this.form.controls.addressState.value;
@@ -59,13 +62,19 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.submitted = false;
 
         this.backupOldData = response;
+
+
+        this.form.get('password').setValue('');
         this.form.get('password').setValidators([]);
         this.form.get('password').updateValueAndValidity();
-
+        
+        this.mode = 'something'; // <-- Indicate to the form document to update
+              
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
 
-      this.form.get('password').setValidators([Validators.required]);
+      this.mode = '';
+      this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.form.get('password').updateValueAndValidity();
 
       this.idState = null;
@@ -116,26 +125,32 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
         /** Update admin user data */
 
-        const updateData: any = this.form.value;
-        updateData.cardType = this.helper.encodeTypeDocument(updateData.cardType);
+        let updateData: any = this.form.value;
+        
+        if( updateData.cardType === 'V' || updateData.cardType === 'E' || updateData.cardType === 'J' ) {
+          updateData.cardType = this.helper.encodeTypeDocument(updateData.cardType);
+        }
+
+        if( updateData.password === '' || updateData.password === null) {
+            delete updateData.password;
+        }
+
         this.progress = 1;
-        this.backupOldData = Object.assign({}, this.backupOldData);
-        this.backupOldData.cardType = this.helper.encodeTypeDocument(this.backupOldData.cardType);
 
-        this.toastr.info('Actualización', 'Enviando información, espere...');
+        this.adminUserService.updateAdminUser( this.backupOldData.id, updateData ).subscribe( (event:any ) => {
+  
+          this.progress = 0;
 
-        this.adminUserService.updateAdminUser( this.backupOldData.id, updateData ).subscribe( (event: HttpEvent<any> ) => {
+          event = this.helper.readlyTypeDocument([event])[0]; 
 
-          switch (event.type) {
-            case HttpEventType.UploadProgress:
-              this.progress = Math.round(event.loaded / event.total * 100);
-              break;
-            case HttpEventType.Response:
-              this.progress = 0;
-              this.store.dispatch( new UpdateAdminUser( this.backupOldData, event.body ) );
-              this.toastr.updateSuccess('Actualización', 'Usuario administrador registrado');
-              break;
-          }
+          this.store.dispatch( new UpdateAdminUser( this.backupOldData, event ) );
+          this.toastr.updateSuccess('Actualización', 'Usuario administrador registrado');
+          this.submitted = false;
+
+          this.form.get('password').setValue('');
+          this.form.get('password').setValidators([]);
+          this.form.get('password').updateValueAndValidity();
+    
         });
 
       }
@@ -156,4 +171,17 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
   // -- Event selected rol --
   onselected(event: any) { this.form.controls.role.setValue(event); }
+  
+  onPress() {
+    if ( this.MODE === this.ACTION.EDIT && this.form.controls.password.value !== null ) {
+      this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+      this.form.get('password').updateValueAndValidity();
+    } 
+
+    if( this.MODE === this.ACTION.EDIT && this.form.controls.password.value === '' ) {
+      this.form.get('password').setValidators([]);
+      this.form.get('password').updateValueAndValidity();
+
+    }
+  }
 }

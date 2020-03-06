@@ -33,13 +33,18 @@ import { AbstractControl, FormControl, Validators } from '@angular/forms';
 export class FormDocumentComponent extends AbstractReactive implements OnChanges, AfterViewInit {
     @Input() controlSelect: AbstractControl | null = new FormControl();
     @Input() onlyCompany: boolean | null = false;
+    @Input() mode: string | null = '';
 
     placeholderDocument = '';
     labelDocument = '';
 
     message =  this.MESSAGES.DOCUMENT_MESSAGE;
 
-    ngOnChanges(): void {
+    ngOnChanges(): void { 
+
+        if( this.mode !== '' ) {
+            this.onChangeDocument( this.controlSelect.value );
+        } else { this.onChangeDocument(this.controlSelect.value); }
 
         if ( this.onlyCompany ) {
             this.controlSelect.setValue('J');

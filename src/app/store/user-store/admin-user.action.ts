@@ -3,7 +3,7 @@ import { AdminUser } from 'src/app/models/user/admin-user.model';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/helpers/utility';
-import { append, patch, removeItem } from '@ngxs/store/operators';
+import { append, patch, removeItem, updateItem } from '@ngxs/store/operators';
 
 // -- State interface --
 
@@ -123,8 +123,12 @@ export class AdminUserState implements NgxsOnInit {
 
     @Action( UpdateAdminUser )
     updateAdminUser( ctx: StateContext<AdminUserModel>, action: UpdateAdminUser ) {
-        console.log('Se estan enviando los datos');
-        console.log( action );
+
+        ctx.setState( patch({
+            ...ctx.getState(),
+            adminUsers: updateItem<AdminUser>( adminUser => adminUser.id === action.oldAdminUser.id, action.newAdminUser )
+        }) )
+
     }
 
     @Action( DeleteAdminUser )

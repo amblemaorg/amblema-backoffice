@@ -57,6 +57,7 @@ registerLocaleData(localeVe, 'es-VE');
       WebSponsorState,
       WebCoordinatorState,
       PostsState,
+
       AdminUserState
     ],
     {

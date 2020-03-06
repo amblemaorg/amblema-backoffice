@@ -40,9 +40,9 @@ export class FormDocumentComponent extends AbstractReactive implements OnChanges
 
     message =  this.MESSAGES.DOCUMENT_MESSAGE;
 
-    ngOnChanges(): void { 
+    ngOnChanges(): void {
 
-        if( this.mode !== '' ) {
+        if ( this.mode !== '' ) {
             this.onChangeDocument( this.controlSelect.value );
         } else { this.onChangeDocument(this.controlSelect.value); }
 

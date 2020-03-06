@@ -127,7 +127,7 @@ export class AdminUserState implements NgxsOnInit {
         ctx.setState( patch({
             ...ctx.getState(),
             adminUsers: updateItem<AdminUser>( adminUser => adminUser.id === action.oldAdminUser.id, action.newAdminUser )
-        }) )
+        }) );
 
     }
 

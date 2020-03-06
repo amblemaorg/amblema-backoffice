@@ -67,9 +67,9 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.form.get('password').setValue('');
         this.form.get('password').setValidators([]);
         this.form.get('password').updateValueAndValidity();
-        
+
         this.mode = 'something'; // <-- Indicate to the form document to update
-              
+
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
 
@@ -125,23 +125,23 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
         /** Update admin user data */
 
-        let updateData: any = this.form.value;
-        
-        if( updateData.cardType === 'V' || updateData.cardType === 'E' || updateData.cardType === 'J' ) {
+        const updateData: any = this.form.value;
+
+        if ( updateData.cardType === 'V' || updateData.cardType === 'E' || updateData.cardType === 'J' ) {
           updateData.cardType = this.helper.encodeTypeDocument(updateData.cardType);
         }
 
-        if( updateData.password === '' || updateData.password === null) {
+        if ( updateData.password === '' || updateData.password === null) {
             delete updateData.password;
         }
 
         this.progress = 1;
 
-        this.adminUserService.updateAdminUser( this.backupOldData.id, updateData ).subscribe( (event:any ) => {
-  
+        this.adminUserService.updateAdminUser( this.backupOldData.id, updateData ).subscribe( (event: any ) => {
+
           this.progress = 0;
 
-          event = this.helper.readlyTypeDocument([event])[0]; 
+          event = this.helper.readlyTypeDocument([event])[0];
 
           this.store.dispatch( new UpdateAdminUser( this.backupOldData, event ) );
           this.toastr.updateSuccess('Actualización', 'Usuario administrador registrado');
@@ -150,7 +150,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           this.form.get('password').setValue('');
           this.form.get('password').setValidators([]);
           this.form.get('password').updateValueAndValidity();
-    
+
         });
 
       }
@@ -171,14 +171,14 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
   // -- Event selected rol --
   onselected(event: any) { this.form.controls.role.setValue(event); }
-  
+
   onPress() {
     if ( this.MODE === this.ACTION.EDIT && this.form.controls.password.value !== null ) {
       this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.form.get('password').updateValueAndValidity();
-    } 
+    }
 
-    if( this.MODE === this.ACTION.EDIT && this.form.controls.password.value === '' ) {
+    if ( this.MODE === this.ACTION.EDIT && this.form.controls.password.value === '' ) {
       this.form.get('password').setValidators([]);
       this.form.get('password').updateValueAndValidity();
 

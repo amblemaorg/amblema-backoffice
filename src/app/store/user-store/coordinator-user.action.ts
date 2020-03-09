@@ -101,6 +101,14 @@ export class CoordinatorUserState implements NgxsOnInit {
         });
     }
 
+    @Action( SelectedCoordinatorUser )
+    selectedCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: SelectedCoordinatorUser ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            coordinatorUser: action.payload
+        }) );
+    }
+
     @Action( SetCoordinatorUser )
     setCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: SetCoordinatorUser ) {
 
@@ -114,7 +122,7 @@ export class CoordinatorUserState implements NgxsOnInit {
     @Action( DeleteCoordinatorUser )
     deleteCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: DeleteCoordinatorUser ) {
         ctx.setState( patch({
-            ...ctx.getState(), 
+            ...ctx.getState(),
             coordinatorUsers: removeItem<CoordinatorUser>( coordinatorUser => coordinatorUser.id === action.payload.id )
         }) );
         this.toastr.deleteRegister('Eliminación', 'Usuario coordinador eliminado');

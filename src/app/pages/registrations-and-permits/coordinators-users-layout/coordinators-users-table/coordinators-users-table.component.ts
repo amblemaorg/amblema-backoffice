@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
-import { CoordinatorUserState, DeleteCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
+import { CoordinatorUserState, DeleteCoordinatorUser, SelectedCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
 import { Select, Store } from '@ngxs/store';
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
   @Select(CoordinatorUserState.coordinatorUsers) data$: Observable<CoordinatorUser[]>;
 
   constructor(
-    private store: Store, 
+    private store: Store,
     private helper: Utility
   ) {
     super('form-coordinators');
@@ -72,6 +72,7 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
         // Change mode purpose
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
+        this.store.dispatch( new SelectedCoordinatorUser( event.data ) );
         break;
       case this.ACTION.DELETE:
         // Call delete modal

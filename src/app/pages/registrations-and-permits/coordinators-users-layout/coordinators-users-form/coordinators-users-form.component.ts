@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { DetailsForm } from '../../shared/details-form';
 import { FormControl, Validators } from '@angular/forms';
@@ -9,16 +9,20 @@ import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.s
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 import { Utility } from 'src/app/helpers/utility';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Store } from '@ngxs/store';
-import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
+import { Store, Select } from '@ngxs/store';
+import { SetCoordinatorUser, CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.action';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { NORMAL_TEXT_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-coordinators-users-form',
   templateUrl: './coordinators-users-form.component.html',
 })
-export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit {
+export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit, OnChanges {
+
+  @Select( CoordinatorUserState.coordinatorUser ) user$: Observable<CoordinatorUser>;
+  subscription: Subscription;
 
   options = [
     { value: true, label: 'Si' },
@@ -33,6 +37,25 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     private coordinatorUserService: CoordinatorUserService,
     private validationService: ValidationService) {
     super('un coordinador');
+  }
+
+  ngOnChanges(): void {
+
+    if ( this.MODE === this.ACTION.EDIT ) {
+      this.subscription = this.user$.subscribe( response => {
+        this.title = 'Actualizar usuario coordinador';
+
+        console.log(response);
+
+        this.restar();
+        this.form.patchValue( response );
+
+
+      });
+    } else if ( this.MODE === this.ACTION.CREATE ) {
+      this.title = 'Registrar usuario coordinador';
+
+    }
   }
 
   ngOnInit(): void {
@@ -55,9 +78,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
   onSubmit() {
     this.submitted = true;
 
-
-    console.log( this.form.get('isReferred').value );
-
     // Working on your validated form data
     if (this.form.valid) {
 
@@ -75,7 +95,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
         data.userType = USER_TYPE.COORDINATOR.CODE.toString();
 
-        console.log(data);
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
@@ -94,8 +113,10 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               break;
           }
         }, (err: any) => {
+          if ( err.error.status === 0 ) {
+            this.toastr.error('Error de datos', 'Verifica los datos del formulario');
 
-          console.log(err);
+          }
 
           if (err.error.cardId) {
             if (String(err.error.cardId[0].status) === '5') {
@@ -127,6 +148,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
     this.form.controls.addressMunicipality.setValue(null);
+    this.form.controls.isReferred.setValue(false);
     this.submitted = false;
   }
 

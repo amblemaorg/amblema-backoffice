@@ -5,7 +5,7 @@ import { SponsorsUsersLayoutRoutingModule } from './sponsors-users-layout-routin
 import { SponsorsUsersLayoutComponent } from './sponsors-users-layout.component';
 import { SponsorsUsersFormComponent } from './sponsors-users-form/sponsors-users-form.component';
 import { SponsorsUsersTableComponent } from './sponsors-users-table/sponsors-users-table.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
@@ -14,13 +14,16 @@ import { FormRegionalAddressModule } from '../../components/form-components/form
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
-
+import { AddressSponsorComponent } from './address-sponsor/address-sponsor.component';
+import { TypeCompanyComponent } from './type-company/type-company.component';
 
 @NgModule({
   declarations: [
     SponsorsUsersLayoutComponent,
     SponsorsUsersFormComponent,
-    SponsorsUsersTableComponent
+    SponsorsUsersTableComponent,
+    AddressSponsorComponent,
+    TypeCompanyComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +31,8 @@ import { ReactiveInputFileModule } from '../../components/form-components/reacti
     NbCardModule,
     Ng2SmartTableModule,
     ReactiveFormsModule,
+    FormRegionalAddressModule,
+    NbIconModule,
 
     // Add custom module
     ReactiveInputModule,

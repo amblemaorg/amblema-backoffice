@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label for="role" class="label">Rol</label>
+    <select
+        name="role"
+        id="role"
+        class="form-control form-group"
+        [formControl]="control"
+        (change)="onChange($event.target.value)">
+        <option disabled selected [value]="null">- Seleccione un rol -</option>
+        <option *ngFor="let item of role$ | async" [value]="item.id">{{ item.name }}</option>
+    </select>
+    
+    <!-- <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation> -->
+
+</div>

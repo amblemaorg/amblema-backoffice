@@ -37,7 +37,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     this.form.addControl('addressHome', new FormControl('', [Validators.required]));
 
     this.form.addControl('birthdate', new FormControl('', [Validators.required]));
-    this.form.addControl('homePhone', new FormControl( '', [Validators.required]));
+    this.form.addControl('homePhone', new FormControl('', [Validators.required]));
     this.form.addControl('addressHome', new FormControl('', [Validators.required]));
     this.form.addControl('gender', new FormControl('', [Validators.required]));
   }
@@ -51,12 +51,20 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
       // Mode
       if (this.MODE === this.ACTION.CREATE) {
         const data: CoordinatorUser = this.form.value;
-        data.cardType = this.helper.encodeTypeDocument( data.cardType );
+
+
+        // Enconde the type document if necesary
+        if (data.cardType === DOCUMENT_TYPE.E.VALUE ||
+          data.cardType === DOCUMENT_TYPE.J.VALUE ||
+          data.cardType === DOCUMENT_TYPE.V.VALUE) {
+          data.cardType = this.helper.encodeTypeDocument(data.cardType);
+        }
+
         data.userType = USER_TYPE.COORDINATOR.CODE.toString();
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
 
-        this.coordinatorUserService.setCoordinatorUser( data ).subscribe( (event: HttpEvent<any>) => {
+        this.coordinatorUserService.setCoordinatorUser(data).subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
@@ -70,8 +78,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               break;
           }
         }, (err: any) => {
-          this.toastr.error('Error', 'Problemas para enviar la información');
-            
+
           if (err.error.cardId) {
             if (String(err.error.cardId[0].status) === '5') {
               this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
@@ -101,7 +108,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     this.form.reset();
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
-    // this.form.controls.userType.setValue(USER_TYPE.COORDINATOR.CODE.toString());
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
   }

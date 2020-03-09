@@ -1,6 +1,7 @@
 import { Component, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { Utility } from 'src/app/helpers/utility';
 
 @Component({
     selector: 'app-form-document',
@@ -39,6 +40,12 @@ export class FormDocumentComponent extends AbstractReactive implements OnChanges
     labelDocument = '';
 
     message =  this.MESSAGES.DOCUMENT_MESSAGE;
+
+    constructor(
+        private helper: Utility
+    ) {
+        super();
+    }
 
     ngOnChanges(): void {
 

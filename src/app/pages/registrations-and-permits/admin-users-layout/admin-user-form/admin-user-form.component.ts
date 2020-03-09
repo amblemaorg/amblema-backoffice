@@ -95,8 +95,14 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
     if (this.form.valid) {
 
-      const data: any = this.form.value;
-      data.cardType = this.helper.encodeTypeDocument(data.cardType);
+      const data = this.form.value;
+
+      // Enconde the type document if necesary
+      if ( data.cardType === DOCUMENT_TYPE.E.VALUE ||
+          data.cardType === DOCUMENT_TYPE.J.VALUE ||
+          data.cardType === DOCUMENT_TYPE.V.VALUE) {
+            data.cardType = this.helper.encodeTypeDocument(data.cardType);
+      }
 
       if (this.MODE === ACTION.CREATE) {
         this.toastr.info('Guardando', 'Enviando información, espere...');
@@ -112,14 +118,12 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
             case HttpEventType.Response:
               this.progress = 0;
               this.store.dispatch(new SetAdminUser(event.body));
-              this.toastr.registerSuccess('Registro', 'Usuario administrador registrado');
+              this.toastr.registerSuccess('Registro', 'Usuario registrado satisfactoriamente');
               this.restar();
               break;
           }
         }, (err: any) => {
-          
-          this.toastr.error('Error', 'Problemas para enviar la información');
-            
+
           if (err.error.cardId) {
             if (String(err.error.cardId[0].status) === '5') {
               this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
@@ -156,7 +160,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           event = this.helper.readlyTypeDocument([event])[0];
 
           this.store.dispatch(new UpdateAdminUser(this.backupOldData, event));
-          this.toastr.updateSuccess('Actualización', 'Usuario administrador registrado');
+          this.toastr.updateSuccess('Actualización', 'Usuario actualizado satisfactoriamente');
           this.submitted = false;
 
           this.form.get('password').setValue('');

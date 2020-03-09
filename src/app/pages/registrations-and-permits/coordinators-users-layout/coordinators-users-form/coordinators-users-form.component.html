@@ -15,9 +15,7 @@
 
                     <div class="col-12 form-group">
                         <label class="label">Imágen del coordinador</label>
-                        <app-input-img 
-                            [control]="form.get('image')"
-                            [align]="'left'"></app-input-img>
+                        <app-input-img [control]="form.get('image')" [align]="'left'"></app-input-img>
                     </div>
 
                     <div class="col-12 col-lg-6">
@@ -45,33 +43,24 @@
                     </div>
 
                     <div class="col-12 col-lg-6">
-                        <app-select-role 
-                            (onselected)="onselected($event)"
-                            [control]="form.get('role')" 
+                        <app-select-role (onselected)="onselected($event)" [control]="form.get('role')"
                             [submitted]="submitted"></app-select-role>
                     </div>
 
 
                     <div class="col-12 col-lg-6">
-                        <app-input-phone 
-                            [submitted]="submitted"
-                            [id]="'phone-room'"
-                            [control]="form.get('homePhone')"
-                            [label]="'Teléfono de habitación'"
-                            [placeholder]="'Teléfono de habitación'"></app-input-phone>
-                            
+                        <app-input-phone [submitted]="submitted" [id]="'phone-room'" [control]="form.get('homePhone')"
+                            [label]="'Teléfono de habitación'" [placeholder]="'Teléfono de habitación'">
+                        </app-input-phone>
+
                     </div>
 
                     <div class="col-12 col-lg-6">
-                        <app-datepicker 
-                            [submitted]="submitted"
-                            [control]="form.get('birthdate')"
+                        <app-datepicker [submitted]="submitted" [control]="form.get('birthdate')"
                             [label]="'Fecha de nacimiento'"></app-datepicker>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-select-sex 
-                            [submitted]="submitted"
-                            [control]="form.get('gender')"></app-select-sex>
+                        <app-select-sex [submitted]="submitted" [control]="form.get('gender')"></app-select-sex>
                     </div>
 
                 </div>
@@ -85,13 +74,9 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-address-coordinator 
-                    [addressHome]="form.get('addressHome')"
-                    [addressCity]="form.get('addressCity')"
-                    [state]="form.get('addressState')"
-                    [municipality]="form.get('addressMunicipality')" 
-                    [control]="form.get('address')"
-                    [submitted]="submitted"></app-address-coordinator>
+                <app-address-coordinator [addressHome]="form.get('addressHome')" [addressCity]="form.get('addressCity')"
+                    [state]="form.get('addressState')" [municipality]="form.get('addressMunicipality')"
+                    [control]="form.get('address')" [submitted]="submitted"></app-address-coordinator>
             </div>
         </div><!-- / End address data -->
 
@@ -104,12 +89,48 @@
                 </app-select-status>
             </div>
         </div>
+
+        <!-- Mora data -->
+        <div class="row ">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12">
+                <nb-accordion class="shadow-none border">
+                    <nb-accordion-item>
+                        <nb-accordion-item-header>Información adicional</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom 
+                                        [submitted]="submitted"
+                                        [id]="'prefession'"
+                                        [control]="form.get('profession')"
+                                        [label]="'Profesión'"
+                                        [placeholder]="'Profesión'"></app-input-custom>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <nb-radio-group formControlName="isReferred">
+                                        <nb-radio value='true'>
+                                            Si
+                                        </nb-radio>
+                                        <nb-radio value='false'>
+                                            No
+                                        </nb-radio>
+                                      </nb-radio-group>
+                                </div>
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+            </div>
+        </div>
     </form><!-- / End main content -->
 
     <!-- Footer content -->
-    <button 
-        [attr.disabled]="progress != 0 ? true: null"
-        [nbSpinner]="progress == 0 ? null : true" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+    <button [attr.disabled]="progress != 0 ? true: null" [nbSpinner]="progress == 0 ? null : true"
+        nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
         [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
         <span *ngIf="MODE == ACTION.CREATE && progress == 0">Guardar</span>
         <span *ngIf="progress != 0">Guardando...</span>

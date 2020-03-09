@@ -125,7 +125,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
-              // console.log(this.progress);
               break;
             case HttpEventType.Response:
               this.progress = 0;

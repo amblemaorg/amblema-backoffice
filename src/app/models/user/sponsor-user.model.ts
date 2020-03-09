@@ -18,19 +18,16 @@ export interface Project {
 }
 
 export interface SponsorUser extends User {
-    firstName: string;
-    lastName: string;
-    cardType: string;
-    cardId: string;
+    name: string;
     companyRIF: string;
     companyType: string;
-    companyOtherType: string;
+    companyOtherType?: string;
     companyPhone: string;
     contactFirstName: string;
     contactLastName: string;
     contactPhone: string;
     image: string;
     webSite: string;
-    projects?: Project[]; // <-- No need in the form s
+    projects?: Project[];
     status: string;
 }

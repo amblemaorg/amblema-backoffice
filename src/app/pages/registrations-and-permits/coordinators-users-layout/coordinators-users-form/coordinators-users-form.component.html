@@ -15,7 +15,9 @@
 
                     <div class="col-12 form-group">
                         <label class="label">Imágen del coordinador</label>
-                        <app-input-img [align]="'left'"></app-input-img>
+                        <app-input-img 
+                            [control]="form.get('image')"
+                            [align]="'left'"></app-input-img>
                     </div>
 
                     <div class="col-12 col-lg-6">
@@ -49,17 +51,6 @@
                             [submitted]="submitted"></app-select-role>
                     </div>
 
-                    <div class="col-12 col-lg-6">
-                        <app-datepicker 
-                            [submitted]="submitted"
-                            [control]="form.get('birthdate')"
-                            [label]="'Fecha de nacimiento'"></app-datepicker>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <app-select-sex 
-                            [submitted]="submitted"
-                            [control]="form.get('gender')"></app-select-sex>
-                    </div>
 
                     <div class="col-12 col-lg-6">
                         <app-input-phone 
@@ -72,23 +63,16 @@
                     </div>
 
                     <div class="col-12 col-lg-6">
-                        <app-input-custom 
+                        <app-datepicker 
                             [submitted]="submitted"
-                            [id]="'city'"
-                            [control]="form.get('addressCity')"
-                            [label]="'Ciudad'"
-                            [placeholder]="'Ciudad'"></app-input-custom>
+                            [control]="form.get('birthdate')"
+                            [label]="'Fecha de nacimiento'"></app-datepicker>
                     </div>
-
                     <div class="col-12 col-lg-6">
-                        <app-input-custom 
+                        <app-select-sex 
                             [submitted]="submitted"
-                            [id]="'house-building'"
-                            [control]="form.get('addressHome')"
-                            [label]="'Casa / Edificio'"
-                            [placeholder]="'Casa / Edificio'"></app-input-custom>
+                            [control]="form.get('gender')"></app-select-sex>
                     </div>
-
 
                 </div>
             </div>
@@ -102,6 +86,8 @@
             </div>
             <div class="col-12">
                 <app-address-coordinator 
+                    [addressHome]="form.get('addressHome')"
+                    [addressCity]="form.get('addressCity')"
                     [state]="form.get('addressState')"
                     [municipality]="form.get('addressMunicipality')" 
                     [control]="form.get('address')"

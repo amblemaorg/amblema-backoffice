@@ -40,10 +40,10 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     this.form.addControl('gender', new FormControl('', [Validators.required]));
 
     // New data no required
-    this.form.addControl('image', new FormControl());
-    this.form.addControl('isReferred', new FormControl()); 
-    this.form.addControl('profession', new FormControl()); 
-    this.form.addControl('referredName', new FormControl()); 
+    this.form.addControl('image', new FormControl(null));
+    this.form.addControl('isReferred', new FormControl(false)); 
+    this.form.addControl('profession', new FormControl('')); 
+    this.form.addControl('referredName', new FormControl('')); 
   }
 
 
@@ -66,6 +66,9 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         }
 
         data.userType = USER_TYPE.COORDINATOR.CODE.toString();
+        
+        console.log(data); 
+
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
 
@@ -83,6 +86,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               break;
           }
         }, (err: any) => {
+
+          console.log(err); 
 
           if (err.error.cardId) {
             if (String(err.error.cardId[0].status) === '5') {

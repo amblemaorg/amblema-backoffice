@@ -70,9 +70,20 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               break;
           }
         }, (err: any) => {
-          this.progress = 0;
+          this.toastr.error('Error', 'Problemas para enviar la información');
+            
+          if (err.error.cardId) {
+            if (String(err.error.cardId[0].status) === '5') {
+              this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
+            }
+          }
 
-          console.log( err );
+          if (err.error.email) {
+            if (String(err.error.email[0].status) === '5') {
+              this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+            }
+          }
+          this.progress = 0;
         });
 
       } else {

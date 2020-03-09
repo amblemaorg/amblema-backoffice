@@ -54,11 +54,11 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.title = 'Actualizar usuario administrador';
 
         // -- Prepare data in the form to update
-        this.form.patchValue( response );
+        this.form.patchValue(response);
         this.idState = this.form.controls.addressState.value;
         this.idMunicipality = this.form.controls.addressMunicipality.value;
-        this.form.controls.addressState.setValue( response.addressState.id );
-        this.form.controls.role.setValue( response.role.id );
+        this.form.controls.addressState.setValue(response.addressState.id);
+        this.form.controls.role.setValue(response.role.id);
         this.submitted = false;
 
         this.backupOldData = response;
@@ -71,7 +71,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.mode = 'something'; // <-- Indicate to the form document to update
 
       });
-    } else if ( this.MODE === this.ACTION.CREATE ) {
+    } else if (this.MODE === this.ACTION.CREATE) {
 
       this.mode = '';
       this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
@@ -80,11 +80,12 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
       this.idState = null;
       this.restar(); // To restar form
       // Title modal
-      this.title = 'Registrar usuario administrador';  }
+      this.title = 'Registrar usuario administrador';
+    }
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -116,8 +117,19 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
               break;
           }
         }, (err: any) => {
-          if (String(err.error.email[0].status) === '5') {
-            this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+          
+          this.toastr.error('Error', 'Problemas para enviar la información');
+            
+          if (err.error.cardId) {
+            if (String(err.error.cardId[0].status) === '5') {
+              this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
+            }
+          }
+
+          if (err.error.email) {
+            if (String(err.error.email[0].status) === '5') {
+              this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+            }
           }
           this.progress = 0;
         });
@@ -127,23 +139,23 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
 
         const updateData: any = this.form.value;
 
-        if ( updateData.cardType === 'V' || updateData.cardType === 'E' || updateData.cardType === 'J' ) {
+        if (updateData.cardType === 'V' || updateData.cardType === 'E' || updateData.cardType === 'J') {
           updateData.cardType = this.helper.encodeTypeDocument(updateData.cardType);
         }
 
-        if ( updateData.password === '' || updateData.password === null) {
-            delete updateData.password;
+        if (updateData.password === '' || updateData.password === null) {
+          delete updateData.password;
         }
 
         this.progress = 1;
 
-        this.adminUserService.updateAdminUser( this.backupOldData.id, updateData ).subscribe( (event: any ) => {
+        this.adminUserService.updateAdminUser(this.backupOldData.id, updateData).subscribe((event: any) => {
 
           this.progress = 0;
 
           event = this.helper.readlyTypeDocument([event])[0];
 
-          this.store.dispatch( new UpdateAdminUser( this.backupOldData, event ) );
+          this.store.dispatch(new UpdateAdminUser(this.backupOldData, event));
           this.toastr.updateSuccess('Actualización', 'Usuario administrador registrado');
           this.submitted = false;
 
@@ -173,12 +185,12 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   onselected(event: any) { this.form.controls.role.setValue(event); }
 
   onPress() {
-    if ( this.MODE === this.ACTION.EDIT && this.form.controls.password.value !== null ) {
+    if (this.MODE === this.ACTION.EDIT && this.form.controls.password.value !== null) {
       this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.form.get('password').updateValueAndValidity();
     }
 
-    if ( this.MODE === this.ACTION.EDIT && this.form.controls.password.value === '' ) {
+    if (this.MODE === this.ACTION.EDIT && this.form.controls.password.value === '') {
       this.form.get('password').setValidators([]);
       this.form.get('password').updateValueAndValidity();
 

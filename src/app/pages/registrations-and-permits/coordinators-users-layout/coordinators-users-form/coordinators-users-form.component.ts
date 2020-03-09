@@ -21,7 +21,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit, OnChanges {
 
-  @Select( CoordinatorUserState.coordinatorUser ) user$: Observable<CoordinatorUser>;
+  @Select( CoordinatorUserState.coordinatorUser ) user$: Observable<any>;
   subscription: Subscription;
 
   options = [
@@ -29,6 +29,10 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     { value: false, label: 'No' },
   ];
   progress = 0;
+
+
+  idState = ' ';
+  idMunicipality = '';
 
   constructor(
     private toastr: CustomToastrService,
@@ -45,16 +49,19 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
       this.subscription = this.user$.subscribe( response => {
         this.title = 'Actualizar usuario coordinador';
 
-        console.log(response);
-
         this.restar();
         this.form.patchValue( response );
+
+        this.idState = this.form.controls.addressState.value;
+        this.idMunicipality = this.form.controls.addressMunicipality.value;
+        this.form.controls.addressState.setValue(response.addressState.id);
+        this.form.controls.role.setValue(response.role.id);
 
 
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
       this.title = 'Registrar usuario coordinador';
-
+      this.restar();
     }
   }
 
@@ -71,7 +78,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     this.form.addControl('image', new FormControl(null));
     this.form.addControl('isReferred', new FormControl(false, []));
     this.form.addControl('profession', new FormControl('', [Validators.pattern( NORMAL_TEXT_PATTERN )]));
-    this.form.addControl('referredName', new FormControl(''));
+    this.form.addControl('referredName', new FormControl('', []));
   }
 
 
@@ -113,6 +120,10 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               break;
           }
         }, (err: any) => {
+
+          console.log( data ); 
+          console.log(err); 
+
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
 

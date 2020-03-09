@@ -74,9 +74,14 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-address-coordinator [addressHome]="form.get('addressHome')" [addressCity]="form.get('addressCity')"
-                    [state]="form.get('addressState')" [municipality]="form.get('addressMunicipality')"
-                    [control]="form.get('address')" [submitted]="submitted"></app-address-coordinator>
+                <app-address-coordinator 
+                    [idState]="idState"
+                    [addressHome]="form.get('addressHome')" 
+                    [addressCity]="form.get('addressCity')"
+                    [state]="form.get('addressState')" 
+                    [municipality]="form.get('addressMunicipality')"
+                    [control]="form.get('address')" 
+                    [submitted]="submitted"></app-address-coordinator>
             </div>
         </div><!-- / End address data -->
 

@@ -4,6 +4,7 @@ import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
 import { patch, append, removeItem } from '@ngxs/store/operators';
+import { response } from 'express';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -14,27 +15,27 @@ export interface CoordinatorUserModel {
 
 export class GetCoordinatorUsers {
     static readonly type = '[Coordinator User] Get Coordinator Users';
-    constructor() {}
+    constructor() { }
 }
 
 export class SetCoordinatorUser {
     static readonly type = '[Coordinator User] Set Coordinator User';
-    constructor( public payload: CoordinatorUser ) {  }
+    constructor(public payload: CoordinatorUser) { }
 }
 
 export class UpdateCoordinatorUser {
     static readonly type = '[Coordinator User] Update Coordinator User';
-    constructor( public oldCoordinatorUser: CoordinatorUser, public newCoordinatorUser: CoordinatorUser) { }
+    constructor(public oldCoordinatorUser: CoordinatorUser, public newCoordinatorUser: CoordinatorUser) { }
 }
 
 export class DeleteCoordinatorUser {
     static readonly type = '[Coordinator User] Delete Coordinator User';
-    constructor( public payload: CoordinatorUser ) { }
+    constructor(public payload: CoordinatorUser) { }
 }
 
 export class SelectedCoordinatorUser {
     static readonly type = '[Coordinator User] Selected Coordinator User';
-    constructor( public payload: CoordinatorUser ) { }
+    constructor(public payload: CoordinatorUser) { }
 }
 
 @State<CoordinatorUserModel>({
@@ -62,18 +63,18 @@ export class SelectedCoordinatorUser {
             addressHome: '',
             status: ''
         },
-        coordinatorUsers: [ ]
+        coordinatorUsers: []
     }
 })
 export class CoordinatorUserState implements NgxsOnInit {
 
     @Selector()
-    static coordinatorUsers( state: CoordinatorUserModel ): CoordinatorUser[] | null {
+    static coordinatorUsers(state: CoordinatorUserModel): CoordinatorUser[] | null {
         return state.coordinatorUsers;
     }
 
     @Selector()
-    static coordinatorUser( state: CoordinatorUserModel ): CoordinatorUser | null {
+    static coordinatorUser(state: CoordinatorUserModel): CoordinatorUser | null {
         return state.coordinatorUser;
     }
 
@@ -81,50 +82,54 @@ export class CoordinatorUserState implements NgxsOnInit {
         private helper: Utility,
         private toastr: CustomToastrService,
         private coordinatorUserService: CoordinatorUserService
-    ) {}
+    ) { }
 
     ngxsOnInit(ctx: StateContext<CoordinatorUserModel>) {
-        ctx.dispatch( new GetCoordinatorUsers() );
+        ctx.dispatch(new GetCoordinatorUsers());
     }
 
-    @Action( GetCoordinatorUsers )
-    getCoordinatorUsers( ctx: StateContext<CoordinatorUserModel>, action: GetCoordinatorUsers) {
-        this.coordinatorUserService.getCoordinatorUsers().subscribe( response => {
+    @Action(GetCoordinatorUsers)
+    getCoordinatorUsers(ctx: StateContext<CoordinatorUserModel>, action: GetCoordinatorUsers) {
+        this.coordinatorUserService.getCoordinatorUsers().subscribe(response => {
 
-            if ( response ) {
-                ctx.setState( patch({
+            if (response) {
+                response = this.helper.readlyTypeDocument(response);
+                ctx.setState(patch({
                     ...ctx.getState(),
                     coordinatorUsers: response
-                }) );
+                }));
             }
 
         });
     }
 
-    @Action( SelectedCoordinatorUser )
-    selectedCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: SelectedCoordinatorUser ) {
-        ctx.setState( patch({
+    @Action(SelectedCoordinatorUser)
+    selectedCoordinatorUser(ctx: StateContext<CoordinatorUserModel>, action: SelectedCoordinatorUser) {
+        ctx.setState(patch({
             ...ctx.getState(),
             coordinatorUser: action.payload
-        }) );
+        }));
     }
 
-    @Action( SetCoordinatorUser )
-    setCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: SetCoordinatorUser ) {
+    @Action(SetCoordinatorUser)
+    setCoordinatorUser(ctx: StateContext<CoordinatorUserModel>, action: SetCoordinatorUser) {
 
-        action.payload = this.helper.readlyTypeDocument( [action.payload] )[0];
-        ctx.setState( patch({
+        action.payload = this.helper.readlyTypeDocument([action.payload])[0];
+        ctx.setState(patch({
             ...ctx.getState(),
             coordinatorUsers: append([action.payload])
         }));
     }
 
-    @Action( DeleteCoordinatorUser )
-    deleteCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: DeleteCoordinatorUser ) {
-        ctx.setState( patch({
-            ...ctx.getState(),
-            coordinatorUsers: removeItem<CoordinatorUser>( coordinatorUser => coordinatorUser.id === action.payload.id )
-        }) );
-        this.toastr.deleteRegister('Eliminación', 'Usuario coordinador eliminado');
+    @Action(DeleteCoordinatorUser)
+    deleteCoordinatorUser(ctx: StateContext<CoordinatorUserModel>, action: DeleteCoordinatorUser) {
+
+        this.coordinatorUserService.deleteCoordinatorUser(action.payload.id).subscribe(response => {
+            ctx.setState(patch({
+                ...ctx.getState(),
+                coordinatorUsers: removeItem<CoordinatorUser>(coordinatorUser => coordinatorUser.id === action.payload.id)
+            }));
+            this.toastr.deleteRegister('Eliminación', 'Usuario coordinador eliminado');
+        });
     }
 }

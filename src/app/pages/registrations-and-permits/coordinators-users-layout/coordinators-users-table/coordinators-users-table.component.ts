@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
-import { CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.action';
-import { Select } from '@ngxs/store';
+import { CoordinatorUserState, DeleteCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
+import { Select, Store } from '@ngxs/store';
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 import { Observable } from 'rxjs';
 import { Utility } from 'src/app/helpers/utility';
@@ -18,6 +18,7 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
   @Select(CoordinatorUserState.coordinatorUsers) data$: Observable<CoordinatorUser[]>;
 
   constructor(
+    private store: Store, 
     private helper: Utility
   ) {
     super('form-coordinators');
@@ -74,6 +75,7 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
         break;
       case this.ACTION.DELETE:
         // Call delete modal
+        this.store.dispatch( new DeleteCoordinatorUser(event.data) );
         break;
     }
   }

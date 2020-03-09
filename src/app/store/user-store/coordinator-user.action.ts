@@ -3,7 +3,7 @@ import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
-import { patch, append } from '@ngxs/store/operators';
+import { patch, append, removeItem } from '@ngxs/store/operators';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -109,5 +109,14 @@ export class CoordinatorUserState implements NgxsOnInit {
             ...ctx.getState(),
             coordinatorUsers: append([action.payload])
         }));
+    }
+
+    @Action( DeleteCoordinatorUser )
+    deleteCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: DeleteCoordinatorUser ) {
+        ctx.setState( patch({
+            ...ctx.getState(), 
+            coordinatorUsers: removeItem<CoordinatorUser>( coordinatorUser => coordinatorUser.id === action.payload.id )
+        }) );
+        this.toastr.deleteRegister('Eliminación', 'Usuario coordinador eliminado');
     }
 }

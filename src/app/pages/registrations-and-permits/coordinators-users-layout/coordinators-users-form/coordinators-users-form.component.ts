@@ -10,7 +10,7 @@ import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 import { Utility } from 'src/app/helpers/utility';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
-import { SetCoordinatorUser, CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.action';
+import { SetCoordinatorUser, CoordinatorUserState, UpdateCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { NORMAL_TEXT_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { Observable, Subscription } from 'rxjs';
@@ -29,7 +29,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     { value: false, label: 'No' },
   ];
   progress = 0;
-
+  backupOldData: CoordinatorUser; 
 
   idState = ' ';
   idMunicipality = '';
@@ -49,6 +49,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
       this.subscription = this.user$.subscribe( response => {
         this.title = 'Actualizar usuario coordinador';
 
+        this.backupOldData = response;
+
         this.restar();
         this.form.patchValue( response );
 
@@ -57,11 +59,24 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         this.form.controls.addressState.setValue(response.addressState.id);
         this.form.controls.role.setValue(response.role.id);
 
+        this.form.get('password').setValue('');
+        this.form.get('password').setValidators([]);
+        this.form.get('password').updateValueAndValidity();
 
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
       this.title = 'Registrar usuario coordinador';
       this.restar();
+
+      this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+      this.form.get('password').updateValueAndValidity();
+      this.idState = null;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if( this.subscription ) {
+      this.subscription.unsubscribe();
     }
   }
 
@@ -121,12 +136,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           }
         }, (err: any) => {
 
-          console.log( data ); 
-          console.log(err); 
-
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
-
           }
 
           if (err.error.cardId) {
@@ -143,8 +154,35 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           this.progress = 0;
         });
 
-      } else {
-        this.edit.emit('');
+      } else if ( this.MODE === this.ACTION.EDIT ) {
+        /** Update admin user data */
+
+        const updateData: any = this.form.value;
+
+        if (updateData.cardType === 'V' || updateData.cardType === 'E' || updateData.cardType === 'J') {
+          updateData.cardType = this.helper.encodeTypeDocument(updateData.cardType);
+        }
+
+        if (updateData.password === '' || updateData.password === null) {
+          delete updateData.password;
+        }
+
+        this.progress = 1;
+
+        this.coordinatorUserService.updateCoordinatorUser(this.backupOldData.id, updateData).subscribe((event: any) => {
+
+          this.progress = 0;
+
+          event = this.helper.readlyTypeDocument([event])[0];
+
+          this.store.dispatch(new UpdateCoordinatorUser(this.backupOldData, event));
+          this.toastr.updateSuccess('Actualización', 'Usuario actualizado satisfactoriamente');
+          this.submitted = false;
+          this.form.get('password').setValue('');
+          this.form.get('password').setValidators([]);
+          this.form.get('password').updateValueAndValidity();
+
+        });
       }
     } else {
 
@@ -165,4 +203,17 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
   // -- Event selected rol --
   onselected(event: any) { this.form.controls.role.setValue(event); }
+
+  onPress() {
+    if (this.MODE === this.ACTION.EDIT && this.form.controls.password.value !== null) {
+      this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+      this.form.get('password').updateValueAndValidity();
+    }
+
+    if (this.MODE === this.ACTION.EDIT && this.form.controls.password.value === '') {
+      this.form.get('password').setValidators([]);
+      this.form.get('password').updateValueAndValidity();
+
+    }
+  }
 }

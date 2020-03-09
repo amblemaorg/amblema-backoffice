@@ -3,8 +3,7 @@ import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
-import { patch, append, removeItem } from '@ngxs/store/operators';
-import { response } from 'express';
+import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -119,6 +118,14 @@ export class CoordinatorUserState implements NgxsOnInit {
             ...ctx.getState(),
             coordinatorUsers: append([action.payload])
         }));
+    }
+
+    @Action( UpdateCoordinatorUser )
+    updateCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: UpdateCoordinatorUser ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            coordinatorUsers: updateItem<CoordinatorUser>( coordinatorUser => coordinatorUser.id === action.oldCoordinatorUser.id, action.newCoordinatorUser )
+        }) );
     }
 
     @Action(DeleteCoordinatorUser)

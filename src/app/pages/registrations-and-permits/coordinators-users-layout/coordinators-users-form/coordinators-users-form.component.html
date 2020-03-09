@@ -32,7 +32,10 @@
                     <div class="col-12 col-lg-6">
                         <app-input-email [control]="form.get('email')" [submitted]="submitted">
                         </app-input-email>
-                        <app-input-password [control]="form.get('password')" [submitted]="submitted">
+                        <app-input-password 
+                            (keyup)="onPress()"
+                            [control]="form.get('password')" 
+                            [submitted]="submitted">
                         </app-input-password>
                     </div>
                     <div class="col-12 col-lg-6">

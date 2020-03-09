@@ -102,23 +102,25 @@
                         <nb-accordion-item-body>
                             <div class="row">
                                 <div class="col-12 col-lg-6">
-                                    <app-input-custom 
-                                        [submitted]="submitted"
-                                        [id]="'prefession'"
-                                        [control]="form.get('profession')"
-                                        [label]="'Profesión'"
+                                    <app-input-custom [submitted]="submitted" [id]="'prefession'"
+                                        [control]="form.get('profession')" [label]="'Profesión'"
                                         [placeholder]="'Profesión'"></app-input-custom>
                                 </div>
 
                                 <div class="col-12 col-lg-6">
-                                    <nb-radio-group formControlName="isReferred">
-                                        <nb-radio value='true'>
-                                            Si
-                                        </nb-radio>
-                                        <nb-radio value='false'>
-                                            No
-                                        </nb-radio>
-                                      </nb-radio-group>
+                                    <div class="form-group">
+                                        <label class="label">¿Es referido de alguien?</label>
+                                        <nb-radio-group  formControlName="isReferred" class="d-flex">
+                                            <nb-radio *ngFor="let option of options" [value]="option.value">
+                                                {{ option.label }}
+                                            </nb-radio>
+                                        </nb-radio-group>
+                                    </div>
+                                    <div *ngIf="form.controls['isReferred'].value">
+                                        <app-input-custom [submitted]="submitted" [id]="'referredName'"
+                                            [control]="form.get('referredName')" [label]="'Nombre de la persona'"
+                                            [placeholder]="'Nombre de la persona'"></app-input-custom>
+                                    </div>
                                 </div>
                             </div>
                         </nb-accordion-item-body>

@@ -41,13 +41,13 @@ export interface CoordinatorUser extends User {
     cardType: string;
     cardId: string;
     birthdate: string;
-    
+
     // No required data
     profession?: string;
     isReferred?: boolean;
     referredName?: string;
     image?: string;
-    
+
     homePhone: string;
     addressHome: string;
     gender: string;

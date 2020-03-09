@@ -12,6 +12,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { NORMAL_TEXT_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 
 @Component({
   selector: 'app-coordinators-users-form',
@@ -19,6 +20,10 @@ import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 })
 export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit {
 
+  options = [
+    { value: true, label: 'Si' },
+    { value: false, label: 'No' },
+  ];
   progress = 0;
 
   constructor(
@@ -41,14 +46,17 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
     // New data no required
     this.form.addControl('image', new FormControl(null));
-    this.form.addControl('isReferred', new FormControl(false)); 
-    this.form.addControl('profession', new FormControl('')); 
-    this.form.addControl('referredName', new FormControl('')); 
+    this.form.addControl('isReferred', new FormControl(false, []));
+    this.form.addControl('profession', new FormControl('', [Validators.pattern( NORMAL_TEXT_PATTERN )]));
+    this.form.addControl('referredName', new FormControl(''));
   }
 
 
   onSubmit() {
     this.submitted = true;
+
+
+    console.log( this.form.get('isReferred').value );
 
     // Working on your validated form data
     if (this.form.valid) {
@@ -66,8 +74,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         }
 
         data.userType = USER_TYPE.COORDINATOR.CODE.toString();
-        
-        console.log(data); 
+
+        console.log(data);
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
@@ -87,7 +95,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           }
         }, (err: any) => {
 
-          console.log(err); 
+          console.log(err);
 
           if (err.error.cardId) {
             if (String(err.error.cardId[0].status) === '5') {

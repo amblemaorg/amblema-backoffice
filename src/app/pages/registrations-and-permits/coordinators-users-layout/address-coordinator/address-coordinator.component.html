@@ -83,18 +83,17 @@
 
     <!-- Key street -->
     <div class="col-12 col-lg-6">
-        <app-input-custom [id]="'street'" [placeholder]="'Calles / Carrera'" [label]="'Calles / Carrera'"
-            [control]="control" [submitted]="submitted"></app-input-custom>
-    </div>
-
-
-    <div class="col-12 col-lg-6">
         <app-input-custom 
             [submitted]="submitted"
             [id]="'city'"
             [control]="addressCity"
             [label]="'Ciudad'"
             [placeholder]="'Ciudad'"></app-input-custom>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <app-input-custom [id]="'street'" [placeholder]="'Calles / Carrera'" [label]="'Calles / Carrera'"
+            [control]="control" [submitted]="submitted"></app-input-custom>
     </div>
 
     <div class="col-12 col-lg-6">

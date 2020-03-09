@@ -32,15 +32,20 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
   ngOnInit(): void {
     this.form.addControl('role', new FormControl());
-
     this.form.addControl('addressCity', new FormControl('', [Validators.required]));
     this.form.addControl('addressHome', new FormControl('', [Validators.required]));
-
     this.form.addControl('birthdate', new FormControl('', [Validators.required]));
     this.form.addControl('homePhone', new FormControl('', [Validators.required]));
     this.form.addControl('addressHome', new FormControl('', [Validators.required]));
     this.form.addControl('gender', new FormControl('', [Validators.required]));
+
+    // New data no required
+    this.form.addControl('image', new FormControl());
+    this.form.addControl('isReferred', new FormControl()); 
+    this.form.addControl('profession', new FormControl()); 
+    this.form.addControl('referredName', new FormControl()); 
   }
+
 
   onSubmit() {
     this.submitted = true;

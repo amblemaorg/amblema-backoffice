@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CoordinatorsUsersLayoutsRoutingModule } from './coordinators-users-layouts-routing.module';
 import { CoordinatorsUsersLayoutsComponent } from './coordinators-users-layouts.component';
-import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
+import { NbCardModule, NbSpinnerModule, NbIconModule } from '@nebular/theme';
 import { CoordinatorsUsersTableComponent } from './coordinators-users-table/coordinators-users-table.component';
 import { CoordinatorsUsersFormComponent } from './coordinators-users-form/coordinators-users-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -14,22 +14,27 @@ import { FormRegionalAddressModule } from '../../components/form-components/form
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveDatepickerModule } from '../../components/form-components/reactive-datepicker/reactive-datepicker.module';
+import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
+import { AddressCoordinatorComponent } from './address-coordinator/address-coordinator.component';
 
 @NgModule({
   declarations: [
     CoordinatorsUsersLayoutsComponent,
     CoordinatorsUsersTableComponent,
-    CoordinatorsUsersFormComponent],
+    CoordinatorsUsersFormComponent,
+    AddressCoordinatorComponent],
   imports: [
     CommonModule,
     CoordinatorsUsersLayoutsRoutingModule,
     NbCardModule,
     Ng2SmartTableModule,
     NbSpinnerModule,
+    NbIconModule,
 
     // Custom module
     ReactiveDatepickerModule,
     ReactiveFormsModule,
+    ReactiveInputFileModule,
     ReactiveInputModule,
     ReactiveSelectModule,
     ModalModule,

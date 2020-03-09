@@ -9,8 +9,15 @@
                 <p class="font-weight-bold text-info mb-0">Datos personales</p>
                 <hr>
             </div>
+
             <div class="col-12">
                 <div class="row">
+
+                    <div class="col-12 form-group">
+                        <label class="label">Imágen del coordinador</label>
+                        <app-input-img [align]="'left'"></app-input-img>
+                    </div>
+
                     <div class="col-12 col-lg-6">
                         <app-input-name [control]="form.get('firstName')" [submitted]="submitted">
                         </app-input-name>
@@ -94,11 +101,11 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-form-regional-address 
+                <app-address-coordinator 
                     [state]="form.get('addressState')"
                     [municipality]="form.get('addressMunicipality')" 
                     [control]="form.get('address')"
-                    [submitted]="submitted"></app-form-regional-address>
+                    [submitted]="submitted"></app-address-coordinator>
             </div>
         </div><!-- / End address data -->
 

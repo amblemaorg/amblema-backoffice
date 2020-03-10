@@ -26,8 +26,10 @@ export class TypeCompanyComponent implements AfterViewInit {
 
   onSelectTypeCompany() {
     if ( this.typeCompany.value === this.option[3].value ) {
-      this.otherCompany.setValidators([Validators.required])
+      this.otherCompany.setValidators([Validators.required]);
     } else { this.otherCompany.clearValidators(); }
+
+    this.otherCompany.updateValueAndValidity();
   }
 
 }

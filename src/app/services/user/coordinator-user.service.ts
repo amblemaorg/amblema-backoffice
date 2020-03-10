@@ -33,7 +33,7 @@ export class CoordinatorUserService {
     });
   }
 
-  updateCoordinatorUser( id: string, data: CoordinatorUser ) : Observable<any> {
+  updateCoordinatorUser( id: string, data: CoordinatorUser ): Observable<any> {
     return this.httpClient.put<CoordinatorUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data);
   }
 

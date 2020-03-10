@@ -124,7 +124,9 @@ export class CoordinatorUserState implements NgxsOnInit {
     updateCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: UpdateCoordinatorUser ) {
         ctx.setState( patch({
             ...ctx.getState(),
-            coordinatorUsers: updateItem<CoordinatorUser>( coordinatorUser => coordinatorUser.id === action.oldCoordinatorUser.id, action.newCoordinatorUser )
+            coordinatorUsers: updateItem<CoordinatorUser>(
+                coordinatorUser =>
+                coordinatorUser.id === action.oldCoordinatorUser.id, action.newCoordinatorUser )
         }) );
     }
 

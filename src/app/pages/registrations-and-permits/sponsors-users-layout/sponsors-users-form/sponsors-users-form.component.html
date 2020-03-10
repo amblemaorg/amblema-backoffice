@@ -63,7 +63,10 @@
                         </app-input-password>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-type-company [submitted]="submitted"></app-type-company>
+                        <app-type-company 
+                            [companyType]="form.get('companyType')"
+                            [companyOtherType]="form.get('companyOtherType')"
+                            [submitted]="submitted"></app-type-company>
                     </div> 
                 </div>
             </div>
@@ -77,6 +80,7 @@
             <div class="col-12 col-lg-6">
                 <app-input-custom 
                     [id]="'contact-name'"
+                    [control]="form.get('contactFirstName')"
                     [label]="'Nombre de la persona de contacto'"
                     [placeholder]="'Nombre de la persona de contacto'"
                     [submitted]="submitted"></app-input-custom>
@@ -84,6 +88,7 @@
             <div class="col-12 col-lg-6">
                 <app-input-custom 
                     [id]="'contact-last-name'"
+                    [control]="form.get('contactLastName')"
                     [label]="'Apellido de la persona de contacto'"
                     [placeholder]="'Apellido de la persona de contacto'"
                     [submitted]="submitted"></app-input-custom>
@@ -92,6 +97,7 @@
             <div class="col-12 col-lg-6">
                 <app-input-custom 
                     [id]="'personal-phone'"
+                    [control]="form.get('contactPhone')"
                     [label]="'Teléfono de la persona de contacto'"
                     [placeholder]="'Teléfono de la persona de contacto'"
                     [submitted]="submitted"></app-input-custom>
@@ -109,6 +115,7 @@
                     [state]="form.get('addressState')" 
                     [municipality]="form.get('addressMunicipality')"
                     [control]="form.get('address')" 
+                    [city]="form.get('city')"
                     [submitted]="submitted"></app-address-sponsor>
             </div>
         </div><!-- / End address data -->

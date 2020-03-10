@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { DetailsForm } from '../../shared/details-form';
 import { FormControl, Validators } from '@angular/forms';
@@ -19,7 +19,7 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'app-coordinators-users-form',
   templateUrl: './coordinators-users-form.component.html',
 })
-export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit, OnChanges {
+export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit, OnChanges, OnDestroy {
 
   @Select( CoordinatorUserState.coordinatorUser ) user$: Observable<any>;
   subscription: Subscription;
@@ -29,7 +29,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     { value: false, label: 'No' },
   ];
   progress = 0;
-  backupOldData: CoordinatorUser; 
+  backupOldData: CoordinatorUser;
 
   idState = ' ';
   idMunicipality = '';
@@ -75,7 +75,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
   }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe();
     }
   }

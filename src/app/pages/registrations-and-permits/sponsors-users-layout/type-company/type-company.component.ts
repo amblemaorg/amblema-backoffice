@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -6,30 +6,36 @@ import { AbstractControl, FormControl, Validators } from '@angular/forms';
   templateUrl: './type-company.component.html',
   styles: []
 })
-export class TypeCompanyComponent implements AfterViewInit {
+export class TypeCompanyComponent implements AfterViewInit, OnInit {
 
-  @Input() typeCompany: AbstractControl | null = new FormControl();
-  @Input() otherCompany: AbstractControl | null = new FormControl();
-  
-  @Input() submitted: boolean; 
+  @Input() companyType: AbstractControl | null = new FormControl();
+  @Input() companyOtherType: AbstractControl | null = new FormControl();
+
+  @Input() submitted: boolean;
 
   option: any = [
     { value: '1', label: 'Fabrica' },
     { value: '2', label: 'Tienda' },
-    { value: '3', label: 'Negocio personal'  },
+    { value: '3', label: 'Negocio personal' },
     { value: '4', label: 'Otro' }
-  ]
+  ];
+
+  ngOnInit(): void {
+    this.companyType.setValue(null);
+    this.companyType.setValidators([Validators.required]);
+    this.companyType.updateValueAndValidity();
+
+  }
 
   ngAfterViewInit(): void {
-    this.typeCompany.setValue(null, [Validators.required])    
+
   }
 
   onSelectTypeCompany() {
-    if ( this.typeCompany.value === this.option[3].value ) {
-      this.otherCompany.setValidators([Validators.required]);
-    } else { this.otherCompany.clearValidators(); }
 
-    this.otherCompany.updateValueAndValidity();
+    if (this.companyType.value === this.option[3].value) {
+      this.companyOtherType.setValidators([Validators.required]);
+    } else { this.companyOtherType.setValidators([]); }
+    this.companyOtherType.updateValueAndValidity();
   }
-
 }

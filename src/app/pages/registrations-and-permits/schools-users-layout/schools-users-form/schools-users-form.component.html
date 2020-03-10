@@ -11,13 +11,16 @@
             </div>
 
             <div class="col-12 form-group">
-                <label class="label">Imágen de perfil de la escuela</label>
+                <label class="label w-100 text-center text-lg-left">Imágen de perfil de la escuela</label>
                 <app-input-img [align]="'left'"></app-input-img>
             </div>
 
             <div class="col-12 col-lg-6">
                 <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
-                <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
+                <app-input-email 
+                    [id]="'school-email'"
+                    [control]="form.get('email')" 
+                    [submitted]="submitted"></app-input-email>
                 <app-input-password [control]="form.get('password')" [submitted]="submitted">
                 </app-input-password>
             </div>
@@ -65,8 +68,12 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-email [label]="'Correo del Director'" [placeholder]="'Correo del Director'"
-                            [control]="form.get('emailContact')" [submitted]="submitted" [id]="'principal-email'">
+                        <app-input-email 
+                            [label]="'Correo del Director'" 
+                            [placeholder]="'Correo del Director'"
+                            [control]="form.get('emailContact')" 
+                            [submitted]="submitted" 
+                            [id]="'principal-email'">
                         </app-input-email>
                     </div>
                     <div class="col-12 col-lg-6">
@@ -99,9 +106,51 @@
                         <nb-accordion-item-header>Información adicional</nb-accordion-item-header>
                         <nb-accordion-item-body>
                             <div class="row">
-                                <div class=col-12>
-                                    
+                                <div class="col-12 col-lg-6">
+                                    <app-input-name 
+                                        [id]="'sub-principal-firstname'"
+                                        [placeholder]="'Nombre del subdirector'"
+                                        [label]="'Nombre del subdirector'"
+                                        [submitted]="submitted"></app-input-name>
                                 </div>
+                                <div class="col-12 col-lg-6">
+                                    <app-input-last-name 
+                                        [id]="'sub-principal-lastname'"
+                                        [placeholder]="'Apellido del subdirector'"
+                                        [label]="'Apellido del subdirector'"
+                                        [submitted]="submitted"></app-input-last-name>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <app-input-phone 
+                                        [placeholder]="'Número de teléfono del subdirector'" 
+                                        [label]="'Número de teléfono del subdirector'"
+                                        [submitted]="submitted" 
+                                        [id]="'sub-principal-phone'"></app-input-phone>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <app-input-email 
+                                        [id]="'sub-principal-email'"
+                                        [label]="'Correo del subdirector'"
+                                        [placeholder]="'Correo del subdirector'" 
+                                        [submitted]="submitted"></app-input-email>
+                                </div>
+
+                                <div class="col-12">
+                                    <hr>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom 
+                                        [id]="'n-teachers'"
+                                        [placeholder]="'Cantidad de docentes'"
+                                        [label]="'Cantidad de docentes'"></app-input-custom>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom 
+                                        [id]="'n-administractive-staff'"
+                                        [placeholder]="'Cantidad de personal administrativo'"
+                                        [label]="'Cantidad de personal administrativo'"></app-input-custom>
+                                </div>
+                                
                             </div>
                         </nb-accordion-item-body>
                     </nb-accordion-item>

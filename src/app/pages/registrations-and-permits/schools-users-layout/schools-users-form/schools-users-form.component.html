@@ -25,8 +25,12 @@
                 </app-input-password>
             </div>
             <div class="col-12 col-lg-6">
-                <app-input-custom [label]="'Código del plantel'" [placeholder]="'Código del plantel'"
-                    [control]="form.get('campusCode')" [submitted]="submitted" [patternMsg]="MESSAGES.NAME_MESSAGE">
+                <app-input-custom 
+                    [control]="form.get('code')"
+                    [label]="'Código del plantel'" 
+                    [placeholder]="'Código del plantel'"
+                    [submitted]="submitted" 
+                    [patternMsg]="MESSAGES.NAME_MESSAGE">
                 </app-input-custom>
 
                 <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
@@ -41,7 +45,7 @@
             </div>
             <div class="col-12">
                 <app-school-address [state]="form.get('addressState')" [municipality]="form.get('addressMunicipality')"
-                    [control]="form.get('address')" [submitted]="submitted"></app-school-address>
+                    [submitted]="submitted"></app-school-address>
             </div>
         </div><!-- / End data address -->
 
@@ -56,12 +60,12 @@
 
                     <div class="col-12 col-lg-6">
                         <app-input-name [label]="'Nombre del Director'" [placeholder]="'Nombre del Director'"
-                            [control]="form.get('nameContact')" [submitted]="submitted" [id]="'principal-fistname'">
+                             [submitted]="submitted" [id]="'principal-fistname'">
                         </app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
                         <app-input-last-name [id]="'principal-lastname'" [label]="'Apellido del Director'"
-                            [placeholder]="'Apellido del Director'" [control]="form.get('lastNameContact')"
+                            [placeholder]="'Apellido del Director'"
                             [submitted]="submitted">
                         </app-input-last-name>
                     </div>
@@ -71,14 +75,13 @@
                         <app-input-email 
                             [label]="'Correo del Director'" 
                             [placeholder]="'Correo del Director'"
-                            [control]="form.get('emailContact')" 
                             [submitted]="submitted" 
                             [id]="'principal-email'">
                         </app-input-email>
                     </div>
                     <div class="col-12 col-lg-6">
                         <app-input-phone [placeholder]="'Teléfono del Director'" [label]="'Teléfono del Director'"
-                            [control]="form.get('phoneContact')" [submitted]="submitted" [id]="'principal-phone'">
+                            [submitted]="submitted" [id]="'principal-phone'">
                         </app-input-phone>
                     </div>
                 </div>
@@ -90,7 +93,7 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-select-status [control]="form.get('status')" [submitted]="submitted">
+                <app-select-status [submitted]="submitted">
                 </app-select-status>
             </div>
         </div>

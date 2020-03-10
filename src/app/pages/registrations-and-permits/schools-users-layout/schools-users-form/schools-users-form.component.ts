@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { BaseForm } from '../../shared/base-form';
 
@@ -21,21 +21,25 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
     { value: '3', label: 'Municipal' },
   ]; 
   
-  constructor(private validationService: ValidationService) {
+  form: FormGroup; 
+
+  constructor(
+    private fb: FormBuilder,
+    private validationService: ValidationService) {
     super('una escuela');
   }
 
   ngOnInit(): void {
 
-    // Add new form controls to schools
-    this.form.addControl('campusCode', new FormControl('', [Validators.required]));
-    this.form.addControl('nameContact', new FormControl());
-    this.form.addControl('lastNameContact', new FormControl());
-    this.form.addControl('emailContact', new FormControl());
-    this.form.addControl('phoneContact', new FormControl());
+    // Data school
+    this.form.addControl('image', new FormControl('', [Validators.required])); 
+    this.form.addControl('code', new FormControl('', [Validators.required])); 
   }
 
   onSubmit() {
+
+    console.log( this.form.value )
+
     this.submitted = true;
 
     // Working on your validated form data

@@ -21,7 +21,6 @@ export class TypeCompanyComponent implements AfterViewInit, OnInit {
   ];
 
   ngOnInit(): void {
-    this.companyType.setValue(null);
     this.companyType.setValidators([Validators.required]);
     this.companyType.updateValueAndValidity();
 

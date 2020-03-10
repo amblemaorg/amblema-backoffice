@@ -13,7 +13,7 @@ export class SponsorUserService {
 
   private readonly USER: string = `users`;
   private readonly SPONSOR_USER: string = `users?userType=${USER_TYPE.SPONSOR.CODE}`;
-  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SPONSOR.CODE}`;  
+  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SPONSOR.CODE}`;
 
   constructor( private httpClient: HttpClient ) { }
 
@@ -24,7 +24,7 @@ export class SponsorUserService {
       );
   }
 
-  setSponsorUser( data: SponsorUser ) : Observable<any> {
+  setSponsorUser( data: SponsorUser ): Observable<any> {
     return this.httpClient.post<SponsorUser>(`${environment.api}${this.SPONSOR_USER}`, data, {
       reportProgress: true,
       observe: 'events'

@@ -117,7 +117,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
         data.userType = USER_TYPE.COORDINATOR.CODE.toString();
 
-
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
 

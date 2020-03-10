@@ -53,7 +53,15 @@
                             [label]="'Teléfono de la empresa'"
                             [placeholder]="'Teléfono de la empresa'"
                             [submitted]="submitted"></app-input-phone>
-                    </div>                    
+                    </div>                   
+                    
+                    <div class="col-12 col-lg-6">
+                        <app-select-role 
+                            (onselected)="onselected($event)" 
+                            [control]="form.get('role')"
+                            [submitted]="submitted"></app-select-role>
+                    </div>
+                    
                     <div class="col-12 col-lg-6">
                         <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
                     </div>
@@ -132,9 +140,11 @@
     </form><!-- / End main content -->
 
     <!-- Footer content -->
-    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+    <button [attr.disabled]="progress != 0 ? true: null" [nbSpinner]="progress == 0 ? null : true"
+        nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
         [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
-        <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
-        <span *ngIf="MODE == ACTION.EDIT">Editar</span>
+        <span *ngIf="MODE == ACTION.CREATE && progress == 0">Guardar</span>
+        <span *ngIf="progress != 0">Guardando...</span>
+        <span *ngIf="MODE == ACTION.EDIT && progress == 0">Editar</span>
     </button>
 </app-modal>

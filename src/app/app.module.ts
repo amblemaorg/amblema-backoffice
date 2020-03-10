@@ -27,6 +27,7 @@ import { registerLocaleData } from '@angular/common';
 import { AdminUserState } from './store/user-store/admin-user.action';
 import { environment } from 'src/environments/environment.prod';
 import { CoordinatorUserState } from './store/user-store/coordinator-user.action';
+import { SponsorUserState } from './store/user-store/sponsor-user.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -61,6 +62,7 @@ registerLocaleData(localeVe, 'es-VE');
 
       AdminUserState,
       CoordinatorUserState,
+      SponsorUserState
     ],
     {
       compatibility: {

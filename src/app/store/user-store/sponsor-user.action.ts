@@ -2,7 +2,8 @@ import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
 import { NgxsOnInit, State, Selector, Action, StateContext } from '@ngxs/store';
 import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
-import { patch, append } from '@ngxs/store/operators';
+import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
+import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
 
 export interface SponsorUserModel {
     sponsorUser: SponsorUser;
@@ -33,7 +34,7 @@ export class UpdateSponsorUser {
 
 export class DeleteSponsorUser {
     static readonly type = '[Sponsor User] Delete Sponsor User';
-    constructor(public paylaod: SponsorUser) { }
+    constructor(public payload: SponsorUser) { }
 }
 
 @State<SponsorUserModel>({
@@ -79,18 +80,27 @@ export class SponsorUserState implements NgxsOnInit {
 
     constructor(
         private helper: Utility,
+        private sponsorUserService: SponsorUserService, 
         private toastr: CustomToastrService,
     ) {}
 
-    ngxsOnInit() { }
+    ngxsOnInit(ctx: StateContext<SponsorUserModel>) {
+        ctx.dispatch( new GetSponsorUsers() ); 
+    }
 
     // -- Sponsor user's actions --
 
     @Action( GetSponsorUsers )
     getSponsorUsers( ctx: StateContext<SponsorUserModel>  ) {
+        this.sponsorUserService.getSponsorUsers().subscribe( response => {
+            if( response ) {
 
-        // CALL SERVICES GET ALL SPONSOR USERS
-
+                ctx.setState( patch({
+                    ...ctx.getState(),
+                    sponsorUsers: response
+                }));
+            }
+        });
     }
 
     @Action( SelectedSponsorUser )
@@ -102,32 +112,32 @@ export class SponsorUserState implements NgxsOnInit {
     }
 
     @Action( SetSponsorUser )
-    setAdminUser( ctx: StateContext<SponsorUserModel>, action: SetSponsorUser ) {
-
-        action.payload = this.helper.readlyTypeDocument( [action.payload] )[0];
+    setSponsorUser( ctx: StateContext<SponsorUserModel>, action: SetSponsorUser ) {
         ctx.setState( patch({
             ...ctx.getState(),
-            adminUsers: append([action.payload])
+            sponsorUsers: append([action.payload])
         }));
     }
 
     @Action( UpdateSponsorUser )
     updateSponsorUser( ctx: StateContext<SponsorUserModel>, action: UpdateSponsorUser ) {
-        console.log('Se estan enviando los datos');
-        console.log( action );
+        ctx.setState( patch({
+            ...ctx.getState(),
+            coordinatorUsers: updateItem<SponsorUser>(
+                coordinatorUser =>
+                coordinatorUser.id === action.oldSponsorUser.id, action.newSponsorUser )
+        }));
     }
 
     @Action( DeleteSponsorUser )
     deleteSponsorUser(ctx: StateContext<SponsorUserModel>, action: DeleteSponsorUser  ) {
 
-        // CALL SERVICES DELETE
-
-        // this.adminUserService.deleteAdminUser( action.payload.id ).subscribe( response => {
-        //     ctx.setState( patch({
-        //         ...ctx.getState(),
-        //         adminUsers: removeItem<AdminUser>( adminUser => adminUser.id === action.payload.id )
-        //     }) );
-        //     this.toastr.deleteRegister('Eliminación', 'Usuario administrador eliminado');
-        // } );
+        this.sponsorUserService.deleteSponsorUser(action.payload.id).subscribe(response => {
+            ctx.setState(patch({
+                ...ctx.getState(),
+                sponsorUsers: removeItem<SponsorUser>(coordinatorUser => coordinatorUser.id === action.payload.id)
+            }));
+            this.toastr.deleteRegister('Eliminación', 'Usuario padrino eliminado');
+        });
     }
 }

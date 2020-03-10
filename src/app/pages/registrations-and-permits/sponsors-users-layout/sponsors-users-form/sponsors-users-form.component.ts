@@ -1,26 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnChanges } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { BaseForm } from '../../shared/base-form';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { STATUS } from 'src/app/helpers/text-content/status';
+import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
+import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { SetSponsorUser, SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-sponsors-users-form',
   templateUrl: './sponsors-users-form.component.html',
 
 })
-export class SponsorsUsersFormComponent extends BaseForm {
+export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, OnChanges {
 
+  @Select(SponsorUserState.sponsorUser) user$: Observable<any>;
+  subscription: Subscription;
 
-  subscription: Subscription; 
-
-  progress = 0; 
-  backupOldData: SponsorUser; 
+  progress = 0;
+  backupOldData: SponsorUser;
 
   form: FormGroup;
 
@@ -28,13 +32,14 @@ export class SponsorsUsersFormComponent extends BaseForm {
     private fb: FormBuilder,
     private store: Store,
     private toast: CustomToastrService,
+    private sponsorUserService: SponsorUserService,
     private validationService: ValidationService) {
     super('un padrino'); // <-- Title modal
 
     // this.type.setValue('J');
 
     this.form = this.fb.group({
-      image: new  FormControl('', [Validators.required]),
+      image: new FormControl('', [Validators.required]),
       webSite: new FormControl('', [Validators.required, Validators.pattern(VIDEO_PATTERN)]),
       name: new FormControl('', [Validators.required]),
       cardType: new FormControl('J'), // <-- Remove card type when is send it
@@ -42,7 +47,8 @@ export class SponsorsUsersFormComponent extends BaseForm {
       companyPhone: new FormControl(),
       email: new FormControl(),
       password: new FormControl(),
-      companyType: new FormControl(),
+      companyType: new FormControl(null),
+      role: new FormControl(),
       companyOtherType: new FormControl(''),
       contactFirstName: new FormControl(),
       contactLastName: new FormControl(),
@@ -55,16 +61,29 @@ export class SponsorsUsersFormComponent extends BaseForm {
     });
   }
 
+  ngOnChanges(): void {
+    if (this.MODE === this.ACTION.EDIT) {
+      this.subscription = this.user$.subscribe(response => {
+        this.title = 'Actualizar usuario padrino';
+        this.backupOldData = response;
+
+        this.restar();
+        this.form.patchValue( response );
+      });
+    } else if (this.MODE === this.ACTION.CREATE) {
+      this.title = 'Registrar usuario padrino';
+      this.restar();
+    }
+  }
+
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
   onSubmit() {
     this.submitted = true;
-
-    console.log( this.form.value );
 
     // Error messages
     if (this.form.controls.image.invalid) {
@@ -79,16 +98,51 @@ export class SponsorsUsersFormComponent extends BaseForm {
     if (this.form.valid) {
 
 
-      const data: any = this.form.value; 
+      const data: any = this.form.value;
+      data.userType = USER_TYPE.SPONSOR.CODE.toString();
+      data['phone'] = '234234234';
       delete data.cardType;
+
 
       // Mode
       if (this.MODE === this.ACTION.CREATE) {
 
         this.toast.info('Guardando', 'Enviando información, espere...');
-        this.progress = 1;        
+        this.progress = 1;
 
+        this.sponsorUserService.getSponsorUsers().subscribe(response => { });
 
+        this.sponsorUserService.setSponsorUser(data).subscribe((event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              this.progress = Math.round(event.loaded / event.total * 100);
+              break;
+            case HttpEventType.Response:
+              this.progress = 0;
+              this.store.dispatch(new SetSponsorUser(event.body));
+              this.toast.registerSuccess('Registro', 'Usuario padrino registrado');
+              this.restar();
+              break;
+          }
+        }, (err: any) => {
+
+          if (err.error.status === 0) {
+            this.toast.error('Error de datos', 'Verifica los datos del formulario');
+          }
+
+          if (err.error.cardId) {
+            if (String(err.error.cardId[0].status) === '5') {
+              this.toast.error('Error de indentidad', 'El documento de identidad ya esta registrado');
+            }
+          }
+
+          if (err.error.email) {
+            if (String(err.error.email[0].status) === '5') {
+              this.toast.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+            }
+          }
+          this.progress = 0;
+        });
 
       } else {
         this.edit.emit('');
@@ -100,12 +154,17 @@ export class SponsorsUsersFormComponent extends BaseForm {
     }
   }
 
-  private restar() : void {
+  private restar(): void {
     this.form.reset();
+    this.form.controls.cardType.setValue('J'); 
+    this.form.controls.companyOtherType.setValue('');
+    this.form.controls.companyType.setValue(null);
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.addressMunicipality.setValue(null);
-    this.form.controls.isReferred.setValue(false);
     this.submitted = false;
   }
+
+  // -- Event selected rol --
+  onselected(event: any) { this.form.controls.role.setValue(event); }
 
 }

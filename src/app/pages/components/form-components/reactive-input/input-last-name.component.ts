@@ -37,7 +37,7 @@ export class InputLastNameComponent extends AbstractReactiveInput implements Aft
       this.control.updateValueAndValidity();
 
       this.id = this.id === '' ? 'last-name' : this.id;
-      this.placeholder = this.placeholder === '' ? 'Apellido' : this.placeholder; 
+      this.placeholder = this.placeholder === '' ? 'Apellido' : this.placeholder;
       this.label = this.label === '' ? 'Apellido' : this.label;
 
       this.cd.detectChanges();

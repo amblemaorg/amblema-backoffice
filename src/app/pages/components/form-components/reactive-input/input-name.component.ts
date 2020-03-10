@@ -36,7 +36,7 @@ export class InputNameComponent extends AbstractReactiveInput implements AfterVi
     this.control.updateValueAndValidity();
 
     this.id = this.id === '' ? 'name' : this.id;
-    this.placeholder = this.placeholder === '' ? 'Nombre' : this.placeholder; 
+    this.placeholder = this.placeholder === '' ? 'Nombre' : this.placeholder;
     this.label = this.label === '' ? 'Nombre' : this.label;
 
     this.cd.detectChanges(); // <!-- Control change

@@ -88,7 +88,7 @@ export class CoordinatorUserState implements NgxsOnInit {
     }
 
     @Action(GetCoordinatorUsers)
-    getCoordinatorUsers(ctx: StateContext<CoordinatorUserModel>, action: GetCoordinatorUsers) {
+    getCoordinatorUsers(ctx: StateContext<CoordinatorUserModel>) {
         this.coordinatorUserService.getCoordinatorUsers().subscribe(response => {
 
             if (response) {

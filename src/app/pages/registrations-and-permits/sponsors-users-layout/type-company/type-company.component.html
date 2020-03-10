@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="role" class="label">Tipo de empresa</label>
-    <select name="role" id="role" (change)="onSelectTypeCompany()" class="form-control form-group"
+    <select name="type-company" id="type-company" (change)="onSelectTypeCompany()" class="form-control form-group"
         [formControl]="companyType">
         <option disabled selected [value]="null">- Seleccione un tipo de empresa -</option>
         <option *ngFor="let item of option" [value]="item.value">{{ item.label }}</option>
@@ -17,5 +17,4 @@
         [placeholder]="'Otra empresa'" 
         [submitted]="submitted" 
         [control]="companyOtherType"></app-input-custom>
-    <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation>
 </div>

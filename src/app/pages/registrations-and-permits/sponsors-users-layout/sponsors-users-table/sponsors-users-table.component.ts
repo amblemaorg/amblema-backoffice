@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { Store, Select } from '@ngxs/store';
+import { SponsorUserState, DeleteSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
+import { Observable } from 'rxjs';
+import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
+import { Utility } from 'src/app/helpers/utility';
 
 // JQuery call
 declare var $: any;
@@ -10,15 +15,12 @@ declare var $: any;
 })
 export class SponsorsUsersTableComponent extends BaseTable implements TableActions, OnInit {
 
-  data: any = [{
-    name: 'Luis',
-    lastName: 'Lopez',
-    document: '324234',
-    phone: '324234324',
-    status: 'Activo'
-  }];
+  @Select( SponsorUserState.sponsorUsers ) data$: Observable<SponsorUser[]>;
 
-  constructor() {
+  constructor(
+    private helper: Utility,
+    private store: Store,
+  ) {
 
     super('form-sponsors');
 
@@ -28,11 +30,11 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         title: 'Nombre',
         type: 'string'
       },
-      lastName: {
-        title: 'Apellido',
+      email: {
+        title: 'Correo',
         type: 'string'
       },
-      document: {
+      companyRIF: {
         title: 'Cédula / Rif',
         type: 'string'
       },
@@ -42,7 +44,20 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
       },
       status: {
         title: 'Estatus',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (row: any) => {
+          return this.helper.readlyStatus( [{ status: row }] )[0].status;
+        },
+        filterFunction(cell?: any, search?: string): boolean {
+
+
+            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+
+            value = value.toUpperCase();
+            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
+              return true;
+            } else { return false;  }
+        }
       }
     };
   }
@@ -61,13 +76,9 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         $(`#${this.ID_FORM}`).modal('show');
         break;
       case this.ACTION.DELETE:
-        // Call delete modal
+        this.store.dispatch( new DeleteSponsorUser( event.data ) )
         break;
     }
   }
-
-  newData(data: any): void {}
-  updateData(data: any): void {}
-  deleteData(data: any): void {}
 
 }

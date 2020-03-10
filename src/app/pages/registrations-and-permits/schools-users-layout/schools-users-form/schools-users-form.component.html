@@ -9,6 +9,12 @@
                 <p class="font-weight-bold text-info mb-0">Datos de la escuela</p>
                 <hr>
             </div>
+
+            <div class="col-12 form-group">
+                <label class="label">Imágen de perfil de la escuela</label>
+                <app-input-img [align]="'left'"></app-input-img>
+            </div>
+
             <div class="col-12 col-lg-6">
                 <app-input-name [control]="form.get('name')" [submitted]="submitted"></app-input-name>
                 <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
@@ -31,9 +37,7 @@
                 <hr>
             </div>
             <div class="col-12">
-                <app-school-address 
-                    [state]="form.get('addressState')" 
-                    [municipality]="form.get('addressMunicipality')"
+                <app-school-address [state]="form.get('addressState')" [municipality]="form.get('addressMunicipality')"
                     [control]="form.get('address')" [submitted]="submitted"></app-school-address>
             </div>
         </div><!-- / End data address -->
@@ -41,45 +45,36 @@
         <!-- Data contact -->
         <div class="row mt-3">
             <div class="col-12">
-                <p class="text-info font-weight-bold mb-0">Contacto</p>
+                <p class="text-info font-weight-bold mb-0">Datos del Director</p>
                 <hr>
             </div>
             <div class="col-12">
                 <div class="row">
 
                     <div class="col-12 col-lg-6">
-                        <app-input-name 
-                            [control]="form.get('nameContact')"
-                            [submitted]="submitted"
-                            [id]="'nameContact'">
+                        <app-input-name [label]="'Nombre del Director'" [placeholder]="'Nombre del Director'"
+                            [control]="form.get('nameContact')" [submitted]="submitted" [id]="'principal-fistname'">
                         </app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-last-name [control]="form.get('lastNameContact')" [submitted]="submitted">
+                        <app-input-last-name [id]="'principal-lastname'" [label]="'Apellido del Director'"
+                            [placeholder]="'Apellido del Director'" [control]="form.get('lastNameContact')"
+                            [submitted]="submitted">
                         </app-input-last-name>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-email [control]="form.get('emailContact')" [submitted]="submitted" [id]="'emailContact'">
+                        <app-input-email [label]="'Correo del Director'" [placeholder]="'Correo del Director'"
+                            [control]="form.get('emailContact')" [submitted]="submitted" [id]="'principal-email'">
                         </app-input-email>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-phone [control]="form.get('phoneContact')" [submitted]="submitted" [id]="'phoneContact'">
+                        <app-input-phone [placeholder]="'Teléfono del Director'" [label]="'Teléfono del Director'"
+                            [control]="form.get('phoneContact')" [submitted]="submitted" [id]="'principal-phone'">
                         </app-input-phone>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <app-input-custom 
-                            [label]="'Cargo en la escuela'" 
-                            [placeholder]="'Cargo en la escuela'"
-                            [submitted]="submitted" 
-                            [id]="'function'">
-                        </app-input-custom>   
-                    </div>
-                </div> 
             </div>
         </div><!-- / End data contact -->
 
@@ -90,6 +85,27 @@
             <div class="col-12 col-lg-6">
                 <app-select-status [control]="form.get('status')" [submitted]="submitted">
                 </app-select-status>
+            </div>
+        </div>
+
+        <!-- More data -->
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12">
+                <nb-accordion class="shadow-none border">
+                    <nb-accordion-item>
+                        <nb-accordion-item-header>Información adicional</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+                                <div class=col-12>
+                                    
+                                </div>
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
             </div>
         </div>
     </form><!-- / End main content -->

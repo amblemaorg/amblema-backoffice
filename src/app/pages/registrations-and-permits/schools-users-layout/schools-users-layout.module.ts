@@ -5,7 +5,7 @@ import { SchoolsUsersLayoutRoutingModule } from './schools-users-layout-routing.
 import { SchoolsUsersLayoutComponent } from './schools-users-layout.component';
 import { SchoolsUsersFormComponent } from './schools-users-form/schools-users-form.component';
 import { SchoolsUsersTableComponent } from './schools-users-table/schools-users-table.component';
-import { NbCardModule, NbIconModule, NbSpinnerModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule, NbSpinnerModule, NbAccordionModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
@@ -32,6 +32,7 @@ import { SchoolAddressComponent } from './school-address/school-address.componen
     FormRegionalAddressModule,
     NbIconModule,
     NbSpinnerModule,
+    NbAccordionModule,
 
     // Add custom modules
     ReactiveInputFileModule,

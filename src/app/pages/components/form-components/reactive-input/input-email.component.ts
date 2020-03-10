@@ -8,12 +8,12 @@ import { EMAIL_PATTERN } from '../shared/constant/validation-patterns-list';
     selector: 'app-input-email',
     template: `
         <div class="form-group">
-            <label for='email' class="label">Correo</label>
+            <label for='email' class="label">{{ label }}</label>
             <input
                 nbInput
                 fullWidth
                 status="basic"
-                placeholder="Correo"
+                [placeholder]="placeholder"
                 [id]='id'
                 [name]='id'
                 type='email'
@@ -38,6 +38,8 @@ export class InputEmailComponent extends AbstractReactiveInput implements AfterV
         this.control.setValidators([Validators.required, Validators.pattern(EMAIL_PATTERN)]);
         this.control.updateValueAndValidity();
         this.id = this.id === '' ? 'email' : this.id;
+        this.label  = this.label === '' ? 'Correo' : this.label;
+        this.placeholder = this.placeholder === '' ? 'Correo' : this.placeholder;
 
         this.cd.detectChanges();
     }

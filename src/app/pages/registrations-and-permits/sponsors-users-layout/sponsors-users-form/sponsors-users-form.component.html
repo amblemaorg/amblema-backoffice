@@ -20,7 +20,7 @@
                     <div class="col-12">
                         <app-input-custom 
                             [id]="'URL'"
-                            [control]="form.get('url')"
+                            [control]="form.get('webSite')"
                             [submitted]="submitted"
                             [patternMsg]="'Introduzca una URL valida'"
                             [label]="'URL del sitio web'"  
@@ -40,7 +40,7 @@
                         <app-form-document 
                             [onlyCompany]="true"
                             [submitted]="submitted"
-                            [control]="form.get('cardId')"
+                            [control]="form.get('companyRIF')"
                             [controlSelect]="form.get('cardType')"></app-form-document>
                     </div>
                 </div>
@@ -48,6 +48,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <app-input-custom 
+                            [control]="form.get('companyPhone')"
                             [id]="'company-phone'"
                             [label]="'Teléfono de la empresa'"
                             [placeholder]="'Teléfono de la empresa'"

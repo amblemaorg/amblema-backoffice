@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
-import { DetailsForm } from '../../shared/details-form';
 import { FormControl, Validators } from '@angular/forms';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { BaseForm } from '../../shared/base-form';
 
 @Component({
   selector: 'app-sponsors-users-form',
   templateUrl: './sponsors-users-form.component.html',
 
 })
-export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
+export class SponsorsUsersFormComponent extends BaseForm implements OnInit {
 
   constructor(
     private toast: CustomToastrService,
@@ -19,14 +19,17 @@ export class SponsorsUsersFormComponent extends DetailsForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form.controls.cardType.setValue('J');
-    this.form.removeControl('lastName');
+    //this.form.controls.cardType.setValue('J');
+    //this.form.get('name').setValidators([Validators.required]);
     this.form.addControl('image', new FormControl('', [Validators.required]));
     this.form.addControl('url', new FormControl('', [Validators.required, Validators.pattern(VIDEO_PATTERN)]));
+    this.form.updateValueAndValidity();
   }
 
   onSubmit() {
     this.submitted = true;
+
+    console.log( this.form.value );
 
     // Error messages
     if (this.form.controls.image.invalid) {

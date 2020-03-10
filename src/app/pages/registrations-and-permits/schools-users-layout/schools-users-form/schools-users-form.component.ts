@@ -9,6 +9,18 @@ import { BaseForm } from '../../shared/base-form';
 })
 export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
 
+  classTime = [
+    { value: '1', label: 'Mañana' },
+    { value: '2', label: 'Tarde' },
+    { value: '3', label: 'Ambos' },
+  ];
+
+  typeSchool = [
+    { value: '1', label: 'Nacional' }, 
+    { value: '2', label: 'Estadal' },
+    { value: '3', label: 'Municipal' },
+  ]; 
+  
   constructor(private validationService: ValidationService) {
     super('una escuela');
   }

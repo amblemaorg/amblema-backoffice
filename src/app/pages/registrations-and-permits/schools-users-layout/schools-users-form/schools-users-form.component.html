@@ -150,7 +150,57 @@
                                         [placeholder]="'Cantidad de personal administrativo'"
                                         [label]="'Cantidad de personal administrativo'"></app-input-custom>
                                 </div>
-                                
+
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom 
+                                        [id]="'n-labor-staff'"
+                                        [placeholder]="'Cantidad del personal obrero'"
+                                        [label]="'Cantidad del personal obrero'"></app-input-custom>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom 
+                                        [id]="'n-students-staff'"
+                                        [placeholder]="'Cantidad de estudiantes'"
+                                        [label]="'Cantidad de estudiantes'"></app-input-custom>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom 
+                                        [id]="'n-grades'"
+                                        [placeholder]="'Cantidad de grados'"
+                                        [label]="'Cantidad de grados'"></app-input-custom>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom 
+                                        [id]="'n-sections'"
+                                        [placeholder]="'Cantidad de secciones'"
+                                        [label]="'Cantidad de secciones'"></app-input-custom>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <label for="sex" class="label">Turno de clases </label>
+                                    <select
+                                        name="classTime"
+                                        id="classTiem"
+                                        class="form-control form-group">
+                                            <option value="null">- Seleccione un turno -</option>
+                                            <option *ngFor="let item of classTime" [value]="item.value">{{ item.label }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <label for="sex" class="label">Tipo de escuela </label>
+                                    <select
+                                        name="typeSchool"
+                                        id="typeSchool"
+                                        class="form-control form-group">
+                                            <option value="null">- Seleccione un tipo -</option>
+                                            <option *ngFor="let item of typeSchool" [value]="item.value">{{ item.label }}</option>
+                                    </select>
+                                </div>
+                                            
                             </div>
                         </nb-accordion-item-body>
                     </nb-accordion-item>

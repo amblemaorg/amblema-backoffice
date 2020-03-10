@@ -120,10 +120,11 @@
             </div>
             <div class="col-12">
                 <app-address-sponsor 
+                    [idState]="idState"
                     [state]="form.get('addressState')" 
                     [municipality]="form.get('addressMunicipality')"
                     [control]="form.get('address')" 
-                    [city]="form.get('city')"
+                    [addressCity]="form.get('addressCity')"
                     [submitted]="submitted"></app-address-sponsor>
             </div>
         </div><!-- / End address data -->

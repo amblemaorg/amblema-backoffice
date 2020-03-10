@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
 import { Store, Select } from '@ngxs/store';
-import { SponsorUserState, DeleteSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
+import { SponsorUserState, DeleteSponsorUser, SelectedSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 import { Observable } from 'rxjs';
 import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
 import { Utility } from 'src/app/helpers/utility';
@@ -74,6 +74,7 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         // Change mode purpose
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
+        this.store.dispatch( new SelectedSponsorUser( event.data ) );
         break;
       case this.ACTION.DELETE:
         this.store.dispatch( new DeleteSponsorUser( event.data ) )

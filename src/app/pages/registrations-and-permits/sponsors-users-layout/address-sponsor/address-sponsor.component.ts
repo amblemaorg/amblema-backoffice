@@ -11,6 +11,6 @@ import { AbstractControl, FormControl } from '@angular/forms';
 })
 export class AddressSponsorComponent extends FormRegionalAddressComponent {
 
-  @Input() city: AbstractControl | null = new FormControl();
+  @Input() addressCity: AbstractControl | null = new FormControl();
 
 }

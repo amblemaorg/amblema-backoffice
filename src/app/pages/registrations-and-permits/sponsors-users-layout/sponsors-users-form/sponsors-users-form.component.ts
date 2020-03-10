@@ -10,7 +10,7 @@ import { Subscription, Observable } from 'rxjs';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
 import { USER_TYPE } from 'src/app/helpers/convention/user-type';
-import { SetSponsorUser, SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
+import { SetSponsorUser, SponsorUserState, UpdateSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -25,6 +25,10 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
 
   progress = 0;
   backupOldData: SponsorUser;
+
+  idState = ' ';
+  idMunicipality = '';
+
 
   form: FormGroup;
 
@@ -56,7 +60,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
       addressState: new FormControl(),
       addressMunicipality: new FormControl(),
       address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
+      addressCity: new FormControl('', [Validators.required]),
       status: new FormControl()
     });
   }
@@ -69,10 +73,22 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
 
         this.restar();
         this.form.patchValue( response );
+        this.idState = this.form.controls.addressState.value;
+        
+        this.form.controls.addressState.setValue(response.addressState.id);
+        this.form.controls.role.setValue(response.role.id);
+        
+        this.form.get('password').setValue('');
+        this.form.get('password').setValidators([]);
+        this.form.get('password').updateValueAndValidity();
       });
     } else if (this.MODE === this.ACTION.CREATE) {
       this.title = 'Registrar usuario padrino';
       this.restar();
+
+      this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+      this.form.get('password').updateValueAndValidity();
+      this.idState = null;
     }
   }
 
@@ -120,7 +136,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
             case HttpEventType.Response:
               this.progress = 0;
               this.store.dispatch(new SetSponsorUser(event.body));
-              this.toast.registerSuccess('Registro', 'Usuario padrino registrado');
+              this.toast.registerSuccess('Registro', 'Padrino registrado satisfactoriamente');
               this.restar();
               break;
           }
@@ -143,9 +159,30 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
           }
           this.progress = 0;
         });
+      } else if( this.MODE === this.ACTION.EDIT )  {
+        
+        const updateData: any = this.form.value;
 
-      } else {
-        this.edit.emit('');
+        if (updateData.password === '' || updateData.password === null) {
+          delete updateData.password;
+        }
+
+        this.progress = 1;
+
+        this.sponsorUserService.updateSponsorUser(this.backupOldData.id, updateData).subscribe((event: any) => {
+
+          this.progress = 0;
+
+
+          this.store.dispatch(new UpdateSponsorUser(this.backupOldData, event));
+          this.toast.updateSuccess('Actualización', 'Usuario actualizado satisfactoriamente');
+          this.submitted = false;
+          this.form.get('password').setValue('');
+          this.form.get('password').setValidators([]);
+          this.form.get('password').updateValueAndValidity();
+
+        });
+
       }
     } else {
 

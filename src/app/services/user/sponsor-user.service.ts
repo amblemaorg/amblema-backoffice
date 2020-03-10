@@ -31,7 +31,7 @@ export class SponsorUserService {
     });
   }
 
-  updateCoordinatorUser( id: string, data: SponsorUser ): Observable<any> {
+  updateSponsorUser( id: string, data: SponsorUser ): Observable<any> {
     return this.httpClient.put<SponsorUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data);
   }
 

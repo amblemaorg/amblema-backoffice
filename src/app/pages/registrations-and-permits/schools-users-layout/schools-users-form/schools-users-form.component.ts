@@ -32,8 +32,11 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
   ngOnInit(): void {
 
     // Data school
-    this.form.addControl('image', new FormControl('', [Validators.required])); 
+    this.form.addControl('image', new FormControl('')); 
     this.form.addControl('code', new FormControl('', [Validators.required])); 
+    
+    // Data address
+    this.form.addControl('addressCity', new FormControl('', [Validators.required]));
   }
 
   onSubmit() {

@@ -30,7 +30,7 @@ import { SchoolAddressComponent } from './school-address/school-address.componen
     Ng2SmartTableModule,
     ReactiveFormsModule,
     FormRegionalAddressModule,
-    NbIconModule, 
+    NbIconModule,
     NbSpinnerModule,
 
     // Add custom modules

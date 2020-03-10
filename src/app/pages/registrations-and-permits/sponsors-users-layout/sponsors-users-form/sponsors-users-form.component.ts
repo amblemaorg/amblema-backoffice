@@ -74,10 +74,10 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
         this.restar();
         this.form.patchValue( response );
         this.idState = this.form.controls.addressState.value;
-        
+
         this.form.controls.addressState.setValue(response.addressState.id);
         this.form.controls.role.setValue(response.role.id);
-        
+
         this.form.get('password').setValue('');
         this.form.get('password').setValidators([]);
         this.form.get('password').updateValueAndValidity();
@@ -116,7 +116,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
 
       const data: any = this.form.value;
       data.userType = USER_TYPE.SPONSOR.CODE.toString();
-      data['phone'] = '234234234';
+      data.phone = '234234234';
       delete data.cardType;
 
 
@@ -159,8 +159,8 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
           }
           this.progress = 0;
         });
-      } else if( this.MODE === this.ACTION.EDIT )  {
-        
+      } else if ( this.MODE === this.ACTION.EDIT )  {
+
         const updateData: any = this.form.value;
 
         if (updateData.password === '' || updateData.password === null) {
@@ -193,7 +193,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
 
   private restar(): void {
     this.form.reset();
-    this.form.controls.cardType.setValue('J'); 
+    this.form.controls.cardType.setValue('J');
     this.form.controls.companyOtherType.setValue('');
     this.form.controls.companyType.setValue(null);
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);

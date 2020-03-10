@@ -80,12 +80,12 @@ export class SponsorUserState implements NgxsOnInit {
 
     constructor(
         private helper: Utility,
-        private sponsorUserService: SponsorUserService, 
+        private sponsorUserService: SponsorUserService,
         private toastr: CustomToastrService,
     ) {}
 
     ngxsOnInit(ctx: StateContext<SponsorUserModel>) {
-        ctx.dispatch( new GetSponsorUsers() ); 
+        ctx.dispatch( new GetSponsorUsers() );
     }
 
     // -- Sponsor user's actions --
@@ -93,7 +93,7 @@ export class SponsorUserState implements NgxsOnInit {
     @Action( GetSponsorUsers )
     getSponsorUsers( ctx: StateContext<SponsorUserModel>  ) {
         this.sponsorUserService.getSponsorUsers().subscribe( response => {
-            if( response ) {
+            if ( response ) {
 
                 ctx.setState( patch({
                     ...ctx.getState(),

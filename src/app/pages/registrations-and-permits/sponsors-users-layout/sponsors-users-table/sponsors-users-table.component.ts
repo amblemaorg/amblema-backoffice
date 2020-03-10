@@ -77,7 +77,7 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         this.store.dispatch( new SelectedSponsorUser( event.data ) );
         break;
       case this.ACTION.DELETE:
-        this.store.dispatch( new DeleteSponsorUser( event.data ) )
+        this.store.dispatch( new DeleteSponsorUser( event.data ) );
         break;
     }
   }

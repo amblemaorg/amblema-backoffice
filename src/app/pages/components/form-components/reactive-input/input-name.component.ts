@@ -7,12 +7,12 @@ import { NORMAL_TEXT_PATTERN } from '../shared/constant/validation-patterns-list
   selector: 'app-input-name',
   template: `
     <div class="form-group">
-      <label for='name' class="label">Nombre</label>
+      <label for='name' class="label">{{label}}</label>
       <input
         nbInput
         fullWidth
         status="basic"
-        placeholder="Nombre"
+        [placeholder]="placeholder"
         [id]='id'
         [name]='id'
         type='text'
@@ -36,6 +36,9 @@ export class InputNameComponent extends AbstractReactiveInput implements AfterVi
     this.control.updateValueAndValidity();
 
     this.id = this.id === '' ? 'name' : this.id;
+    this.placeholder = this.placeholder === '' ? 'Nombre' : this.placeholder; 
+    this.label = this.label === '' ? 'Nombre' : this.label;
+
     this.cd.detectChanges(); // <!-- Control change
   }
 }

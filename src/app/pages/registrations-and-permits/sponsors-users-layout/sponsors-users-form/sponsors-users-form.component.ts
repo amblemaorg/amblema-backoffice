@@ -3,7 +3,7 @@ import { ValidationService } from 'src/app/pages/components/form-components/shar
 import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { BaseForm } from '../../shared/base-form';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { VIDEO_PATTERN, NUMBER_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { VIDEO_PATTERN, NUMBER_PATTERN, NORMAL_TEXT_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 
 @Component({
   selector: 'app-sponsors-users-form',

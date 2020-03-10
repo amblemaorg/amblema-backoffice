@@ -39,7 +39,7 @@ export class InputPhoneComponent extends AbstractReactiveInput implements AfterV
 
     ngAfterViewInit(): void {
         this.label = this.label ? this.label : 'Télefono';
-
+        this.placeholder = this.placeholder === '' ? 'Télefono' : this.placeholder;
         this.control.setValidators([Validators.required, Validators.pattern(NUMBER_PATTERN)]);
         this.control.updateValueAndValidity();
         this.id = this.id === '' ? 'phone' : this.id;

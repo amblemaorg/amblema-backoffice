@@ -50,6 +50,7 @@
                         <app-input-custom 
                             [control]="form.get('companyPhone')"
                             [id]="'company-phone'"
+                            [patternMsg]="'Número telefónico inválido, ingrese sólo números'"
                             [label]="'Teléfono de la empresa'"
                             [placeholder]="'Teléfono de la empresa'"
                             [submitted]="submitted"></app-input-custom>
@@ -78,20 +79,20 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-input-custom 
+                <app-input-name 
                     [id]="'contact-name'"
                     [control]="form.get('contactFirstName')"
                     [label]="'Nombre de la persona de contacto'"
                     [placeholder]="'Nombre de la persona de contacto'"
-                    [submitted]="submitted"></app-input-custom>
+                    [submitted]="submitted"></app-input-name>
             </div>
             <div class="col-12 col-lg-6">
-                <app-input-custom 
+                <app-input-last-name 
                     [id]="'contact-last-name'"
                     [control]="form.get('contactLastName')"
                     [label]="'Apellido de la persona de contacto'"
                     [placeholder]="'Apellido de la persona de contacto'"
-                    [submitted]="submitted"></app-input-custom>
+                    [submitted]="submitted"></app-input-last-name>
             </div>
 
             <div class="col-12 col-lg-6">

@@ -24,8 +24,6 @@ export class CoordinatorUserService {
       );
   }
 
-  /** Less update method */
-
   setCoordinatorUser(data: CoordinatorUser): Observable<any> {
     return this.httpClient.post<CoordinatorUser>(`${environment.api}${this.COORDINATOR_USER}`, data, {
       reportProgress: true,

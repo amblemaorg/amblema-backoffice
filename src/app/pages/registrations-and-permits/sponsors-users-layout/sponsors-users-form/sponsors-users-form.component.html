@@ -47,13 +47,12 @@
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-custom 
+                        <app-input-phone 
                             [control]="form.get('companyPhone')"
                             [id]="'company-phone'"
-                            [patternMsg]="'Número telefónico inválido, ingrese sólo números'"
                             [label]="'Teléfono de la empresa'"
                             [placeholder]="'Teléfono de la empresa'"
-                            [submitted]="submitted"></app-input-custom>
+                            [submitted]="submitted"></app-input-phone>
                     </div>                    
                     <div class="col-12 col-lg-6">
                         <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
@@ -96,12 +95,12 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <app-input-custom 
+                <app-input-phone 
                     [id]="'personal-phone'"
                     [control]="form.get('contactPhone')"
                     [label]="'Teléfono de la persona de contacto'"
                     [placeholder]="'Teléfono de la persona de contacto'"
-                    [submitted]="submitted"></app-input-custom>
+                    [submitted]="submitted"></app-input-phone>
             </div>
         </div> 
 

@@ -1,15 +1,23 @@
 <div class="form-group">
-    <label for="role" class="label">Rol</label>
+    <label for="role" class="label">Tipo de empresa</label>
     <select
         name="role"
         id="role"
+        (change)="onSelectTypeCompany()"
         class="form-control form-group"
-        [formControl]="control"
-        (change)="onChange($event.target.value)">
-        <option disabled selected [value]="null">- Seleccione un rol -</option>
-        <option *ngFor="let item of role$ | async" [value]="item.id">{{ item.name }}</option>
+        [formControl]="typeCompany">
+        <option disabled selected [value]="null">- Seleccione un tipo de empresa -</option>
+        <option *ngFor="let item of option" [value]="item.value">{{ item.label }}</option>
+        <div *ngIf="typeCompany.invalid" class="alert alert-primary">
+            <strong> {{errorMessage}} </strong>
+          </div>
     </select>
-    
-    <!-- <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation> -->
 
+    <app-input-custom 
+        *ngIf="typeCompany.value == option[3].value"
+        [label]="'Otra empresa'"
+        [placeholder]="'Otra empresa'"
+        [submitted]="submitted"
+        [control]="otherCompany"></app-input-custom>
+    <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation>
 </div>

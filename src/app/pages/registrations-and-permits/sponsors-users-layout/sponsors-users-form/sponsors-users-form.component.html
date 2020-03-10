@@ -46,28 +46,24 @@
                 </div>
 
                 <div class="row">
-
-                    <div class="col-12 col-lg-6">
-                        <app-input-custom 
-                            [submitted]="submitted"
-                            [id]="'type-company'"
-                            [placeholder]="'Tipo de empresa'"
-                            [label]="'Tipo de empresa'"></app-input-custom>
-                    </div>
-                
                     <div class="col-12 col-lg-6">
                         <app-input-custom 
                             [id]="'company-phone'"
                             [label]="'Teléfono de la empresa'"
                             [placeholder]="'Teléfono de la empresa'"
                             [submitted]="submitted"></app-input-custom>
-                    </div>
-                    
+                    </div>                    
                     <div class="col-12 col-lg-6">
                         <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
                         <app-input-password [control]="form.get('password')" [submitted]="submitted">
                         </app-input-password>
                     </div>
+                    <div class="col-12 col-lg-6">
+                        <app-type-company [submitted]="submitted"></app-type-company>
+                    </div> 
                 </div>
             </div>
         </div><!-- / End personal data -->

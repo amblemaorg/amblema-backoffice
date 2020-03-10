@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 import { AddressSponsorComponent } from './address-sponsor/address-sponsor.component';
 import { TypeCompanyComponent } from './type-company/type-company.component';
+import { ReactiveValidationModule } from '../../components/form-components/reactive-validation/reactive-validation.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { TypeCompanyComponent } from './type-company/type-company.component';
     ReactiveInputModule,
     ReactiveSelectModule,
     ReactiveInputFileModule,
+    ReactiveValidationModule,
     FormDocumentModule,
     FormRegionalAddressModule,
     ModalModule,

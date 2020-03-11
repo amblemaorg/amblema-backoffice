@@ -61,7 +61,7 @@
             </div>
         </div><!-- / End data address -->
 
-        <!-- Data contact -->
+        <!-- Data principal -->
         <div class="row mt-3">
             <div class="col-12">
                 <p class="text-info font-weight-bold mb-0">Datos del Director</p>
@@ -71,12 +71,19 @@
                 <div class="row">
 
                     <div class="col-12 col-lg-6">
-                        <app-input-name [label]="'Nombre del Director'" [placeholder]="'Nombre del Director'"
-                             [submitted]="submitted" [id]="'principal-fistname'">
+                        <app-input-name 
+                            [control]="form.get('principalFirstName')"
+                            [label]="'Nombre del Director'" 
+                            [placeholder]="'Nombre del Director'"
+                            [submitted]="submitted" 
+                            [id]="'principal-fistname'">
                         </app-input-name>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-last-name [id]="'principal-lastname'" [label]="'Apellido del Director'"
+                        <app-input-last-name 
+                            [control]="form.get('principalLastName')"
+                            [id]="'principal-lastname'" 
+                            [label]="'Apellido del Director'"
                             [placeholder]="'Apellido del Director'"
                             [submitted]="submitted">
                         </app-input-last-name>
@@ -85,6 +92,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <app-input-email 
+                            [control]="form.get('principalEmail')"
                             [label]="'Correo del Director'" 
                             [placeholder]="'Correo del Director'"
                             [submitted]="submitted" 
@@ -92,13 +100,17 @@
                         </app-input-email>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-input-phone [placeholder]="'Teléfono del Director'" [label]="'Teléfono del Director'"
-                            [submitted]="submitted" [id]="'principal-phone'">
+                        <app-input-phone 
+                            [control]="form.get('principalPhone')"
+                            [placeholder]="'Teléfono del Director'" 
+                            [label]="'Teléfono del Director'"
+                            [submitted]="submitted" 
+                            [id]="'principal-phone'">
                         </app-input-phone>
                     </div>
                 </div>
             </div>
-        </div><!-- / End data contact -->
+        </div><!-- / End data principal -->
 
         <div class="row">
             <div class="col-12">
@@ -124,25 +136,31 @@
                         <nb-accordion-item-body>
                             <div class="row">
                                 <div class="col-12 col-lg-6">
-                                    <app-input-name 
+                                    <app-input-custom 
+                                        [patternMsg]="'Nombre inválido. Debes agregar solo letras en este campo'"
+                                        [control]="form.get('subPrincipalFirstName')"
                                         [id]="'sub-principal-firstname'"
                                         [placeholder]="'Nombre del subdirector'"
                                         [label]="'Nombre del subdirector'"
-                                        [submitted]="submitted"></app-input-name>
+                                        [submitted]="submitted"></app-input-custom>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <app-input-last-name 
+                                    <app-input-custom 
+                                        [patternMsg]="'Apellido inválido. Debes agregar solo letras en este campo'"
                                         [id]="'sub-principal-lastname'"
+                                        [control]="form.get('subPrincipalLastName')"
                                         [placeholder]="'Apellido del subdirector'"
                                         [label]="'Apellido del subdirector'"
-                                        [submitted]="submitted"></app-input-last-name>
+                                        [submitted]="submitted"></app-input-custom>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <app-input-phone 
+                                    <app-input-custom 
+                                        [control]="form.get('subPrincipalPhone')"
+                                        [patternMsg]="'Número telefónico inválido, ingrese sólo números'"
                                         [placeholder]="'Número de teléfono del subdirector'" 
                                         [label]="'Número de teléfono del subdirector'"
                                         [submitted]="submitted" 
-                                        [id]="'sub-principal-phone'"></app-input-phone>
+                                        [id]="'sub-principal-phone'"></app-input-custom>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <app-input-email 

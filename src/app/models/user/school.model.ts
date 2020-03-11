@@ -15,20 +15,20 @@ export interface SchoolUser extends User {
     principalPhone: string;
 
     // No required ---
-    image: string;
-    schoolType: string;
-    subPrincipalFirstName: string;
-    subPrincipalLastName: string;
-    subPrincipalEmail: string;
-    subPrincipalPhone: string;
+    image?: string;
+    schoolType?: string;
+    subPrincipalFirstName?: string;
+    subPrincipalLastName?: string;
+    subPrincipalEmail?: string;
+    subPrincipalPhone?: string;
 
-    nTeachers: string;
-    nAdministrativeStaff: string;
-    nLaborStaff: string;
-    nStudents: string;
-    nGrades: string;
-    nSections: string;
-    schoolShift: string;
+    nTeachers?: string;
+    nAdministrativeStaff?: string;
+    nLaborStaff?: string;
+    nStudents?: string;
+    nGrades?: string;
+    nSections?: string;
+    schoolShift?: string;
     // ----------------
 
     status: string;

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminUsersLayoutRoutingModule } from './admin-users-layout-routing.module';
 import { AdminUsersLayoutComponent } from './admin-users-layout.component';
-import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
+import { NbCardModule, NbSpinnerModule, NbAlertModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AdminUserTableComponent } from './admin-user-table/admin-user-table.component';
 import { AdminUserFormComponent } from './admin-user-form/admin-user-form.component';
@@ -30,6 +30,7 @@ import { AdminUserViewComponent } from './admin-user-view/admin-user-view.compon
     Ng2SmartTableModule,
     AdminUsersLayoutRoutingModule,
     NbSpinnerModule,
+    NbAlertModule,
 
     // Custom module
     ReactiveInputModule,

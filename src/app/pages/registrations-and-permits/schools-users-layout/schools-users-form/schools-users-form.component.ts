@@ -6,6 +6,8 @@ import {
   NORMAL_TEXT_PATTERN,
   NUMBER_PATTERN,
   EMAIL_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { SchoolUserService } from 'src/app/services/user/school-user.service';
 
 @Component({
   selector: 'app-schools-users-form',
@@ -29,6 +31,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private schoolUserService: SchoolUserService, 
     private validationService: ValidationService) {
     super('una escuela');
   }
@@ -76,6 +79,16 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
 
       // Mode
       if ( this.MODE === this.ACTION.CREATE ) {
+
+        const data : any = this.form.value;
+        data.userType = USER_TYPE.SCHOOL.CODE.toString();
+
+        console.log( data );
+
+        this.schoolUserService.setSchoolUser( data ).subscribe( response => {
+          console.log(response);
+        }, (err: any) => { console.log( err )  });
+
 
       } else {
 

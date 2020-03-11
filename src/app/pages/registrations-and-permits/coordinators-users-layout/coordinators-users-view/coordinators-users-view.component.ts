@@ -20,7 +20,7 @@ export class CoordinatorsUsersViewComponent implements OnInit {
     this.data$.subscribe( response => {
       this.data = response; 
 
-      console.log( this.data );
+      //console.log( this.data );
       this.data = Object.assign( {}, this.data );
       this.data.gender = this.data.gender === '2' ? 'Masculino' : 'Femenino';
 

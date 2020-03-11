@@ -123,7 +123,7 @@ export class ViewLearningComponent implements OnInit, OnChanges {
     type: 'string',
   },
   correctOption: {
-    title: 'Respuesta',
+    title: 'Correcta',
     type: 'string',
     valuePrepareFunction: (value) => {
       if (value === this.anwers[0].value) {

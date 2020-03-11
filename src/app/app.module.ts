@@ -70,7 +70,7 @@ registerLocaleData(localeVe, 'es-VE');
       },
       developmentMode: !environment.production
     }),
-    NgxsStoragePluginModule.forRoot({}),
+    //NgxsStoragePluginModule.forRoot({}),
     NbToastrModule.forRoot(),
   ],
   providers: [

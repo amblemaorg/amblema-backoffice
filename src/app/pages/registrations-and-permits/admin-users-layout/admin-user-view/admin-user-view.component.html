@@ -1,5 +1,62 @@
 <div class="row">
-    <div class="col-6 text-right px-2">
+    <div class="col-12 col-lg-6">
+        <p class="font-weight-bold text-info mb-0">Datos personales</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ data.firstName }}</span></p>
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ data.lastName }}</span></p>
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.phone }}</span></p>
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ data.email }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Documento de
+                        identidad:</span><span>{{ data.cardType }}-{{ data.cardId }}</span></p>
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Cargo:</span><span>{{ data.function }}</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <p class="font-weight-bold text-info mb-0">Datos de usuario</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Tipo de usuario:</span>
+                    <span>Administrador</span> </p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Rol de usuario:</span>
+                    <span>{{ data.role.name }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Fecha de creación:</span>
+                    <span>{{ data.createdAt | date:'dd/MM/yyyy'}}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Última actualización:</span>
+                    <span>{{ data.updatedAt | date:'dd/MM/yyyy'}}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estatus:</span>
+                    <nb-alert [status]="data.status === 'Activo' ? 'success' : 'danger'" class=" alert-success px-2 py-0">{{ data.status }}</nb-alert> </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                    <span>{{ data.addressState.name }}</span> </p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Municipio:</span>
+                    <span>{{ data.addressMunicipality.name }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección:</span>
+                    <span>{{ data.address }}</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-12 col-lg-6">
         <p><span class="font-weight-bold">Nombre:</span></p>
         <p><span class="font-weight-bold">Apellido:</span></p>
         <p><span class="font-weight-bold">Teléfono:</span></p>
@@ -38,7 +95,6 @@
     <div class="col-12 text-center">
         <p class="font-weight-bold"><span>Estatus: </span><span class="text-primary">{{ data.status }}</span></p>
     </div>
-    <!-- 
     <div class="col-6">
         <p><span class="font-weight-bold">Nombre:</span> {{ data.firstName }}</p>
         <p><span class="font-weight-bold">Apellido:</span> {{ data.lastName }}</p>
@@ -51,5 +107,5 @@
         <p><span class="font-weight-bold">Municipio:</span> {{ data.addressMunicipality.name }}</p>
         <p><span class="font-weight-bold">Dirección:</span> {{ data.address }}</p>
         <p><span class="font-weight-bold">Correo:</span> {{ data.email }}</p>
-    </div> -->
-</div>
+    </div>
+</div> -->

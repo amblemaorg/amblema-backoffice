@@ -130,7 +130,7 @@ export class DeleteQuizze {
         oldLearning: {
             id: '',
             title: '',
-            name: '', 
+            name: '',
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
@@ -321,7 +321,7 @@ export class LearningState implements NgxsOnInit {
 
     @Action(UpdateLearningOne)
     updateLearningOne(ctx: StateContext<LearningStateModel>, action: UpdateLearningOne) {
-        
+
         ctx.patchState({
             learning: action.payload
         });

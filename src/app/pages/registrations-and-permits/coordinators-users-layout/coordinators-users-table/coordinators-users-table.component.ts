@@ -67,6 +67,8 @@ export class CoordinatorsUsersTableComponent extends BaseTable implements OnInit
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
+        this.store.dispatch( new SelectedCoordinatorUser( event.data ) );
+        $('#coordinators-users-view').modal('show');
         break;
       case this.ACTION.EDIT:
         // Change mode purpose

@@ -16,13 +16,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveDatepickerModule } from '../../components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 import { AddressCoordinatorComponent } from './address-coordinator/address-coordinator.component';
+import { CoordinatorsUsersViewComponent } from './coordinators-users-view/coordinators-users-view.component';
 
 @NgModule({
   declarations: [
     CoordinatorsUsersLayoutsComponent,
     CoordinatorsUsersTableComponent,
     CoordinatorsUsersFormComponent,
-    AddressCoordinatorComponent],
+    AddressCoordinatorComponent,
+    CoordinatorsUsersViewComponent],
   imports: [
     CommonModule,
     CoordinatorsUsersLayoutsRoutingModule,
@@ -34,6 +36,7 @@ import { AddressCoordinatorComponent } from './address-coordinator/address-coord
     NbRadioModule,
 
     // Custom module
+    ModalModule,
     ReactiveDatepickerModule,
     ReactiveFormsModule,
     ReactiveInputFileModule,

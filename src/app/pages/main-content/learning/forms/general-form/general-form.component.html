@@ -1,6 +1,11 @@
 <form [formGroup]="form">
     <div class="row form-group">
         <div class="col-12">
+            <app-input-custom [control]="form.get('name')" [id]="'name-module'" [label]="'AmbLeTema'"
+                [placeholder]="'AmbLeTema'" [submitted]="submitted">
+            </app-input-custom>
+        </div>
+        <div class="col-12">
             <app-input-custom [control]="form.get('title')" [id]="'title-module'" [label]="'Titulo del módulo'"
                 [placeholder]="'Titulo del módulo'" [submitted]="submitted">
             </app-input-custom>

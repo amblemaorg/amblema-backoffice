@@ -12,6 +12,7 @@ export interface Quizze {
 
 export interface Learning {
     id?: string;
+    name: string;
     title: string;
     description: string;
     secondaryTitle: string;

@@ -130,6 +130,7 @@ export class DeleteQuizze {
         oldLearning: {
             id: '',
             title: '',
+            name: '', 
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
@@ -141,6 +142,7 @@ export class DeleteQuizze {
         },
         learning: {
             id: '',
+            name: '',
             title: '',
             description: '',
             secondaryTitle: '',
@@ -219,6 +221,7 @@ export class LearningState implements NgxsOnInit {
             oldLearning: {
                 id: '',
                 title: '',
+                name: '',
                 description: '',
                 secondaryTitle: '',
                 secondaryDescription: '',
@@ -231,6 +234,7 @@ export class LearningState implements NgxsOnInit {
             learning: {
                 id: '',
                 title: '',
+                name: '',
                 description: '',
                 secondaryTitle: '',
                 secondaryDescription: '',
@@ -272,6 +276,7 @@ export class LearningState implements NgxsOnInit {
                 learning: {
                     id: '',
                     title: '',
+                    name: '',
                     description: '',
                     secondaryTitle: '',
                     secondaryDescription: '',
@@ -305,6 +310,7 @@ export class LearningState implements NgxsOnInit {
         ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
+                name: action.payload.name,
                 title: action.payload.title,
                 description: action.payload.description,
                 duration: action.payload.duration,
@@ -315,6 +321,7 @@ export class LearningState implements NgxsOnInit {
 
     @Action(UpdateLearningOne)
     updateLearningOne(ctx: StateContext<LearningStateModel>, action: UpdateLearningOne) {
+        
         ctx.patchState({
             learning: action.payload
         });

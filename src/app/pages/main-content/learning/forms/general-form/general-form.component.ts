@@ -37,7 +37,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   ngOnInit(): void {
 
     // Add new controls
-    this.form.addControl('duration', new FormControl(' ', [Validators.required]));
+    this.form.addControl('duration', new FormControl('', [Validators.required]));
     this.form.addControl('objectives', new FormControl());
 
     // Fill data form, register in stage

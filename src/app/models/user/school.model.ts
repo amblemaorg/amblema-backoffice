@@ -22,12 +22,12 @@ export interface SchoolUser extends User {
     subPrincipalEmail?: string;
     subPrincipalPhone?: string;
 
-    nTeachers?: string;
-    nAdministrativeStaff?: string;
-    nLaborStaff?: string;
-    nStudents?: string;
-    nGrades?: string;
-    nSections?: string;
+    nTeachers?: number;
+    nAdministrativeStaff?: number;
+    nLaborStaff?: number;
+    nStudents?: number;
+    nGrades?: number;
+    nSections?: number;
     schoolShift?: string;
     // ----------------
 

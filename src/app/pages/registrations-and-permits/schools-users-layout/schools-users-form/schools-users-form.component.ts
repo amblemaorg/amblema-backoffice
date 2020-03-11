@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { BaseForm } from '../../shared/base-form';
-import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { NORMAL_TEXT_PATTERN, NUMBER_PATTERN, EMAIL_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 
 @Component({
   selector: 'app-schools-users-form',
@@ -48,16 +48,16 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
     // Data sub principal
     this.form.addControl('subPrincipalFirstName', new FormControl('', [Validators.pattern(NORMAL_TEXT_PATTERN)]));
     this.form.addControl('subPrincipalLastName', new FormControl('', [Validators.pattern(NORMAL_TEXT_PATTERN)]));
-    this.form.addControl('subPrincipalEmail', new FormControl()); 
+    this.form.addControl('subPrincipalEmail', new FormControl('', [Validators.pattern(EMAIL_PATTERN)])); 
     this.form.addControl('subPrincipalPhone', new FormControl('', [Validators.pattern(NUMBER_PATTERN)])); 
 
     // Data extra school
-    this.form.addControl('nTeachers', new FormControl());
-    this.form.addControl('nAdministrativeStaff', new FormControl());
-    this.form.addControl('nLaborStaff', new FormControl()); 
-    this.form.addControl('nStudents', new FormControl()); 
-    this.form.addControl('nGrades', new FormControl());
-    this.form.addControl('nSections', new FormControl());
+    this.form.addControl('nTeachers', new FormControl('', [Validators.pattern(NUMBER_PATTERN)]));
+    this.form.addControl('nAdministrativeStaff', new FormControl('', [Validators.pattern(NUMBER_PATTERN)]));
+    this.form.addControl('nLaborStaff', new FormControl('', [Validators.pattern(NUMBER_PATTERN)])); 
+    this.form.addControl('nStudents', new FormControl('', [Validators.pattern(NUMBER_PATTERN)])); 
+    this.form.addControl('nGrades', new FormControl('', [Validators.pattern(NUMBER_PATTERN)]));
+    this.form.addControl('nSections', new FormControl('', [Validators.pattern(NUMBER_PATTERN)]));
     this.form.addControl('schoolShift', new FormControl());
     this.form.addControl('schoolType', new FormControl()); 
   }
@@ -65,6 +65,8 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
   onSubmit() {
 
     this.submitted = true;
+
+    console.log( this.form.value )
 
     // Working on your validated form data
     if (this.form.valid) {

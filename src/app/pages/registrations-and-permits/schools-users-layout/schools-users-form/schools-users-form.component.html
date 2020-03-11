@@ -163,11 +163,13 @@
                                         [id]="'sub-principal-phone'"></app-input-custom>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <app-input-email 
+                                    <app-input-custom 
+                                        [control]="form.get('subPrincipalEmail')" 
+                                        [patternMsg]="'El correo electrónico no corresponde a un formato correcto'"
                                         [id]="'sub-principal-email'"
                                         [label]="'Correo del subdirector'"
                                         [placeholder]="'Correo del subdirector'" 
-                                        [submitted]="submitted"></app-input-email>
+                                        [submitted]="submitted"></app-input-custom>
                                 </div>
 
                                 <div class="col-12">
@@ -175,12 +177,18 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <app-input-custom 
+                                        [submitted]="submitted"
+                                        [control]="form.get('nTeachers')"
+                                        [patternMsg]="'Ingrese sólo números'"
                                         [id]="'n-teachers'"
                                         [placeholder]="'Cantidad de docentes'"
                                         [label]="'Cantidad de docentes'"></app-input-custom>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <app-input-custom 
+                                        [submitted]="submitted"
+                                        [control]="form.get('nAdministrativeStaff')"
+                                        [patternMsg]="'Ingrese sólo números'"
                                         [id]="'n-administractive-staff'"
                                         [placeholder]="'Cantidad de personal administrativo'"
                                         [label]="'Cantidad de personal administrativo'"></app-input-custom>
@@ -188,6 +196,9 @@
 
                                 <div class="col-12 col-lg-6">
                                     <app-input-custom 
+                                        [submitted]="submitted"
+                                        [control]="form.get('nLaborStaff')"
+                                        [patternMsg]="'Ingrese sólo números'"                           
                                         [id]="'n-labor-staff'"
                                         [placeholder]="'Cantidad del personal obrero'"
                                         [label]="'Cantidad del personal obrero'"></app-input-custom>
@@ -195,6 +206,9 @@
 
                                 <div class="col-12 col-lg-6">
                                     <app-input-custom 
+                                        [submitted]="submitted"
+                                        [control]="form.get('nStudents')"
+                                        [patternMsg]="'Ingrese sólo números'"  
                                         [id]="'n-students-staff'"
                                         [placeholder]="'Cantidad de estudiantes'"
                                         [label]="'Cantidad de estudiantes'"></app-input-custom>
@@ -202,6 +216,9 @@
 
                                 <div class="col-12 col-lg-6">
                                     <app-input-custom 
+                                        [submitted]="submitted"
+                                        [control]="form.get('nGrades')"
+                                        [patternMsg]="'Ingrese sólo números'"
                                         [id]="'n-grades'"
                                         [placeholder]="'Cantidad de grados'"
                                         [label]="'Cantidad de grados'"></app-input-custom>
@@ -209,6 +226,9 @@
 
                                 <div class="col-12 col-lg-6">
                                     <app-input-custom 
+                                        [control]="form.get('nSections')"
+                                        [submitted]="submitted"
+                                        [patternMsg]="'Ingrese sólo números'"
                                         [id]="'n-sections'"
                                         [placeholder]="'Cantidad de secciones'"
                                         [label]="'Cantidad de secciones'"></app-input-custom>
@@ -217,6 +237,7 @@
                                 <div class="col-12 col-lg-6">
                                     <label for="sex" class="label">Turno de clases </label>
                                     <select
+                                        formControlName="schoolShift"
                                         name="classTime"
                                         id="classTiem"
                                         class="form-control form-group">
@@ -228,6 +249,7 @@
                                 <div class="col-12 col-lg-6">
                                     <label for="sex" class="label">Tipo de escuela </label>
                                     <select
+                                        formControlName="schoolType"
                                         name="typeSchool"
                                         id="typeSchool"
                                         class="form-control form-group">

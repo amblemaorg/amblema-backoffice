@@ -53,16 +53,16 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
         this.restar();
         this.form.patchValue( response );
-
+        this.form.controls.birthdate.setValue( new Date(this.backupOldData.birthdate.toString())); 
         this.idState = this.form.controls.addressState.value;
         this.idMunicipality = this.form.controls.addressMunicipality.value;
         this.form.controls.addressState.setValue(response.addressState.id);
         this.form.controls.role.setValue(response.role.id);
 
         this.form.get('password').setValue('');
-        this.form.get('password').setValidators([]);
+        this.form.get('password').clearValidators();
         this.form.get('password').updateValueAndValidity();
-
+        
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
       this.title = 'Registrar usuario coordinador';
@@ -119,6 +119,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
+
 
         this.coordinatorUserService.setCoordinatorUser(data).subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
@@ -180,6 +181,23 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           this.form.get('password').setValidators([]);
           this.form.get('password').updateValueAndValidity();
 
+        }, (err: any) => {
+          if ( err.error.status === 0 ) {
+            this.toastr.error('Error de datos', 'Verifica los datos del formulario');
+          }
+
+          if (err.error.cardId) {
+            if (String(err.error.cardId[0].status) === '5') {
+              this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
+            }
+          }
+
+          if (err.error.email) {
+            if (String(err.error.email[0].status) === '5') {
+              this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+            }
+          }
+          this.progress = 0;
         });
       }
     } else {

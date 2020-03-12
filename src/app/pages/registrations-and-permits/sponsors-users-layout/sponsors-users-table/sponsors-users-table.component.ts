@@ -38,7 +38,7 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         title: 'Cédula / Rif',
         type: 'string'
       },
-      phone: {
+      companyPhone: {
         title: 'Teléfono',
         type: 'string'
       },
@@ -69,6 +69,8 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
+        this.store.dispatch( new SelectedSponsorUser( event.data ) );
+        $('#sponsor-users-view').modal('show');
         break;
       case this.ACTION.EDIT:
         // Change mode purpose

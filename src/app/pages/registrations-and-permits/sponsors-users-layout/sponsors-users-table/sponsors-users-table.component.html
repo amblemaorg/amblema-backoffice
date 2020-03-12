@@ -10,6 +10,11 @@
 </div>
 
 <!-- Modal -->
-<app-sponsors-users-form 
-    [ID]="ID_FORM"
-    [MODE]="MODE"></app-sponsors-users-form>
+<app-sponsors-users-form [ID]="ID_FORM" [MODE]="MODE"></app-sponsors-users-form>
+
+<app-modal 
+    [ID]="'sponsor-users-view'" 
+    [size]="'lg'" 
+    [title]="'Datos del usuario padrino'">
+    <app-sponsors-users-view content></app-sponsors-users-view>
+</app-modal>

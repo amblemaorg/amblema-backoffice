@@ -62,7 +62,9 @@ export class SchoolsUsersTableComponent extends BaseTable implements TableAction
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
-        break;
+        this.store.dispatch( new SelectedSchoolUser( event.data ) );
+        $('#school-users-view').modal('show');
+        break; 
       case this.ACTION.EDIT:
         // Change mode purpose
         this.MODE = this.ACTION.EDIT;

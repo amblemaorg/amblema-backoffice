@@ -10,6 +10,8 @@
 </div>
 
 <!-- Modal -->
-<app-schools-users-form 
-    [ID]="ID_FORM"
-    [MODE]="MODE"></app-schools-users-form>
+<app-schools-users-form [ID]="ID_FORM" [MODE]="MODE"></app-schools-users-form>
+
+<app-modal [ID]="'school-users-view'" [size]="'lg'" [title]="'Datos del usuario escuela'">
+    <app-schools-users-view content></app-schools-users-view>
+</app-modal>

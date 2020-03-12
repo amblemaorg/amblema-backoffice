@@ -15,6 +15,7 @@ import { FormDocumentModule } from '../../components/form-components/forms/form-
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 import { SchoolAddressComponent } from './school-address/school-address.component';
+import { SchoolsUsersViewComponent } from './schools-users-view/schools-users-view.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SchoolAddressComponent } from './school-address/school-address.componen
     SchoolsUsersTableComponent,
     SchoolsUsersLayoutComponent,
     SchoolAddressComponent,
+    SchoolsUsersViewComponent,
   ],
   imports: [
     CommonModule,

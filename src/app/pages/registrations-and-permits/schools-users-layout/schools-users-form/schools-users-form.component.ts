@@ -48,7 +48,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
   ngOnInit(): void {
 
     // Data school
-    this.form.addControl('image', new FormControl(''));
+    this.form.addControl('image', new FormControl(null));
     this.form.addControl('code', new FormControl('', [Validators.required]));
     this.form.addControl('role', new FormControl()); 
 
@@ -95,6 +95,8 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
 
+        console.log(data);
+
         this.schoolUserService.setSchoolUser( data ).subscribe( (event: HttpEvent<any>) => {
         
           switch (event.type) {
@@ -110,7 +112,23 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
               break;
           }
         }, (err: any) => {  
-          console.log(err)
+          console.log(err);
+          if ( err.error.status === 0 ) {
+            this.toastr.error('Error de datos', 'Verifica los datos del formulario');
+          }
+
+          if (err.error.cardId) {
+            if (String(err.error.cardId[0].status) === '5') {
+              this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
+            }
+          }
+
+          if (err.error.email) {
+            if (String(err.error.email[0].status) === '5') {
+              this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+            }
+          }
+          this.progress = 0;
         });
       } else {
 

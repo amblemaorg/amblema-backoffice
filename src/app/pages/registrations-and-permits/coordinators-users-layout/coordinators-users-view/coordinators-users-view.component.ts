@@ -16,9 +16,9 @@ export class CoordinatorsUsersViewComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.data$.subscribe( response => {
-      this.data = response; 
+      this.data = response;
       this.data = Object.assign( {}, this.data );
 
       this.data.isReferred = this.data.isReferred ? 'Si' : 'No';

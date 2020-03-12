@@ -34,7 +34,7 @@ import { CoordinatorsUsersViewComponent } from './coordinators-users-view/coordi
     NbIconModule,
     NbAccordionModule,
     NbRadioModule,
-    NbAlertModule, 
+    NbAlertModule,
 
     // Custom module
     ModalModule,

@@ -7,10 +7,10 @@ import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
 export interface SchoolUserModel {
     schoolUser: SchoolUser;
-    schoolUsers: SchoolUser[]; 
+    schoolUsers: SchoolUser[];
 }
 
-// -- Actions -- 
+// -- Actions --
 
 export class GetSchoolUsers {
     static readonly type = '[School User] Get School Users';
@@ -42,16 +42,16 @@ export class SelectedSchoolUser {
     defaults: {
         schoolUser: {
             id: '',
-            name: '', 
+            name: '',
             email: '',
-            password: '', 
+            password: '',
             userType: '',
-            phone: '', 
+            phone: '',
             role: '',
-            addressState: '', 
+            addressState: '',
             addressMunicipality: '',
             address: '',
-            addressCity: '', 
+            addressCity: '',
             code: '',
 
             // Principal
@@ -67,7 +67,7 @@ export class SelectedSchoolUser {
             subPrincipalPhone: '',
 
             // Data school
-            image: '', 
+            image: '',
             schoolType: '',
             nTeachers: 0,
             nAdministrativeStaff: 0,
@@ -76,8 +76,8 @@ export class SelectedSchoolUser {
             nGrades: 0,
             nSections: 0,
             schoolShift: '',
-    
-            status: '', 
+
+            status: '',
         },
         schoolUsers: []
     }
@@ -95,13 +95,13 @@ export class SchoolUserState implements NgxsOnInit {
     }
 
     constructor(
-        private helper:  Utility,
-        private toastr: CustomToastrService, 
+        private helper: Utility,
+        private toastr: CustomToastrService,
         private schoolUserService: SchoolUserService,
     ) {}
 
     ngxsOnInit( ctx: StateContext<SchoolUserModel> ) {
-        ctx.dispatch( new GetSchoolUsers );
+        ctx.dispatch( new GetSchoolUsers() );
     }
 
     @Action(GetSchoolUsers)

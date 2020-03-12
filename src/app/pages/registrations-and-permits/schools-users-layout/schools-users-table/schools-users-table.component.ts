@@ -17,8 +17,8 @@ export class SchoolsUsersTableComponent extends BaseTable implements TableAction
 
   @Select( SchoolUserState.schoolUsers ) data$: Observable<SchoolUser[]>;
 
-  constructor( 
-    private store: Store, 
+  constructor(
+    private store: Store,
     private helper: Utility ) {
     super('form-schools');
     this.settings.columns = {

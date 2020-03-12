@@ -53,7 +53,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
         this.restar();
         this.form.patchValue( response );
-        this.form.controls.birthdate.setValue( new Date(this.backupOldData.birthdate.toString())); 
+        this.form.controls.birthdate.setValue( new Date(this.backupOldData.birthdate.toString()));
         this.idState = this.form.controls.addressState.value;
         this.idMunicipality = this.form.controls.addressMunicipality.value;
         this.form.controls.addressState.setValue(response.addressState.id);
@@ -62,7 +62,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         this.form.get('password').setValue('');
         this.form.get('password').clearValidators();
         this.form.get('password').updateValueAndValidity();
-        
+
       });
     } else if ( this.MODE === this.ACTION.CREATE ) {
       this.title = 'Registrar usuario coordinador';

@@ -13,7 +13,7 @@ export class SchoolUserService {
 
   private readonly USER: string = `users`;
   private readonly SCHOOL_USER: string = `users?userType=${USER_TYPE.SCHOOL.CODE}`;
-  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SCHOOL.CODE}`;  
+  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SCHOOL.CODE}`;
 
   constructor( private  httpClient: HttpClient ) { }
 

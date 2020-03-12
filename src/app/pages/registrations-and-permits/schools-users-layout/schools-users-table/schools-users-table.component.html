@@ -6,12 +6,10 @@
 
 <!-- Table -->
 <div class="table-responsive">
-    <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+    <ng2-smart-table (custom)="onAction($event)" [source]='data$ | async' [settings]="settings"></ng2-smart-table>
 </div>
 
 <!-- Modal -->
 <app-schools-users-form 
     [ID]="ID_FORM"
-    [MODE]="MODE"
-    (create)="newData($event)"
-    (edit)="updateData($event)"></app-schools-users-form>
+    [MODE]="MODE"></app-schools-users-form>

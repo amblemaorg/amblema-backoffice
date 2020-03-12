@@ -1,5 +1,9 @@
 import { SchoolUser } from 'src/app/models/user/school.model';
-import { State, NgxsOnInit } from '@ngxs/store';
+import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
+import { Utility } from 'src/app/helpers/utility';
+import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { SchoolUserService } from 'src/app/services/user/school-user.service';
+import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
 export interface SchoolUserModel {
     schoolUser: SchoolUser;
@@ -37,14 +41,119 @@ export class SelectedSchoolUser {
     name: 'schooluser',
     defaults: {
         schoolUser: {
-            
+            id: '',
+            name: '', 
+            email: '',
+            password: '', 
+            userType: '',
+            phone: '', 
+            role: '',
+            addressState: '', 
+            addressMunicipality: '',
+            address: '',
+            addressCity: '', 
+            code: '',
+
+            // Principal
+            principalFirstName: '',
+            principalLastName: '',
+            principalEmail: '',
+            principalPhone: '',
+
+            // Sub principal
+            subPrincipalFirstName: '',
+            subPrincipalLastName: '',
+            subPrincipalEmail: '',
+            subPrincipalPhone: '',
+
+            // Data school
+            image: '', 
+            schoolType: '',
+            nTeachers: 0,
+            nAdministrativeStaff: 0,
+            nLaborStaff: 0,
+            nStudents: 0,
+            nGrades: 0,
+            nSections: 0,
+            schoolShift: '',
+    
+            status: '', 
         },
         schoolUsers: []
     }
 })
 export class SchoolUserState implements NgxsOnInit {
-    
-    ngxsOnInit() {
 
+    @Selector()
+    static schoolUsers(state: SchoolUserModel): SchoolUser[] | null {
+        return state.schoolUsers;
+    }
+
+    @Selector()
+    static schoolUser(state: SchoolUserModel): SchoolUser | null {
+        return state.schoolUser;
+    }
+
+    constructor(
+        private helper:  Utility,
+        private toastr: CustomToastrService, 
+        private schoolUserService: SchoolUserService,
+    ) {}
+
+    ngxsOnInit( ctx: StateContext<SchoolUserModel> ) {
+        ctx.dispatch( new GetSchoolUsers );
+    }
+
+    @Action(GetSchoolUsers)
+    getSchoolUsers(ctx: StateContext<SchoolUserModel>) {
+        this.schoolUserService.getSchoolUsers().subscribe(response => {
+
+            if (response) {
+                ctx.setState(patch({
+                    ...ctx.getState(),
+                    schoolUsers: response
+                }));
+            }
+        });
+    }
+
+    @Action(SelectedSchoolUser)
+    selectedSchoolUser(ctx: StateContext<SchoolUserModel>, action: SelectedSchoolUser) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            schoolUser: action.payload
+        }));
+    }
+
+    @Action(SetSchoolUser)
+    setSchoolUser(ctx: StateContext<SchoolUserModel>, action: SetSchoolUser) {
+
+        action.payload = this.helper.readlyTypeDocument([action.payload])[0];
+        ctx.setState(patch({
+            ...ctx.getState(),
+            schoolUsers: append([action.payload])
+        }));
+    }
+
+    @Action( UpdateSchoolUser )
+    updateSchoolUser( ctx: StateContext<SchoolUserModel>, action: UpdateSchoolUser ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            schoolUsers: updateItem<SchoolUser>(
+                schoolUser =>
+                schoolUser.id === action.oldSchoolUser.id, action.newSchoolUser )
+        }) );
+    }
+
+    @Action(DeleteSchoolUser)
+    deleteSchoolUser(ctx: StateContext<SchoolUserModel>, action: DeleteSchoolUser) {
+
+        this.schoolUserService.deleteSchoolUser(action.payload.id).subscribe(response => {
+            ctx.setState(patch({
+                ...ctx.getState(),
+                schoolUsers: removeItem<SchoolUser>(schoolUser => schoolUser.id === action.payload.id)
+            }));
+            this.toastr.deleteRegister('Eliminación', 'Usuario escuela eliminado');
+        });
     }
 }

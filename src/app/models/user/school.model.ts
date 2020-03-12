@@ -2,12 +2,6 @@ import { User } from './user.model';
 
 export interface SchoolUser extends User {
     code: string;
-    name: string;
-    contactFirstName: string;
-    contactLastName: string;
-    contactEmail: string;
-    contactPhone: string;
-    contactFunction: string;
 
     principalFirstName: string;
     principalLastName: string;

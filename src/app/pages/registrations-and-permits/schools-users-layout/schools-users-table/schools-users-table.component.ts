@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { Select, Store } from '@ngxs/store';
+import { SchoolUserState, SelectedSchoolUser, DeleteSchoolUser } from 'src/app/store/user-store/school-user.action';
+import { Observable } from 'rxjs';
+import { SchoolUser } from 'src/app/models/user/school.model';
+import { Utility } from 'src/app/helpers/utility';
 
 // JQuery call
 declare var $: any;
@@ -8,26 +13,20 @@ declare var $: any;
   selector: 'app-schools-users-table',
   templateUrl: './schools-users-table.component.html',
 })
-export class SchoolsUsersTableComponent extends BaseTable implements TableActions, OnInit {
+export class SchoolsUsersTableComponent extends BaseTable implements TableActions {
 
-  data: any = [
-    {
-      name: 'La escuelita',
-      id: '234234DD',
-      email: 'escuela@gmail.com',
-      address: 'Lara',
-      status: 'Activa'
-    }
-  ];
+  @Select( SchoolUserState.schoolUsers ) data$: Observable<SchoolUser[]>;
 
-  constructor() {
+  constructor( 
+    private store: Store, 
+    private helper: Utility ) {
     super('form-schools');
     this.settings.columns = {
       name: {
         title: 'Nombre',
         type: 'string'
       },
-      id: {
+      code: {
         title: 'Código',
         type: 'string'
       },
@@ -41,12 +40,22 @@ export class SchoolsUsersTableComponent extends BaseTable implements TableAction
       },
       status: {
         title: 'Estatus',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (row: any) => {
+          return this.helper.readlyStatus( [{ status: row }] )[0].status;
+        },
+        filterFunction(cell?: any, search?: string): boolean {
+
+
+            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+
+            value = value.toUpperCase();
+            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
+              return true;
+            } else { return false;  }
+        }
       }
     };
-  }
-
-  ngOnInit() {
   }
 
   onAction(event: any) {
@@ -58,13 +67,12 @@ export class SchoolsUsersTableComponent extends BaseTable implements TableAction
         // Change mode purpose
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
+        this.store.dispatch( new SelectedSchoolUser( event.data ) );
         break;
       case this.ACTION.DELETE:
         // Call delete modal
+        this.store.dispatch( new DeleteSchoolUser(event.data) );
         break;
     }
   }
-  newData(data: any): void {}
-  updateData(data: any): void {}
-  deleteData(data: any): void {}
 }

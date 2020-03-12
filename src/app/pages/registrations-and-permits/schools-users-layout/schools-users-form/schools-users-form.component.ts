@@ -12,6 +12,7 @@ import { CustomToastrService } from 'src/app/services/custom-toastr.service';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store } from '@ngxs/store';
+import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
 
 @Component({
   selector: 'app-schools-users-form',
@@ -95,6 +96,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
         this.progress = 1;
 
         this.schoolUserService.setSchoolUser( data ).subscribe( (event: HttpEvent<any>) => {
+        
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
@@ -102,13 +104,13 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit {
             case HttpEventType.Response:
               this.progress = 0;
 
-              //this.store.dispatch(new SetCoordinatorUser(event.body));
+              this.store.dispatch(new SetSchoolUser(event.body));
               this.toastr.registerSuccess('Registro', 'Usuario coordinador registrado');
               this.restar();
               break;
           }
         }, (err: any) => {  
-
+          console.log(err)
         });
       } else {
 

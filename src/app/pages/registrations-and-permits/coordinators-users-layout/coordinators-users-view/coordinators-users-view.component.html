@@ -10,6 +10,8 @@
                         class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ data.lastName }}</span></p>
                 <p class="d-flex w-100"><span
                         class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.phone }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Teléfono de
+                        habitación:</span><span>{{ data.homePhone }}</span></p>
                 <p class="d-flex w-100"><span
                         class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ data.email }}</span></p>
                 <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Documento de
@@ -23,7 +25,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-12 col-lg-6">
         <p class="font-weight-bold text-info mb-0">Datos de usuario</p>
         <hr>
@@ -42,9 +44,16 @@
                     <span>{{ data.createdAt | date:'dd/MM/yyyy'}}</span></p>
                 <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Última actualización:</span>
                     <span>{{ data.updatedAt | date:'dd/MM/yyyy'}}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Puntuación:</span>
+                    <span>{{ data.nCoins }}</span> </p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Fase:</span>
+                    <nb-alert class="px-2 py-0" [status]="data.phase === 'Inicio' ? 'basic' : 
+                    data.phase === 'Interesado' ? 'basic' : data.phase === 'Instruido' ? 'info' : 
+                    data.phase === 'Aprobado' ? 'primary' : 'success'">{{ data.phase }}</nb-alert> </p>
+
                 <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estatus:</span>
                     <nb-alert [status]="data.status === 'Activo' ? 'success' : 'danger'"
-                        class=" alert-success px-2 py-0">{{ data.status }}</nb-alert>
+                        class="px-2 py-0">{{ data.status }}</nb-alert>
                 </p>
             </div>
         </div>

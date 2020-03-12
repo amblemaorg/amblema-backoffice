@@ -19,11 +19,17 @@ export class CoordinatorsUsersViewComponent implements OnInit {
   ngOnInit(): void {
     this.data$.subscribe( response => {
       this.data = response;
+
+      console.log( response )
       this.data = Object.assign( {}, this.data );
 
       this.data.isReferred = this.data.isReferred ? 'Si' : 'No';
       this.data.gender = this.data.gender === '2' ? 'Masculino' : 'Femenino';
       this.data.status = this.data.status === '1' ? 'Activo' : 'Inactivo';
+
+      this.data.phase = this.data.phase === '1' ? 'Inicio' : 
+      this.data.phase === '2' ? 'Interesado' : this.data.phase === '3' ? 'Instruido' :
+      this.data.phase === '4' ? 'Aprobado' : 'PECA';
     });
   }
 }

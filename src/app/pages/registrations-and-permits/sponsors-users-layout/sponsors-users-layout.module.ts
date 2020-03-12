@@ -37,7 +37,7 @@ import { SponsorsUsersViewComponent } from './sponsors-users-view/sponsors-users
     FormRegionalAddressModule,
     NbIconModule,
     NbSpinnerModule,
-    NbAlertModule, 
+    NbAlertModule,
 
     // Add custom module
     ReactiveInputModule,

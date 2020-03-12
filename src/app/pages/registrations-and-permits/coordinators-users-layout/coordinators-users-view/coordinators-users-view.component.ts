@@ -11,7 +11,7 @@ import { Observable, Subscription } from 'rxjs';
 export class CoordinatorsUsersViewComponent implements OnInit, OnDestroy {
 
   @Select( CoordinatorUserState.coordinatorUser ) data$: Observable<any>;
-  subscription: Subscription; 
+  subscription: Subscription;
 
   data: any;
 
@@ -26,7 +26,7 @@ export class CoordinatorsUsersViewComponent implements OnInit, OnDestroy {
       this.data.gender = this.data.gender === '2' ? 'Masculino' : 'Femenino';
       this.data.status = this.data.status === '1' ? 'Activo' : 'Inactivo';
 
-      this.data.phase = this.data.phase === '1' ? 'Inicio' : 
+      this.data.phase = this.data.phase === '1' ? 'Inicio' :
       this.data.phase === '2' ? 'Interesado' : this.data.phase === '3' ? 'Instruido' :
       this.data.phase === '4' ? 'Aprobado' : 'PECA';
     });
@@ -34,7 +34,7 @@ export class CoordinatorsUsersViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if ( this.subscription ) {
-      this.subscription.unsubscribe();      
+      this.subscription.unsubscribe();
     }
   }
 }

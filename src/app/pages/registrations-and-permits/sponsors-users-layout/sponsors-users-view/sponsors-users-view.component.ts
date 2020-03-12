@@ -10,32 +10,32 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class SponsorsUsersViewComponent implements OnInit, OnDestroy {
 
-  @Select( SponsorUserState.sponsorUser ) data$: Observable<any>; 
-  subscription: Subscription; 
+  @Select( SponsorUserState.sponsorUser ) data$: Observable<any>;
+  subscription: Subscription;
 
   data: any;
 
   constructor() { }
 
-  ngOnInit() : void {
-    
+  ngOnInit(): void {
+
     this.data$ .subscribe( response => {
-      this.data = response; 
+      this.data = response;
       this.data = Object.assign( {}, this.data );
 
-      console.log(response)
+      console.log(response);
 
       this.data.status = this.data.status === '1' ? 'Activo' : 'Inactivo';
 
-      this.data.phase = this.data.phase === '1' ? 'Inicio' : 
+      this.data.phase = this.data.phase === '1' ? 'Inicio' :
       this.data.phase === '2' ? 'Interesado' : 'PECA';
       this.data.companyType = this.data.companyType === '1' ? 'Fabrica' :
-        this.data.companyType === '2' ? 'Tienda' : this.data.companyType === 3 ? 'Negocio personal' :  'Otro'
-    }); 
+        this.data.companyType === '2' ? 'Tienda' : this.data.companyType === 3 ? 'Negocio personal' :  'Otro';
+    });
   }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe();
     }
   }

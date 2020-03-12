@@ -49,11 +49,12 @@
                 <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Fase:</span>
                     <nb-alert class="px-2 py-0" [status]="data.phase === 'Inicio' ? 'basic' : 
                     data.phase === 'Interesado' ? 'basic' : data.phase === 'Instruido' ? 'info' : 
-                    data.phase === 'Aprobado' ? 'primary' : 'success'">{{ data.phase }}</nb-alert> </p>
+                    data.phase === 'Aprobado' ? 'primary' : 'success'">{{ data.phase }}</nb-alert>
+                </p>
 
                 <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estatus:</span>
-                    <nb-alert [status]="data.status === 'Activo' ? 'success' : 'danger'"
-                        class="px-2 py-0">{{ data.status }}</nb-alert>
+                    <nb-alert [status]="data.status === 'Activo' ? 'success' : 'danger'" class="px-2 py-0">
+                        {{ data.status }}</nb-alert>
                 </p>
             </div>
         </div>
@@ -76,5 +77,30 @@
                     <span>{{ data.addressHome }}</span></p>
             </div>
         </div>
+    </div>
+
+    <div class="col-12" *ngIf="data.projects">
+        <p class="font-weight-bold text-info mb-3">Proyectos</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class=" font-weight-light border-bottom" scope="col">Código del proyecto</th>
+                    <th class=" font-weight-light border-bottom" scope="col">Escuela</th>
+                    <th class=" font-weight-light border-bottom" scope="col">Padrino</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let item of data.projects; let i = index;">
+                    <th *ngIf="i >= 0" scope="row">{{ item.code }}</th>
+                    <td *ngIf="i >= 0"><span *ngIf="item.school">{{ item.school.name }}</span> <span *ngIf="!item.school">No hay escuela asociada</span></td>
+                    <td *ngIf="i >= 0"><span *ngIf="item.sponsor">{{ item.sponsor.name }}</span><span *ngIf="!item.sponsor">No hay
+                            padrino asociado</span></td>
+                </tr>
+                <tr *ngIf="data.projects.length == 0">
+                    <td colspan="3">No hay proyectos asociados a este usuario</td>    
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

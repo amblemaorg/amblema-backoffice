@@ -19,19 +19,20 @@ export class SchoolsUsersViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
     this.data$ .subscribe( response => {
       this.data = response;
 
       this.data = Object.assign( {}, this.data );
-      this.data.schoolShift = this.data.schoolShift === '1' ? 'Mañana' : this.data.schoolShift === '2' ? 'Tarde' : this.data.schoolShift === '3' ? 'Ambos' : null; 
-      this.data.schoolType = this.data.schoolType === '1' ? 'Nacional' : 
+      this.data.schoolShift = this.data.schoolShift === '1' ? 'Mañana' : this.data.schoolShift === '2' ? 'Tarde'
+      : this.data.schoolShift === '3' ? 'Ambos' : null;
+      this.data.schoolType = this.data.schoolType === '1' ? 'Nacional' :
       this.data.schoolType === '2' ? 'Estadal' : this.data.schoolType === '3' ? 'Municipal' : null;
       this.data.status = this.data.status === '1' ? 'Activo' : 'Inactivo';
       this.data.phase = this.data.phase === '1' ? 'Inicio' :
       this.data.phase === '2' ? 'Interesado' : 'PECA';
 
-      console.log( this.data ); 
+      console.log( this.data );
 
     });
   }

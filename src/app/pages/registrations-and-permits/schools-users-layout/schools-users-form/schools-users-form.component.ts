@@ -200,6 +200,8 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
           this.form.get('password').updateValueAndValidity();
 
         }, (err: any) => {
+
+          console.log( err ); 
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }
@@ -243,6 +245,8 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
     data.nStudents = data.nStudents === '' ? null : data.nStudents;
     data.nGrades = data.nGrades === '' ? null : data.nGrades;
     data.nSections = data.nSections === '' ? null : data.nSections;
+    data.schoolShift = data.schoolShift === 'null' ? null : data.schoolShift;
+    data.schoolType = data.schoolType === 'null' ? null : data.schoolType; 
   }
 
   // -- Event selected rol --

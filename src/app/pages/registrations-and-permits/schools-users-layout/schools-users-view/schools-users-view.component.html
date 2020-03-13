@@ -1,4 +1,5 @@
 <div class="row">
+        <!-- Normal data -->
         <div class="col-12 col-lg-6">
                 <p class="font-weight-bold text-info mb-0">Datos de la escuela</p>
                 <hr>
@@ -20,25 +21,11 @@
                                 <p *ngIf="data.schoolType" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Tipo de
                                                 escuela:</span><span>{{ data.schoolType }}</span></p>
-
-                                <!-- <p class="d-flex w-100"><span
-                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.companyPhone }}</span></p>
-
-                <p class="d-flex w-100"><span
-                        class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ data.email }}</span></p>
-                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Documento de
-                        identidad:</span><span>J-{{ data.companyRIF }}</span></p>
-                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Sitio web:</span><a
-                        [href]="data.webSite">{{ data.webSite }}</a></p>
-                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Tipo de
-                        empresa:</span><span>{{ data.companyType }}</span></p>
-                <p *ngIf="data.companyOtherType != ''" class="d-flex w-100"><span
-                        class="pl-0 font-weight-bold col-5">Otro tipo de
-                        empresa:</span><span>{{ data.companyOtherType }}</span></p> -->
                         </div>
                 </div>
         </div>
 
+        <!-- User data -->
         <div class="col-12 col-lg-6">
                 <p class="font-weight-bold text-info mb-0">Datos de usuario</p>
                 <hr>
@@ -71,6 +58,7 @@
                 </div>
         </div>
 
+        <!-- Address -->
         <div class="col-12 col-lg-6">
                 <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
                 <hr>
@@ -88,6 +76,7 @@
                 </div>
         </div>
 
+        <!-- Principal data -->
         <div class="col-12 col-lg-6">
                 <p class="font-weight-bold text-info mb-0">Datos del director</p>
                 <hr>
@@ -109,6 +98,7 @@
                 </div>
         </div>
 
+        <!-- Sub Principal Data -->
         <div class="col-12 col-lg-6"
                 *ngIf="data.subPrincipalFirstName || data.subPrincipalLastName || data.subPrincipalEmail || data.subPrincipalPhone">
                 <p class="font-weight-bold text-info mb-0">Datos del subdirector</p>
@@ -131,8 +121,9 @@
                 </div>
         </div>
 
+        <!-- Additional data -->
         <div class="col-12 col-lg-6"
-                *ngIf="data.nTeachers || data.nAdministrativeStaff || data.nLaborStaff || data.nStudents || data.nGrades || data.nSections || schoolShift">
+                *ngIf="data.schoolShift || data.nTeachers || data.nAdministrativeStaff || data.nLaborStaff || data.nStudents || data.nGrades || data.nSections || schoolShift">
                 <p class="font-weight-bold text-info mb-0">Datos adicionales</p>
                 <hr>
                 <div class="row">
@@ -161,10 +152,48 @@
                                                 class="pl-0 font-weight-bold col-5">Cantidad de
                                                 secciones:</span><span>{{ data.nSections }}</span>
                                 </p>
+                                <p *ngIf="data.schoolShift" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Turno de
+                                                clases:</span><span>{{ data.schoolShift }}</span>
+                                </p>
                         </div>
                 </div>
         </div>
 
+        <!-- Proyect data -->
+        <div class="col-12" *ngIf="data.project">
+                <p class="font-weight-bold text-info mb-3">Proyectos</p>
+                <table class="table table-bordered">
+                        <thead>
+                                <tr>
+                                        <th class=" font-weight-light border-bottom" scope="col">Código del proyecto
+                                        </th>
+                                        <th class=" font-weight-light border-bottom" scope="col">Coordinador</th>
+                                        <th class=" font-weight-light border-bottom" scope="col">Padrino</th>
+                                </tr>
+                        </thead>
+                        <tbody>
 
+                                <tr>
+                                        <th scope="row">{{ data.project.code }}</th>
+                                        <td><span *ngIf="data.project.coordinator">{{ data.coordinator.name }}</span>
+                                                <span *ngIf="!data.project.coordinator">No hay coordinador
+                                                        asociada</span></td>
+                                        <td><span *ngIf="data.project.sponsor">{{ data.sponsor.name }}</span><span
+                                                        *ngIf="!data.project.sponsor">No hay
+                                                        padrino asociado</span></td>
+                                </tr>
 
+                                <!-- <tr *ngFor="let item of data.project; let i = index;">
+                            <th *ngIf="i >= 0" scope="row">{{ item.code }}</th>
+                            <td *ngIf="i >= 0"><span *ngIf="item.coordinator">{{ item.coordinator.name }}</span> <span *ngIf="!item.coordinator">No hay coordinador asociada</span></td>
+                            <td *ngIf="i >= 0"><span *ngIf="item.sponsor">{{ item.sponsor.name }}</span><span *ngIf="!item.sponsor">No hay
+                                    padrino asociado</span></td>
+                        </tr> -->
+                                <!-- <tr *ngIf="data.project.length == 0">
+                            <td colspan="3">No hay proyectos asociados a este usuario</td>    
+                        </tr> -->
+                        </tbody>
+                </table>
+        </div>
 </div>

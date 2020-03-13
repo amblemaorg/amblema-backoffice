@@ -178,12 +178,15 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
       } else if ( this.MODE === this.ACTION.EDIT ) {
         const updateData: any = this.form.value;
 
-
         if (updateData.password === '' || updateData.password === null) {
           delete updateData.password;
         }
 
         this.progress = 1;
+
+        console.log(updateData); 
+
+        this.sanitizeNoRequiredData( updateData );
 
         this.schoolUserService.updateSchoolUser(this.backupOldData.id, updateData).subscribe((event: any) => {
 

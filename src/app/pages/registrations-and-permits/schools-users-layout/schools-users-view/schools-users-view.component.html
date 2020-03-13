@@ -1,13 +1,27 @@
 <div class="row">
-    <div class="col-12 col-lg-6">
-        <p class="font-weight-bold text-info mb-0">Datos de la escuela</p>
-        <hr>
-        <div class="row">
-            <div class="col-12">
-                <p class="d-flex w-100"><span
-                        class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ data.name }}</span></p>
+        <div class="col-12 col-lg-6">
+                <p class="font-weight-bold text-info mb-0">Datos de la escuela</p>
+                <hr>
+                <div class="row">
+                        <div class="col-12">
+                                <p class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ data.name }}</span>
+                                </p>
+                                <p class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ data.email }}</span>
+                                </p>
 
-                <!-- <p class="d-flex w-100"><span
+                                <p class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.phone }}</span>
+                                </p>
+
+                                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Código del
+                                                plantel:</span><span>{{ data.code }}</span></p>
+                                <p *ngIf="data.schoolType" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Tipo de
+                                                escuela:</span><span>{{ data.schoolType }}</span></p>
+
+                                <!-- <p class="d-flex w-100"><span
                         class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.companyPhone }}</span></p>
 
                 <p class="d-flex w-100"><span
@@ -21,7 +35,136 @@
                 <p *ngIf="data.companyOtherType != ''" class="d-flex w-100"><span
                         class="pl-0 font-weight-bold col-5">Otro tipo de
                         empresa:</span><span>{{ data.companyOtherType }}</span></p> -->
-            </div>
+                        </div>
+                </div>
         </div>
-    </div>
+
+        <div class="col-12 col-lg-6">
+                <p class="font-weight-bold text-info mb-0">Datos de usuario</p>
+                <hr>
+                <div class="row">
+                        <div class="col-12">
+
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Tipo de
+                                                usuario:</span>
+                                        <span>Escuela</span> </p>
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Rol de usuario:</span>
+                                        <span>{{ data.role.name }}</span></p>
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Fecha de
+                                                creación:</span>
+                                        <span>{{ data.createdAt | date:'dd/MM/yyyy'}}</span></p>
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Última
+                                                actualización:</span>
+                                        <span>{{ data.updatedAt | date:'dd/MM/yyyy'}}</span></p>
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Fase:</span>
+                                        <nb-alert class="px-2 py-0 mb-0" [status]="data.phase === 'Inicio' ? 'basic' : 
+                            data.phase === 'Interesado' ? 'basic' : data.phase === 'Instruido' ? 'info' : 
+                            data.phase === 'Aprobado' ? 'primary' : 'success'">{{ data.phase }}</nb-alert>
+                                </p>
+
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estatus:</span>
+                                        <nb-alert [status]="data.status === 'Activo' ? 'success' : 'danger'"
+                                                class="px-2 py-0">
+                                                {{ data.status }}</nb-alert>
+                                </p>
+                        </div>
+                </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+                <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
+                <hr>
+                <div class="row">
+                        <div class="col-12">
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                                        <span>{{ data.addressState.name }}</span> </p>
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Municipio:</span>
+                                        <span>{{ data.addressMunicipality.name }}</span></p>
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección:</span>
+                                        <span>{{ data.address }}</span></p>
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                                        <span>{{ data.addressCity }}</span></p>
+                        </div>
+                </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+                <p class="font-weight-bold text-info mb-0">Datos del director</p>
+                <hr>
+                <div class="row">
+                        <div class="col-12">
+                                <p class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ data.principalFirstName }}</span>
+                                </p>
+                                <p class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ data.principalLastName }}</span>
+                                </p>
+                                <p class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ data.principalEmail }}</span>
+                                </p>
+                                <p class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.principalPhone }}</span>
+                                </p>
+                        </div>
+                </div>
+        </div>
+
+        <div class="col-12 col-lg-6"
+                *ngIf="data.subPrincipalFirstName || data.subPrincipalLastName || data.subPrincipalEmail || data.subPrincipalPhone">
+                <p class="font-weight-bold text-info mb-0">Datos del subdirector</p>
+                <hr>
+                <div class="row">
+                        <div class="col-12">
+                                <p *ngIf="data.subPrincipalFirstName" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ data.subPrincipalFirstName }}</span>
+                                </p>
+                                <p *ngIf="data.subPrincipalLastName" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ data.subPrincipalLastName }}</span>
+                                </p>
+                                <p *ngIf="data.subPrincipalEmail" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ data.subPrincipalEmail }}</span>
+                                </p>
+                                <p *ngIf="data.subPrincipalPhone" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.subPrincipalPhone }}</span>
+                                </p>
+                        </div>
+                </div>
+        </div>
+
+        <div class="col-12 col-lg-6"
+                *ngIf="data.nTeachers || data.nAdministrativeStaff || data.nLaborStaff || data.nStudents || data.nGrades || data.nSections || schoolShift">
+                <p class="font-weight-bold text-info mb-0">Datos adicionales</p>
+                <hr>
+                <div class="row">
+                        <div class="col-12">
+                                <p *ngIf="data.nTeachers" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Cantidad de
+                                                docentes:</span><span>{{ data.nTeachers }}</span>
+                                </p>
+                                <p *ngIf="data.nAdministrativeStaff" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Cantidad de personal
+                                                administrativo:</span><span>{{ data.nAdministrativeStaff }}</span>
+                                </p>
+                                <p *ngIf="data.nLaborStaff" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Cantidad de personal
+                                                obrero:</span><span>{{ data.nLaborStaff }}</span>
+                                </p>
+                                <p *ngIf="data.nStudents" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Cantidad de
+                                                estudiantes:</span><span>{{ data.nStudents }}</span>
+                                </p>
+                                <p *ngIf="data.nGrades" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Cantidad de
+                                                grados:</span><span>{{ data.nGrades }}</span>
+                                </p>
+                                <p *ngIf="data.nSections" class="d-flex w-100"><span
+                                                class="pl-0 font-weight-bold col-5">Cantidad de
+                                                secciones:</span><span>{{ data.nSections }}</span>
+                                </p>
+                        </div>
+                </div>
+        </div>
+
+
+
 </div>

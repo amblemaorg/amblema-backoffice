@@ -131,6 +131,7 @@ export class DeleteQuizze {
             id: '',
             title: '',
             name: '',
+            priority: 0,
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
@@ -144,6 +145,7 @@ export class DeleteQuizze {
             id: '',
             name: '',
             title: '',
+            priority: 0,
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
@@ -193,7 +195,6 @@ export class LearningState implements NgxsOnInit {
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
         this.learningService.getLearnings().subscribe( response => {
-
             response.forEach(value => {
                 value.slider = this.helper.mediaNumberToString(value.slider);
             });
@@ -222,6 +223,7 @@ export class LearningState implements NgxsOnInit {
                 id: '',
                 title: '',
                 name: '',
+                priority: 0,
                 description: '',
                 secondaryTitle: '',
                 secondaryDescription: '',
@@ -235,6 +237,7 @@ export class LearningState implements NgxsOnInit {
                 id: '',
                 title: '',
                 name: '',
+                priority: 0,
                 description: '',
                 secondaryTitle: '',
                 secondaryDescription: '',
@@ -277,6 +280,7 @@ export class LearningState implements NgxsOnInit {
                     id: '',
                     title: '',
                     name: '',
+                    priority: 0,
                     description: '',
                     secondaryTitle: '',
                     secondaryDescription: '',

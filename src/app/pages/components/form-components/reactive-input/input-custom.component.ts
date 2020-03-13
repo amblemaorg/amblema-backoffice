@@ -26,5 +26,6 @@ import { AbstractReactiveInput } from './abstract-reactive-input';
 
 export class InputCustomComponent  extends AbstractReactiveInput {
 
+
     constructor( private cd: ChangeDetectorRef ) {super(); }
 }

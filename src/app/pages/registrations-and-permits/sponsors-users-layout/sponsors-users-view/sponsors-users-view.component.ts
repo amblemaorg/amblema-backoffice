@@ -22,9 +22,7 @@ export class SponsorsUsersViewComponent implements OnInit, OnDestroy {
     this.data$ .subscribe( response => {
       this.data = response;
       this.data = Object.assign( {}, this.data );
-
-      console.log(response);
-
+      
       this.data.status = this.data.status === '1' ? 'Activo' : 'Inactivo';
 
       this.data.phase = this.data.phase === '1' ? 'Inicio' :

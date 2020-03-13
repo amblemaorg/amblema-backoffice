@@ -39,6 +39,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
     // Add new controls
     this.form.addControl('duration', new FormControl('', [Validators.required]));
     this.form.addControl('objectives', new FormControl());
+    this.form.addControl('priority', new FormControl(null, [Validators.required])); 
 
     // Fill data form, register in stage
     this.subscription = this.data$.subscribe(response => {
@@ -62,6 +63,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
     // Fill data form to update the data
     this.subscription = this.data$.subscribe(response => {
+      console.log(response);
       if (this.MODE === ACTION.CREATE) {
         if (response !== null) {
           this.form.patchValue(response);

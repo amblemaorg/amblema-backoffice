@@ -15,6 +15,7 @@ export interface Learning {
     name: string;
     title: string;
     description: string;
+    priority: number;
     secondaryTitle: string;
     secondaryDescription: string;
     objectives: string[];

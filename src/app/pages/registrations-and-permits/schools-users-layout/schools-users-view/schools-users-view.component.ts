@@ -31,9 +31,6 @@ export class SchoolsUsersViewComponent implements OnInit {
       this.data.status = this.data.status === '1' ? 'Activo' : 'Inactivo';
       this.data.phase = this.data.phase === '1' ? 'Inicio' :
       this.data.phase === '2' ? 'Interesado' : 'PECA';
-
-      console.log( this.data );
-
     });
   }
 

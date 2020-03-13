@@ -18,10 +18,13 @@ import { ModalStepperModule } from '../../components/shared/modal/modal-stepper/
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { FormSliderModule } from '../../components/form-components/forms/form-slider/form-slider.module';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormVideoModule } from '../../components/form-components/forms/form-video/form-video.module';
 import { ViewLearningComponent } from './view-learning/view-learning.component';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { DropdownPriorityComponent } from './dropdown-priority/dropdown-priority.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { ModalModule } from '../../components/shared/modal/modal-forms/modal.mod
     SecondaryFormComponent,
     SecondaryMediaFormComponent,
     QuizzFormComponent,
-    ViewLearningComponent
+    ViewLearningComponent,
+    DropdownPriorityComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +51,11 @@ import { ModalModule } from '../../components/shared/modal/modal-forms/modal.mod
     NbRadioModule,
     ModalModule,
     ReactiveFormsModule,
-    NbListModule,
+    NbListModule, 
+    NbInputModule, 
+    Ng2SearchPipeModule,
+    NgSelectModule,
+    FormsModule,
 
     // Add custom module
     ReactiveTextAreaModule,

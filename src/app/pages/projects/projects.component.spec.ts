@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProjectsComponent } from './projects.component';
 import { NbCardModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Utility } from 'src/app/helpers/utility';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
@@ -13,7 +14,10 @@ describe('ProjectsComponent', () => {
       declarations: [ ProjectsComponent ],
       imports: [
         Ng2SmartTableModule,
-        NbCardModule ]
+        NbCardModule ], 
+      providers: [
+        Utility
+      ]
     })
     .compileComponents();
   }));

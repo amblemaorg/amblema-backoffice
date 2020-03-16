@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ACTION } from '../../../../../helpers/text-content/text-crud';
 import { Store } from '@ngxs/store';
-import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Post } from 'src/app/models/web/blog.model';
 import { Utility } from 'src/app/helpers/utility';
 

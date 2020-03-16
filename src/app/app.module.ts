@@ -16,7 +16,7 @@ import { RolesState, RoleState } from './store/role.action';
 import { Utility } from './helpers/utility';
 import { LearningState } from './store/learning.action';
 import { WebHomeState } from './store/web-home.action';
-import { CustomToastrService } from './services/custom-toastr.service';
+import { CustomToastrService } from './services/helper/custom-toastr.service';
 import { WebAboutState } from './store/web-about.action';
 import { WebSponsorState } from './store/web-sponsor.action';
 import { WebCoordinatorState } from './store/web-coordinator.action';

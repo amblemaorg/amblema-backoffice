@@ -4,7 +4,7 @@ import { Utility } from '../helpers/utility';
 import { LearningService } from '../services/learning.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { Slider } from '../models/web/slider.model';
-import { CustomToastrService } from '../services/custom-toastr.service';
+import { CustomToastrService } from '../services/helper/custom-toastr.service';
 
 // -- State Model --
 

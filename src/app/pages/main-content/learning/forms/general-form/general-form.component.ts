@@ -6,7 +6,7 @@ import { LearningState, SetLearningOne } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
 import { Learning } from 'src/app/models/learning.model';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
-import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Router } from '@angular/router';
 
 @Component({

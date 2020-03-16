@@ -10,21 +10,21 @@ import { Utility } from 'src/app/helpers/utility';
 export class ProjectsComponent extends BaseTable implements OnInit {
 
   data: any = [
-    { 
+    {
       coordinator: 'Juan',
-      school: 'Simoncito', 
+      school: 'Simoncito',
       sponsor: 'El Padrino',
       phase: 'Inicio',
       status: 'Activo'
     }
   ]; // <-- Dummy variable
 
-  constructor( private helper: Utility ) { super(); }
+  constructor(private helper: Utility) { super(); }
 
   ngOnInit(): void {
     // Add columns
     this.settings.columns = {
-      coordinator : {
+      coordinator: {
         title: 'Coordinador',
         type: 'string'
       },
@@ -44,21 +44,19 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         title: 'Estatus',
         type: 'string',
         valuePrepareFunction: (row: any) => {
-          return this.helper.readlyStatus( [{ status: row }] )[0].status;
+          return this.helper.readlyStatus([{ status: row }])[0].status;
         },
         filterFunction(cell?: any, search?: string): boolean {
-            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
-            value = value.toUpperCase();
-            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
-              return true;
-            } else { return false;  }
+          let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+          value = value.toUpperCase();
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else { return false; }
         }
       }
     };
   }
 
   // Events table
-  onAction( event: any )  {
-
-  }
+  onAction(event: any) {}
 }

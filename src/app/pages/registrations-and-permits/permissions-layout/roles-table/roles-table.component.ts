@@ -7,7 +7,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { RolesState, UpdateRole, GetRoles } from 'src/app/store/role.action';
 import { PermissionService } from 'src/app/services/permission.service';
-import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-roles-table',

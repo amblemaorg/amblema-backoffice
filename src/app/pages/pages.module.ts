@@ -19,7 +19,7 @@ import { HeaderComponent } from './components/layouts/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './registrations-and-permits/dashboard-layout/dashboard-layout.component';
-import { CustomToastrService } from '../services/custom-toastr.service';
+import { CustomToastrService } from '../services/helper/custom-toastr.service';
 
 @NgModule({
   declarations: [

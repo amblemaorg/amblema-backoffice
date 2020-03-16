@@ -9,7 +9,7 @@ import {
 } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
-import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';

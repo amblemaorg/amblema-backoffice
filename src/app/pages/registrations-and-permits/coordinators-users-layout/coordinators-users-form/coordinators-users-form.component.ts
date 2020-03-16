@@ -11,7 +11,7 @@ import { Utility } from 'src/app/helpers/utility';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
 import { SetCoordinatorUser, CoordinatorUserState, UpdateCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
-import { CustomToastrService } from 'src/app/services/custom-toastr.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { NORMAL_TEXT_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { Observable, Subscription } from 'rxjs';
 

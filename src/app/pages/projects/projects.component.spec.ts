@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectsComponent } from './projects.component';
+import { NbCardModule } from '@nebular/theme';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
@@ -8,7 +9,8 @@ describe('ProjectsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectsComponent ]
+      declarations: [ ProjectsComponent ],
+      imports: [ NbCardModule ]
     })
     .compileComponents();
   }));
@@ -21,5 +23,14 @@ describe('ProjectsComponent', () => {
 
   it('TestCase#2930 - Should module projects', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('TestCase#2930 - Should defined columns Smart Table', () => {
+    expect( component.settings.columns ).toBeDefined();
+    expect( component.settings.columns.coordinator).toBeDefined();
+    expect( component.settings.columns.school).toBeDefined();
+    expect( component.settings.columns.sponsor ).toBeDefined();
+    expect( component.settings.columns.phase ).toBeDefined();
+    expect( component.settings.columns.status ).toBeDefined();
   });
 });

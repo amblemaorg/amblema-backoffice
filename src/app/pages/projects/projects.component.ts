@@ -7,21 +7,21 @@ import { BaseTable } from 'src/app/helpers/base-table';
   styles: []
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
-  
-  data: any // <-- Dummy variable
+
+  data: any; // <-- Dummy variable
 
   constructor() { super(); }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     // Add columns
     this.settings.columns = {
       coordinator : {
         title: 'Coordinador',
         type: 'string'
-      }, 
+      },
       school: {
-        title: 'Escuela', 
-        type: 'string', 
+        title: 'Escuela',
+        type: 'string',
       },
       sponsor: {
         title: 'Padrino',
@@ -30,12 +30,12 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       phase: {
         title: 'Fase',
         type: 'string'
-      }, 
+      },
       status: {
         title: 'Estatus',
         type: 'string'
       }
-    }
+    };
   }
 
   // Events table

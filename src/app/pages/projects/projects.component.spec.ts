@@ -11,8 +11,8 @@ describe('ProjectsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ProjectsComponent ],
-      imports: [ 
-        Ng2SmartTableModule, 
+      imports: [
+        Ng2SmartTableModule,
         NbCardModule ]
     })
     .compileComponents();

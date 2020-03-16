@@ -8,6 +8,8 @@ import { BaseTable } from 'src/app/helpers/base-table';
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
   
+  data: any // <-- Dummy variable
+
   constructor() { super(); }
 
   ngOnInit(): void { 
@@ -34,5 +36,10 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         type: 'string'
       }
     }
+  }
+
+  // Events table
+  onAction( event: any )  {
+
   }
 }

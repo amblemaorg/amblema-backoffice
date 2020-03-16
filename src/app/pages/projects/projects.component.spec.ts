@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectsComponent } from './projects.component';
 import { NbCardModule } from '@nebular/theme';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
@@ -10,7 +11,9 @@ describe('ProjectsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ProjectsComponent ],
-      imports: [ NbCardModule ]
+      imports: [ 
+        Ng2SmartTableModule, 
+        NbCardModule ]
     })
     .compileComponents();
   }));

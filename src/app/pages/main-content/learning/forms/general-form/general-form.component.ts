@@ -111,7 +111,6 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   sendStepOne() {
     const prepareData: Learning = this.form.value;
     prepareData.objectives = this.objectives;
-    
     this.store.dispatch(new SetLearningOne(prepareData));
   }
 }

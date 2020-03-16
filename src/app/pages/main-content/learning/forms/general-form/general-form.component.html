@@ -87,7 +87,7 @@
                 type="button"
                 nbButton
                 nbStepperNext
-                [attr.disabled]="form.valid && objectives.length > 0 && (form.controls.priority.value > 0) ? null : true"
+                [attr.disabled]="form.valid && objectives.length > 0 ? null : true"
                 class="next-button btn-primary btn col-12 col-lg-auto">
                 <span class="d-none d-sm-inline">Siguiente</span>
                 <nb-icon icon="arrow-forward-outline"></nb-icon>

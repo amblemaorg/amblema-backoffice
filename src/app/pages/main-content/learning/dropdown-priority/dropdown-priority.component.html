@@ -1,6 +1,7 @@
 <div class="position-relative">
     <label class="label">Prioridad del modulo</label>
     <ng-select 
+        (close)="onChangePriority($event)"
         [(ngModel)]="selected"
         (change)="itemSelected($event)"
         notFoundText="No hay posiciones"

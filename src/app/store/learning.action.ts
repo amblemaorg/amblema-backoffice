@@ -131,7 +131,7 @@ export class DeleteQuizze {
             id: '',
             title: '',
             name: '',
-            priority: 0,
+            priority: null,
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
@@ -145,7 +145,7 @@ export class DeleteQuizze {
             id: '',
             name: '',
             title: '',
-            priority: 0,
+            priority: null,
             description: '',
             secondaryTitle: '',
             secondaryDescription: '',
@@ -223,7 +223,7 @@ export class LearningState implements NgxsOnInit {
                 id: '',
                 title: '',
                 name: '',
-                priority: 0,
+                priority: null,
                 description: '',
                 secondaryTitle: '',
                 secondaryDescription: '',
@@ -237,7 +237,7 @@ export class LearningState implements NgxsOnInit {
                 id: '',
                 title: '',
                 name: '',
-                priority: 0,
+                priority: null,
                 description: '',
                 secondaryTitle: '',
                 secondaryDescription: '',
@@ -280,7 +280,7 @@ export class LearningState implements NgxsOnInit {
                     id: '',
                     title: '',
                     name: '',
-                    priority: 0,
+                    priority: null,
                     description: '',
                     secondaryTitle: '',
                     secondaryDescription: '',
@@ -292,6 +292,7 @@ export class LearningState implements NgxsOnInit {
                 }
             });
             this.toastr.registerSuccess('Registro', 'Modulo de aprendizaje registrado correctamente.');
+        }, (err: any) => {
         });
     }
 
@@ -318,6 +319,7 @@ export class LearningState implements NgxsOnInit {
                 title: action.payload.title,
                 description: action.payload.description,
                 duration: action.payload.duration,
+                priority: action.payload.priority,
                 objectives: action.payload.objectives,
             })
         }));

@@ -39,7 +39,8 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
     // Add new controls
     this.form.addControl('duration', new FormControl('', [Validators.required]));
     this.form.addControl('objectives', new FormControl());
-    this.form.addControl('priority', new FormControl(null, [Validators.required])); 
+    this.form.addControl('priority', new FormControl(null));
+
 
     // Fill data form, register in stage
     this.subscription = this.data$.subscribe(response => {
@@ -47,6 +48,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
       if (response !== null) {
         this.form.patchValue(response);
         this.form.controls.objectives.reset(); // <-- Clear form
+        this.form.controls.priority.setValue(null );
         this.objectives = response.objectives as string[]; // <-- To print the list
       }
     });
@@ -63,9 +65,10 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
     // Fill data form to update the data
     this.subscription = this.data$.subscribe(response => {
-      console.log(response);
+
       if (this.MODE === ACTION.CREATE) {
         if (response !== null) {
+
           this.form.patchValue(response);
         }
       } else {
@@ -75,6 +78,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
 
   addObjective() {
     this.objectives = Object.assign([], this.objectives);
+
     if (this.objectives.length < 5) {
       this.objectives.push(this.form.controls.objectives.value);
       this.form.controls.objectives.reset();
@@ -107,6 +111,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   sendStepOne() {
     const prepareData: Learning = this.form.value;
     prepareData.objectives = this.objectives;
+    
     this.store.dispatch(new SetLearningOne(prepareData));
   }
 }

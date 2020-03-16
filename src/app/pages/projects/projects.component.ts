@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
+import { Utility } from 'src/app/helpers/utility';
 
 @Component({
   selector: 'app-projects',
@@ -8,9 +9,17 @@ import { BaseTable } from 'src/app/helpers/base-table';
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
 
-  data: any; // <-- Dummy variable
+  data: any = [
+    { 
+      coordinator: 'Juan',
+      school: 'Simoncito', 
+      sponsor: 'El Padrino',
+      phase: 'Inicio',
+      status: 'Activo'
+    }
+  ]; // <-- Dummy variable
 
-  constructor() { super(); }
+  constructor( private helper: Utility ) { super(); }
 
   ngOnInit(): void {
     // Add columns
@@ -33,7 +42,17 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       },
       status: {
         title: 'Estatus',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (row: any) => {
+          return this.helper.readlyStatus( [{ status: row }] )[0].status;
+        },
+        filterFunction(cell?: any, search?: string): boolean {
+            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+            value = value.toUpperCase();
+            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
+              return true;
+            } else { return false;  }
+        }
       }
     };
   }

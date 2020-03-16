@@ -8,7 +8,9 @@
                 <p> <span class=" font-weight-bold ">Titulo:</span> {{ learning.title}}</p>
                 <p> <span class=" font-weight-bold ">Descripción:</span> {{ learning.description }}</p>
                 <p> <span class=" font-weight-bold ">Duracion:</span> {{ duration }}(HH:MM)</p>
-                <p> <span class=" font-weight-bold ">Posición:</span> {{ learning.priority }}</p>
+                <p *ngIf="learning.priority"> <span class=" font-weight-bold ">Posición:</span> {{ learning.priority }}</p>
+
+                <p *ngIf="!learning.priority"> <span class=" font-weight-bold ">Posición:</span> Ultima posición</p>
                 <p><span class=" font-weight-bold ">Objectivos:</span></p>
                 <ul>
                     <li *ngFor="let item of learning.objectives">{{item}}</li>

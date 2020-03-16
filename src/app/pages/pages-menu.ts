@@ -196,7 +196,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     icon: 'edit-outline',
-    title: 'Ver escuelas'
+    title: 'Ver escuelas',
+    link: '/pages/projects'
   },
 
   {

@@ -15,9 +15,32 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       school: 'Simoncito',
       sponsor: 'El Padrino',
       phase: 'Inicio',
-      status: 'Activo'
-    }
+      status: '1'
+    },
+    {
+      coordinator: 'Juan',
+      school: 'Simoncito',
+      sponsor: 'El Padrino',
+      phase: 'Inicio',
+      status: '2'
+    },
   ]; // <-- Dummy variable
+
+  /**
+   * Arrow functions
+   */
+
+  valuePrepareFunction = ( row: any ) => {
+    return this.helper.readlyStatus([{ status: row }])[0].status;
+  }
+
+  filterFunction = (cell?: any, search?: string) => {
+    let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+    value = value.toUpperCase();
+    if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else { return false; }
+  }
 
   constructor(private helper: Utility) { super(); }
 
@@ -43,20 +66,12 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       status: {
         title: 'Estatus',
         type: 'string',
-        valuePrepareFunction: (row: any) => {
-          return this.helper.readlyStatus([{ status: row }])[0].status;
-        },
-        filterFunction(cell?: any, search?: string): boolean {
-          let value: string = cell === '1' ? 'Activo' : 'Inactivo';
-          value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
-            return true;
-          } else { return false; }
-        }
+        valuePrepareFunction: this.valuePrepareFunction,
+        filterFunction: this.filterFunction,
       }
     };
   }
 
   // Events table
-  onAction(event: any) {}
+  onAction(event: any): void {}
 }

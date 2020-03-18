@@ -15,6 +15,6 @@ describe('ModalService', () => {
   });
 
   it('TestCase#2944 - Should be open close', () => {
-    
-  })
+
+  });
 });

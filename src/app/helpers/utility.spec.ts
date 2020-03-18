@@ -1,33 +1,33 @@
-import { Utility } from "./utility";
+import { Utility } from './utility';
 import { STATUS } from './text-content/status';
 
 describe('Utility class', () => {
 
-    let helper: Utility = new Utility();
-    
+    const helper: Utility = new Utility();
+
     it('General - Should be readly status', () => {
-        let dummyData: any = [
+        const dummyData: any = [
             { status: '1' }
         ];
         let value = helper.readlyStatus( dummyData )[0].status;
         expect( value ).toBe( STATUS.ACTIVE.MSG );
-        value = helper.readlyStatus([{ status : '2' }])[0].status; 
-        expect( value ).toBe( STATUS.INACTIVE.MSG ); 
-    }); 
+        value = helper.readlyStatus([{ status : '2' }])[0].status;
+        expect( value ).toBe( STATUS.INACTIVE.MSG );
+    });
 
     it('General - Should be incode status', () => {
-        let dummyData: any = [
+        const dummyData: any = [
             { status : 'Activo' }
-        ]; 
+        ];
         let value = helper.incodeStatus( dummyData )[0].status;
         expect( value ).toBe( STATUS.ACTIVE.CODE );
-        value = helper.incodeStatus([{ status: 'Inactivo' }])[0].status; 
-        expect( value ).toBe(STATUS.INACTIVE.CODE); 
+        value = helper.incodeStatus([{ status: 'Inactivo' }])[0].status;
+        expect( value ).toBe(STATUS.INACTIVE.CODE);
     });
 
     it('General - Should be encode type document', () => {
-        expect( helper.encodeTypeDocument('V') ).toBe('1'); 
-        expect( helper.encodeTypeDocument('J') ).toBe('2'); 
+        expect( helper.encodeTypeDocument('V') ).toBe('1');
+        expect( helper.encodeTypeDocument('J') ).toBe('2');
         expect( helper.encodeTypeDocument('E') ).toBe('3');
     });
 
@@ -38,12 +38,47 @@ describe('Utility class', () => {
     });
 
     it('General - Should be filter json by id', () => {
-        let data:any = [
-            { id:'1', value: 'one' },
-            { id:'2', value: 'two' }
-        ]; 
-        console.log('Imprimiendo: ' + data);
-        expect( helper.filter( data, '2' ) ).toBe( data[0] );
+        const data: any = [
+            { id: '1', value: 'one' },
+            { id: '2', value: 'two' }
+        ];
+        expect( helper.filter( data, '2' ) ).toContain(data[1]);
     });
-    
+
+    it('General - Should convert tag post', () => {
+        const data: any = [
+            { tag: '1' },
+        ];
+
+        expect( helper.convertTagsNumberToString(data)[0].tag).toBe('Ambiente');
+        expect( helper.convertTagsNumberToString([{tag: '2'}])[0].tag).toBe('Lectura');
+        expect( helper.convertTagsNumberToString([{tag: '3'}])[0].tag).toBe('Matemáticas');
+        expect( helper.convertTagsNumberToString([{tag: '4'}])[0].tag).toBe('Otra');
+
+        data.tag = 'Ambiente';
+        expect( helper.convertTagStringToNumber(data).tag ).toBe('1');
+        data.tag = 'Lectura';
+        expect( helper.convertTagStringToNumber(data).tag ).toBe('2');
+        data.tag = 'Matemáticas';
+        expect( helper.convertTagStringToNumber(data).tag ).toBe('3');
+        data.tag = 'Otra';
+        expect( helper.convertTagStringToNumber(data).tag ).toBe('4');
+    });
+
+    it('General - Should be public code post', () => {
+        expect( helper.convertStatusPostToString( [ { status: '1' } ] )[0].status ).toBe('Publicado');
+        expect( helper.convertStatusPostToString( [ { status: '2' } ] )[0].status ).toBe('No publicado');
+
+        const data: any = { status : 'Publicado' };
+        expect( helper.convertStatusPostToNumber(data).status ).toBe( '1' );
+        data.status = 'No publicado';
+        expect(helper.convertStatusPostToNumber(data).status).toBe('2');
+    });
+
+    it('General - Should be image or video', () => {
+        const data: any = [{ type: '1' }];
+        expect( helper.mediaNumberToString(data)[0].type ).toBe('Imagen');
+        data[0].type = '2';
+        expect( helper.mediaNumberToString(data)[0].type ).toBe('Video');
+    });
 });

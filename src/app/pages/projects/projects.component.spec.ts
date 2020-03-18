@@ -14,7 +14,7 @@ describe('ProjectsComponent', () => {
       declarations: [ ProjectsComponent ],
       imports: [
         Ng2SmartTableModule,
-        NbCardModule ], 
+        NbCardModule ],
       providers: [
         Utility
       ]
@@ -39,5 +39,15 @@ describe('ProjectsComponent', () => {
     expect( component.settings.columns.sponsor ).toBeDefined();
     expect( component.settings.columns.phase ).toBeDefined();
     expect( component.settings.columns.status ).toBeDefined();
+  });
+
+  it('General - Convert and filter custom, smart table', () => {
+
+    const data: any = component.valuePrepareFunction('1');
+    expect( data ).toBe('Activo');
+
+    const result: any = component.filterFunction('1', 'A');
+    expect(result).toBe(true);
+    expect(component.filterFunction( '1', 'E' )).toBeFalsy();
   });
 });

@@ -21,6 +21,7 @@ variables:
 before_script:
   - cd $PATH_PROJECT_STAGING
   
+  - docker-compose down
   # TURN ON SERVER
   - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
   -   docker-compose up -d linking_amblema_nginx

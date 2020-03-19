@@ -16,9 +16,8 @@ variables:
   CONTAINER_SERVER: "nginx-amblema"
       
   # PATH TO STAGING
-  #PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
-  PATH_PROJECT_STAGING: /home/binaural19/Proyectos/amblema---backoffice
-
+  PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
+  
 before_script:
   - cd $PATH_PROJECT_STAGING
   

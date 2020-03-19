@@ -15,17 +15,11 @@ variables:
   CONTAINER_BUILD: "build_amblema_backoffice"
   CONTAINER_SERVER: "nginx-amblema"
       
-  # PATH TO QA
-  #PATH_FOLDER_QA: /home/amblema/amblema---backoffice/qa
-  #PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema---backoffice
-  PATH_PROJECT_QA:  /home/binaural19/Proyectos/amblema---backoffice
-  
   # PATH TO STAGING
-  PATH_FOLDER_STAGING: /home/amblema/amblema---backoffice/staging
-  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/amblema---backoffice
+  PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
 
 before_script:
-  - cd $PATH_PROJECT_QA
+  - cd $PATH_PROJECT_STAGING
   
   # TURN ON SERVER
   - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
@@ -110,6 +104,8 @@ linking:
 staging:
   stage: staging
   script: 
+      - docker exec $CONTAINER_RUN  usermod -u 1018 node && chown -R node:node node_modules/
+      - docker exec $CONTAINER_RUN  usermod -u 1018 node && chown -R node:node dist/
       - docker container stop $CONTAINER_BUILD
       - docker container stop $CONTAINER_RUN 
       - docker container stop $CONTAINER_TEST

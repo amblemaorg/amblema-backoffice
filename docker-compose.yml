@@ -44,13 +44,11 @@ services:
         image: devbinaural/nginx
         ports:
             - 10502:10502
-            - 10503:10503
         volumes: 
 
             # SHARE THE BUILT PROJECTS
             - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
-            - /home/amblema/amblema---backoffice/staging/amblema---backoffice/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice-Staging/
-
+            
             # SERVER FILES CONFIGURATION
             - ./server/:/etc/nginx/
         networks: 

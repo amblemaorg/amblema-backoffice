@@ -85,9 +85,6 @@ coverage:
   artifacts:
       paths:
           - $PATH_PROJECT_STAGING/coverage/Amblema-BackOffice/
-      archive:
-        paths:
-          - ./coverage/Amblema-BackOffice/index.html
       expire_in: 7days
   tags: 
       - amblema

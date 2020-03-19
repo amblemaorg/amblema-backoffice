@@ -54,7 +54,7 @@ update-environment:
 linting:
   stage: cleanup
   script:
-      - docker exec -it $CONTAINER_RUN ng lint --fix
+      - docker exec $CONTAINER_RUN ng lint --fix
   tags:
       - amblema
   only:
@@ -65,7 +65,7 @@ linting:
 build:
   stage: build
   script:
-      - docker exec -it $CONTAINER_RUN ng build --prod --build-optimizer
+      - docker exec $CONTAINER_RUN ng build --prod --build-optimizer
   tags: 
       - amblema
   only:
@@ -76,7 +76,7 @@ build:
 run-tests:
   stage: test
   script: 
-      - docker exec -it $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --watch=false
+      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --watch=false
   tags: 
       - amblema
   only:
@@ -85,7 +85,7 @@ run-tests:
 coverage: 
   stage: test
   script: 
-      - docker exec -it $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
+      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
   artifacts:
       paths:
           - ./coverage/Amblema-BackOffice/index.html

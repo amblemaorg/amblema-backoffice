@@ -1,100 +1,122 @@
 stages:
+  - cleanup
+  - build
   - test
-  - qa
+  - code-quality
+  - performance
+  - review # <-- SCRIPT AUTO DEVOPS
+  - deploy
   - staging
+  - production # <-- CONDITIONAL
 
 variables:
+  CONTAINER_RUN: "running_amblema_backoffice"
+  CONTAINER_TEST: "test_amblema_backoffice"
+  CONTAINER_BUILD: "build_amblema_backoffice"
   CONTAINER_SERVER: "nginx-amblema"
+      
+  # PATH TO QA
+  #PATH_FOLDER_QA: /home/amblema/amblema---backoffice/qa
+  #PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema---backoffice
+  PATH_PROJECT_QA:  /home/binaural19/Proyectos/amblema---backoffice
   
-  # Path to QA
-  PATH_FOLDER_QA: /home/amblema/amblema---backoffice/qa
-  PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema---backoffice
-
-  # Path to staging
+  # PATH TO STAGING
   PATH_FOLDER_STAGING: /home/amblema/amblema---backoffice/staging
   PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/amblema---backoffice
 
-# Jobs for QA environment
+before_script:
+  - cd $PATH_PROJECT_QA
+  
+  # TURN ON SERVER
+  - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
+  -   docker-compose up -d linking_amblema_nginx
+  - fi
 
-update-qa-environment:
-  stage: qa
+  # TURN ON CONTAINER
+  - if [ ! "$(docker ps -q -f name=$CONTAINER_RUN)" ]; then
+  -   docker-compose up -d run_amblema_backoffice
+  - fi
+
+# PREPARE ENVIROMENT
+
+update-environment: 
+  stage: cleanup
   script:
-    - cd $PATH_PROJECT_QA 
-    - git config user.email "franklin@binauraldev.com"
-    - git config user.name "franklinp"
-    - git stash
-    - git pull $CI_REPOSITORY_URL qaestable
+      - git config user.email "franklin@binauraldev.com"
+      - git config user.name "franklinp"
+      - git stash
+      - git pull $CI_REPOSITORY_URL master
   tags:
-    - amblema
+      - amblema
   only:
-    - qaestable
+      - master
 
-run-tests-qa: 
-  stage: qa
-  image: devbinaural/angular:8.0.0
+linting:
+  stage: cleanup
   script:
-    - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
+      - docker exec -it $CONTAINER_RUN ng lint --fix
   tags:
-    - amblema-angular
+      - amblema
   only:
-    - qaestable
-  when: manual
+      - master
 
-deploy-qa-environment:
-  stage: qa
-  image: devbinaural/angular:8.0.0
+# BUILD
+
+build:
+  stage: build
   script:
-    - cd $PATH_PROJECT_QA 
-    - docker-compose up build_amblema_backoffice
-    - docker restart $CONTAINER_SERVER
-  tags:
-    - amblema
+      - docker exec -it $CONTAINER_RUN ng build --prod --build-optimizer
+  tags: 
+      - amblema
   only:
-    - qaestable  
+      - master
 
-turn-off-qa:
-  stage: qa
+# TEST
+
+run-tests:
+  stage: test
+  script: 
+      - docker exec -it $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --watch=false
+  tags: 
+      - amblema
+  only:
+      - master
+
+coverage: 
+  stage: test
+  script: 
+      - docker exec -it $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
+  artifacts:
+      paths:
+          - ./coverage/Amblema-BackOffice/index.html
+  tags: 
+      - amblema
+  only:
+      - master
+
+# DEPLOY
+
+linking:
+  stage: deploy
   script:
-    - cd $PATH_PROJECT_QA
-    - rm -rf dist/
-  tags:
-    - amblema
+      - docker restart $CONTAINER_SERVER
+  tags: 
+      - amblema
   only:
-    - qaestable
-  when: manual
+      - master
 
-# Jobs for Staging environment
+# STAGING
 
-update-staging-environment:
+staging:
   stage: staging
-  script:
-    - cd $PATH_PROJECT_STAGING
-    - git config user.email "franklin@binauraldev.com"
-    - git config user.name "franklinp"
-    - git pull $CI_REPOSITORY_URL staging
+  script: 
+      - docker container stop $CONTAINER_BUILD
+      - docker container stop $CONTAINER_RUN 
+      - docker container stop $CONTAINER_TEST
+      - docker container rm $CONTAINER_BUILD
+      - docker container rm $CONTAINER_RUN 
+      - docker container rm $CONTAINER_TEST
   tags:
-    - amblema
-  only:
-    - staging
-
-deploy-staging-environment:
-  stage: staging
-  script:
-    - cd $PATH_PROJECT_STAGING 
-    - docker-compose up build_amblema_backoffice
-    - docker restart $CONTAINER_SERVER
-  tags:
-    - amblema
-  only:
-    - staging
-
-turn-off-staging:
-  stage: staging
-  script:
-    - cd $PATH_PROJECT_STAGING
-    - rm -rf dist/
-  tags:
-    - amblema
-  only:
-    - staging
-  when: manual
+      - amblema
+  only: 
+      - master

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
-
 const routes: Routes = [
   {
     path: 'auth',
@@ -10,7 +9,13 @@ const routes: Routes = [
   },
   {
     path: 'pages',
-    canActivate: [AuthGuard],
+
+    /**
+     * -- NOTE: When you have all the role
+     * and the user can be logged. Remove the commentary
+     * in the guard
+     */
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
   },
   {
@@ -25,7 +30,7 @@ const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: true,
 };
 
 @NgModule({

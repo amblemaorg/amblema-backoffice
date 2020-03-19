@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-12">
+        <nb-card>
+            <nb-card-header>Padrinos</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    
+                    <!-- Image background -->
+                    <div class="col-12 form-group">
+                        <p class="font-weight-bold">Sección principal</p>
+                        <app-input-img 
+                            [id]="'background-image'"
+                            [align]="'left'" 
+                            [control]="formSponsor.get('backgroundImage')"></app-input-img>
+                    </div>
+
+                    <!-- Testimonial form -->
+                    <div class="col-12 form-group">
+                        <hr>
+                        <p class="font-weight-bold">Testimonio de los padrinos</p>
+                        <app-testimonial-form 
+                            (delete)="onDeleteTestimonial($event)"
+                            (edit)="onEditTestimonial($event)"
+                            (register)="onRegisterTestimonial($event)"
+                            [testimonials]="testimonials"></app-testimonial-form>
+                    </div>
+
+                    <!-- Steps to be a sponsor -->
+                    <div class="col-12">
+                        <hr>
+                        <p class="font-weight-bold">¿Cómo ser un padrino?</p>
+                    
+                        <app-text-area-custom 
+                            *ngFor="let item of steps.controls; let i = index;" 
+                            [control]="formSponsor.get('steps').get(''+i)"
+                            label='Paso {{i + 1}}' 
+                            placeholder='Paso {{i + 1}}' 
+                            [submitted]="submitted"
+                            id='step-{{i}}'></app-text-area-custom>
+                    </div>
+
+                    <!-- Save changes -->
+                    <div class="col-12 text-right">
+                        <hr>
+                        <div class="btn btn-primary col-12 col-lg-auto" (click)="onSave()">Guardar cambios</div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

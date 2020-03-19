@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-12">
+        <nb-card>
+            <nb-card-header>Escuelas</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    
+                    <div class="col-12 form-group">
+                        <div class="table-responsive table-responsive-xl">
+                            <ng2-smart-table 
+                                (custom)="onAction($event)" 
+                                [source]='data' 
+                                [settings]="settings">
+                            </ng2-smart-table>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-right">
+                        <hr>
+                        <div class="btn btn-primary col-12 col-lg-auto">Guardar cambios</div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

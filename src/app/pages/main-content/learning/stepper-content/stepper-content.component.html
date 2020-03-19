@@ -1,0 +1,102 @@
+<div class="col-12">
+    <nb-stepper #stepper [orientation]="orientation" disableStepNavigation>
+
+        <!-- Fist step -->
+        <nb-step [label]="labelOne">
+            <ng-template #labelOne>
+                <div class="text-center" *ngIf="titleStep">
+                    Información<br> general <br>del módulo
+                </div>
+            </ng-template>
+            <h4 *ngIf="!titleStep">Información general del módulo</h4>
+            <hr *ngIf="!titleStep">
+            <app-general-form [MODE]="MODE"></app-general-form>
+        </nb-step> <!-- / End -->
+    
+        <!-- Second step -->
+        <nb-step [label]="labelTwo">
+            <ng-template #labelTwo>
+                <div *ngIf="titleStep">
+                    Contenido multimedia principal
+                </div>
+            </ng-template>
+            <h4 *ngIf="!titleStep">Contenido multimedia principal</h4>
+            <hr *ngIf="!titleStep">
+            <app-general-media-form class="col-12"></app-general-media-form>
+        </nb-step><!-- / End -->
+    
+        <!-- Three step -->
+        <nb-step [label]="labelThree">
+            <ng-template #labelThree>
+                <div *ngIf="titleStep">
+                    Titulo secundario
+                </div>
+            </ng-template>
+            <h4 *ngIf="!titleStep">Titulo secundario</h4>
+            <hr *ngIf="!titleStep">
+            <app-secondary-form></app-secondary-form>
+        </nb-step><!-- / End -->
+    
+        <!-- Four step -->
+        <nb-step [label]="labelFour">
+            <ng-template #labelFour>
+                <div class="text-center" *ngIf="titleStep">
+                    Contenido multimedia secundario
+                </div>
+            </ng-template>
+            <h4 *ngIf="!titleStep">Contenido multimedia secundario</h4>
+            <hr *ngIf="!titleStep">
+            <app-secondary-media-form></app-secondary-media-form>
+            <div class="text-center row d-flex justify-content-center">
+                <div class="col-6 col-lg-auto">
+                    <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
+                        <nb-icon icon="arrow-back-outline"></nb-icon>
+                        <span class="d-none d-sm-inline">Atrás</span>
+                    </button>
+                </div>
+                <div class="col-6 col-lg-auto">
+                    <button class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext>
+                        <span class="d-none d-sm-inline">Siguiente</span>
+                        <nb-icon icon="arrow-forward-outline"></nb-icon>
+                    </button>
+                </div>
+            </div>
+        </nb-step><!-- / End -->
+    
+        <!-- Five step -->
+        <nb-step [label]="labelFive">
+            <ng-template #labelFive>
+                <div class="text-center" *ngIf="titleStep">Quizz</div>
+            </ng-template>
+            <h4 *ngIf="!titleStep">Quizz</h4>
+            <hr *ngIf="!titleStep">
+            <app-quizz-form (senddata)="onSaveLearning($event)"></app-quizz-form>
+        </nb-step><!-- / End -->
+    
+        <!-- Final step -->
+        <nb-step [hidden]="true">
+            <div class="step-container text-center">
+                <h3 class="mb-4">Registro guardado exitosamente</h3>
+    
+                <div class="text-center row d-flex justify-content-center">
+                    <div class="col-6 col-lg-auto">
+                        <button class="btn btn-primary col-12 col-lg-auto" (click)="stepper.reset()">
+                            <span *ngIf="MODE == ACTION.CREATE">
+                                Nuevo registro
+                            </span>
+                            <span *ngIf="MODE != ACTION.CREATE">
+                                Actualizar nuevamente   
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col-6 col-lg-auto">
+                        <button 
+                            (click)="stepper.reset(); routeback.navigate(['pages/content/learning']);"
+                            class="btn btn-outline-secondary col-12 col-lg-auto" >Finalizar</button>
+                    </div>
+                </div>
+            </div>
+        </nb-step><!-- / End -->
+    </nb-stepper>
+</div>
+

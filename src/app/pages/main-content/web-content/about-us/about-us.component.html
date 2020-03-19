@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-12">
+        <nb-card>
+            <nb-card-header>Nosotros</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    
+                    <!-- Slider -->
+                    <div class="col-12 form-group">
+                        <app-form-slider 
+                            (delete)="onDeleteSlider($event)"
+                            (edit)="onEditSlider($event)"
+                            (register)="onRegisterSlider($event)"
+                            [sliders]="sliders"></app-form-slider>
+                    </div>
+
+                    <!-- Content-->
+                    <div class="col-12">
+                      <app-content-text 
+                        [form]="form"></app-content-text>
+                    </div>
+
+                    <!-- Form awards -->
+                    <div class="col-12">
+                        <hr>
+                        <p class="font-weight-bold">Premios y reconocimientos</p>
+                        <app-award-form 
+                            (delete)="onDeleteAward($event)"
+                            (edit)="onEditAward($event)"
+                            (register)="onRegisterAward($event)"
+                            [awards]="awards">
+                        </app-award-form>
+                    </div>
+
+                    <div class="col-12 text-right">
+                        <hr> 
+                        <button (click)="onSaveWebAbout()" class="btn btn-primary col-12 col-lg-auto">Guardar cambios</button>  
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

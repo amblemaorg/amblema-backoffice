@@ -1,0 +1,118 @@
+stages:
+  - cleanup
+  - build
+  - test
+  - code-quality
+  - performance
+  - review # <-- SCRIPT AUTO DEVOPS
+  - deploy
+  - staging
+  - production # <-- CONDITIONAL
+
+variables:
+  CONTAINER_RUN: "running_amblema_backoffice"
+  CONTAINER_TEST: "test_amblema_backoffice"
+  CONTAINER_BUILD: "build_amblema_backoffice"
+  CONTAINER_SERVER: "nginx-amblema"
+      
+  # PATH TO STAGING
+  PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
+
+before_script:
+  - cd $PATH_PROJECT_STAGING
+  
+  # TURN ON SERVER
+  - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
+  -   docker-compose up -d linking_amblema_nginx
+  - fi
+
+  # TURN ON CONTAINER
+  - if [ ! "$(docker ps -q -f name=$CONTAINER_RUN)" ]; then
+  -   docker-compose up -d run_amblema_backoffice
+  - fi
+
+# PREPARE ENVIROMENT
+
+update-environment: 
+  stage: cleanup
+  script:
+      - git config user.email "franklin@binauraldev.com"
+      - git config user.name "franklinp"
+      - git stash
+      - git pull $CI_REPOSITORY_URL master
+  tags:
+      - amblema
+  only:
+      - master
+
+linting:
+  stage: cleanup
+  script:
+      - docker exec $CONTAINER_RUN ng lint --fix
+  tags:
+      - amblema
+  only:
+      - master
+
+# BUILD
+
+build:
+  stage: build
+  script:
+      - docker exec $CONTAINER_RUN ng build --prod --build-optimizer
+  tags: 
+      - amblema
+  only:
+      - master
+
+# TEST
+
+run-tests:
+  stage: test
+  script: 
+      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --watch=false
+  tags: 
+      - amblema
+  only:
+      - master
+
+coverage: 
+  stage: test
+  script: 
+      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
+  artifacts:
+      paths:
+          - ./coverage/Amblema-BackOffice/index.html
+  tags: 
+      - amblema
+  only:
+      - master
+
+# DEPLOY
+
+linking:
+  stage: deploy
+  script:
+      - docker restart $CONTAINER_SERVER
+  tags: 
+      - amblema
+  only:
+      - master
+
+# STAGING
+
+staging:
+  stage: staging
+  script: 
+      - docker exec $CONTAINER_RUN  usermod -u 1018 node && chown -R node:node node_modules/
+      - docker exec $CONTAINER_RUN  usermod -u 1018 node && chown -R node:node dist/
+      - docker container stop $CONTAINER_BUILD
+      - docker container stop $CONTAINER_RUN 
+      - docker container stop $CONTAINER_TEST
+      - docker container rm $CONTAINER_BUILD
+      - docker container rm $CONTAINER_RUN 
+      - docker container rm $CONTAINER_TEST
+  tags:
+      - amblema
+  only: 
+      - master

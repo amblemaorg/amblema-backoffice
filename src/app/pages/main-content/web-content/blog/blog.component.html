@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-12">
+        <nb-card>
+            <nb-card-header>Blog</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="input-group mb-3">
+                            <input 
+                                [(ngModel)]="query"
+                                autocomplete="off"
+                                type="text" 
+                                nbInput 
+                                placeholder="Buscar por titulo o etiqueta..." 
+                                fullWidth 
+                                class="col border-right-0">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-info" type="button" id="button-addon2">
+                                    <nb-icon icon="search-outline"></nb-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 text-right">
+                        <button class="col-12 col-lg-auto btn btn-success" data-toggle="modal"
+                            [attr.data-target]="'#'+ID_FORM" (click)='MODE=ACTION.CREATE'>Registrar</button>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<div class="columm-post">
+    <div class="card-post" *ngFor="let item of pageOfItems | search: query">
+        <app-blog-card 
+            (edit)="onEditPost($event)"
+            (delete)="onDeletePost($event)"
+            [data]="item"></app-blog-card>
+    </div>
+</div>
+
+<nb-card *ngIf="(posts.length <= 0) || ((data$ | async | search: query).length === 0)">
+    <nb-card-body class="fadeIn">
+        <nb-alert status="warning" class="mb-0">No hay registro de posts.</nb-alert>
+    </nb-card-body>
+</nb-card>
+
+<nb-card [ngClass]="{'d-none': posts.length <= 10}">
+    <nb-card-body class="d-flex justify-content-center">
+        <app-paginator 
+            [initialPage]="1"
+            [maxPages]="5"
+            [pageSize]="10"
+            [items]="data$ | async"
+            (changePage)="onChangePage($event)"></app-paginator>
+    </nb-card-body>
+</nb-card>
+
+<app-blog-form 
+    (edit)="onEditPostForm($event)"
+    (register)="onRegisterPost($event)"
+    [DATA]="postSelected"
+    [ID]="ID_FORM" 
+    [MODE]="MODE"></app-blog-form>

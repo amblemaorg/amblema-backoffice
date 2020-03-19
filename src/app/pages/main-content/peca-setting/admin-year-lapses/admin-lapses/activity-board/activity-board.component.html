@@ -1,0 +1,9 @@
+<div class="col-12 form-group">
+    <button class="btn btn-success">Agregar actividad</button>
+</div>
+
+<div class="col-12">
+    <div class="table-responsive">
+        <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+    </div>
+</div>

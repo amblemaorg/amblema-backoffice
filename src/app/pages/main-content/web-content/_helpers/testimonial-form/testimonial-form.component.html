@@ -1,0 +1,68 @@
+<form [formGroup]="form" class="row form-group" (ngSubmit)="onSubmit()">
+
+    <div class="col-12 col-lg-auto">
+        <app-input-img 
+            [control]="form.get('image')"
+            [id]="'testimonial-img'"></app-input-img>
+    </div>
+    <div class="col-12 col-lg">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <app-input-name 
+                    [control]="form.get('firstName')"
+                    [submitted]="submitted" 
+                    [id]="'name'"></app-input-name>
+            </div>
+            <div class="col-12 col-lg-6">
+                <app-input-last-name 
+                    [control]="form.get('lastName')"
+                    [submitted]="submitted" 
+                    [id]="'lastName'"></app-input-last-name>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <app-input-position 
+                    [control]="form.get('function')"
+                    [submitted]="submitted" 
+                    [id]="'position'">
+                </app-input-position>
+            </div>
+            <div class="col-12 col-lg-6">
+                <app-text-area-description 
+                    [id]="'description-testimonial'"
+                    [submitted]="submitted"
+                    [control]="form.get('description')"></app-text-area-description>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 text-right">
+        <button 
+            type="submit" 
+            [ngClass]="{    
+                'mr-xl-3' : MODE === ACTION.EDIT,
+                'btn-success': MODE === ACTION.CREATE, 
+                'btn-primary' : MODE === ACTION.EDIT}"
+            class="btn col-12 col-xl-auto">
+            <span *ngIf="MODE === ACTION.CREATE">Registrar</span>
+            <span *ngIf="MODE === ACTION.EDIT">Actualizar</span>
+        </button>
+        <button
+            (click)="form.reset(); MODE = ACTION.CREATE"
+            *ngIf="MODE === ACTION.EDIT" 
+        class="btn btn-outline-secondary col-12 col-xl-auto mt-3 mt-xl-0">Cancelar</button>
+    </div>
+</form>
+
+<!-- Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <ng2-smart-table 
+                (custom)="onAction($event)" 
+                [source]='testimonials' 
+                [settings]="settings"></ng2-smart-table>
+        </div>
+    </div>
+</div>

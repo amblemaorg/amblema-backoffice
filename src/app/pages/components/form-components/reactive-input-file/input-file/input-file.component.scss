@@ -1,0 +1,27 @@
+
+.input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  + .js-labelFile {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+      
+    cursor: pointer;
+    .icon:before {
+      //font-awesome
+      content: "\f093";
+    }
+    &.has-file {
+      .icon:before {
+        //font-awesome
+        content: "\f00c";
+        color: #5AAC7B;
+      }
+    }
+  }
+}

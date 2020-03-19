@@ -1,0 +1,47 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p class="font-weight-bold">Diapositiva</p>
+    <div class="row align-items-center form-group">
+        <div class="col-12 col-xl form-group">
+            <app-input-img 
+                [id]="'input-slider'"
+                [control]="form.get('image')"></app-input-img>
+        </div>
+        <div class="col-12 col-xl-9">
+            <div class="row">
+                <div class="col-12">
+                    <app-text-area-description 
+                        [submitted]="false"
+                        [control]="form.get('description')"></app-text-area-description>
+                </div>
+                <div class="col-12 text-right">
+                    <button 
+                        [attr.disabled]="form.invalid ? true : null"
+                        type="submit" 
+                        [ngClass]="{    
+                            'mr-xl-3' : MODE === ACTION.EDIT,
+                            'btn-success': MODE === ACTION.CREATE, 
+                            'btn-primary' : MODE === ACTION.EDIT}"
+                        class="btn col-12 col-xl-auto mr-xl-3">
+                        <span *ngIf="MODE === ACTION.CREATE">Registrar</span>
+                        <span *ngIf="MODE === ACTION.EDIT">Actualizar</span>
+                    </button>
+                    <button
+                        (click)="form.reset(); MODE = ACTION.CREATE"
+                        *ngIf="MODE === ACTION.EDIT" 
+                        class="btn btn-outline-secondary col-12 col-xl-auto mt-3 mt-xl-0">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-12 form-group">
+            <div class="table-responsive">
+                <ng2-smart-table 
+                    (custom)="onAction($event)" 
+                    [source]='sliders' 
+                    [settings]="settings"></ng2-smart-table>
+            </div>
+        </div>
+    </div>
+</form>

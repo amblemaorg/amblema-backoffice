@@ -1,0 +1,84 @@
+<form [formGroup]="form" class="row form-group" (ngSubmit)="onSubmit()">
+    <div class="col-12 form-group">
+        <div class="row">
+            <div class="mb-3 mb-md-0 col-md">
+                <label class="label w-100 text-center">Vista previa</label>
+                <app-input-img 
+                    [id]="'preview'"
+                    [control]="form.get('image')"></app-input-img>
+            </div>
+            <div class="mb-3 mb-md-0 col-md">
+                <label class="label w-100 text-center">Primera imagen</label>
+                <app-input-img 
+                    [control]="form.get('image2')"
+                    [id]="'award-img-2'"></app-input-img>
+
+            </div>
+            <div class="mb-3 mb-md-0 col-md">
+                <label class="label w-100 text-center">Segunda imagen</label>
+                <app-input-img 
+                    [control]="form.get('image3')"
+                    [id]="'award-img-3'"></app-input-img>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <app-input-custom 
+                    [control]="form.get('title')"
+                    [submitted]="submitted"
+                    [placeholder]="'Titulo'" 
+                    [label]="'Titulo'" 
+                    [id]="'title'"></app-input-custom>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <app-text-area-custom 
+                    [submitted]="submitted"
+                    [control]="form.get('description')"
+                    [placeholder]="'Primera descripción'" 
+                    [label]="'Primera descripción'" 
+                    [id]="'firstDescription'"></app-text-area-custom>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <app-text-area-custom 
+                    [control]="form.get('description2')"
+                    [submitted]="submitted"
+                    [placeholder]="'Segunda descripción'" 
+                    [label]="'Segunda descripción'" 
+                    [id]="'secondDescription'">
+                </app-text-area-custom>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 text-right">
+        <button 
+            type="submit" 
+            [ngClass]="{    
+                'mr-xl-3' : MODE === ACTION.EDIT,
+                'btn-success': MODE === ACTION.CREATE, 
+                'btn-primary' : MODE === ACTION.EDIT}"
+            class="btn col-12 col-xl-auto">
+            <span *ngIf="MODE === ACTION.CREATE">Registrar</span>
+            <span *ngIf="MODE === ACTION.EDIT">Actualizar</span>
+        </button>
+        <button
+            (click)="form.reset(); MODE = ACTION.CREATE"
+            *ngIf="MODE === ACTION.EDIT" 
+        class="btn btn-outline-secondary col-12 col-xl-auto mt-3 mt-xl-0">Cancelar</button>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <ng2-smart-table 
+                (custom)="onAction($event)" 
+                [source]='awards' 
+                [settings]="settings"></ng2-smart-table>
+        </div>
+    </div>
+</div>  

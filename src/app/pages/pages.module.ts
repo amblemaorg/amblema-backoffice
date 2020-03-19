@@ -3,13 +3,23 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './pages-routing.module';
 import { NbTokenStorage, NbTokenLocalStorage, NbAuthModule } from '@nebular/auth';
 import { HttpClientModule } from '@angular/common/http';
-import { NbLayoutModule, NbSidebarModule, NbIconModule, NbActionsModule, NbUserModule, NbMenuModule } from '@nebular/theme';
-import { HeaderComponent } from './components/header/header.component';
-
+import {
+  NbLayoutModule,
+  NbSidebarModule,
+  NbIconModule,
+  NbActionsModule,
+  NbUserModule,
+  NbMenuModule,
+  NbContextMenuModule,
+  NbCardModule,
+  NbInputModule,
+  NbSelectModule,
+  NbToastrModule, } from '@nebular/theme';
+import { HeaderComponent } from './components/layouts/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
-import { ProfileComponent } from './layouts/profile/profile.component';
+import { DashboardLayoutComponent } from './registrations-and-permits/dashboard-layout/dashboard-layout.component';
+import { CustomToastrService } from '../services/helper/custom-toastr.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +27,6 @@ import { ProfileComponent } from './layouts/profile/profile.component';
     HeaderComponent,
     DashboardLayoutComponent,
     DashboardLayoutComponent,
-    ProfileComponent,
   ],
   imports: [
     RouterModule,
@@ -27,12 +36,20 @@ import { ProfileComponent } from './layouts/profile/profile.component';
     NbLayoutModule,
     NbSidebarModule.forRoot(),
     NbAuthModule.forRoot({}),
+    NbCardModule,
     NbIconModule,
     NbActionsModule,
+    NbInputModule,
+    NbSelectModule,
     NbUserModule,
-    NbMenuModule.forRoot()
+    NbMenuModule.forRoot(),
+    NbContextMenuModule,
+
+    NbToastrModule.forRoot()
   ],
+  exports: [ NbIconModule ],
   providers: [
+    CustomToastrService,
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
   ]
 })

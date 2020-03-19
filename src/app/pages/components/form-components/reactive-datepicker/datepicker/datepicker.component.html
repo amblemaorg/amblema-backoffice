@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label [hidden]="label == ''" class="label">{{ label }} </label>
+    <input 
+        nbInput
+        fullWidth
+        status="basic"
+        type="text"
+        readonly
+        [formControl]="control"
+        [placeholder]="label"
+        class="form-control form-group"
+        [maxDate]="maxDate"
+        [bsConfig]="{ 
+            adaptivePosition: true,
+            dateInputFormat: 'DD MMM YYYY' }"
+        bsDatepicker>
+    <app-reactive-validation [validationErrors]="validationErrors"></app-reactive-validation>
+</div>

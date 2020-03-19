@@ -1,0 +1,88 @@
+<app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
+
+    <!-- Main content -->
+    <form [formGroup]="form" (keydown.enter)="onSubmit()" content>
+
+        <!-- Personal data -->
+        <div class="row">
+            <div class="col-12">
+                <p class="font-weight-bold text-info mb-0">Datos personales</p>
+                <hr>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-input-name [control]="form.get('firstName')" [submitted]="submitted"></app-input-name>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-input-last-name [control]="form.get('lastName')" [submitted]="submitted">
+                        </app-input-last-name>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-input-position [control]="form.get('function')" [submitted]="submitted">
+                        </app-input-position>
+                        <app-select-role 
+                            (onselected)="onselected($event)"
+                            [control]="form.get('role')" 
+                            [submitted]="submitted"></app-select-role>
+                        <app-input-phone [control]="form.get('phone')" [submitted]="submitted"></app-input-phone>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-form-document 
+                            [mode]="mode"
+                            [submitted]="submitted" 
+                            [control]="form.get('cardId')"
+                            [controlSelect]="form.get('cardType')"></app-form-document>
+                        <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
+                        <app-input-password  
+                            (keyup)="onPress()"
+                            [control]="form.get('password')" 
+                            [submitted]="submitted">
+                        </app-input-password>
+                    </div>
+                </div>
+            </div>
+        </div><!-- / End personal data -->
+
+        <!-- Address data -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <p class="font-weight-bold text-info mb-0">Dirección</p>
+                <hr>
+            </div>
+            <div class="col-12">
+                <app-form-regional-address 
+                    [idState]="idState"
+                    [state]="form.get('addressState')" 
+                    [municipality]="form.get('addressMunicipality')"
+                    [control]="form.get('address')" 
+                    [submitted]="submitted"></app-form-regional-address>
+            </div>
+        </div><!-- / End address data -->
+
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12 col-lg-6">
+                <app-select-status [control]="form.get('status')" [submitted]="submitted">
+                </app-select-status>
+            </div>
+        </div>
+
+    </form><!-- / End main content -->
+
+    <!-- Footer content -->
+    <button 
+        [attr.disabled]="progress != 0 ? true: null"
+        [nbSpinner]="progress == 0 ? null : true" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+        [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
+        <span *ngIf="MODE == ACTION.CREATE && progress == 0">Guardar</span>
+        <span *ngIf="progress != 0">Guardando...</span>
+        <span *ngIf="MODE == ACTION.EDIT && progress == 0">Editar</span>
+    </button>
+
+</app-modal>

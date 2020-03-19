@@ -11,49 +11,51 @@ services:
         volumes:
             - .:/app
         networks: 
-            - amblema_web
+            - amblema_net
 
     # BUILD
     build_amblema_backoffice: 
         container_name: build_amblema_backoffice
-        image: devbinaural/angular
-        command: ng build --prod
-        ports: 
-            - 4200:4200
-        volumes: 
-            - .:/app
-        networks: 
-            - amblema_web
-
-    # UNIT TEST
-    test_amblema_backoffice:
-        container_name: test_amblema_backoffice
-        image: devbinaural/angular
+        image: devbinaural/angular:8.0.0
+        command: bash -c "npm install && ng build --prod --build-optimizer && usermod -u 1018 node &&
+                chown -R node:node node_modules/ && chown -R node:node dist/"
         ports: 
             - 4200:4200 
         volumes: 
             - .:/app
         networks: 
-            - amblema_web
-    
+            - amblema_net
+
+    # UNIT TEST
+    test_amblema_backoffice:
+        container_name: test_amblema_backoffice
+        image: devbinaural/angular:8.0.0
+        command: bash -c "npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false"
+        ports: 
+            - 4200:4200 
+        volumes: 
+            - .:/app
+        networks: 
+            - amblema_net
+
     # LINKING NGINX
     linking_amblema_nginx:
         container_name: nginx-amblema
         image: devbinaural/nginx
         ports:
-            - 24000:24000
+            - 10502:10502
         volumes: 
 
-            # SHARE THE BUILT PROJECT
+            # SHARE THE BUILT PROJECTS
             - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
             
             # SERVER FILES CONFIGURATION
             - ./server/:/etc/nginx/
         networks: 
-            - amblema_web
+            - amblema_net
 
 networks:
-    amblema_web:
+    amblema_net:
         driver: bridge
 
 volumes:

@@ -1,0 +1,34 @@
+<nb-card>
+    <nb-card-header class="text-center">
+        <img [src]="data.image" [alt]="data.text" class="img-fluid">
+    </nb-card-header>
+    <nb-card-body>
+        <section>
+            <h5 class="card-title">{{ data.title }}</h5>
+            <p class="card-text">{{ data.text }}</p>
+            <nb-alert class="d-inline-block mb-0 py-0 px-2" [status]="data.tag == 'Ambiente' ? 'success' : 
+            data.tag == 'Lectura' ? 'info' :
+            data.tag == 'Matemáticas' ? 'primary' : 'danger'" >
+            <small class="font-weight-bold">
+                {{data.tag}}
+            </small></nb-alert>
+        </section>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-between align-items-center">
+        <nb-alert outline="primary" class="mb-0 py-0 px-2">
+            <small>{{data.status}}</small>
+        </nb-alert>
+        <div>
+            <button 
+            (click)="delete.emit(data)"
+            class="col-auto col-lg-auto btn btn-outline-danger mr-2">
+            <nb-icon icon="trash-2-outline"></nb-icon>
+        </button>
+        <button 
+            (click)="edit.emit(data)"
+            class="col-auto col-lg-auto btn btn-outline-primary">
+            <nb-icon icon="edit-outline"></nb-icon>
+        </button>    
+        </div>
+    </nb-card-footer>
+</nb-card>

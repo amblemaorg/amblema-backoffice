@@ -1,0 +1,20 @@
+<div class="form-group">
+    <label for="role" class="label">Tipo de empresa</label>
+    <select name="type-company" id="type-company" (change)="onSelectTypeCompany()" class="form-control form-group"
+        [formControl]="companyType">
+        <option disabled selected [value]="null">- Seleccione un tipo de empresa -</option>
+        <option *ngFor="let item of option" [value]="item.value">{{ item.label }}</option>
+
+    </select>
+    <div *ngIf="submitted && !companyType.value" class="alert alert-primary">
+        <strong> Seleccione un tipo de empresa </strong>
+    </div>
+
+    <app-input-custom 
+        [id]="'other-company'" 
+        *ngIf="companyType.value == option[3].value" 
+        [label]="'Otra empresa'"
+        [placeholder]="'Otra empresa'" 
+        [submitted]="submitted" 
+        [control]="companyOtherType"></app-input-custom>
+</div>

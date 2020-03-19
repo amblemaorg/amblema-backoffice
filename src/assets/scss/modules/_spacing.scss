@@ -1,0 +1,11 @@
+@import '../mixins';
+
+.m-inline-form {
+    margin-top: 26px;
+}
+
+.m-inline-parcial {
+    @include screen( $breakpoint-md ) {
+        margin-top: 26px;
+    }
+}

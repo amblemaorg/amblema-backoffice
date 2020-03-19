@@ -1,0 +1,20 @@
+<!-- Register -->
+<div class="mb-3">
+    <button class="btn btn-success col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
+        (click)='MODE=ACTION.CREATE'>Registrar</button>
+</div>
+
+<!-- Table -->
+<div class="table-responsive">
+    <ng2-smart-table (custom)="onAction($event)" [source]='data$ | async' [settings]="settings"></ng2-smart-table>
+</div>
+
+<!-- Modal -->
+<app-sponsors-users-form [ID]="ID_FORM" [MODE]="MODE"></app-sponsors-users-form>
+
+<app-modal 
+    [ID]="'sponsor-users-view'" 
+    [size]="'lg'" 
+    [title]="'Datos del usuario padrino'">
+    <app-sponsors-users-view content></app-sponsors-users-view>
+</app-modal>

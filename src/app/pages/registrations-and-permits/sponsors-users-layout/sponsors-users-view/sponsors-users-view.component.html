@@ -1,0 +1,109 @@
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <p class="font-weight-bold text-info mb-0">Datos de la empresa</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ data.name }}</span></p>
+
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ data.companyPhone }}</span></p>
+
+                <p class="d-flex w-100"><span
+                        class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ data.email }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Documento de
+                        identidad:</span><span>J-{{ data.companyRif }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Sitio web:</span><a
+                        [href]="data.webSite">{{ data.webSite }}</a></p>
+                <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Tipo de
+                        empresa:</span><span>{{ data.companyType }}</span></p>
+                <p *ngIf="data.companyOtherType != ''" class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Otro tipo de
+                        empresa:</span><span>{{ data.companyOtherType }}</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <p class="font-weight-bold text-info mb-0">Datos de usuario</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Tipo de usuario:</span>
+                    <span>Padrino</span> </p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Rol de usuario:</span>
+                    <span>{{ data.role.name }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Fecha de creación:</span>
+                    <span>{{ data.createdAt | date:'dd/MM/yyyy'}}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Última actualización:</span>
+                    <span>{{ data.updatedAt | date:'dd/MM/yyyy'}}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Fase:</span>
+                    <nb-alert class="px-2 py-0" [status]="data.phase === 'Inicio' ? 'basic' : 
+                    data.phase === 'Interesado' ? 'basic' : 'success'">{{ data.phase }}</nb-alert>
+                </p>
+
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estatus:</span>
+                    <nb-alert [status]="data.status === 'Activo' ? 'success' : 'danger'" class="px-2 py-0">
+                        {{ data.status }}</nb-alert>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <p class="font-weight-bold text-info mb-0">Datos de la persona de contacto</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Nombre:</span>
+                    <span>{{ data.contactFirstName }}</span> </p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Apellido:</span>
+                    <span>{{ data.contactLastName }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Teléfono:</span>
+                    <span>{{ data.contactPhone }}</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                    <span>{{ data.addressState.name }}</span> </p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Municipio:</span>
+                    <span>{{ data.addressMunicipality.name }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección:</span>
+                    <span>{{ data.address }}</span></p>
+                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                    <span>{{ data.addressCity }}</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12" *ngIf="data.projects">
+        <p class="font-weight-bold text-info mb-3">Proyectos</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class=" font-weight-light border-bottom" scope="col">Código del proyecto</th>
+                    <th class=" font-weight-light border-bottom" scope="col">Coordinador</th>
+                    <th class=" font-weight-light border-bottom" scope="col">Escuela</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let item of data.projects; let i = index;">
+                    <th *ngIf="i >= 0" scope="row">{{ item.code }}</th>
+                    <td *ngIf="i >= 0"><span *ngIf="item.coordinator">{{ item.coordinator.name }}</span> <span *ngIf="!item.coordinator">No hay coordinador asociada</span></td>
+                    <td *ngIf="i >= 0"><span *ngIf="item.school">{{ item.school.name }}</span><span *ngIf="!item.school">No hay
+                            escuela asociado</span></td>
+                </tr>
+                <tr *ngIf="data.projects.length == 0">
+                    <td colspan="3">No hay proyectos asociados a este usuario</td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

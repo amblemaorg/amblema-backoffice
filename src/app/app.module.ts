@@ -4,15 +4,37 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbMenuModule, NbToastrModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './guards/auth.guard';
 import { NbAuthModule } from '@nebular/auth';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsModule } from '@ngxs/store';
+import { RolesState, RoleState } from './store/role.action';
+import { Utility } from './helpers/utility';
+import { LearningState } from './store/learning.action';
+import { WebHomeState } from './store/web-home.action';
+import { CustomToastrService } from './services/helper/custom-toastr.service';
+import { WebAboutState } from './store/web-about.action';
+import { WebSponsorState } from './store/web-sponsor.action';
+import { WebCoordinatorState } from './store/web-coordinator.action';
+import { PostsState } from './store/blog.action';
+
+import localeVe from '@angular/common/locales/es-VE';
+import { registerLocaleData } from '@angular/common';
+import { AdminUserState } from './store/user-store/admin-user.action';
+import { environment } from 'src/environments/environment.prod';
+import { CoordinatorUserState } from './store/user-store/coordinator-user.action';
+import { SponsorUserState } from './store/user-store/sponsor-user.action';
+import { SchoolUserState } from './store/user-store/school-user.action';
+registerLocaleData(localeVe, 'es-VE');
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -22,10 +44,43 @@ import { HttpClientModule } from '@angular/common/http';
     NbLayoutModule,
     NbEvaIconsModule,
     NbAuthModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    NbMenuModule.forRoot(),
+
+    // -- NGXS --
+    NgxsModule.forRoot( [
+      // RECUERDA REFACTORIZAR EL
+      // MANEJADOR DE ESTADO DE ROLES
+      RolesState,
+      RoleState,
+
+      LearningState,
+      WebHomeState,
+      WebAboutState,
+      WebSponsorState,
+      WebCoordinatorState,
+      PostsState,
+
+      AdminUserState,
+      CoordinatorUserState,
+      SponsorUserState,
+      SchoolUserState
+    ],
+    {
+      compatibility: {
+        strictContentSecurityPolicy: true
+      },
+      developmentMode: !environment.production
+    }),
+    NgxsStoragePluginModule.forRoot({}),
+    NbToastrModule.forRoot(),
   ],
   providers: [
-    AuthGuard
+    CustomToastrService,
+    AuthGuard,
+
+    // -- Custom Helper --
+    Utility,
   ],
   bootstrap: [AppComponent]
 })

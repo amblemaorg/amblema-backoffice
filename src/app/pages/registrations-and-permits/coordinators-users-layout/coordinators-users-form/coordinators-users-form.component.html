@@ -1,0 +1,149 @@
+<app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
+
+    <!-- Main content -->
+    <form [formGroup]="form" (keydown.enter)="onSubmit()" content>
+
+        <!-- Personal data -->
+        <div class="row">
+            <div class="col-12">
+                <p class="font-weight-bold text-info mb-0">Datos personales</p>
+                <hr>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+
+                    <div class="col-12 form-group">
+                        <label class="label w-100 text-center text-lg-left">Imágen del coordinador</label>
+                        <app-input-img [control]="form.get('image')" [align]="'left'"></app-input-img>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-input-name [control]="form.get('firstName')" [submitted]="submitted">
+                        </app-input-name>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-input-last-name [control]="form.get('lastName')" [submitted]="submitted">
+                        </app-input-last-name>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-input-email [control]="form.get('email')" [submitted]="submitted">
+                        </app-input-email>
+                        <app-input-password 
+                            (keyup)="onPress()"
+                            [control]="form.get('password')" 
+                            [submitted]="submitted">
+                        </app-input-password>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-form-document [submitted]="submitted" [control]="form.get('cardId')"
+                            [controlSelect]="form.get('cardType')"></app-form-document>
+                        <app-input-phone [control]="form.get('phone')" [submitted]="submitted">
+                        </app-input-phone>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-select-role (onselected)="onselected($event)" [control]="form.get('role')"
+                            [submitted]="submitted"></app-select-role>
+                    </div>
+
+
+                    <div class="col-12 col-lg-6">
+                        <app-input-phone [submitted]="submitted" [id]="'phone-room'" [control]="form.get('homePhone')"
+                            [label]="'Teléfono de habitación'" [placeholder]="'Teléfono de habitación'">
+                        </app-input-phone>
+
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-datepicker [submitted]="submitted" [control]="form.get('birthdate')"
+                            [label]="'Fecha de nacimiento'"></app-datepicker>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <app-select-sex [submitted]="submitted" [control]="form.get('gender')"></app-select-sex>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- / End personal data -->
+
+        <!-- Address data -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <p class="font-weight-bold text-info mb-0">Dirección</p>
+                <hr>
+            </div>
+            <div class="col-12">
+                <app-address-coordinator 
+                    [idState]="idState"
+                    [addressHome]="form.get('addressHome')" 
+                    [addressCity]="form.get('addressCity')"
+                    [state]="form.get('addressState')" 
+                    [municipality]="form.get('addressMunicipality')"
+                    [control]="form.get('address')" 
+                    [submitted]="submitted"></app-address-coordinator>
+            </div>
+        </div><!-- / End address data -->
+
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12 col-lg-6">
+                <app-select-status [control]="form.get('status')" [submitted]="submitted">
+                </app-select-status>
+            </div>
+        </div>
+
+        <!-- Mora data -->
+        <div class="row ">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12">
+                <nb-accordion class="shadow-none border">
+                    <nb-accordion-item>
+                        <nb-accordion-item-header>Información adicional</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                    <app-input-custom [submitted]="submitted" [id]="'prefession'"
+                                        [control]="form.get('profession')" [label]="'Profesión'"
+                                        [placeholder]="'Profesión'"></app-input-custom>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="label">¿Es referido de alguien?</label>
+                                        <nb-radio-group  formControlName="isReferred" class="d-flex">
+                                            <nb-radio *ngFor="let option of options" [value]="option.value">
+                                                {{ option.label }}
+                                            </nb-radio>
+                                        </nb-radio-group>
+                                    </div>
+                                    <div *ngIf="form.controls['isReferred'].value">
+                                        <app-input-custom [submitted]="submitted" [id]="'referredName'"
+                                            [control]="form.get('referredName')" [label]="'Nombre de la persona'"
+                                            [placeholder]="'Nombre de la persona'"></app-input-custom>
+                                    </div>
+                                </div>
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+            </div>
+        </div>
+    </form><!-- / End main content -->
+
+    <!-- Footer content -->
+    <button [attr.disabled]="progress != 0 ? true: null" [nbSpinner]="progress == 0 ? null : true"
+        nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
+        [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
+        <span *ngIf="MODE == ACTION.CREATE && progress == 0">Guardar</span>
+        <span *ngIf="progress != 0">Guardando...</span>
+        <span *ngIf="MODE == ACTION.EDIT && progress == 0">Editar</span>
+    </button>
+</app-modal>

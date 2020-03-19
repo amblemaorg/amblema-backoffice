@@ -1,0 +1,20 @@
+<!-- Button register -->
+<div class="mb-3">
+    <button class="btn btn-success col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
+        (click)='MODE=ACTION.CREATE'>Registrar</button>
+</div>
+
+<!-- Table -->
+<div class="table-responsive">
+    <ng2-smart-table (custom)="onAction($event)" [source]='data$ | async' [settings]="settings"></ng2-smart-table>
+</div>
+
+<!-- Modal form -->
+<app-admin-user-form [ID]='ID_FORM' [MODE]='MODE'>
+</app-admin-user-form>
+
+
+<!-- Modal query -->
+<app-modal [ID]="'view-admin-user'" [size]="'lg'" [title]="'Datos de usuario administrador'"> 
+    <app-admin-user-view content></app-admin-user-view>    
+</app-modal>

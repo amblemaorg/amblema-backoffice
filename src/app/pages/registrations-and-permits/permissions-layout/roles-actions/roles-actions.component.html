@@ -1,0 +1,22 @@
+<div>
+    <!-- Nav -->
+    <div>
+        <button class="btn btn-outline-secondary col col-md-auto" [routerLink]="['routePath']">
+            <nb-icon icon="arrow-back-outline"></nb-icon>
+            Atrás
+        </button>
+    </div>
+    <hr>
+
+    <!-- Update -->
+    <p class="font-weight-bold">Actualización de rol</p>
+    <app-select-role [control]="control" (onselected)="onSelected($event)"></app-select-role>
+    <app-roles-form [MODE]="MODE" [DATA]="role"></app-roles-form>
+    <hr>
+
+    <!-- List actions -->
+    <p class="font-weight-bold">Lista de acciones</p>
+    <div class="table-responsive">
+        <ng2-smart-table [source]='data' [settings]="settings"></ng2-smart-table>
+    </div>
+</div>

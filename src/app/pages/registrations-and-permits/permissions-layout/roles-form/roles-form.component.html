@@ -1,0 +1,26 @@
+<form [formGroup]="formRole" action="">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <app-input-custom
+            [label]="'Rol'"
+            [placeholder]="'Rol'"
+            [control]="formRole.get('role')"
+            [submitted]="submitted"></app-input-custom>
+        </div>
+
+        <div class="col-12 col-lg">
+            <app-select-status 
+                [control]="formRole.get('status')"
+                [submitted]='submitted'>
+            </app-select-status>
+        </div>
+        <div class="col-12 col-lg">
+            <button class="btn btn-success btn-block m-inline-parcial"
+            [ngClass]="{'btn-success': MODE == ACTION.CREATE, 'btn-primary': MODE == ACTION.EDIT}"
+            (click)="onSubmit()">
+                <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
+                <span *ngIf="MODE == ACTION.EDIT">Actualizar</span>
+            </button>
+        </div>
+    </div>
+</form>

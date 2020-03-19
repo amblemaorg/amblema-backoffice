@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { RouterModule } from '@angular/router';
-import { NbAuthModule, NbPasswordAuthStrategy, NbAuthSimpleToken } from '@nebular/auth';
+import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken } from '@nebular/auth';
 import { NbAlertModule, NbCheckboxModule, NbButtonModule, NbInputModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [
@@ -36,18 +37,20 @@ import { HttpClientModule } from '@angular/common/http';
       strategies: [
         NbPasswordAuthStrategy.setup({
           name: 'email',
-          baseEndpoint: 'https://reqres.in',
+          baseEndpoint: `${environment.api}`,
           token: {
-            class: NbAuthSimpleToken,
-            key: 'token'
+            class: NbAuthJWTToken,
+            key: 'access_token'
           },
           login: {
-            endpoint: '/api/login',
+            endpoint: 'auth/login',
             method: 'post',
             redirect: {
-              success: '/pages',
+              success: '/pages/dashboard',
               failure: null
-            }
+            },
+            defaultErrors: ['La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente.'],
+            defaultMessages: ['Has ingresado exitosamente.'],
           },
         })
       ],

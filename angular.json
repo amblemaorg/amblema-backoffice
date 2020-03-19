@@ -28,11 +28,17 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "src/styles.scss",
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "src/styles.scss"
+              "node_modules/nebular-icons/css/nebular-icons.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -54,8 +60,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -95,6 +101,8 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -142,13 +150,14 @@
               ],
               "sourceMap": false,
               "optimization": {
-                "scripts": false,
+                "scripts": true,
                 "styles": true
               }
             }
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Amblema-BackOffice"
 }

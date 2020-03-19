@@ -6,6 +6,7 @@ services:
     run_amblema_backoffice:
         container_name: running_amblema_backoffice
         image: devbinaural/angular:8.0.0
+        command: bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
         ports:
             - 4200:4200
         volumes:
@@ -48,7 +49,7 @@ services:
 
             # SHARE THE BUILT PROJECTS
             - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
-            
+
             # SERVER FILES CONFIGURATION
             - ./server/:/etc/nginx/
         networks: 

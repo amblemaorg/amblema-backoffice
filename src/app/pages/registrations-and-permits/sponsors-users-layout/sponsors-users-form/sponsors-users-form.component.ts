@@ -47,7 +47,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
       webSite: new FormControl('', [Validators.required, Validators.pattern(VIDEO_PATTERN)]),
       name: new FormControl('', [Validators.required]),
       cardType: new FormControl('J'), // <-- Remove card type when is send it
-      companyRIF: new FormControl(''),
+      companyRif: new FormControl(''),
       companyPhone: new FormControl(),
       email: new FormControl(),
       password: new FormControl(),

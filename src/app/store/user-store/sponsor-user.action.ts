@@ -52,7 +52,7 @@ export class DeleteSponsorUser {
             addressMunicipality: '',
             addressCity: '',
             address: '',
-            companyRIF: ' ',
+            companyRif: ' ',
             companyType: '',
             companyOtherType: ' ',
             companyPhone: '',

@@ -19,7 +19,7 @@ export interface Project {
 
 export interface SponsorUser extends User {
     name: string;
-    companyRIF: string;
+    companyRif: string;
     companyType: string;
     companyOtherType?: string;
     companyPhone: string;

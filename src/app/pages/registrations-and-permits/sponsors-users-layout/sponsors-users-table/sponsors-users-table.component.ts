@@ -34,7 +34,7 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         title: 'Correo',
         type: 'string'
       },
-      companyRIF: {
+      companyRif: {
         title: 'Cédula / Rif',
         type: 'string'
       },

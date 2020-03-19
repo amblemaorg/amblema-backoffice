@@ -21,7 +21,7 @@ services:
         command: bash -c "npm install && ng build --prod --build-optimizer && usermod -u 1018 node &&
                 chown -R node:node node_modules/ && chown -R node:node dist/"
         ports: 
-            - 4200:4200 
+            - 4000:4000 
         volumes: 
             - .:/app
         networks: 

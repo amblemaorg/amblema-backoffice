@@ -16,7 +16,8 @@ variables:
   CONTAINER_SERVER: "nginx-amblema"
       
   # PATH TO STAGING
-  PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
+  #PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
+  PATH_PROJECT_STAGING: /home/binaural19/Proyectos/amblema---backoffice
 
 before_script:
   - cd $PATH_PROJECT_STAGING
@@ -60,7 +61,7 @@ linting:
 build:
   stage: build
   script:
-      - docker exec $CONTAINER_RUN ng build --prod --build-optimizer
+      - docker-compose up build_amblema_backoffice
   tags: 
       - amblema
   only:
@@ -83,7 +84,11 @@ coverage:
       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
   artifacts:
       paths:
+          - $PATH_PROJECT_STAGING/coverage/Amblema-BackOffice/
+      archive:
+        paths:
           - ./coverage/Amblema-BackOffice/index.html
+      expire_in: 7days
   tags: 
       - amblema
   only:
@@ -105,14 +110,8 @@ linking:
 staging:
   stage: staging
   script: 
-      - docker exec $CONTAINER_RUN  usermod -u 1018 node && chown -R node:node node_modules/
-      - docker exec $CONTAINER_RUN  usermod -u 1018 node && chown -R node:node dist/
-      - docker container stop $CONTAINER_BUILD
-      - docker container stop $CONTAINER_RUN 
-      - docker container stop $CONTAINER_TEST
-      - docker container rm $CONTAINER_BUILD
+      - docker container stop $CONTAINER_RUN
       - docker container rm $CONTAINER_RUN 
-      - docker container rm $CONTAINER_TEST
   tags:
       - amblema
   only: 

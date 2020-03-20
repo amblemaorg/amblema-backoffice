@@ -12,7 +12,7 @@ declare var $: any;
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
 
-  MODAL = "form-project";
+  MODAL = 'form-project';
 
   data: any = [
     {
@@ -52,6 +52,9 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     private helper: Utility) { super(); }
 
   ngOnInit(): void {
+
+    this.MODE = this.ACTION.CREATE;
+
     // Add columns
     this.settings.columns = {
       coordinator: {
@@ -81,5 +84,17 @@ export class ProjectsComponent extends BaseTable implements OnInit {
 
 
   // Events table
-  onAction(event: any): void {}
+  onAction(event: any): void {
+    switch (event.action) {
+      case this.ACTION.VIEW:
+
+        break;
+      case this.ACTION.EDIT:
+        this.MODE = this.ACTION.EDIT;
+        this.modal.open( this.MODAL );
+        break;
+      case this.ACTION.DELETE:
+        break;
+    }
+  }
 }

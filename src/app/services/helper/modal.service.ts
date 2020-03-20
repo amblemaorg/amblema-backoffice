@@ -11,10 +11,10 @@ export class ModalService {
 
   public open( id: string ) {
     $(`#${id}`).modal('show');
-      
+
   }
 
   public close(id: string) {
-    $(`#${id}`).modal('hide');  
+    $(`#${id}`).modal('hide');
   }
 }

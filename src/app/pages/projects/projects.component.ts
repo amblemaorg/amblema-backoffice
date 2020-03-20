@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { Utility } from 'src/app/helpers/utility';
+import { ModalService } from 'src/app/services/helper/modal.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-projects',
@@ -8,6 +11,8 @@ import { Utility } from 'src/app/helpers/utility';
   styles: []
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
+
+  MODAL = "form-project";
 
   data: any = [
     {
@@ -42,7 +47,9 @@ export class ProjectsComponent extends BaseTable implements OnInit {
           } else { return false; }
   }
 
-  constructor(private helper: Utility) { super(); }
+  constructor(
+    private modal: ModalService,
+    private helper: Utility) { super(); }
 
   ngOnInit(): void {
     // Add columns
@@ -71,6 +78,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       }
     };
   }
+
 
   // Events table
   onAction(event: any): void {}

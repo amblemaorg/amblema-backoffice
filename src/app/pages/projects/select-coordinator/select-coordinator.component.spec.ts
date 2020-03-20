@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectCoordinatorComponent } from './select-coordinator.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 describe('SelectCoordinatorComponent', () => {
   let component: SelectCoordinatorComponent;
@@ -8,7 +9,8 @@ describe('SelectCoordinatorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectCoordinatorComponent ]
+      declarations: [ SelectCoordinatorComponent ],
+      imports: [ NgSelectModule ]
     })
     .compileComponents();
   }));

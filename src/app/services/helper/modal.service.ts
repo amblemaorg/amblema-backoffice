@@ -9,12 +9,12 @@ export class ModalService {
 
   constructor() {}
 
-  public open( id: string ) {
+  public open( id: string ): void {
     $(`#${id}`).modal('show');
 
   }
 
-  public close(id: string) {
+  public close(id: string): void {
     $(`#${id}`).modal('hide');
   }
 }

@@ -48,7 +48,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   }
 
   constructor(
-    private modal: ModalService,
+    public modal: ModalService,
     private helper: Utility) { super(); }
 
   ngOnInit(): void {

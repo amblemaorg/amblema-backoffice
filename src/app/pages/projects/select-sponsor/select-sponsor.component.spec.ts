@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectSponsorComponent } from './select-sponsor.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 
 describe('SelectSponsorComponent', () => {
   let component: SelectSponsorComponent;
@@ -8,7 +11,11 @@ describe('SelectSponsorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectSponsorComponent ]
+      declarations: [ SelectSponsorComponent ],
+      imports: [
+        ModalModule,
+        ReactiveInputModule,
+        NgSelectModule ]
     })
     .compileComponents();
   }));

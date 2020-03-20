@@ -2,7 +2,27 @@
     [ID]="MODAL" 
     [size]="'lg'" 
     [title]="title">
-    <div content>
-        registro de datos
-    </div>
+    
+    <form  content>
+        <div class="row">
+            <div class="col-12">
+                <app-input-custom 
+                    [id]="'title-project'"
+                    [placeholder]="'Titulo del proyecto'"
+                    [label]="'Titulo del proyecto'"></app-input-custom>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <app-select-coordinator></app-select-coordinator>
+            </div>
+            <div class="col-4">
+                <app-select-school></app-select-school>
+            </div>
+            <div class="col-4">
+                <app-select-sponsor></app-select-sponsor>
+            </div>
+        </div>
+    </form>
+
 </app-modal>

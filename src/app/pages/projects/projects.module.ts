@@ -16,10 +16,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
-    ProjectsComponent, 
-    ProjectFormComponent, 
-    SelectSchoolComponent, 
-    SelectSponsorComponent, 
+    ProjectsComponent,
+    ProjectFormComponent,
+    SelectSchoolComponent,
+    SelectSponsorComponent,
     SelectCoordinatorComponent],
   imports: [
     CommonModule,

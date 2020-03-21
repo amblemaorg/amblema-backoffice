@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from 'src/app/services/helper/modal.service';
 
 @Component({
   selector: 'app-coordinator',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoordinatorComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public modalService: ModalService
+  ) { }
 
   ngOnInit() {
   }

@@ -9,7 +9,8 @@ import { FormSimpleStepModule } from 'src/app/pages/components/form-components/f
 
 
 @NgModule({
-  declarations: [CoordinatorComponent],
+  declarations: [
+    CoordinatorComponent],
   imports: [
     CommonModule,
     CoordinatorRoutingModule,

@@ -7,6 +7,11 @@
         <app-form-file-step [placeholder]="'Completar los módulos de formación'" [id]="'complete-modules'"></app-form-file-step>
     </nb-card-body>
     <nb-card-footer class="text-right">
-        <button class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
+        <button (click)="modalService.open('step-form-coordinator')" class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
     </nb-card-footer>
 </nb-card>
+
+<!-- Modal -->
+<app-steps-form 
+    [title]="'Registro de paso'" 
+    [id]="'step-form-coordinator'"></app-steps-form>

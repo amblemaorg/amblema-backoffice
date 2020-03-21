@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ModalService } from './modal.service';
 
+declare var $: any;
+
 describe('ModalService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
@@ -10,11 +12,10 @@ describe('ModalService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('TestCase#2944 - Should be open modal', () => {
+  it('TestCase#2944 - Should be modal functions', () => {
+    const service: ModalService = TestBed.get(ModalService);
 
-  });
-
-  it('TestCase#2944 - Should be open close', () => {
-
+    expect( service.open('modal') ).toBeUndefined();
+    expect( service.close('modal') ).toBeUndefined();
   });
 });

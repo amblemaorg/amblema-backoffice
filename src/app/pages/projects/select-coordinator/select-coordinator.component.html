@@ -1,0 +1,21 @@
+<!-- <div class="position-relative">
+    <label class="label">Prioridad del modulo</label>
+    <ng-select 
+        (close)="onChangePriority($event)"
+        [(ngModel)]="selected"
+        (change)="itemSelected($event)"
+        notFoundText="No hay posiciones"
+        class="custom"
+        [items]="data" 
+        bindLabel="name" 
+        placeholder="Selecciona una prioridad">
+    </ng-select>
+</div> -->
+
+<div class="position-relative">
+    <label class="label">Coordinador</label>
+    <ng-select 
+        notFoundText="No hay coordinador"
+        bindLabel="name"
+        placeholder="- Selecciona un coordinador -"></ng-select>
+</div>

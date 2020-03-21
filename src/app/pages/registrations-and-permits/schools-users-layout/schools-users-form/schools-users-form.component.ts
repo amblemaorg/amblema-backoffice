@@ -141,7 +141,6 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
         this.sanitizeNoRequiredData( data );
 
-
         this.schoolUserService.setSchoolUser(data).subscribe((event: HttpEvent<any>) => {
 
           switch (event.type) {

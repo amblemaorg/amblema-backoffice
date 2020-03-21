@@ -266,7 +266,10 @@ export class LearningState implements NgxsOnInit {
     @Action(AddLearning)
     addLearning(ctx: StateContext<LearningStateModel>, action: AddLearning ) {
 
+        console.log( action.payload );
+
         this.learningService.setLearning(action.payload).subscribe( response => {
+            console.log(response);
             response.slider = this.helper.mediaNumberToString(response.slider);
 
             ctx.setState(patch({
@@ -293,6 +296,7 @@ export class LearningState implements NgxsOnInit {
             });
             this.toastr.registerSuccess('Registro', 'Modulo de aprendizaje registrado correctamente.');
         }, (err: any) => {
+            console.log(err);
         });
     }
 

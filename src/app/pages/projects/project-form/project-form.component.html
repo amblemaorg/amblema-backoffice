@@ -1,1 +1,32 @@
-<p>project-form works!</p>
+<app-modal 
+    [ID]="MODAL" 
+    [size]="'lg'" 
+    extra="true"
+    [title]="title">
+    
+    <form  content>
+        <div class="row">
+            <div class="col-12">
+                <app-input-custom 
+                    [id]="'title-project'"
+                    [placeholder]="'Titulo del proyecto'"
+                    [label]="'Titulo del proyecto'"></app-input-custom>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group">
+                <app-select-coordinator></app-select-coordinator>
+            </div>
+            <div class="col-12 form-group">
+                <app-select-school></app-select-school>
+            </div>
+            <div class="col-12 form-group">
+                <app-select-sponsor></app-select-sponsor>
+            </div>
+        </div>
+    </form>
+
+    <button button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
+        <span>Guardar</span>
+    </button>
+</app-modal>

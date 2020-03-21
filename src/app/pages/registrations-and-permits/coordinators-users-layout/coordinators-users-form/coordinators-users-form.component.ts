@@ -92,8 +92,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     // New data no required
     this.form.addControl('image', new FormControl(null));
     this.form.addControl('isReferred', new FormControl(false, []));
-    this.form.addControl('profession', new FormControl('', [Validators.pattern( NORMAL_TEXT_PATTERN )]));
-    this.form.addControl('referredName', new FormControl('', []));
+    this.form.addControl('profession', new FormControl(null, [Validators.pattern( NORMAL_TEXT_PATTERN )]));
+    this.form.addControl('referredName', new FormControl(null, []));
   }
 
 
@@ -120,7 +120,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
 
-
         this.coordinatorUserService.setCoordinatorUser(data).subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.UploadProgress:
@@ -134,7 +133,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               break;
           }
         }, (err: any) => {
-
+          console.log(err);
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }

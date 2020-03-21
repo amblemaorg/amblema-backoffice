@@ -5,13 +5,20 @@
         <!-- Button Create -->
         <div>
             <button 
-                class="mb-3 btn btn-success col-12 col-md-auto" 
-                data-toggle="modal">Registrar</button>
+                (click)="modal.open(MODAL);" 
+                class="mb-3 btn btn-success col-12 col-md-auto">Registrar</button>
         </div>
 
         <!-- Table -->
         <div class="table-responsive">
-            <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+            <ng2-smart-table 
+                (custom)="onAction($event)" 
+                [source]='data' 
+                [settings]="settings"></ng2-smart-table>
         </div>
     </nb-card-body>
 </nb-card>
+
+<app-project-form [mode]="MODE" [MODAL]="MODAL"></app-project-form>
+
+

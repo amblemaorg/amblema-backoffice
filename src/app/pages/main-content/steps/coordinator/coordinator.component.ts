@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from 'src/app/services/helper/modal.service';
+import { KIND_STEP } from '../steps-form/steps-form.component';
 
 @Component({
   selector: 'app-coordinator',
@@ -7,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoordinatorComponent implements OnInit {
 
-  constructor() { }
+  modal = 'form-step-coordinator';
+  kind: any = KIND_STEP;
+
+  constructor(
+    public modalService: ModalService
+  ) { }
 
   ngOnInit() {
   }

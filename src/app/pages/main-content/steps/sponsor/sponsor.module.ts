@@ -6,6 +6,7 @@ import { SponsorComponent } from './sponsor.component';
 import { NbCardModule } from '@nebular/theme';
 import { FormSimpleStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-simple-step/form-simple-step.module';
 import { FormFileStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-file-step/form-file-step.module';
+import { StepsFormModule } from '../steps-form/steps-form.module';
 
 @NgModule({
   declarations: [SponsorComponent],
@@ -14,6 +15,7 @@ import { FormFileStepModule } from 'src/app/pages/components/form-components/for
     SponsorRoutingModule,
     NbCardModule,
 
+    StepsFormModule,
     FormSimpleStepModule,
     FormFileStepModule,
   ]

@@ -11,11 +11,14 @@ export class StepsFormComponent implements OnInit {
   @Input() title:string;
   @Input() kind: string;
 
+  options = [
+    { value: true, label: 'Si' },
+    { value: false, label: 'No' },
+  ];
+
   constructor() { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
 }
 

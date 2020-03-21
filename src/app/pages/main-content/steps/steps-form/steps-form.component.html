@@ -1,17 +1,46 @@
-<app-modal 
-    [size]="'lg'"
-    [title]="title" 
-    [ID]="id">
+<app-modal [size]="'lg'" extra="true" [title]="title" [ID]="id">
     <form class="row" content>
         <div class="col-12">
-            <app-input-custom 
-                [label]="'Nombre'" 
-                [placeholder]="'Nombre'" 
-                [id]="'name-steps'"></app-input-custom>
+            <app-input-custom [label]="'Nombre'" [placeholder]="'Nombre'" [id]="'name-steps'"></app-input-custom>
         </div>
 
         <div class="col-12">
+            <div class="row">
+                <div class="col-12">
+                    <label class="label">Selecciona los elementos del paso</label>
+                </div>
+        
+                <div class="col-auto form-group">
+                    <nb-checkbox>Descripción</nb-checkbox>
+                </div>
+        
+                <div class="col-auto form-group">
+                    <nb-checkbox>Fecha</nb-checkbox>
+                </div>
+                <div class="col-auto form-group">
+                    <nb-checkbox>Archivo adjunto</nb-checkbox>
+        
+                </div>
+                <div class="col-auto form-group">
+                    <nb-checkbox>Video</nb-checkbox>
+                </div>
+                <div class="col-auto form-group">
+                    <nb-checkbox>Checklist</nb-checkbox>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-12">
+            <label class="label">
+                ¿Requiere aprobación de fundación AmbLeMa?
+            </label>
+            <nb-radio-group class="d-flex">
+                <nb-radio *ngFor="let option of options" [value]="option.value">
+                    {{ option.label }}
+                </nb-radio>
+            </nb-radio-group>
         </div>
     </form>
+
+    <button button class="col-6 col-lg-auto btn btn-success">Guardar</button>
 </app-modal>

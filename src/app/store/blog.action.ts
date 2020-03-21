@@ -97,7 +97,7 @@ export class PostsState implements NgxsOnInit {
                 updateItem<Post>(post => post.id === action.oldPost.id, response)
             );
 
-        }, (err: any) => console.log(err));
+            });
     }
 
     @Action( DeletePost )

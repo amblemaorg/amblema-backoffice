@@ -106,6 +106,13 @@ export class InputImgComponent implements OnInit {
        *
        */
 
+      // const element = document.createElement('canvas');
+      // element.width = 200;
+      // element.height = 200;
+
+      // const ctx = element.getContext('2d');
+      // ctx.drawImage(img, 0, 0, 200, 200);
+
       //  String base 64
       this.pictureBase64 = reader.result;
       this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form

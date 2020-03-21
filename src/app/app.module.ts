@@ -49,8 +49,6 @@ registerLocaleData(localeVe, 'es-VE');
 
     // -- NGXS --
     NgxsModule.forRoot( [
-      // RECUERDA REFACTORIZAR EL
-      // MANEJADOR DE ESTADO DE ROLES
       RolesState,
       RoleState,
 
@@ -73,6 +71,8 @@ registerLocaleData(localeVe, 'es-VE');
       developmentMode: !environment.production
     }),
     NgxsStoragePluginModule.forRoot({}),
+    // -- NGXS --
+
     NbToastrModule.forRoot(),
   ],
   providers: [

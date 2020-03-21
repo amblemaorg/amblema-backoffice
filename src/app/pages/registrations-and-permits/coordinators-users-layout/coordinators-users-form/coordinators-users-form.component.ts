@@ -133,7 +133,6 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               break;
           }
         }, (err: any) => {
-          console.log(err);
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }

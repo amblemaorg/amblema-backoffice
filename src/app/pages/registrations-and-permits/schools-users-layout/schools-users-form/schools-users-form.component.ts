@@ -156,7 +156,6 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
               break;
           }
         }, (err: any) => {
-          console.log(err);
           if (err.error.status === 0) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }
@@ -183,8 +182,6 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
         this.progress = 1;
 
-        console.log(updateData);
-
         this.sanitizeNoRequiredData( updateData );
 
         this.schoolUserService.updateSchoolUser(this.backupOldData.id, updateData).subscribe((event: any) => {
@@ -200,7 +197,6 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
         }, (err: any) => {
 
-          console.log( err );
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }

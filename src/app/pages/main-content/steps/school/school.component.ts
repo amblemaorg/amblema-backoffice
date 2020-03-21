@@ -13,7 +13,7 @@ export class SchoolComponent implements OnInit {
   kind: any = KIND_STEP;
 
   constructor(
-    private modalService: ModalService
+    public modalService: ModalService
   ) { }
 
   ngOnInit() {

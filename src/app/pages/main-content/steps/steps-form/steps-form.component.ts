@@ -9,10 +9,19 @@ export class StepsFormComponent implements OnInit {
 
   @Input() id:string; 
   @Input() title:string;
+  @Input() kind: string;
 
   constructor() { }
 
   ngOnInit() {
+
   }
 
+}
+
+export const KIND_STEP = {
+  GENERAL: 'General',
+  COORDINATOR: 'Coordinator', 
+  SPONSOR: 'Sponsor',
+  SCHOOL: 'School'
 }

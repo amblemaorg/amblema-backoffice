@@ -9,7 +9,7 @@ import { KIND_STEP } from '../steps-form/steps-form.component';
 })
 export class CoordinatorComponent implements OnInit {
 
-  modal: string = 'form-step-coordinator';
+  modal = 'form-step-coordinator';
   kind: any = KIND_STEP;
 
   constructor(

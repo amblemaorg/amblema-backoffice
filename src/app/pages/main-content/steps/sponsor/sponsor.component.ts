@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { KIND_STEP } from '../steps-form/steps-form.component';
+import { ModalService } from 'src/app/services/helper/modal.service';
 
 @Component({
   selector: 'app-sponsor',
@@ -6,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SponsorComponent implements OnInit {
 
-  constructor() { }
+  modal = 'form-step-sponsor';
+  kind: any = KIND_STEP;
+
+  constructor(
+    public modalService: ModalService
+  ) { }
 
   ngOnInit() {
   }

@@ -15,6 +15,12 @@
         <app-form-file-step [placeholder]="'Convenio Escuela - Fundación'" [id]="'agreed-school-fundation'"></app-form-file-step>
     </nb-card-body>
     <nb-card-footer class="text-right">
-        <button class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
+        <button (click)="modalService.open(modal)" class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
     </nb-card-footer>
 </nb-card>
+
+<!-- Modal -->
+<app-steps-form 
+    [kind]="kind.SPONSOR"
+    title="Registro de paso" 
+    [id]="modal"></app-steps-form>

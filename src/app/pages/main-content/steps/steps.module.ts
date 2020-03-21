@@ -12,10 +12,10 @@ import { ReactiveInputModule } from '../../components/form-components/reactive-i
   ],
   imports: [
     CommonModule,
-    StepsRoutingModule, 
+    StepsRoutingModule,
 
     ModalModule,
     ReactiveInputModule
-  ], 
+  ],
 })
 export class StepsModule { }

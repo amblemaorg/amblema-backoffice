@@ -13,6 +13,12 @@
         <app-form-simple-step [placeholder]="'Conformación de AmbleMa'" [id]="'step-amblema'"></app-form-simple-step>
     </nb-card-body>
     <nb-card-footer class="text-right">
-        <button class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
+        <button (click)="modalService.open(modal)" class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
     </nb-card-footer>
 </nb-card>
+
+<!-- Modal -->
+<app-steps-form 
+    [kind]="kind.GENERAL"
+    title="Registro de paso" 
+    [id]="modal"></app-steps-form>

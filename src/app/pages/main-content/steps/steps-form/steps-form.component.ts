@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class StepsFormComponent implements OnInit {
 
-  @Input() id:string; 
-  @Input() title:string;
+  @Input() id: string;
+  @Input() title: string;
   @Input() kind: string;
 
   options = [
@@ -24,7 +24,7 @@ export class StepsFormComponent implements OnInit {
 
 export const KIND_STEP = {
   GENERAL: 'General',
-  COORDINATOR: 'Coordinator', 
+  COORDINATOR: 'Coordinator',
   SPONSOR: 'Sponsor',
   SCHOOL: 'School'
-}
+};

@@ -15,7 +15,7 @@ import { NbCheckboxModule, NbRadioModule } from '@nebular/theme';
     ModalModule,
     NbRadioModule,
     NbCheckboxModule
-  ], 
+  ],
   exports: [StepsFormComponent]
 })
 export class StepsFormModule { }

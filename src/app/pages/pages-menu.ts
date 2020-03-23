@@ -44,7 +44,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'bell-outline',
     children: [
       {
-        title: 'Proyecto'
+        title: 'Proyecto',
+        icon: 'briefcase-outline',
+      },
+      {
+        title: 'Creación de usuario',
+        icon: 'person-add-outline'
+      },
+      {
+        title: 'Validar información',
+        icon: 'checkmark-circle-outline'
       }
     ]
   },

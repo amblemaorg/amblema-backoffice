@@ -44,7 +44,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'bell-outline',
     children: [
       {
-        
+        title: 'Proyecto'
       }
     ]
   },

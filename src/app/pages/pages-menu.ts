@@ -46,14 +46,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Proyecto',
         icon: 'briefcase-outline',
+        link: '/pages/requests/project-requests',
       },
       {
         title: 'Creación de usuario',
-        icon: 'person-add-outline'
+        icon: 'person-add-outline',
+        link: '/pages/requests/creation-requests',
       },
       {
         title: 'Validar información',
-        icon: 'checkmark-circle-outline'
+        icon: 'checkmark-circle-outline',
+        link: '/pages/requests/requests-validate-information'
       }
     ]
   },

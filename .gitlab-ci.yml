@@ -83,7 +83,7 @@ coverage:
       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
   artifacts:
       paths:
-          - $PATH_PROJECT_STAGING/coverage/Amblema-BackOffice/index.html
+          - coverage/Amblema-BackOffice/
       expire_in: 7days
   tags: 
       - amblema

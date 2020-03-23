@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SchoolsRoutingModule } from './schools-routing.module';
 import { SchoolsComponent } from './schools.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { SchoolSettingsComponent } from './school-settings/school-settings.component';
 
 @NgModule({
@@ -19,7 +19,8 @@ import { SchoolSettingsComponent } from './school-settings/school-settings.compo
     CommonModule,
     SchoolsRoutingModule,
     Ng2SmartTableModule,
-    NbCardModule
+    NbCardModule, 
+    NbButtonModule,
   ]
 })
 export class SchoolsModule { }

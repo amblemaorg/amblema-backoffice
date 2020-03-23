@@ -46,7 +46,10 @@
 
     </form>
 
-    <button button (click)="onSubmit()" type="submit" class="btn btn-primary col-6 col-md-auto">
+    <button 
+        nbButton 
+        [status]="MODE == ACTION.CREATE ? 'success' : 'primary'"
+        button (click)="onSubmit()" type="submit" class="btn btn-primary col-6 col-md-auto">
         <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
         <span *ngIf="MODE == ACTION.EDIT">Editar</span>
     </button>

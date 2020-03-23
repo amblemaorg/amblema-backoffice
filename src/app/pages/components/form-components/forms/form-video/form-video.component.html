@@ -19,7 +19,7 @@
     </div>
     <div class="col-12 col-lg-auto form-group">
         <div class="btn-group m-inline-form" *ngIf="MODE === ACTION.EDIT">
-            <button 
+            <button nbButton 
                 (click)="onEditVideo()"
                 type="button" 
                 class="btn btn-outline-info">
@@ -27,7 +27,7 @@
             </button>
         </div>
         
-        <button
+        <button nbButton
             *ngIf="MODE === ACTION.CREATE"
             [attr.disabled]="form.invalid ? true : null"
             type="submit" 

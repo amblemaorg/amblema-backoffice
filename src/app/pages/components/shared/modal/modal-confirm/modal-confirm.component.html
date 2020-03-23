@@ -7,7 +7,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title" id="exampleModalLabel">{{title}}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button nbButton type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -15,8 +15,8 @@
                 <ng-content select="[content]"></ng-content>
             </div>
             <div class="modal-footer d-flex justify-content-center justify-content-md-end flex-nowrap">
-                <button type="button" class="btn btn-danger col-12 col-md-auto" data-dismiss="modal">Eliminar</button>
-                <button type="button" class="btn btn-outline-secondary col-12 col-md-auto" data-dismiss="modal">Cancelar</button>
+                <button nbButton type="button" class="btn btn-danger col-12 col-md-auto" data-dismiss="modal">Eliminar</button>
+                <button nbButton type="button" class="btn btn-outline-secondary col-12 col-md-auto" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

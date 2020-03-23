@@ -6,6 +6,7 @@ import { ReactiveValidationModule } from '../../reactive-validation/reactive-val
 import { ReactiveTextAreaModule } from '../../reactive-text-area/reactive-text-area.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveTextAreaModule,
     Ng2SmartTableModule,
 
+    NbButtonModule,
     FormsModule,
     ReactiveFormsModule
   ]

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LearningRoutingModule } from './learning-routing.module';
 import { LearningComponent } from './learning.component';
-import { NbCardModule, NbStepperModule, NbIconModule, NbInputModule, NbListModule, NbRadioModule } from '@nebular/theme';
+import { NbCardModule, NbStepperModule, NbIconModule, NbInputModule, NbListModule, NbRadioModule, NbButtonModule } from '@nebular/theme';
 import { LearningTableComponent } from './learning-table/learning-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { StepperContentComponent } from './stepper-content/stepper-content.component';
@@ -55,6 +55,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NbInputModule,
     Ng2SearchPipeModule,
     NgSelectModule,
+    NbButtonModule,
     FormsModule,
 
     // Add custom module

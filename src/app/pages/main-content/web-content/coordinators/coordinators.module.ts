@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CoordinatorsRoutingModule } from './coordinators-routing.module';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { CoordinatorsComponent } from './coordinators.component';
 import { HelperModule } from '../_helpers/helper.module';
 import { ReactiveSelectModule } from 'src/app/pages/components/form-components/reactive-select/reactive-select.module';
@@ -19,6 +19,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
     CoordinatorsRoutingModule,
     NbCardModule,
     HelperModule,
+    NbButtonModule,
 
     // Add custom module
     ReactiveTextAreaModule,

@@ -5,7 +5,7 @@ import { SponsorsUsersLayoutRoutingModule } from './sponsors-users-layout-routin
 import { SponsorsUsersLayoutComponent } from './sponsors-users-layout.component';
 import { SponsorsUsersFormComponent } from './sponsors-users-form/sponsors-users-form.component';
 import { SponsorsUsersTableComponent } from './sponsors-users-table/sponsors-users-table.component';
-import { NbCardModule, NbIconModule, NbSpinnerModule, NbAlertModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule, NbSpinnerModule, NbAlertModule, NbButtonModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
@@ -38,6 +38,7 @@ import { SponsorsUsersViewComponent } from './sponsors-users-view/sponsors-users
     NbIconModule,
     NbSpinnerModule,
     NbAlertModule,
+    NbButtonModule,
 
     // Add custom module
     ReactiveInputModule,

@@ -23,13 +23,16 @@
 
 <div class="text-center row d-flex justify-content-center">
     <div class="col-6 col-lg-auto">
-        <button class="prev-button btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
+        <button 
+            outline
+            status="basic"
+            nbButton class="prev-button btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
             <nb-icon icon="arrow-back-outline"></nb-icon>
             <span class="d-none d-sm-inline">Atrás</span>
         </button>
     </div>
     <div class="col-6 col-lg-auto">
-        <button 
+        <button nbButton 
             (click)="onSave()"
             [attr.disabled]="form.invalid ? true : null"
             class="next-button btn-block btn btn-primary" 

@@ -20,11 +20,18 @@
         </nb-alert>
         <div>
             <button 
+            nbButton 
+            outline
+            size="small"
+            status="danger"
             (click)="delete.emit(data)"
             class="col-auto col-lg-auto btn btn-outline-danger mr-2">
             <nb-icon icon="trash-2-outline"></nb-icon>
         </button>
-        <button 
+        <button nbButton 
+            outline
+            status="primary"
+            size="small"
             (click)="edit.emit(data)"
             class="col-auto col-lg-auto btn btn-outline-primary">
             <nb-icon icon="edit-outline"></nb-icon>

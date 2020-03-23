@@ -40,6 +40,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    title: 'Solicitudes',
+    icon: 'bell-outline',
+    children: [
+      {
+        
+      }
+    ]
+  },
+  {
     title: 'Contenido',
     icon: 'browser-outline',
     children: [

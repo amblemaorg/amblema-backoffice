@@ -15,6 +15,8 @@
                 </div>
                 <div class="col-12 text-right">
                     <button 
+                        [status]="MODE === ACTION.CREATE ? 'success' : 'primary'"
+                        nbButton 
                         [attr.disabled]="form.invalid ? true : null"
                         type="submit" 
                         [ngClass]="{    
@@ -25,7 +27,9 @@
                         <span *ngIf="MODE === ACTION.CREATE">Registrar</span>
                         <span *ngIf="MODE === ACTION.EDIT">Actualizar</span>
                     </button>
-                    <button
+                    <button nbButton
+                        outline
+                        status="basic"
                         (click)="form.reset(); MODE = ACTION.CREATE"
                         *ngIf="MODE === ACTION.EDIT" 
                         class="btn btn-outline-secondary col-12 col-xl-auto mt-3 mt-xl-0">Cancelar</button>

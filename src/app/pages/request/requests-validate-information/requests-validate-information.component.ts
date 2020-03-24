@@ -11,12 +11,10 @@ export class RequestsValidateInformationComponent extends BaseTable implements O
 
   data: any = [
     {
-      idRequest: '000',
       idProject: '101101',
-      applicant: 'Jose Jose', 
+      type: 'Testimonio de los docentes', 
       date: '09/80/2000',
       status: 'Activo',
-      type: 'Coordinador'
     }
   ];
 
@@ -36,20 +34,12 @@ export class RequestsValidateInformationComponent extends BaseTable implements O
     },
 
       this.settings.columns = {
-        idRequest: {
-          title: 'N° de la solicitud',
-          type: 'string',
-        },
         idProject: {
           title: 'ID del proyecto',
           type: 'string'
         },
         type: {
-          title: 'Tipo de solicitante',
-          type: 'string'
-        },
-        applicant: {
-          title: 'Solicitante',
+          title: 'Tipo de validación',
           type: 'string'
         },
         date: {

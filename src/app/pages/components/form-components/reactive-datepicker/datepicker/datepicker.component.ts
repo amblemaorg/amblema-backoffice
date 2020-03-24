@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale, esLocale } from 'ngx-bootstrap/chronos';
@@ -10,8 +10,8 @@ import { defineLocale, esLocale } from 'ngx-bootstrap/chronos';
 })
 export class DatepickerComponent extends AbstractReactive implements OnInit {
 
+  @Input() today: boolean | null = true;
   maxDate = new Date();
-
 
   constructor( private localService: BsLocaleService ) {
     super();

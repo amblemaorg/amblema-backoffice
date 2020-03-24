@@ -13,6 +13,7 @@ import { ReactiveInputModule } from 'src/app/pages/components/form-components/re
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
+import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
     ReactiveTextAreaModule,
     ReactiveInputModule,
     NbIconModule,
+    ReactiveDatepickerModule,
     NbListModule,
     ReactiveInputFileModule,
     NbCheckboxModule,

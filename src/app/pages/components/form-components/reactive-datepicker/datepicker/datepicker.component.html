@@ -9,7 +9,7 @@
         [formControl]="control"
         [placeholder]="label"
         class="form-control form-group"
-        [maxDate]="maxDate"
+        [maxDate]="today ? maxDate : null"
         [bsConfig]="{ 
             adaptivePosition: true,
             dateInputFormat: 'DD MMM YYYY' }"

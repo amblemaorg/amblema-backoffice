@@ -34,8 +34,13 @@
             <nb-checkbox formControlName="checkedVideo" class="d-block form-group">Video</nb-checkbox>
             <app-input-custom *ngIf="form.get('checkedVideo').value" [id]="'url-video'" [placeholder]="'URL del video'"
                 [label]="'URL del video'"></app-input-custom>
+
+                <nb-checkbox formControlName="checkedDate" class="d-block form-group">Fecha</nb-checkbox>
+                <app-datepicker *ngIf="form.get('checkedDate').value" [label]="'Fecha'" [today]="false"></app-datepicker>
+        
             <nb-checkbox formControlName="checkedList" class="d-block form-group" (checkedChange)="checked=!checked">
                 Checklist</nb-checkbox>
+            
 
             <!-- Dynamic list -->
             <div class="row" *ngIf="form.get('checkedList').value">
@@ -95,7 +100,10 @@
                 </div>
             </div>
             <!-- / Dynamic list -->
+
+
         </div>
+
     </form>
     <button nbButton status="success" button class="col-6 col-md-auto">Registrar</button>
 </app-modal>

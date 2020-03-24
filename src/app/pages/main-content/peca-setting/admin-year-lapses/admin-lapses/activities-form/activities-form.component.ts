@@ -27,7 +27,8 @@ export class ActivitiesFormComponent implements OnInit {
       checkedFileAdmin: new FormControl(false), 
       checkedVideo: new FormControl(false),
       checkedList: new FormControl(false),
-      checkedFileClient: new FormControl(false)
+      checkedFileClient: new FormControl(false),
+      checkedDate: new FormControl(false)
     });
   }
 

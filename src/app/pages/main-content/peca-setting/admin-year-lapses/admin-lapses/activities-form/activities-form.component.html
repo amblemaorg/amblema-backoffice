@@ -38,7 +38,7 @@
                 <nb-checkbox formControlName="checkedDate" class="d-block form-group">Fecha</nb-checkbox>
                 <app-datepicker *ngIf="form.get('checkedDate').value" [label]="'Fecha'" [today]="false"></app-datepicker>
         
-            <nb-checkbox formControlName="checkedList" class="d-block form-group" (checkedChange)="checked=!checked">
+            <nb-checkbox formControlName="checkedList" class="d-block form-group">
                 Checklist</nb-checkbox>
             
 

@@ -16,15 +16,15 @@ export class ActivitiesFormComponent implements OnInit {
   objectives: string[] = []; // Objective list
   MODE_LIST = ACTION.CREATE;
   ID_ITEM: number;
-  ACTION = ACTION; 
+  ACTION = ACTION;
 
-  constructor( 
-    private toastr:CustomToastrService,
-    private fb : FormBuilder ) {
+  constructor(
+    private toastr: CustomToastrService,
+    private fb: FormBuilder ) {
     this.form = this.fb.group({
       objectives: new FormControl(),
-      checkedDescription: new FormControl(false), 
-      checkedFileAdmin: new FormControl(false), 
+      checkedDescription: new FormControl(false),
+      checkedFileAdmin: new FormControl(false),
       checkedVideo: new FormControl(false),
       checkedList: new FormControl(false),
       checkedFileClient: new FormControl(false),
@@ -33,7 +33,7 @@ export class ActivitiesFormComponent implements OnInit {
   }
 
   ngOnInit(  ) {
-    
+
   }
 
   addObjective() {

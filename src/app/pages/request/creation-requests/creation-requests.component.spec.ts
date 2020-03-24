@@ -10,7 +10,7 @@ describe('CreationRequestsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreationRequestsComponent ], 
+      declarations: [ CreationRequestsComponent ],
       imports: [
         NbCardModule,
         Ng2SmartTableModule

@@ -1,30 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
-  selector: 'app-steps-form',
-  templateUrl: './steps-form.component.html',
-  styles: []
+  selector: 'app-activities-form',
+  templateUrl: './activities-form.component.html',
+  styleUrls: ['./activities-form.component.scss']
 })
-export class StepsFormComponent implements OnInit {
-
-  @Input() id: string;
-  @Input() title: string;
-  @Input() kind: string;
+export class ActivitiesFormComponent implements OnInit {
 
   form: FormGroup;
+
   // For list
   objectives: string[] = []; // Objective list
   MODE_LIST = ACTION.CREATE;
   ID_ITEM: number;
   ACTION = ACTION;
-
-  options = [
-    { value: true, label: 'Si' },
-    { value: false, label: 'No' },
-  ];
 
   constructor(
     private toastr: CustomToastrService,
@@ -32,14 +24,17 @@ export class StepsFormComponent implements OnInit {
     this.form = this.fb.group({
       objectives: new FormControl(),
       checkedDescription: new FormControl(false),
-      checkedDate: new FormControl(false),
-      checkedFile: new FormControl(false),
+      checkedFileAdmin: new FormControl(false),
       checkedVideo: new FormControl(false),
-      checkedList: new FormControl(false)
+      checkedList: new FormControl(false),
+      checkedFileClient: new FormControl(false),
+      checkedDate: new FormControl(false)
     });
   }
 
-  ngOnInit() {}
+  ngOnInit(  ) {
+
+  }
 
   addObjective() {
     this.objectives = Object.assign([], this.objectives);
@@ -71,12 +66,4 @@ export class StepsFormComponent implements OnInit {
     this.form.controls.objectives.reset();
   }
 
-
 }
-
-export const KIND_STEP = {
-  GENERAL: 'General',
-  COORDINATOR: 'Coordinator',
-  SPONSOR: 'Sponsor',
-  SCHOOL: 'School'
-};

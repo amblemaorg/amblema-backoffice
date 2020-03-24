@@ -41,7 +41,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Solicitudes',
-    icon: 'bell-outline',
+    icon: 'email-outline',
     children: [
       {
         title: 'Proyecto',
@@ -210,10 +210,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/content/learning'
       },
     ]
-  },
-  {
-    icon: 'email-outline',
-    title: 'Correos'
   },
   {
     icon: 'edit-outline',

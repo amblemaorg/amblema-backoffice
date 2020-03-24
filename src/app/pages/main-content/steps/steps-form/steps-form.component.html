@@ -1,7 +1,17 @@
 <app-modal [size]="'lg'" extra="true" [title]="title" [ID]="id">
-    <form class="row" content>
-        <div class="col-12">
+    <form [formGroup]="form" class="row" content>
+        <div class="col-12 col-md-6">
             <app-input-custom [label]="'Nombre'" [placeholder]="'Nombre'" [id]="'name-steps'"></app-input-custom>
+        </div>
+
+        <div class="col-12 col-md-6 form-group">
+            <label for="" class="label">Aprobación</label>
+            <select name="" id="" class="form-control">
+                <option value=""> - Seleccione el tipo de aprobación - </option>
+                <option value="">Lo aprueba el administrador</option>
+                <option value="">Se aprueba al completar los campos</option>
+                <option value="">Genera una solicitud de aprobación</option>
+            </select>
         </div>
 
         <div class="col-12">
@@ -9,23 +19,100 @@
                 <div class="col-12">
                     <label class="label">Selecciona los elementos del paso</label>
                 </div>
-        
-                <div class="col-auto form-group">
-                    <nb-checkbox>Descripción</nb-checkbox>
-                </div>
-        
-                <div class="col-auto form-group">
-                    <nb-checkbox>Fecha</nb-checkbox>
-                </div>
-                <div class="col-auto form-group">
-                    <nb-checkbox>Archivo adjunto</nb-checkbox>
-        
-                </div>
-                <div class="col-auto form-group">
-                    <nb-checkbox>Video</nb-checkbox>
-                </div>
-                <div class="col-auto form-group">
-                    <nb-checkbox>Checklist</nb-checkbox>
+
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <nb-checkbox formControlName="checkedDescription" class="d-block form-group">Descripción
+                            </nb-checkbox>
+                            <app-text-area-custom *ngIf="form.get('checkedDescription').value" [id]="'description'"
+                                [label]="'Descripción'" [placeholder]="'Descripción'"></app-text-area-custom>
+                            <nb-checkbox formControlName="checkedDate" class="d-block form-group">Fecha</nb-checkbox>
+                            <app-datepicker *ngIf="form.get('checkedDate').value" [label]="'Fecha'" [today]="false">
+                            </app-datepicker>
+
+                            <nb-checkbox formControlName="checkedFile" class="d-block form-group">Archivo adjunto
+                            </nb-checkbox>
+                            <app-input-file *ngIf="form.get('checkedFile').value"></app-input-file>
+                        </div>
+                        <div class="col-6">
+                            <nb-checkbox formControlName="checkedVideo" class="d-block form-group">Video</nb-checkbox>
+                            <app-input-custom *ngIf="form.get('checkedVideo').value" [id]="'url-video'"
+                                [placeholder]="'URL del video'" [label]="'URL del video'"></app-input-custom>
+
+                            <!-- Check loader -->
+                            <nb-checkbox formControlName="checkedList" class="d-block form-group">Checklist</nb-checkbox>
+
+                            <!-- Dynamic list -->
+                            <div class="row" *ngIf="form.get('checkedList').value">
+
+                                <div class="col-12 form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <app-input-custom [id]="'objectives'" [label]="'Objetivos'"
+                                                [control]="form.get('objectives')" [placeholder]="'Objetivos'"
+                                                [submitted]="submitted">
+                                            </app-input-custom>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button nbButton status="primary"
+                                                style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                                                *ngIf="MODE_LIST === ACTION.CREATE"
+                                                [attr.disabled]="!form.controls['objectives'].value ? true : null"
+                                                (click)="addObjective()" class="btn btn-outline-info m-inline-form">
+                                                <nb-icon icon="plus"></nb-icon>
+                                            </button>
+
+                                            <div class="btn-group m-inline-parcial" role="group"
+                                                *ngIf="MODE_LIST === ACTION.EDIT">
+                                                <button style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline
+                                                    nbButton status="info" type="button" class="btn btn-outline-info"
+                                                    (click)="confirmAction()">
+                                                    Confirmar
+                                                </button>
+                                                <button nbButton
+                                                    style="padding-top: 0.6rem; padding-bottom: 0.6rem; border-bottom-left-radius: 0; border-top-left-radius: 0;"
+                                                    outline status="danger" type="button" class="btn btn-outline-danger"
+                                                    (click)="MODE_LIST = ACTION.CREATE; 
+                                form.controls['objectives'].enable();
+                                form.controls['objectives'].reset();">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 form-group">
+                                    <nb-list>
+                                        <nb-list-item *ngFor="let item of objectives; let i = index;"
+                                            class="d-flex w-100 justify-content-between">
+                                            <span>{{ item }}</span>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <button nbButton status="info"
+                                                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline
+                                                    type="button" class="btn btn-outline-info"
+                                                    (click)="onEditObjective(i)">
+                                                    <nb-icon icon="edit-outline"></nb-icon>
+                                                </button>
+                                                <button nbButton status="danger"
+                                                    style="border-bottom-left-radius: 0; border-top-left-radius: 0; padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                                                    outline type="button" class="btn btn-outline-danger"
+                                                    (click)="onDeleteObjective(i)">
+                                                    <nb-icon icon="trash-2-outline"></nb-icon>
+                                                </button>
+                                            </div>
+                                        </nb-list-item>
+                                    </nb-list>
+                                </div>
+                            </div>
+                            <!-- / Dynamic list -->
+
+
+                            <!-- / Check loader -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

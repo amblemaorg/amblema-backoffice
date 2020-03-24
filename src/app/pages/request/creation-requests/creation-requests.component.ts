@@ -13,7 +13,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
     {
       idRequest: '000',
       idProject: '101101',
-      applicant: 'Jose Jose', 
+      applicant: 'Jose Jose',
       date: '09/80/2000',
       status: 'Activo',
       type: 'Coordinador'
@@ -59,8 +59,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
         status: {
           title: 'Estatus',
           type: 'string '
-        }       
-      };    
+        }
+      };
   }
 
 }

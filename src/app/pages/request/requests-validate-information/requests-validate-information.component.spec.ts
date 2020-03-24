@@ -10,7 +10,7 @@ describe('RequestsValidateInformationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestsValidateInformationComponent ], 
+      declarations: [ RequestsValidateInformationComponent ],
       imports: [
         NbCardModule,
         Ng2SmartTableModule,

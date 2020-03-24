@@ -1,43 +1,41 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StepsFormComponent } from './steps-form.component';
+import { ActivitiesFormComponent } from './activities-form.component';
 import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
-import { NbRadioModule, NbCheckboxModule, NbThemeModule, NbIconModule, NbListModule, NbToastrModule } from '@nebular/theme';
+import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
+import { NbCheckboxModule, NbIconModule, NbListModule, NbToastrModule, NbThemeModule } from '@nebular/theme';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
-import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-describe('StepsFormComponent', () => {
-  let component: StepsFormComponent;
-  let fixture: ComponentFixture<StepsFormComponent>;
+describe('ActivitiesFormComponent', () => {
+  let component: ActivitiesFormComponent;
+  let fixture: ComponentFixture<ActivitiesFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        StepsFormComponent ],
+      declarations: [ ActivitiesFormComponent ],
       imports: [
-        NbThemeModule.forRoot(),
-        ReactiveInputModule,
-        NbRadioModule,
-        NbListModule,
-        ReactiveFormsModule,
-        FormsModule,
-        ReactiveDatepickerModule,
-        NbIconModule,
-        ReactiveInputFileModule,
+        ModalModule, 
         ReactiveTextAreaModule,
-        NbCheckboxModule,
-      
+        ReactiveInputModule,
+        ReactiveDatepickerModule,
+        NbListModule,
+        ReactiveFormsModule, 
+        FormsModule,
+        NbThemeModule.forRoot(), 
         NbToastrModule.forRoot({}),
-        ModalModule ],
+        NbIconModule,
+        ReactiveInputFileModule, 
+        NbCheckboxModule
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StepsFormComponent);
+    fixture = TestBed.createComponent(ActivitiesFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

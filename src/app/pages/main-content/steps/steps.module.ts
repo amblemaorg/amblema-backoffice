@@ -5,6 +5,8 @@ import { StepsRoutingModule } from './steps-routing.module';
 import { StepsComponent } from './steps.component';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveTextAreaModule } from '../../components/form-components/reactive-text-area/reactive-text-area.module';
 
 @NgModule({
   declarations: [
@@ -13,9 +15,10 @@ import { ReactiveInputModule } from '../../components/form-components/reactive-i
   imports: [
     CommonModule,
     StepsRoutingModule,
-
+    ReactiveFormsModule,
+    ReactiveTextAreaModule,
+    ReactiveInputModule,
     ModalModule,
-    ReactiveInputModule
   ],
 })
 export class StepsModule { }

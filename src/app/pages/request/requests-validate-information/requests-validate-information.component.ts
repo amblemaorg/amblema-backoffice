@@ -12,7 +12,7 @@ export class RequestsValidateInformationComponent extends BaseTable implements O
   data: any = [
     {
       idProject: '101101',
-      type: 'Testimonio de los docentes', 
+      type: 'Testimonio de los docentes',
       date: '09/80/2000',
       status: 'Activo',
     }
@@ -49,8 +49,8 @@ export class RequestsValidateInformationComponent extends BaseTable implements O
         status: {
           title: 'Estatus',
           type: 'string '
-        }       
-      };    
+        }
+      };
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { SpecialToggleComponent } from '../special-toggle/special-toggle.component';
+import { ModalService } from 'src/app/services/helper/modal.service';
 
 @Component({
   selector: 'app-activity-board',
@@ -32,7 +33,9 @@ export class ActivityBoardComponent extends BaseTable implements TableActions {
     }
   ];
 
-  constructor() {
+  constructor(
+    public modalService: ModalService
+  ) {
     super('form-activity-lapse');
 
     this.settings.actions = false;
@@ -57,7 +60,4 @@ export class ActivityBoardComponent extends BaseTable implements TableActions {
   }
 
   onAction(event: any): void {}
-  newData(event: any): void {}
-  updateData(event: any): void {}
-  deleteData(event: any): void {}
 }

@@ -7,6 +7,7 @@ import { NbCardModule, NbAccordionModule, NbButtonModule } from '@nebular/theme'
 import { ActivityBoardComponent } from './activity-board/activity-board.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SpecialToggleComponent } from './special-toggle/special-toggle.component';
+import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { SpecialToggleComponent } from './special-toggle/special-toggle.componen
     Ng2SmartTableModule,
     NbButtonModule,
 
+    ModalModule,
     // Call custom module
 
   ]

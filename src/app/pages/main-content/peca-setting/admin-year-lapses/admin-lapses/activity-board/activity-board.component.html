@@ -1,9 +1,27 @@
 <div class="col-12 form-group">
-    <button nbButton status="success" class="btn btn-success">Agregar actividad</button>
+    <button 
+        nbButton 
+        (click)="modalService.open('modal-add-activity')"
+        status="success" 
+        class="btn btn-success col-12 col-md-auto">Agregar actividad</button>
 </div>
 
 <div class="col-12">
     <div class="table-responsive">
-        <ng2-smart-table (custom)="onAction($event)" [source]='data' [settings]="settings"></ng2-smart-table>
+        <ng2-smart-table 
+            (custom)="onAction($event)" 
+            [source]='data' 
+            [settings]="settings"></ng2-smart-table>
     </div>
 </div>
+
+<!-- Modal steps -->
+<app-modal 
+    [size]="'lg'"
+    [ID]="'modal-add-activity'" 
+    [title]="'Crear una nueva actividad'">
+    <div content>
+        Hello world
+    </div>
+    <button nbButton status="success" button>Registrar</button>
+</app-modal>

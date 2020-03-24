@@ -1,8 +1,64 @@
 <!-- Modal steps -->
-<app-modal 
-    [size]="'lg'"
-    [ID]="'modal-add-activity'" 
-    [title]="'Crear una nueva actividad'">
-    <div content>Formulario de registro de actividades</div>
-    <button nbButton status="success" button>Registrar</button>
+<app-modal [size]="'lg'" [ID]="'modal-add-activity'" [title]="'Nueva actividad'" extra="true">
+    <form content class="row">
+
+        <div class="col-12 col-md-6">
+            <app-input-custom [id]="'name-activity'" [placeholder]="'Nombre de la actividad'"
+                [label]="'Nombre de la actividad'"></app-input-custom>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label class="label">Tipo de aprobación</label>
+            <select name="" id="" class="form-control">
+                <option value="">Lo aprueba el administrador</option>
+                <option value="">Genera una solicitud de aprobación</option>
+            </select>
+        </div>
+
+        <div class="col-12 form-group">
+            <hr>
+            <label class="label">Elementos del paso</label></div>
+
+        <div class="col-12 col-md-6">
+            <nb-checkbox class="d-block form-group">Texto</nb-checkbox>
+            <nb-checkbox class="d-block form-group">Adjuntar archivo - BackOffice</nb-checkbox>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <nb-checkbox class="d-block form-group">Video</nb-checkbox>
+            <nb-checkbox class="d-block form-group">Checklist</nb-checkbox>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <nb-checkbox class="d-block form-group">Adjuntar archivo - PECA</nb-checkbox>
+
+        </div>
+
+        <!-- <div class="col-12">
+            <app-input-custom [id]="'name-activity'" [placeholder]="'Nombre de la actividad'"
+                [label]="'Nombre de la actividad'"></app-input-custom>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <nb-checkbox class="d-block form-group">Texto</nb-checkbox>
+                    <nb-checkbox class="d-block form-group">Adjuntar archivo - BackOffice</nb-checkbox>
+                    <nb-checkbox class="d-block form-group">Video</nb-checkbox>
+
+                </div>
+                <div class="col-6">
+                    <nb-checkbox class="d-block form-group">Checklist</nb-checkbox>
+                    <nb-checkbox class="d-block form-group">Adjuntar archivo - PECA</nb-checkbox>                    
+                </div>
+            </div>
+        </div> -->
+    </form>
+    <button nbButton status="success" button class="col-6 col-md-auto">Registrar</button>
 </app-modal>
+
+
+<!-- Texto
+Adjuntar archivo - Backoffice
+Video
+Checklist
+Adjuntar archivo - PECA -->

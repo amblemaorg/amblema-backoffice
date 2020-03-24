@@ -1,6 +1,6 @@
 <!-- Modal steps -->
-<app-modal [size]="'lg'" [ID]="'modal-add-activity'" [title]="'Nueva actividad'" extra="true">
-    <form content class="row">
+<app-modal [size]="'normal'" [ID]="'modal-add-activity'" [title]="'Nueva actividad'" extra="true">
+    <form content [formGroup]="form" class="row">
 
         <div class="col-12 col-md-6">
             <app-input-custom [id]="'name-activity'" [placeholder]="'Nombre de la actividad'"
@@ -9,7 +9,7 @@
 
         <div class="col-12 col-md-6">
             <label class="label">Tipo de aprobación</label>
-            <select name="" id="" class="form-control">
+            <select name="" id="type-aprobate" class="form-control">
                 <option value="">Lo aprueba el administrador</option>
                 <option value="">Genera una solicitud de aprobación</option>
             </select>
@@ -19,46 +19,21 @@
             <hr>
             <label class="label">Elementos del paso</label></div>
 
-        <div class="col-12 col-md-6">
-            <nb-checkbox class="d-block form-group">Texto</nb-checkbox>
-            <nb-checkbox class="d-block form-group">Adjuntar archivo - BackOffice</nb-checkbox>
+        <div class="col-12 col-md-6 col-lg-4">
+            <nb-checkbox formControlName="checkedDescription" class="d-block form-group">Texto</nb-checkbox>
+            <app-text-area-custom *ngIf="form.get('checkedDescription')" [id]="'description'" [placeholder]="'Descrición'" [label]="'Descripción'"></app-text-area-custom>            
+
+            <nb-checkbox formControlName="checkedFileAdmin" class="d-block form-group">Adjuntar archivo - BackOffice</nb-checkbox>
         </div>
 
-        <div class="col-12 col-md-6">
-            <nb-checkbox class="d-block form-group">Video</nb-checkbox>
-            <nb-checkbox class="d-block form-group">Checklist</nb-checkbox>
+        <div class="col-12 col-md-6 col-lg-4">
+            <nb-checkbox formControlName="checkedVideo" class="d-block form-group">Video</nb-checkbox>
+            <nb-checkbox formControlName="checkedList" class="d-block form-group" (checkedChange)="checked=!checked">Checklist</nb-checkbox>
         </div>
 
-        <div class="col-12 col-md-6">
-            <nb-checkbox class="d-block form-group">Adjuntar archivo - PECA</nb-checkbox>
-
+        <div class="col-12 col-md-6 col-lg-4">
+            <nb-checkbox formControlName="checkedFileClient" class="d-block form-group">Adjuntar archivo - PECA</nb-checkbox>
         </div>
-
-        <!-- <div class="col-12">
-            <app-input-custom [id]="'name-activity'" [placeholder]="'Nombre de la actividad'"
-                [label]="'Nombre de la actividad'"></app-input-custom>
-        </div>
-        <div class="col-12">
-            <div class="row">
-                <div class="col-6">
-                    <nb-checkbox class="d-block form-group">Texto</nb-checkbox>
-                    <nb-checkbox class="d-block form-group">Adjuntar archivo - BackOffice</nb-checkbox>
-                    <nb-checkbox class="d-block form-group">Video</nb-checkbox>
-
-                </div>
-                <div class="col-6">
-                    <nb-checkbox class="d-block form-group">Checklist</nb-checkbox>
-                    <nb-checkbox class="d-block form-group">Adjuntar archivo - PECA</nb-checkbox>                    
-                </div>
-            </div>
-        </div> -->
     </form>
     <button nbButton status="success" button class="col-6 col-md-auto">Registrar</button>
 </app-modal>
-
-
-<!-- Texto
-Adjuntar archivo - Backoffice
-Video
-Checklist
-Adjuntar archivo - PECA -->

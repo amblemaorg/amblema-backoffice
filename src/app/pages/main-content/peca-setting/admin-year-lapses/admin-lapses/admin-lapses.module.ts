@@ -10,6 +10,8 @@ import { SpecialToggleComponent } from './special-toggle/special-toggle.componen
 import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
 import { ActivitiesFormComponent } from './activities-form/activities-form.component';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { ReactiveInputModule } from 'src/app/pages/components/form-components/re
     ReactiveInputModule,
     Ng2SmartTableModule,
     NbButtonModule,
+    ReactiveTextAreaModule,
     NbCheckboxModule,
+    ReactiveFormsModule,
 
     ModalModule,
     // Call custom module

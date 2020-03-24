@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogComponent } from './blog.component';
-import { NbCardModule, NbInputModule, NbIconModule, NbBadgeModule, NbAlertModule } from '@nebular/theme';
+import { NbCardModule, NbInputModule, NbIconModule, NbBadgeModule, NbAlertModule, NbButtonModule } from '@nebular/theme';
 import { BlogCardComponent } from './blog-card/blog-card.component';
 import { BlogFormComponent } from './blog-form/blog-form.component';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
@@ -32,6 +32,7 @@ import { PaginatorModule } from 'src/app/pages/components/shared/paginator/pagin
     NbIconModule,
     NbBadgeModule,
     NbAlertModule,
+    NbButtonModule,
 
     // Add custom module
     PaginatorModule,

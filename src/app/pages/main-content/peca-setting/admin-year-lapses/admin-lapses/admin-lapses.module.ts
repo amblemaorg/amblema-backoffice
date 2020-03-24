@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminLapsesRoutingModule } from './admin-lapses-routing.module';
 import { AdminLapsesComponent } from './admin-lapses.component';
-import { NbCardModule, NbAccordionModule } from '@nebular/theme';
+import { NbCardModule, NbAccordionModule, NbButtonModule } from '@nebular/theme';
 import { ActivityBoardComponent } from './activity-board/activity-board.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SpecialToggleComponent } from './special-toggle/special-toggle.component';
@@ -25,6 +25,7 @@ import { SpecialToggleComponent } from './special-toggle/special-toggle.componen
     NbAccordionModule,
     NbCardModule,
     Ng2SmartTableModule,
+    NbButtonModule,
 
     // Call custom module
 

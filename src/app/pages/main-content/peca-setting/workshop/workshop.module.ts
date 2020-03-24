@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { WorkshopRoutingModule } from './workshop-routing.module';
 import { WorkshopComponent } from './workshop.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { FormFileStepModule } from 'src/app/pages/components/form-components/forms/form-step/form-file-step/form-file-step.module';
 
 @NgModule({
@@ -12,6 +12,7 @@ import { FormFileStepModule } from 'src/app/pages/components/form-components/for
     CommonModule,
     WorkshopRoutingModule,
     NbCardModule,
+    NbButtonModule,
 
     // Add custom module
     FormFileStepModule

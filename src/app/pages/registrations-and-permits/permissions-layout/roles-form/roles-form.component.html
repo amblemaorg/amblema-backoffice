@@ -8,14 +8,15 @@
             [submitted]="submitted"></app-input-custom>
         </div>
 
-        <div class="col-12 col-lg">
+        <div class="col-12 col-md">
             <app-select-status 
                 [control]="formRole.get('status')"
                 [submitted]='submitted'>
             </app-select-status>
         </div>
-        <div class="col-12 col-lg">
-            <button class="btn btn-success btn-block m-inline-parcial"
+        <div class="col-12 col-md">
+            <button nbButton [status]="MODE == ACTION.CREATE ? 'success' : 'primary'" class="btn-block m-inline-parcial"
+            style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
             [ngClass]="{'btn-success': MODE == ACTION.CREATE, 'btn-primary': MODE == ACTION.EDIT}"
             (click)="onSubmit()">
                 <span *ngIf="MODE == ACTION.CREATE">Guardar</span>

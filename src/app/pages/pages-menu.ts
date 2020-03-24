@@ -40,6 +40,27 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    title: 'Solicitudes',
+    icon: 'bell-outline',
+    children: [
+      {
+        title: 'Proyecto',
+        icon: 'briefcase-outline',
+        link: '/pages/requests/project-requests',
+      },
+      {
+        title: 'Creación de usuario',
+        icon: 'person-add-outline',
+        link: '/pages/requests/creation-requests',
+      },
+      {
+        title: 'Validar información',
+        icon: 'checkmark-circle-outline',
+        link: '/pages/requests/requests-validate-information'
+      }
+    ]
+  },
+  {
     title: 'Contenido',
     icon: 'browser-outline',
     children: [

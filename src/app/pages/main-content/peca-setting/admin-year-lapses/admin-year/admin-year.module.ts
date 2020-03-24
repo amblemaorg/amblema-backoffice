@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminYearRoutingModule } from './admin-year-routing.module';
 import { AdminYearComponent } from './admin-year.component';
-import { NbCardModule, NbListModule } from '@nebular/theme';
+import { NbCardModule, NbListModule, NbButtonModule } from '@nebular/theme';
 import { SchoolBoardComponent } from './school-board/school-board.component';
 import { SchoolAdminComponent } from './school-admin/school-admin.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -15,6 +15,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     AdminYearRoutingModule,
     NbCardModule,
     NbListModule,
+    NbButtonModule,
     Ng2SmartTableModule
   ]
 })

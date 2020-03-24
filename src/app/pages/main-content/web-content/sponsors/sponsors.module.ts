@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SponsorsRoutingModule } from './sponsors-routing.module';
 import { SponsorsComponent } from './sponsors.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { HelperModule } from '../_helpers/helper.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -22,6 +22,7 @@ import { ReactiveSelectModule } from 'src/app/pages/components/form-components/r
     HelperModule,
     Ng2SmartTableModule,
     ReactiveInputFileModule,
+    NbButtonModule,
 
     // Add custom module
     ReactiveTextAreaModule,

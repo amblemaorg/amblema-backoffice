@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ConventionRoutingModule } from './convention-routing.module';
 import { ConventionComponent } from './convention.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 
 @NgModule({
@@ -12,6 +12,7 @@ import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components
     CommonModule,
     ConventionRoutingModule,
     NbCardModule,
+    NbButtonModule,
 
     // Add custom module
     ReactiveTextAreaModule,

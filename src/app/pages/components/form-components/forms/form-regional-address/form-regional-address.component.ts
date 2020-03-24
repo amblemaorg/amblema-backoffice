@@ -11,6 +11,7 @@ import { errorMessages } from 'src/app/helpers/text-content/error-manager';
 @Component({
     selector: 'app-form-regional-address',
     templateUrl: './form-regional-address.component.html',
+    styleUrls: ['./form-regional-address.component.scss']
 })
 
 export class FormRegionalAddressComponent extends AbstractReactive implements OnDestroy, OnChanges {

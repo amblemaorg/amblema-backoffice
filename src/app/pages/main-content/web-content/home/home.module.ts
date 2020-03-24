@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { HelperModule } from '../_helpers/helper.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FormSliderModule } from 'src/app/pages/components/form-components/forms/form-slider/form-slider.module';
@@ -18,7 +18,7 @@ import { FormSliderModule } from 'src/app/pages/components/form-components/forms
     NbCardModule,
     HelperModule,
     Ng2SmartTableModule,
-
+    NbButtonModule,
     FormSliderModule,
   ]
 })

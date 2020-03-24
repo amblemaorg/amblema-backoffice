@@ -41,7 +41,7 @@
                 [placeholder]="'Respuesta'"></app-input-custom>
         </div>
 
-        <div class="col-12">
+        <div class="col-12 mt-3 form-group">
             <label class="label d-block">Respuesta correcta</label>
             <nb-radio-group 
                 formControlName="correctOption"
@@ -54,10 +54,11 @@
         </div>
 
         <div class="col-12 text-right">
-            <button 
+            <button nbButton 
+                [status]="MODE == ACTION.CREATE ? 'success' : 'primary'"
                 type="submit" 
                 [ngClass]="{    
-                    'mr-xl-3' : MODE === ACTION.EDIT,
+                    'mr-lg-3' : MODE === ACTION.EDIT,
                     'btn-primary': MODE == ACTION.EDIT,
                     'btn-success': MODE == ACTION.CREATE}"
                 class="btn btn-success col-12 col-lg-auto">
@@ -66,9 +67,11 @@
             </button>
 
             <button 
+                status="basic"
+                nbButton 
                 (click)="form.reset(); MODE = ACTION.CREATE"
                 *ngIf="MODE == ACTION.EDIT"
-                class="btn btn-outline-secondary col-12 col-xl-auto mt-3 mt-xl-0">
+                class="btn btn-outline-secondary col-12 col-lg-auto mt-3 mt-lg-0">
                 Cancelar
             </button>
         </div>
@@ -94,13 +97,17 @@
 <!-- Button stepper -->
 <div class="text-center row d-flex justify-content-center">
     <div class="col-6 col-lg-auto">
-        <button class="prev-button" class="btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
+        <button  
+            outline
+            status="basic"
+            class="prev-button btn-block btn btn-outline-secondary" nbButton nbStepperPrevious>
             <nb-icon icon="arrow-back-outline"></nb-icon>
             <span class="d-none d-sm-inline">Atrás</span>
         </button>
     </div>
     <div class="col-6 col-lg-auto">
-        <button 
+        <button nbButton 
+            status="primary"
             (click)="onSaveAll()"
             [attr.disabled]=" quizzes.length > 0 ? null : true "
             class="next-button btn-primary btn col-12 col-lg-auto" 

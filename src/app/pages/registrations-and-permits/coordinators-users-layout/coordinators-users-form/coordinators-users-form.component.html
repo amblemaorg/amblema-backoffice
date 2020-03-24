@@ -139,11 +139,14 @@
     </form><!-- / End main content -->
 
     <!-- Footer content -->
-    <button [attr.disabled]="progress != 0 ? true: null" [nbSpinner]="progress == 0 ? null : true"
-        nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto"
-        [ngClass]="{'btn-primary': MODE == ACTION.EDIT, 'btn-success': MODE == ACTION.CREATE}">
+    <button nbButton
+        nbButton
+        [status]="MODE == ACTION.EDIT ? 'primary' : 'success'"
+        [attr.disabled]="progress != 0 ? true: null"
+        [nbSpinner]="progress == 0 ? null : true" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="col-6 col-md-auto">
         <span *ngIf="MODE == ACTION.CREATE && progress == 0">Guardar</span>
         <span *ngIf="progress != 0">Guardando...</span>
         <span *ngIf="MODE == ACTION.EDIT && progress == 0">Editar</span>
     </button>
+
 </app-modal>

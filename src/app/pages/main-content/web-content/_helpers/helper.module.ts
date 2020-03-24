@@ -9,6 +9,7 @@ import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { AwardFormComponent } from './award-form/award-form.component';
+import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { AwardFormComponent } from './award-form/award-form.component';
         Ng2SmartTableModule,
         FormsModule,
         ReactiveFormsModule,
+        NbButtonModule,
 
         // Add custom module
         ReactiveInputModule,

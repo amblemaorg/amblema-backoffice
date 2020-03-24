@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminLapsesRoutingModule } from './admin-lapses-routing.module';
 import { AdminLapsesComponent } from './admin-lapses.component';
-import { NbCardModule, NbAccordionModule, NbButtonModule, NbCheckboxModule } from '@nebular/theme';
+import { NbCardModule, NbAccordionModule, NbButtonModule, NbCheckboxModule, NbIconModule, NbListModule } from '@nebular/theme';
 import { ActivityBoardComponent } from './activity-board/activity-board.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SpecialToggleComponent } from './special-toggle/special-toggle.component';
@@ -12,6 +12,7 @@ import { ActivitiesFormComponent } from './activities-form/activities-form.compo
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
+import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 
 
 @NgModule({
@@ -34,6 +35,10 @@ import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components
     Ng2SmartTableModule,
     NbButtonModule,
     ReactiveTextAreaModule,
+    ReactiveInputModule,
+    NbIconModule,
+    NbListModule,
+    ReactiveInputFileModule,
     NbCheckboxModule,
     ReactiveFormsModule,
 

@@ -19,7 +19,7 @@ import { SchoolSettingsComponent } from './school-settings/school-settings.compo
     CommonModule,
     SchoolsRoutingModule,
     Ng2SmartTableModule,
-    NbCardModule, 
+    NbCardModule,
     NbButtonModule,
   ]
 })

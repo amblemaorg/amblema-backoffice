@@ -1,6 +1,8 @@
 <nb-card>
     <nb-card-header>Solicitudes de nuevo proyecto</nb-card-header>
     <nb-card-body>
-        Tabla de solicitudes para crear un nuevo proyecto
+        <div class="table-responsive">
+            <ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
+        </div>
     </nb-card-body>
 </nb-card>

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectRequestsComponent } from './project-requests.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NbCardModule } from '@nebular/theme';
 
 describe('ProjectRequestsComponent', () => {
   let component: ProjectRequestsComponent;
@@ -8,7 +10,11 @@ describe('ProjectRequestsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectRequestsComponent ]
+      declarations: [ ProjectRequestsComponent ],
+      imports: [
+        NbCardModule,
+        Ng2SmartTableModule
+      ]
     })
     .compileComponents();
   }));

@@ -8,13 +8,15 @@ import { ActivityBoardComponent } from './activity-board/activity-board.componen
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SpecialToggleComponent } from './special-toggle/special-toggle.component';
 import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
+import { ActivitiesFormComponent } from './activities-form/activities-form.component';
 
 
 @NgModule({
   declarations: [
     AdminLapsesComponent,
     ActivityBoardComponent,
-    SpecialToggleComponent
+    SpecialToggleComponent,
+    ActivitiesFormComponent
   ],
   entryComponents: [
     SpecialToggleComponent

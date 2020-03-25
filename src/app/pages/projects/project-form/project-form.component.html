@@ -4,23 +4,24 @@
     extra="true"
     [title]="title">
     
-    <form  content>
+    <form [formGroup]="form" content>
         <div class="row">
             <div class="col-12">
                 <app-input-custom 
+                    [submitted]="submitted"
                     [id]="'title-project'"
                     [placeholder]="'Titulo del proyecto'"
                     [label]="'Titulo del proyecto'"></app-input-custom>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 form-group">
+            <div class="col-12 col-md-4 form-group">
                 <app-select-coordinator></app-select-coordinator>
             </div>
-            <div class="col-12 form-group">
+            <div class="col-12 col-md-4 form-group">
                 <app-select-school></app-select-school>
             </div>
-            <div class="col-12 form-group">
+            <div class="col-12 col-md-4 form-group">
                 <app-select-sponsor></app-select-sponsor>
             </div>
         </div>

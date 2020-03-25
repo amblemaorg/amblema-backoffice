@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   templateUrl: './project-form.component.html',
   styles: []
 })
-export class ProjectFormComponent implements OnChanges, OnDestroy, OnInit {
+export class ProjectFormComponent implements OnChanges, OnInit {
 
   @Input() mode: string;
   @Input() MODAL: string;
@@ -15,6 +15,7 @@ export class ProjectFormComponent implements OnChanges, OnDestroy, OnInit {
   title: string;
 
   form: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder) {
   }
@@ -32,11 +33,8 @@ export class ProjectFormComponent implements OnChanges, OnDestroy, OnInit {
     this.title = this.mode === ACTION.CREATE ? 'Registrar proyecto' : 'Editar proyecto';
   }
 
-  ngOnDestroy(): void {
-
-  }
-
   onSubmit(): void {
-
+    this.submitted = true;
+    
   }
 }

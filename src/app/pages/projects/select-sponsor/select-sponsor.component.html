@@ -1,6 +1,7 @@
 <div class="position-relative">
     <label class="label">Padrino</label>
     <ng-select 
+        [items]="sponsorUsers$ | async"
         notFoundText="No hay padrino"
         bindLabel="name"
         placeholder="- Selecciona un padrino -"></ng-select>

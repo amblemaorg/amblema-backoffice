@@ -1,6 +1,7 @@
 <div class="position-relative">
     <label class="label">Escuela</label>
     <ng-select 
+        [items]="schoolUsers$ | async"
         notFoundText="No hay escuela"
         bindLabel="name"
         placeholder="- Selecciona una escuela -"></ng-select>

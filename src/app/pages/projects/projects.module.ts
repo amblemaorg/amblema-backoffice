@@ -12,6 +12,7 @@ import { SelectSchoolComponent } from './select-school/select-school.component';
 import { SelectSponsorComponent } from './select-sponsor/select-sponsor.component';
 import { SelectCoordinatorComponent } from './select-coordinator/select-coordinator.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,6 +27,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NbCardModule,
     Ng2SmartTableModule,
     NbButtonModule,
+    ReactiveFormsModule, 
+    FormsModule,
 
     ModalModule,
     NgSelectModule,

@@ -6,7 +6,7 @@ import {
   SetTestimonialWebSponsor,
   UpdateTestimonialWebSponsor,
   DeleteTestimonialWebSponsor,
-  SetWebSponsor } from 'src/app/store/web-sponsor.action';
+  SetWebSponsor } from 'src/app/store/web-content/web-sponsor.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebSponsor } from 'src/app/models/web/web-sponsor.model';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';

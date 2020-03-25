@@ -11,6 +11,7 @@ export class PagesComponent implements OnInit {
 
     // Call menu options
     menu = MENU_ITEMS;
+    
     constructor(
         private authService: NbAuthService,
         private router: Router) {
@@ -21,7 +22,6 @@ export class PagesComponent implements OnInit {
                     this.loading = true;
                     break;
                 }
-
                 case event instanceof NavigationEnd:
                 case event instanceof NavigationCancel:
                 case event instanceof NavigationError: {

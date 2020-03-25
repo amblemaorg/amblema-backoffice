@@ -5,7 +5,7 @@ import {
   SetTestimonialWebCoordinator,
   UpdateTestimonialWebCoordinator,
   DeleteTestimonialWebCoordinator,
-  SetWebCoordinator } from 'src/app/store/web-coordinator.action';
+  SetWebCoordinator } from 'src/app/store/web-content/web-coordinator.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebCoordinator } from 'src/app/models/web/web-coordinator.model';
 import { Testimonial } from 'src/app/models/web/testimonial.model';

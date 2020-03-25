@@ -22,10 +22,10 @@ export class ProjectFormComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      title: new FormControl([Validators.required]),
-      idSponsor: new FormControl([Validators.required]),
-      idSchool: new FormControl([Validators.required]),
-      idCoordinator: new FormControl([Validators.required])
+      title: new FormControl('',[Validators.required]),
+      idSponsor: new FormControl('', [Validators.required]),
+      idSchool: new FormControl('',[Validators.required]),
+      idCoordinator: new FormControl('',[Validators.required])
     });
   }
 
@@ -35,6 +35,12 @@ export class ProjectFormComponent implements OnChanges, OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    
+
+    console.log(
+
+      this.form.value
+
+    )
+
   }
 }

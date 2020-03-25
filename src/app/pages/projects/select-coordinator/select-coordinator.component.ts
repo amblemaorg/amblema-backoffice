@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.action';
 import { Observable } from 'rxjs';
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-select-coordinator',
@@ -11,4 +12,9 @@ import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 })
 export class SelectCoordinatorComponent {
   @Select( CoordinatorUserState.coordinatorUsers ) coordinatorUsers$: Observable<CoordinatorUser[]>;
+  @Input() control: AbstractControl | null = new FormControl(); 
+
+  onSelected( event: any ) {
+    this.control.setValue( event ? event.id : null );
+  }
 }

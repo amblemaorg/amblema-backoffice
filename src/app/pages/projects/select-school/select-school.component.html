@@ -1,6 +1,7 @@
 <div class="position-relative">
     <label class="label">Escuela</label>
     <ng-select 
+        (change)="onSelected($event)"
         [items]="schoolUsers$ | async"
         notFoundText="No hay escuela"
         bindLabel="name"

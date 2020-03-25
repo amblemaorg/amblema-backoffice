@@ -12,6 +12,8 @@ import { SelectSponsorComponent } from './select-sponsor/select-sponsor.componen
 import { SelectCoordinatorComponent } from './select-coordinator/select-coordinator.component';
 import { SelectSchoolComponent } from './select-school/select-school.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
@@ -27,6 +29,9 @@ describe('ProjectsComponent', () => {
         ProjectsComponent ],
       imports: [
         ModalModule,
+        NgxsModule.forRoot(),
+        ReactiveFormsModule,
+        FormsModule,
         NgSelectModule,
         ReactiveInputModule,
         Ng2SmartTableModule,

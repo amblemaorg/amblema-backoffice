@@ -3,7 +3,7 @@ import { BaseTable } from 'src/app/helpers/base-table';
 import { Utility } from 'src/app/helpers/utility';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { Select, Store } from '@ngxs/store';
-import { ProjectState, DeleteProject } from 'src/app/store/project.action';
+import { ProjectState, DeleteProject, SelectedProject } from 'src/app/store/project.action';
 import { Project } from 'src/app/models/project.model';
 import { Observable } from 'rxjs';
 
@@ -97,19 +97,23 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     };
   }
 
+  clear() {
+    
+  }
 
   // Events table
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-
+        this.store.dispatch(new SelectedProject(event.data));
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
         this.modal.open(this.MODAL);
+        this.store.dispatch(new SelectedProject(event.data));
         break;
       case this.ACTION.DELETE:
-        this.store.dispatch( new DeleteProject( event.id ) );
+        this.store.dispatch(new DeleteProject(event.data.id));
         break;
     }
   }

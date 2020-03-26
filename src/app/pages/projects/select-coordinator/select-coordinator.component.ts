@@ -4,6 +4,9 @@ import { CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.
 import { Observable } from 'rxjs';
 import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
 import { AbstractControl, FormControl } from '@angular/forms';
+import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { ProjectState } from 'src/app/store/project.action';
+import { Project } from 'src/app/models/project.model';
 
 @Component({
   selector: 'app-select-coordinator',
@@ -12,8 +15,11 @@ import { AbstractControl, FormControl } from '@angular/forms';
 })
 export class SelectCoordinatorComponent implements OnInit, OnChanges {
   @Select( CoordinatorUserState.coordinatorUsers ) coordinatorUsers$: Observable<CoordinatorUser[]>;
+  @Select( ProjectState.project ) project$: Observable<Project>;
+
   @Input() control: AbstractControl | null = new FormControl();
   @Input() submitted: boolean;
+  @Input() mode:string;
 
   selectedCoordinator;
 
@@ -21,6 +27,12 @@ export class SelectCoordinatorComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.selectedCoordinator = this.control.value ? this.selectedCoordinator : null;
+  
+    if( this.mode === ACTION.EDIT  ) {
+      this.project$.subscribe( (response:any) => {
+        this.selectedCoordinator = response.coordinator.name;
+      });
+    } else { this.control.reset(); this.selectedCoordinator = null; }
   }
 
   onSelected( event: any ) {

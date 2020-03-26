@@ -6,7 +6,7 @@
         <div>
             <button nbButton 
                 status="success"
-                (click)="modal.open(MODAL);" 
+                (click)="modal.open(MODAL); MODE = ACTION.CREATE; clear()" 
                 class="mb-3 btn btn-success col-12 col-md-auto">Registrar</button>
         </div>
 

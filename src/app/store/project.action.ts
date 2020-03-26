@@ -34,7 +34,12 @@ export class UpdateProject {
 
 export class DeleteProject {
     static readonly type = '[Project] Delete Project';
-    constructor( public payload: Project ) {}
+    constructor( public payload: string ) {}
+}
+
+export class ClearProject {
+    static readonly type = '[Project] Clear Project';
+    constructor( ) {}
 }
 
 @State<ProjectStateModel>({
@@ -118,10 +123,10 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
 
     @Action(DeleteProject)
     deleteProject(ctx: StateContext<ProjectStateModel>, action: DeleteProject) {
-        this.subscription = this.projectService.deleteProject(action.payload.id).subscribe(response => {
+        this.subscription = this.projectService.deleteProject(action.payload).subscribe(response => {
             ctx.setState(patch({
                 ...ctx.getState(),
-                projects: removeItem<Project>(project => project.id === action.payload.id)
+                projects: removeItem<Project>(project => project.id === action.payload)
             }));
             this.toastr.deleteRegister('Eliminación', 'Se ha eliminado un proyecto');
         });

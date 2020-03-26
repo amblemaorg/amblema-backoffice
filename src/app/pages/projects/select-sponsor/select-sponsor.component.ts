@@ -4,6 +4,9 @@ import { SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
 import { Observable } from 'rxjs';
 import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
 import { FormControl, AbstractControl } from '@angular/forms';
+import { ProjectState } from 'src/app/store/project.action';
+import { Project } from 'src/app/models/project.model';
+import { ACTION } from 'src/app/helpers/text-content/text-crud';
 
 @Component({
   selector: 'app-select-sponsor',
@@ -12,8 +15,11 @@ import { FormControl, AbstractControl } from '@angular/forms';
 })
 export class SelectSponsorComponent implements OnInit, OnChanges {
   @Select( SponsorUserState.sponsorUsers ) sponsorUsers$: Observable<SponsorUser[]>;
+  @Select( ProjectState.project ) project$: Observable<Project>;
+
   @Input() control: AbstractControl | null = new FormControl();
   @Input() submitted: boolean;
+  @Input() mode:string;
 
   selectedSponsor;
 
@@ -23,6 +29,13 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.selectedSponsor = this.control.value ? this.selectedSponsor : null;
+    if( this.mode === ACTION.EDIT  ) {
+      this.project$.subscribe( (response:any) => {
+        this.selectedSponsor = response.sponsor.name;
+      });
+    } else {
+      this.control.reset(); this.selectedSponsor = null;
+    }
   }
 
   onSelected( event: any ) {

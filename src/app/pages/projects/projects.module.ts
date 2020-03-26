@@ -13,6 +13,7 @@ import { SelectSponsorComponent } from './select-sponsor/select-sponsor.componen
 import { SelectCoordinatorComponent } from './select-coordinator/select-coordinator.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ProjectFormComponent,
     SelectSchoolComponent,
     SelectSponsorComponent,
-    SelectCoordinatorComponent],
+    SelectCoordinatorComponent,
+    ProjectDetailsComponent],
   imports: [
     CommonModule,
     NbCardModule,

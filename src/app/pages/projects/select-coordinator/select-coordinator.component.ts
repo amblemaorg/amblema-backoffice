@@ -19,7 +19,7 @@ export class SelectCoordinatorComponent implements OnInit, OnChanges {
 
   @Input() control: AbstractControl | null = new FormControl();
   @Input() submitted: boolean;
-  @Input() mode:string;
+  @Input() mode: string;
 
   selectedCoordinator;
 
@@ -27,16 +27,17 @@ export class SelectCoordinatorComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.selectedCoordinator = this.control.value ? this.selectedCoordinator : null;
-  
-    if( this.mode === ACTION.EDIT  ) {
-      this.project$.subscribe( (response:any) => {
+
+    if ( this.mode === ACTION.EDIT  ) {
+      this.project$.subscribe( (response: any) => {
         this.selectedCoordinator = response.coordinator.name;
       });
-    } else { this.control.reset(); this.selectedCoordinator = null; }
+    } 
   }
 
   onSelected( event: any ) {
     this.control.setValue( event ? event.id : null );
+
     this.selectedCoordinator = event ? event.name : null;
   }
 }

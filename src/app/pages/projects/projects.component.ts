@@ -98,7 +98,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   }
 
   clear() {
-    
+
   }
 
   // Events table
@@ -106,6 +106,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     switch (event.action) {
       case this.ACTION.VIEW:
         this.store.dispatch(new SelectedProject(event.data));
+        this.modal.open('view-project');
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;

@@ -19,7 +19,7 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
 
   @Input() control: AbstractControl | null = new FormControl();
   @Input() submitted: boolean;
-  @Input() mode:string;
+  @Input() mode: string;
 
   selectedSponsor;
 
@@ -29,12 +29,10 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.selectedSponsor = this.control.value ? this.selectedSponsor : null;
-    if( this.mode === ACTION.EDIT  ) {
-      this.project$.subscribe( (response:any) => {
+    if ( this.mode === ACTION.EDIT  ) {
+      this.project$.subscribe( (response: any) => {
         this.selectedSponsor = response.sponsor.name;
       });
-    } else {
-      this.control.reset(); this.selectedSponsor = null;
     }
   }
 

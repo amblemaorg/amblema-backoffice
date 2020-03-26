@@ -18,7 +18,7 @@ export class SelectSchoolComponent implements OnInit, OnChanges {
   @Select( ProjectState.project ) project$: Observable<Project>;
   @Input() control: AbstractControl | null = new FormControl();
   @Input() submitted: boolean;
-  @Input() mode:string;
+  @Input() mode: string;
 
   selectedSchool;
 
@@ -27,13 +27,11 @@ export class SelectSchoolComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.selectedSchool = this.control.value ? this.selectedSchool : null;
-  
-    if( this.mode === ACTION.EDIT  ) {
-      this.project$.subscribe( (response:any) => {
+
+    if ( this.mode === ACTION.EDIT  ) {
+      this.project$.subscribe( (response: any) => {
         this.selectedSchool = response.school.name;
       });
-    } else {
-      this.control.reset(); this.selectedSchool = null;
     }
   }
 

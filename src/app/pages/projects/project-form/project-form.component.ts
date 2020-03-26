@@ -18,7 +18,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
   @Input() mode: string;
   @Input() MODAL: string;
 
-  @Select( ProjectState.project ) project$: Observable<Project>;
+  @Select(ProjectState.project) project$: Observable<Project>;
 
   title: string;
   form: FormGroup;
@@ -35,9 +35,6 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
     private toastr: CustomToastrService,
     private projectService: ProjectService,
     private fb: FormBuilder) {
-  }
-
-  ngOnInit(): void {
     this.form = this.fb.group({
       sponsor: new FormControl(null, [Validators.required]),
       school: new FormControl(null, [Validators.required]),
@@ -45,27 +42,31 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
     });
   }
 
+  ngOnInit(): void {
+
+  }
+
   ngOnChanges(): void {
     this.title = this.mode === ACTION.CREATE ? 'Registrar proyecto' : 'Editar proyecto';
 
-    
 
-    if( this.mode === ACTION.EDIT ) {
-      this.project$.subscribe( (response:any) => {
-  
-        this.oldProject = response; 
-        this.form.controls.sponsor.setValue( response.sponsor.id );
-        this.form.controls.school.setValue( response.school.id );  
-        this.form.controls.coordinator.setValue( response.coordinator.id ); 
-      });
-    } else {
-      this.progress = 0;
-      this.submitted = false;
-    }
+
+     if( this.mode === ACTION.EDIT ) {
+       this.project$.subscribe( (response:any) => {
+         this.oldProject = response; 
+         this.form.controls.sponsor.setValue( response.sponsor.id );
+         this.form.controls.school.setValue( response.school.id );  
+         this.form.controls.coordinator.setValue( response.coordinator.id ); 
+       });
+     } else  {
+       this.form.reset();
+       this.progress = 0;
+       this.submitted = false;
+     }
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -73,35 +74,31 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
   onSubmit(): void {
     this.submitted = true;
 
-
-    if ( this.form.valid ) {
+    if (this.form.valid) {
       this.progress = 1;
-      if ( this.mode === ACTION.CREATE ) {
-        this.projectService.setProject( this.form.value ).subscribe( response => {
+      if (this.mode === ACTION.CREATE) {
+
+        this.projectService.setProject(this.form.value).subscribe(response => {
           this.reset();
           this.toastr.registerSuccess('Registro proyecto', 'Proyecto registrado correctamente');
-          this.store.dispatch( new AddProject(response) );
+          this.store.dispatch(new AddProject(response));
 
         }, (err: any) => {
           this.progress = 0;
         });
-      } else if ( this.mode === ACTION.EDIT ) {
-
-        this.projectService.updateProject( this.oldProject.id, this.form.value ).subscribe( response => {
-
-          this.toastr.updateSuccess('Actualización', "Actualización de proyecto exitoso"); 
-
-          this.store.dispatch( new UpdateProject( response, this.oldProject ) );
-
+      } else if (this.mode === ACTION.EDIT) {
+        this.projectService.updateProject(this.oldProject.id, this.form.value).subscribe(response => {
+          this.toastr.updateSuccess('Actualización', "Actualización de proyecto exitoso");
+          this.store.dispatch(new UpdateProject(response, this.oldProject));
           this.progress = 0;
-          this.submitted = false;          
+          this.submitted = false;
 
-        } );
+        });
       }
     }
   }
 
-  reset() :boolean {
+  reset(): boolean {
     this.form.reset();
     this.submitted = false;
     this.progress = 0;

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
-import { NbCardModule, NbButtonModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbSpinnerModule } from '@nebular/theme';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ModalModule } from '../components/shared/modal/modal-forms/modal.module';
@@ -29,7 +29,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     NbButtonModule,
     ReactiveFormsModule,
     FormsModule,
-
+    NbSpinnerModule,
     ModalModule,
     NgSelectModule,
     ReactiveInputModule,

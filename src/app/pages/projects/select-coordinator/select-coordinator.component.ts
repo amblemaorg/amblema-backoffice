@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.action';
 import { Observable } from 'rxjs';
@@ -10,11 +10,21 @@ import { AbstractControl, FormControl } from '@angular/forms';
   templateUrl: './select-coordinator.component.html',
   styleUrls: ['./select-coordinator.component.scss']
 })
-export class SelectCoordinatorComponent {
+export class SelectCoordinatorComponent implements OnInit, OnChanges {
   @Select( CoordinatorUserState.coordinatorUsers ) coordinatorUsers$: Observable<CoordinatorUser[]>;
   @Input() control: AbstractControl | null = new FormControl();
+  @Input() submitted: boolean; 
+
+  selectedCoordinator;
+
+  ngOnInit(): void { }
+
+  ngOnChanges(): void {
+    this.selectedCoordinator = this.control.value ? this.selectedCoordinator : null; 
+  }
 
   onSelected( event: any ) {
     this.control.setValue( event ? event.id : null );
+    this.selectedCoordinator = event ? event.name : null;
   }
 }

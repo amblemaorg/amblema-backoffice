@@ -36,7 +36,6 @@ export interface StepsProgress {
 
 export interface Project {
     id?: string;
-    title: string;
     phase?: string;
     school: string;
     sponsor: string;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { SchoolUserState } from 'src/app/store/user-store/school-user.action';
 import { Observable } from 'rxjs';
@@ -10,11 +10,24 @@ import { AbstractControl, FormControl } from '@angular/forms';
   templateUrl: './select-school.component.html',
   styleUrls: ['./select-school.component.scss']
 })
-export class SelectSchoolComponent {
+export class SelectSchoolComponent implements OnInit, OnChanges {
   @Select( SchoolUserState.schoolUsers ) schoolUsers$: Observable<SchoolUser[]>;
   @Input() control: AbstractControl | null = new FormControl();
+  @Input() submitted: boolean;
+
+  selectedSchool;
+
+  ngOnInit(): void {
+  }
+
+  ngOnChanges(): void {
+    this.selectedSchool = this.control.value ? this.selectedSchool : null; 
+  }
 
   onSelected( event: any ) {
     this.control.setValue( event ? event.id : null );
+  
+    this.selectedSchool = event ? event.name : null;
   }
+
 }

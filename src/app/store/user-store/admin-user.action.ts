@@ -4,6 +4,8 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/helpers/utility';
 import { append, patch, removeItem, updateItem } from '@ngxs/store/operators';
+import { Subscription } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
 // -- State interface --
 
@@ -21,7 +23,7 @@ export class GetAdminUsers {
 
 export class SelectedAdminUser {
     static readonly type = '[User] Selected User';
-    constructor( public paylaod: AdminUser ) {}
+    constructor(public paylaod: AdminUser) { }
 }
 
 export class SetAdminUser {
@@ -63,15 +65,17 @@ export class DeleteAdminUser {
         adminUsers: []
     }
 })
-export class AdminUserState implements NgxsOnInit {
+export class AdminUserState implements NgxsOnInit, OnDestroy {
+
+    subscription: Subscription;
 
     @Selector()
-    static adminUsers( state: AdminUserModel  ): AdminUser[ ] | null {
+    static adminUsers(state: AdminUserModel): AdminUser[] | null {
         return state.adminUsers;
     }
 
     @Selector()
-    static adminUser( state: AdminUserModel ): AdminUser | null {
+    static adminUser(state: AdminUserModel): AdminUser | null {
         return state.adminUser;
     }
 
@@ -79,21 +83,27 @@ export class AdminUserState implements NgxsOnInit {
         private helper: Utility,
         private toastr: CustomToastrService,
         private adminUserService: AdminUserService
-    ) {}
+    ) { }
 
     ngxsOnInit(ctx: StateContext<AdminUserModel>) {
         ctx.dispatch(new GetAdminUsers());
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     // -- Admin user's actions --
 
     @Action(GetAdminUsers)
     getAdminUsers(ctx: StateContext<AdminUserModel>) {
-        this.adminUserService.getAdminUsers()
+        this.subscription = this.adminUserService.getAdminUsers()
             .subscribe(response => {
                 if (response) {
 
-                    response = this.helper.readlyTypeDocument( response );
+                    response = this.helper.readlyTypeDocument(response);
 
                     ctx.setState({
                         ...ctx.getState(),
@@ -103,43 +113,42 @@ export class AdminUserState implements NgxsOnInit {
             });
     }
 
-    @Action( SelectedAdminUser )
-    selectedAdminUser( ctx: StateContext<AdminUserModel>, action: SelectedAdminUser ) {
+    @Action(SelectedAdminUser)
+    selectedAdminUser(ctx: StateContext<AdminUserModel>, action: SelectedAdminUser) {
         ctx.setState(patch({
             ...ctx.getState(),
-            adminUser : action.paylaod
+            adminUser: action.paylaod
         }));
     }
 
-    @Action( SetAdminUser )
-    setAdminUser( ctx: StateContext<AdminUserModel>, action: SetAdminUser ) {
+    @Action(SetAdminUser)
+    setAdminUser(ctx: StateContext<AdminUserModel>, action: SetAdminUser) {
 
-        action.payload = this.helper.readlyTypeDocument( [action.payload] )[0];
-        ctx.setState( patch({
+        action.payload = this.helper.readlyTypeDocument([action.payload])[0];
+        ctx.setState(patch({
             ...ctx.getState(),
             adminUsers: append([action.payload])
         }));
     }
 
-    @Action( UpdateAdminUser )
-    updateAdminUser( ctx: StateContext<AdminUserModel>, action: UpdateAdminUser ) {
+    @Action(UpdateAdminUser)
+    updateAdminUser(ctx: StateContext<AdminUserModel>, action: UpdateAdminUser) {
 
-        ctx.setState( patch({
+        ctx.setState(patch({
             ...ctx.getState(),
-            adminUsers: updateItem<AdminUser>( adminUser => adminUser.id === action.oldAdminUser.id, action.newAdminUser )
-        }) );
+            adminUsers: updateItem<AdminUser>(adminUser => adminUser.id === action.oldAdminUser.id, action.newAdminUser)
+        }));
 
     }
 
-    @Action( DeleteAdminUser )
-    deleteAdminUser(ctx: StateContext<AdminUserModel>, action: DeleteAdminUser  ) {
-
-        this.adminUserService.deleteAdminUser( action.payload.id ).subscribe( response => {
-            ctx.setState( patch({
+    @Action(DeleteAdminUser)
+    deleteAdminUser(ctx: StateContext<AdminUserModel>, action: DeleteAdminUser) {
+        this.subscription = this.adminUserService.deleteAdminUser(action.payload.id).subscribe(response => {
+            ctx.setState(patch({
                 ...ctx.getState(),
-                adminUsers: removeItem<AdminUser>( adminUser => adminUser.id === action.payload.id )
-            }) );
+                adminUsers: removeItem<AdminUser>(adminUser => adminUser.id === action.payload.id)
+            }));
             this.toastr.deleteRegister('Eliminación', 'Usuario administrador eliminado');
-        } );
+        });
     }
 }

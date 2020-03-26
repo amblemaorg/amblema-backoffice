@@ -15,6 +15,7 @@
 <div class="position-relative">
     <label class="label">Coordinador</label>
     <ng-select 
+        [(ngModel)]="selectedCoordinator"
         (change)="onSelected($event)"
         [items]="coordinatorUsers$ | async"
         notFoundText="No hay coordinador"

@@ -4,6 +4,8 @@ import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { Subscription } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
 export interface SchoolUserModel {
     schoolUser: SchoolUser;
@@ -82,7 +84,9 @@ export class SelectedSchoolUser {
         schoolUsers: []
     }
 })
-export class SchoolUserState implements NgxsOnInit {
+export class SchoolUserState implements NgxsOnInit, OnDestroy {
+
+    subscription: Subscription;
 
     @Selector()
     static schoolUsers(state: SchoolUserModel): SchoolUser[] | null {
@@ -98,15 +102,21 @@ export class SchoolUserState implements NgxsOnInit {
         private helper: Utility,
         private toastr: CustomToastrService,
         private schoolUserService: SchoolUserService,
-    ) {}
+    ) { }
 
-    ngxsOnInit( ctx: StateContext<SchoolUserModel> ) {
-        ctx.dispatch( new GetSchoolUsers() );
+    ngxsOnInit(ctx: StateContext<SchoolUserModel>) {
+        ctx.dispatch(new GetSchoolUsers());
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     @Action(GetSchoolUsers)
     getSchoolUsers(ctx: StateContext<SchoolUserModel>) {
-        this.schoolUserService.getSchoolUsers().subscribe(response => {
+        this.subscription = this.schoolUserService.getSchoolUsers().subscribe(response => {
 
             if (response) {
                 ctx.setState(patch({
@@ -135,20 +145,20 @@ export class SchoolUserState implements NgxsOnInit {
         }));
     }
 
-    @Action( UpdateSchoolUser )
-    updateSchoolUser( ctx: StateContext<SchoolUserModel>, action: UpdateSchoolUser ) {
-        ctx.setState( patch({
+    @Action(UpdateSchoolUser)
+    updateSchoolUser(ctx: StateContext<SchoolUserModel>, action: UpdateSchoolUser) {
+        ctx.setState(patch({
             ...ctx.getState(),
             schoolUsers: updateItem<SchoolUser>(
                 schoolUser =>
-                schoolUser.id === action.oldSchoolUser.id, action.newSchoolUser )
-        }) );
+                    schoolUser.id === action.oldSchoolUser.id, action.newSchoolUser)
+        }));
     }
 
     @Action(DeleteSchoolUser)
     deleteSchoolUser(ctx: StateContext<SchoolUserModel>, action: DeleteSchoolUser) {
 
-        this.schoolUserService.deleteSchoolUser(action.payload.id).subscribe(response => {
+        this.subscription = this.schoolUserService.deleteSchoolUser(action.payload.id).subscribe(response => {
             ctx.setState(patch({
                 ...ctx.getState(),
                 schoolUsers: removeItem<SchoolUser>(schoolUser => schoolUser.id === action.payload.id)

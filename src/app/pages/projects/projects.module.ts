@@ -27,7 +27,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     NbCardModule,
     Ng2SmartTableModule,
     NbButtonModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     FormsModule,
 
     ModalModule,

@@ -12,7 +12,7 @@ import { FormControl, AbstractControl } from '@angular/forms';
 })
 export class SelectSponsorComponent {
   @Select( SponsorUserState.sponsorUsers ) sponsorUsers$: Observable<SponsorUser[]>;
-  @Input() control: AbstractControl | null = new FormControl(); 
+  @Input() control: AbstractControl | null = new FormControl();
 
   onSelected( event: any ) {
     this.control.setValue( event ? event.id : null );

@@ -25,9 +25,9 @@ describe('SelectSponsorComponent', () => {
         ModalModule,
         NgxsModule.forRoot([
           SponsorUserState
-        ]), 
+        ]),
         ReactiveInputModule,
-        NgSelectModule ], 
+        NgSelectModule ],
         providers: [
           CustomToastrService,
           Utility]

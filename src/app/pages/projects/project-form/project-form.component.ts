@@ -15,17 +15,17 @@ export class ProjectFormComponent implements OnChanges, OnInit {
   title: string;
 
   form: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      title: new FormControl('',[Validators.required]),
-      idSponsor: new FormControl('', [Validators.required]),
-      idSchool: new FormControl('',[Validators.required]),
-      idCoordinator: new FormControl('',[Validators.required])
+      title: new FormControl('', [Validators.required]),
+      sponsor: new FormControl('', [Validators.required]),
+      school: new FormControl('', [Validators.required]),
+      coordinator: new FormControl('', [Validators.required])
     });
   }
 
@@ -40,7 +40,7 @@ export class ProjectFormComponent implements OnChanges, OnInit {
 
       this.form.value
 
-    )
+    );
 
   }
 }

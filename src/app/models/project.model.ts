@@ -41,6 +41,6 @@ export interface Project {
     school: string;
     sponsor: string;
     coordinator: string;
-    stepsProgress: StepsProgress;
+    stepsProgress?: StepsProgress;
 }
 

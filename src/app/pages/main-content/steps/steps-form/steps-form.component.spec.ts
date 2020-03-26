@@ -29,7 +29,7 @@ describe('StepsFormComponent', () => {
         ReactiveInputFileModule,
         ReactiveTextAreaModule,
         NbCheckboxModule,
-      
+
         NbToastrModule.forRoot({}),
         ModalModule ],
     })

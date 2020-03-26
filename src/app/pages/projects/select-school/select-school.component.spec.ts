@@ -17,12 +17,12 @@ describe('SelectSchoolComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SelectSchoolComponent ],
       imports: [
-        NbToastrModule.forRoot(), 
+        NbToastrModule.forRoot(),
         NbThemeModule.forRoot(),
         HttpClientModule,
         NgxsModule.forRoot([SponsorUserState]),
         NgSelectModule],
-        providers: [ 
+        providers: [
           CustomToastrService,
           Utility]
     })

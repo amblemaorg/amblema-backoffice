@@ -10,26 +10,26 @@ import { map } from 'rxjs/operators';
 })
 export class ProjectService {
 
-  private readonly PROJECT = 'projects'; 
+  private readonly PROJECT = 'projects';
 
   constructor( private httpClient: HttpClient ) { }
 
-  getProjects() :Observable<Project[]> {
+  getProjects(): Observable<Project[]> {
     return this.httpClient.get<Project[]>(`${environment.api}${this.PROJECT}`)
       .pipe(
         map((data: any) => data.records)
       );
   }
 
-  setProject( data: Project ) : Observable<Project> {
+  setProject( data: Project ): Observable<Project> {
      return this.httpClient.post<Project>(`${environment.api}${this.PROJECT}`, data);
   }
 
-  deleteProject(id: string): Observable<string> { 
+  deleteProject(id: string): Observable<string> {
     return this.httpClient.delete<string>(`${environment.api}${this.PROJECT}/${id}`);
   }
 
-  updateProject( id:string,  data: Project) : Observable<Project> {
+  updateProject( id: string,  data: Project): Observable<Project> {
     return this.httpClient.put<Project>(`${environment.api}${this.PROJECT}/${id}`, data);
   }
 }

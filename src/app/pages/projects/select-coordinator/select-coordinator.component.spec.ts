@@ -13,19 +13,18 @@ describe('SelectCoordinatorComponent', () => {
   let component: SelectCoordinatorComponent;
   let fixture: ComponentFixture<SelectCoordinatorComponent>;
 
-  let ngSelect: NgSelectComponent; 
   let store: Store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SelectCoordinatorComponent ],
-      imports: [ 
+      imports: [
         NbToastrModule.forRoot(),
         NbThemeModule.forRoot(),
         HttpClientModule,
         NgxsModule.forRoot([ CoordinatorUserState ]),
         NgSelectModule ],
-      providers: [ 
+      providers: [
         CustomToastrService,
         Utility ]
     })

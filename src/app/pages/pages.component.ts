@@ -11,7 +11,7 @@ export class PagesComponent implements OnInit {
 
     // Call menu options
     menu = MENU_ITEMS;
-    
+
     constructor(
         private authService: NbAuthService,
         private router: Router) {

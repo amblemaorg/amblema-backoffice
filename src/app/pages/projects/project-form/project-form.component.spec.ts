@@ -27,7 +27,7 @@ describe('ProjectFormComponent', () => {
         NgSelectModule,
         ReactiveFormsModule,
         FormsModule,
-        NgxsModule.forRoot([]), 
+        NgxsModule.forRoot([]),
         ReactiveInputModule,
       ]
     })

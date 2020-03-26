@@ -29,6 +29,7 @@ import { environment } from 'src/environments/environment.prod';
 import { CoordinatorUserState } from './store/user-store/coordinator-user.action';
 import { SponsorUserState } from './store/user-store/sponsor-user.action';
 import { SchoolUserState } from './store/user-store/school-user.action';
+import { ProjectState } from './store/project.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -62,7 +63,9 @@ registerLocaleData(localeVe, 'es-VE');
       AdminUserState,
       CoordinatorUserState,
       SponsorUserState,
-      SchoolUserState
+      SchoolUserState,
+
+      ProjectState
     ],
     {
       compatibility: {

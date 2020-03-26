@@ -14,7 +14,7 @@
         <div class="table-responsive">
             <ng2-smart-table 
                 (custom)="onAction($event)" 
-                [source]='data' 
+                [source]='projects$ | async' 
                 [settings]="settings"></ng2-smart-table>
         </div>
     </nb-card-body>

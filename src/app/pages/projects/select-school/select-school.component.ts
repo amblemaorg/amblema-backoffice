@@ -21,12 +21,12 @@ export class SelectSchoolComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.selectedSchool = this.control.value ? this.selectedSchool : null; 
+    this.selectedSchool = this.control.value ? this.selectedSchool : null;
   }
 
   onSelected( event: any ) {
     this.control.setValue( event ? event.id : null );
-  
+
     this.selectedSchool = event ? event.name : null;
   }
 

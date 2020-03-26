@@ -13,14 +13,14 @@ import { AbstractControl, FormControl } from '@angular/forms';
 export class SelectCoordinatorComponent implements OnInit, OnChanges {
   @Select( CoordinatorUserState.coordinatorUsers ) coordinatorUsers$: Observable<CoordinatorUser[]>;
   @Input() control: AbstractControl | null = new FormControl();
-  @Input() submitted: boolean; 
+  @Input() submitted: boolean;
 
   selectedCoordinator;
 
   ngOnInit(): void { }
 
   ngOnChanges(): void {
-    this.selectedCoordinator = this.control.value ? this.selectedCoordinator : null; 
+    this.selectedCoordinator = this.control.value ? this.selectedCoordinator : null;
   }
 
   onSelected( event: any ) {

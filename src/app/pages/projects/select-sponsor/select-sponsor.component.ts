@@ -18,16 +18,16 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
   selectedSponsor;
 
   ngOnInit(): void {
-    
+
   }
 
   ngOnChanges(): void {
-    this.selectedSponsor = this.control.value ? this.selectedSponsor : null; 
+    this.selectedSponsor = this.control.value ? this.selectedSponsor : null;
   }
 
   onSelected( event: any ) {
     this.control.setValue( event ? event.id : null );
-  
+
     this.selectedSponsor = event ? event.name : null;
   }
 }

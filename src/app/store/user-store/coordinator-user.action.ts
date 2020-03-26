@@ -91,8 +91,8 @@ export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
         ctx.dispatch(new GetCoordinatorUsers());
     }
 
-    ngOnDestroy() : void {
-        if( this.subscription ) {
+    ngOnDestroy(): void {
+        if ( this.subscription ) {
             this.subscription.unsubscribe();
         }
     }

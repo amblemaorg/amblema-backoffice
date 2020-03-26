@@ -42,7 +42,6 @@ export class DeleteProject {
     defaults: {
         project: {
             id: '',
-            title: '',
             phase: '',
             coordinator: ' ',
             school: '',
@@ -52,6 +51,7 @@ export class DeleteProject {
     }
 })
 export class ProjectState implements NgxsOnInit, OnDestroy {
+    private subscription: Subscription;
 
     @Selector()
     static project( state: ProjectStateModel ): Project | null {
@@ -64,14 +64,13 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
     }
 
     constructor(
-        private subscription: Subscription,
         private toastr: CustomToastrService,
         private projectService: ProjectService ) {
 
     }
 
     ngxsOnInit(ctx: StateContext<ProjectStateModel>): void {
-        ctx.dispatch(new GetProjects);
+        ctx.dispatch(new GetProjects());
     }
 
     ngOnDestroy(): void {
@@ -87,7 +86,7 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
                 ...ctx.getState(),
                 projects: response
             }));
-        } );
+        });
     }
 
     @Action(SelectedProject)
@@ -103,7 +102,7 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
 
         ctx.setState(patch({
             ...ctx.getState(),
-            Projects: append([action.payload])
+            projects: append([action.payload])
         }));
     }
 
@@ -112,7 +111,7 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
 
         ctx.setState(patch({
             ...ctx.getState(),
-            Projects: updateItem<Project>(Project => Project.id === action.oldProject.id, action.newProject)
+            projects: updateItem<Project>(project => project.id === action.oldProject.id, action.newProject)
         }));
 
     }
@@ -122,9 +121,9 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
         this.subscription = this.projectService.deleteProject(action.payload.id).subscribe(response => {
             ctx.setState(patch({
                 ...ctx.getState(),
-                Projects: removeItem<Project>(Project => Project.id === action.payload.id)
+                projects: removeItem<Project>(project => project.id === action.payload.id)
             }));
             this.toastr.deleteRegister('Eliminación', 'Se ha eliminado un proyecto');
         });
-    }    
+    }
 }

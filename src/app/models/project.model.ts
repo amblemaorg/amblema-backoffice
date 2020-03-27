@@ -36,8 +36,12 @@ export interface StepsProgress {
 
 export interface Project {
     id?: string;
+    code: string;
     phase?: string;
     school: string;
+    status?: string;
+    createdAt?: string;
+    updatedAt?: string;
     sponsor: string;
     coordinator: string;
     stepsProgress?: StepsProgress;

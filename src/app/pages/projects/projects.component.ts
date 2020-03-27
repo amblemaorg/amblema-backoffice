@@ -6,6 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { ProjectState, DeleteProject, SelectedProject } from 'src/app/store/project.action';
 import { Project } from 'src/app/models/project.model';
 import { Observable } from 'rxjs';
+import { PROJECT_PHASE } from 'src/app/helpers/convention/phase';
 
 declare var $: any;
 
@@ -17,6 +18,8 @@ declare var $: any;
 export class ProjectsComponent extends BaseTable implements OnInit {
 
   @Select(ProjectState.projects) projects$: Observable<Project[]>;
+  @Select(ProjectState.project) project$: Observable<Project>;
+
   MODAL = 'form-project';
 
   /**
@@ -86,7 +89,17 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       },
       phase: {
         title: 'Fase',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (row: any) => {
+          const value: string = row === PROJECT_PHASE.STEPS.CODE ? PROJECT_PHASE.STEPS.VALUE : PROJECT_PHASE.PECA.VALUE;
+          return value;
+        },
+        filterFunction: (cell?: any, search?: string) => {
+
+          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else { return false; }
+        }
       },
       status: {
         title: 'Estatus',

@@ -9,6 +9,10 @@ import { SelectSchoolComponent } from '../select-school/select-school.component'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
+import { NbButtonModule, NbSpinnerModule, NbToastrModule, NbThemeModule, NbAlertModule } from '@nebular/theme';
+import { Utility } from 'src/app/helpers/utility';
+import { ProjectDetailsComponent } from '../project-details/project-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ProjectFormComponent', () => {
   let component: ProjectFormComponent;
@@ -20,15 +24,25 @@ describe('ProjectFormComponent', () => {
         SelectCoordinatorComponent,
         SelectSponsorComponent,
         SelectSchoolComponent,
-        ProjectFormComponent
+        ProjectFormComponent,
+        ProjectDetailsComponent,
       ],
       imports: [
         ModalModule,
+        NbAlertModule,
         NgSelectModule,
         ReactiveFormsModule,
         FormsModule,
+        NbSpinnerModule,
+        NbToastrModule.forRoot(),
+        NbButtonModule,
+        HttpClientModule,
+        NbThemeModule.forRoot(),
         NgxsModule.forRoot([]),
         ReactiveInputModule,
+      ],
+      providers: [
+        Utility,
       ]
     })
     .compileComponents();

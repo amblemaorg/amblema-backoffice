@@ -8,6 +8,7 @@ import { Utility } from 'src/app/helpers/utility';
 import { NbToastrModule, NbThemeModule } from '@nebular/theme';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('SelectCoordinatorComponent', () => {
   let component: SelectCoordinatorComponent;
@@ -21,12 +22,15 @@ describe('SelectCoordinatorComponent', () => {
       imports: [
         NbToastrModule.forRoot(),
         NbThemeModule.forRoot(),
+        ReactiveFormsModule,
+        FormsModule,
         HttpClientModule,
         NgxsModule.forRoot([ CoordinatorUserState ]),
         NgSelectModule ],
       providers: [
         CustomToastrService,
-        Utility ]
+        Utility
+      ]
     })
     .compileComponents();
     store = TestBed.get(Store);

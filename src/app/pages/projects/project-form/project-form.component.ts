@@ -36,9 +36,9 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
     private projectService: ProjectService,
     private fb: FormBuilder) {
     this.form = this.fb.group({
-      sponsor: new FormControl(null, [Validators.required]),
-      school: new FormControl(null, [Validators.required]),
-      coordinator: new FormControl(null, [Validators.required])
+      sponsor: new FormControl(null),
+      school: new FormControl(null),
+      coordinator: new FormControl(null)
     });
   }
 
@@ -51,12 +51,12 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
 
 
-     if( this.mode === ACTION.EDIT ) {
-       this.project$.subscribe( (response:any) => {
-         this.oldProject = response; 
+    if ( this.mode === ACTION.EDIT ) {
+       this.project$.subscribe( (response: any) => {
+         this.oldProject = response;
          this.form.controls.sponsor.setValue( response.sponsor.id );
-         this.form.controls.school.setValue( response.school.id );  
-         this.form.controls.coordinator.setValue( response.coordinator.id ); 
+         this.form.controls.school.setValue( response.school.id );
+         this.form.controls.coordinator.setValue( response.coordinator.id );
        });
      } else  {
        this.form.reset();
@@ -88,7 +88,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
         });
       } else if (this.mode === ACTION.EDIT) {
         this.projectService.updateProject(this.oldProject.id, this.form.value).subscribe(response => {
-          this.toastr.updateSuccess('Actualización', "Actualización de proyecto exitoso");
+          this.toastr.updateSuccess('Actualización', 'Actualización de proyecto exitoso');
           this.store.dispatch(new UpdateProject(response, this.oldProject));
           this.progress = 0;
           this.submitted = false;

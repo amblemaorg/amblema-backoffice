@@ -10,6 +10,7 @@ import { Utility } from 'src/app/helpers/utility';
 import { HttpClientModule } from '@angular/common/http';
 import { NbToastrModule, NbThemeModule } from '@nebular/theme';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('SelectSponsorComponent', () => {
   let component: SelectSponsorComponent;
@@ -19,6 +20,8 @@ describe('SelectSponsorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SelectSponsorComponent ],
       imports: [
+        ReactiveFormsModule,
+        FormsModule,
         NbToastrModule.forRoot(),
         NbThemeModule.forRoot(),
         HttpClientModule,

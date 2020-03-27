@@ -1,5 +1,37 @@
-<app-modal [ID]="'view-project'" [title]="'Detalles del proyecto'">
+<app-modal [ID]="'view-project'" [title]="'Detalles del proyecto'" [size]="'normal'">
     <div class="row" content>
-        
-    </div>   
+        <div class="col-6">
+            <p class="row">
+                <span class=" font-weight-bold col-6">ID del proyecto:</span> <span class="col-6">{{ data.code }}</span>
+            </p>
+            <p class="row">
+                <span class=" font-weight-bold col-6" *ngIf="data.coordinator.name">Coordinador:</span> <span
+                    class="col-6">{{ data.coordinator.name }}</span> </p>
+            <p class="row"><span class="font-weight-bold col-6" *ngIf="data.school.name">Escuela:</span>
+                <span class="col-6">
+                    {{ data.school.name }}
+                </span>
+            </p>
+            <p class="row"><span class="col-6 font-weight-bold " *ngIf="data.sponsor.name">Padrino:
+                </span> <span class="col-6"> {{ data.sponsor.name }}</span></p>
+        </div>
+
+        <div class="col-6">
+            <p class="row">
+                <span class=" font-weight-bold col-6" *ngIf="data.phase">Fase:</span>
+                <span class="col-6">
+                    <nb-alert 
+                        [status]="phase === PROJECT_PHASE.STEPS.VALUE ? 'info' : 'success'" class="d-inline-block px-2 py-0 mb-0"> {{ phase }}</nb-alert>
+                </span></p>
+            <button 
+                class="form-group"
+                fullWidth
+                outline
+                nbButton>Ir a pasos</button>
+                <button 
+                status="info"
+                fullWidth
+                nbButton>Ir al PECA</button>
+        </div>
+    </div>
 </app-modal>

@@ -32,7 +32,7 @@ export class SelectCoordinatorComponent implements OnInit, OnChanges {
       this.project$.subscribe( (response: any) => {
         this.selectedCoordinator = response.coordinator.name;
       });
-    } 
+    }
   }
 
   onSelected( event: any ) {

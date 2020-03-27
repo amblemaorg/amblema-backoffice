@@ -1,6 +1,6 @@
-<app-modal [ID]="'view-project'" [title]="'Detalles del proyecto'" [size]="'normal'">
+<app-modal [ID]="'view-project'" [title]="'Detalles del proyecto'" [size]="'lg'">
     <div class="row" content>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <p class="row">
                 <span class=" font-weight-bold col-6">ID del proyecto:</span> <span class="col-6">{{ data.code }}</span>
             </p>
@@ -16,7 +16,7 @@
                 </span> <span class="col-6"> {{ data.sponsor.name }}</span></p>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <p class="row">
                 <span class=" font-weight-bold col-6" *ngIf="data.phase">Fase:</span>
                 <span class="col-6">

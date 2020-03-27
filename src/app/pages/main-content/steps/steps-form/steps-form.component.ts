@@ -31,11 +31,14 @@ export class StepsFormComponent implements OnInit {
     private fb: FormBuilder ) {
     this.form = this.fb.group({
       objectives: new FormControl(),
-      checkedDescription: new FormControl(false),
-      checkedDate: new FormControl(false),
-      checkedFile: new FormControl(false),
-      checkedVideo: new FormControl(false),
-      checkedList: new FormControl(false)
+
+      // Optional
+      hasText: new FormControl(false),
+      hasDate: new FormControl(false),
+      hasFile: new FormControl(false),
+      hasVideo: new FormControl(false),
+      hasChecklist: new FormControl(false)
+      // ---------------------
     });
   }
 
@@ -70,8 +73,6 @@ export class StepsFormComponent implements OnInit {
     this.MODE_LIST = ACTION.CREATE;
     this.form.controls.objectives.reset();
   }
-
-
 }
 
 export const KIND_STEP = {

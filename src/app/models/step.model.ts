@@ -19,7 +19,7 @@ export interface Step {
     video?: string;
     checklist?: ItemCheck[];
     // ----------------
-
+    
     approvalType: string;
     isStandard?: string;
     status: string;

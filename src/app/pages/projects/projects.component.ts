@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { Utility } from 'src/app/helpers/utility';
 import { ModalService } from 'src/app/services/helper/modal.service';
+import { Select, Store } from '@ngxs/store';
+import { ProjectState, DeleteProject, SelectedProject } from 'src/app/store/project.action';
+import { Project } from 'src/app/models/project.model';
+import { Observable } from 'rxjs';
+import { PROJECT_PHASE } from 'src/app/helpers/convention/phase';
 
 declare var $: any;
 
@@ -12,30 +17,16 @@ declare var $: any;
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
 
-  MODAL = 'form-project';
+  @Select(ProjectState.projects) projects$: Observable<Project[]>;
+  @Select(ProjectState.project) project$: Observable<Project>;
 
-  data: any = [
-    {
-      coordinator: 'Juan',
-      school: 'Simoncito',
-      sponsor: 'El Padrino',
-      phase: 'Inicio',
-      status: '1'
-    },
-    {
-      coordinator: 'Juan',
-      school: 'Simoncito',
-      sponsor: 'El Padrino',
-      phase: 'Inicio',
-      status: '2'
-    },
-  ]; // <-- Dummy variable
+  MODAL = 'form-project';
 
   /**
    * Arrow functions
    */
 
-  valuePrepareFunction = ( row: any ) => {
+  valuePrepareFunction = (row: any) => {
     return this.helper.readlyStatus([{ status: row }])[0].status;
   }
 
@@ -43,35 +34,72 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     let value: string = cell === '1' ? 'Activo' : 'Inactivo';
     value = value.toUpperCase();
     if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
-            return true;
-          } else { return false; }
+      return true;
+    } else { return false; }
   }
 
   constructor(
+    private store: Store,
     public modal: ModalService,
     private helper: Utility) { super(); }
 
   ngOnInit(): void {
-
     this.MODE = this.ACTION.CREATE;
 
     // Add columns
     this.settings.columns = {
       coordinator: {
         title: 'Coordinador',
-        type: 'string'
+        type: 'text',
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: (cell?: any, search?: string) => {
+
+          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else { return false; }
+        }
       },
       school: {
         title: 'Escuela',
-        type: 'string',
+        type: 'text',
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: (cell?: any, search?: string) => {
+
+          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else { return false; }
+        }
       },
       sponsor: {
         title: 'Padrino',
-        type: 'string'
+        type: 'text',
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: (cell?: any, search?: string) => {
+
+          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else { return false; }
+        }
       },
       phase: {
         title: 'Fase',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (row: any) => {
+          const value: string = row === PROJECT_PHASE.STEPS.CODE ? PROJECT_PHASE.STEPS.VALUE : PROJECT_PHASE.PECA.VALUE;
+          return value;
+        },
+        filterFunction: (cell?: any, search?: string) => {
+
+          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else { return false; }
+        }
       },
       status: {
         title: 'Estatus',
@@ -82,18 +110,24 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     };
   }
 
+  clear() {
+
+  }
 
   // Events table
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-
+        this.store.dispatch(new SelectedProject(event.data));
+        this.modal.open('view-project');
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
-        this.modal.open( this.MODAL );
+        this.modal.open(this.MODAL);
+        this.store.dispatch(new SelectedProject(event.data));
         break;
       case this.ACTION.DELETE:
+        this.store.dispatch(new DeleteProject(event.data.id));
         break;
     }
   }

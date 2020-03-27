@@ -4,6 +4,8 @@ import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
+import { Subscription, SubscriptionLike } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -65,7 +67,9 @@ export class SelectedCoordinatorUser {
         coordinatorUsers: []
     }
 })
-export class CoordinatorUserState implements NgxsOnInit {
+export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
+
+    subscription: Subscription;
 
     @Selector()
     static coordinatorUsers(state: CoordinatorUserModel): CoordinatorUser[] | null {
@@ -87,9 +91,15 @@ export class CoordinatorUserState implements NgxsOnInit {
         ctx.dispatch(new GetCoordinatorUsers());
     }
 
+    ngOnDestroy(): void {
+        if ( this.subscription ) {
+            this.subscription.unsubscribe();
+        }
+    }
+
     @Action(GetCoordinatorUsers)
     getCoordinatorUsers(ctx: StateContext<CoordinatorUserModel>) {
-        this.coordinatorUserService.getCoordinatorUsers().subscribe(response => {
+        this.subscription = this.coordinatorUserService.getCoordinatorUsers().subscribe(response => {
 
             if (response) {
                 response = this.helper.readlyTypeDocument(response);
@@ -132,8 +142,7 @@ export class CoordinatorUserState implements NgxsOnInit {
 
     @Action(DeleteCoordinatorUser)
     deleteCoordinatorUser(ctx: StateContext<CoordinatorUserModel>, action: DeleteCoordinatorUser) {
-
-        this.coordinatorUserService.deleteCoordinatorUser(action.payload.id).subscribe(response => {
+        this.subscription = this.coordinatorUserService.deleteCoordinatorUser(action.payload.id).subscribe(response => {
             ctx.setState(patch({
                 ...ctx.getState(),
                 coordinatorUsers: removeItem<CoordinatorUser>(coordinatorUser => coordinatorUser.id === action.payload.id)

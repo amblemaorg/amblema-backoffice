@@ -15,12 +15,12 @@ import { NgxsModule } from '@ngxs/store';
 import { RolesState, RoleState } from './store/role.action';
 import { Utility } from './helpers/utility';
 import { LearningState } from './store/learning.action';
-import { WebHomeState } from './store/web-home.action';
+import { WebHomeState } from './store/web-content/web-home.action';
 import { CustomToastrService } from './services/helper/custom-toastr.service';
-import { WebAboutState } from './store/web-about.action';
-import { WebSponsorState } from './store/web-sponsor.action';
-import { WebCoordinatorState } from './store/web-coordinator.action';
-import { PostsState } from './store/blog.action';
+import { WebAboutState } from './store/web-content/web-about.action';
+import { WebSponsorState } from './store/web-content/web-sponsor.action';
+import { WebCoordinatorState } from './store/web-content/web-coordinator.action';
+import { PostsState } from './store/web-content/blog.action';
 
 import localeVe from '@angular/common/locales/es-VE';
 import { registerLocaleData } from '@angular/common';
@@ -29,6 +29,7 @@ import { environment } from 'src/environments/environment.prod';
 import { CoordinatorUserState } from './store/user-store/coordinator-user.action';
 import { SponsorUserState } from './store/user-store/sponsor-user.action';
 import { SchoolUserState } from './store/user-store/school-user.action';
+import { ProjectState } from './store/project.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -62,7 +63,9 @@ registerLocaleData(localeVe, 'es-VE');
       AdminUserState,
       CoordinatorUserState,
       SponsorUserState,
-      SchoolUserState
+      SchoolUserState,
+
+      ProjectState
     ],
     {
       compatibility: {

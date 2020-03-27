@@ -1,9 +1,9 @@
-import { Testimonial } from '../models/web/testimonial.model';
+import { Testimonial } from '../../models/web/testimonial.model';
 import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
-import { WebSponsor } from '../models/web/web-sponsor.model';
+import { WebSponsor } from '../../models/web/web-sponsor.model';
 import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
-import { CustomToastrService } from '../services/helper/custom-toastr.service';
-import { WebSponsorService } from '../services/web-content/web-sponsor.service';
+import { CustomToastrService } from '../../services/helper/custom-toastr.service';
+import { WebSponsorService } from '../../services/web-content/web-sponsor.service';
 
 
 // -- Web Sponsor class action --

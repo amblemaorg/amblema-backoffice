@@ -1,32 +1,44 @@
-<app-modal 
-    [ID]="MODAL" 
-    [size]="'lg'" 
-    extra="true"
-    [title]="title">
-    
-    <form  content>
+<app-modal [ID]="MODAL" [size]="'lg'" extra="true" [title]="title">
+
+    <form [formGroup]="form" content>
         <div class="row">
-            <div class="col-12">
-                <app-input-custom 
-                    [id]="'title-project'"
-                    [placeholder]="'Titulo del proyecto'"
-                    [label]="'Titulo del proyecto'"></app-input-custom>
+            <div class="col-12 col-md-4 form-group">
+                <app-select-coordinator
+                    [mode]="mode" 
+                    [submitted]="submitted"
+                    [control]="form.get('coordinator')"></app-select-coordinator>
+                <div *ngIf="submitted && form.controls.coordinator.invalid" class="mt-3 alert alert-primary">
+                    <strong>Campo requerido</strong>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 form-group">
-                <app-select-coordinator></app-select-coordinator>
+            <div class="col-12 col-md-4 form-group">
+                <app-select-school
+                    [mode]="mode"  
+                    [submitted]="submitted"
+                    [control]="form.get('school')"></app-select-school>
+                <div *ngIf="submitted && form.controls.school.invalid" class="mt-3 alert alert-primary">
+                    <strong>Campo requerido</strong>
+                </div>
             </div>
-            <div class="col-12 form-group">
-                <app-select-school></app-select-school>
-            </div>
-            <div class="col-12 form-group">
-                <app-select-sponsor></app-select-sponsor>
+            <div class="col-12 col-md-4 form-group">
+                <app-select-sponsor 
+                    [mode]="mode" 
+                    [submitted]="submitted"
+                    [control]="form.get('sponsor')"></app-select-sponsor>
+                <div *ngIf="submitted && form.controls.sponsor.invalid" class="mt-3 alert alert-primary">
+                    <strong>Campo requerido</strong>
+                </div>
             </div>
         </div>
     </form>
 
-    <button status="success" nbButton button type="submit" (click)="onSubmit()" class="btn btn-primary col-6 col-md-auto">
-        <span>Guardar</span>
-    </button>
+    <button nbButton
+        nbButton
+        [status]="mode === ACTION.EDIT ? 'primary' : 'success'"
+        [attr.disabled]="progress !== 0 ? true: null"
+        [nbSpinner]="progress == 0 ? null : true" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="col-6 col-md-auto">
+        <span *ngIf="mode === ACTION.CREATE && progress == 0">Guardar</span>
+        <span *ngIf="progress !== 0">Guardando...</span>
+        <span *ngIf="mode === ACTION.EDIT && progress === 0">Editar</span>
+    </button> 
 </app-modal>

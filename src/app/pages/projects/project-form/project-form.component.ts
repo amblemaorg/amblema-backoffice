@@ -1,42 +1,108 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
+import { Subscription, Observable } from 'rxjs';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { Store, Select } from '@ngxs/store';
+import { AddProject, ProjectState, UpdateProject } from 'src/app/store/project.action';
 
 @Component({
   selector: 'app-project-form',
   templateUrl: './project-form.component.html',
   styles: []
 })
-export class ProjectFormComponent implements OnChanges, OnDestroy, OnInit {
+export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
   @Input() mode: string;
   @Input() MODAL: string;
 
+  @Select(ProjectState.project) project$: Observable<Project>;
+
   title: string;
-
   form: FormGroup;
+  submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  oldProject: Project;
+  subscription: Subscription;
+  ACTION = ACTION;
+
+  progress = 0;
+
+  constructor(
+    private store: Store,
+    private toastr: CustomToastrService,
+    private projectService: ProjectService,
+    private fb: FormBuilder) {
+    this.form = this.fb.group({
+      sponsor: new FormControl(null),
+      school: new FormControl(null),
+      coordinator: new FormControl(null)
+    });
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      title: new FormControl([Validators.required]),
-      idSponsor: new FormControl([Validators.required]),
-      idSchool: new FormControl([Validators.required]),
-      idCoordinator: new FormControl([Validators.required])
-    });
+
   }
 
   ngOnChanges(): void {
     this.title = this.mode === ACTION.CREATE ? 'Registrar proyecto' : 'Editar proyecto';
+
+
+
+    if ( this.mode === ACTION.EDIT ) {
+       this.project$.subscribe( (response: any) => {
+         this.oldProject = response;
+         this.form.controls.sponsor.setValue( response.sponsor.id );
+         this.form.controls.school.setValue( response.school.id );
+         this.form.controls.coordinator.setValue( response.coordinator.id );
+       });
+     } else  {
+       this.form.reset();
+       this.progress = 0;
+       this.submitted = false;
+     }
   }
 
   ngOnDestroy(): void {
-
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   onSubmit(): void {
+    this.submitted = true;
 
+    if (this.form.valid) {
+      this.progress = 1;
+      if (this.mode === ACTION.CREATE) {
+
+        this.projectService.setProject(this.form.value).subscribe(response => {
+          this.reset();
+          this.toastr.registerSuccess('Registro proyecto', 'Proyecto registrado correctamente');
+          this.store.dispatch(new AddProject(response));
+
+        }, (err: any) => {
+          this.progress = 0;
+        });
+      } else if (this.mode === ACTION.EDIT) {
+        this.projectService.updateProject(this.oldProject.id, this.form.value).subscribe(response => {
+          this.toastr.updateSuccess('Actualización', 'Actualización de proyecto exitoso');
+          this.store.dispatch(new UpdateProject(response, this.oldProject));
+          this.progress = 0;
+          this.submitted = false;
+
+        });
+      }
+    }
+  }
+
+  reset(): boolean {
+    this.form.reset();
+    this.submitted = false;
+    this.progress = 0;
+
+    return true;
   }
 }

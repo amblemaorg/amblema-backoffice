@@ -6,7 +6,7 @@
         <div>
             <button nbButton 
                 status="success"
-                (click)="modal.open(MODAL);" 
+                (click)="modal.open(MODAL); MODE = ACTION.CREATE; clear()" 
                 class="mb-3 btn btn-success col-12 col-md-auto">Registrar</button>
         </div>
 
@@ -14,12 +14,12 @@
         <div class="table-responsive">
             <ng2-smart-table 
                 (custom)="onAction($event)" 
-                [source]='data' 
+                [source]='projects$ | async' 
                 [settings]="settings"></ng2-smart-table>
         </div>
     </nb-card-body>
 </nb-card>
 
 <app-project-form [mode]="MODE" [MODAL]="MODAL"></app-project-form>
-
+<app-project-details [data]="project$ | async"></app-project-details>
 

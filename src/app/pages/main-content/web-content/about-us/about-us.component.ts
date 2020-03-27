@@ -9,7 +9,7 @@ import {
   SetAwardWebAbout,
   UpdateAwardWebAbout,
   DeleteAwardWebAbout,
-  SetWebAbout} from 'src/app/store/web-about.action';
+  SetWebAbout} from 'src/app/store/web-content/web-about.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebAbout, Award } from 'src/app/models/web/web-about.model';
 import { Slider } from 'src/app/models/web/slider.model';

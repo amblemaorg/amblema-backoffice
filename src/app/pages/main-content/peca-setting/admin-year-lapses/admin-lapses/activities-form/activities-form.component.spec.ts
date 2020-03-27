@@ -17,17 +17,17 @@ describe('ActivitiesFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ActivitiesFormComponent ],
       imports: [
-        ModalModule, 
+        ModalModule,
         ReactiveTextAreaModule,
         ReactiveInputModule,
         ReactiveDatepickerModule,
         NbListModule,
-        ReactiveFormsModule, 
+        ReactiveFormsModule,
         FormsModule,
-        NbThemeModule.forRoot(), 
+        NbThemeModule.forRoot(),
         NbToastrModule.forRoot({}),
         NbIconModule,
-        ReactiveInputFileModule, 
+        ReactiveInputFileModule,
         NbCheckboxModule
       ]
     })

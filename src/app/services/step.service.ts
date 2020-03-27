@@ -9,11 +9,11 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class StepService {
 
-  private readonly STEP = 'steps'; 
+  private readonly STEP = 'steps';
 
   constructor( private httpClient: HttpClient ) { }
 
-  setStep(data: Step) : Observable<Step> {
+  setStep(data: Step): Observable<Step> {
     return this.httpClient.post<Step>(`${environment.api}${this.STEP}`, data );
-  } 
+  }
 }

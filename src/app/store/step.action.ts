@@ -11,7 +11,7 @@ interface StepStateModel {
 // -- Actions --
 
 export class GetSteps {
-    static readonly type = "[Steps] Get Steps";
+    static readonly type = '[Steps] Get Steps';
 }
 
 export class AddStep {

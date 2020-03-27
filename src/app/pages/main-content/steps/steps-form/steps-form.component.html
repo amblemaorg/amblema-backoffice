@@ -1,39 +1,44 @@
 <app-modal [size]="'lg'" extra="true" [title]="title" [ID]="id">
     <form [formGroup]="form" class="row" content>
         <div class="col-12 col-md-6">
-            <app-input-custom [label]="'Nombre'" [placeholder]="'Nombre'" [id]="'name-steps'"></app-input-custom>
+            <app-input-custom 
+                [submitted]='submitted'
+                [control]="form.get('name')"
+                [label]="'Nombre'" 
+                [placeholder]="'Nombre'" 
+                [id]="'name-steps'"></app-input-custom>
         </div>
-
         <div class="col-12 col-md-6 form-group">
             <label for="" class="label">Aprobación</label>
-            <select name="" id="" class="form-control">
-                <option value=""> - Seleccione el tipo de aprobación - </option>
-                <option value="">Lo aprueba el administrador</option>
-                <option value="">Se aprueba al completar los campos</option>
-                <option value="">Genera una solicitud de aprobación</option>
+            <select formControlName="approvalType" class="form-control">
+                <option value="null"> - Seleccione el tipo de aprobación - </option>
+                <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{ item.VALUE }}</option>
             </select>
         </div>
-
         <div class="col-12">
             <div class="row">
                 <div class="col-12">
                     <label class="label">Selecciona los elementos del paso</label>
                 </div>
-
                 <div class="col-12">
                     <div class="row">
                         <div class="col-6">
                             <nb-checkbox formControlName="hasText" class="d-block form-group">Descripción
                             </nb-checkbox>
-                            <app-text-area-custom *ngIf="form.get('hasText').value" [id]="'description'"
-                                [label]="'Descripción'" [placeholder]="'Descripción'"></app-text-area-custom>
+                            <app-text-area-custom 
+                                *ngIf="form.get('hasText').value" 
+                                [id]="'description'"
+                                [label]="'Descripción'" 
+                                [control]="form.get('text')"
+                                [placeholder]="'Descripción'"></app-text-area-custom>
                             <nb-checkbox formControlName="hasDate" class="d-block form-group">Fecha</nb-checkbox>
-                            <app-datepicker *ngIf="form.get('hasDate').value" [label]="'Fecha'" [today]="false">
-                            </app-datepicker>
+
 
                             <nb-checkbox formControlName="hasFile" class="d-block form-group">Archivo adjunto
                             </nb-checkbox>
-                            <app-input-file *ngIf="form.get('hasFile').value"></app-input-file>
+                            <app-input-file 
+                                [control]="form.get('file')"
+                                *ngIf="form.get('hasFile').value"></app-input-file>
                         </div>
                         <div class="col-6">
                             <nb-checkbox formControlName="hasVideo" class="d-block form-group">Video</nb-checkbox>
@@ -110,25 +115,17 @@
                             </div>
                             <!-- / Dynamic list -->
 
-
                             <!-- / Check loader -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-12">
-            <label class="label">
-                ¿Requiere aprobación de fundación AmbLeMa?
-            </label>
-            <nb-radio-group class="d-flex">
-                <nb-radio *ngFor="let option of options" [value]="option.value">
-                    {{ option.label }}
-                </nb-radio>
-            </nb-radio-group>
-        </div>
     </form>
 
-    <button nbButton button class="col-6 col-md-auto btn btn-success">Guardar</button>
+    <button 
+        (click)="onSubmit()"
+        nbButton 
+        button 
+        class="col-6 col-md-auto btn btn-success">Guardar</button>
 </app-modal>

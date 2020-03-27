@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { ItemCheck } from 'src/app/models/step.model';
+import { APPROVAL_TYPE } from '../../../../models/step.model';
+import { StepService } from 'src/app/services/step.service';
 
 @Component({
   selector: 'app-steps-form',
@@ -16,18 +18,18 @@ export class StepsFormComponent implements OnInit {
   @Input() kind: string;
 
   form: FormGroup;
+
+  APPROVAL_TYPE = APPROVAL_TYPE;
+  submitted: boolean = false; 
+
   // For list
   checklist: ItemCheck[] = []; // Objective list
   MODE_LIST = ACTION.CREATE;
   ID_ITEM: number;
   ACTION = ACTION;
 
-  options = [
-    { value: true, label: 'Si' },
-    { value: false, label: 'No' },
-  ];
-
   constructor(
+    private stepService: StepService,
     private toastr: CustomToastrService,
     private fb: FormBuilder ) {
     this.form = this.fb.group({
@@ -38,10 +40,14 @@ export class StepsFormComponent implements OnInit {
       hasVideo: new FormControl(false),
       hasChecklist: new FormControl(false),
       // ---------------------
-      
+
       // Optional inputs show
       checklist: new FormControl(),
-      
+      approvalType: new FormControl(null, [Validators.required]), 
+      name: new FormControl(null,[Validators.required]),
+      text: new FormControl(null), 
+      file: new FormControl(),
+      video: new FormControl(),
     });
   }
 
@@ -75,6 +81,25 @@ export class StepsFormComponent implements OnInit {
     }
     this.MODE_LIST = ACTION.CREATE;
     this.form.controls.checklist.reset();
+  }
+
+  onSubmit() {
+
+    this.submitted = true;
+
+    if( this.form.valid ) {
+      
+      let data:any = this.form.value;
+
+      data.checklist = this.checklist;
+
+      this.stepService.setStep( data ).subscribe( response => {
+
+        console.log(response);
+
+      });
+    }
+
   }
 }
 

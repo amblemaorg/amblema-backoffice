@@ -1,11 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input-file',
   template: `
     <div class="form-group">
-      <input type="file" name="file" id="file" class="input-file">
+  
       <label for="file" nbButton outline status="info" class="btn btn-outline-info js-labelFile">
+      <input 
+        type="file" 
+        [name]="id" 
+        [id]="id" 
+        (change)="handleUpload($event.target.files)"
+        class="input-file">
         <nb-icon icon="file-text-outline" class="mr-2"></nb-icon>
         <span class="js-fileName">Cargar archivo</span>
       </label>
@@ -15,9 +22,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputFileComponent implements OnInit {
 
+  @Input() control: AbstractControl | null = new FormControl();
+  @Input() id: string | null = Math.random().toString();
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  handleUpload(file: File) {
+    this.control.setValue( file[0] as File );
+  }
 }

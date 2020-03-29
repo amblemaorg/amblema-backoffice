@@ -1,13 +1,12 @@
 @import '../../../../../../assets/scss/mixins';
 
-label {
+button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 10px;
-  // width: 10rem;
-  // height: 10rem;
   position: relative!important;
+  padding: .375rem .75rem;
   cursor: pointer;
 
   .input-file {
@@ -15,6 +14,8 @@ label {
     height: 100%;
     opacity: 0;
     overflow: hidden;
+    left: 0;
+    top: 0;
     position: absolute;
     z-index: 1;
     cursor: pointer;
@@ -23,6 +24,8 @@ label {
   &:hover { 
     &:before {
       content: '';
+      left: 0;
+      top: 0;
       position: absolute;
       width: 100%;
       height: 100%;
@@ -32,8 +35,6 @@ label {
   }
   svg { @include center(both) }
   .icon:before {
-    //font-awesome
-
     z-index: 3;
     content: "\f093";
   }

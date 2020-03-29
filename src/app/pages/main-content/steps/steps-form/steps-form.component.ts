@@ -20,7 +20,7 @@ export class StepsFormComponent implements OnInit {
   form: FormGroup;
 
   APPROVAL_TYPE = APPROVAL_TYPE;
-  submitted: boolean = false; 
+  submitted = false;
 
   // For list
   checklist: ItemCheck[] = []; // Objective list
@@ -43,9 +43,9 @@ export class StepsFormComponent implements OnInit {
 
       // Optional inputs show
       checklist: new FormControl(),
-      approvalType: new FormControl(null, [Validators.required]), 
-      name: new FormControl(null,[Validators.required]),
-      text: new FormControl(null), 
+      approvalType: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required]),
+      text: new FormControl(null),
       file: new FormControl(),
       video: new FormControl(),
     });
@@ -87,17 +87,21 @@ export class StepsFormComponent implements OnInit {
 
     this.submitted = true;
 
-    if( this.form.valid ) {
-      
-      let data:any = this.form.value;
+    if ( this.form.valid ) {
+
+      const data: any = this.form.value;
 
       data.checklist = this.checklist;
 
-      this.stepService.setStep( data ).subscribe( response => {
+      const formData = new FormData();
+      formData.append('name', data.name);
+
+
+      this.stepService.setStep(formData ).subscribe( response => {
 
         console.log(response);
 
-      });
+      }, (err: any) => { console.log(err); });
     }
 
   }

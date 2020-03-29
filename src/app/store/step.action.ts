@@ -62,8 +62,8 @@ export class StepState implements NgxsOnInit {
 
     @Action(AddStep)
     addStep(ctx: StateContext<StepStateModel>, action: AddStep) {
-        this.stepService.setStep(action.payload).subscribe(response => {
-            console.log(response);
-        });
+        // this.stepService.setStep(action).subscribe(response => {
+        //     console.log(response);
+        // });
     }
 }

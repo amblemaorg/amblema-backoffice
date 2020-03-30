@@ -5,6 +5,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { ItemCheck } from 'src/app/models/step.model';
 import { APPROVAL_TYPE } from '../../../../models/step.model';
 import { StepService } from 'src/app/services/step.service';
+import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 
 @Component({
   selector: 'app-steps-form',
@@ -43,12 +44,14 @@ export class StepsFormComponent implements OnInit {
       // ---------------------
 
       // Optional inputs show
-      checklist: new FormControl(),
       approvalType: new FormControl(null, [Validators.required]),
       name: new FormControl(null, [Validators.required]),
+      
+      
+      checklist: new FormControl(null),
       text: new FormControl(null),
-      file: new FormControl(),
-      video: new FormControl(),
+      file: new FormControl(null),
+      video: new FormControl(null),
     });
   }
 
@@ -88,41 +91,61 @@ export class StepsFormComponent implements OnInit {
 
     this.submitted = true;
 
+    // Before config required data
+    if( this.form.controls.hasText.value ) {
+      this.form.controls.text.setValidators([Validators.required]);
+      this.form.controls.text.updateValueAndValidity();
+    } else {
+       this.form.controls.text.clearValidators();
+       this.form.controls.text.updateValueAndValidity();   
+    }
+
+    if( this.form.controls.hasChecklist.value ) {
+      this.form.controls.checklist.setValidators([Validators.required]);
+      this.form.controls.checklist.updateValueAndValidity();
+    } else {
+       this.form.controls.checklist.clearValidators();
+       this.form.controls.checklist.updateValueAndValidity();   
+    }
+
+    if( this.form.controls.hasVideo.value ) {
+      this.form.controls.video.setValidators([Validators.required, Validators.pattern(VIDEO_PATTERN)]);
+      this.form.controls.video.updateValueAndValidity();  
+    } else {
+      this.form.controls.video.clearValidators();
+      this.form.controls.video.updateValueAndValidity();   
+   }
+    
+    // ---------------------------
+
     if ( this.form.valid ) {
 
       const data: any = this.form.value;
 
       data.checklist = this.checklist;
-
-     
       const formData = new FormData();
+
       formData.append('name', data.name);
       formData.append('approvalType', data.approvalType); 
+      formData.append('text', data.text);
+    
+      formData.append('tag', this.kind); 
+
       formData.append('hasText', String(data.hasText)); 
       formData.append('hasFile', String(data.hasFile));
       formData.append('hasUpload', String(data.hasUpload));
-      
       formData.append('hasDate', String(data.hasDate));
       formData.append('hasVideo', String(data.hasVideo));
       formData.append('hasChecklist', String(data.hasChecklist));
-      
-      formData.append('text', data.text); 
-      formData.append('tag', KIND_STEP.GENERAL.CODE); 
-
-
-      console.log(formData); 
-      
-
+    
       this.stepService.setStep(formData ).subscribe( response => {
 
-        console.log(response);
-
+        console.log(response); 
       }, (err: any) => { console.log(err); });
     }
 
   }
 }
-// "tag": "str (1=general, 2=coordinador, 3=padrino, 4=escuela)",
 
 export const KIND_STEP = {
   GENERAL: {

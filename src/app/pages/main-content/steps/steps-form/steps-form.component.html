@@ -10,10 +10,14 @@
         </div>
         <div class="col-12 col-md-6 form-group">
             <label for="" class="label">Aprobación</label>
-            <select formControlName="approvalType" class="form-control">
-                <option value="null"> - Seleccione el tipo de aprobación - </option>
+            <select formControlName="approvalType" class="form-control form-group">
+                <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
                 <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{ item.VALUE }}</option>
             </select>
+
+            <div class="alert alert-primary" *ngIf="submitted && form.get('approvalType').invalid">
+                <strong>Campo requerido</strong>
+              </div>
         </div>
         <div class="col-12">
             <div class="row">
@@ -29,6 +33,7 @@
                                 *ngIf="form.get('hasText').value" 
                                 [id]="'description'"
                                 [label]="'Descripción'" 
+                                [submitted]="submitted"
                                 [control]="form.get('text')"
                                 [placeholder]="'Descripción'"></app-text-area-custom>
                             <nb-checkbox formControlName="hasDate" class="d-block form-group">Fecha</nb-checkbox>
@@ -42,8 +47,13 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <nb-checkbox formControlName="hasVideo" class="d-block form-group">Video</nb-checkbox>
-                            <app-input-custom *ngIf="form.get('hasVideo').value" [id]="'url-video'"
-                                [placeholder]="'URL del video'" [label]="'URL del video'"></app-input-custom>
+                            <app-input-custom 
+                                *ngIf="form.get('hasVideo').value" 
+                                [id]="'url-video'"
+                                [submitted]="submitted"
+                                [control]="form.get('video')"
+                                [placeholder]="'URL del video'" 
+                                [label]="'URL del video'"></app-input-custom>
 
                             <!-- Check loader -->
                             <nb-checkbox formControlName="hasChecklist" class="d-block form-group">Checklist

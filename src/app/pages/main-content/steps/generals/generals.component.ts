@@ -9,8 +9,8 @@ import { KIND_STEP } from '../steps-form/steps-form.component';
 export class GeneralsComponent implements OnInit {
 
   modal = 'form-step-general';
-  kind: any = KIND_STEP;
-
+  kind: string = KIND_STEP.GENERAL.CODE;
+  
   constructor(
     public modalService: ModalService
   ) { }

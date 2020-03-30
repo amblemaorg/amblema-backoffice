@@ -37,6 +37,7 @@
     "@ngxs/logger-plugin": "^3.6.2",
     "@ngxs/storage-plugin": "^3.6.2",
     "@ngxs/store": "^3.6.2",
+    "@rxweb/reactive-form-validators": "^1.9.9-beta4",
     "@types/jquery": "^3.3.31",
     "bootstrap": "^4.4.1",
     "crypto-js": "^4.0.0",

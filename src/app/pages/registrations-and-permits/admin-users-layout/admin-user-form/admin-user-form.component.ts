@@ -35,7 +35,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
     private store: Store,
     private helper: Utility,
     private toastr: CustomToastrService,
-    
+
     private adminUserService: AdminUserService,
     private validationService: ValidationService) { super(); }
 
@@ -115,10 +115,10 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
-                break;
+              break;
             case HttpEventType.Response:
               setTimeout(() => {
-                this.progress = 0;  
+                this.progress = 0;
               }, 2000);
 
               this.store.dispatch(new SetAdminUser(event.body));

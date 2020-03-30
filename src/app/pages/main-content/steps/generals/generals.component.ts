@@ -10,7 +10,7 @@ export class GeneralsComponent implements OnInit {
 
   modal = 'form-step-general';
   kind: string = KIND_STEP.GENERAL.CODE;
-  
+
   constructor(
     public modalService: ModalService
   ) { }

@@ -1,24 +1,25 @@
 <app-modal [size]="'lg'" extra="true" [title]="title" [ID]="id">
     <form [formGroup]="form" class="row" content>
+
+        <!-- Name -->
         <div class="col-12 col-md-6">
-            <app-input-custom 
-                [submitted]='submitted'
-                [control]="form.get('name')"
-                [label]="'Nombre'" 
-                [placeholder]="'Nombre'" 
-                [id]="'name-steps'"></app-input-custom>
+            <app-input-custom [submitted]='submitted' [control]="form.get('name')" [label]="'Nombre'"
+                [placeholder]="'Nombre'" [id]="'name-steps'"></app-input-custom>
         </div>
-        <div class="col-12 col-md-6 form-group">
+
+        <!-- Approval -->
+        <div class="col-12 col-md-6">
             <label for="" class="label">Aprobación</label>
             <select formControlName="approvalType" class="form-control form-group">
                 <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
                 <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{ item.VALUE }}</option>
             </select>
-
             <div class="alert alert-primary" *ngIf="submitted && form.get('approvalType').invalid">
                 <strong>Campo requerido</strong>
-              </div>
+            </div>
         </div>
+
+        <!-- Enable/Disabled inputs -->
         <div class="col-12">
             <div class="row">
                 <div class="col-12">
@@ -27,32 +28,30 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12 col-md-6">
+
+                            <!-- Text -->
                             <nb-checkbox formControlName="hasText" class="d-block form-group">Descripción
                             </nb-checkbox>
-                            <app-text-area-custom 
-                                *ngIf="form.get('hasText').value" 
-                                [id]="'description'"
-                                [label]="'Descripción'" 
-                                [submitted]="submitted"
-                                [control]="form.get('text')"
+                            <app-text-area-custom *ngIf="form.get('hasText').value" [id]="'description'"
+                                [label]="'Descripción'" [submitted]="submitted" [control]="form.get('text')"
                                 [placeholder]="'Descripción'"></app-text-area-custom>
+
+                            <!-- Date -->
                             <nb-checkbox formControlName="hasDate" class="d-block form-group">Fecha</nb-checkbox>
 
-
+                            <!-- File - BackOffice -->
                             <nb-checkbox formControlName="hasFile" class="d-block form-group">Archivo adjunto
                             </nb-checkbox>
-                            <app-input-file 
-                                [control]="form.get('file')"
+                            <app-input-file [submitted]="submitted" [control]="form.get('file')"
                                 *ngIf="form.get('hasFile').value"></app-input-file>
                         </div>
+
                         <div class="col-12 col-md-6">
+
+                            <!-- Video -->
                             <nb-checkbox formControlName="hasVideo" class="d-block form-group">Video</nb-checkbox>
-                            <app-input-custom 
-                                *ngIf="form.get('hasVideo').value" 
-                                [id]="'url-video'"
-                                [submitted]="submitted"
-                                [control]="form.get('video')"
-                                [placeholder]="'URL del video'" 
+                            <app-input-custom *ngIf="form.get('hasVideo').value" [id]="'url-video'"
+                                [submitted]="submitted" [control]="form.get('video')" [placeholder]="'URL del video'"
                                 [label]="'URL del video'"></app-input-custom>
 
                             <!-- Check loader -->
@@ -135,9 +134,5 @@
         </div>
     </form>
 
-    <button 
-        (click)="onSubmit()"
-        nbButton 
-        button 
-        class="col-6 col-md-auto btn btn-success">Guardar</button>
+    <button nbButton button (click)="onSubmit()" class="col-6 col-md-auto btn btn-success">Guardar</button>
 </app-modal>

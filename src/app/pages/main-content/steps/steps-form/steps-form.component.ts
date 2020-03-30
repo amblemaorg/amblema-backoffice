@@ -6,6 +6,7 @@ import { ItemCheck } from 'src/app/models/step.model';
 import { APPROVAL_TYPE } from '../../../../models/step.model';
 import { StepService } from 'src/app/services/step.service';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { FileValidator, EXTENSIONS } from 'src/app/pages/components/shared/file-validator';
 
 @Component({
   selector: 'app-steps-form',
@@ -19,50 +20,98 @@ export class StepsFormComponent implements OnInit {
   @Input() kind: string;
 
   form: FormGroup;
+  submitted: boolean = false;
 
   APPROVAL_TYPE = APPROVAL_TYPE;
-  submitted = false;
 
-  // For list
+  // Conf checklist
   checklist: ItemCheck[] = []; // Objective list
   MODE_LIST = ACTION.CREATE;
   ID_ITEM: number;
   ACTION = ACTION;
 
   constructor(
-    private stepService: StepService,
     private toastr: CustomToastrService,
-    private fb: FormBuilder ) {
+    private stepService: StepService,
+    private fb: FormBuilder) {
     this.form = this.fb.group({
-      // Optional
-      hasText: new FormControl(false),
-      hasDate: new FormControl(false),
-      hasFile: new FormControl(false),
-      hasVideo: new FormControl(false),
-      hasChecklist: new FormControl(false),
-      hasUpload: new FormControl(false), 
-      // ---------------------
-
-      // Optional inputs show
-      approvalType: new FormControl(null, [Validators.required]),
       name: new FormControl(null, [Validators.required]),
-      
-      
-      checklist: new FormControl(null),
+      approvalType: new FormControl(null, [Validators.required]),
+      hasText: new FormControl(false),
       text: new FormControl(null),
+      hasDate: new FormControl(false),
+
+      hasFile: new FormControl(false),
       file: new FormControl(null),
+      hasVideo: new FormControl(false),
       video: new FormControl(null),
+      hasChecklist: new FormControl(false),
+      checklist: new FormControl(null),
+      hasUpload: new FormControl(false),
     });
   }
 
-  ngOnInit() {}
+  ngOnInit(): void { }
+
+  onSubmit(): void {
+
+    this.submitted = true;
+
+    if (this.form.valid) {
+
+      const formData = new FormData();
+
+      formData.append('name', this.form.controls.name.value);
+      formData.append('approvalType', this.form.controls.approvalType.value);
+      formData.append('tag', this.kind);
+      formData.append('hasDate', this.form.controls.hasDate.value);
+      formData.append('hasText', this.form.controls.hasText.value);
+      formData.append('text', this.form.controls.text.value);
+
+      // To send file, to be true
+      if (this.form.controls.hasFile.value) {
+        formData.append('file', this.form.controls.file.value);
+      }
+
+      // To send video, to be true
+      if (this.form.controls.hasVideo.value) {
+        formData.append('video', JSON.stringify({ name: Math.random().toString(), url: this.form.controls.video.value }));
+      }
+
+      // To send list, to be true
+      if (this.form.controls.hasChecklist.value) {
+        formData.append('checklist', JSON.stringify(this.checklist));
+      }
+
+      formData.append('hasFile', this.form.controls.hasFile.value);
+      formData.append('hasVideo', this.form.controls.hasVideo.value);
+      formData.append('hasChecklist', this.form.controls.hasChecklist.value);
+      formData.append('hasUpload', this.form.controls.hasUpload.value);
+
+      this.stepService.setStep(formData).subscribe(response => {
+      
+        this.resetForm();
+      });
+    }
+  }
+
+  resetForm() {
+    this.form.reset();
+    this.submitted = false;
+    this.checklist = [];
+  }
+
+  /**
+   * CRUD CheckList
+   */
 
   addObjective() {
     this.checklist = Object.assign([], this.checklist);
 
     if (this.checklist.length < 5) {
-      this.checklist.push({name: this.form.controls.checklist.value });
+      this.checklist.push({ name: this.form.controls.checklist.value });
       this.form.controls.checklist.reset();
+      
     } else { this.toastr.error('Limite de registro', 'Solo se pueden registrar 5 objectivos'); }
   }
 
@@ -73,8 +122,7 @@ export class StepsFormComponent implements OnInit {
   }
 
   onDeleteObjective(index: number): void {
-    this.ID_ITEM = index;
-    this.checklist = this.checklist.filter(e => e.name !== this.checklist[this.ID_ITEM].name);
+    this.checklist = this.checklist.filter( (value, key) => key !== index );
     this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
   }
 
@@ -86,65 +134,6 @@ export class StepsFormComponent implements OnInit {
     this.MODE_LIST = ACTION.CREATE;
     this.form.controls.checklist.reset();
   }
-
-  onSubmit() {
-
-    this.submitted = true;
-
-    // Before config required data
-    if( this.form.controls.hasText.value ) {
-      this.form.controls.text.setValidators([Validators.required]);
-      this.form.controls.text.updateValueAndValidity();
-    } else {
-       this.form.controls.text.clearValidators();
-       this.form.controls.text.updateValueAndValidity();   
-    }
-
-    if( this.form.controls.hasChecklist.value ) {
-      this.form.controls.checklist.setValidators([Validators.required]);
-      this.form.controls.checklist.updateValueAndValidity();
-    } else {
-       this.form.controls.checklist.clearValidators();
-       this.form.controls.checklist.updateValueAndValidity();   
-    }
-
-    if( this.form.controls.hasVideo.value ) {
-      this.form.controls.video.setValidators([Validators.required, Validators.pattern(VIDEO_PATTERN)]);
-      this.form.controls.video.updateValueAndValidity();  
-    } else {
-      this.form.controls.video.clearValidators();
-      this.form.controls.video.updateValueAndValidity();   
-   }
-    
-    // ---------------------------
-
-    if ( this.form.valid ) {
-
-      const data: any = this.form.value;
-
-      data.checklist = this.checklist;
-      const formData = new FormData();
-
-      formData.append('name', data.name);
-      formData.append('approvalType', data.approvalType); 
-      formData.append('text', data.text);
-    
-      formData.append('tag', this.kind); 
-
-      formData.append('hasText', String(data.hasText)); 
-      formData.append('hasFile', String(data.hasFile));
-      formData.append('hasUpload', String(data.hasUpload));
-      formData.append('hasDate', String(data.hasDate));
-      formData.append('hasVideo', String(data.hasVideo));
-      formData.append('hasChecklist', String(data.hasChecklist));
-    
-      this.stepService.setStep(formData ).subscribe( response => {
-
-        console.log(response); 
-      }, (err: any) => { console.log(err); });
-    }
-
-  }
 }
 
 export const KIND_STEP = {
@@ -153,7 +142,7 @@ export const KIND_STEP = {
     VALUE: 'General'
   },
   COORDINATOR: {
-    CODE: '2', 
+    CODE: '2',
     VALUE: 'Coordinador'
   },
   SPONSOR: {
@@ -161,7 +150,7 @@ export const KIND_STEP = {
     VALUE: 'Padrino'
   },
   SCHOOL: {
-    CODE: '4', 
+    CODE: '4',
     VALUE: 'Escuela'
   }
 };

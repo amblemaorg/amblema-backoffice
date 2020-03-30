@@ -26,6 +26,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
     NbListModule,
     ReactiveDatepickerModule,
     NbButtonModule,
+
   ],
   exports: [StepsFormComponent]
 })

@@ -4,6 +4,7 @@ import { InputImgComponent } from './input-img/input-img.component';
 import { InputFileComponent } from './input-file/input-file.component';
 import { NbIconModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     NbButtonModule,
     NbAlertModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ReactiveValidationModule,
+
   ],
   exports: [
     InputImgComponent,

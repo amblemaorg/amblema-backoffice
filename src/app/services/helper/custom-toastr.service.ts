@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbToastRef } from '@nebular/theme';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomToastrService {
 
-  private readonly position: any = 'bottom-left';
+  private readonly position: any = 'top-right';
   private readonly duration: number = 6000;
 
   public durationInfo = 0;
+
 
   constructor(private toastrService: NbToastrService) { }
 
@@ -41,6 +42,7 @@ export class CustomToastrService {
   }
 
   error(title: string, content: string): void {
+
     this.toastrService.danger( content, title, {
       position: this.position,
       iconPack: 'eva',
@@ -55,7 +57,7 @@ export class CustomToastrService {
       position: this.position,
       iconPack: 'eva',
       icon: 'alert-triangle-outline',
-      duration: this.duration
+      duration: this.duration,
     });
   }
 }

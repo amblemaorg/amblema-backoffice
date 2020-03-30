@@ -39,6 +39,7 @@ export class StepsFormComponent implements OnInit {
       hasFile: new FormControl(false),
       hasVideo: new FormControl(false),
       hasChecklist: new FormControl(false),
+      hasUpload: new FormControl(false), 
       // ---------------------
 
       // Optional inputs show
@@ -93,12 +94,24 @@ export class StepsFormComponent implements OnInit {
 
       data.checklist = this.checklist;
 
+     
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('approvalType', data.approvalType); 
-      formData.append('hasText', data.hasText); 
+      formData.append('hasText', String(data.hasText)); 
+      formData.append('hasFile', String(data.hasFile));
+      formData.append('hasUpload', String(data.hasUpload));
+      
+      formData.append('hasDate', String(data.hasDate));
+      formData.append('hasVideo', String(data.hasVideo));
+      formData.append('hasChecklist', String(data.hasChecklist));
+      
       formData.append('text', data.text); 
       formData.append('tag', KIND_STEP.GENERAL.CODE); 
+
+
+      console.log(formData); 
+      
 
       this.stepService.setStep(formData ).subscribe( response => {
 

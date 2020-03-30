@@ -95,7 +95,10 @@ export class StepsFormComponent implements OnInit {
 
       const formData = new FormData();
       formData.append('name', data.name);
-
+      formData.append('approvalType', data.approvalType); 
+      formData.append('hasText', data.hasText); 
+      formData.append('text', data.text); 
+      formData.append('tag', KIND_STEP.GENERAL.CODE); 
 
       this.stepService.setStep(formData ).subscribe( response => {
 
@@ -106,10 +109,23 @@ export class StepsFormComponent implements OnInit {
 
   }
 }
+// "tag": "str (1=general, 2=coordinador, 3=padrino, 4=escuela)",
 
 export const KIND_STEP = {
-  GENERAL: 'General',
-  COORDINATOR: 'Coordinator',
-  SPONSOR: 'Sponsor',
-  SCHOOL: 'School'
+  GENERAL: {
+    CODE: '1',
+    VALUE: 'General'
+  },
+  COORDINATOR: {
+    CODE: '2', 
+    VALUE: 'Coordinador'
+  },
+  SPONSOR: {
+    CODE: '3',
+    VALUE: 'Padrino'
+  },
+  SCHOOL: {
+    CODE: '4', 
+    VALUE: 'Escuela'
+  }
 };

@@ -12,15 +12,7 @@ export class StepService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  setStep(data: FormData): Observable<Step> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': '',
-        Accept: 'multipart/form-data',
-      }),
-
-    };
-
-    return this.httpClient.post<Step>(`${environment.api}${this.STEP}`, data,  httpOptions);
+  setStep(data: FormData): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}${this.STEP}`, data);
   }
 }

@@ -27,4 +27,8 @@ export class StepService {
   updateStep( id: string,  data: FormData): Observable<any> {
     return this.httpClient.put<any>(`${environment.api}${this.STEP}/${id}`, data);
   }
+
+  deleteStep(id: string): Observable<string> {
+    return this.httpClient.delete<string>(`${environment.api}${this.STEP}/${id}`);
+  }
 }

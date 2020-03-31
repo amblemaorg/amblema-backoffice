@@ -122,8 +122,8 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
   }
 
   onDelete() {
-
-    
-
+    this.updateStepService.deleteStep(this.data.id).subscribe( (response: any) => {
+      
+    });
   }
 }

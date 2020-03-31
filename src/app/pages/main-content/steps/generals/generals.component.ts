@@ -12,7 +12,7 @@ import { Step } from 'src/app/models/step.model';
 })
 export class GeneralsComponent implements OnInit, OnDestroy {
 
-  @Select(StepState.generalStandardSteps) steps$: Observable<Step[]>;
+  @Select(StepState.generalSteps) steps$: Observable<Step[]>;
   subscription: Subscription;
 
   modal = 'form-step-general';
@@ -64,7 +64,7 @@ export class GeneralsComponent implements OnInit, OnDestroy {
   }
 }
 
-export const DEV_NAME = {
+const DEV_NAME = {
   SCHOOL: 'findSchool',
   SPONSOR: 'findSponsor',
   COORDINATOR: 'findCoordinator',

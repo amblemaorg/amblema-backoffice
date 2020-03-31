@@ -62,9 +62,9 @@ export class StepState implements NgxsOnInit {
     }
 
     @Selector()
-    static generalStandardSteps( state: StepStateModel ): Step[] | null {
-        const generals: Step[] = state.steps.filter((value) => (value.tag === KIND_STEP.GENERAL.CODE && value.isStandard === true) );
-        return generals;
+    static sponsorStandardSteps( state: StepStateModel ) : Step[] | null {
+        const sponsors: Step[] = state.steps.filter( (value) => (value.tag === KIND_STEP.SPONSOR.CODE && value.isStandard === true ));
+        return sponsors; 
     }
 
     constructor(

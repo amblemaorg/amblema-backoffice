@@ -28,11 +28,11 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
   async ngOnInit() {
 
-    console.log( this.data )
+    console.log(this.data)
 
     // Clear validation
     this.form.controls.name.setValidators([]);
-    this.form.controls.approvalType.setValidators([]); 
+    this.form.controls.approvalType.setValidators([]);
     this.form.updateValueAndValidity();
 
     // Prepare the data in the form
@@ -44,11 +44,20 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       }
 
       if (this.data.hasVideo) {
-        this.form.controls.video.setValue( this.data.video.url );
+        this.form.controls.video.setValue(this.data.video.url);
         this.form.controls.video.setValidators([Validators.required, Validators.pattern(VIDEO_PATTERN)]);
         this.form.updateValueAndValidity()
       }
 
+      if( this.data.hasFile ) {
+        let isUpload: any = this.data.file;
+
+        if (isUpload.url) {
+          this.form.controls.file.setValue( isUpload );
+        }
+      }
+
+      this.form.controls.approvalType.setValue(this.data.approvalType);
       this.form.controls.status.setValue(this.data.status === STATUS.ACTIVE.CODE ? true : false);
     }
   }
@@ -61,6 +70,8 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
       this.data.text = this.form.controls.text.value;
       this.data.status = this.form.controls.status.value ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE;
+      this.data.approvalType = this.form.controls.approvalType.value;
+      this.data.file = this.form.controls.file.value;
 
       const formData = new FormData();
 
@@ -72,9 +83,16 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       formData.append('hasText', String(this.data.hasText));
       formData.append('text', this.data.text);
 
+      console.log(this.data);
+
       // To send file, to be true
       if (this.data.hasFile) {
-        formData.append('file', this.data.file);
+        let isUpload: any = this.data.file;
+        if (isUpload.url) {
+          formData.append('file', JSON.stringify(this.data.file));
+        } else {
+          formData.append('file', this.data.file);
+        }
       }
 
       // To send video, to be true
@@ -93,12 +111,19 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       formData.append('hasUpload', String(this.data.hasUpload));
       formData.append('status', String(this.data.status));
 
-
       // Update step
       this.updateStepService.updateStep(this.data.id, formData).subscribe(response => {
-        this.toastrService.updateSuccess('Actualización','Paso actualizado')
+        this.toastrService.updateSuccess('Actualización', 'Paso actualizado')
+      }, (err: any) => {
+        console.log(err);
       })
     }
+
+  }
+
+  onDelete() {
+
+    
 
   }
 }

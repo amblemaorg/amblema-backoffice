@@ -6,6 +6,7 @@ import { NbIconModule, NbButtonModule } from '@nebular/theme';
 import { ToggleModule } from 'src/app/pages/components/shared/toggle/toggle.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputModule } from '../../../reactive-input/reactive-input.module';
+import { ReactiveInputFileModule } from '../../../reactive-input-file/reactive-input-file.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReactiveInputModule } from '../../../reactive-input/reactive-input.modu
     FormsModule,
     ReactiveTextAreaModule,
     ReactiveInputModule,
+    ReactiveInputFileModule,
     NbIconModule,
     NbButtonModule,
     ToggleModule

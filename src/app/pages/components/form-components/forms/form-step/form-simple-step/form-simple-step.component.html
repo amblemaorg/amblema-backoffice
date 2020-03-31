@@ -23,10 +23,35 @@
             [label]="'URL del video'"></app-input-custom>
     </div>
 
+    <div class="col-12">
+        <label for="" class="label">Aprobación</label>
+            <select formControlName="approvalType" class="form-control form-group">
+                <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
+                <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{ item.VALUE }}</option>
+            </select>
+    </div>
+
+    <div class="col-12" *ngIf="data.hasFile">
+        <app-input-file 
+            [id]="data.id+'file'"
+            [submitted]="false" 
+            [control]="form.get('file')">
+
+        </app-input-file>
+    </div>
+
+    <p *ngIf="data.hasChecklist">Lista</p>
+
     <div class="col-12 form-group text-right">
+        
         <button [attr.disabled]=" form.invalid ? true : null " nbButton type="submit" status="primary"
             class="col-12 col-md-auto">
             Guardar <nb-icon icon="edit-outline"></nb-icon>
+        </button>
+
+        <button *ngIf="!data.isStandard" (click)="onDelete()" nbButton status="danger"
+            class="col-12 col-md-auto ml-md-3 mt-3 mt-md-0">
+            Eliminar <nb-icon icon="trash-2-outline"></nb-icon>
         </button>
     </div>
 </form>

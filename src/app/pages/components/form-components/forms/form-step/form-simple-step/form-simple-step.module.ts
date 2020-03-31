@@ -4,6 +4,7 @@ import { FormSimpleStepComponent } from './form-simple-step.component';
 import { ReactiveTextAreaModule } from '../../../reactive-text-area/reactive-text-area.module';
 import { NbIconModule, NbButtonModule } from '@nebular/theme';
 import { ToggleModule } from 'src/app/pages/components/shared/toggle/toggle.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,8 @@ import { ToggleModule } from 'src/app/pages/components/shared/toggle/toggle.modu
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     ReactiveTextAreaModule,
     NbIconModule,
     NbButtonModule,

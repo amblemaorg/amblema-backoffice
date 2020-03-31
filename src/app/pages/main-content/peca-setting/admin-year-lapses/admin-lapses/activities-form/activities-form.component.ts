@@ -52,7 +52,7 @@ export class ActivitiesFormComponent implements OnInit {
   }
 
   onDeleteObjective(index: number): void {
-    this.checklist = this.checklist.filter( (value, key) => key !== index );
+    this.objectives = this.objectives.filter( (value, key) => key !== index );
     this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
   }
 

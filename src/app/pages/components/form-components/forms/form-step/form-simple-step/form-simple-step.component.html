@@ -1,16 +1,28 @@
-<div class="row">
-    <div class="col-12 col-md order-12 order-md-0 form-group">
-        <app-text-area-custom [id]="id" [label]="label" [placeholder]="placeholder">
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="row" >
+    <div class="col-12 form-group">
+        <app-toggle 
+            [id]="id+'toggle'" 
+            [control]="form.get('status')"
+            [label]="form.get('status').value ? 'Paso activado' : 'Paso desactivado'" 
+            class="d-block mx-2"></app-toggle>
+    </div>
+    <div class="col-12 col-md ">
+        <app-text-area-custom 
+            [submitted]="false"
+            [control]="form.get('text')"
+            [id]="id" 
+            [label]="label" 
+            [placeholder]="placeholder">
         </app-text-area-custom>
     </div>
-    <div class="col-12 col-md-auto pt-0 pt-md-4 order-0 order-md-12 form-group justify-content-between d-flex"
-    [ngClass]="{'pt-md-4': label}"
-    style="display: -webkit-box;">
-        <app-toggle [id]="id+'toggle'" value="true" class="d-block mx-2"></app-toggle>
-        <div>
-            <button nbButton size="small" status="primary" class="btn btn-primary" >
-                <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-        </div>
+    <div class="col-12 form-group text-right">
+        <button 
+            [attr.disabled]=" form.invalid ? true : null "
+            nbButton 
+            type="submit"
+            status="primary" 
+            class="col-12 col-md-auto">
+            Guardar <nb-icon icon="edit-outline"></nb-icon>
+        </button>
     </div>
-</div>
+</form>

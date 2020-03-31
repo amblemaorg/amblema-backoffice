@@ -20,7 +20,7 @@ export class StepsFormComponent implements OnInit {
   @Input() kind: string;
 
   form: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
   APPROVAL_TYPE = APPROVAL_TYPE;
 
@@ -40,7 +40,6 @@ export class StepsFormComponent implements OnInit {
       hasText: new FormControl(false),
       text: new FormControl(null),
       hasDate: new FormControl(false),
-
       hasFile: new FormControl(false),
       file: new FormControl(null),
       hasVideo: new FormControl(false),
@@ -51,18 +50,22 @@ export class StepsFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   onSubmit(): void {
+    const checkListValid = this.form.controls.hasChecklist.value && this.checklist.length > 0 ?
+      true : this.form.controls.hasChecklist.value && this.checklist.length === 0 ? false : true;
 
     this.submitted = true;
 
-    if (this.form.valid) {
+    if (this.form.valid && checkListValid) {
 
       const formData = new FormData();
 
       formData.append('name', this.form.controls.name.value);
       formData.append('approvalType', this.form.controls.approvalType.value);
+
       formData.append('tag', this.kind);
       formData.append('hasDate', this.form.controls.hasDate.value);
       formData.append('hasText', this.form.controls.hasText.value);
@@ -89,10 +92,41 @@ export class StepsFormComponent implements OnInit {
       formData.append('hasUpload', this.form.controls.hasUpload.value);
 
       this.stepService.setStep(formData).subscribe(response => {
-      
         this.resetForm();
       });
     }
+  }
+
+  /**
+   * Enable / Disabled inputs
+   */
+
+  changeText(): void {
+    if (this.form.controls.hasText.value) {
+      this.form.controls.text.setValidators([Validators.required]);
+    } else {
+      this.form.controls.text.clearValidators();
+    }
+    this.form.controls.text.updateValueAndValidity();
+  }
+
+  changeFile(): void {
+    if (this.form.controls.hasFile.value) {
+      this.form.controls.file.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
+    } else {
+      this.form.controls.file.clearValidators();
+    }
+    this.form.controls.file.updateValueAndValidity();
+  }
+
+  changeVideo(): void {
+    if (this.form.controls.hasVideo.value) {
+      this.form.controls.video.setValidators([Validators.required, Validators.pattern(VIDEO_PATTERN)]);
+    } else {
+      this.form.controls.video.clearValidators();
+    }
+    this.form.controls.video.updateValueAndValidity();
+
   }
 
   resetForm() {
@@ -111,7 +145,7 @@ export class StepsFormComponent implements OnInit {
     if (this.checklist.length < 5) {
       this.checklist.push({ name: this.form.controls.checklist.value });
       this.form.controls.checklist.reset();
-      
+
     } else { this.toastr.error('Limite de registro', 'Solo se pueden registrar 5 objectivos'); }
   }
 
@@ -122,7 +156,7 @@ export class StepsFormComponent implements OnInit {
   }
 
   onDeleteObjective(index: number): void {
-    this.checklist = this.checklist.filter( (value, key) => key !== index );
+    this.checklist = this.checklist.filter((value, key) => key !== index);
     this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
   }
 
@@ -136,21 +170,3 @@ export class StepsFormComponent implements OnInit {
   }
 }
 
-export const KIND_STEP = {
-  GENERAL: {
-    CODE: '1',
-    VALUE: 'General'
-  },
-  COORDINATOR: {
-    CODE: '2',
-    VALUE: 'Coordinador'
-  },
-  SPONSOR: {
-    CODE: '3',
-    VALUE: 'Padrino'
-  },
-  SCHOOL: {
-    CODE: '4',
-    VALUE: 'Escuela'
-  }
-};

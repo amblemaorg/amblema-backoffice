@@ -7,17 +7,15 @@ import { AbstractReactive } from '../../form-components/abstract-reactive';
     <div class="custom-control custom-switch">
       <input type="checkbox" class="custom-control-input"
         [formControl]="control"
-        [checked]="value"
+        [checked]="control.value"
         [id]="id"
         [name]="id">
-      <label class="custom-control-label" [for]="id">{{label}}</label>
+      <label *ngIf="label" style="padding-top: 2px;" class="custom-control-label font-weight-bold" [for]="id">{{label}}</label>
     </div>
   `,
   styles: []
 })
 export class ToggleComponent extends AbstractReactive {
-
-  @Input() value: boolean | null = false;
 
   constructor() {
     super();

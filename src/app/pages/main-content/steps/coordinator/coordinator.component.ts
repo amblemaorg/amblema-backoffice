@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/services/helper/modal.service';
-import { KIND_STEP } from '../steps-form/steps-form.component';
+import { KIND_STEP } from '../_shared/shared';
 
 @Component({
   selector: 'app-coordinator',

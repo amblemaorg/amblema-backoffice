@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { Validators } from '@angular/forms';
 import { FileValidator, EXTENSIONS } from '../../../shared/file-validator';
@@ -8,7 +8,11 @@ import { FileValidator, EXTENSIONS } from '../../../shared/file-validator';
   template: `
     <div class="form-group">
 
-      <button nbButton outline status="info" class="js-labelFile">
+      <button
+        nbButton
+        [ngClass]="{ 'mb-3': !control.value && submitted }"
+        outline
+        status="info" class="js-labelFile">
       <input
         type="file"
         [name]="id"

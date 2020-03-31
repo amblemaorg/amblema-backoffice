@@ -30,7 +30,7 @@
                         <div class="col-12 col-md-6">
 
                             <!-- Text -->
-                            <nb-checkbox formControlName="hasText" class="d-block form-group">Descripción
+                            <nb-checkbox formControlName="hasText" (change)="changeText()" class="d-block form-group">Descripción
                             </nb-checkbox>
                             <app-text-area-custom *ngIf="form.get('hasText').value" [id]="'description'"
                                 [label]="'Descripción'" [submitted]="submitted" [control]="form.get('text')"
@@ -40,7 +40,7 @@
                             <nb-checkbox formControlName="hasDate" class="d-block form-group">Fecha</nb-checkbox>
 
                             <!-- File - BackOffice -->
-                            <nb-checkbox formControlName="hasFile" class="d-block form-group">Archivo adjunto
+                            <nb-checkbox (change)="changeFile()" formControlName="hasFile" class="d-block form-group">Archivo adjunto
                             </nb-checkbox>
                             <app-input-file [submitted]="submitted" [control]="form.get('file')"
                                 *ngIf="form.get('hasFile').value"></app-input-file>
@@ -49,7 +49,7 @@
                         <div class="col-12 col-md-6">
 
                             <!-- Video -->
-                            <nb-checkbox formControlName="hasVideo" class="d-block form-group">Video</nb-checkbox>
+                            <nb-checkbox formControlName="hasVideo" (change)="changeVideo()" class="d-block form-group">Video</nb-checkbox>
                             <app-input-custom *ngIf="form.get('hasVideo').value" [id]="'url-video'"
                                 [submitted]="submitted" [control]="form.get('video')" [placeholder]="'URL del video'"
                                 [label]="'URL del video'"></app-input-custom>
@@ -57,6 +57,10 @@
                             <!-- Check loader -->
                             <nb-checkbox formControlName="hasChecklist" class="d-block form-group">Checklist
                             </nb-checkbox>
+
+                            <nb-alert status="info" class="form-group py-2" *ngIf="form.get('hasChecklist').value && checklist.length === 0">
+                                Recuerda registrar por lo menos un elemento en la lista
+                            </nb-alert>
 
                             <!-- Dynamic list -->
                             <div class="row" *ngIf="form.get('hasChecklist').value">
@@ -121,6 +125,8 @@
                                         </nb-list-item>
                                     </nb-list>
                                 </div>
+
+                                
                             </div>
                             <!-- / Dynamic list -->
 

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Step } from '../models/step.model';
 import { environment } from 'src/environments/environment.prod';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,9 +11,16 @@ export class StepService {
 
   private readonly STEP = 'steps';
 
-  constructor( private httpClient: HttpClient ) { }
+  constructor(private httpClient: HttpClient) { }
 
   setStep(data: FormData): Observable<any> {
     return this.httpClient.post<any>(`${environment.api}${this.STEP}`, data);
+  }
+
+  getSteps(): Observable<Step[]> {
+    return this.httpClient.get<Step[]>(`${environment.api}${this.STEP}`)
+      .pipe(
+        map((data: any) => data.records)
+      );
   }
 }

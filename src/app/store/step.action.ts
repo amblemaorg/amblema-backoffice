@@ -1,7 +1,8 @@
-import { State, NgxsOnInit, Action, StateContext } from '@ngxs/store';
+import { State, NgxsOnInit, Action, StateContext, Store, Selector } from '@ngxs/store';
 import { Step } from '../models/step.model';
 import { StepService } from '../services/step.service';
-
+import { patch } from '@ngxs/store/operators';
+import { KIND_STEP } from '../pages/main-content/steps/_shared/shared';
 
 interface StepStateModel {
     step: Step;
@@ -45,7 +46,7 @@ export class AddStep {
             // ----------------
 
             approvalType: '',
-            isStandard: '',
+            isStandard: false,
             status: '',
         },
         steps: []
@@ -54,16 +55,42 @@ export class AddStep {
 
 export class StepState implements NgxsOnInit {
 
+    @Selector()
+    static generalSteps( state: StepStateModel ): Step[] | null {
+        const generals: Step[] = state.steps.filter( (value) => value.tag === KIND_STEP.GENERAL.CODE );
+        return generals;
+    }
+
+    @Selector()
+    static generalStandardSteps( state: StepStateModel ): Step[] | null {
+        const generals: Step[] = state.steps.filter((value) => (value.tag === KIND_STEP.GENERAL.CODE && value.isStandard === true) );
+        return generals;
+    }
+
     constructor(
+        private store: Store,
         private stepService: StepService
     ) {}
 
-    ngxsOnInit() { }
+    ngxsOnInit() {
+        this.store.dispatch(new GetSteps() );
+    }
 
     @Action(AddStep)
     addStep(ctx: StateContext<StepStateModel>, action: AddStep) {
         // this.stepService.setStep(action).subscribe(response => {
         //     console.log(response);
         // });
+    }
+
+    @Action(GetSteps)
+    getSteps( ctx: StateContext<StepStateModel>, action: GetSteps ) {
+        this.stepService.getSteps().subscribe( response => {
+
+            ctx.setState(patch({
+                ...ctx.getState(),
+                steps: response
+            }));
+        } );
     }
 }

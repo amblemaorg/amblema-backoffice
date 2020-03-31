@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KIND_STEP } from '../steps-form/steps-form.component';
+import { KIND_STEP } from '../_shared/shared';
 import { ModalService } from 'src/app/services/helper/modal.service';
 
 @Component({

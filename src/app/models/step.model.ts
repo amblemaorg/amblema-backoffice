@@ -21,7 +21,7 @@ export interface Step {
     // ----------------
 
     approvalType: string;
-    isStandard?: string;
+    isStandard?: boolean;
     status: string;
 }
 
@@ -60,7 +60,7 @@ export const APPROVAL_TYPE = [
         VALUE: 'Se apueba al completar los campos'
     },
     {
-        code: '3',
+        CODE: '3',
         VALUE: 'Generar solicitud de aprobación'
     }
 ];

@@ -15,45 +15,47 @@ import { FileValidator, EXTENSIONS } from 'src/app/pages/components/shared/file-
 })
 export class StepsFormComponent implements OnInit {
 
-  @Input() id: string;
-  @Input() title: string;
-  @Input() kind: string;
+  @Input() protected id: string;
+  @Input() protected title: string;
+  @Input() protected kind: string;
 
-  form: FormGroup;
-  submitted = false;
+  public form: FormGroup = new FormGroup({
+    name: new FormControl(null, [Validators.required]),
+    approvalType: new FormControl(null, [Validators.required]),
+    hasText: new FormControl(false),
+    text: new FormControl(null),
+    hasDate: new FormControl(false),
+    hasFile: new FormControl(false),
+    file: new FormControl(null),
+    hasVideo: new FormControl(false),
+    video: new FormControl(null),
+    hasChecklist: new FormControl(false),
+    checklist: new FormControl(null),
+    hasUpload: new FormControl(false),
+  });
 
-  APPROVAL_TYPE = APPROVAL_TYPE;
+  public submitted = false;
+
+  public APPROVAL_TYPE = APPROVAL_TYPE;
 
   // Conf checklist
-  checklist: ItemCheck[] = []; // Objective list
-  MODE_LIST = ACTION.CREATE;
-  ID_ITEM: number;
-  ACTION = ACTION;
+  public checklist: ItemCheck[] = []; // Objective list
+  public MODE_LIST = ACTION.CREATE;
+  public ID_ITEM: number;
+  public ACTION = ACTION;
 
   constructor(
-    private toastr: CustomToastrService,
-    private stepService: StepService,
-    private fb: FormBuilder) {
-    this.form = this.fb.group({
-      name: new FormControl(null, [Validators.required]),
-      approvalType: new FormControl(null, [Validators.required]),
-      hasText: new FormControl(false),
-      text: new FormControl(null),
-      hasDate: new FormControl(false),
-      hasFile: new FormControl(false),
-      file: new FormControl(null),
-      hasVideo: new FormControl(false),
-      video: new FormControl(null),
-      hasChecklist: new FormControl(false),
-      checklist: new FormControl(null),
-      hasUpload: new FormControl(false),
-    });
+    public toastr?: CustomToastrService,
+    protected stepService?: StepService,
+    public fb?: FormBuilder) {
+      
   }
 
   ngOnInit(): void {
+    
   }
 
-  onSubmit(): void {
+  protected onSubmit(): void {
     const checkListValid = this.form.controls.hasChecklist.value && this.checklist.length > 0 ?
       true : this.form.controls.hasChecklist.value && this.checklist.length === 0 ? false : true;
 

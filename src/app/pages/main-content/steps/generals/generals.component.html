@@ -1,37 +1,41 @@
 <nb-card>
     <nb-card-header>Generales</nb-card-header>
     <nb-card-body>
-        <h6 class="mb-3">Planificación del taller inicial</h6>
+        <!-- <h6 class="mb-3">Planificación del taller inicial</h6>
         <app-form-video-step [placeholder]="'Planificación del taller inicial'" [id]="'Planificación del taller inicial'"></app-form-video-step>
-     
-        <h6 class="mb-3">Encontrar una escuela</h6>
-        <app-form-simple-step
-            *ngIf="dataSchoolStep"
-            [data]="dataSchoolStep"
-            [placeholder]="'Encontrar una escuela'" 
-            [id]="'step-schools'"></app-form-simple-step>
+      -->
         
+        <h6 class="mb-3">Planificación del taller inicial</h6>
+        <app-form-simple-step 
+        *ngIf="dataWorkPlanning" 
+        [data]="dataWorkPlanning"></app-form-simple-step> 
+
+
+        <h6 class="mb-3">Encontrar una escuela</h6>
+        <app-form-simple-step 
+            *ngIf="dataSchoolStep" 
+            [data]="dataSchoolStep"></app-form-simple-step> 
+   
         <h6 class="mb-3">Encontrar un padrino</h6>
         <app-form-simple-step 
             *ngIf="dataSponsorStep"
-            [data]="dataSponsorStep"
-            [placeholder]="'Encontrar un padrino'" 
-            [id]="'step-sponsors'"></app-form-simple-step>
+            [data]="dataSponsorStep"></app-form-simple-step>
+        
         <h6 class="mb-3">Encontrar un coordinador</h6>
         <app-form-simple-step 
-            *ngIf="dataSponsorStep"
-            [data]="dataSponsorStep"
-            [placeholder]="'Encontrar un coordinador'" 
-            [id]="'step-coordinator'"></app-form-simple-step>
+            *ngIf="dataCoordinatorStep"
+            [data]="dataCoordinatorStep"></app-form-simple-step>
+
         <h6 class="mb-3">Confirmación de AmbLeMa</h6>
-        <app-form-simple-step [placeholder]="'Conformación de AmbleMa'" [id]="'step-amblema'"></app-form-simple-step>
+        <app-form-simple-step 
+            *ngIf="dataConfirmatinStep"
+            [data]="dataConfirmatinStep"></app-form-simple-step>
     </nb-card-body>
     <nb-card-footer class="text-right">
         <button nbButton status="success" (click)="modalService.open(modal)" class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
     </nb-card-footer>
 </nb-card>
 
-<!-- Modal -->
 <app-steps-form 
     [kind]="kind"
     title="Registro de paso" 

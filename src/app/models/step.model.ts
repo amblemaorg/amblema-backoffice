@@ -16,7 +16,7 @@ export interface Step {
     // ----------------
     text?: string;
     file?: string;
-    video?: string;
+    video?: any;
     checklist?: ItemCheck[];
     // ----------------
 

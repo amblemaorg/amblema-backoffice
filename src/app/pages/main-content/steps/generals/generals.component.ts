@@ -29,19 +29,20 @@ export class GeneralsComponent implements OnInit, OnDestroy {
   ) { }
 
   async ngOnInit() {
-    
+
     this.subscription = await this.steps$.subscribe(response => {
       response.forEach((value) => {
 
-        // Get standard forms    
+        // Get standard forms
         switch (value.devName) {
           case DEV_NAME.SCHOOL:
             this.dataSchoolStep = value;
             break;
           case DEV_NAME.SPONSOR:
             this.dataSponsorStep = value;
-            case DEV_NAME.COORDINATOR:
-              this.dataCoordinatorStep = value;
+            break;
+          case DEV_NAME.COORDINATOR:
+            this.dataCoordinatorStep = value;
             break;
           case DEV_NAME.CONFIRMATION:
             this.dataConfirmatinStep = value;
@@ -53,11 +54,11 @@ export class GeneralsComponent implements OnInit, OnDestroy {
 
       });
     });
-    
+
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }

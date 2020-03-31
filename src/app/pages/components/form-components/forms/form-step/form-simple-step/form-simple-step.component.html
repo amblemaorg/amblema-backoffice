@@ -1,26 +1,30 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="form" class="row" >
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
     <div class="col-12 form-group">
-        <app-toggle 
-            [id]="id+'toggle'" 
-            [control]="form.get('status')"
-            [label]="form.get('status').value ? 'Paso activado' : 'Paso desactivado'" 
-            class="d-block mx-2"></app-toggle>
+        <app-toggle [id]="data.id+'toggle'" [control]="form.get('status')"
+            [label]="form.get('status').value ? 'Paso activado' : 'Paso desactivado'" class="d-block mx-2"></app-toggle>
     </div>
     <div class="col-12 col-md ">
         <app-text-area-custom 
-            [submitted]="false"
-            [control]="form.get('text')"
-            [id]="id" 
+            *ngIf="data.hasText" 
+            [submitted]="false" 
+            [control]="form.get('text')" 
+            [id]="data.id + 'text'"
             [label]="label" 
-            [placeholder]="placeholder">
+            [placeholder]="data.name">
         </app-text-area-custom>
     </div>
+    <div class="col-12">
+        <app-input-custom 
+            *ngIf="data.hasVideo" 
+            [id]="data.id + 'video'" 
+            [submitted]="false"
+            [control]="form.get('video')" 
+            [placeholder]="'URL del video'" 
+            [label]="'URL del video'"></app-input-custom>
+    </div>
+
     <div class="col-12 form-group text-right">
-        <button 
-            [attr.disabled]=" form.invalid ? true : null "
-            nbButton 
-            type="submit"
-            status="primary" 
+        <button [attr.disabled]=" form.invalid ? true : null " nbButton type="submit" status="primary"
             class="col-12 col-md-auto">
             Guardar <nb-icon icon="edit-outline"></nb-icon>
         </button>

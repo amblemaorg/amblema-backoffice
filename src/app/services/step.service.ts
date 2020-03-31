@@ -23,4 +23,8 @@ export class StepService {
         map((data: any) => data.records)
       );
   }
+
+  updateStep( id: string,  data: FormData): Observable<any> {
+    return this.httpClient.put<any>(`${environment.api}${this.STEP}/${id}`, data);
+  }
 }

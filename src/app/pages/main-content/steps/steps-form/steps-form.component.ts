@@ -7,6 +7,8 @@ import { APPROVAL_TYPE } from '../../../../models/step.model';
 import { StepService } from 'src/app/services/step.service';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { FileValidator, EXTENSIONS } from 'src/app/pages/components/shared/file-validator';
+import { Store } from '@ngxs/store';
+import { AddStep } from 'src/app/store/step.action';
 
 @Component({
   selector: 'app-steps-form',
@@ -18,6 +20,8 @@ export class StepsFormComponent implements OnInit {
   @Input() protected id: string;
   @Input() protected title: string;
   @Input() protected kind: string;
+
+  protected progress: boolean = false; 
 
   public form: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
@@ -45,17 +49,17 @@ export class StepsFormComponent implements OnInit {
   public ACTION = ACTION;
 
   constructor(
-    public toastr?: CustomToastrService,
-    protected stepService?: StepService,
+    public store?: Store,
+    private toastr?: CustomToastrService,
+    public stepService?: StepService,
     public fb?: FormBuilder) {
       
   }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   protected onSubmit(): void {
+    // This is to valid the check list if has a check
     const checkListValid = this.form.controls.hasChecklist.value && this.checklist.length > 0 ?
       true : this.form.controls.hasChecklist.value && this.checklist.length === 0 ? false : true;
 
@@ -63,6 +67,7 @@ export class StepsFormComponent implements OnInit {
 
     if (this.form.valid && checkListValid) {
 
+      this.progress = true;
       const formData = new FormData();
 
       formData.append('name', this.form.controls.name.value);
@@ -95,6 +100,13 @@ export class StepsFormComponent implements OnInit {
 
       this.stepService.setStep(formData).subscribe(response => {
         this.resetForm();
+        this.store.dispatch( new AddStep(response) );
+        this.toastr.registerSuccess('Registro', 'Paso registrado'); 
+      }, (err: any) => {
+
+        console.log( err )
+        this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+        this.progress = false;
       });
     }
   }
@@ -134,6 +146,7 @@ export class StepsFormComponent implements OnInit {
   resetForm() {
     this.form.reset();
     this.submitted = false;
+    this.progress = false; 
     this.checklist = [];
   }
 
@@ -141,7 +154,7 @@ export class StepsFormComponent implements OnInit {
    * CRUD CheckList
    */
 
-  addObjective() {
+  public addObjective() {
     this.checklist = Object.assign([], this.checklist);
 
     if (this.checklist.length < 5) {
@@ -151,24 +164,24 @@ export class StepsFormComponent implements OnInit {
     } else { this.toastr.error('Limite de registro', 'Solo se pueden registrar 5 objectivos'); }
   }
 
-  onEditObjective(index: number): void {
+  public onEditObjective(index: number): void {
     this.MODE_LIST = ACTION.EDIT;
     this.ID_ITEM = index;
     this.form.controls.checklist.setValue(this.checklist[index].name);
   }
 
-  onDeleteObjective(index: number): void {
+  public onDeleteObjective(index: number): void {
     this.checklist = this.checklist.filter((value, key) => key !== index);
     this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
   }
 
-  confirmAction() {
-    this.checklist = Object.assign([], this.checklist);
-    if (this.MODE_LIST === ACTION.EDIT) {
-      this.checklist[this.ID_ITEM].name = this.form.controls.checklist.value;
-    }
-    this.MODE_LIST = ACTION.CREATE;
-    this.form.controls.checklist.reset();
+  protected confirmAction() {
+      this.checklist = Object.assign([], this.checklist);
+      if (this.MODE_LIST === ACTION.EDIT) {
+        this.checklist[this.ID_ITEM].name = this.form.controls.checklist.value;
+      }
+      this.MODE_LIST = ACTION.CREATE;
+      this.form.controls.checklist.reset();
   }
 }
 

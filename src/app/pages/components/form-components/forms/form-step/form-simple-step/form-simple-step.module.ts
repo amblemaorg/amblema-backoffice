@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormSimpleStepComponent } from './form-simple-step.component';
 import { ReactiveTextAreaModule } from '../../../reactive-text-area/reactive-text-area.module';
-import { NbIconModule, NbButtonModule } from '@nebular/theme';
+import { NbIconModule, NbButtonModule, NbListModule, NbAlertModule } from '@nebular/theme';
 import { ToggleModule } from 'src/app/pages/components/shared/toggle/toggle.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputModule } from '../../../reactive-input/reactive-input.module';
@@ -22,6 +22,8 @@ import { ReactiveInputFileModule } from '../../../reactive-input-file/reactive-i
     ReactiveTextAreaModule,
     ReactiveInputModule,
     ReactiveInputFileModule,
+    NbListModule,
+    NbAlertModule,
     NbIconModule,
     NbButtonModule,
     ToggleModule

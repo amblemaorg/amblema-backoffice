@@ -1,7 +1,7 @@
 import { State, NgxsOnInit, Action, StateContext, Store, Selector } from '@ngxs/store';
 import { Step } from '../models/step.model';
 import { StepService } from '../services/step.service';
-import { patch } from '@ngxs/store/operators';
+import { patch, removeItem, append, updateItem } from '@ngxs/store/operators';
 import { KIND_STEP } from '../pages/main-content/steps/_shared/shared';
 
 interface StepStateModel {
@@ -19,6 +19,17 @@ export class AddStep {
     static readonly type = '[Step] Add Step';
     constructor(public payload: Step) { }
 }
+
+export class DeleteStep {
+    static readonly type = '[Step] Delete Step';
+    constructor( public payload: string ) {}
+}
+
+export class UpdateStep {
+    static readonly type = '[Step] Update Step';
+    constructor( public newStep: Step, public oldStep: Step ) {  }
+}
+
 
 @State<StepStateModel>({
     name: 'steps',
@@ -62,10 +73,23 @@ export class StepState implements NgxsOnInit {
     }
 
     @Selector()
-    static sponsorStandardSteps( state: StepStateModel ) : Step[] | null {
-        const sponsors: Step[] = state.steps.filter( (value) => (value.tag === KIND_STEP.SPONSOR.CODE && value.isStandard === true ));
+    static sponsorSteps( state: StepStateModel ) : Step[] | null {
+        const sponsors: Step[] = state.steps.filter( (value) => value.tag === KIND_STEP.SPONSOR.CODE );
         return sponsors; 
     }
+
+    @Selector()
+    static coordinatorSteps( state: StepStateModel ) : Step[] | null {
+        const coordinators: Step[] = state.steps.filter( (value) => value.tag === KIND_STEP.COORDINATOR.CODE );
+        return coordinators; 
+    }
+
+    @Selector()
+    static schoolSteps( state: StepStateModel ) : Step[] | null {
+        const schools: Step[] = state.steps.filter( (value) => value.tag === KIND_STEP.SCHOOL.CODE );
+        return schools; 
+    }
+
 
     constructor(
         private store: Store,
@@ -78,9 +102,20 @@ export class StepState implements NgxsOnInit {
 
     @Action(AddStep)
     addStep(ctx: StateContext<StepStateModel>, action: AddStep) {
-        // this.stepService.setStep(action).subscribe(response => {
-        //     console.log(response);
-        // });
+        ctx.setState(patch({
+            ...ctx.getState(),
+            steps: append([action.payload])
+        }));
+    }
+
+    @Action(UpdateStep)
+    updateStep(ctx: StateContext<StepStateModel>, action: UpdateStep) {
+
+        ctx.setState(patch({
+            ...ctx.getState(),
+            steps: updateItem<Step>(Step => Step.id === action.oldStep.id, action.newStep)
+        }));
+
     }
 
     @Action(GetSteps)
@@ -92,5 +127,15 @@ export class StepState implements NgxsOnInit {
                 steps: response
             }));
         } );
+    }
+
+    @Action( DeleteStep  )
+    deleteStep( ctx:StateContext<StepStateModel>,action: DeleteStep ) {
+
+        ctx.setState(patch({
+            ...ctx.getState(),
+            steps: removeItem<Step>(step => step.id === action.payload)
+        }));
+
     }
 }

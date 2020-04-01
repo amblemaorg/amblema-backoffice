@@ -1,13 +1,18 @@
 <nb-card>
     <nb-card-header>Coordinador</nb-card-header>
     <nb-card-body>
-        <h6 class="mb-3">Enviar currículum vitae</h6>
-        <app-form-simple-step [placeholder]="'Enviar currículum vitae'" [id]="'send-resumen'"></app-form-simple-step>
-        <h6 class="mb-3">Completar los módulos de formación</h6>
-        <app-form-file-step [placeholder]="'Completar los módulos de formación'" [id]="'complete-modules'"></app-form-file-step>
+        <div *ngIf="steps$ | async">
+            <div *ngFor="let item of steps$ | async" class="border p-3 rounded mb-4">
+                <h6 class="mb-3">{{ item.name }}</h6>
+                <app-form-simple-step [data]="item"></app-form-simple-step>
+
+            </div>
+        </div>
+
     </nb-card-body>
     <nb-card-footer class="text-right">
-        <button nbButton status="success" (click)="modalService.open(modal)" class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
+        <button nbButton status="success" (click)="modalService.open(modal)"
+            class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
     </nb-card-footer>
 </nb-card>
 

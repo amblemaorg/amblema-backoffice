@@ -12,18 +12,11 @@ import { StepState } from 'src/app/store/step.action';
 })
 export class SponsorComponent implements OnInit {
 
-  @Select(StepState.sponsorStandardSteps) steps$: Observable<Step[]>;
+  @Select(StepState.sponsorSteps) steps$: Observable<Step[]>;
   subscription: Subscription;
 
   modal = 'form-step-sponsor';
-  kind: string = KIND_STEP.GENERAL.CODE;
-
-  // sponsorKnowAmblemaMethod: Step;
-  // sponsorFillSchoolForm: Step;
-  // sponsorFillCoordinatorForm: Step;
-  // sponsorPresentationSchool: Step;
-  // sponsorAgreementSchool: Step;
-  // sponsorAgreementSchoolFoundation: Step;
+  kind: string = KIND_STEP.SPONSOR.CODE;
 
 
   constructor(
@@ -31,42 +24,7 @@ export class SponsorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.steps$.subscribe( response => {
-      
-      response.forEach((value) => {
-
-        // Get standard forms
-        // switch (value.devName) {
-        //   case DEV_NAME.SCHOOL:
-        //     this.dataSchoolStep = value;
-        //     break;
-        //   case DEV_NAME.SPONSOR:
-        //     this.dataSponsorStep = value;
-        //     break;
-        //   case DEV_NAME.COORDINATOR:
-        //     this.dataCoordinatorStep = value;
-        //     break;
-        //   case DEV_NAME.CONFIRMATION:
-        //     this.dataConfirmatinStep = value;
-        //     break;
-        //   case DEV_NAME.WORK_PLANNING:
-        //     this.dataWorkPlanning = value;
-        //     break;
-        // }
-
-      });
-
-    } )
     
   }
 
-}
-
-const DEV_NAME = {
-  SPONSOR_KNOW: 'sponsorKnowAmblemaMethod', 
-  SPONSOR_FILL_SCHOOL_FORM: 'sponsorFillSchoolForm',
-  SPONSOR_FILL_COORDINATOR_FORM: 'sponsorFillCoordinatorForm',
-  SPONSOR_PRESENTATION_SCHOOL: 'sponsorPresentationSchool',
-  SPONSOR_AGREEMENT_SCHOOL: 'sponsorAgreementSchool',
-  SPONSOR_AGREEMENT_SCHOOL_FOUNDATION: 'sponsorAgreementSchoolFoundation',
 }

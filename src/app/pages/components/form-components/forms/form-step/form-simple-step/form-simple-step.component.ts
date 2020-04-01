@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ɵConsole } from '@angular/core';
 import { Step } from 'src/app/models/step.model';
 import { FormControl, Validators } from '@angular/forms';
 import { STATUS } from 'src/app/helpers/text-content/status';
@@ -6,6 +6,8 @@ import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/
 import { StepService } from 'src/app/services/step.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { VIDEO_PATTERN } from '../../../shared/constant/validation-patterns-list';
+import { Store } from '@ngxs/store';
+import { DeleteStep, UpdateStep } from 'src/app/store/step.action';
 
 @Component({
   selector: 'app-form-simple-step',
@@ -16,11 +18,14 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
   @Input() data: Step;
 
+  oldData: Step;
+
   constructor(
+    private stores: Store,
     private toastrService: CustomToastrService,
     private updateStepService: StepService,
   ) {
-    super();
+    super(stores, toastrService);
 
     // Add new control status toggle
     this.form.addControl('status', new FormControl(false));
@@ -28,8 +33,12 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
   async ngOnInit() {
 
-    console.log(this.data)
+    this.checklist = this.data.checklist;
+    this.checklist = Object.assign([], this.checklist);
 
+    // To update the store
+    this.oldData = this.data;
+    
     // Clear validation
     this.form.controls.name.setValidators([]);
     this.form.controls.approvalType.setValidators([]);
@@ -49,11 +58,11 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
         this.form.updateValueAndValidity()
       }
 
-      if( this.data.hasFile ) {
+      if (this.data.hasFile) {
         let isUpload: any = this.data.file;
 
         if (isUpload.url) {
-          this.form.controls.file.setValue( isUpload );
+          this.form.controls.file.setValue(isUpload);
         }
       }
 
@@ -82,8 +91,6 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       formData.append('hasDate', String(this.data.hasDate));
       formData.append('hasText', String(this.data.hasText));
       formData.append('text', this.data.text);
-
-      console.log(this.data);
 
       // To send file, to be true
       if (this.data.hasFile) {
@@ -114,16 +121,28 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       // Update step
       this.updateStepService.updateStep(this.data.id, formData).subscribe(response => {
         this.toastrService.updateSuccess('Actualización', 'Paso actualizado')
+        this.stores.dispatch(new UpdateStep(response, this.oldData));
       }, (err: any) => {
-        console.log(err);
+        
+        this.toastrService.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+
       })
     }
 
   }
 
+  confirmAction() {
+    if (this.MODE_LIST === this.ACTION.EDIT) {
+      this.checklist[this.ID_ITEM] =  { name: this.form.controls.checklist.value, id: this.checklist[this.ID_ITEM].id } ;
+    }
+    this.MODE_LIST = this.ACTION.CREATE;
+    this.form.controls.checklist.reset();
+  }
+
   onDelete() {
-    this.updateStepService.deleteStep(this.data.id).subscribe( (response: any) => {
-      
+    this.updateStepService.deleteStep(this.data.id).subscribe((response: any) => {
+      this.stores.dispatch(new DeleteStep(this.data.id))
+      this.toastrService.deleteRegister('Eliminación', 'Paso eliminado')
     });
   }
 }

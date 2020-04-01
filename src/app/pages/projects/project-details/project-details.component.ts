@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { PROJECT_PHASE } from 'src/app/helpers/convention/phase';
 
 @Component({
@@ -6,18 +6,20 @@ import { PROJECT_PHASE } from 'src/app/helpers/convention/phase';
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.scss']
 })
-export class ProjectDetailsComponent implements OnInit, OnChanges {
+export class ProjectDetailsComponent implements OnChanges {
 
   @Input() data: any;
 
   PROJECT_PHASE = PROJECT_PHASE;
   phase: string;
 
-  ngOnInit(): void { }
+  showYear = false;
 
   ngOnChanges(): void {
-
-    console.log(this.data);
     this.phase = this.data.phase === PROJECT_PHASE.STEPS.CODE ? PROJECT_PHASE.STEPS.VALUE : PROJECT_PHASE.PECA.VALUE;
+  }
+
+  onNavigate(): void {
+    window.open('https://www.google.com', '_blank');
   }
 }

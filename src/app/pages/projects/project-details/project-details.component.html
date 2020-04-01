@@ -1,37 +1,63 @@
-<app-modal [ID]="'view-project'" [title]="'Detalles del proyecto'" [size]="'lg'">
+<app-modal [ID]="'view-project'" [title]="'Detalles del proyecto'" [size]="'lg'" [extra]="showYear ? showYear : false">
     <div class="row" content>
-        <div class="col-12 col-md-6">
-            <p class="row">
-                <span class=" font-weight-bold col-6">ID del proyecto:</span> <span class="col-6">{{ data.code }}</span>
-            </p>
-            <p class="row">
-                <span class=" font-weight-bold col-6" *ngIf="data.coordinator.name">Coordinador:</span> <span
-                    class="col-6">{{ data.coordinator.name }}</span> </p>
-            <p class="row"><span class="font-weight-bold col-6" *ngIf="data.school.name">Escuela:</span>
-                <span class="col-6">
-                    {{ data.school.name }}
-                </span>
-            </p>
-            <p class="row"><span class="col-6 font-weight-bold " *ngIf="data.sponsor.name">Padrino:
-                </span> <span class="col-6"> {{ data.sponsor.name }}</span></p>
+
+        <div *ngIf="!showYear" class="col-12">
+
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <p class="row">
+                        <span class=" font-weight-bold col-6">ID del proyecto:</span> <span
+                            class="col-6">{{ data.code }}</span>
+                    </p>
+                    <p class="row">
+                        <span class=" font-weight-bold col-6" *ngIf="data.coordinator.name">Coordinador:</span> <span
+                            class="col-6">{{ data.coordinator.name }}</span> </p>
+                    <p class="row"><span class="font-weight-bold col-6" *ngIf="data.school.name">Escuela:</span>
+                        <span class="col-6">
+                            {{ data.school.name }}
+                        </span>
+                    </p>
+                    <p class="row"><span class="col-6 font-weight-bold " *ngIf="data.sponsor.name">Padrino:
+                        </span> <span class="col-6"> {{ data.sponsor.name }}</span></p>
+                </div>
+
+                <div ngVar="let go" class="col-12 col-md-6">
+                    <p class="row">
+                        <span class=" font-weight-bold col-6" *ngIf="data.phase">Fase:</span>
+                        <span class="col-6">
+                            <nb-alert [status]="phase === PROJECT_PHASE.STEPS.VALUE ? 'info' : 'success'"
+                                class="d-inline-block px-2 py-0 mb-0"> {{ phase }}</nb-alert>
+                        </span></p>
+                    <button class="form-group" fullWidth outline (click)="showYear=true; go='Ir a pasos'" nbButton>Ir a pasos</button>
+                    <button status="info" fullWidth (click)="showYear=true; go='Ir al PECA'" nbButton>Ir al PECA</button>
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-12 col-md-6">
-            <p class="row">
-                <span class=" font-weight-bold col-6" *ngIf="data.phase">Fase:</span>
-                <span class="col-6">
-                    <nb-alert 
-                        [status]="phase === PROJECT_PHASE.STEPS.VALUE ? 'info' : 'success'" class="d-inline-block px-2 py-0 mb-0"> {{ phase }}</nb-alert>
-                </span></p>
-            <button 
-                class="form-group"
-                fullWidth
-                outline
-                nbButton>Ir a pasos</button>
-                <button 
-                status="info"
-                fullWidth
-                nbButton>Ir al PECA</button>
+        <div class="col-12" *ngIf="showYear">
+            <div class="row">
+                <div class="col-12">
+                    <h6>{{ go }}</h6>                    
+                    <div class="form-group">
+                        <label for="" class="label">Selecciona un periodo escolar</label>
+                    <select name="" id="" class="form-control">
+                        <option value="">2020 - 2020</option>
+                        <option value="">2010 - 2010</option>
+                        <option value="">2009 - 2020</option>
+                    </select>
+
+                    </div>
+                    <div class="text-right">
+                        <button class="col-12 col-md-auto" nbButton status="info" (click)="onNavigate()">Ir <nb-icon icon="globe-outline"></nb-icon></button>
+                
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+
+    <button nbButton button status="info" *ngIf="showYear" class="col-5 col-md-auto" outline (click)="showYear=false">Volver</button>
+
 </app-modal>

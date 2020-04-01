@@ -3,11 +3,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StepsFormComponent } from './steps-form.component';
 import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
-import { NbRadioModule, NbCheckboxModule, NbThemeModule, NbIconModule, NbListModule, NbToastrModule } from '@nebular/theme';
+import { NbRadioModule, NbCheckboxModule, NbThemeModule, NbIconModule, NbListModule, NbToastrModule, NbAlertModule, NbSpinnerModule } from '@nebular/theme';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { StepState } from 'src/app/store/step.action';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('StepsFormComponent', () => {
   let component: StepsFormComponent;
@@ -22,14 +25,17 @@ describe('StepsFormComponent', () => {
         ReactiveInputModule,
         NbRadioModule,
         NbListModule,
+        NbAlertModule,
         ReactiveFormsModule,
         FormsModule,
+        NbSpinnerModule,
         ReactiveDatepickerModule,
         NbIconModule,
+        HttpClientModule,
         ReactiveInputFileModule,
         ReactiveTextAreaModule,
         NbCheckboxModule,
-
+        NgxsModule.forRoot([ StepState ]),
         NbToastrModule.forRoot({}),
         ModalModule ],
     })

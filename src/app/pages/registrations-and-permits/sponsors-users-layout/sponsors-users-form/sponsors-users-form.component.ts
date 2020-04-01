@@ -142,6 +142,8 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
           }
         }, (err: any) => {
 
+          console.log(err);
+
           if (err.error.status === 0) {
             this.toast.error('Error de datos', 'Verifica los datos del formulario');
           }

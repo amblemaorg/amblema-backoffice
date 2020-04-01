@@ -17,7 +17,7 @@ export class GeneralsComponent implements OnInit, OnDestroy {
 
   modal = 'form-step-general';
   kind: string = KIND_STEP.GENERAL.CODE;
-  
+
   constructor(
     public modalService: ModalService
   ) { }

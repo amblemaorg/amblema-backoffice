@@ -3,7 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
 import { StepsFormComponent } from './steps-form.component';
 import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
-import { NbCheckboxModule, NbRadioModule, NbIconModule, NbListModule, NbButtonModule, NbAlertModule, NbSpinnerModule } from '@nebular/theme';
+import {
+  NbCheckboxModule
+  , NbRadioModule
+  , NbIconModule
+  , NbListModule
+  , NbButtonModule
+  , NbAlertModule
+  , NbSpinnerModule } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';

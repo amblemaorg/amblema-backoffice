@@ -24,7 +24,7 @@ export class SponsorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
   }
 
 }

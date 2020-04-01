@@ -18,7 +18,7 @@ export class SchoolComponent implements OnInit {
 
   modal = 'form-step-general';
   kind: string = KIND_STEP.SCHOOL.CODE;
-  
+
 
   constructor(
     public modalService: ModalService

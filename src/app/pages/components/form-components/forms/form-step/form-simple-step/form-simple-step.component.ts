@@ -38,7 +38,7 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
     // To update the store
     this.oldData = this.data;
-    
+
     // Clear validation
     this.form.controls.name.setValidators([]);
     this.form.controls.approvalType.setValidators([]);
@@ -49,17 +49,17 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       if (this.data.hasText) {
         this.form.controls.text.setValue(this.data.text);
         this.form.controls.text.setValidators([Validators.required]);
-        this.form.updateValueAndValidity()
+        this.form.updateValueAndValidity();
       }
 
       if (this.data.hasVideo) {
         this.form.controls.video.setValue(this.data.video.url);
         this.form.controls.video.setValidators([Validators.required, Validators.pattern(VIDEO_PATTERN)]);
-        this.form.updateValueAndValidity()
+        this.form.updateValueAndValidity();
       }
 
       if (this.data.hasFile) {
-        let isUpload: any = this.data.file;
+        const isUpload: any = this.data.file;
 
         if (isUpload.url) {
           this.form.controls.file.setValue(isUpload);
@@ -94,7 +94,7 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
       // To send file, to be true
       if (this.data.hasFile) {
-        let isUpload: any = this.data.file;
+        const isUpload: any = this.data.file;
         if (isUpload.url) {
           formData.append('file', JSON.stringify(this.data.file));
         } else {
@@ -120,13 +120,13 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
       // Update step
       this.updateStepService.updateStep(this.data.id, formData).subscribe(response => {
-        this.toastrService.updateSuccess('Actualización', 'Paso actualizado')
+        this.toastrService.updateSuccess('Actualización', 'Paso actualizado');
         this.stores.dispatch(new UpdateStep(response, this.oldData));
       }, (err: any) => {
-        
+
         this.toastrService.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
 
-      })
+      });
     }
 
   }
@@ -141,8 +141,8 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
   onDelete() {
     this.updateStepService.deleteStep(this.data.id).subscribe((response: any) => {
-      this.stores.dispatch(new DeleteStep(this.data.id))
-      this.toastrService.deleteRegister('Eliminación', 'Paso eliminado')
+      this.stores.dispatch(new DeleteStep(this.data.id));
+      this.toastrService.deleteRegister('Eliminación', 'Paso eliminado');
     });
   }
 }

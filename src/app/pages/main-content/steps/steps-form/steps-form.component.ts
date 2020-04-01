@@ -17,11 +17,11 @@ import { AddStep } from 'src/app/store/step.action';
 })
 export class StepsFormComponent implements OnInit {
 
-  @Input() protected id: string;
-  @Input() protected title: string;
-  @Input() protected kind: string;
+  @Input() id: string;
+  @Input() title: string;
+  @Input() kind: string;
 
-  protected progress: boolean = false; 
+  progress = false;
 
   public form: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
@@ -53,12 +53,12 @@ export class StepsFormComponent implements OnInit {
     private toastr?: CustomToastrService,
     public stepService?: StepService,
     public fb?: FormBuilder) {
-      
+
   }
 
   ngOnInit(): void {}
 
-  protected onSubmit(): void {
+  onSubmit(): void {
     // This is to valid the check list if has a check
     const checkListValid = this.form.controls.hasChecklist.value && this.checklist.length > 0 ?
       true : this.form.controls.hasChecklist.value && this.checklist.length === 0 ? false : true;
@@ -101,10 +101,10 @@ export class StepsFormComponent implements OnInit {
       this.stepService.setStep(formData).subscribe(response => {
         this.resetForm();
         this.store.dispatch( new AddStep(response) );
-        this.toastr.registerSuccess('Registro', 'Paso registrado'); 
+        this.toastr.registerSuccess('Registro', 'Paso registrado');
       }, (err: any) => {
 
-        console.log( err )
+        console.log( err );
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
         this.progress = false;
       });
@@ -146,7 +146,7 @@ export class StepsFormComponent implements OnInit {
   resetForm() {
     this.form.reset();
     this.submitted = false;
-    this.progress = false; 
+    this.progress = false;
     this.checklist = [];
   }
 

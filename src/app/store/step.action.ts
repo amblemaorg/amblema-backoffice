@@ -73,21 +73,21 @@ export class StepState implements NgxsOnInit {
     }
 
     @Selector()
-    static sponsorSteps( state: StepStateModel ) : Step[] | null {
+    static sponsorSteps( state: StepStateModel ): Step[] | null {
         const sponsors: Step[] = state.steps.filter( (value) => value.tag === KIND_STEP.SPONSOR.CODE );
-        return sponsors; 
+        return sponsors;
     }
 
     @Selector()
-    static coordinatorSteps( state: StepStateModel ) : Step[] | null {
+    static coordinatorSteps( state: StepStateModel ): Step[] | null {
         const coordinators: Step[] = state.steps.filter( (value) => value.tag === KIND_STEP.COORDINATOR.CODE );
-        return coordinators; 
+        return coordinators;
     }
 
     @Selector()
-    static schoolSteps( state: StepStateModel ) : Step[] | null {
+    static schoolSteps( state: StepStateModel ): Step[] | null {
         const schools: Step[] = state.steps.filter( (value) => value.tag === KIND_STEP.SCHOOL.CODE );
-        return schools; 
+        return schools;
     }
 
 
@@ -113,7 +113,7 @@ export class StepState implements NgxsOnInit {
 
         ctx.setState(patch({
             ...ctx.getState(),
-            steps: updateItem<Step>(Step => Step.id === action.oldStep.id, action.newStep)
+            steps: updateItem<Step>(step => step.id === action.oldStep.id, action.newStep)
         }));
 
     }
@@ -130,7 +130,7 @@ export class StepState implements NgxsOnInit {
     }
 
     @Action( DeleteStep  )
-    deleteStep( ctx:StateContext<StepStateModel>,action: DeleteStep ) {
+    deleteStep( ctx: StateContext<StepStateModel>, action: DeleteStep ) {
 
         ctx.setState(patch({
             ...ctx.getState(),

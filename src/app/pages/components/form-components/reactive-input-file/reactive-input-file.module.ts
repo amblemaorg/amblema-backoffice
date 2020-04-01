@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputImgComponent } from './input-img/input-img.component';
 import { InputFileComponent } from './input-file/input-file.component';
-import { NbIconModule, NbButtonModule } from '@nebular/theme';
+import { NbIconModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbIconModule,
     FormsModule,
     NbButtonModule,
-    ReactiveFormsModule
+    NbAlertModule,
+    ReactiveFormsModule,
+    ReactiveValidationModule,
+
   ],
   exports: [
     InputImgComponent,

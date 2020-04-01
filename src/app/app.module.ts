@@ -30,6 +30,7 @@ import { CoordinatorUserState } from './store/user-store/coordinator-user.action
 import { SponsorUserState } from './store/user-store/sponsor-user.action';
 import { SchoolUserState } from './store/user-store/school-user.action';
 import { ProjectState } from './store/project.action';
+import { StepState } from './store/step.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -65,7 +66,8 @@ registerLocaleData(localeVe, 'es-VE');
       SponsorUserState,
       SchoolUserState,
 
-      ProjectState
+      ProjectState,
+      StepState,
     ],
     {
       compatibility: {

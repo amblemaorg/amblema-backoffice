@@ -92,8 +92,7 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   }
 
   onDeleteObjective(index: number): void {
-    this.ID_ITEM = index;
-    this.objectives = this.objectives.filter(e => e !== this.objectives[this.ID_ITEM]);
+    this.objectives = this.objectives.filter( (value, key) => key !== index );
     this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
   }
 

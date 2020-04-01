@@ -91,7 +91,6 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
     @Action( GetProjects )
     getProjects(ctx: StateContext<ProjectStateModel>) {
         this.subscription = this.projectService.getProjects().subscribe( response => {
-            console.log(response);
             ctx.setState( patch({
                 ...ctx.getState(),
                 projects: response

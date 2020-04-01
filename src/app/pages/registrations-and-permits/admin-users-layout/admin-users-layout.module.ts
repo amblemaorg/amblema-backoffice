@@ -15,6 +15,7 @@ import { FormDocumentModule } from '../../components/form-components/forms/form-
 import { FormRegionalAddressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUserViewComponent } from './admin-user-view/admin-user-view.component';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AdminUserViewComponent } from './admin-user-view/admin-user-view.compon
     NbButtonModule,
     ReactiveInputModule,
     ReactiveSelectModule,
+    ProgressModule,
     ModalModule,
     FormDocumentModule,
     FormRegionalAddressModule

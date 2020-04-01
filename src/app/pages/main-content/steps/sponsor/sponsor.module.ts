@@ -16,9 +16,8 @@ import { StepsFormModule } from '../steps-form/steps-form.module';
     NbCardModule,
     NbButtonModule,
 
-    StepsFormModule,
     FormSimpleStepModule,
-    FormFileStepModule,
+    StepsFormModule
   ]
 })
 export class SponsorModule { }

@@ -1,18 +1,15 @@
 <nb-card>
     <nb-card-header>Padrino</nb-card-header>
     <nb-card-body>
-
-        <h6 class="mb-3">Presentación a la escuela</h6>
-        <app-form-simple-step [placeholder]="'Presentación a la escuela'" [id]="'presentation-school'"></app-form-simple-step>
         
-        <h6 class="mb-3">Conoce el método AmbLeMa</h6>
-        <app-form-simple-step [placeholder]="'Conoce el método AmbLeMa'" [id]="'method-amblema'"></app-form-simple-step>
-        
-        <h6 class="mb-3">Convenio Padrino - Escuela</h6>
-        <app-form-simple-step [placeholder]="'Convenio Padrino - Escuela'" [id]="'agreed-sponsor-school'"></app-form-simple-step>
-        
-        <h6 class="mb-3">Convenio Escuela - Fundación</h6>
-        <app-form-file-step [placeholder]="'Convenio Escuela - Fundación'" [id]="'agreed-school-fundation'"></app-form-file-step>
+        <div *ngIf="steps$ | async">
+            <div *ngFor="let item of steps$ | async" class="border p-3 rounded mb-4">
+                <h6 class="mb-3">{{ item.name }}</h6>
+                <app-form-simple-step 
+                    [data]="item"></app-form-simple-step>
+                
+            </div>
+        </div>
     </nb-card-body>
     <nb-card-footer class="text-right">
         <button nbButton status="success" (click)="modalService.open(modal)" class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
@@ -21,6 +18,6 @@
 
 <!-- Modal -->
 <app-steps-form 
-    [kind]="kind.SPONSOR"
+    [kind]="kind"
     title="Registro de paso" 
     [id]="modal"></app-steps-form>

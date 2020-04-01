@@ -1,20 +1,22 @@
 <nb-card>
     <nb-card-header>Escuela</nb-card-header>
     <nb-card-body>
-        <h6 class="mb-3">Presentación del padrino</h6>
-        <app-form-simple-step [placeholder]="'Presentación del padrino'" [id]="'presentation-sponsor'"></app-form-simple-step>
-        <h6 class="mb-3">Convenio Padrino - Escuela</h6>
-        <app-form-simple-step [placeholder]="'Convenio Padrino - Escuela'" [id]="'agreement-sponsor-school'"></app-form-simple-step>
-        <h6 class="mb-3">Convenio Escuela - Fundación</h6>
-        <app-form-file-step [placeholder]="'Convenio Escuela - Fundación'" [id]="'agreement-school-fundation'"></app-form-file-step>
+        <div *ngIf="steps$ | async">
+            <div *ngFor="let item of steps$ | async" class="border p-3 rounded mb-4">
+                <h6 class="mb-3">{{ item.name }}</h6>
+                <app-form-simple-step [data]="item"></app-form-simple-step>
+
+            </div>
+        </div>
     </nb-card-body>
     <nb-card-footer class="text-right">
-        <button nbButton status="success" (click)="modalService.open(modal)" class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
+        <button nbButton status="success" (click)="modalService.open(modal)"
+            class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
     </nb-card-footer>
 </nb-card>
 
 <!-- Modal -->
 <app-steps-form 
-    [kind]="kind.SCHOOL"
+    [kind]="kind"
     title="Registro de paso" 
     [id]="modal"></app-steps-form>

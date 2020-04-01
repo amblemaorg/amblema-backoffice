@@ -35,6 +35,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
     private store: Store,
     private helper: Utility,
     private toastr: CustomToastrService,
+
     private adminUserService: AdminUserService,
     private validationService: ValidationService) { super(); }
 
@@ -108,22 +109,24 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
 
+
         this.adminUserService.setAdminUser(data).subscribe((event: HttpEvent<any>) => {
 
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
-              // console.log(this.progress);
               break;
             case HttpEventType.Response:
-              this.progress = 0;
+              setTimeout(() => {
+                this.progress = 0;
+              }, 2000);
+
               this.store.dispatch(new SetAdminUser(event.body));
               this.toastr.registerSuccess('Registro', 'Usuario registrado satisfactoriamente');
               this.restar();
               break;
           }
         }, (err: any) => {
-
           if (err.error.cardId) {
             if (String(err.error.cardId[0].status) === '5') {
               this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');

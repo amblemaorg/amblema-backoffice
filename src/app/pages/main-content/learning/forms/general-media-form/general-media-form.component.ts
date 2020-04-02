@@ -6,6 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { LearningState, SetMedia, DeleteMedia, UpdateMedia } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-general-media-form',
@@ -33,11 +34,12 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
 
   formMedia: FormGroup = new FormGroup({
     url: new FormControl({ value: '', disabled: false }, [Validators.required]),
-    description: new FormControl({ value: '', disabled: false }, [Validators.required]),
+    description: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.maxLength(71)]),
     type: new FormControl({ value: this.options[0].value, disabled: false })
   });
 
   constructor(
+    private toast: CustomToastrService,
     private store: Store,
     private sanitizer: DomSanitizer
   ) {
@@ -115,11 +117,16 @@ export class GeneralMediaFormComponent extends BaseTable implements OnDestroy, O
 
   onMedia() {
     if (this.MODE === this.ACTION.CREATE) {
-      this.store.dispatch(new SetMedia(this.formMedia.value));
-      this.formMedia.controls.url.reset();
-      this.formMedia.controls.description.reset();
+
+      if (this.sliders.length < 4) {
+        this.store.dispatch(new SetMedia(this.formMedia.value));
+        this.formMedia.controls.url.reset();
+        this.formMedia.controls.description.reset();
+      } else {
+        this.toast.error('Limite', 'Solo se pueden realizar 4 registros');
+      }
     } else if (this.MODE === this.ACTION.EDIT) {
-      this.store.dispatch( new UpdateMedia( this.sliderBackUp, this.formMedia.value ) );
+      this.store.dispatch(new UpdateMedia(this.sliderBackUp, this.formMedia.value));
       this.MODE = this.ACTION.CREATE;
       this.formMedia.controls.url.reset();
       this.formMedia.controls.description.reset();

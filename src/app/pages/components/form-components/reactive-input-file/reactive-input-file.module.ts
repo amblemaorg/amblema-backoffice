@@ -5,6 +5,7 @@ import { InputFileComponent } from './input-file/input-file.component';
 import { NbIconModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
+import {NgxImageCompressService} from 'ngx-image-compress';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,9 @@ import { ReactiveValidationModule } from '../reactive-validation/reactive-valida
   exports: [
     InputImgComponent,
     InputFileComponent
+  ],
+  providers: [
+    NgxImageCompressService
   ]
 })
 export class ReactiveInputFileModule { }

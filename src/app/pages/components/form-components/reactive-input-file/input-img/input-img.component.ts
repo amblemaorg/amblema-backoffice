@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { AbstractControl, FormControl } from '@angular/forms';
-
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-input-img',
@@ -29,7 +29,7 @@ export class InputImgComponent implements OnInit {
   @Input() control: AbstractControl | null = new FormControl();
   @Input() align: string | null = 'center';
   @Input() url: string | null = null;
-  @Input() id: string | null = String( Math.random() );
+  @Input() id: string | null = String(Math.random());
 
   // To validate the file
   readonly pattern = /image-*/;
@@ -39,7 +39,9 @@ export class InputImgComponent implements OnInit {
 
   private pictureBase64 = '';
 
-  constructor( private toast: CustomToastrService ) { }
+  constructor(
+    private compress: NgxImageCompressService,
+    private toast: CustomToastrService) { }
 
   ngOnInit() {
     this.pictureBase64 = this.url ? this.url : this.pictureBase64;
@@ -57,6 +59,9 @@ export class InputImgComponent implements OnInit {
     // Instance reader
     const reader = new FileReader();
 
+    // Get file's size on bytes, convert to Kb
+    this.size = event.target.files[0].size / 1000;
+
     /**
      * So that an error does not occur if the user cancels
      * the action of loading an image
@@ -67,9 +72,6 @@ export class InputImgComponent implements OnInit {
         this.toast.error('Error de archivo', 'Carga una image valida');
         return false;
       }
-
-      // Get file's size on bytes
-      this.size = event.target.files[0].size;
 
       // Convert binary file
       reader.onload = this.convertLoad.bind(this);
@@ -95,29 +97,21 @@ export class InputImgComponent implements OnInit {
     // Save on the source
     img.src = reader.result;
 
-    // Subscribe load
-    img.onload = () => {
+    // Compress the image
+    if (this.size > 800) {
+      this.compress.compressFile(reader.result, -1, 40, 40).then(result => {
 
-      /**
-       *
-       * You can call the methods in this block.
-       * Since the properties of an image are obtained
-       * when an object of type image is subscribed
-       *
-       */
+        this.pictureBase64 = result;
+        this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form
+      });
+    } else { // No compress
+      img.onload = () => {
 
-      // const element = document.createElement('canvas');
-      // element.width = 200;
-      // element.height = 200;
-
-      // const ctx = element.getContext('2d');
-      // ctx.drawImage(img, 0, 0, 200, 200);
-
-      //  String base 64
-      this.pictureBase64 = reader.result;
-      this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form
-
-      return true;
-    };
+        //  String base 64
+        this.pictureBase64 = reader.result;
+        this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form
+        return true;
+      };
+    }
   }
 }

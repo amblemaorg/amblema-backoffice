@@ -2,6 +2,7 @@
     <div class="row form-group">
         <div class="col-12">
             <app-input-custom 
+                [max]="116"
                 [control]="form.get('question')"
                 [id]="'question'"
                 [submitted]="submitted"        
@@ -9,7 +10,8 @@
                 [placeholder]="'Pregunta'"></app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom 
+            <app-input-custom
+                [max]="132"
                 [control]="form.get('optionA')"
                 [id]="'a'"
                 [submitted]="submitted"
@@ -18,6 +20,7 @@
         </div>
         <div class="col-12">
             <app-input-custom 
+                [max]="132"
                 [control]="form.get('optionB')"
                 [id]="'b'"
                 [submitted]="submitted"
@@ -26,6 +29,7 @@
         </div>
         <div class="col-12">
             <app-input-custom 
+                [max]="132"
                 [control]="form.get('optionC')"
                 [id]="'c'"
                 [submitted]="submitted"
@@ -34,6 +38,7 @@
         </div>
         <div class="col-12">
             <app-input-custom 
+                [max]="132"
                 [control]="form.get('optionD')"
                 [id]="'d'"
                 [submitted]="submitted"

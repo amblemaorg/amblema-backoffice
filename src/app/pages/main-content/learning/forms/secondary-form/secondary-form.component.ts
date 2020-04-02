@@ -16,8 +16,8 @@ export class SecondaryFormComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   form: FormGroup = new FormGroup({
-    secondaryTitle: new FormControl('', [Validators.required]),
-    secondaryDescription: new FormControl('', [Validators.required])
+    secondaryTitle: new FormControl('', [Validators.required, Validators.maxLength(140)]),
+    secondaryDescription: new FormControl('', [Validators.required, Validators.maxLength(4970)])
   });
 
   constructor(

@@ -50,13 +50,16 @@
             [ngClass]="{
                 'col-lg-7': formMedia.controls['type'].value == options[1].value, 
                 'col-lg-8': formMedia.controls['type'].value == options[0].value}">
-            <app-text-area-description 
+            <app-text-area-custom
+                [label]="'Descripción'"
+                [placeholder]="'Descripción'" 
+                [max]="71"
                 [control]="formMedia.get('description')"
-                [submitted]="false"></app-text-area-description>
+                [submitted]="false"></app-text-area-custom>
         </div>
 
         <!-- Button -->
-        <div class="col-12 text-right">
+        <div class="col-12 text-right mt-3">
             <button nbButton 
                 status="basic"
                 (click)="   

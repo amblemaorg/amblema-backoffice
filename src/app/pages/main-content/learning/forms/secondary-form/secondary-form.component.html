@@ -2,6 +2,7 @@
     <div class="row form-group">
         <div class="col-12">
             <app-input-custom 
+                [max]="140"
                 [submitted]="false"
                 [control]="form.get('secondaryTitle')"
                 [id]="'secondary-title'"
@@ -10,7 +11,8 @@
             </app-input-custom>
         </div>
         <div class="col-12">
-            <app-text-area-custom 
+            <app-text-area-custom
+                [max]="4970" 
                 [submitted]="false"
                 [control]="form.get('secondaryDescription')"
                 [id]="'secondary-description'"

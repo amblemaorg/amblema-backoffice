@@ -1,18 +1,30 @@
 <form [formGroup]="form">
     <div class="row form-group">
         <div class="col-12">
-            <app-input-custom [control]="form.get('name')" [id]="'name-module'" [label]="'AmbLeTema'"
+            <app-input-custom 
+                [max]="60"
+                [control]="form.get('name')" 
+                [id]="'name-module'" 
+                [label]="'AmbLeTema'"
                 [placeholder]="'AmbLeTema'" [submitted]="submitted">
             </app-input-custom>
         </div>
         <div class="col-12">
-            <app-input-custom [control]="form.get('title')" [id]="'title-module'" [label]="'Titulo del módulo'"
+            <app-input-custom 
+                [max]="140"
+                [control]="form.get('title')" 
+                [id]="'title-module'" [label]="'Titulo del módulo'"
                 [placeholder]="'Titulo del módulo'" [submitted]="submitted">
             </app-input-custom>
         </div>
         <div class="col-12">
-            <app-text-area-custom [control]="form.get('description')" [id]="'description-module'"
-                [label]="'Descripción general'" [placeholder]="'Descripción general'" [submitted]="submitted">
+            <app-text-area-custom 
+                [max]="2800"
+                [control]="form.get('description')" 
+                [id]="'description-module'"
+                [label]="'Descripción general'" 
+                [placeholder]="'Descripción general'" 
+                [submitted]="submitted">
             </app-text-area-custom>
         </div>
         <div class="col-12 form-group">
@@ -26,7 +38,11 @@
         <div class="col-12 form-group">
             <div class="row">
                 <div class="col">
-                    <app-input-custom [id]="'objectives'" [label]="'Objetivos'" [control]="form.get('objectives')"
+                    <app-input-custom 
+                        [id]="'objectives'" 
+                        [label]="'Objetivos'" 
+                        [max]="873"
+                        [control]="form.get('objectives')"
                         [placeholder]="'Objetivos'" [submitted]="submitted">
                     </app-input-custom>
                 </div>

@@ -3,6 +3,7 @@ import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Slider } from 'src/app/models/web/slider.model';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-form-slider',
@@ -22,6 +23,7 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
   oldSlider: Slider; // <-- For update slider
 
   constructor(
+    private taostr: CustomToastrService,
     private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder) {
     super('form-slider');
@@ -55,7 +57,7 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       image: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      description: new FormControl('', [Validators.required, Validators.maxLength(56)])
     });
   }
 
@@ -74,10 +76,19 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
   }
 
   onSubmit() {
+
+
     if (this.MODE === this.ACTION.CREATE) {
-      this.register.emit(this.form.value);
-      this.form.reset();
-      this.form.controls.image.setValue(null);
+
+
+
+      if ( this.sliders.length < 6 ) {
+        this.register.emit(this.form.value);
+        this.form.reset();
+        this.form.controls.image.setValue(null);
+      } else {
+        this.taostr.error('Limite', 'Solo se puede realizar 6 registro');
+      }
     } else {
       this.edit.emit([this.oldSlider, this.form.value]);
       this.form.reset();

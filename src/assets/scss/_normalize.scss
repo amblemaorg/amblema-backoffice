@@ -47,6 +47,23 @@ ng2-smart-table {
     }
 }
 
+table-cell-view-mode {
+    div {
+        .content-wrapper {
+            
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            width: 17rem;
+            &:hover {
+                overflow: visible;
+                white-space: normal;     
+            }
+        }
+    }
+}
+
 /* Reset bootstrap button */
 
 button {

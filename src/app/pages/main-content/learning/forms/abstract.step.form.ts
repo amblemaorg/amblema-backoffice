@@ -7,9 +7,9 @@ export abstract class AbtractStepForm {
 
     // General form
     form: FormGroup = new FormGroup({
-        name: new FormControl('', [Validators.required]),
-        title: new FormControl('', [Validators.required]),
-        description: new FormControl('', [Validators.required])
+        name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+        title: new FormControl('', [Validators.required, Validators.maxLength(140)]),
+        description: new FormControl('', [Validators.required, Validators.maxLength(2800)])
     });
 
     ACTION = ACTION;

@@ -6,13 +6,14 @@ import { LearningState, DeleteLearning, SelectedLearning, ClearLearning } from '
 import { Learning } from 'src/app/models/learning.model';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var $: any;
 
 @Component({
   selector: 'app-learning-table',
   templateUrl: './learning-table.component.html',
-  styles: [``]
+  styleUrls: ['./learning-table.component.scss']
 })
 export class LearningTableComponent extends BaseTable implements OnInit, OnDestroy, TableActions {
 
@@ -25,7 +26,8 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
   msgAction = 'Nuevo módulo de aprendizaje';
   constructor(
     private router: Router,
-    private store: Store
+    private store: Store,
+    private sanatizer: DomSanitizer,
   ) {
     super('modal-view-learning');
     this.MODE = this.ACTION.CREATE;
@@ -38,9 +40,13 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
       },
       description: {
         title: 'Descripción',
-        type: 'string'
+        type: 'html',
+        valuePrepareFunction: (row: string) =>  {
+          return this.sanatizer.bypassSecurityTrustHtml(`<div class="content-wrapper"><span>${ row }</span></div>`);
+        }
       },
       duration: {
+
         title: 'Duración HH:MM',
         type: 'string',
         valuePrepareFunction: (row: string) =>  {

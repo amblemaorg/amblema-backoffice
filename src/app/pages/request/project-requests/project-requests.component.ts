@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { Selector, Select } from '@ngxs/store';
+import { ProjectRequestState } from 'src/app/store/request/project-requests.action';
+import { Observable } from 'rxjs';
+import { ProjectRequest } from 'src/app/models/request/project-requests.model';
 
 @Component({
   selector: 'app-project-requests',
@@ -9,18 +13,15 @@ import { ACTION } from 'src/app/helpers/text-content/text-crud';
 })
 export class ProjectRequestsComponent extends BaseTable implements OnInit {
 
-  data: any = [
-    {
-      idRequest: '000',
-      applicant: 'Jose Jose', date: '09/80/2000',
-      status: 'Activo',
-      type: 'Coordinador'
-    }
-  ];
+  @Select( ProjectRequestState.projectRquests ) data$: Observable<ProjectRequest[ ]>;
 
   constructor() { super(''); }
 
   ngOnInit(): void {
+
+    this.data$.subscribe( response => {
+      console.log(response)
+    } )
 
     this.settings.actions = {
       columnTitle: 'Acciones',
@@ -35,7 +36,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
     },
 
       this.settings.columns = {
-        idRequest: {
+        requestCode: {
           title: 'N° de la solicitud',
           type: 'string',
         },
@@ -43,11 +44,11 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           title: 'Tipo de solicitante',
           type: 'string'
         },
-        applicant: {
+        name: {
           title: 'Solicitante',
           type: 'string'
         },
-        date: {
+        createdAt: {
           title: 'Fecha',
           type: 'string'
         },

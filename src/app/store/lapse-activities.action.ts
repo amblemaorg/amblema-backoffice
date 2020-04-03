@@ -3,7 +3,7 @@ import { LapseActivity } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
 
 export class GetLapActivities {
-    static readonly type = "[LapActivities] Get LapActivities";
+    static readonly type = '[LapActivities] Get LapActivities';
 }
 
 @State< LapseActivity[] >({
@@ -12,18 +12,18 @@ export class GetLapActivities {
 })
 export class LapseActivityState implements NgxsOnInit {
     ngxsOnInit(ctx: StateContext<LapseActivity>): void {
-        ctx.dispatch( new GetLapActivities() ); 
+        ctx.dispatch( new GetLapActivities() );
     }
 
     constructor(
         private lapseActivities: LapseActivitiesService
     ) {}
 
-    @Action( GetLapActivities ) 
+    @Action( GetLapActivities )
     getLapActivities( ctx: StateContext<LapseActivity> ) {
-        
+
         this.lapseActivities.getLapseActivities().subscribe( response => {
             console.log(response);
-        } )
-    }  
+        } );
+    }
 }

@@ -5,7 +5,7 @@ import { patch } from '@ngxs/store/operators';
 
 
 export class GetProjectRequests {
-    static readonly type = "[GetProjectRequests] Get GetProjectRequests";
+    static readonly type = '[GetProjectRequests] Get GetProjectRequests';
 }
 
 @State< ProjectRequest [] >({
@@ -13,23 +13,23 @@ export class GetProjectRequests {
     defaults: []
 })
 export class ProjectRequestState implements NgxsOnInit {
-    
+
     @Selector()
-    static projectRquests( state: ProjectRequest[] ) : ProjectRequest[] | null {
-        return state; 
+    static projectRquests( state: ProjectRequest[] ): ProjectRequest[] | null {
+        return state;
     }
 
-    ngxsOnInit( ctx: StateContext<ProjectRequest[]> ) : void {
+    ngxsOnInit( ctx: StateContext<ProjectRequest[]> ): void {
         ctx.dispatch( new GetProjectRequests() );
     }
 
     constructor( private projectRequestsService: ProjectRequestsService) {}
 
     @Action( GetProjectRequests )
-    getProjectRequests( ctx: StateContext< ProjectRequest[]>  ) { 
+    getProjectRequests( ctx: StateContext< ProjectRequest[]>  ) {
         this.projectRequestsService.getProjectRequests().subscribe( response => {
-            ctx.setState( response ); 
+            ctx.setState( response );
         } );
-        
+
     }
 }

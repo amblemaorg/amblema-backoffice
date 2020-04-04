@@ -2,7 +2,16 @@
     <nb-card-header>Solicitudes de nuevo proyecto</nb-card-header>
     <nb-card-body>
         <div class="table-responsive">
-            <ng2-smart-table [settings]="settings" [source]="data$ | async"></ng2-smart-table>
+            <ng2-smart-table 
+                (custom)="onAction($event)"  
+                [settings]="settings" 
+                [source]="data$ | async"></ng2-smart-table>
         </div>
     </nb-card-body>
 </nb-card>
+
+<app-modal [ID]="modal" [title]="'Solicitud de proyecto'">
+    <div content>
+        solicitud de proyecto
+    </div>
+</app-modal> 

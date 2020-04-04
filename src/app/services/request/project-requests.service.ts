@@ -19,7 +19,7 @@ export class ProjectRequestsService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getProjectRequests() : Observable<ProjectRequest[]> {
+  getProjectRequests(): Observable<ProjectRequest[]> {
     return this.httpClient.get<ProjectRequest[]>(`${environment.api}${this.PROJECT_REQUESTS}`)
       .pipe(
         map((data: any) => data.records)

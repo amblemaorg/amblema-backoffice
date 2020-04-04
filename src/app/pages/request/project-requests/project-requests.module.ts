@@ -5,6 +5,7 @@ import { ProjectRequestsRoutingModule } from './project-requests-routing.module'
 import { ProjectRequestsComponent } from './project-requests.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbCardModule } from '@nebular/theme';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { NbCardModule } from '@nebular/theme';
     CommonModule,
     Ng2SmartTableModule,
     NbCardModule,
+    ModalModule,
     ProjectRequestsRoutingModule,
   ]
 })

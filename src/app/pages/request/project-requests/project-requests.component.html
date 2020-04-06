@@ -150,7 +150,11 @@
                                                 plantel:</span><span>{{ requestSelected.code }}</span></p>
                                         <p *ngIf="requestSelected.schoolType" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Tipo de
-                                                escuela:</span><span>{{ requestSelected.schoolType }}</span></p>
+                                                escuela:</span>
+                                            <span *ngIf="requestSelected.schoolType === '3'">Municipal</span>
+
+                                            <span *ngIf="requestSelected.schoolType === '2'">Estadal</span>
+                                            <span *ngIf="requestSelected.schoolType === '1'">Nacional</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -267,7 +271,10 @@
                                         </p>
                                         <p *ngIf="requestSelected.schoolShift" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Turno de
-                                                clases:</span><span>{{ requestSelected.schoolShift }}</span>
+                                                clases:</span>
+                                            <span *ngIf="requestSelected.schoolShift === '1'">Mañana</span>
+                                            <span *ngIf="requestSelected.schoolShift === '2'">Tarde</span>
+                                            <span *ngIf="requestSelected.schoolShift === '3'">Ambos</span>
                                         </p>
                                     </div>
                                 </div>
@@ -277,11 +284,38 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-12">
-                <div *ngIf="requestSelected.hasSchool">Tiene escuela</div>
-                <div *ngIf="!requestSelected.hasSchool">No tiene escuela</div>
+                <div *ngIf="confirmAction">
+                    <label class="label"> Acciones para la solicitud</label>
+                    <select class="form-control form-group">
+                        <option value="2">Aceptar</option>
+                        <option value="3">Rechazar</option>
+                    </select>
+                </div>
+
+                <div *ngIf="!confirmAction">
+                    <nb-alert status="info">Confirmar acción, al aprobar o rechazar esta solicitud no se podrá cambiar de
+                        estatus.</nb-alert>
+                </div>
+
+                <div class="w-100 text-right justify-content-end">
+
+                    <button class="col-12 col-md-auto" nbButton *ngIf="confirmAction" status="primary"
+                        (click)="confirmAction=false">Proceder</button>
+
+                    <div class="row justify-content-end">
+
+                        <div class="col-6 col-md-auto">
+                            <button nbButton fullWidth *ngIf="!confirmAction" status="danger">Confirmar</button>
+                        </div>
+                        <div class="col-6 col-md-auto">
+                            <button nbButton fullWidth *ngIf="!confirmAction" status="basic"
+                                (click)="confirmAction=true">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </app-modal>

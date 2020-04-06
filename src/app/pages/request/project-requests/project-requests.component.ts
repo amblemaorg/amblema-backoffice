@@ -23,6 +23,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   modal = 'project-request-modal';
   requestSelected: any = {};
 
+
+  confirmAction = true;
   type = TYPE_REQUEST;
 
   constructor(
@@ -105,11 +107,19 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
      switch (event.action) {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
+  
+        console.log( this.requestSelected ); 
+
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
         // this.store.dispatch(new DeleteProject(event.data.id));
         break;
     }
+  }
+
+  onApprovedRequest() : void {
+
+
   }
 }

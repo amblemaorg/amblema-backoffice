@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RequestsValidateInformationComponent } from './requests-validate-information.component';
 import { NbCardModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 
 describe('RequestsValidateInformationComponent', () => {
   let component: RequestsValidateInformationComponent;
@@ -13,6 +14,7 @@ describe('RequestsValidateInformationComponent', () => {
       declarations: [ RequestsValidateInformationComponent ],
       imports: [
         NbCardModule,
+        ModalModule,
         Ng2SmartTableModule,
       ]
     })

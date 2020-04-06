@@ -2,7 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectRequestsComponent } from './project-requests.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbAlertModule, NbToastrModule, NbThemeModule } from '@nebular/theme';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { ProjectRequestState } from 'src/app/store/request/project-requests.action';
+import { HttpClientModule } from '@angular/common/http';
+import { Utility } from 'src/app/helpers/utility';
 
 describe('ProjectRequestsComponent', () => {
   let component: ProjectRequestsComponent;
@@ -13,8 +19,17 @@ describe('ProjectRequestsComponent', () => {
       declarations: [ ProjectRequestsComponent ],
       imports: [
         NbCardModule,
+        NgxsModule.forRoot([ ProjectRequestState ]),
+        NbThemeModule.forRoot(),
+        NbToastrModule.forRoot(),
+        HttpClientModule,
+        ModalModule,
+        NbAlertModule,
+        FormsModule,
+        ReactiveFormsModule,
         Ng2SmartTableModule
-      ]
+      ], 
+      providers: [Utility]
     })
     .compileComponents();
   }));

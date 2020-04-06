@@ -12,6 +12,7 @@ import { REQUEST_STATUS, TYPE_REQUEST } from 'src/app/helpers/convention/request
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { GetProjects } from 'src/app/store/project.action';
 
 @Component({
   selector: 'app-project-requests',
@@ -154,5 +155,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           });
           break;
     }
+
+    // ==============================
+    this.store.dispatch( new GetProjects() );
   }
 }

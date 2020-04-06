@@ -26,15 +26,15 @@ export class ProjectRequestsService {
       );
   }
 
-  putProjectRequestSchool( id:string, status:string ) : Observable<ProjectRequest> {
-    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`, { status: status });
+  putProjectRequestSchool( id: string, status: string ): Observable<ProjectRequest> {
+    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`, { status });
   }
 
-  putProjectRequestCoordinator( id:string, status:string ) : Observable<ProjectRequest> {
-    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`, { status: status });
+  putProjectRequestCoordinator( id: string, status: string ): Observable<ProjectRequest> {
+    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`, { status });
   }
 
-  putProjectRequestSponsor( id:string, status:string ) : Observable<ProjectRequest> {
-    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, { status: status });
+  putProjectRequestSponsor( id: string, status: string ): Observable<ProjectRequest> {
+    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, { status });
   }
 }

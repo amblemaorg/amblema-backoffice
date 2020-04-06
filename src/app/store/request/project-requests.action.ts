@@ -4,7 +4,7 @@ import { ProjectRequestsService } from 'src/app/services/request/project-request
 import { patch, updateItem } from '@ngxs/store/operators';
 
 export interface ProjectRequestModel {
-    projectRequests: ProjectRequest[]
+    projectRequests: ProjectRequest[];
 }
 
 export class GetProjectRequests {
@@ -51,6 +51,6 @@ export class ProjectRequestState implements NgxsOnInit {
         ctx.setState(patch({
             ...ctx.getState(),
             projectRequests: updateItem<ProjectRequest>(projectRequest => projectRequest.id === action.oldProject.id, action.newProject)
-        }))
+        }));
     }
 }

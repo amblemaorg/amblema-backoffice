@@ -25,13 +25,13 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   modal = 'project-request-modal';
   requestSelected: any = {};
 
-  statusSelected: string = '2';
+  statusSelected = '2';
 
   confirmAction = true;
   type = TYPE_REQUEST;
 
   constructor(
-    private toast: CustomToastrService, 
+    private toast: CustomToastrService,
     private store: Store,
     private projectRequestService: ProjectRequestsService,
     private modalService: ModalService,
@@ -122,31 +122,37 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   onApprovedRequest(): void {
-    this.requestSelected = Object.assign({},this.requestSelected); 
+    this.requestSelected = Object.assign({}, this.requestSelected);
     switch (this.requestSelected.type) {
       case TYPE_REQUEST.COORDINATOR.ORIGINAL:
-        this.projectRequestService.putProjectRequestCoordinator( this.requestSelected.id,  this.statusSelected.toString() ).subscribe( response => {
+        this.projectRequestService.putProjectRequestCoordinator(
+            this.requestSelected.id,
+            this.statusSelected.toString() ).subscribe( response => {
           this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
           this.requestSelected.status = response.status.toString();
-          this.toast.info("Solicitud", "Se ha cambiado de estatus la solicitud");
+          this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
         });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-          this.projectRequestService.putProjectRequestSchool( this.requestSelected.id,  this.statusSelected.toString() ).subscribe( response => {
+          this.projectRequestService.putProjectRequestSchool(
+            this.requestSelected.id,
+            this.statusSelected.toString() ).subscribe( response => {
             this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
             this.requestSelected.status = response.status.toString();
-            this.toast.info("Solicitud", "Se ha cambiado de estatus la solicitud");
+            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
-        break;
+          break;
         case TYPE_REQUEST.SPONSOR.ORIGINAL:
-          this.projectRequestService.putProjectRequestSponsor( this.requestSelected.id,  this.statusSelected.toString() ).subscribe( response => {
-          
+          this.projectRequestService.putProjectRequestSponsor(
+            this.requestSelected.id,
+            this.statusSelected.toString() ).subscribe( response => {
+
             this.requestSelected.status = response.status.toString();
             this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
 
-          this.toast.info("Solicitud", "Se ha cambiado de estatus la solicitud");
+            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
-        break;
+          break;
     }
   }
 }

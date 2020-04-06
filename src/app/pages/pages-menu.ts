@@ -125,7 +125,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             children: [
               {
                 title: 'Taller inicial',
-                link: '/pages/content/peca-setting/workshop'
+                link: '/pages/content/peca-setting/lapse/2'
               },
               {
                 title: 'Planificación del lapso',

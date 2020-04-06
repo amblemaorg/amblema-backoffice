@@ -3,14 +3,20 @@ import { STATUS } from './text-content/status';
 import { Post } from '../models/web/blog.model';
 import { SliderMedia } from '../models/learning.model';
 import { DOCUMENT_TYPE } from './convention/document-type';
-import { AdminUser } from '../models/user/admin-user.model';
+import { REQUEST_STATUS } from './convention/request-status';
+import { STATUS_CODES } from 'http';
 
 @Inject('root')
 export class Utility {
 
-    /**
-     * Status selector
-     */
+    /* Convert the request status */
+
+    public readlyRequestStatus( value: string ): string {
+        return value = value === REQUEST_STATUS.PENDING.CODE ? REQUEST_STATUS.PENDING.VALUE :
+            value === REQUEST_STATUS.ACCEPTED.CODE ? REQUEST_STATUS.ACCEPTED.VALUE : REQUEST_STATUS.REJECTED.VALUE;
+    }
+
+    /* Status selector */
 
     public readlyStatus(object?: any[]): any[] {
         object.forEach((value, key) => {

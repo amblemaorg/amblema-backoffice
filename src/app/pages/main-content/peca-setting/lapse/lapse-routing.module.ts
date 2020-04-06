@@ -4,7 +4,7 @@ import { LapseComponent } from './lapse.component';
 
 
 const routes: Routes = [
-  { path: '', component: LapseComponent }
+  { path: ':id', component: LapseComponent },
 ];
 
 @NgModule({

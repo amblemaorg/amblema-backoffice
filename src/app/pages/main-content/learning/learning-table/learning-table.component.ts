@@ -59,7 +59,7 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
         type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe('es-VE').transform(lastLoginTime, 'M/dd/yyyy');
+          return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
         }
       }
     };

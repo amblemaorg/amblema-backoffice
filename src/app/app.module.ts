@@ -31,6 +31,8 @@ import { SponsorUserState } from './store/user-store/sponsor-user.action';
 import { SchoolUserState } from './store/user-store/school-user.action';
 import { ProjectState } from './store/project.action';
 import { StepState } from './store/step.action';
+import { LapseActivityState } from './store/lapse-activities.action';
+import { ProjectRequestState } from './store/request/project-requests.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -51,9 +53,11 @@ registerLocaleData(localeVe, 'es-VE');
 
     // -- NGXS --
     NgxsModule.forRoot( [
+      /* Auth */
       RolesState,
       RoleState,
 
+      /* Content web */
       LearningState,
       WebHomeState,
       WebAboutState,
@@ -61,12 +65,16 @@ registerLocaleData(localeVe, 'es-VE');
       WebCoordinatorState,
       PostsState,
 
+      /* Users */
       AdminUserState,
       CoordinatorUserState,
       SponsorUserState,
       SchoolUserState,
 
+      /* PECA */
+      LapseActivityState,
       ProjectState,
+      ProjectRequestState,
       StepState,
     ],
     {

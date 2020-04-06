@@ -5,6 +5,7 @@ import { Select, Store } from '@ngxs/store';
 import { LearningState, SetQuizze, UpdateQuizze, DeleteQuizze } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
 import { Quizze, Learning } from 'src/app/models/learning.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-quizz-form',
@@ -40,7 +41,8 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
   submitted = false;
 
   constructor(
-    private store: Store
+    private store: Store,
+    private sanatizer: DomSanitizer
   ) {
     super('form-quizz');
 
@@ -54,23 +56,38 @@ export class QuizzFormComponent extends BaseTable implements OnInit, OnDestroy, 
     this.settings.columns = {
       question: {
         title: 'Pregunta',
-        type: 'string'
+        type: 'html',
+        valuePrepareFunction: (row: string) =>  {
+          return this.sanatizer.bypassSecurityTrustHtml(`<div class="content-wrapper"><span>${ row }</span></div>`);
+        }
       },
       optionA: {
         title: 'Respuesta A',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (row: string) =>  {
+          return this.sanatizer.bypassSecurityTrustHtml(`<div class="content-wrapper"><span>${ row }</span></div>`);
+        }
       },
       optionB: {
         title: 'Respuesta B',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (row: string) =>  {
+          return this.sanatizer.bypassSecurityTrustHtml(`<div class="content-wrapper"><span>${ row }</span></div>`);
+        }
       },
       optionC: {
         title: 'Respuesta C',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (row: string) =>  {
+          return this.sanatizer.bypassSecurityTrustHtml(`<div class="content-wrapper"><span>${ row }</span></div>`);
+        }
       },
       optionD: {
         title: 'Respuesta D',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (row: string) =>  {
+          return this.sanatizer.bypassSecurityTrustHtml(`<div class="content-wrapper"><span>${ row }</span></div>`);
+        }
       },
       correctOption: {
         title: 'Correcta',

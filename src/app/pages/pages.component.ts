@@ -33,10 +33,10 @@ export class PagesComponent implements OnInit {
                 }
             }
         });
+
     }
 
     loading = false;
-
 
     ngOnInit() { }
 }

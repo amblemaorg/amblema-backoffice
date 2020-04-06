@@ -10,6 +10,7 @@ import { sortDate } from '../../main-content/learning/learning-table/learning-ta
 import { DatePipe } from '@angular/common';
 import { REQUEST_STATUS, TYPE_REQUEST } from 'src/app/helpers/convention/request-status';
 import { ModalService } from 'src/app/services/helper/modal.service';
+import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 
 @Component({
   selector: 'app-project-requests',
@@ -23,11 +24,13 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   modal = 'project-request-modal';
   requestSelected: any = {};
 
+  statusSelected: string = '2';
 
   confirmAction = true;
   type = TYPE_REQUEST;
 
   constructor(
+    private projectRequestService: ProjectRequestsService,
     private modalService: ModalService,
     private helper: Utility) { super(''); }
 
@@ -107,9 +110,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
      switch (event.action) {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
-  
-        console.log( this.requestSelected ); 
-
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
@@ -118,8 +118,17 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
     }
   }
 
-  onApprovedRequest() : void {
-
-
+  onApprovedRequest(): void {
+    switch (this.requestSelected.type) {
+      case TYPE_REQUEST.COORDINATOR.ORIGINAL:
+        break;
+      case TYPE_REQUEST.SCHOOL.ORIGINAL:
+          this.projectRequestService.putProjectRequestSchool( this.requestSelected.id,  this.statusSelected ).subscribe( response => {
+            console.log( response )
+          });
+        break;
+        case TYPE_REQUEST.SPONSOR.ORIGINAL:
+        break;
+    }
   }
 }

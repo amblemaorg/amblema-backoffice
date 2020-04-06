@@ -6,6 +6,7 @@ import { ProjectRequestsComponent } from './project-requests.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbCardModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,8 @@ import { ModalModule } from '../../components/shared/modal/modal-forms/modal.mod
     NbCardModule,
     NbButtonModule,
     ModalModule,
+    ReactiveFormsModule,
+    FormsModule,
     ProjectRequestsRoutingModule,
     NbAlertModule
   ]

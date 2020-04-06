@@ -5,4 +5,6 @@ export interface ProjectRequest {
     name: string;
     createdAt: string;
     /* From here more data is shown according to the type of applicant */
+
+    status: string;
 }

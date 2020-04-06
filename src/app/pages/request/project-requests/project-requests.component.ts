@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
-import { Select } from '@ngxs/store';
-import { ProjectRequestState } from 'src/app/store/request/project-requests.action';
+import { Select, Store } from '@ngxs/store';
+import { ProjectRequestState, UpdateProjectRequests } from 'src/app/store/request/project-requests.action';
 import { Observable } from 'rxjs';
 import { ProjectRequest } from 'src/app/models/request/project-requests.model';
 import { Utility } from 'src/app/helpers/utility';
@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { REQUEST_STATUS, TYPE_REQUEST } from 'src/app/helpers/convention/request-status';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-project-requests',
@@ -30,6 +31,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   type = TYPE_REQUEST;
 
   constructor(
+    private toast: CustomToastrService, 
+    private store: Store,
     private projectRequestService: ProjectRequestsService,
     private modalService: ModalService,
     private helper: Utility) { super(''); }
@@ -119,15 +122,30 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   onApprovedRequest(): void {
+    this.requestSelected = Object.assign({},this.requestSelected); 
     switch (this.requestSelected.type) {
       case TYPE_REQUEST.COORDINATOR.ORIGINAL:
+        this.projectRequestService.putProjectRequestCoordinator( this.requestSelected.id,  this.statusSelected.toString() ).subscribe( response => {
+          this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
+          this.requestSelected.status = response.status.toString();
+          this.toast.info("Solicitud", "Se ha cambiado de estatus la solicitud");
+        });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-          this.projectRequestService.putProjectRequestSchool( this.requestSelected.id,  this.statusSelected ).subscribe( response => {
-            console.log( response )
+          this.projectRequestService.putProjectRequestSchool( this.requestSelected.id,  this.statusSelected.toString() ).subscribe( response => {
+            this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
+            this.requestSelected.status = response.status.toString();
+            this.toast.info("Solicitud", "Se ha cambiado de estatus la solicitud");
           });
         break;
         case TYPE_REQUEST.SPONSOR.ORIGINAL:
+          this.projectRequestService.putProjectRequestSponsor( this.requestSelected.id,  this.statusSelected.toString() ).subscribe( response => {
+          
+            this.requestSelected.status = response.status.toString();
+            this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
+
+          this.toast.info("Solicitud", "Se ha cambiado de estatus la solicitud");
+          });
         break;
     }
   }

@@ -12,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { RolesState, RoleState } from './store/role.action';
 import { Utility } from './helpers/utility';
 import { LearningState } from './store/learning.action';
 import { WebHomeState } from './store/web-content/web-home.action';
@@ -33,6 +32,7 @@ import { ProjectState } from './store/project.action';
 import { StepState } from './store/step.action';
 import { LapseActivityState } from './store/lapse-activities.action';
 import { ProjectRequestState } from './store/request/project-requests.action';
+import { RolesState } from './store/role.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -55,7 +55,6 @@ registerLocaleData(localeVe, 'es-VE');
     NgxsModule.forRoot( [
       /* Auth */
       RolesState,
-      RoleState,
 
       /* Content web */
       LearningState,

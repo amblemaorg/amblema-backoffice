@@ -7,8 +7,9 @@ import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { SetRole, GetRoles } from 'src/app/store/role.action';
+import { SetRole, GetRoles, UpdateRole } from 'src/app/store/role.action';
 import { Role } from 'src/app/models/permission.model';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-roles-form',
@@ -26,6 +27,7 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
   subscribe: Subscription;
 
   role: Role; // <-- To update the data
+  progress = 0;
 
   formRole: FormGroup = new FormGroup({
     role: new FormControl('', [Validators.required]),
@@ -46,11 +48,10 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
   }
 
   ngOnChanges(): void {
-
     if (this.MODE === this.ACTION.EDIT) {
 
       this.formRole.controls.role.setValue(this.DATA.name);
-      this.formRole.controls.status.setValue( this.DATA.status === STATUS.ACTIVE.MSG ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE );
+      this.formRole.controls.status.setValue(this.DATA.status === STATUS.ACTIVE.MSG ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE);
     } else { this.formRole.controls.status.setValue(STATUS.ACTIVE.CODE); }
   }
 
@@ -59,36 +60,53 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
 
     // Validate the form
     if (this.formRole.valid) {
-      if (this.MODE === ACTION.CREATE) {
 
-        this.subscribe = this.permissionsService.setRole(
+      this.progress = 1;
+
+      if (this.MODE === ACTION.CREATE) {
+        this.permissionsService.setRole(
           {
+            name: this.formRole.controls.role.value,
+            status: this.formRole.controls.status.value,
+          }
+        ).subscribe((response: HttpEvent<any>) => {
+
+          switch (response.type) {
+            case HttpEventType.UploadProgress:
+              this.progress = Math.round(response.loaded / response.total * 100);
+
+              break;
+            case HttpEventType.Response:
+              setTimeout(() => {
+                this.progress = 0;
+              }, 2000);
+
+              this.resetForm();
+              this.store.dispatch(new SetRole(response.body));
+              this.toastr.registerSuccess('Registro rol', 'Nuevo rol registrado');
+              break;
+          }
+        }, (err: any) => {
+          this.toastr.error('Error', 'Hubo un error en el registro');
+          this.progress = 0;
+          this.submitted = false;
+        });
+      } else { // <!-- Update the role
+        this.subscribe = this.permissionsService.updateRole( this.DATA.id,
+{
             name: this.formRole.controls.role.value,
             status: this.formRole.controls.status.value,
           }
         ).subscribe(response => {
-          this.resetForm();
-          this.store.dispatch(new SetRole(response));
-          this.toastr.registerSuccess('Registro rol', 'Nuevo rol registrado');
-        });
-      } else { // <!-- Update the role
-        this.subscribe = this.permissionsService.updateRole(
-          this.DATA.id,
-          {
-            name: this.formRole.controls.role.value,
-            status: this.formRole.controls.status.value,
-          }
-        ).subscribe( response => {
+
+          
+          this.store.dispatch( new UpdateRole( response, this.DATA  ) );
           this.submitted = false;
-
-          // YOUT NEED TO IMPROVE THIS CODE
-
-          this.store.dispatch( new GetRoles() );
-          this.toastr.updateSuccess('Actualizar', 'Rol actualizado');
+          this.progress = 1; 
+          this.toastr.updateSuccess('Actualización', 'Rol actualizado correctamente'); 
         });
       }
     } else {
-
       // Call error messages
       this.validationService.markAllFormFieldsAsTouched(this.formRole);
     }

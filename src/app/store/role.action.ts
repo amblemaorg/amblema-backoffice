@@ -3,11 +3,12 @@ import { Role } from '../models/permission.model';
 import { NgZone } from '@angular/core';
 import { PermissionService } from '../services/permission.service';
 import { Utility } from '../helpers/utility';
+import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
-/*
- * NOTA: IMPORTANTE REFACTORIZAR ESTE CODIGO
- * UN SOLO STATE MODEL,  "RolesStateModel"
- */
+export interface RoleStateModel {
+    role: Role;
+    roles: Role[];
+}
 
 // Role actions
 
@@ -26,21 +27,42 @@ export class SetRole {
 
 export class UpdateRole {
     static readonly type = '[Role] Update Role';
+    constructor(public newRole: Role, public oldRole: Role) { }
+}
+
+export class DeleteRole {
+    static readonly type = '[Role] Delete Role';
     constructor(public payload: Role) { }
+}
+
+export class SelectedRole {
+    static readonly type = '[Role] Selected Role';
+    constructor( public payload:Role ) {}
 }
 
 // Role State
 
-@State<Role[]>({
+@State<RoleStateModel>({
     name: 'roles',
-    defaults: []
+    defaults: {
+        role: {
+            id: '',
+            name: '',
+            permissions: [],
+            status: '',
+        },
+        roles: []
+    }
 })
 export class RolesState implements NgxsOnInit {
 
     @Selector()
-    static roles(state: Role[]): Role[] | null {
-        return state;
+    static roles(state: RoleStateModel): Role[] | null {
+        return state.roles;
     }
+    
+    @Selector()
+    static role( state: RoleStateModel ) : Role | null { return state.role;  }
 
     // Get all roles
     ngxsOnInit(ctx: StateContext<Role[]>) {
@@ -57,45 +79,52 @@ export class RolesState implements NgxsOnInit {
      * Roles actions
      */
 
+    @Action( SelectedRole )
+    selectedRole( ctx:StateContext<RoleStateModel>, action: SelectedRole ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            role: action.payload
+        }) );
+    }
+
     @Action(GetRoles)
-    getRoles(ctx: StateContext<Role[]>) {
+    getRoles(ctx: StateContext<RoleStateModel>) {
         return this.permissionsService.getRoles()
             .subscribe(response => {
                 response = this.helper.readlyStatus(response);
-                ctx.setState(response);
+                ctx.setState({
+                    ...ctx.getState(),
+                    roles: response
+                }
+                );
             });
     }
 
     @Action(SetRole)
-    setRoles(ctx: StateContext<Role[]>, action: SetRole) {
-        const value = ctx.getState();
-        ctx.setState(value.concat(this.helper.readlyStatus([action.payload])));
+    setRole(ctx: StateContext<RoleStateModel>, action: SetRole) {
+        let value: any = this.helper.readlyStatus( [action.payload] )[0];
+        
+        ctx.setState(patch({
+            ...ctx.getState(),
+            roles: append([value])
+        }));
     }
 
     @Action(UpdateRole)
-    updateRoles(ctx: StateContext<Role[]>, action: UpdateRole) {
-    }
-}
+    updateRole(ctx: StateContext<RoleStateModel>, action: UpdateRole) {
+  
 
-/** Single rol */
-
-@State<Role>({
-    name: 'role',
-    defaults: {
-        id: '',
-        name: '',
-        permissions: []
-    }
-})
-export class RoleState {
-
-    @Selector()
-    static role(state: Role): Role | null {
-        return state;
+        ctx.setState(patch({
+            ...ctx.getState(),
+            roles: updateItem<Role>(role => role.id === action.oldRole.id, this.helper.readlyStatus([action.newRole])[0])
+        }));
     }
 
-    @Action(UpdateRole)
-    updateRole(ctx: StateContext<Role>, action: UpdateRole) {
-        ctx.setState(action.payload);
+    @Action(DeleteRole)
+    deleteRole(ctx: StateContext<RoleStateModel>, action: DeleteRole) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            roles: removeItem<Role>(role => role.id === action.payload.id)
+        }));
     }
 }

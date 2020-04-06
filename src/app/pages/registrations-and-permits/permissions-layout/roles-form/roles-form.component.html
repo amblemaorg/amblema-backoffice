@@ -15,13 +15,20 @@
             </app-select-status>
         </div>
         <div class="col-12 col-md">
-            <button nbButton [status]="MODE == ACTION.CREATE ? 'success' : 'primary'" class="btn-block m-inline-parcial"
+            <button nbButton 
+            [attr.disabled]="progress > 1 || submitted === true ? true : null"
+            [status]="MODE == ACTION.CREATE ? 'success' : 'primary'"
+            class="btn-block m-inline-parcial"
             style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
             [ngClass]="{'btn-success': MODE == ACTION.CREATE, 'btn-primary': MODE == ACTION.EDIT}"
             (click)="onSubmit()">
                 <span *ngIf="MODE == ACTION.CREATE">Guardar</span>
                 <span *ngIf="MODE == ACTION.EDIT">Actualizar</span>
             </button>
+        </div>
+
+        <div class="col-12">
+            <app-progress [porcent]="progress"></app-progress>
         </div>
     </div>
 </form>

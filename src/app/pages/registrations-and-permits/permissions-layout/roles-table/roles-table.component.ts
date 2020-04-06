@@ -5,7 +5,7 @@ import { TableActions, BaseTable } from '../../../../helpers/base-table';
 import { Role } from 'src/app/models/permission.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { RolesState, UpdateRole, GetRoles } from 'src/app/store/role.action';
+import { RolesState, DeleteRole, SelectedRole } from 'src/app/store/role.action';
 import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
@@ -54,19 +54,11 @@ export class RolesTableComponent extends BaseTable implements TableActions, OnIn
     switch (event.action) {
       case ACTION.EDIT:
         this.router.navigate(['/pages/permissions/actions']);
-        this.store.dispatch( new UpdateRole(event.data) );
+        this.store.dispatch( new SelectedRole( event.data ) );
         break;
       case ACTION.DELETE:
-
-        /**
-         * RECUERDA MEJORAR ESTE CODIGO Y NO HACER DOBLE
-         * PETICION, ADEMAS DE MOSTRAR UN MENSAJE DE CONFIRMACION
-         * PARA ELIMINAR. Y DE ERROR PARA CUANDO UN ROL ES ASIGNADO.
-         */
-
         this.service.deleteRole( event.data.id ).subscribe( (response) => {
-          this.store.dispatch( new GetRoles() );
-          this.toastr.deleteRegister( 'Elimiación', 'Rol eliminado' );
+          this.store.dispatch( new DeleteRole( event.data ) );
         });
         break;
     }

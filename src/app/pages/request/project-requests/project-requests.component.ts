@@ -21,7 +21,9 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   @Select(ProjectRequestState.projectRquests) data$: Observable<ProjectRequest[]>;
 
   modal = 'project-request-modal';
-  requestSelected: any;
+  requestSelected: any = {};
+
+  type = TYPE_REQUEST;
 
   constructor(
     private modalService: ModalService,

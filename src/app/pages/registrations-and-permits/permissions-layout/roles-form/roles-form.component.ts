@@ -106,7 +106,7 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
         });
       }
     } else {
-      
+
       // Call error messages
       this.validationService.markAllFormFieldsAsTouched(this.formRole);
     }

@@ -29,7 +29,7 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   ];
 
   constructor(
-    private store: Store, 
+    private store: Store,
     private sanitizer: DomSanitizer) {
     super('form-role-action');
 
@@ -77,16 +77,16 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   }
 
   // Event select another rol
-  onSelected(id: any): void { 
+  onSelected(id: any): void {
 
     this.subscription = this.roles$.subscribe( response => {
       return response.filter( (value, key) => {
 
-        if( value.id === id ) {
+        if ( value.id === id ) {
           this.store.dispatch( new SelectedRole( value ) );
           return true;
         }
-      } )
+      } );
     } );
 
   }

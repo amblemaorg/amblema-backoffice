@@ -37,7 +37,7 @@ export class DeleteRole {
 
 export class SelectedRole {
     static readonly type = '[Role] Selected Role';
-    constructor( public payload:Role ) {}
+    constructor( public payload: Role ) {}
 }
 
 // Role State
@@ -60,9 +60,9 @@ export class RolesState implements NgxsOnInit {
     static roles(state: RoleStateModel): Role[] | null {
         return state.roles;
     }
-    
+
     @Selector()
-    static role( state: RoleStateModel ) : Role | null { return state.role;  }
+    static role( state: RoleStateModel ): Role | null { return state.role;  }
 
     // Get all roles
     ngxsOnInit(ctx: StateContext<Role[]>) {
@@ -80,7 +80,7 @@ export class RolesState implements NgxsOnInit {
      */
 
     @Action( SelectedRole )
-    selectedRole( ctx:StateContext<RoleStateModel>, action: SelectedRole ) {
+    selectedRole( ctx: StateContext<RoleStateModel>, action: SelectedRole ) {
         ctx.setState( patch({
             ...ctx.getState(),
             role: action.payload
@@ -102,8 +102,8 @@ export class RolesState implements NgxsOnInit {
 
     @Action(SetRole)
     setRole(ctx: StateContext<RoleStateModel>, action: SetRole) {
-        let value: any = this.helper.readlyStatus( [action.payload] )[0];
-        
+        const value: any = this.helper.readlyStatus( [action.payload] )[0];
+
         ctx.setState(patch({
             ...ctx.getState(),
             roles: append([value])
@@ -112,7 +112,7 @@ export class RolesState implements NgxsOnInit {
 
     @Action(UpdateRole)
     updateRole(ctx: StateContext<RoleStateModel>, action: UpdateRole) {
-  
+
 
         ctx.setState(patch({
             ...ctx.getState(),

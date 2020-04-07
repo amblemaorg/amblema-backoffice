@@ -99,7 +99,7 @@
         </div>
 
         <!-- Mora data -->
-        <div class="row ">
+        <div class="row form-group">
             <div class="col-12">
                 <hr>
             </div>
@@ -136,17 +136,20 @@
                 </nb-accordion>
             </div>
         </div>
+
+        <app-progress [porcent]="progress" *ngIf="MODE === ACTION.CREATE"></app-progress>
+
     </form><!-- / End main content -->
 
     <!-- Footer content -->
     <button nbButton
         nbButton
         [status]="MODE == ACTION.EDIT ? 'primary' : 'success'"
-        [attr.disabled]="progress != 0 ? true: null"
-        [nbSpinner]="progress == 0 ? null : true" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="col-6 col-md-auto">
-        <span *ngIf="MODE == ACTION.CREATE && progress == 0">Guardar</span>
-        <span *ngIf="progress != 0">Guardando...</span>
-        <span *ngIf="MODE == ACTION.EDIT && progress == 0">Editar</span>
+        [attr.disabled]="progress > 0 ? true : null"
+        [nbSpinner]="progress > 0 ? true : null" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="col-6 col-md-auto">
+        <span *ngIf="MODE === ACTION.CREATE && progress === 0">Guardar</span>
+        <span *ngIf="progress > 0">Guardando...</span>
+        <span *ngIf="MODE === ACTION.EDIT && progress === 0 && !submitted">Editar</span>
     </button>
 
 </app-modal>

@@ -99,14 +99,13 @@ export class InputImgComponent implements OnInit {
 
     // Compress the image
     if (this.size > 800) {
-      this.compress.compressFile(reader.result, -1, 40, 40).then(result => {
-
+      this.compress.compressFile(reader.result, -1, 35, 35).then(result => {
         this.pictureBase64 = result;
         this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form
       });
     } else { // No compress
-      img.onload = () => {
 
+      img.onload = () => {
         //  String base 64
         this.pictureBase64 = reader.result;
         this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form

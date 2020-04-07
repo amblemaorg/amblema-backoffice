@@ -24,6 +24,7 @@ import { ReactiveDatepickerModule } from '../../components/form-components/react
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 import { AddressCoordinatorComponent } from './address-coordinator/address-coordinator.component';
 import { CoordinatorsUsersViewComponent } from './coordinators-users-view/coordinators-users-view.component';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CoordinatorsUsersViewComponent } from './coordinators-users-view/coordi
     NbCardModule,
     Ng2SmartTableModule,
     NbSpinnerModule,
+    ProgressModule,
     NbIconModule,
     NbAccordionModule,
     NbRadioModule,

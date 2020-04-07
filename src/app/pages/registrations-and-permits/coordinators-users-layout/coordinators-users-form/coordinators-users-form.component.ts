@@ -120,19 +120,24 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.progress = 1;
 
+
         this.coordinatorUserService.setCoordinatorUser(data).subscribe((event: HttpEvent<any>) => {
+
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.progress = Math.round(event.loaded / event.total * 100);
               break;
             case HttpEventType.Response:
-              this.progress = 0;
+              setTimeout(() => {
+                this.progress = 0;
+              }, 2000);
               this.store.dispatch(new SetCoordinatorUser(event.body));
               this.toastr.registerSuccess('Registro', 'Usuario coordinador registrado');
               this.restar();
               break;
           }
         }, (err: any) => {
+
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }
@@ -149,12 +154,13 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
             }
           }
           this.progress = 0;
-        });
+        }, () => { this.progress = 0; } );
 
       } else if ( this.MODE === this.ACTION.EDIT ) {
         /** Update admin user data */
 
         const updateData: any = this.form.value;
+        this.progress = 1;
 
         if (updateData.cardType === 'V' || updateData.cardType === 'E' || updateData.cardType === 'J') {
           updateData.cardType = this.helper.encodeTypeDocument(updateData.cardType);
@@ -164,11 +170,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           delete updateData.password;
         }
 
-        this.progress = 1;
-
         this.coordinatorUserService.updateCoordinatorUser(this.backupOldData.id, updateData).subscribe((event: any) => {
 
-          this.progress = 0;
 
           event = this.helper.readlyTypeDocument([event])[0];
 
@@ -195,8 +198,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
             }
           }
-          this.progress = 0;
-        });
+        }, () => { this.progress = 0; });
       }
     } else {
 

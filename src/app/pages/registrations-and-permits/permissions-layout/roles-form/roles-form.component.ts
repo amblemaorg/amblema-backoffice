@@ -61,9 +61,10 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
     // Validate the form
     if (this.formRole.valid) {
 
-      this.progress = 1;
 
       if (this.MODE === ACTION.CREATE) {
+        this.progress = 1;
+
         this.permissionsService.setRole(
           {
             name: this.formRole.controls.role.value,
@@ -92,21 +93,20 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
           this.submitted = false;
         });
       } else { // <!-- Update the role
-        this.subscribe = this.permissionsService.updateRole( this.DATA.id,
-{
+        this.subscribe = this.permissionsService.updateRole(this.DATA.id,
+          {
+
             name: this.formRole.controls.role.value,
             status: this.formRole.controls.status.value,
           }
         ).subscribe(response => {
-
-          
-          this.store.dispatch( new UpdateRole( response, this.DATA  ) );
-          this.submitted = false;
-          this.progress = 1; 
-          this.toastr.updateSuccess('Actualización', 'Rol actualizado correctamente'); 
+              this.store.dispatch(new UpdateRole(response, this.DATA));
+              this.submitted = false;
+              this.toastr.updateSuccess('Actualización', 'Rol actualizado correctamente');
         });
       }
     } else {
+      
       // Call error messages
       this.validationService.markAllFormFieldsAsTouched(this.formRole);
     }

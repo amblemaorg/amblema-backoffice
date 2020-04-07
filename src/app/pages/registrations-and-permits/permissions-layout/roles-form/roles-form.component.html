@@ -16,7 +16,8 @@
         </div>
         <div class="col-12 col-md">
             <button nbButton 
-            [attr.disabled]="progress > 1 || submitted === true ? true : null"
+            [nbSpinner]="progress > 1 ? true : null" nbSpinnerStatus="success"
+            [attr.disabled]="progress > 1 ? true : null"
             [status]="MODE == ACTION.CREATE ? 'success' : 'primary'"
             class="btn-block m-inline-parcial"
             style="padding-top: 0.6rem; padding-bottom: 0.6rem;"

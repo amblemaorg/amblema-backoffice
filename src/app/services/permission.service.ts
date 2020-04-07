@@ -28,8 +28,8 @@ export class PermissionService {
     });
   }
 
-  updateRole(id: string, data: Role ): Observable<Role> {
-    return this.httpClient.put<Role>(`${environment.api}${this.ROLE}/${id}`, data, {
+  updateRole(id: string, data: Role ): Observable<any> {
+    return this.httpClient.put<any>(`${environment.api}${this.ROLE}/${id}`, data, {
       reportProgress: true
     });
   }

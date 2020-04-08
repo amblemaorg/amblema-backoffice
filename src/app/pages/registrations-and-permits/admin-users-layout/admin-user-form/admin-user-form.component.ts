@@ -115,7 +115,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
             case HttpEventType.Response:
               this.store.dispatch(new SetAdminUser(response.body));
               this.toastr.registerSuccess('Registro', 'Usuario registrado satisfactoriamente');
-              this.restar()
+              this.restar();
               break;
           }
         }, (err: any) => {

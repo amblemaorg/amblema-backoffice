@@ -1,16 +1,12 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoadingService implements OnInit {
+export class LoadingService {
   loading$: Subject<boolean> = new Subject();
-  porcent$: Subject<number> = new Subject(); 
-
-  ngOnInit(): void {
-    this.porcent$.next(0); 
-  }
+  porcent$: Subject<number> = new Subject();
 
   startLoading() {
     this.loading$.next(true);

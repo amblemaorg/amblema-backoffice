@@ -12,7 +12,7 @@ export class ProgressComponent implements AfterViewInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    private loadingService:LoadingService,
+    private loadingService: LoadingService,
     private cd: ChangeDetectorRef,
   ) {
   }
@@ -21,8 +21,8 @@ export class ProgressComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void { }
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
-      this.subscription.unsubscribe(); 
+    if ( this.subscription ) {
+      this.subscription.unsubscribe();
     }
   }
 }

@@ -9,7 +9,7 @@ import { LoadingService } from '../services/helper/loading.service';
 })
 export class LoadingInterceptorService {
 
-    activeRequests: number = 0;
+    activeRequests = 0;
 
     constructor(
         private loadingScreenService: LoadingService
@@ -24,10 +24,10 @@ export class LoadingInterceptorService {
         this.activeRequests++;
 
         return next.handle(request).pipe(
-            tap((event: HttpEvent<any>) => {
-                switch (event.type) {
+            tap((response: HttpEvent<any>) => {
+                switch (response.type) {
                     case HttpEventType.UploadProgress:
-                        this.loadingScreenService.setPorcent(Math.round(event.loaded / event.total * 100));
+                        this.loadingScreenService.setPorcent(Math.round(response.loaded / response.total * 100));
                         break;
                     case HttpEventType.Response:
                         setTimeout(() => {
@@ -43,6 +43,6 @@ export class LoadingInterceptorService {
                     this.loadingScreenService.stopLoading();
                 }
             })
-        )
-    };
+        );
+    }
 }

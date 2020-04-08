@@ -71,15 +71,15 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
         this.title = 'Actualizar usuario padrino';
         this.backupOldData = response;
         this.restar();
-        this.form.patchValue( response ); 
+        this.form.patchValue( response );
         this.idState = this.form.controls.addressState.value;
         this.form.controls.addressState.setValue(response.addressState.id);
-        this.form.controls.role.setValue(response.role.id); 
+        this.form.controls.role.setValue(response.role.id);
 
         this.form.get('password').setValue(null);
-        this.form.get('password').clearValidators(); 
+        this.form.get('password').clearValidators();
         this.form.get('password').updateValueAndValidity();
-        
+
       });
     } else if (this.MODE === this.ACTION.CREATE) {
       this.title = 'Registrar usuario padrino';
@@ -111,7 +111,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
     if (this.form.valid) {
       const data: any = this.form.value;
       data.userType = USER_TYPE.SPONSOR.CODE.toString();
-    
+
       delete data.cardType;
 
       if (this.MODE === this.ACTION.CREATE) {
@@ -133,7 +133,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
         }, (err: any) => {
 
           this.showProgress = false;
-      
+
           if (err.error.status === 0) {
             this.toast.error('Error de datos', 'Verifica los datos del formulario');
           }
@@ -158,7 +158,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
         if (updateData.password === '' || updateData.password === null) {
           delete updateData.password;
         }
-        this.showProgress = true; 
+        this.showProgress = true;
 
         this.sponsorUserService.updateSponsorUser(this.backupOldData.id, updateData).subscribe((event: any) => {
           this.store.dispatch(new UpdateSponsorUser(this.backupOldData, event));
@@ -167,15 +167,15 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
           this.form.get('password').setValue('');
           this.form.get('password').setValidators([]);
           this.form.get('password').updateValueAndValidity();
-        
+
           setTimeout(() => {
-              this.showProgress = false; 
+              this.showProgress = false;
           }, 2500);
 
         });
 
       }
-    } else {      
+    } else {
       // Call error messages
       this.validationService.markAllFormFieldsAsTouched(this.form);
     }

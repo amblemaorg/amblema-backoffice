@@ -139,9 +139,9 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
 
-        this.showProgress = true; 
+        this.showProgress = true;
         this.sanitizeNoRequiredData( data );
-  
+
         this.schoolUserService.setSchoolUser(data).subscribe((event: HttpEvent<any>) => {
 
           switch (event.type) {
@@ -179,7 +179,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
         }
 
         this.sanitizeNoRequiredData( updateData );
-        this.showProgress = true; 
+        this.showProgress = true;
 
         this.schoolUserService.updateSchoolUser(this.backupOldData.id, updateData).subscribe((event: any) => {
 
@@ -228,7 +228,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
     this.submitted = false;
 
     setTimeout(() => {
-      this.showProgress = false; 
+      this.showProgress = false;
     }, 2500);
   }
 

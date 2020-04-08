@@ -4,7 +4,7 @@ import { NbAuthService } from '@nebular/auth';
 import { NavigationStart, Router, NavigationEnd, NavigationCancel, NavigationError, Event } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
-import { LapseActivityState } from '../store/lapse-activities.action';
+import { LapseActivityState, LapseActivityModel } from '../store/lapse-activities.action';
 import { LapseActivity } from '../models/lapse-activities.model';
 import { takeWhile, take } from 'rxjs/operators';
 @Component({
@@ -30,7 +30,7 @@ export class PagesComponent implements OnInit, OnDestroy {
 
     /* State */
 
-    @Select(LapseActivityState.lapseActivities) lapses$: Observable<LapseActivity>;
+    @Select(LapseActivityState.LapseActivity) lapses$: Observable<LapseActivityModel>;
     subscriptionLapse: Subscription;
 
     constructor(
@@ -59,57 +59,7 @@ export class PagesComponent implements OnInit, OnDestroy {
 
     loading = false;
 
-    async ngOnInit() {
-
-        /* Get the lapses and activities to configure the menu*/
-
-        this.subscriptionLapse = await this.lapses$.pipe(take(1)).subscribe(response => {
-
-            this.menu.find(value => {
-
-                /* Get in 'Contenido' option */
-                if (value.title === 'Contenido') {
-
-                    /* Sub level options */
-                    value.children.find(children => {
-
-                        /* Find the correcto option */
-                        if (children.title === 'Ajustes del PECA') {
-
-                            /* Find laspes */
-                            children.children.find(lapses => {
-
-                                /**
-                                 * All standard and generic options begin to be created,
-                                 *  in order to create them they must be in active status
-                                 */
-
-                                if (lapses.title === 'Lapso 1') {
-                                    response.lapse1.find(option => {
-                                        lapses.children.push({
-                                            title: option.name,
-                                            link: `${this.ROUTE_LAPSE}/${option.id}`
-                                        });
-                                    });
-                                }
-
-                            }); // End find lapses
-
-                            return true;
-                        }
-
-                        return false;
-
-                    }); // <-- End level options
-
-                    return true;
-                }
-                return false;
-
-            }); // <-- End menu
-
-        }); // <-- End subscription
-    } // <-- End OnInit
+        
 
     ngOnDestroy(): void {
         if (this.subscriptionLapse) {

@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
 import { SchoolAddressComponent } from './school-address/school-address.component';
 import { SchoolsUsersViewComponent } from './schools-users-view/schools-users-view.component';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SchoolsUsersViewComponent } from './schools-users-view/schools-users-vi
     NbAccordionModule,
     NbAlertModule,
     NbButtonModule,
+    ProgressModule,
 
     // Add custom modules
     ReactiveInputFileModule,

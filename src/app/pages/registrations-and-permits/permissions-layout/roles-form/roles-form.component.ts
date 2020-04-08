@@ -25,9 +25,10 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
   submitted = false;
   ACTION = ACTION;
   subscribe: Subscription;
+  showProgress = false;
 
   role: Role; // <-- To update the data
-  progress = 0;
+
 
   formRole: FormGroup = new FormGroup({
     role: new FormControl('', [Validators.required]),
@@ -63,7 +64,8 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
 
 
       if (this.MODE === ACTION.CREATE) {
-        this.progress = 1;
+
+        this.showProgress = true;
 
         this.permissionsService.setRole(
           {
@@ -73,15 +75,7 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
         ).subscribe((response: HttpEvent<any>) => {
 
           switch (response.type) {
-            case HttpEventType.UploadProgress:
-              this.progress = Math.round(response.loaded / response.total * 100);
-
-              break;
             case HttpEventType.Response:
-              setTimeout(() => {
-                this.progress = 0;
-              }, 2000);
-
               this.resetForm();
               this.store.dispatch(new SetRole(response.body));
               this.toastr.registerSuccess('Registro rol', 'Nuevo rol registrado');
@@ -89,10 +83,13 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
           }
         }, (err: any) => {
           this.toastr.error('Error', 'Hubo un error en el registro');
-          this.progress = 0;
+          this.showProgress = false;
           this.submitted = false;
         });
       } else { // <!-- Update the role
+
+        this.showProgress = true;
+
         this.subscribe = this.permissionsService.updateRole(this.DATA.id,
           {
 
@@ -100,9 +97,13 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
             status: this.formRole.controls.status.value,
           }
         ).subscribe(response => {
-              this.store.dispatch(new UpdateRole(response, this.DATA));
-              this.submitted = false;
-              this.toastr.updateSuccess('Actualización', 'Rol actualizado correctamente');
+          this.store.dispatch(new UpdateRole(response, this.DATA));
+          this.submitted = false;
+
+          setTimeout(() => {
+            this.showProgress = false;
+          }, 2100);
+          this.toastr.updateSuccess('Actualización', 'Rol actualizado correctamente');
         });
       }
     } else {
@@ -115,5 +116,8 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
   private resetForm(): void {
     this.formRole.controls.role.reset();
     this.submitted = false;
+    setTimeout(() => {
+      this.showProgress = false;
+    }, 2500);
   }
 }

@@ -8,7 +8,7 @@ import { NbThemeModule, NbLayoutModule, NbMenuModule, NbToastrModule} from '@neb
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './guards/auth.guard';
 import { NbAuthModule } from '@nebular/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
@@ -33,6 +33,7 @@ import { StepState } from './store/step.action';
 import { LapseActivityState } from './store/lapse-activities.action';
 import { ProjectRequestState } from './store/request/project-requests.action';
 import { RolesState } from './store/role.action';
+import { LoadingInterceptorService } from './intercepts/loading-intercept';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -93,6 +94,11 @@ registerLocaleData(localeVe, 'es-VE');
 
     // -- Custom Helper --
     Utility,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

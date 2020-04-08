@@ -24,15 +24,18 @@ export class AdminUserService {
       );
   }
 
-  setAdminUser( data: AdminUser ): Observable<any>  {
+  setAdminUser(data: AdminUser): Observable<any> {
     return this.httpClient.post<AdminUser>(`${environment.api}${this.ADMIN_USER}`, data, {
       reportProgress: true,
       observe: 'events'
-     });
+    });
   }
 
-  updateAdminUser( id: string, data: AdminUser ): Observable<any> {
-    return this.httpClient.put<AdminUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data);
+  updateAdminUser(id: string, data: AdminUser): Observable<any> {
+    return this.httpClient.put<AdminUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   deleteAdminUser(id: string): Observable<string> {

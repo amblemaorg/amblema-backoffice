@@ -26,14 +26,14 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
 
   testimonials: Testimonial[];
   submitted = false;
-  showProgress = false; 
+  showProgress = false;
 
   steps = new FormArray([]);
   form: FormGroup = new FormGroup({
     backgroundImage: new FormControl('', [Validators.required]),
   });
 
-  constructor( 
+  constructor(
     private taostr: CustomToastrService,
     private webCoordinatorService: WebCoordinatorService,
     private store: Store ) { }
@@ -91,7 +91,8 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
     this.subscription = this.store.dispatch( new SetWebCoordinator( { coordinatorPage: this.form.value } ) ).subscribe( (response: any) => {
       this.showProgress = true;
 
-      this.subscription = this.webCoordinatorService.setContentWebCoordinator( response.webcoordinator ).subscribe( (event: HttpEvent<any>) => {
+      this.subscription = this.webCoordinatorService.setContentWebCoordinator(
+        response.webcoordinator ).subscribe( (event: HttpEvent<any>) => {
 
         switch (event.type) {
           case HttpEventType.Response:
@@ -99,12 +100,12 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
                 this.showProgress = false;
               }, 2500);
               this.taostr.updateSuccess('Actualizacion', 'Contenido de la página coordinadores guardado.');
-            break;
+              break;
         }
 
       }, (err: any) => {
-        this.showProgress = false
-        this.taostr.error('Error', 'No se ha completado el registro.'); } ); 
+        this.showProgress = false;
+        this.taostr.error('Error', 'No se ha completado el registro.'); } );
     } );
   }
 

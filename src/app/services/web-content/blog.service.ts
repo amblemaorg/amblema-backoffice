@@ -30,7 +30,7 @@ export class BlogService {
 
   updatePost( id: string, data: Post ): Observable<any> {
     return this.httpClient.put<Post>(`${environment.api}${this.POST}/${id}`, data, {
-      reportProgress: true, 
+      reportProgress: true,
       observe: 'body'
     });
   }

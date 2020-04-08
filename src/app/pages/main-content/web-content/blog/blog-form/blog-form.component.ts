@@ -89,11 +89,11 @@ export class BlogFormComponent implements OnInit, OnChanges {
                 this.showProgress = false;
               }, 2500);
 
-              let value: any = response.body;
+              let data: any = response.body;
 
-              value = this.helper.convertTagsNumberToString([value])[0];
-              value = this.helper.convertStatusPostToString([value])[0];
-              this.store.dispatch(new SetPost(value));
+              data = this.helper.convertTagsNumberToString([data])[0];
+              data = this.helper.convertStatusPostToString([data])[0];
+              this.store.dispatch(new SetPost(data));
               this.toast.registerSuccess('Registro Post', 'Nuevo post registrado');
 
               this.formBlog.reset();

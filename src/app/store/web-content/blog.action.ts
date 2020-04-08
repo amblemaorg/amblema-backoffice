@@ -65,7 +65,7 @@ export class PostsState implements NgxsOnInit {
     @Action(SetPost)
     setPost( ctx: StateContext<Post[]>, action: SetPost ) {
 
-        ctx.setState(append([action.payload])); 
+        ctx.setState(append([action.payload]));
     }
 
     @Action( UpdatePost )

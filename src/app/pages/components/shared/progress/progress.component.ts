@@ -12,7 +12,7 @@ export class ProgressComponent implements AfterViewInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    private loadingService: LoadingService,
+    public loadingService: LoadingService,
     private cd: ChangeDetectorRef,
   ) {
   }

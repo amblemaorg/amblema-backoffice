@@ -37,7 +37,7 @@ import { ProgressModule } from 'src/app/pages/components/shared/progress/progres
 
     // Add custom module
     ProgressModule,
-    NbSpinnerModule, 
+    NbSpinnerModule,
     PaginatorModule,
     ReactiveSelectModule,
     ReactiveInputModule,

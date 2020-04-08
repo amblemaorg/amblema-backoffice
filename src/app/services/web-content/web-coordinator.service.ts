@@ -23,7 +23,7 @@ export class WebCoordinatorService {
 
   setContentWebCoordinator( data: WebCoordinator ): Observable<any> {
     return this.httpClient.post<WebCoordinator>(`${environment.api}${this.WEB_COORDINATOR}`, data, {
-      reportProgress: true, 
+      reportProgress: true,
       observe: 'events'
     });
   }

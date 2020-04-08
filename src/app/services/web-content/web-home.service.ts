@@ -21,7 +21,10 @@ export class WebHomeService {
       );
   }
 
-  setContentWebHome( data: HomePages ): Observable<HomePages> {
-    return this.httpClient.post<HomePages>(`${environment.api}${this.WEB_HOME}`, data);
+  setContentWebHome( data: HomePages ): Observable<any> {
+    return this.httpClient.post<HomePages>(`${environment.api}${this.WEB_HOME}`, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 }

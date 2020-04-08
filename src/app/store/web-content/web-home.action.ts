@@ -94,11 +94,7 @@ export class WebHomeState implements NgxsOnInit {
     @Action(SetWebHome)
     setWebHome(ctx: StateContext<WebHome>, action: SetWebHome) {
         ctx.patchState(action.payload);
-        this.webHomeService.setContentWebHome({ homePage: ctx.getState() }).subscribe(response => {
-            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página de inicio guardado.');
-        }, (err: any) => {
-            this.toastr.error('Error', 'No se ha completado el registro.');
-        });
+
     }
 
     // -- Slider actions --

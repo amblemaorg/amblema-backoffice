@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, StateContext, Action } from '@ngxs/store';
+import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
 import { LapseActivity } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
 
@@ -6,11 +6,21 @@ export class GetLapActivities {
     static readonly type = '[LapActivities] Get LapActivities';
 }
 
-@State< LapseActivity[] >({
+@State< LapseActivity >({
     name: 'lapseactivities',
-    defaults: []
+    defaults: {
+        lapse1: [],
+        lapse2: [],
+        lapse3: []
+    }
 })
 export class LapseActivityState implements NgxsOnInit {
+
+    @Selector()
+    static lapseActivities( state: LapseActivity ): LapseActivity | null {
+        return state;
+    }
+
     ngxsOnInit(ctx: StateContext<LapseActivity>): void {
         ctx.dispatch( new GetLapActivities() );
     }
@@ -23,7 +33,11 @@ export class LapseActivityState implements NgxsOnInit {
     getLapActivities( ctx: StateContext<LapseActivity> ) {
 
         this.lapseActivities.getLapseActivities().subscribe( response => {
-            console.log(response);
+
+            if ( response ) {
+                ctx.setState( response );
+            }
+
         } );
     }
 }

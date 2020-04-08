@@ -14,10 +14,10 @@ export class LapseActivitiesService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getLapseActivities(): Observable<LapseActivity[]> {
-    return this.httpClient.get<LapseActivity[]>(`${environment.api}${this.LAPSE_ACTIVITY}`)
+  getLapseActivities(): Observable<LapseActivity> {
+    return this.httpClient.get<LapseActivity>(`${environment.api}${this.LAPSE_ACTIVITY}`)
       .pipe(
-        map((data: any) => data.records)
+        map((data: any) => data)
       );
   }
 

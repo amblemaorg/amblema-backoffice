@@ -83,11 +83,11 @@ export class WebCoordinatorState implements NgxsOnInit {
             }
         });
 
-        this.webCoordinatorService.setContentWebCoordinator( ctx.getState() ).subscribe( response => {
-            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página coordinadores guardado.');
-        }, (err: any) => {
-            this.toastr.error('Error', 'No se ha completado el registro.');
-        });
+        // this.webCoordinatorService.setContentWebCoordinator( ctx.getState() ).subscribe( response => {
+        //     this.toastr.updateSuccess('Actualizacion', 'Contenido de la página coordinadores guardado.');
+        // }, (err: any) => {
+        //     this.toastr.error('Error', 'No se ha completado el registro.');
+        // });
     }
 
     // -- Testimonial actions --

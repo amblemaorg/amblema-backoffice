@@ -32,7 +32,10 @@ export class SponsorUserService {
   }
 
   updateSponsorUser( id: string, data: SponsorUser ): Observable<any> {
-    return this.httpClient.put<SponsorUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data);
+    return this.httpClient.put<SponsorUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   deleteSponsorUser(id: string): Observable<string> {

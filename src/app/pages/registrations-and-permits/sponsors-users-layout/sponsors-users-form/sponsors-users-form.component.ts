@@ -23,14 +23,13 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
   @Select(SponsorUserState.sponsorUser) user$: Observable<any>;
   subscription: Subscription;
 
-  progress = 0;
   backupOldData: SponsorUser;
 
   idState = ' ';
   idMunicipality = '';
-
-
   form: FormGroup;
+
+  showProgress = false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,22 +64,22 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
     });
   }
 
-  ngOnChanges(): void {
+  ngOnChanges() {
     if (this.MODE === this.ACTION.EDIT) {
-      this.subscription = this.user$.subscribe(response => {
+
+      this.subscription = this.user$.subscribe( response => {
         this.title = 'Actualizar usuario padrino';
         this.backupOldData = response;
-
         this.restar();
         this.form.patchValue( response );
         this.idState = this.form.controls.addressState.value;
-
         this.form.controls.addressState.setValue(response.addressState.id);
         this.form.controls.role.setValue(response.role.id);
 
-        this.form.get('password').setValue('');
-        this.form.get('password').setValidators([]);
+        this.form.get('password').setValue(null);
+        this.form.get('password').clearValidators();
         this.form.get('password').updateValueAndValidity();
+
       });
     } else if (this.MODE === this.ACTION.CREATE) {
       this.title = 'Registrar usuario padrino';
@@ -101,7 +100,6 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
   onSubmit() {
     this.submitted = true;
 
-    // Error messages
     if (this.form.controls.image.invalid) {
       if (this.MODE === this.ACTION.CREATE) {
         this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de padrino');
@@ -110,31 +108,23 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
       }
     }
 
-    // Working on your validated form data
     if (this.form.valid) {
-
-
       const data: any = this.form.value;
       data.userType = USER_TYPE.SPONSOR.CODE.toString();
-      data.phone = '234234234';
+
       delete data.cardType;
 
-
-      // Mode
       if (this.MODE === this.ACTION.CREATE) {
 
         this.toast.info('Guardando', 'Enviando información, espere...');
-        this.progress = 1;
+
+        this.showProgress = true;
 
         this.sponsorUserService.getSponsorUsers().subscribe(response => { });
 
         this.sponsorUserService.setSponsorUser(data).subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
-            case HttpEventType.UploadProgress:
-              this.progress = Math.round(event.loaded / event.total * 100);
-              break;
             case HttpEventType.Response:
-              this.progress = 0;
               this.store.dispatch(new SetSponsorUser(event.body));
               this.toast.registerSuccess('Registro', 'Padrino registrado satisfactoriamente');
               this.restar();
@@ -142,7 +132,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
           }
         }, (err: any) => {
 
-          console.log(err);
+          this.showProgress = false;
 
           if (err.error.status === 0) {
             this.toast.error('Error de datos', 'Verifica los datos del formulario');
@@ -159,23 +149,18 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
               this.toast.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
             }
           }
-          this.progress = 0;
         });
       } else if ( this.MODE === this.ACTION.EDIT )  {
+
 
         const updateData: any = this.form.value;
 
         if (updateData.password === '' || updateData.password === null) {
           delete updateData.password;
         }
-
-        this.progress = 1;
+        this.showProgress = true;
 
         this.sponsorUserService.updateSponsorUser(this.backupOldData.id, updateData).subscribe((event: any) => {
-
-          this.progress = 0;
-
-
           this.store.dispatch(new UpdateSponsorUser(this.backupOldData, event));
           this.toast.updateSuccess('Actualización', 'Usuario actualizado satisfactoriamente');
           this.submitted = false;
@@ -183,11 +168,14 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
           this.form.get('password').setValidators([]);
           this.form.get('password').updateValueAndValidity();
 
+          setTimeout(() => {
+              this.showProgress = false;
+          }, 2500);
+
         });
 
       }
     } else {
-
       // Call error messages
       this.validationService.markAllFormFieldsAsTouched(this.form);
     }
@@ -201,6 +189,10 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
+
+    setTimeout(() => {
+      this.showProgress = false;
+    }, 2500);
   }
 
   // -- Event selected rol --

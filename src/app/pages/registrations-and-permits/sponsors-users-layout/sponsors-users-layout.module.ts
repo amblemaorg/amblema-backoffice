@@ -18,6 +18,7 @@ import { AddressSponsorComponent } from './address-sponsor/address-sponsor.compo
 import { TypeCompanyComponent } from './type-company/type-company.component';
 import { ReactiveValidationModule } from '../../components/form-components/reactive-validation/reactive-validation.module';
 import { SponsorsUsersViewComponent } from './sponsors-users-view/sponsors-users-view.component';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SponsorsUsersViewComponent } from './sponsors-users-view/sponsors-users
     NbSpinnerModule,
     NbAlertModule,
     NbButtonModule,
+    ProgressModule,
 
     // Add custom module
     ReactiveInputModule,

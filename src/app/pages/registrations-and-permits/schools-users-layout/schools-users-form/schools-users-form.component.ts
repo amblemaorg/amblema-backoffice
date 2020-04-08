@@ -38,10 +38,11 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
     { value: '3', label: 'Municipal' },
   ];
 
-  progress = 0;
   backupOldData: SchoolUser;
   idState = ' ';
   idMunicipality = '';
+
+  showProgress = false;
 
   form: FormGroup;
 
@@ -137,18 +138,14 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
         data.userType = USER_TYPE.SCHOOL.CODE.toString();
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
-        this.progress = 1;
 
+        this.showProgress = true;
         this.sanitizeNoRequiredData( data );
 
         this.schoolUserService.setSchoolUser(data).subscribe((event: HttpEvent<any>) => {
 
           switch (event.type) {
-            case HttpEventType.UploadProgress:
-              this.progress = Math.round(event.loaded / event.total * 100);
-              break;
             case HttpEventType.Response:
-              this.progress = 0;
 
               this.store.dispatch(new SetSchoolUser(event.body));
               this.toastr.registerSuccess('Registro', 'Usuario coordinador registrado');
@@ -156,6 +153,8 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
               break;
           }
         }, (err: any) => {
+          this.showProgress = false;
+
           if (err.error.status === 0) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }
@@ -171,7 +170,6 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
               this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
             }
           }
-          this.progress = 0;
         });
       } else if ( this.MODE === this.ACTION.EDIT ) {
         const updateData: any = this.form.value;
@@ -180,13 +178,10 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
           delete updateData.password;
         }
 
-        this.progress = 1;
-
         this.sanitizeNoRequiredData( updateData );
+        this.showProgress = true;
 
         this.schoolUserService.updateSchoolUser(this.backupOldData.id, updateData).subscribe((event: any) => {
-
-          this.progress = 0;
 
           this.store.dispatch(new UpdateSchoolUser(this.backupOldData, event));
           this.toastr.updateSuccess('Actualización', 'Usuario actualizado satisfactoriamente');
@@ -195,7 +190,12 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
           this.form.get('password').setValidators([]);
           this.form.get('password').updateValueAndValidity();
 
+          setTimeout(() => {
+              this.showProgress = false;
+          }, 2100);
+
         }, (err: any) => {
+          this.showProgress = false;
 
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
@@ -212,7 +212,6 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
               this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
             }
           }
-          this.progress = 0;
         });
       }
     } else {
@@ -227,6 +226,10 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
+
+    setTimeout(() => {
+      this.showProgress = false;
+    }, 2500);
   }
 
   private sanitizeNoRequiredData(data: any) {

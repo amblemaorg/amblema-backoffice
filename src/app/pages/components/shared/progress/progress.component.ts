@@ -1,16 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, ChangeDetectorRef, OnDestroy, AfterViewInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/services/helper/loading.service';
 
 @Component({
   selector: 'app-progress',
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']
 })
-export class ProgressComponent implements OnInit {
+export class ProgressComponent implements AfterViewInit, OnDestroy {
 
-  @Input() porcent: number;
+  subscription: Subscription;
 
-  constructor() { }
+  constructor(
+    public loadingService: LoadingService,
+    private cd: ChangeDetectorRef,
+  ) {
+  }
 
-  ngOnInit() {
+  /* This code block is for access the data loading services */
+  ngAfterViewInit(): void { }
+
+  ngOnDestroy(): void {
+    if ( this.subscription ) {
+      this.subscription.unsubscribe();
+    }
   }
 }

@@ -28,7 +28,7 @@ describe('ProjectRequestsComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         Ng2SmartTableModule
-      ], 
+      ],
       providers: [Utility]
     })
     .compileComponents();

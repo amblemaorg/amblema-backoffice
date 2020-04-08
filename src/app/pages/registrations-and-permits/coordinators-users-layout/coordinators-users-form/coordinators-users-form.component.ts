@@ -21,15 +21,17 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit, OnChanges, OnDestroy {
 
-  @Select( CoordinatorUserState.coordinatorUser ) user$: Observable<any>;
+  @Select(CoordinatorUserState.coordinatorUser) user$: Observable<any>;
   subscription: Subscription;
 
   options = [
     { value: true, label: 'Si' },
     { value: false, label: 'No' },
   ];
-  progress = 0;
+
   backupOldData: CoordinatorUser;
+
+  showProgress = false;
 
   idState = ' ';
   idMunicipality = '';
@@ -45,15 +47,15 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
   ngOnChanges(): void {
 
-    if ( this.MODE === this.ACTION.EDIT ) {
-      this.subscription = this.user$.subscribe( response => {
+    if (this.MODE === this.ACTION.EDIT) {
+      this.subscription = this.user$.subscribe(response => {
         this.title = 'Actualizar usuario coordinador';
 
         this.backupOldData = response;
 
         this.restar();
-        this.form.patchValue( response );
-        this.form.controls.birthdate.setValue( new Date(this.backupOldData.birthdate.toString()));
+        this.form.patchValue(response);
+        this.form.controls.birthdate.setValue(new Date(this.backupOldData.birthdate.toString()));
         this.idState = this.form.controls.addressState.value;
         this.idMunicipality = this.form.controls.addressMunicipality.value;
         this.form.controls.addressState.setValue(response.addressState.id);
@@ -64,7 +66,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         this.form.get('password').updateValueAndValidity();
 
       });
-    } else if ( this.MODE === this.ACTION.CREATE ) {
+    } else if (this.MODE === this.ACTION.CREATE) {
       this.title = 'Registrar usuario coordinador';
       this.restar();
 
@@ -75,7 +77,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -92,7 +94,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     // New data no required
     this.form.addControl('image', new FormControl(null));
     this.form.addControl('isReferred', new FormControl(false, []));
-    this.form.addControl('profession', new FormControl(null, [Validators.pattern( NORMAL_TEXT_PATTERN )]));
+    this.form.addControl('profession', new FormControl(null, [Validators.pattern(NORMAL_TEXT_PATTERN)]));
     this.form.addControl('referredName', new FormControl(null, []));
   }
 
@@ -118,22 +120,23 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         data.userType = USER_TYPE.COORDINATOR.CODE.toString();
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
-        this.progress = 1;
+        this.showProgress = true;
+
 
         this.coordinatorUserService.setCoordinatorUser(data).subscribe((event: HttpEvent<any>) => {
+
           switch (event.type) {
-            case HttpEventType.UploadProgress:
-              this.progress = Math.round(event.loaded / event.total * 100);
-              break;
             case HttpEventType.Response:
-              this.progress = 0;
               this.store.dispatch(new SetCoordinatorUser(event.body));
               this.toastr.registerSuccess('Registro', 'Usuario coordinador registrado');
               this.restar();
               break;
           }
         }, (err: any) => {
-          if ( err.error.status === 0 ) {
+
+          this.showProgress = false;
+
+          if (err.error.status === 0) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }
 
@@ -148,10 +151,9 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
             }
           }
-          this.progress = 0;
-        });
+        }, () => { });
 
-      } else if ( this.MODE === this.ACTION.EDIT ) {
+      } else if (this.MODE === this.ACTION.EDIT) {
         /** Update admin user data */
 
         const updateData: any = this.form.value;
@@ -164,12 +166,9 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           delete updateData.password;
         }
 
-        this.progress = 1;
+        this.showProgress = true;
 
         this.coordinatorUserService.updateCoordinatorUser(this.backupOldData.id, updateData).subscribe((event: any) => {
-
-          this.progress = 0;
-
           event = this.helper.readlyTypeDocument([event])[0];
 
           this.store.dispatch(new UpdateCoordinatorUser(this.backupOldData, event));
@@ -179,8 +178,15 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           this.form.get('password').setValidators([]);
           this.form.get('password').updateValueAndValidity();
 
+          setTimeout(() => {
+            this.showProgress = false;
+          }, 2100);
+
         }, (err: any) => {
-          if ( err.error.status === 0 ) {
+
+          this.showProgress = false;
+
+          if (err.error.status === 0) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
           }
 
@@ -195,8 +201,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
               this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
             }
           }
-          this.progress = 0;
-        });
+        }, () => { });
       }
     } else {
 
@@ -213,6 +218,10 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     this.form.controls.addressMunicipality.setValue(null);
     this.form.controls.isReferred.setValue(false);
     this.submitted = false;
+
+    setTimeout(() => {
+      this.showProgress = false;
+    }, 2500);
   }
 
   // -- Event selected rol --

@@ -6,11 +6,12 @@ import { PermissionsLayoutComponent } from './permissions-layout.component';
 import { RolesTableComponent } from './roles-table/roles-table.component';
 import { RolesFormComponent } from './roles-form/roles-form.component';
 import { RolesActionsComponent } from './roles-actions/roles-actions.component';
-import { NbCardModule, NbIconModule, NbButtonModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule, NbButtonModule, NbSpinnerModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     NbCardModule,
     PermissionsLayoutRoutingModule,
     Ng2SmartTableModule,
+    ProgressModule,
     NbIconModule,
+    NbSpinnerModule,
     NbButtonModule,
     ReactiveFormsModule,
 

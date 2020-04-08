@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogComponent } from './blog.component';
-import { NbCardModule, NbInputModule, NbIconModule, NbBadgeModule, NbAlertModule, NbButtonModule } from '@nebular/theme';
+import { NbCardModule, NbInputModule, NbIconModule, NbBadgeModule, NbAlertModule, NbButtonModule, NbSpinnerModule } from '@nebular/theme';
 import { BlogCardComponent } from './blog-card/blog-card.component';
 import { BlogFormComponent } from './blog-form/blog-form.component';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
@@ -14,6 +14,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPostPipe } from 'src/app/pipes/search-post.pipe';
 import { PaginatorModule } from 'src/app/pages/components/shared/paginator/paginator.module';
+import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { PaginatorModule } from 'src/app/pages/components/shared/paginator/pagin
     NbButtonModule,
 
     // Add custom module
+    ProgressModule,
+    NbSpinnerModule,
     PaginatorModule,
     ReactiveSelectModule,
     ReactiveInputModule,

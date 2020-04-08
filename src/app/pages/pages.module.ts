@@ -44,7 +44,6 @@ import { CustomToastrService } from '../services/helper/custom-toastr.service';
     NbUserModule,
     NbMenuModule.forRoot(),
     NbContextMenuModule,
-
     NbToastrModule.forRoot()
   ],
   exports: [ NbIconModule ],

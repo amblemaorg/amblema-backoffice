@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ACTION } from '../../../../helpers/text-content/text-crud';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BaseTable } from 'src/app/helpers/base-table';
-import { Select } from '@ngxs/store';
-import { RolesState, RoleState } from 'src/app/store/role.action';
+import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { Role } from 'src/app/models/permission.model';
 import { FormControl } from '@angular/forms';
+import { RolesState, SelectedRole } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-roles-actions',
@@ -14,7 +14,7 @@ import { FormControl } from '@angular/forms';
 })
 export class RolesActionsComponent extends BaseTable implements OnInit, OnDestroy {
 
-  @Select(RoleState.role) role$: Observable<Role>; // <-- Get data pre selected
+  @Select(RolesState.role) role$: Observable<Role>; // <-- Get data pre selected
   @Select(RolesState.roles) roles$: Observable<Role[]>; // <-- Get all Roles
 
   subscription: Subscription;
@@ -29,6 +29,7 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   ];
 
   constructor(
+    private store: Store,
     private sanitizer: DomSanitizer) {
     super('form-role-action');
 
@@ -65,7 +66,6 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
       this.role = role;
       setTimeout(() => {
         this.control.setValue(role.id); // Rol pre selected, set in the form
-
       });
     });
   }
@@ -77,18 +77,17 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   }
 
   // Event select another rol
-  onSelected(id: string): void {
+  onSelected(id: any): void {
 
-    this.subscription = this.roles$.subscribe(response => {
-      this.role = this.filter(response, id)[0];
-    });
-  }
+    this.subscription = this.roles$.subscribe( response => {
+      return response.filter( (value, key) => {
 
-  private filter(object: any[], id: string): any {
-    return object.filter(value => {
-      if (value.id === id) {
-        return value;
-      }
-    });
+        if ( value.id === id ) {
+          this.store.dispatch( new SelectedRole( value ) );
+          return true;
+        }
+      } );
+    } );
+
   }
 }

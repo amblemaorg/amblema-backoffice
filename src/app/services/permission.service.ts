@@ -21,12 +21,18 @@ export class PermissionService {
       );
   }
 
-  setRole( data: Role ): Observable<Role> {
-    return this.httpClient.post<Role>(`${environment.api}${this.ROLE}/`, data);
+  setRole( data: Role ): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}${this.ROLE}/`, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
-  updateRole(id: string, data: Role ): Observable<Role> {
-    return this.httpClient.put<Role>(`${environment.api}${this.ROLE}/${id}`, data);
+  updateRole(id: string, data: Role ): Observable<any> {
+    return this.httpClient.put<any>(`${environment.api}${this.ROLE}/${id}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   deleteRole( id: string ): Observable<string> {

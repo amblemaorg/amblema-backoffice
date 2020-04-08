@@ -83,11 +83,6 @@ export class WebSponsorState implements NgxsOnInit {
             }
         });
 
-        this.webSponsorService.setContentWebSponsor( ctx.getState() ).subscribe( response => {
-            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página padrinos guardado.');
-        }, (err: any) => {
-            this.toastr.error('Error', 'No se ha completado el registro.');
-        });
     }
 
     // -- Testimonial actions --

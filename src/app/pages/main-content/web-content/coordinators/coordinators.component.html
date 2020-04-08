@@ -40,7 +40,15 @@
                     <!-- Save changes -->
                     <div class="col-12 text-right">
                         <hr>
-                        <button nbButton class="btn btn-primary col-12 col-lg-auto" (click)="onSave()">Guardar cambios</button>
+                        <app-progress *ngIf="showProgress" class="form-group text-left"></app-progress>
+            
+                        <button 
+                            [ngClass]="{'mt-3': showProgress}"
+                            [attr.disabled]="showProgress ? true : null"
+                            [nbSpinner]="showProgress ? true : null" 
+                            nbSpinnerStatus="success"
+                            nbButton 
+                            class="btn btn-primary col-12 col-lg-auto" (click)="onSave()">Guardar cambios</button>
                     </div>
                 </div>
             </nb-card-body>

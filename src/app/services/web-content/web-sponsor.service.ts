@@ -21,7 +21,10 @@ export class WebSponsorService {
     );
   }
 
-  setContentWebSponsor( data: WebSponsor ): Observable<WebSponsor> {
-    return this.httpClient.post<WebSponsor>(`${environment.api}${this.WEB_SPONSOR}`, data);
+  setContentWebSponsor( data: WebSponsor ): Observable<any> {
+    return this.httpClient.post<WebSponsor>(`${environment.api}${this.WEB_SPONSOR}`, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 }

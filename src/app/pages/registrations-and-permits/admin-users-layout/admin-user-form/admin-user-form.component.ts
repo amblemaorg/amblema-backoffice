@@ -10,10 +10,10 @@ import { Utility } from 'src/app/helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { DOCUMENT_TYPE } from 'src/app/helpers/convention/document-type';
 import { STATUS } from 'src/app/helpers/text-content/status';
-import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { SetAdminUser, AdminUserState, UpdateAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/models/user/admin-user.model';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-user-form',
@@ -24,12 +24,12 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   @Select(AdminUserState.adminUser) user$: Observable<any>;
   subscription: Subscription;
 
-  progress = 0;
   idState = ' ';
   idMunicipality = '';
   backupOldData: AdminUser;
-
   mode = '';
+
+  showProgress = false;
 
   constructor(
     private store: Store,
@@ -99,34 +99,27 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
       const data = this.form.value;
 
       // Enconde the type document if necesary
-      if ( data.cardType === DOCUMENT_TYPE.E.VALUE ||
-          data.cardType === DOCUMENT_TYPE.J.VALUE ||
-          data.cardType === DOCUMENT_TYPE.V.VALUE) {
-            data.cardType = this.helper.encodeTypeDocument(data.cardType);
+      if (data.cardType === DOCUMENT_TYPE.E.VALUE ||
+        data.cardType === DOCUMENT_TYPE.J.VALUE ||
+        data.cardType === DOCUMENT_TYPE.V.VALUE) {
+        data.cardType = this.helper.encodeTypeDocument(data.cardType);
       }
 
       if (this.MODE === ACTION.CREATE) {
         this.toastr.info('Guardando', 'Enviando información, espere...');
-        this.progress = 1;
+        this.showProgress = true;
 
+        this.adminUserService.setAdminUser(data).subscribe((response: HttpEvent<any>) => {
 
-        this.adminUserService.setAdminUser(data).subscribe((event: HttpEvent<any>) => {
-
-          switch (event.type) {
-            case HttpEventType.UploadProgress:
-              this.progress = Math.round(event.loaded / event.total * 100);
-              break;
+          switch (response.type) {
             case HttpEventType.Response:
-              setTimeout(() => {
-                this.progress = 0;
-              }, 2000);
-
-              this.store.dispatch(new SetAdminUser(event.body));
+              this.store.dispatch(new SetAdminUser(response.body));
               this.toastr.registerSuccess('Registro', 'Usuario registrado satisfactoriamente');
               this.restar();
               break;
           }
         }, (err: any) => {
+          this.showProgress = false;
           if (err.error.cardId) {
             if (String(err.error.cardId[0].status) === '5') {
               this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
@@ -138,7 +131,6 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
               this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
             }
           }
-          this.progress = 0;
         });
       } else {
 
@@ -154,11 +146,9 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           delete updateData.password;
         }
 
-        this.progress = 1;
+        this.showProgress = true;
 
         this.adminUserService.updateAdminUser(this.backupOldData.id, updateData).subscribe((event: any) => {
-
-          this.progress = 0;
 
           event = this.helper.readlyTypeDocument([event])[0];
 
@@ -169,6 +159,10 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
           this.form.get('password').setValue('');
           this.form.get('password').setValidators([]);
           this.form.get('password').updateValueAndValidity();
+
+          setTimeout(() => {
+            this.showProgress = false;
+          }, 2100);
 
         });
 
@@ -186,6 +180,9 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
     this.form.controls.userType.setValue(USER_TYPE.ADMIN.CODE.toString());
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
+    setTimeout(() => {
+      this.showProgress = false;
+    }, 2500);
   }
 
   // -- Event selected rol --

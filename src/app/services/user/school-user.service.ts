@@ -15,7 +15,7 @@ export class SchoolUserService {
   private readonly SCHOOL_USER: string = `users?userType=${USER_TYPE.SCHOOL.CODE}`;
   private readonly USER_TYPE: string = `?userType=${USER_TYPE.SCHOOL.CODE}`;
 
-  constructor( private  httpClient: HttpClient ) { }
+  constructor(private httpClient: HttpClient) { }
 
   getSchoolUsers(): Observable<SchoolUser[]> {
     return this.httpClient.get<SchoolUser[]>(`${environment.api}${this.SCHOOL_USER}`)
@@ -24,15 +24,18 @@ export class SchoolUserService {
       );
   }
 
-  setSchoolUser( data: SchoolUser ): Observable<any> {
+  setSchoolUser(data: SchoolUser): Observable<any> {
     return this.httpClient.post<SchoolUser>(`${environment.api}${this.SCHOOL_USER}`, data, {
       reportProgress: true,
       observe: 'events'
     });
   }
 
-  updateSchoolUser( id: string, data: SchoolUser ): Observable<any> {
-    return this.httpClient.put<SchoolUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data);
+  updateSchoolUser(id: string, data: SchoolUser): Observable<any> {
+    return this.httpClient.put<SchoolUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   deleteSchoolUser(id: string): Observable<string> {

@@ -10,6 +10,9 @@ import { Observable, Subscription } from 'rxjs';
 import { WebCoordinator } from 'src/app/models/web/web-coordinator.model';
 import { Testimonial } from 'src/app/models/web/testimonial.model';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { WebCoordinatorService } from 'src/app/services/web-content/web-coordinator.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-coordinators',
@@ -23,13 +26,17 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
 
   testimonials: Testimonial[];
   submitted = false;
+  showProgress = false; 
 
   steps = new FormArray([]);
   form: FormGroup = new FormGroup({
     backgroundImage: new FormControl('', [Validators.required]),
   });
 
-  constructor( private store: Store ) { }
+  constructor( 
+    private taostr: CustomToastrService,
+    private webCoordinatorService: WebCoordinatorService,
+    private store: Store ) { }
 
   ngOnInit() {
 
@@ -80,7 +87,27 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
   // Save
 
   onSave() {
-    this.store.dispatch( new SetWebCoordinator( { coordinatorPage: this.form.value } ) );
+
+    this.subscription = this.store.dispatch( new SetWebCoordinator( { coordinatorPage: this.form.value } ) ).subscribe( (response: any) => {
+      this.showProgress = true;
+
+      this.subscription = this.webCoordinatorService.setContentWebCoordinator( response.webcoordinator ).subscribe( (event: HttpEvent<any>) => {
+
+        switch (event.type) {
+          case HttpEventType.Response:
+              setTimeout(() => {
+                this.showProgress = false;
+              }, 2500);
+              this.taostr.updateSuccess('Actualizacion', 'Contenido de la página coordinadores guardado.');
+            break;
+        }
+
+      }, (err: any) => {
+        //console.log(err )
+        
+        this.showProgress = false
+        this.taostr.error('Error', 'No se ha completado el registro.'); } ); 
+    } );
   }
 
 }

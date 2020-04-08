@@ -105,13 +105,6 @@ export class WebAboutState implements NgxsOnInit {
                 mathText: action.payload.aboutUsPage.mathText,
             }
         });
-
-        this.webAboutService.setContentWebAbout(ctx.getState()).subscribe(response => {
-            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');
-        }, (err: any) => {
-            this.toastr.error('Error', 'No se ha completado el registro.');
-
-        });
     }
 
     // -- Slider's actions --

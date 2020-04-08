@@ -9,10 +9,14 @@ import {
   SetAwardWebAbout,
   UpdateAwardWebAbout,
   DeleteAwardWebAbout,
-  SetWebAbout} from 'src/app/store/web-content/web-about.action';
+  SetWebAbout
+} from 'src/app/store/web-content/web-about.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebAbout, Award } from 'src/app/models/web/web-about.model';
 import { Slider } from 'src/app/models/web/slider.model';
+import { WebAboutService } from 'src/app/services/web-content/web-about.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-about-us',
@@ -21,9 +25,10 @@ import { Slider } from 'src/app/models/web/slider.model';
 })
 export class AboutUsComponent implements OnInit, OnDestroy {
 
-  @Select( WebAboutState.webAbout ) data$: Observable<WebAbout>;
+  @Select(WebAboutState.webAbout) data$: Observable<WebAbout>;
   subscription: Subscription;
 
+  showProgress = false;
   sliders: Slider[];
   awards: Award[];
 
@@ -34,66 +39,91 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     mathText: new FormControl('')
   });
 
-  constructor( private store: Store ) { }
+  constructor(
+    private webAboutService: WebAboutService,
+    private toastr: CustomToastrService,
+    private store: Store) { }
 
   ngOnInit() {
-    this.subscription = this.data$.subscribe( response => {
+    this.subscription = this.data$.subscribe(response => {
       this.sliders = response.aboutUsPage.slider;
       this.awards = response.aboutUsPage.awards;
 
-      if ( response.aboutUsPage.aboutUsText ) {
-        this.form.controls.aboutUsText.setValue( response.aboutUsPage.aboutUsText );
+      if (response.aboutUsPage.aboutUsText) {
+        this.form.controls.aboutUsText.setValue(response.aboutUsPage.aboutUsText);
       }
-      if ( response.aboutUsPage.environmentText ) {
-        this.form.controls.environmentText.setValue( response.aboutUsPage.environmentText );
+      if (response.aboutUsPage.environmentText) {
+        this.form.controls.environmentText.setValue(response.aboutUsPage.environmentText);
       }
-      if ( response.aboutUsPage.readingText ) {
-        this.form.controls.readingText.setValue( response.aboutUsPage.readingText );
+      if (response.aboutUsPage.readingText) {
+        this.form.controls.readingText.setValue(response.aboutUsPage.readingText);
       }
-      if ( response.aboutUsPage.mathText ) {
-        this.form.controls.mathText.setValue( response.aboutUsPage.mathText );
+      if (response.aboutUsPage.mathText) {
+        this.form.controls.mathText.setValue(response.aboutUsPage.mathText);
       }
     });
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
   // -- CRUD Sliders --
 
-  onRegisterSlider( slider: Slider ) {
-    this.store.dispatch( new SetSliderWebAbout( slider ) );
+  onRegisterSlider(slider: Slider) {
+    this.store.dispatch(new SetSliderWebAbout(slider));
   }
 
-  onEditSlider(slider: any []) {
-    this.store.dispatch( new UpdateSliderWebAbout( slider[0], slider[1] ) );
+  onEditSlider(slider: any[]) {
+    this.store.dispatch(new UpdateSliderWebAbout(slider[0], slider[1]));
   }
 
-  onDeleteSlider( slider: Slider ) {
-    this.store.dispatch( new DeleteSliderWebAbout( slider ) );
+  onDeleteSlider(slider: Slider) {
+    this.store.dispatch(new DeleteSliderWebAbout(slider));
   }
 
   // -- CRUD Awards --
 
-  onRegisterAward( award: Award ) {
-    this.store.dispatch( new SetAwardWebAbout(award) );
+  onRegisterAward(award: Award) {
+    this.store.dispatch(new SetAwardWebAbout(award));
   }
 
-  onEditAward( award: any []) {
-    this.store.dispatch( new UpdateAwardWebAbout( award[0], award[1] ) );
+  onEditAward(award: any[]) {
+    this.store.dispatch(new UpdateAwardWebAbout(award[0], award[1]));
   }
 
-  onDeleteAward( award: Award ) {
-    this.store.dispatch( new DeleteAwardWebAbout(award) );
+  onDeleteAward(award: Award) {
+    this.store.dispatch(new DeleteAwardWebAbout(award));
   }
 
   // -- Save --
 
   onSaveWebAbout() {
-    this.store.dispatch( new SetWebAbout( { aboutUsPage: this.form.value } ) );
+    this.store.dispatch(new SetWebAbout({ aboutUsPage: this.form.value })).subscribe((response: any) => {
+
+      this.showProgress = true; 
+
+      this.webAboutService.setContentWebAbout(response.webabout).subscribe((event: HttpEvent<any> ) => {
+        
+        switch (event.type) {
+          case HttpEventType.Response:
+            setTimeout(() => {
+              this.showProgress = false;
+
+            }, 2500);
+            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');      
+            break;
+        }
+      
+      }, (err: any) => {
+        this.showProgress = false;
+            
+        this.toastr.error('Error', 'No se ha completado el registro.');
+      });
+
+    });
   }
 
 }

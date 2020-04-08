@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NbCardModule, NbButtonModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbSpinnerModule } from '@nebular/theme';
 import { AboutUsComponent } from './about-us.component';
 import { HelperModule } from '../_helpers/helper.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -11,6 +11,7 @@ import { ReactiveInputModule } from 'src/app/pages/components/form-components/re
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveSelectModule } from 'src/app/pages/components/form-components/reactive-select/reactive-select.module';
 import { FormSliderModule } from 'src/app/pages/components/form-components/forms/form-slider/form-slider.module';
+import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { FormSliderModule } from 'src/app/pages/components/form-components/forms
     ReactiveInputModule,
     ReactiveInputFileModule,
     ReactiveSelectModule,
-    FormSliderModule
+    FormSliderModule, 
+    ProgressModule,
+    NbSpinnerModule,
   ]
 })
 export class AboutUsModule { }

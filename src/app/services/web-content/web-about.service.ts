@@ -21,7 +21,10 @@ export class WebAboutService {
       );
   }
 
-  setContentWebAbout( data: WebAbout ): Observable<WebAbout> {
-    return this.httpClient.post<WebAbout>(`${environment.api}${this.WEB_ABOUT}`, data);
+  setContentWebAbout( data: WebAbout ): Observable<any> {
+    return this.httpClient.post<WebAbout>(`${environment.api}${this.WEB_ABOUT}`, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 }

@@ -44,9 +44,15 @@
                 [control]="formBlog.get('status')"></app-select-post-status>
         </div>
 
+        <div class="col-12">
+            <app-progress *ngIf="showProgress"></app-progress>
+        </div>
+        
     </form>
-
     <button 
+        [attr.disabled]="showProgress ? true : null"
+        [nbSpinner]="showProgress ? true : null" 
+        nbSpinnerStatus="success"
         nbButton 
         [status]="MODE == ACTION.CREATE ? 'success' : 'primary'"
         button (click)="onSubmit()" type="submit" class="btn btn-primary col-6 col-md-auto">

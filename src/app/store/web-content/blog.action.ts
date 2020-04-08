@@ -65,39 +65,14 @@ export class PostsState implements NgxsOnInit {
     @Action(SetPost)
     setPost( ctx: StateContext<Post[]>, action: SetPost ) {
 
-        let data: Post = action.payload;
-
-        data = this.helper.convertTagStringToNumber(data);
-        data = this.helper.convertStatusPostToNumber(data);
-
-        this.blogService.setPost(  data ).subscribe(  response => {
-            response = this.helper.convertTagsNumberToString([response])[0];
-            response = this.helper.convertStatusPostToString([response])[0];
-            ctx.setState(append([response]));
-            this.toastr.registerSuccess('Registro Post', 'Nuevo post registrado');
-        }, (err: any) => {
-            this.toastr.error('Error', 'No se ha completado el registro.');
-        });
+        ctx.setState(append([action.payload])); 
     }
 
     @Action( UpdatePost )
     updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
-        let data: Post = action.newPost;
-
-        data = this.helper.convertTagStringToNumber(data);
-        data = this.helper.convertStatusPostToNumber(data);
-
-        this.blogService.updatePost( action.newPost.id, data ).subscribe( response => {
-            this.toastr.updateSuccess('Actualización', 'Post actualizado correctamente');
-
-            response = this.helper.convertTagsNumberToString([response])[0];
-            response = this.helper.convertStatusPostToString([response])[0];
-
-            ctx.setState(
-                updateItem<Post>(post => post.id === action.oldPost.id, response)
-            );
-
-            });
+        ctx.setState(
+            updateItem<Post>(post => post.id === action.oldPost.id, action.newPost)
+        );
     }
 
     @Action( DeletePost )

@@ -21,12 +21,18 @@ export class BlogService {
       );
   }
 
-  setPost( data: Post ): Observable<Post> {
-    return this.httpClient.post<Post>(`${environment.api}${this.POST}`, data);
+  setPost( data: Post ): Observable<any> {
+    return this.httpClient.post<Post>(`${environment.api}${this.POST}`, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
-  updatePost( id: string, data: Post ): Observable<Post> {
-    return this.httpClient.put<Post>(`${environment.api}${this.POST}/${id}`, data);
+  updatePost( id: string, data: Post ): Observable<any> {
+    return this.httpClient.put<Post>(`${environment.api}${this.POST}/${id}`, data, {
+      reportProgress: true, 
+      observe: 'body'
+    });
   }
 
   deletePost( id: string ): Observable<string> {

@@ -103,8 +103,6 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
         }
 
       }, (err: any) => {
-        //console.log(err )
-        
         this.showProgress = false
         this.taostr.error('Error', 'No se ha completado el registro.'); } ); 
     } );

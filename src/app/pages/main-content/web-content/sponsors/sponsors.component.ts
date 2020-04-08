@@ -90,9 +90,9 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   onSave() {
     this.subscription = this.store.dispatch(new SetWebSponsor({ sponsorPage: this.formSponsor.value })).subscribe((response: any) => {
       this.showProgress = true;
-      this.subscription = this.webSponsorService.setContentWebSponsor(response.websponsor).subscribe((response: HttpEvent<any>) => {
+      this.subscription = this.webSponsorService.setContentWebSponsor(response.websponsor).subscribe((event: HttpEvent<any>) => {
 
-        switch (response.type) {
+        switch (event.type) {
           case HttpEventType.Response:
             setTimeout(() => {
               this.showProgress = false;

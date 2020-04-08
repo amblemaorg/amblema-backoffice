@@ -103,23 +103,23 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   onSaveWebAbout() {
     this.store.dispatch(new SetWebAbout({ aboutUsPage: this.form.value })).subscribe((response: any) => {
 
-      this.showProgress = true; 
+      this.showProgress = true;
 
       this.webAboutService.setContentWebAbout(response.webabout).subscribe((event: HttpEvent<any> ) => {
-        
+
         switch (event.type) {
           case HttpEventType.Response:
             setTimeout(() => {
               this.showProgress = false;
 
             }, 2500);
-            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');      
+            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página guardado.');
             break;
         }
-      
+
       }, (err: any) => {
         this.showProgress = false;
-            
+
         this.toastr.error('Error', 'No se ha completado el registro.');
       });
 

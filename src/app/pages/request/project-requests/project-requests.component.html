@@ -8,7 +8,7 @@
     </nb-card-body>
 </nb-card>
 
-<app-modal [ID]="modal" [title]="'Solicitud de proyecto'" [size]="'lg'">
+<app-modal [ID]="modal" [title]="'Solicitud de proyecto'" [size]="'lg'" *ngIf="data$ | async">
     <div content>
         <div class="row">
             <div class="col-12">
@@ -194,10 +194,10 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-12">
-                                        <p class="d-flex w-100"><span
+                                        <p *ngIf="requestSelected.phone" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.phone }}</span>
                                         </p>
-                                        <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Código del
+                                        <p *ngIf="requestSelected.code" class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Código del
                                                 plantel:</span><span>{{ requestSelected.code }}</span></p>
                                         <p *ngIf="requestSelected.schoolType" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Tipo de
@@ -211,7 +211,7 @@
                             </div>
                         </div>
 
-                        <!-- Address -->
+                        <!-- address -->
                         <div class="col-12 col-lg-6 form-group">
 
                             <div>
@@ -219,15 +219,15 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-12">
-                                        <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                                        <p *ngIf="requestSelected.addressState.name" class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
                                             <span>{{ requestSelected.addressState.name }}</span> </p>
-                                        <p class="d-flex w-100"><span
+                                        <p *ngIf="requestSelected.addressMunicipality.name" class="d-flex w-100"><span
                                                 class="pl-0 col-5 font-weight-bold">Municipio:</span>
                                             <span>{{ requestSelected.addressMunicipality.name }}</span></p>
                                         <p *ngIf="requestSelected.address" class="d-flex w-100"><span
                                                 class="pl-0 col-5 font-weight-bold">Dirección:</span>
                                             <span>{{ requestSelected.address }}</span></p>
-                                        <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                                        <p *ngIf="requestSelected.addressCity" class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
                                             <span>{{ requestSelected.addressCity }}</span></p>
                                     </div>
                                 </div>
@@ -243,16 +243,16 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-12">
-                                        <p class="d-flex w-100"><span
+                                        <p *ngIf="requestSelected.principalFirstName" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.principalFirstName }}</span>
                                         </p>
-                                        <p class="d-flex w-100"><span
+                                        <p *ngIf="requestSelected.principalLastName" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ requestSelected.principalLastName }}</span>
                                         </p>
-                                        <p class="d-flex w-100"><span
+                                        <p *ngIf="requestSelected.principalEmail" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.principalEmail }}</span>
                                         </p>
-                                        <p class="d-flex w-100"><span
+                                        <p *ngIf="requestSelected.principalPhone" class="d-flex w-100"><span
                                                 class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.principalPhone }}</span>
                                         </p>
                                     </div>
@@ -400,13 +400,13 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col-12">
-                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                                            <p *ngIf="requestSelected.sponsorAddressState" class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
                                                 <span>{{ requestSelected.sponsorAddressState.name }}</span> </p>
-                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Municipio:</span>
+                                            <p *ngIf="requestSelected.sponsorAddressMunicipality" class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Municipio:</span>
                                                 <span>{{ requestSelected.sponsorAddressMunicipality.name }}</span></p>
-                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección:</span>
+                                            <p *ngIf="requestSelected.sponsorAddressStreet" class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección:</span>
                                                 <span>{{ requestSelected.sponsorAddressStreet }}</span></p>
-                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                                            <p *ngIf="requestSelected.sponsorAddressCity" class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
                                                 <span>{{ requestSelected.sponsorAddressCity }}</span></p>
                                         </div>
                                     </div>

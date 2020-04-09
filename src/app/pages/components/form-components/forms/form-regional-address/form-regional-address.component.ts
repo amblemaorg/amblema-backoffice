@@ -1,12 +1,12 @@
 import { Component, Input, OnDestroy, OnChanges } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { AddressService, DataMunicipality } from 'src/app/services/address.service';
 import { State, Municipality } from '../../../../../models/address.model';
 import { ACTION } from '../../../../../helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Subscription } from 'rxjs';
 import { errorMessages } from 'src/app/helpers/text-content/error-manager';
+import { AddressService, DataMunicipality } from 'src/app/services/address.service';
 
 @Component({
     selector: 'app-form-regional-address',
@@ -14,7 +14,7 @@ import { errorMessages } from 'src/app/helpers/text-content/error-manager';
     styleUrls: ['./form-regional-address.component.scss']
 })
 
-export class FormRegionalAddressComponent extends AbstractReactive implements OnDestroy, OnChanges {
+export class FormRegionaladdressComponent extends AbstractReactive implements OnDestroy, OnChanges {
 
     // Parse to form
     @Input() state: AbstractControl | null = new FormControl();
@@ -39,7 +39,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
     constructor(private addressService: AddressService, private toastr: CustomToastrService) {
         super();
-        this.initAddress();
+        this.initaddress();
     }
 
     ngOnChanges(): void {
@@ -98,7 +98,7 @@ export class FormRegionalAddressComponent extends AbstractReactive implements On
 
     }
 
-    private initAddress(): void {
+    private initaddress(): void {
 
         // Get suscription and data
         this.subscribe = this.addressService.getStates().subscribe((value) => {

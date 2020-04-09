@@ -17,7 +17,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
 import { FormDocumentModule } from '../../components/form-components/forms/form-document/form-document.module';
-import { FormRegionalAddressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
+import { FormRegionaladdressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveDatepickerModule } from '../../components/form-components/reactive-datepicker/reactive-datepicker.module';
@@ -55,7 +55,7 @@ import { ProgressModule } from '../../components/shared/progress/progress.module
     ReactiveSelectModule,
     ModalModule,
     FormDocumentModule,
-    FormRegionalAddressModule,
+    FormRegionaladdressModule,
   ]
 })
 export class CoordinatorsUsersLayoutsModule { }

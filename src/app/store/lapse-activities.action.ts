@@ -20,7 +20,7 @@ export class GetLapActivities {
             lapse1: [],
             lapse2: [],
             lapse3: [],
-        }, 
+        },
         selectedActivity: {
             id: '',
             name: '',
@@ -35,7 +35,7 @@ export class GetLapActivities {
             video: [],
             checklist: [],
             approvalType: '',
-            status: '',   
+            status: '',
         }
     }
 })
@@ -47,13 +47,13 @@ export class LapseActivityState implements NgxsOnInit {
     }
 
     @Selector()
-    static selectedActivity( state: LapseActivityModel ) : Activity | null {
-        return state.selectedActivity; 
+    static selectedActivity( state: LapseActivityModel ): Activity | null {
+        return state.selectedActivity;
     }
 
     ngxsOnInit(ctx: StateContext<LapseActivityModel>): void {
         ctx.dispatch( new GetLapActivities() );
-        
+
     }
 
     constructor(

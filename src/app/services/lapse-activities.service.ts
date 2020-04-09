@@ -20,8 +20,8 @@ export class LapseActivitiesService {
         map((data: any) => data)
       );
   }
-  
-  getActivity( id:string, lapse: any ): Observable<Activity> {
+
+  getActivity( id: string, lapse: any ): Observable<Activity> {
     return this.httpClient.get<Activity>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`).
       pipe(
         map( (data: any) => data )

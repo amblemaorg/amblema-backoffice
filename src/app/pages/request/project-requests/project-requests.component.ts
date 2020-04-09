@@ -12,7 +12,9 @@ import { REQUEST_STATUS, TYPE_REQUEST } from 'src/app/helpers/convention/request
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { GetProjects } from 'src/app/store/project.action';
+import { GetProjects, AddProject } from 'src/app/store/project.action';
+import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
+import { SetSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 
 @Component({
   selector: 'app-project-requests',
@@ -39,9 +41,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
     private helper: Utility) { super(''); }
 
   ngOnInit(): void {
-    this.data$.subscribe(response => {
-      console.log(response);
-    });
 
     this.settings.actions = {
       columnTitle: 'Acciones',
@@ -138,10 +137,17 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           this.projectRequestService.putProjectRequestSchool(
             this.requestSelected.id,
             this.statusSelected.toString() ).subscribe( response => {
-            console.log( response )
-            this.store.dispatch( new UpdateProjectRequests( response.record, this.requestSelected ) );
-            this.requestSelected.status = response.record.status.toString();
-            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+
+              // Save storage Project, School and Sponsor if they have it
+              this.store.dispatch( new UpdateProjectRequests( response.record, this.requestSelected ) );
+              this.store.dispatch( new AddProject( response.project ) );
+              this.store.dispatch( new SetSchoolUser(response.school) );
+              if ( response.sponsor.id ) {
+                this.store.dispatch( new SetSponsorUser(response.sponsor) );
+              }
+
+              this.requestSelected.status = response.record.status.toString();
+              this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
           break;
         case TYPE_REQUEST.SPONSOR.ORIGINAL:

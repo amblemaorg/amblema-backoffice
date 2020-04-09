@@ -15,8 +15,8 @@ import { LapseActivity } from 'src/app/models/lapse-activities.model';
 export class ActivityBoardComponent extends BaseTable implements TableActions, OnInit {
 
   @Select( LapseActivityState.lapses ) lapses$: Observable<LapseActivity>;
-  
-  data: any; 
+
+  data: any;
 
   constructor(
     public modalService: ModalService
@@ -45,11 +45,11 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
   }
 
   ngOnInit(): void {
-    
+
     this.lapses$.subscribe( response => {
-      
-      this.data = response.lapse1; 
-    } )
+
+      this.data = response.lapse1;
+    } );
 
   }
 

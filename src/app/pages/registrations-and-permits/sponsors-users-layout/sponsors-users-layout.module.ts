@@ -10,7 +10,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
 import { FormDocumentModule } from '../../components/form-components/forms/form-document/form-document.module';
-import { FormRegionalAddressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
+import { FormRegionaladdressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
@@ -35,7 +35,7 @@ import { ProgressModule } from '../../components/shared/progress/progress.module
     NbCardModule,
     Ng2SmartTableModule,
     ReactiveFormsModule,
-    FormRegionalAddressModule,
+    FormRegionaladdressModule,
     NbIconModule,
     NbSpinnerModule,
     NbAlertModule,
@@ -48,7 +48,7 @@ import { ProgressModule } from '../../components/shared/progress/progress.module
     ReactiveInputFileModule,
     ReactiveValidationModule,
     FormDocumentModule,
-    FormRegionalAddressModule,
+    FormRegionaladdressModule,
     ModalModule,
   ]
 })

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
-import { ProjectRequestState, UpdateProjectRequests } from 'src/app/store/request/project-requests.action';
+import { ProjectRequestState, UpdateProjectRequests, DeleteProjectRequests } from 'src/app/store/request/project-requests.action';
 import { Observable } from 'rxjs';
 import { ProjectRequest } from 'src/app/models/request/project-requests.model';
 import { Utility } from 'src/app/helpers/utility';
@@ -110,13 +110,34 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   onAction(event: any): void {
-     switch (event.action) {
+    switch (event.action) {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
-        // this.store.dispatch(new DeleteProject(event.data.id));
+        if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
+
+          this.projectRequestService.deleteProjectRequestSponsor(event.data.id).subscribe(response => {
+            this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicirud de proyecto');
+            this.store.dispatch(new DeleteProjectRequests(event.data));
+          });
+        } else if (event.data.type === TYPE_REQUEST.SCHOOL.ORIGINAL) {
+
+          this.projectRequestService.deleteProjectRequestSchool(event.data.id).subscribe(response => {
+            this.store.dispatch(new DeleteProjectRequests(event.data));
+            this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicirud de proyecto');
+
+          });
+        } else {
+
+          this.projectRequestService.deleteProjectRequestCoordinator(event.data.id).subscribe(response => {
+            this.store.dispatch(new DeleteProjectRequests(event.data));
+            this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicirud de proyecto');
+
+          });
+        }
+
         break;
     }
   }
@@ -126,44 +147,60 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
     switch (this.requestSelected.type) {
       case TYPE_REQUEST.COORDINATOR.ORIGINAL:
         this.projectRequestService.putProjectRequestCoordinator(
-            this.requestSelected.id,
-            this.statusSelected.toString() ).subscribe( response => {
-          this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
-          this.requestSelected.status = response.status.toString();
-          this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
-        });
-        break;
-      case TYPE_REQUEST.SCHOOL.ORIGINAL:
-          this.projectRequestService.putProjectRequestSchool(
-            this.requestSelected.id,
-            this.statusSelected.toString() ).subscribe( response => {
-
-              // Save storage Project, School and Sponsor if they have it
-              this.store.dispatch( new UpdateProjectRequests( response.record, this.requestSelected ) );
-              this.store.dispatch( new AddProject( response.project ) );
-              this.store.dispatch( new SetSchoolUser(response.school) );
-              if ( response.sponsor.id ) {
-                this.store.dispatch( new SetSponsorUser(response.sponsor) );
-              }
-
-              this.requestSelected.status = response.record.status.toString();
-              this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
-          });
-          break;
-        case TYPE_REQUEST.SPONSOR.ORIGINAL:
-          this.projectRequestService.putProjectRequestSponsor(
-            this.requestSelected.id,
-            this.statusSelected.toString() ).subscribe( response => {
-
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
+            this.store.dispatch(new UpdateProjectRequests(response, this.requestSelected));
             this.requestSelected.status = response.status.toString();
-            this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
-
             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
-          break;
+        break;
+      case TYPE_REQUEST.SCHOOL.ORIGINAL:
+        this.projectRequestService.putProjectRequestSchool(
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
+
+            // Save storage Project, School and Sponsor if they have it
+            this.store.dispatch(new UpdateProjectRequests(response.record, this.requestSelected));
+
+            // Create users and projects when the request is accepted
+            if (this.requestSelected === '2') {
+              this.store.dispatch(new AddProject(response.project));
+              this.store.dispatch(new SetSchoolUser(response.school));
+              if (response.sponsor.id) {
+                this.store.dispatch(new SetSponsorUser(response.sponsor));
+              }
+            }
+
+            this.requestSelected.status = response.record.status.toString();
+            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+          });
+        break;
+      case TYPE_REQUEST.SPONSOR.ORIGINAL:
+        this.projectRequestService.putProjectRequestSponsor(
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
+
+            // Save Storage project
+            this.store.dispatch(new UpdateProjectRequests(response.record, this.requestSelected));
+
+            // Create users and project, sponsor and school
+            if (this.requestSelected === '2') {
+              this.store.dispatch(new AddProject(response.project));
+              this.store.dispatch(new SetSponsorUser(response.sponsor));
+
+              if (response.school.id) {
+                this.store.dispatch(new SetSchoolUser(response.school));
+              }
+            }
+
+
+            this.requestSelected.status = response.record.status.toString();
+            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+          });
+        break;
     }
 
     // ==============================
-    this.store.dispatch( new GetProjects() );
+    this.store.dispatch(new GetProjects());
   }
 }

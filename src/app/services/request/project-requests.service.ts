@@ -37,4 +37,17 @@ export class ProjectRequestsService {
   putProjectRequestSponsor( id: string, status: string ): Observable<any> {
     return this.httpClient.put<ProjectRequest>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, { status });
   }
+
+
+  deleteProjectRequestSchool( id: string ): Observable<any> {
+    return this.httpClient.delete<string>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`);
+  }
+
+  deleteProjectRequestCoordinator( id: string ): Observable<any> {
+    return this.httpClient.delete<string>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`);
+  }
+
+  deleteProjectRequestSponsor( id: string ): Observable<any> {
+    return this.httpClient.delete<string>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`);
+  }
 }

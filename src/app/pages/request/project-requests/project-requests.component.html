@@ -176,6 +176,8 @@
                             </div>
                         </div>
 
+
+
                     </div>
                 </div>
 
@@ -328,6 +330,87 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <!-- Has sponsor -->
+                        <div class="col-12 form-group" *ngIf="requestSelected.hasSponsor">
+                            <p class="font-weight-bold text-primary mb-0">La escuela tiene padrino</p>
+                            <hr>
+                        </div>
+
+                        <div *ngIf="requestSelected.hasSponsor" class="col-12 form-group">
+
+                            <div class="row">
+                                <div class="col-12 col-lg-6 form-group">
+                                    <p class="font-weight-bold text-info mb-0">Datos de la empresa</p>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="d-flex w-100"><span
+                                                    class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.sponsorName }}</span>
+                                            </p>
+
+                                            <p class="d-flex w-100"><span
+                                                    class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.sponsorCompanyPhone }}</span>
+                                            </p>
+
+                                            <p class="d-flex w-100"><span
+                                                    class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.sponsorEmail }}</span>
+                                            </p>
+                                            <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Documento
+                                                    de
+                                                    identidad:</span><span>J-{{ requestSelected.sponsorRif }}</span></p>
+                                            <p class="d-flex w-100" *ngIf="requestSelected.sponsorwebSite"><span
+                                                    class="pl-0 font-weight-bold col-5">Sitio
+                                                    web:</span><a
+                                                    [href]="requestSelected.sponsorwebSite">{{ requestSelected.sponsorWebSite }}</a>
+                                            </p>
+                                            <p class="d-flex w-100" *ngIf="requestSelected.sponsorCompanyType !== '4'">
+                                                <span class="pl-0 font-weight-bold col-5">Tipo de
+                                                    empresa:</span><span>{{ requestSelected.sponsorCompanyType === '1' ?  'Fabrica' :  requestSelected.sponsorCompanyType === '2' ? 'Tienda' : 'Negocio personal' }}</span>
+                                            </p>
+
+                                            <p *ngIf="requestSelected.sponsorCompanyType === '4'" class="d-flex w-100">
+                                                <span class="pl-0 font-weight-bold col-5">Otro tipo de
+                                                    empresa:</span><span>{{ requestSelected.sponsorCompanyOtherType }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12 col-lg-6 form-group">
+                                    <p class="font-weight-bold text-info mb-0">Datos de la persona de contacto</p>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Nombre:</span>
+                                                <span>{{ requestSelected.sponsorContactFirstName }}</span> </p>
+                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Apellido:</span>
+                                                <span>{{ requestSelected.sponsorContactLastName }}</span></p>
+                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Teléfono:</span>
+                                                <span>{{ requestSelected.sponsorContactPhone }}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12 col-lg-6 form-group">
+                                    <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                                                <span>{{ requestSelected.sponsorAddressState.name }}</span> </p>
+                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Municipio:</span>
+                                                <span>{{ requestSelected.sponsorAddressMunicipality.name }}</span></p>
+                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección:</span>
+                                                <span>{{ requestSelected.sponsorAddressStreet }}</span></p>
+                                            <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                                                <span>{{ requestSelected.sponsorAddressCity }}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

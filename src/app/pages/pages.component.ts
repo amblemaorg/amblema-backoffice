@@ -64,7 +64,7 @@ export class PagesComponent implements OnInit, OnDestroy {
         /* Get the lapses and activities to configure the menu*/
 
         this.subscriptionLapse = await this.lapses$.subscribe(response => {
-            
+        
 
             this.menu.find(value => {
 

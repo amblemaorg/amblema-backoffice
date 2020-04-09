@@ -138,8 +138,9 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           this.projectRequestService.putProjectRequestSchool(
             this.requestSelected.id,
             this.statusSelected.toString() ).subscribe( response => {
-            this.store.dispatch( new UpdateProjectRequests( response, this.requestSelected ) );
-            this.requestSelected.status = response.status.toString();
+            console.log( response )
+            this.store.dispatch( new UpdateProjectRequests( response.record, this.requestSelected ) );
+            this.requestSelected.status = response.record.status.toString();
             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
           break;

@@ -9,8 +9,9 @@
 <div class="col-12">
     <div class="table-responsive">
         <ng2-smart-table 
+            *ngIf="lapses$ | async"
             (custom)="onAction($event)" 
-            [source]='data' 
+            [source]="data" 
             [settings]="settings"></ng2-smart-table>
     </div>
 </div>

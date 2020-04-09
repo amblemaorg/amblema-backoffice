@@ -1,23 +1,29 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
 import { LapseActivity, Activity } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
-
+import { patch } from '@ngxs/store/operators';
 
 export interface LapseActivityModel {
-    activittySelected: Activity;
-    lapses: LapseActivity;
+    lapses?: LapseActivity;
+    selectedActivity?: Activity;
+
 }
 
 export class GetLapActivities {
     static readonly type = '[LapActivities] Get LapActivities';
 }
 
-@State<LapseActivityModel>({
+@State< LapseActivityModel >({
     name: 'lapseactivities',
     defaults: {
-        activittySelected: {
+        lapses: {
+            lapse1: [],
+            lapse2: [],
+            lapse3: [],
+        }, 
+        selectedActivity: {
             id: '',
-            name: ' ',
+            name: '',
             hasText: false,
             hasDate: false,
             hasFile: false,
@@ -29,45 +35,40 @@ export class GetLapActivities {
             video: [],
             checklist: [],
             approvalType: '',
-            status: ''
-        },
-        lapses: {
-            lapse1: [],
-            lapse2: [],
-            lapse3: []
+            status: '',   
         }
     }
 })
 export class LapseActivityState implements NgxsOnInit {
 
     @Selector()
-    static LapseActivity( state: LapseActivityModel ): LapseActivityModel | null {
-        return state;
+    static lapses( state: LapseActivityModel ): LapseActivity | null {
+        return state.lapses;
     }
 
     @Selector()
-    static lapses( state: LapseActivityModel ) : LapseActivity | null {
-        return state.lapses; d
+    static selectedActivity( state: LapseActivityModel ) : Activity | null {
+        return state.selectedActivity; 
     }
 
     ngxsOnInit(ctx: StateContext<LapseActivityModel>): void {
-        ctx.dispatch(new GetLapActivities());
+        ctx.dispatch( new GetLapActivities() );
+        
     }
 
     constructor(
         private lapseActivities: LapseActivitiesService
-    ) { }
+    ) {}
 
-    @Action(GetLapActivities)
-    getLapActivities(ctx: StateContext<LapseActivityModel>) {
-
-        this.lapseActivities.getLapseActivities().subscribe(response => {
-
-            ctx.setState({
-                activittySelected: ctx.getState().activittySelected,
-                lapses: response
-            });
-
-        });
+    @Action( GetLapActivities )
+    getLapActivities( ctx: StateContext<LapseActivityModel> ) {
+        this.lapseActivities.getLapseActivities().subscribe( response => {
+            if ( response ) {
+                ctx.setState(patch({
+                    ...ctx.getState(),
+                    lapses: response
+                 } ));
+            }
+        } );
     }
 }

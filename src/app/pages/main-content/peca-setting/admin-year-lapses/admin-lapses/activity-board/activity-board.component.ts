@@ -1,37 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { SpecialToggleComponent } from '../special-toggle/special-toggle.component';
 import { ModalService } from 'src/app/services/helper/modal.service';
+import { Select } from '@ngxs/store';
+import { LapseActivityState } from 'src/app/store/lapse-activities.action';
+import { Observable } from 'rxjs';
+import { LapseActivity } from 'src/app/models/lapse-activities.model';
 
 @Component({
   selector: 'app-activity-board',
   templateUrl: './activity-board.component.html',
   styles: []
 })
-export class ActivityBoardComponent extends BaseTable implements TableActions {
+export class ActivityBoardComponent extends BaseTable implements TableActions, OnInit {
 
-  data: any = [
-    {
-      activity: 'Opción',
-      status: ''
-    },
-    {
-      activity: 'Taller inicial',
-      status: ''
-    },
-    {
-      activity: 'Planificación del primer lapso',
-      status: ''
-    },
-    {
-      activity: 'Venezuela Megadiversa',
-      status: ''
-    },
-    {
-      activity: 'Convención anual',
-      status: ''
-    }
-  ];
+  @Select( LapseActivityState.lapses ) lapses$: Observable<LapseActivity>;
+
+  data: any;
 
   constructor(
     public modalService: ModalService
@@ -42,9 +27,9 @@ export class ActivityBoardComponent extends BaseTable implements TableActions {
 
     // Custom columns
     this.settings.columns = {
-      activity: {
+      name: {
         title: 'Actividad',
-        type: 'string',
+        type: 'text',
       },
       status: {
         title: 'Estatus',
@@ -57,6 +42,15 @@ export class ActivityBoardComponent extends BaseTable implements TableActions {
         }
       }
     };
+  }
+
+  ngOnInit(): void {
+
+    this.lapses$.subscribe( response => {
+
+      this.data = response.lapse1;
+    } );
+
   }
 
   onAction(event: any): void {}

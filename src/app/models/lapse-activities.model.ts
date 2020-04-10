@@ -1,30 +1,41 @@
-export interface File {
-    name?: string;
-    url?: string;
-}
-
-export interface Video {
-    name?: string;
-    url?: string;
-}
-
-export interface Checklist {
+export interface Lapse {
     id: string;
     name: string;
+    devName: string;
+    isStandard: string;
+    status: string;
 }
 
 export interface LapseActivity {
+    lapse1: Lapse[];
+    lapse2: Lapse[];
+    lapse3: Lapse[];
+}
+
+
+export interface Activity {
+    id?: string;
     name: string;
-    hasText?: string;
-    hasDate?: string;
-    hasFile?: string;
-    hasVideo?: string;
-    hasChecklist?: string;
-    hasUpload?: string;
+    hasText?: boolean;
+    hasDate?: boolean;
+    hasFile?: boolean;
+    hasVideo?: boolean;
+    hasChecklist?: boolean;
+    hasUpload?: boolean;
     text?: string;
-    file?: File;
-    video?: Video;
-    checklist?: Checklist[];
-    approvalType: string;
-    status?: string;
+    file?: any;
+    video?: Video[];
+    checklist?: CheckList[];
+    approvalType?: string;
+    status: string;
+}
+
+export interface Video {
+    id?: string;
+    name?: string;
+}
+
+export interface CheckList {
+    id?: string;
+    name?: string;
 }

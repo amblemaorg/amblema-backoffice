@@ -12,7 +12,7 @@ import { ReactiveInputModule } from '../../components/form-components/reactive-i
 import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { FormDocumentModule } from '../../components/form-components/forms/form-document/form-document.module';
-import { FormRegionalAddressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
+import { FormRegionaladdressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUserViewComponent } from './admin-user-view/admin-user-view.component';
 import { ProgressModule } from '../../components/shared/progress/progress.module';
@@ -40,7 +40,7 @@ import { ProgressModule } from '../../components/shared/progress/progress.module
     ProgressModule,
     ModalModule,
     FormDocumentModule,
-    FormRegionalAddressModule
+    FormRegionaladdressModule
   ]
 })
 export class AdminUsersLayoutModule { }

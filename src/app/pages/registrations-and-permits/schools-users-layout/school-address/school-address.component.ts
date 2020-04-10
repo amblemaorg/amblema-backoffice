@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {
-  FormRegionalAddressComponent
+  FormRegionaladdressComponent
 } from 'src/app/pages/components/form-components/forms/form-regional-address/form-regional-address.component';
 import { AbstractControl, FormControl } from '@angular/forms';
 
@@ -22,6 +22,6 @@ import { AbstractControl, FormControl } from '@angular/forms';
 
   `]
 })
-export class SchoolAddressComponent extends FormRegionalAddressComponent {
+export class SchooladdressComponent extends FormRegionaladdressComponent {
   @Input() addressCity: AbstractControl | null = new FormControl();
 }

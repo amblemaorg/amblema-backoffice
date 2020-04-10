@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="data$ | async">
         <!-- Normal data -->
         <div class="col-12 col-lg-6">
                 <p class="font-weight-bold text-info mb-0">Datos de la escuela</p>
@@ -58,7 +58,7 @@
                 </div>
         </div>
 
-        <!-- Address -->
+        <!-- address -->
         <div class="col-12 col-lg-6">
                 <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
                 <hr>
@@ -176,24 +176,14 @@
 
                                 <tr>
                                         <th scope="row">{{ data.project.code }}</th>
-                                        <td><span *ngIf="data.project.coordinator">{{ data.coordinator.name }}</span>
-                                                <span *ngIf="!data.project.coordinator">No hay coordinador
-                                                        asociada</span></td>
-                                        <td><span *ngIf="data.project.sponsor">{{ data.sponsor.name }}</span><span
+                                        <td><span *ngIf="data.project.coordinator">{{ data.project.coordinator.name }}</span>
+                                            <span *ngIf="!data.project.coordinator">No hay coordinador asociada</span></td>
+                                        <td><span *ngIf="data.project.sponsor">{{ data.project.sponsor.name }}</span><span
                                                         *ngIf="!data.project.sponsor">No hay
-                                                        padrino asociado</span></td>
+                                                        padrino asociado</span></td> 
                                 </tr>
 
-                                <!-- <tr *ngFor="let item of data.project; let i = index;">
-                            <th *ngIf="i >= 0" scope="row">{{ item.code }}</th>
-                            <td *ngIf="i >= 0"><span *ngIf="item.coordinator">{{ item.coordinator.name }}</span> <span *ngIf="!item.coordinator">No hay coordinador asociada</span></td>
-                            <td *ngIf="i >= 0"><span *ngIf="item.sponsor">{{ item.sponsor.name }}</span><span *ngIf="!item.sponsor">No hay
-                                    padrino asociado</span></td>
-                        </tr> -->
-                                <!-- <tr *ngIf="data.project.length == 0">
-                            <td colspan="3">No hay proyectos asociados a este usuario</td>    
-                        </tr> -->
                         </tbody>
                 </table>
-        </div>
+        </div> 
 </div>

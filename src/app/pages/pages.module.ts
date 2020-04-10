@@ -20,6 +20,7 @@ import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './registrations-and-permits/dashboard-layout/dashboard-layout.component';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';
+import { MenuSetUp } from './pages-menu-service';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { CustomToastrService } from '../services/helper/custom-toastr.service';
   ],
   exports: [ NbIconModule ],
   providers: [
+    MenuSetUp,
     CustomToastrService,
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
   ]

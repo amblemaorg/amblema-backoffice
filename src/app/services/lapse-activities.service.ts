@@ -28,6 +28,10 @@ export class LapseActivitiesService {
       );
   }
 
+  statusActivity( data: any ): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}`, data);
+  }
+
   // setLapseActivitie( data: LapseActivitie ): Observable<LapseActivitie> {
   //    return this.httpClient.post<LapseActivitie>(`${environment.api}${this.PROJECT}`, data);
   // }

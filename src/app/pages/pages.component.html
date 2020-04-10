@@ -4,7 +4,9 @@
   </nb-layout-header>
 
   <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive start>
-    <nb-menu [items]="menu" *ngIf="lapses$ | async"></nb-menu>
+    <nb-menu 
+      *ngIf="(menuSetUp.lapses$ | async)"
+      [items]="menuSetUp.menu"></nb-menu>
   </nb-sidebar> 
 
   <nb-layout-column>

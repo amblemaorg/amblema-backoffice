@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
+import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
 
 @Component({
   selector: 'app-special-toggle',
@@ -12,11 +14,18 @@ export class SpecialToggleComponent implements OnInit {
 
   @Output() save: EventEmitter<any> = new EventEmitter();
 
+  control: AbstractControl | null = new FormControl();
+
+  constructor(
+    private lapseActivityService: LapseActivitiesService
+  ) {}
+
   ngOnInit() {
+
   }
 
   onclick() {
-    alert('Hizo click');
+    console.log( this.value );
+    console.log( this.rowData )
   }
-
 }

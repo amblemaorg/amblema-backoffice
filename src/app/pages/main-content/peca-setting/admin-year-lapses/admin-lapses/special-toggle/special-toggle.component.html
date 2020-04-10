@@ -1,7 +1,32 @@
-<div class="w-100 d-flex align-items-center justify-content-start">
-    <label for="customSwitch0" class="mb-0 pr-2">Desactivado</label>
-    <div class="custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="customSwitch0">
-        <label class="custom-control-label" for="customSwitch0"></label>
-    </div>
+<!-- <div class="w-100 d-flex align-items-center justify-content-start" (click)="onclick()">
+    <label [for]="rowData.id" class="mb-0 pr-2">
+            Desactivado
+            <div class="custom-control custom-switch">
+                <input 
+                    type="checkbox" 
+                    class="custom-control-input" 
+                    [id]="rowData.id">
+                <label class="custom-control-label" [for]="rowData.id"></label>
+            </div>
+        </label>
+</div> -->
+<!-- 
+<div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input"
+      [formControl]="control"
+      [checked]="control.value"
+      [id]="rowData.id"
+      [name]="rowData.id">
+    <label *ngIf="label" style="padding-top: 2px;" class="custom-control-label font-weight-bold" [for]="rowData.id">Desactivado</label>
+  </div> -->
+
+
+<div class="custom-control custom-switch" (click)="onclick()">
+    <input 
+        type="checkbox" 
+        class="custom-control-input" 
+        [formControl]="control"
+        [name]="rowData.id"
+        [id]="rowData.id">
+    <label style="padding-top: 2px;" class="custom-control-label" [for]="rowData.id">Desactivado</label>
 </div>

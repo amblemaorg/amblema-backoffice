@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { SpecialToggleComponent } from '../special-toggle/special-toggle.component';
 import { ModalService } from 'src/app/services/helper/modal.service';
@@ -15,6 +15,8 @@ import { LapseActivity } from 'src/app/models/lapse-activities.model';
 export class ActivityBoardComponent extends BaseTable implements TableActions, OnInit {
 
   @Select( LapseActivityState.lapses ) lapses$: Observable<LapseActivity>;
+
+  @Input() lapse: number;
 
   data: any;
 
@@ -45,12 +47,10 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
   }
 
   ngOnInit(): void {
-
+    console.log( this.lapse );
     this.lapses$.subscribe( response => {
-
       this.data = response.lapse1;
-    } );
-
+    });
   }
 
   onAction(event: any): void {}

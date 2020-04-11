@@ -11,7 +11,7 @@
         <ng2-smart-table 
             *ngIf="lapses$ | async"
             (custom)="onAction($event)" 
-            [source]="data" 
+            [source]="source" 
             [settings]="settings"></ng2-smart-table>
     </div>
 </div>

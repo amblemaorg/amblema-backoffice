@@ -13,6 +13,7 @@
         <!-- Table -->
         <div class="table-responsive">
             <ng2-smart-table 
+                *ngIf="projects$ | async"
                 (custom)="onAction($event)" 
                 [source]='projects$ | async' 
                 [settings]="settings"></ng2-smart-table>

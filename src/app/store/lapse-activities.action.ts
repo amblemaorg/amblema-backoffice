@@ -5,7 +5,7 @@ import { patch, updateItem } from '@ngxs/store/operators';
 
 export interface LapseActivityModel {
     lapses?: LapseActivity;
-    selectedActivity?: Activity;
+    selectedActivity?: any;
 
 }
 
@@ -18,6 +18,13 @@ export class UpdateStatusLapseActivity {
     constructor(
             public newLapseActivity: Lapse,
             public lapse: string ) {}
+}
+
+export class SelectActivity {
+    static readonly type = '[Activity] Select Activity';
+    constructor(
+        public payload: Activity
+    ) {}
 }
 
 @State< LapseActivityModel >({
@@ -81,7 +88,6 @@ export class LapseActivityState implements NgxsOnInit {
 
     @Action( UpdateStatusLapseActivity )
     updateStatusLapseActivity(ctx: StateContext<LapseActivityModel>, action: UpdateStatusLapseActivity ) {
-
         if ( action.lapse === '1' ) {
             ctx.setState( patch({
                 ...ctx.getState(),
@@ -91,7 +97,15 @@ export class LapseActivityState implements NgxsOnInit {
                 })
             }) );
         }
+    }
 
+    @Action( SelectActivity )
+    selectActivity( ctx: StateContext<LapseActivityModel>, action: SelectActivity ) {
+
+        ctx.setState( patch({
+            ...ctx.getState(),
+            selectedActivity: action.payload
+        }) );
 
     }
 }

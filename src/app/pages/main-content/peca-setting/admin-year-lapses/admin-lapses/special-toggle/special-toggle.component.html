@@ -1,7 +1,10 @@
-<div class="w-100 d-flex align-items-center justify-content-start">
-    <label for="customSwitch0" class="mb-0 pr-2">Desactivado</label>
-    <div class="custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="customSwitch0">
-        <label class="custom-control-label" for="customSwitch0"></label>
-    </div>
+<div class="custom-control custom-switch">
+    <input 
+        type="checkbox" 
+        class="custom-control-input"
+        [formControl]="control"
+        (change)="onclick()"
+        [name]="rowData.id + rowData.lapse"
+        [id]="rowData.id + rowData.lapse">
+    <label style="padding-top: 2px;" class="custom-control-label" [for]="rowData.id + rowData.lapse">{{  control.value ? 'Activo' : 'Inactivo' }}</label>
 </div>

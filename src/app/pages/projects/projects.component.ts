@@ -50,41 +50,62 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     this.settings.columns = {
       coordinator: {
         title: 'Coordinador',
-        type: 'text',
+        type: 'string',
         valuePrepareFunction: (row: any) => {
           return row.name;
         },
         filterFunction: (cell?: any, search?: string) => {
+          if (cell.name !== undefined) {
+            let value: string = cell.name;
+            value = value.toUpperCase();
 
-          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
-            return true;
-          } else { return false; }
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+
+              return true;
+            } else { return false; }
+          } else {
+            return false;
+          }
         }
       },
       school: {
         title: 'Escuela',
-        type: 'text',
+        type: 'string',
         valuePrepareFunction: (row: any) => {
           return row.name;
         },
         filterFunction: (cell?: any, search?: string) => {
+          if (cell.name !== undefined) {
+            let value: string = cell.name;
+            value = value.toUpperCase();
 
-          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
-            return true;
-          } else { return false; }
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+
+              return true;
+            } else { return false; }
+          } else {
+            return false;
+          }
         }
       },
       sponsor: {
         title: 'Padrino',
-        type: 'text',
+        type: 'string',
         valuePrepareFunction: (row: any) => {
           return row.name;
         },
         filterFunction: (cell?: any, search?: string) => {
+          if (cell.name !== undefined) {
+            let value: string = cell.name;
+            value = value.toUpperCase();
 
-          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
-            return true;
-          } else { return false; }
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+
+              return true;
+            } else { return false; }
+          } else {
+            return false;
+          }
         }
       },
       phase: {
@@ -96,9 +117,17 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         },
         filterFunction: (cell?: any, search?: string) => {
 
-          if (cell.name.indexOf(search.toUpperCase()) === 0 || search === '') {
-            return true;
-          } else { return false; }
+          if (cell !== undefined) {
+            let value: string = cell === PROJECT_PHASE.STEPS.CODE ? PROJECT_PHASE.STEPS.VALUE : PROJECT_PHASE.PECA.VALUE ;
+            value = value.toUpperCase();
+
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+
+              return true;
+            } else { return false; }
+          } else {
+            return false;
+          }
         }
       },
       status: {

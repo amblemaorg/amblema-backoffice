@@ -4,6 +4,7 @@ export interface Lapse {
     devName: string;
     isStandard: string;
     status: string;
+    lapse?: string;
 }
 
 export interface LapseActivity {

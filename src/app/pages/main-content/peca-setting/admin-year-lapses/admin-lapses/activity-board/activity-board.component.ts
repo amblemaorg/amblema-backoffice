@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { SpecialToggleComponent } from '../special-toggle/special-toggle.component';
 import { ModalService } from 'src/app/services/helper/modal.service';
@@ -14,18 +14,46 @@ import { LapseActivity } from 'src/app/models/lapse-activities.model';
 })
 export class ActivityBoardComponent extends BaseTable implements TableActions, OnInit {
 
-  @Select( LapseActivityState.lapses ) lapses$: Observable<LapseActivity>;
+  @Select(LapseActivityState.lapses) lapses$: Observable<LapseActivity>;
 
-  data: any;
+  @Input() lapse: string;
+
+  data: Array<any>;
 
   constructor(
     public modalService: ModalService
   ) {
     super('form-activity-lapse');
 
-    this.settings.actions = false;
+  }
 
-    // Custom columns
+  ngOnInit(): void {
+
+    // Prepare the source data table
+    this.lapses$.subscribe(response => {
+
+      /* Give each activity a lapse */
+
+      if (this.lapse === '1') {
+        this.data = response.lapse1;
+        this.data.forEach(value => {
+          value.lapse = '1';
+        });
+      } else if (this.lapse === '2') {
+        this.data = response.lapse2;
+        this.data.forEach(value => {
+          value.lapse = '2';
+        });
+      } else {
+        this.data = response.lapse3;
+        this.data.forEach(value => {
+          value.lapse = '3';
+        });
+      }
+    });
+
+    // Setting columns
+    this.settings.actions = false;
     this.settings.columns = {
       name: {
         title: 'Actividad',
@@ -37,21 +65,12 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
         renderComponent: SpecialToggleComponent,
         sort: true,
         filter: false,
-        onComponentInitFunction(instance) {
+        onComponentInitFunction(instance: any) {
           instance.save.subscribe();
         }
       }
     };
   }
 
-  ngOnInit(): void {
-
-    this.lapses$.subscribe( response => {
-
-      this.data = response.lapse1;
-    } );
-
-  }
-
-  onAction(event: any): void {}
+  onAction(event: any): void { }
 }

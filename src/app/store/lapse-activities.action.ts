@@ -1,16 +1,30 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { LapseActivity, Activity } from '../models/lapse-activities.model';
+import { LapseActivity, Activity, Lapse } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
-import { patch } from '@ngxs/store/operators';
+import { patch, updateItem } from '@ngxs/store/operators';
 
 export interface LapseActivityModel {
     lapses?: LapseActivity;
-    selectedActivity?: Activity;
+    selectedActivity?: any;
 
 }
 
 export class GetLapActivities {
     static readonly type = '[LapActivities] Get LapActivities';
+}
+
+export class UpdateStatusLapseActivity {
+    static readonly type = '[LapActivities] Get Lapse Activity';
+    constructor(
+            public newLapseActivity: Lapse,
+            public lapse: string ) {}
+}
+
+export class SelectActivity {
+    static readonly type = '[Activity] Select Activity';
+    constructor(
+        public payload: Activity
+    ) {}
 }
 
 @State< LapseActivityModel >({
@@ -70,5 +84,28 @@ export class LapseActivityState implements NgxsOnInit {
                  } ));
             }
         } );
+    }
+
+    @Action( UpdateStatusLapseActivity )
+    updateStatusLapseActivity(ctx: StateContext<LapseActivityModel>, action: UpdateStatusLapseActivity ) {
+        if ( action.lapse === '1' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse1: updateItem<Lapse>( lapse => lapse.id === action.newLapseActivity.id, action.newLapseActivity )
+                })
+            }) );
+        }
+    }
+
+    @Action( SelectActivity )
+    selectActivity( ctx: StateContext<LapseActivityModel>, action: SelectActivity ) {
+
+        ctx.setState( patch({
+            ...ctx.getState(),
+            selectedActivity: action.payload
+        }) );
+
     }
 }

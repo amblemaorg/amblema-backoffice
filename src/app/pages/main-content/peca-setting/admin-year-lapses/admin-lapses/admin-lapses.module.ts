@@ -3,7 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { AdminLapsesRoutingModule } from './admin-lapses-routing.module';
 import { AdminLapsesComponent } from './admin-lapses.component';
-import { NbCardModule, NbAccordionModule, NbButtonModule, NbCheckboxModule, NbIconModule, NbListModule, NbAlertModule } from '@nebular/theme';
+import { 
+  NbCardModule, 
+  NbAccordionModule, 
+  NbButtonModule, 
+  NbCheckboxModule, 
+  NbIconModule, 
+  NbListModule, 
+  NbAlertModule } from '@nebular/theme';
 import { ActivityBoardComponent } from './activity-board/activity-board.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SpecialToggleComponent } from './special-toggle/special-toggle.component';
@@ -43,7 +50,7 @@ import { ReactiveDatepickerModule } from 'src/app/pages/components/form-componen
     ReactiveInputFileModule,
     NbCheckboxModule,
     ReactiveFormsModule,
-    NbAlertModule, 
+    NbAlertModule,
     ModalModule,
     // Call custom module
 

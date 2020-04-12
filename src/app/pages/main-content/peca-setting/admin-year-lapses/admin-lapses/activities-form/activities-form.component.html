@@ -3,62 +3,70 @@
     <form content [formGroup]="form" class="row">
 
         <div class="col-12 col-md-6">
+            
+            <!-- Name activity -->
             <app-input-custom 
-                [submitted]="submitted"
+                [submitted]="submitted" 
                 [control]="form.get('name')" 
-                [id]="'name-activity'"
+                [id]="'name-activity'+lapse"
                 [placeholder]="'Nombre de la actividad'" 
                 [label]="'Nombre de la actividad'"></app-input-custom>
         </div>
 
         <div class="col-12 col-md-6">
+
+            <!-- Type approval -->
             <label class="label">Tipo de aprobación</label>
-            <select name="" id="type-aprobate" class="form-control">
-                <option value="">Lo aprueba el administrador</option>
-                <option value="">Genera una solicitud de aprobación</option>
+            <select 
+                formControlName="approvalType"
+                [id]="'type-aprobate'+lapse" 
+                class="form-control">
+                    <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
+                    <option value="1">Lo aprueba el administrador</option>
+                    <option value="2">Genera una solicitud de aprobación</option>
             </select>
         </div>
 
         <div class="col-12 form-group">
             <hr>
             <label class="label">Elementos del paso</label></div>
-
         <div class="col-12 col-md-6">
 
             <!-- Text -->
             <nb-checkbox formControlName="hasText" (change)="changeText()" class="d-block form-group">Texto
             </nb-checkbox>
-            <app-text-area-custom *ngIf="form.get('hasText').value" [id]="'description'"
-                [label]="'Descripción'" [submitted]="submitted" [control]="form.get('text')"
-                [placeholder]="'Descripción'"></app-text-area-custom>
+            <app-text-area-custom *ngIf="form.get('hasText').value" [id]="'description'" [label]="'Descripción'"
+                [submitted]="submitted" [control]="form.get('text')" [placeholder]="'Descripción'">
+            </app-text-area-custom>
 
-
-<!-- 
-            <nb-checkbox formControlName="hasFile" class="d-block form-group">Adjuntar archivo - BackOffice
+            <!--Has file -->
+            <nb-checkbox (change)="changeFile()" formControlName="hasFile" class="d-block form-group">
+                Adjuntar archivo - BackOffice
             </nb-checkbox>
-            <app-input-file 
-                *ngIf="form.get('hasFile').value"></app-input-file> -->
+            <app-input-file *ngIf="form.get('hasFile').value" [submitted]="submitted" [control]="form.get('file')">
+            </app-input-file>
 
-                <nb-checkbox (change)="changeFile()" formControlName="hasFile" class="d-block form-group">
-                    Adjuntar archivo - BackOffice
-                </nb-checkbox>
-                <app-input-file 
-                    *ngIf="form.get('hasFile').value"
-                    [submitted]="submitted" 
-                    [control]="form.get('file')"></app-input-file>
-
+            <!-- Has Upload -->
             <nb-checkbox formControlName="hasUpload" class="d-block form-group">Adjuntar archivo - PECA
             </nb-checkbox>
         </div>
 
         <div class="col-12 col-md-6">
-            <nb-checkbox formControlName="hasVideo" class="d-block form-group">Video</nb-checkbox>
-            <app-input-custom *ngIf="form.get('video').value" [id]="'url-video'" [placeholder]="'URL del video'"
+
+            <!-- Video -->
+            <nb-checkbox 
+                formControlName="hasVideo" 
+                class="d-block form-group">Video</nb-checkbox>
+            <app-input-custom 
+                *ngIf="hasVideo" 
+                [id]="'url-video'" 
+                [control]="form.get('video')"
+                [placeholder]="'URL del video'"
                 [label]="'URL del video'"></app-input-custom>
-            <!-- 
-                <nb-checkbox formControlName="checkedDate" class="d-block form-group">Fecha</nb-checkbox>
-                <app-datepicker *ngIf="form.get('checkedDate').value" [label]="'Fecha'" [today]="false"></app-datepicker>
-         -->
+            
+                <!-- Has a date -->
+                <nb-checkbox formControlName="hasDate" class="d-block form-group">Fecha</nb-checkbox>
+                <!-- <app-datepicker *ngIf="form.get('checkedDate').value" [label]="'Fecha'" [today]="false"></app-datepicker> -->
 
             <!-- Check loader -->
             <nb-checkbox formControlName="hasChecklist" class="d-block form-group">Checklist
@@ -135,5 +143,10 @@
         </div>
 
     </form>
-    <button nbButton status="success" button class="col-6 col-md-auto">Registrar</button>
+    <button 
+        (click)="onSubmit()"
+        nbButton 
+        status="success" 
+        button 
+        class="col-6 col-md-auto">Registrar</button>
 </app-modal>

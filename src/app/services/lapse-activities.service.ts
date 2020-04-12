@@ -32,15 +32,7 @@ export class LapseActivitiesService {
     return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}`, data);
   }
 
-  // setLapseActivitie( data: LapseActivitie ): Observable<LapseActivitie> {
-  //    return this.httpClient.post<LapseActivitie>(`${environment.api}${this.PROJECT}`, data);
-  // }
-
-  // deleteLapseActivitie(id: string): Observable<string> {
-  //   return this.httpClient.delete<string>(`${environment.api}${this.PROJECT}/${id}`);
-  // }
-
-  // updateLapseActivitie( id: string,  data: LapseActivitie): Observable<LapseActivitie> {
-  //   return this.httpClient.put<LapseActivitie>(`${environment.api}${this.PROJECT}/${id}`, data);
-  // }
+  createActivity( lapse: string, data: FormData ): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}/${lapse}`, data);
+  }
 }

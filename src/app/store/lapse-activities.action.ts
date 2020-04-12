@@ -1,7 +1,7 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
 import { LapseActivity, Activity, Lapse } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
-import { patch, updateItem } from '@ngxs/store/operators';
+import { patch, updateItem, append } from '@ngxs/store/operators';
 
 export interface LapseActivityModel {
     lapses?: LapseActivity;
@@ -18,6 +18,13 @@ export class UpdateStatusLapseActivity {
     constructor(
             public newLapseActivity: Lapse,
             public lapse: string ) {}
+}
+
+export class AddLapseActivity {
+    static readonly type = '[Activity] Add LapseActivity';
+    constructor(
+        public payload: Lapse,
+        public lapse: string) {}
 }
 
 export class SelectActivity {
@@ -84,6 +91,21 @@ export class LapseActivityState implements NgxsOnInit {
                  } ));
             }
         } );
+    }
+
+    @Action( AddLapseActivity )
+    addLapseActivity(ctx: StateContext<LapseActivityModel>, action: AddLapseActivity ) {
+
+        if ( action.lapse === '1' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse1: append([action.payload])
+                })
+            }) );
+        }
+
     }
 
     @Action( UpdateStatusLapseActivity )

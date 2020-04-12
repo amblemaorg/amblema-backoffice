@@ -44,7 +44,7 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
 
   ngOnChanges(): void {
 
-    if( this.control.value ) {
+    if ( this.control.value ) {
       if (typeof this.control.value.url === 'string' || this.control.value.url instanceof String) {
         this.url = this.control.value.url;
         this.nameFile = this.control.value.name;
@@ -55,7 +55,7 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
         this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
         this.control.updateValueAndValidity();
       }
-    }    
+    }
   }
 
   ngAfterViewInit(): void {

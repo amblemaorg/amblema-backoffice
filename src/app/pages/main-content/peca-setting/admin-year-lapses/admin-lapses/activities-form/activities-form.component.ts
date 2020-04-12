@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/steps-form.component';
 import { Store } from '@ngxs/store';
+import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
+import { GetLapActivities, AddLapseActivity } from 'src/app/store/lapse-activities.action';
 
 @Component({
   selector: 'app-activities-form',
@@ -12,63 +14,73 @@ import { Store } from '@ngxs/store';
 })
 export class ActivitiesFormComponent extends StepsFormComponent implements OnInit {
 
-  //form: FormGroup;
-
-  // For list
-  // objectives: string[] = []; 
-  // MODE_LIST = ACTION.CREATE;
-  // ID_ITEM: number;
-  // ACTION = ACTION;
+  @Input() lapse: string;
 
   constructor(
-    public store: Store, 
+    public store: Store,
+    private lapseActivityService: LapseActivitiesService,
     public toastr: CustomToastrService
-    //private toastr: CustomToastrService,
-    //private fb: FormBuilder
     ) {
       super( store, toastr);
-    // this.form = this.fb.group({
-    //   objectives: new FormControl(),
-    //   checkedDescription: new FormControl(false),
-    //   checkedFileAdmin: new FormControl(false),
-    //   checkedVideo: new FormControl(false),
-    //   checkedList: new FormControl(false),
-    //   checkedFileClient: new FormControl(false),
-    //   checkedDate: new FormControl(false)
-    // });
   }
 
-  ngOnInit(  ) {
-
+  ngOnInit(  ): void {
+    this.form.addControl('hasDate', new FormControl(false));
   }
 
-  // addObjective() {
-  //   this.objectives = Object.assign([], this.objectives);
 
-  //   if (this.objectives.length < 5) {
-  //     this.objectives.push(this.form.controls.objectives.value);
-  //     this.form.controls.objectives.reset();
-  //   } else { this.toastr.error('Limite de registro', 'Solo se pueden registrar 5 objectivos'); }
-  // }
+  onSubmit(): void {
 
-  // onEditObjective(index: number): void {
-  //   this.MODE_LIST = ACTION.EDIT;
-  //   this.ID_ITEM = index;
-  //   this.form.controls.objectives.setValue(this.objectives[index]);
-  // }
+    // This is to valid the check list if has a check
+    const checkListValid = this.form.controls.hasChecklist.value && this.checklist.length > 0 ?
+      true : this.form.controls.hasChecklist.value && this.checklist.length === 0 ? false : true;
 
-  // onDeleteObjective(index: number): void {
-  //   this.objectives = this.objectives.filter( (value, key) => key !== index );
-  //   this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
-  // }
+    this.submitted = true;
 
-  // confirmAction() {
-  //   this.objectives = Object.assign([], this.objectives);
-  //   if (this.MODE_LIST === ACTION.EDIT) {
-  //     this.objectives[this.ID_ITEM] = this.form.controls.objectives.value;
-  //   }
-  //   this.MODE_LIST = ACTION.CREATE;
-  //   this.form.controls.objectives.reset();
-  // }
+    if (this.form.valid && checkListValid) {
+
+      this.progress = true;
+      const formData = new FormData();
+
+      formData.append('name', this.form.controls.name.value);
+      formData.append('approvalType', this.form.controls.approvalType.value);
+
+      formData.append('tag', this.kind);
+      formData.append('hasDate', this.form.controls.hasDate.value);
+      formData.append('hasText', this.form.controls.hasText.value);
+      formData.append('text', this.form.controls.text.value);
+
+      // To send file, to be true
+      if (this.form.controls.hasFile.value) {
+        formData.append('file', this.form.controls.file.value);
+      }
+
+      // To send video, to be true
+      if (this.form.controls.hasVideo.value) {
+        formData.append('video', JSON.stringify({ name: Math.random().toString(), url: this.form.controls.video.value }));
+      }
+
+      // To send list, to be true
+      if (this.form.controls.hasChecklist.value) {
+        formData.append('checklist', JSON.stringify(this.checklist));
+      }
+
+      formData.append('hasFile', this.form.controls.hasFile.value);
+      formData.append('hasVideo', this.form.controls.hasVideo.value);
+      formData.append('hasChecklist', this.form.controls.hasChecklist.value);
+      formData.append('hasUpload', this.form.controls.hasUpload.value);
+      formData.append('hasDate', this.form.controls.hasDate.value);
+
+      this.lapseActivityService.createActivity( this.lapse, formData ).subscribe( response => {
+        this.store.dispatch( new AddLapseActivity( response, this.lapse ) );
+        this.resetForm();
+        this.toastr.registerSuccess('Registro', 'Actividad registrada');
+      }, (err: any) => {
+        this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+        this.progress = false;
+      } );
+    }
+  }
+
 
 }

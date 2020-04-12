@@ -13,7 +13,6 @@ export class LapseComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-
   lapse: string;
   id: string;
 
@@ -29,7 +28,7 @@ export class LapseComponent implements OnInit, OnDestroy {
       this.lapse = response.lapse;
       this.id = response.id;
 
-      this.lapseActivityService.getActivity(response.id, response.lapse).subscribe(value => {
+      this.subscription = this.lapseActivityService.getActivity(response.id, response.lapse).subscribe(value => {
         this.store.dispatch( new SelectActivity ( value ) );
       });
     });

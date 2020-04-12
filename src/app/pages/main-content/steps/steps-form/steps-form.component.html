@@ -42,7 +42,9 @@
                             <!-- File - BackOffice -->
                             <nb-checkbox (change)="changeFile()" formControlName="hasFile" class="d-block form-group">Archivo adjunto
                             </nb-checkbox>
-                            <app-input-file [submitted]="submitted" [control]="form.get('file')"
+                            <app-input-file 
+                                [submitted]="submitted" 
+                                [control]="form.get('file')"
                                 *ngIf="form.get('hasFile').value"></app-input-file>
                         </div>
 

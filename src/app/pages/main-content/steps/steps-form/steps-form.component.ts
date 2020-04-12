@@ -50,7 +50,7 @@ export class StepsFormComponent implements OnInit {
 
   constructor(
     public store?: Store,
-    private toastr?: CustomToastrService,
+    public toastr?: CustomToastrService,
     public stepService?: StepService,
     public fb?: FormBuilder) {
 

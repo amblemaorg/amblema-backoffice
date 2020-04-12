@@ -11,5 +11,4 @@ export class ActivityFormComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

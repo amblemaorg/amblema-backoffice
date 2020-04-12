@@ -15,14 +15,14 @@ import { LapseActivity } from 'src/app/models/lapse-activities.model';
 export class ActivityBoardComponent extends BaseTable implements TableActions, OnInit {
 
   @Select(LapseActivityState.lapses) lapses$: Observable<LapseActivity>;
-  subscription: Subscription; 
+  subscription: Subscription;
 
   @Input() lapse: string;
 
   data: Array<any>;
 
   constructor(
-    private store: Store, 
+    private store: Store,
     public modalService: ModalService
   ) {
     super('form-activity-lapse');
@@ -43,9 +43,9 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
         for (let index = 0; index < this.data.length; index++) {
           this.data[index] = Object.assign({}, this.data[index], { lapse: '1' });
         }
-        this.source.load( this.data ); 
+        this.source.load( this.data );
       } else if (this.lapse === '2') {
-        
+
         this.data = response.lapse2;
 
         this.data = Object.assign([], this.data);
@@ -53,7 +53,7 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
         for (let index = 0; index < this.data.length; index++) {
           this.data[index] = Object.assign({}, this.data[index], { lapse: '2' });
         }
-        this.source.load( this.data ); 
+        this.source.load( this.data );
       } else {
 
         this.data = response.lapse3;
@@ -63,7 +63,7 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
         for (let index = 0; index < this.data.length; index++) {
           this.data[index] = Object.assign({}, this.data[index], { lapse: '3' });
         }
-        this.source.load( this.data ); 
+        this.source.load( this.data );
       }
     });
 
@@ -78,7 +78,7 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
         title: 'Estatus',
         type: 'custom',
         renderComponent: SpecialToggleComponent,
-        sort: true, 
+        sort: true,
         filter: false,
         onComponentInitFunction(instance: any) {
           instance.save.subscribe();
@@ -90,7 +90,7 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
   onAction(event: any): void { }
 
   onUpdateState( value: any ) {
-      this.store.dispatch( new GetLapActivities() ); 
+      this.store.dispatch( new GetLapActivities() );
   }
 
 }

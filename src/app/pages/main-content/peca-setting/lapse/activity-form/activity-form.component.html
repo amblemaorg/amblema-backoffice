@@ -1,9 +1,118 @@
 <nb-card>
-    <nb-card-header>Planificación del lapso</nb-card-header>
+    <nb-card-header>{{ data.name }}</nb-card-header>
     <nb-card-body>
-        componennte generico de laposos
+
+
+        <!-- ######################################### -->
+        <!-- Generic activity -->
+        <!-- ######################################### -->
+        <form [formGroup]="form" (ngSubmit)="onSubmitGeneric()" class="row">
+            <!-- <div class="col-12 form-group">
+                <app-toggle [id]="data.id+'toggle'" [control]="form.get('status')"
+                    [label]="form.get('status').value ? 'Paso activado' : 'Paso desactivado'" class="d-block mx-2">
+                </app-toggle>
+            </div> -->
+            <div class="col-12 col-md ">
+                <app-text-area-custom *ngIf="data.hasText" [submitted]="false" [control]="form.get('text')"
+                    [id]="data.id + 'text'" [label]="'Descripción'" [placeholder]="data.name">
+                </app-text-area-custom>
+            </div>
+            <div class="col-12">
+                <app-input-custom *ngIf="data.hasVideo" [id]="data.id + 'video'" [submitted]="false"
+                    [control]="form.get('video')" [placeholder]="'URL del video'" [label]="'URL del video'">
+                </app-input-custom>
+            </div>
+
+            <div class="col-12">
+                <label for="" class="label">Aprobación</label>
+                <select formControlName="approvalType" class="form-control form-group">
+                    <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
+                    <option value="1">Lo aprueba el administrador</option>
+                    <option value="2">Genera una solicitud de aprobación</option>
+                </select>
+            </div>
+
+            <div class="col-12" *ngIf="data.hasFile">
+                <app-input-file [id]="data.id+'file'" [submitted]="false" [control]="form.get('file')">
+                </app-input-file>
+            </div>
+
+            <div class="col-12" *ngIf="data.hasChecklist">
+
+                <nb-alert status="info" class="form-group py-2" *ngIf="checklist.length === 0">
+                    Recuerda registrar por lo menos un elemento en la lista
+                </nb-alert>
+
+                <!-- Dynamic list -->
+                <div class="row">
+
+                    <div class="col-12 form-group">
+                        <div class="row">
+                            <div class="col">
+                                <app-input-custom [id]="'checklist'" [label]="'Objetivos'"
+                                    [control]="form.get('checklist')" [placeholder]="'Objetivos'"
+                                    [submitted]="submitted">
+                                </app-input-custom>
+                            </div>
+                            <div class="col-auto">
+                                <button nbButton status="primary" style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                                    *ngIf="MODE_LIST === ACTION.CREATE"
+                                    [attr.disabled]="!form.controls['checklist'].value ? true : null"
+                                    (click)="addObjective()" class="btn btn-outline-info m-inline-form">
+                                    <nb-icon icon="plus"></nb-icon>
+                                </button>
+
+                                <div class="btn-group m-inline-parcial" role="group" *ngIf="MODE_LIST === ACTION.EDIT">
+                                    <button style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline nbButton
+                                        status="info" type="button" class="btn btn-outline-info"
+                                        (click)="confirmAction()">
+                                        Confirmar
+                                    </button>
+                                    <button nbButton
+                                        style="padding-top: 0.6rem; padding-bottom: 0.6rem; border-bottom-left-radius: 0; border-top-left-radius: 0;"
+                                        outline status="danger" type="button" class="btn btn-outline-danger" (click)="MODE_LIST = ACTION.CREATE; 
+                    form.controls['checklist'].enable();
+                    form.controls['checklist'].reset();">
+                                        Cancelar
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <nb-list>
+                            <nb-list-item *ngFor="let item of checklist; let i = index;"
+                                class="d-flex w-100 justify-content-between">
+                                <span *ngIf="item.name">{{ item.name }}</span>
+
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button nbButton status="info" style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                                        outline type="button" class="btn btn-outline-info" (click)="onEditObjective(i)">
+                                        <nb-icon icon="edit-outline"></nb-icon>
+                                    </button>
+                                    <button nbButton status="danger"
+                                        style="border-bottom-left-radius: 0; border-top-left-radius: 0; padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                                        outline type="button" class="btn btn-outline-danger"
+                                        (click)="onDeleteObjective(i)">
+                                        <nb-icon icon="trash-2-outline"></nb-icon>
+                                    </button>
+                                </div>
+                            </nb-list-item>
+                        </nb-list>
+                    </div>
+                </div>
+                <!-- / Dynamic list -->
+
+            </div>
+            <div class="col-12 form-group text-right">
+                <button 
+                    [attr.disabled]="form.invalid ? true : null " nbButton type="submit" status="primary"
+                    class="col-12 col-md-auto">
+                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+                </button>
+            </div>
+        </form>
     </nb-card-body>
-    <nb-card-footer class="text-right">
-        <button nbButton status="success" class="btn btn-success col-12 col-lg-auto">Guardar</button>
-    </nb-card-footer>
 </nb-card>

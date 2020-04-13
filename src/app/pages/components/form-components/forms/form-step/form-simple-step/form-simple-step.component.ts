@@ -18,12 +18,12 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
   @Input() data: Step;
 
-  oldData: Step;
+  protected oldData: Step;
 
   constructor(
-    private stores: Store,
-    private toastrService: CustomToastrService,
-    private updateStepService: StepService,
+    public stores: Store,
+    public toastrService: CustomToastrService,
+    protected updateStepService: StepService,
   ) {
     super(stores, toastrService);
 
@@ -123,9 +123,7 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
         this.toastrService.updateSuccess('Actualización', 'Paso actualizado');
         this.stores.dispatch(new UpdateStep(response, this.oldData));
       }, (err: any) => {
-
         this.toastrService.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
-
       });
     }
 

@@ -25,8 +25,8 @@ export class LapseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.route.params.subscribe(response => {
 
-      this.lapse = response.lapse;
       this.id = response.id;
+      this.lapse = response.lapse;
 
       this.subscription = this.lapseActivityService.getActivity(response.id, response.lapse).subscribe(value => {
         this.store.dispatch( new SelectActivity ( value ) );

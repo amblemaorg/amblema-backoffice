@@ -58,8 +58,9 @@
                 formControlName="hasVideo" 
                 class="d-block form-group">Video</nb-checkbox>
             <app-input-custom 
-                *ngIf="hasVideo" 
+                *ngIf="form.get('hasVideo').value" 
                 [id]="'url-video'" 
+                [submitted]="submitted" 
                 [control]="form.get('video')"
                 [placeholder]="'URL del video'"
                 [label]="'URL del video'"></app-input-custom>

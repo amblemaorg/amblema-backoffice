@@ -35,8 +35,6 @@ export class MenuSetUp {
 
         this.subscriptionLapse = await this.lapses$.subscribe(response => {
 
-            console.log( response );
-
             this.menu.find(value => {
 
                 /* Get in 'Contenido' option */
@@ -68,7 +66,7 @@ export class MenuSetUp {
                                         if (option.status === STATUS.ACTIVE.CODE) {
                                             lapses.children.push({
                                                 title: option.name,
-                                                link: `${this.ROUTE_LAPSE}/${option.devName.toLocaleLowerCase()}/1`
+                                                link: `${this.ROUTE_LAPSE}/${option.id.toLocaleLowerCase()}/1`
                                             });
                                         }
                                     });

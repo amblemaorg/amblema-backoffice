@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { FormControl } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/steps-form.component';
 import { Store } from '@ngxs/store';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
-import { GetLapActivities, AddLapseActivity } from 'src/app/store/lapse-activities.action';
+import { AddLapseActivity } from 'src/app/store/lapse-activities.action';
 
 @Component({
   selector: 'app-activities-form',

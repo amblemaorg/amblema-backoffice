@@ -5,17 +5,18 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { LapseActivityState } from 'src/app/store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
 import { Activity } from 'src/app/models/lapse-activities.model';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
+import { Slider } from 'src/app/models/web/slider.model';
 
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.scss']
 })
-export class ActivityFormComponent extends StepsFormComponent implements OnInit {
+export class ActivityFormComponent extends StepsFormComponent implements OnInit, OnChanges {
 
   @Select(LapseActivityState.selectedActivity) activity$: Observable<Activity>;
   subscription: Subscription;
@@ -23,7 +24,19 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit 
   @Input() lapse: string;
   @Input() id: string;
 
+  formStandard: FormGroup;
+  formCoin: FormGroup; 
+
+  readonly DEVNAME_STANDARD = {
+    INITIAL_WORKSHOP: 'initialworkshop',
+    AMBLE_COINS: 'amblecoins',
+    LAPSE_PLANNING: 'lapseplanning',
+    ANNUAL_CONVETION: 'annualconvention'
+  };
+
   data: any;
+  sliders: Slider[] = [];
+
   oldData: any;
 
   constructor(
@@ -38,14 +51,26 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit 
   }
 
   ngOnInit() {
-    this.subscription = this.activity$.subscribe(response => {
-      this.data = response;
-      console.log( this.data );
-      this.basicValidation();
-    });
+
+    
   }
 
 
+
+  ngOnChanges(): void {
+    // Get form
+    this.subscription = this.activity$.subscribe(response => {
+      this.data = response;
+      console.log(this.id);
+      console.log( response );
+      if (!this.data.isStandard) {
+        this.basicValidation();
+      } else if (this.data.isStandard) {
+        this.createForm(this.id);
+        // this.formStandard.patchValue(response);
+      }
+    }); 
+  }
 
   onSubmitGeneric(): void {
 
@@ -97,10 +122,8 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit 
       // Update activity
 
       this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
-        console.log( response );
-        this.toastr.updateSuccess('Actualización', 'Paso actualizado');
+        this.toastr.updateSuccess('Actualización', 'Actividad actualizada');
       }, (err: any) => {
-        console.log(err);
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
       });
     }
@@ -146,4 +169,130 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit 
       this.form.controls.status.setValue(this.data.status === STATUS.ACTIVE.CODE ? true : false);
     }
   }
+
+  createForm(id: string) {
+
+    if (id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP) {
+
+      this.formStandard = new FormGroup({
+        agreementFile: new FormControl(null, [Validators.required]),
+        teachersMeetingFile: new FormControl(null, [Validators.required]),
+        agreementDescription: new FormControl(null, [Validators.required]),
+        planningMeetingFile: new FormControl(null, [Validators.required]),
+        planningMeetingDescription: new FormControl(null, [Validators.required]),
+        teachersMeetingDescription: new FormControl(null, [Validators.required])
+      });
+    } else if (id === this.DEVNAME_STANDARD.AMBLE_COINS) {
+       this.formStandard = new FormGroup({
+        teachersMeetingDescription: new FormControl(null, [Validators.required]),
+        teachersMeetingFile: new FormControl(null, [Validators.required]),
+        piggyBankSlider: new FormControl([], [Validators.required]),
+        piggyBankDescription: new FormControl(null, [Validators.required]), 
+      }); 
+    } else if ( id === this.DEVNAME_STANDARD.LAPSE_PLANNING ) {
+      this.formStandard = new FormGroup({
+        proposalFundationDescription: new FormControl(null, [Validators.required]),
+        proposalFundationFile: new FormControl(null, [Validators.required]),
+        meetingDescription: new FormControl(null, [Validators.required]), 
+      });
+    } else if ( id === this.DEVNAME_STANDARD.ANNUAL_CONVETION ) {
+      this.formStandard = new FormGroup({
+        step4Description: new FormControl(null, [Validators.required]),
+        step3Description: new FormControl(null, [Validators.required]),
+        step2Description: new FormControl(null, [Validators.required]), 
+        step1Description: new FormControl(null, [Validators.required]), 
+      });
+    }
+  }
+
+  onSubmitInitialWorkshop(): void {
+
+    const prepareData: any = this.formStandard.value;
+
+    const formData = new FormData();
+
+    formData.append('agreementFile', prepareData.agreementFile.url ?
+      JSON.stringify(prepareData.agreementFile) : prepareData.agreementFile);
+    formData.append('teachersMeetingFile', prepareData.teachersMeetingFile.url ?
+      JSON.stringify(prepareData.teachersMeetingFile) : prepareData.teachersMeetingFile);
+    formData.append('planningMeetingFile', prepareData.planningMeetingFile.url ?
+    JSON.stringify(prepareData.planningMeetingFile) : prepareData.planningMeetingFile);
+    formData.append('agreementDescription', prepareData.agreementDescription);
+
+    formData.append('planningMeetingDescription', prepareData.planningMeetingDescription);
+    formData.append('teachersMeetingDescription', prepareData.teachersMeetingDescription);
+
+    this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
+      this.toastr.updateSuccess('Actualización', 'Taller inicial actualizado');
+          }, (err: any) => {
+            
+      this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+    });
+
+  }
+
+  onSubmitAblemaCoins() {
+    const prepareData: any = this.formStandard.value;
+
+    const formData = new FormData();
+
+    formData.append('teachersMeetingFile', prepareData.teachersMeetingFile.url ?
+    JSON.stringify(prepareData.teachersMeetingFile) : prepareData.teachersMeetingFile);
+    
+
+    formData.append('teachersMeetingDescription', prepareData.planningMeetingDescription);
+    formData.append('piggyBankDescription', prepareData.teachersMeetingDescription);
+    
+    formData.append('piggyBankSlider', JSON.stringify(this.sliders) );
+  
+    this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
+      this.toastr.updateSuccess('Actualización', 'AbLeCoins actualizado');
+          }, (err: any) => {
+            console.log( err ); 
+      this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+    });
+
+  }
+
+  onSubmitLapsePlanning() {
+    const prepareData: any = this.formStandard.value;
+
+    const formData = new FormData();
+
+    formData.append('proposalFundationFile', prepareData.proposalFundationFile.url ?
+    JSON.stringify(prepareData.proposalFundationFile) : prepareData.proposalFundationFile);
+    
+
+    formData.append('proposalFundationDescription', prepareData.proposalFundationDescription);
+    formData.append('meetingDescription', prepareData.meetingDescription);
+    
+  
+    this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
+      this.toastr.updateSuccess('Actualización', 'Planificación inicial actualizado');
+          }, (err: any) => {
+            console.log( err ); 
+      this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+    });
+  }
+
+  onSubmitAnualConvention() {
+    const prepareData: any = this.formStandard.value;
+
+    const formData = new FormData();
+
+
+    formData.append('step4Description', prepareData.step4Description);
+    formData.append('step3Description', prepareData.step3Description);
+    formData.append('step2Description', prepareData.step2Description);
+    formData.append('step1Description', prepareData.step1Description);
+    
+  
+    this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
+      this.toastr.updateSuccess('Actualización', 'Convención anual actualizado');
+          }, (err: any) => {
+            console.log( err ); 
+      this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+    });
+  }
+  
 }

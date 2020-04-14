@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { LapseActivity } from '../models/lapse-activities.model';
 import { Injectable } from '@angular/core';
 import { STATUS } from '../helpers/text-content/status';
-import { take } from 'rxjs/operators';
+import { take, takeWhile, first } from 'rxjs/operators';
 
 @Injectable()
 export class MenuSetUp {
@@ -33,7 +33,7 @@ export class MenuSetUp {
 
         /* Get the lapses and activities to configure the menu*/
 
-        this.subscriptionLapse = await this.lapses$.subscribe(response => {
+        this.subscriptionLapse = await this.lapses$.pipe( first() ).subscribe(response => {
 
             this.menu.find(value => {
 
@@ -43,7 +43,7 @@ export class MenuSetUp {
                     /* Sub level options */
                     value.children.find(children => {
 
-                        /* Find the correcto option */
+                        /* Find the correct option */
                         if (children.title === 'Ajustes del PECA') {
 
                             /* Find laspes */

@@ -2,16 +2,156 @@
     <nb-card-header>{{ data.name }}</nb-card-header>
     <nb-card-body>
 
+        <!-- ######################################### -->
+        <!-- Initial workshop form -->
+        <!-- ######################################### -->
+        <form (ngSubmit)="onSubmitInitialWorkshop()" [formGroup]="formStandard"
+            *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP && data.isStandard && formStandard" class="row">
+
+            <div class="col-12">
+                <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP" [submitted]="false"
+                    [control]="formStandard.get('teachersMeetingDescription')"
+                    [id]="data.id + 'teachersMeetingDescription'" [label]="'Archivo de reunión de maestros(a)'"
+                    [placeholder]="'Archivo de reunión de maestros(a)'">
+                </app-text-area-custom>
+                <app-input-file *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP" [id]="id+'teachersMeetingFile'"
+                    [submitted]="false" [control]="formStandard.get('teachersMeetingFile')">
+                </app-input-file>
+            </div>
+
+            <div class="col-12">
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('agreementDescription')"
+                    [id]="data.id + 'agreementDescription'" [label]="'Acuerdo descripción'"
+                    [placeholder]="'Acuerdo descripción'">
+                </app-text-area-custom>
+                <app-input-file [id]="id+'agreementFile'" [submitted]="false"
+                    [control]="formStandard.get('agreementFile')">
+                </app-input-file>
+            </div>
+
+            <div class="col-12">
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('planningMeetingDescription')"
+                    [id]="data.id + 'planningMeetingDescription'" [label]="'Planificación de la reunión'"
+                    [placeholder]="'Planificación de la reunión'">
+                </app-text-area-custom>
+                <app-input-file [id]="id+'planningMeetingFile'" [submitted]="false"
+                    [control]="formStandard.get('planningMeetingFile')">
+                </app-input-file>
+            </div>
+
+            <div class="col-12">
+                <hr>
+                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+                </button>
+            </div>
+        </form>
+
+        <!-- ######################################### -->
+        <!-- Amble coins form -->
+        <!-- ######################################### -->
+        <form (ngSubmit)="onSubmitAblemaCoins()" [formGroup]="formStandard"
+            *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS">
+            <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [submitted]="false"
+                [control]="formStandard.get('teachersMeetingDescription')" [id]="data.id + 'teachersMeetingDescription'"
+                [label]="'Descripción de la reunión de maestras'"
+                [placeholder]="'Descripción de la reunión de maestras'">
+            </app-text-area-custom>
+            <app-input-file *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [id]="id+'teachersMeetingFile'"
+                [submitted]="false" [control]="formStandard.get('teachersMeetingFile')">
+            </app-input-file>
+
+            <app-slider-standard [sliders]="sliders"></app-slider-standard>
+            <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [submitted]="false"
+                [control]="formStandard.get('piggyBankDescription')" [id]="data.id + 'piggyBankDescription'"
+                [label]="'Descripción del Bank'" [placeholder]="'Descripción del Bank'">
+            </app-text-area-custom>
+
+            <div class="col-12">
+                <hr>
+                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+                </button>
+            </div>
+        </form>
+
+        <!-- ######################################### -->
+        <!-- Lapse Planning form -->
+        <!-- ######################################### -->
+        <form (ngSubmit)="onSubmitLapsePlanning()" [formGroup]="formStandard" *ngIf="id === this.DEVNAME_STANDARD.LAPSE_PLANNING">
+
+            <div class="col-12 col-md ">
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('proposalFundationDescription')"
+                    [id]="data.id + 'proposalFundationDescription'" [label]="'Propuesta de la Fundación'"
+                    [placeholder]="'Propuesta de la Fundación'">
+                </app-text-area-custom>
+
+                <app-input-file [id]="id+'proposalFundationFile'" [submitted]="false"
+                    [control]="formStandard.get('proposalFundationFile')">
+                </app-input-file>
+
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('meetingDescription')"
+                    [id]="data.id + 'meetingDescription'" [label]="'Descripción de la reunión'"
+                    [placeholder]="'Descripción de la reunión'">
+                </app-text-area-custom>
+            </div>
+
+            <div class="col-12">
+                <hr>
+                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+                </button>
+            </div>
+        </form>
+
+        <!-- ######################################### -->
+        <!-- Anual convention -->
+        <!-- ######################################### -->
+        <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard" *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_CONVETION">
+
+            <div class="col-12 col-md ">
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step1Description')"
+                    [id]="data.id + 'step1Description'" [label]="'Paso 1'"
+                    [placeholder]="'Paso 1'">
+                </app-text-area-custom>
+                </div>
+
+            <div class="col-12 col-md ">
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step2Description')"
+                    [id]="data.id + 'step2Description'" [label]="'Paso 2'"
+                    [placeholder]="'Paso 2'">
+                </app-text-area-custom>
+            </div>
+
+            <div class="col-12 col-md ">
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step3Description')"
+                    [id]="data.id + 'step3Description'" [label]="'Paso 3'"
+                    [placeholder]="'Paso 3'">
+                </app-text-area-custom>
+            </div>
+
+            <div class="col-12 col-md ">
+                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step4Description')"
+                    [id]="data.id + 'step4Description'" [label]="'Paso 4'"
+                    [placeholder]="'Paso 4'">
+                </app-text-area-custom>
+            </div>
+
+
+            <div class="col-12">
+                <hr>
+                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+                </button>
+            </div>
+        </form>
+
 
         <!-- ######################################### -->
         <!-- Generic activity -->
         <!-- ######################################### -->
-        <form [formGroup]="form" (ngSubmit)="onSubmitGeneric()" class="row">
-            <!-- <div class="col-12 form-group">
-                <app-toggle [id]="data.id+'toggle'" [control]="form.get('status')"
-                    [label]="form.get('status').value ? 'Paso activado' : 'Paso desactivado'" class="d-block mx-2">
-                </app-toggle>
-            </div> -->
+        <form [formGroup]="form" (ngSubmit)="onSubmitGeneric()" class="row" *ngIf="!data.isStandard">
+
             <div class="col-12 col-md ">
                 <app-text-area-custom *ngIf="data.hasText" [submitted]="false" [control]="form.get('text')"
                     [id]="data.id + 'text'" [label]="'Descripción'" [placeholder]="data.name">
@@ -107,8 +247,7 @@
 
             </div>
             <div class="col-12 form-group text-right">
-                <button 
-                    [attr.disabled]="form.invalid ? true : null " nbButton type="submit" status="primary"
+                <button [attr.disabled]="form.invalid ? true : null " nbButton type="submit" status="primary"
                     class="col-12 col-md-auto">
                     Guardar <nb-icon icon="edit-outline"></nb-icon>
                 </button>

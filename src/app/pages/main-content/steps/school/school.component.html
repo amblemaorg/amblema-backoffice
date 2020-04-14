@@ -1,5 +1,17 @@
 <nb-card>
-    <nb-card-header>Escuela</nb-card-header>
+    <nb-card-header>
+        <div class="row justify-content-between align-items-center">
+            <div class="col-12 col-lg-auto mb-3 mb-lg-0">
+                Escuela
+            </div >
+            <div class="col-12 col-lg-auto">
+
+            <button nbButton status="success" (click)="modalService.open(modal)"
+            class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
+            </div>
+        </div>
+
+    </nb-card-header>
     <nb-card-body>
         <div *ngIf="steps$ | async">
             <div *ngFor="let item of steps$ | async" class="border p-3 rounded mb-4">
@@ -9,10 +21,6 @@
             </div>
         </div>
     </nb-card-body>
-    <nb-card-footer class="text-right">
-        <button nbButton status="success" (click)="modalService.open(modal)"
-            class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
-    </nb-card-footer>
 </nb-card>
 
 <!-- Modal -->

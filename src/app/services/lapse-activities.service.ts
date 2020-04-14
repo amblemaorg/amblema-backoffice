@@ -42,4 +42,8 @@ export class LapseActivitiesService {
   createActivity( lapse: string, data: FormData ): Observable<any> {
     return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}/${lapse}`, data);
   }
+
+  deleteActivity( id: string, lapse: string ) : Observable<any>  {
+    return this.httpClient.delete<any>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`);  
+  }
 }

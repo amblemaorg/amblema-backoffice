@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
+import { ButtonDeleteComponent } from './button-delete/button-delete.component';
 
 
 @NgModule({
@@ -28,10 +29,12 @@ import { ReactiveDatepickerModule } from 'src/app/pages/components/form-componen
     AdminLapsesComponent,
     ActivityBoardComponent,
     SpecialToggleComponent,
-    ActivitiesFormComponent
+    ActivitiesFormComponent,
+    ButtonDeleteComponent
   ],
   entryComponents: [
-    SpecialToggleComponent
+    SpecialToggleComponent,
+    ButtonDeleteComponent, 
   ],
   imports: [
     CommonModule,

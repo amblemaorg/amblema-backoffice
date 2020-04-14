@@ -1,7 +1,7 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
 import { LapseActivity, Activity, Lapse } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
-import { patch, updateItem, append } from '@ngxs/store/operators';
+import { patch, updateItem, append, removeItem } from '@ngxs/store/operators';
 
 export interface LapseActivityModel {
     lapses?: LapseActivity;
@@ -31,6 +31,14 @@ export class SelectActivity {
     static readonly type = '[Activity] Select Activity';
     constructor(
         public payload: Activity
+    ) {}
+}
+
+export class DeleteLapseActivity {
+    static readonly type = '[Activity] Delete Activity';
+    constructor(
+        public id: string, 
+        public lapse: string
     ) {}
 }
 
@@ -116,6 +124,20 @@ export class LapseActivityState implements NgxsOnInit {
                 lapses: patch({
                     ...ctx.getState().lapses,
                     lapse1: updateItem<Lapse>( lapse => lapse.id === action.newLapseActivity.id, action.newLapseActivity )
+                })
+            }) );
+        }
+    }
+
+
+    @Action( DeleteLapseActivity )
+    DeleteLapseActivity(ctx: StateContext<LapseActivityModel>, action: DeleteLapseActivity ) {
+        if ( action.lapse === '1' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse1: removeItem<Lapse>( lapse => lapse.id === action.id )
                 })
             }) );
         }

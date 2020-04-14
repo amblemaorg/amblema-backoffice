@@ -6,6 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { LapseActivityState, GetLapActivities } from 'src/app/store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
 import { LapseActivity } from 'src/app/models/lapse-activities.model';
+import { ButtonDeleteComponent } from '../button-delete/button-delete.component';
 
 @Component({
   selector: 'app-activity-board',
@@ -78,6 +79,17 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
         title: 'Estatus',
         type: 'custom',
         renderComponent: SpecialToggleComponent,
+        sort: true,
+        filter: false,
+        onComponentInitFunction(instance: any) {
+          instance.save.subscribe();
+        }
+      },
+      action: {
+        width: '40px',
+        title: 'Eliminar',
+        type: 'custom',
+        renderComponent: ButtonDeleteComponent,
         sort: true,
         filter: false,
         onComponentInitFunction(instance: any) {

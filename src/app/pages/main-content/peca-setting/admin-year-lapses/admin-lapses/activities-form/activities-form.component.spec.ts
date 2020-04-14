@@ -31,7 +31,7 @@ describe('ActivitiesFormComponent', () => {
         NbToastrModule.forRoot({}),
         NbIconModule,
         ReactiveInputFileModule,
-        HttpClientModule, 
+        HttpClientModule,
         NgxsModule.forRoot([ LapseActivityState ]),
 
         NbAlertModule,

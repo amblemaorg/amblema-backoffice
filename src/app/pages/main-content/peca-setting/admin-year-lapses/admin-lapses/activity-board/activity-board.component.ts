@@ -31,6 +31,8 @@ export class ActivityBoardComponent extends BaseTable implements TableActions, O
 
   ngOnInit()  {
 
+
+
     // Prepare the source data table
     this.subscription =  this.lapses$.subscribe(response => {
 

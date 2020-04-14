@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { FormSliderComponent } from 'src/app/pages/components/form-components/forms/form-slider/form-slider.component';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, EventManager } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './slider-standard.component.html',
   styleUrls: ['./slider-standard.component.scss']
 })
-export class SliderStandardComponent extends FormSliderComponent {
+export class SliderStandardComponent extends FormSliderComponent implements OnChanges {
 
   constructor(
     public toastr: CustomToastrService,
@@ -36,6 +36,11 @@ export class SliderStandardComponent extends FormSliderComponent {
 
   }
 
+
+  ngOnChanges() {
+    this.source.load( this.sliders );
+  }
+
   onAction( event: any ): void {
 
     switch (event.action) {
@@ -45,14 +50,10 @@ export class SliderStandardComponent extends FormSliderComponent {
         this.form.patchValue(event.data);
         break;
       case this.ACTION.DELETE:
-        this.sliders = this.sliders.filter( value => {
+        this.sliders.forEach( (item, index) => {
+          if (item.description === event.data.description && item.image === event.data.image  ) { this.sliders.splice(index, 1); }
+        });
 
-          if ( value.description === event.data.description && value.image === event.data.image  ) {
-            return false;
-          }
-
-          return true;
-        } );
         this.source.load(this.sliders);
         break;
     }

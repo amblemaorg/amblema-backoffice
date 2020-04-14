@@ -51,7 +51,7 @@
         <!-- Amble coins form -->
         <!-- ######################################### -->
         <form (ngSubmit)="onSubmitAblemaCoins()" [formGroup]="formStandard"
-            *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS">
+            *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS && data.isStandard && formStandard">
             <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [submitted]="false"
                 [control]="formStandard.get('teachersMeetingDescription')" [id]="data.id + 'teachersMeetingDescription'"
                 [label]="'Descripción de la reunión de maestras'"
@@ -61,7 +61,9 @@
                 [submitted]="false" [control]="formStandard.get('teachersMeetingFile')">
             </app-input-file>
 
-            <app-slider-standard [sliders]="sliders"></app-slider-standard>
+            <app-slider-standard 
+              
+                [sliders]="sliders"></app-slider-standard>
             <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [submitted]="false"
                 [control]="formStandard.get('piggyBankDescription')" [id]="data.id + 'piggyBankDescription'"
                 [label]="'Descripción del Bank'" [placeholder]="'Descripción del Bank'">
@@ -78,7 +80,8 @@
         <!-- ######################################### -->
         <!-- Lapse Planning form -->
         <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitLapsePlanning()" [formGroup]="formStandard" *ngIf="id === this.DEVNAME_STANDARD.LAPSE_PLANNING">
+        <form (ngSubmit)="onSubmitLapsePlanning()" [formGroup]="formStandard" 
+            *ngIf="id === this.DEVNAME_STANDARD.LAPSE_PLANNING && data.isStandard && formStandard">
 
             <div class="col-12 col-md ">
                 <app-text-area-custom [submitted]="false" [control]="formStandard.get('proposalFundationDescription')"
@@ -107,7 +110,8 @@
         <!-- ######################################### -->
         <!-- Anual convention -->
         <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard" *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_CONVETION">
+        <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard" 
+        *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_CONVETION && data.isStandard && formStandard">
 
             <div class="col-12 col-md ">
                 <app-text-area-custom [submitted]="false" [control]="formStandard.get('step1Description')"
@@ -158,8 +162,12 @@
                 </app-text-area-custom>
             </div>
             <div class="col-12">
-                <app-input-custom *ngIf="data.hasVideo" [id]="data.id + 'video'" [submitted]="false"
-                    [control]="form.get('video')" [placeholder]="'URL del video'" [label]="'URL del video'">
+                <app-input-custom 
+                    *ngIf="data.hasVideo" 
+                    [id]="data.id + 'video'" 
+                    [submitted]="false"
+                    [control]="form.get('video')" 
+                    [placeholder]="'URL del video'" [label]="'URL del video'">
                 </app-input-custom>
             </div>
 

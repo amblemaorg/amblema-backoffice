@@ -61,7 +61,7 @@ export class FormSliderComponent extends BaseTable implements OnInit {
     });
   }
 
-  protected onAction(event: any): void {
+  onAction(event: any): void {
 
     switch (event.action) {
       case this.ACTION.EDIT:
@@ -75,7 +75,7 @@ export class FormSliderComponent extends BaseTable implements OnInit {
     }
   }
 
-  protected onSubmit() {
+  onSubmit() {
 
 
     if (this.MODE === this.ACTION.CREATE) {

@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
+import { State, NgxsOnInit, StateContext, Action, Selector, getActionTypeFromInstance } from '@ngxs/store';
 import { LapseActivity, Activity, Lapse } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
 import { patch, updateItem, append, removeItem } from '@ngxs/store/operators';
@@ -86,6 +86,7 @@ export class LapseActivityState implements NgxsOnInit {
     }
 
     constructor(
+
         private lapseActivities: LapseActivitiesService
     ) {}
 
@@ -114,6 +115,26 @@ export class LapseActivityState implements NgxsOnInit {
             }) );
         }
 
+        if ( action.lapse === '2' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse2: append([action.payload])
+                })
+            }) );
+        }
+
+        if ( action.lapse === '3' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse3: append([action.payload])
+                })
+            }) );
+        }
+
     }
 
     @Action( UpdateStatusLapseActivity )
@@ -124,6 +145,26 @@ export class LapseActivityState implements NgxsOnInit {
                 lapses: patch({
                     ...ctx.getState().lapses,
                     lapse1: updateItem<Lapse>( lapse => lapse.id === action.newLapseActivity.id, action.newLapseActivity )
+                })
+            }) );
+        }
+
+        if ( action.lapse === '2' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse2: updateItem<Lapse>( lapse => lapse.id === action.newLapseActivity.id, action.newLapseActivity )
+                })
+            }) );
+        }
+
+        if ( action.lapse === '3' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse3: updateItem<Lapse>( lapse => lapse.id === action.newLapseActivity.id, action.newLapseActivity )
                 })
             }) );
         }
@@ -141,10 +182,31 @@ export class LapseActivityState implements NgxsOnInit {
                 })
             }) );
         }
+
+        if ( action.lapse === '2' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse2: removeItem<Lapse>( lapse => lapse.id === action.id )
+                })
+            }) );
+        }
+
+        if ( action.lapse === '3' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse3: removeItem<Lapse>( lapse => lapse.id === action.id )
+                })
+            }) );
+        }
     }
 
     @Action( SelectActivity )
     selectActivity( ctx: StateContext<LapseActivityModel>, action: SelectActivity ) {
+
 
         ctx.setState( patch({
             ...ctx.getState(),

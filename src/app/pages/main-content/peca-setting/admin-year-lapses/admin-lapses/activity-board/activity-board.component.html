@@ -1,7 +1,8 @@
 <div class="col-12 form-group">
     <button 
         nbButton 
-        (click)="modalService.open('modal-add-activity')"
+        [name]="'modal-add-activity'+lapse"
+        (click)="modalService.open('modal-add-activity'+lapse)"
         status="success" 
         class="btn btn-success col-12 col-md-auto">Agregar actividad</button>
 </div>
@@ -16,4 +17,5 @@
     </div>
 </div>
 
-<app-activities-form [lapse]="lapse"></app-activities-form>
+<app-activities-form 
+[lapse]="lapse"></app-activities-form>

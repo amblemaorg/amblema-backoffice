@@ -15,6 +15,7 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
 
   @Input() lapse: string;
 
+
   constructor(
     public store: Store,
     private lapseActivityService: LapseActivitiesService,
@@ -72,9 +73,18 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
 
       this.lapseActivityService.createActivity( this.lapse, formData ).subscribe( response => {
         this.store.dispatch( new AddLapseActivity( response, this.lapse ) );
+
         this.resetForm();
+
+        this.form.controls.hasFile.setValue(false);
+        this.form.controls.hasUpload.setValue(false);
+        this.form.controls.hasDate.setValue(false);
+        this.form.controls.hasVideo.setValue(false);
+        this.form.controls.hasChecklist.setValue(false);
+
         this.toastr.registerSuccess('Registro', 'Actividad registrada');
       }, (err: any) => {
+
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
         this.progress = false;
       } );

@@ -72,6 +72,43 @@ export class MenuSetUp {
                                     });
                                 }
 
+                                // Lapse 2
+                                if (lapses.title === 'Lapso 2') {
+
+                                    if ( isUpdate ) {
+                                        lapses.children  = [];
+                                    }
+
+                                    response.lapse2.find(option => {
+                                        // Add activity
+                                        if (option.status === STATUS.ACTIVE.CODE) {
+                                            lapses.children.push({
+                                                title: option.name,
+                                                link: `${this.ROUTE_LAPSE}/${option.id.toLocaleLowerCase()}/2`
+                                            });
+                                        }
+                                    });
+                                }
+
+
+                                // Lapse 3
+                                if (lapses.title === 'Lapso 3') {
+
+                                    if ( isUpdate ) {
+                                        lapses.children  = [];
+                                    }
+
+                                    response.lapse3.find(option => {
+                                        // Add activity
+                                        if (option.status === STATUS.ACTIVE.CODE) {
+                                            lapses.children.push({
+                                                title: option.name,
+                                                link: `${this.ROUTE_LAPSE}/${option.id.toLocaleLowerCase()}/3`
+                                            });
+                                        }
+                                    });
+                                }
+
                             }); // End find lapses
 
                             return true;

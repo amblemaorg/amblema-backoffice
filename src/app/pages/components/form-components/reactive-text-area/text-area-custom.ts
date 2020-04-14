@@ -25,7 +25,7 @@ import { AbstractReactive } from '../abstract-reactive';
     `
 })
 
-export class TextAreaCustomComponent extends AbstractReactive implements OnChanges, AfterContentChecked {
+export class TextAreaCustomComponent extends AbstractReactive implements AfterContentChecked {
     @Input() state: boolean | null = false;
     @Input() max: number | null = null;
 
@@ -39,17 +39,17 @@ export class TextAreaCustomComponent extends AbstractReactive implements OnChang
     }
 
     // This method listen changes, enable or disabled text area.
-    ngOnChanges(): void {
-        if (this.state) {
-            this.control.disable();
-        } else {
-            this.control.enable();
-        }
-    }
+    // ngOnChanges(): void {
+    //     if (this.state) {
+    //         this.control.disable();
+    //     } else {
+    //         this.control.enable();
+    //     }
+    // }
 
     ngAfterContentChecked() {
         this.show = true;
-        this.value = this.control.value;
+        this.value = this.control.value ? this.control.value : null;
         this.length = this.value ? this.value.length : 0;
         this.cd.detectChanges();
     }

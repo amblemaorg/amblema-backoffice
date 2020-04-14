@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/helpers/base-table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -10,22 +10,22 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
   templateUrl: './form-slider.component.html',
   styleUrls: ['./form-slider.component.scss']
 })
-export class FormSliderComponent extends BaseTable implements TableActions, OnInit {
+export class FormSliderComponent extends BaseTable implements OnInit {
 
-  @Input() sliders: Slider[];
+  @Input() public sliders: Slider[];
 
-  @Output() register = new EventEmitter<Slider>();
-  @Output() edit = new EventEmitter<Slider[]>();
-  @Output() delete = new EventEmitter<Slider>();
+  @Output() protected register = new EventEmitter<Slider>();
+  @Output() protected edit = new EventEmitter<Slider[]>();
+  @Output() protected delete = new EventEmitter<Slider>();
 
-  form: FormGroup;
-  MODE = this.ACTION.CREATE;
-  oldSlider: Slider; // <-- For update slider
+  public form: FormGroup;
+  public MODE = this.ACTION.CREATE;
+  public oldSlider: Slider; // <-- For update slider
 
   constructor(
-    private taostr: CustomToastrService,
-    private sanitizer: DomSanitizer,
-    private formBuilder: FormBuilder) {
+    public taostr: CustomToastrService,
+    public sanitizer: DomSanitizer,
+    public formBuilder: FormBuilder) {
     super('form-slider');
 
     this.settings.actions.custom = [
@@ -79,8 +79,6 @@ export class FormSliderComponent extends BaseTable implements TableActions, OnIn
 
 
     if (this.MODE === this.ACTION.CREATE) {
-
-
 
       if ( this.sliders.length < 6 ) {
         this.register.emit(this.form.value);

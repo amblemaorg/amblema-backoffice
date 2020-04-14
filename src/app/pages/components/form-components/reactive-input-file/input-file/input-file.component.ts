@@ -40,29 +40,32 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
   nameFile: string;
   url: string = null;
 
-  constructor( private cd: ChangeDetectorRef ) { super(); }
+  constructor(private cd: ChangeDetectorRef) { super(); }
 
   ngOnChanges(): void {
-    if ( typeof this.control.value.url === 'string'  || this.control.value.url instanceof String ) {
-      this.url = this.control.value.url;
-      this.nameFile = this.control.value.name;
-      this.control.setValidators( [Validators.required] );
-      this.control.updateValueAndValidity();
-    } else {
-      this.url = null;
-      this.control.setValidators( [Validators.required, FileValidator.fileExtensions(EXTENSIONS)] );
-      this.control.updateValueAndValidity();
+
+    if ( this.control.value !== null ) {
+      if (typeof this.control.value.url === 'string' || this.control.value.url instanceof String) {
+        this.url = this.control.value.url;
+        this.nameFile = this.control.value.name;
+        this.control.setValidators([Validators.required]);
+        this.control.updateValueAndValidity();
+      } else {
+        this.url = null;
+        this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
+        this.control.updateValueAndValidity();
+      }
     }
   }
 
   ngAfterViewInit(): void {
-    this.control.setValidators( [Validators.required, FileValidator.fileExtensions(EXTENSIONS)] );
+    this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
     this.control.updateValueAndValidity();
     this.cd.detectChanges();
   }
 
   handleUpload(file: File) {
-    this.control.setValue( file[0] as File );
+    this.control.setValue(file[0] as File);
     this.nameFile = file[0].name;
   }
 }

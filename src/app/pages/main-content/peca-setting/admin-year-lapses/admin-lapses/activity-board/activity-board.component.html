@@ -1,7 +1,8 @@
 <div class="col-12 form-group">
     <button 
         nbButton 
-        (click)="modalService.open('modal-add-activity')"
+        [name]="'modal-add-activity'+lapse"
+        (click)="modalService.open('modal-add-activity'+lapse)"
         status="success" 
         class="btn btn-success col-12 col-md-auto">Agregar actividad</button>
 </div>
@@ -11,9 +12,10 @@
         <ng2-smart-table 
             *ngIf="lapses$ | async"
             (custom)="onAction($event)" 
-            [source]="data" 
+            [source]="source" 
             [settings]="settings"></ng2-smart-table>
     </div>
 </div>
 
-<app-activities-form></app-activities-form>
+<app-activities-form 
+[lapse]="lapse"></app-activities-form>

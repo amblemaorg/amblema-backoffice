@@ -123,71 +123,23 @@ export const MENU_ITEMS: NbMenuItem[] = [
           {
             title: 'Lapso 1',
             children: [
-              // {
-              //   title: 'Taller inicial',
-              //   link: '/pages/content/peca-setting/lapse/2'
-              // },
-              // {
-              //   title: 'Planificación del lapso',
-              //   link: '/pages/content/peca-setting/lapse'
-              // },
-              // { title: 'Venezuela megadiversa' },
-              // {
-              //   title: 'AmbLeMonedas',
-              //   link: '/pages/content/peca-setting/coins'
-              // },
-              // {
-              //   title: 'Convención anual',
-              //   link: '/pages/content/peca-setting/convention'
-              // },
+
             ]
           },
 
-          /* Take this special snippet into account */
+          {
+            title: 'Lapso 2',
+            children: [
 
-          // {
-          //   title: 'Lapso 2',
-          //   children: [
-          //     {
-          //       title: 'Taller inicial',
-          //       link: '/pages/content/peca-setting/workshop'
-          //     },
-          //     {
-          //       title: 'Planificación del lapso',
-          //       link: '/pages/content/peca-setting/lapse'
-          //     },
-          //     { title: 'Venezuela megadiversa' },
-          //     {
-          //       title: 'AmbLeMonedas',
-          //       link: '/pages/content/peca-setting/coins'
-          //     },
-          //     {
-          //       title: 'Convención anual',
-          //       link: '/pages/content/peca-setting/convention'
-          //     },
-          //   ]
-          // },
-          // {
-          //   title: 'Lapso 3',
-          //   children: [
-          //     {
-          //       title: 'Taller inicial',
-          //       link: '/pages/content/peca-setting/workshop-2'
-          //     },
-          //     { title: 'Planificación del lapso',
-          //       link: '/pages/content/peca-setting/lapse-2'
-          //     },
-          //     { title: 'Venezuela megadiversa' },
-          //     {
-          //       title: 'AmbLeMonedas',
-          //       link: '/pages/content/peca-setting/coins-2'
-          //     },
-          //     {
-          //       title: 'Convención anual',
-          //       link: '/pages/content/peca-setting/convention-2'
-          //     },
-          //   ]
-          // },
+            ]
+          },
+
+          {
+            title: 'Lapso 3',
+            children: [
+
+            ]
+          },
 
           /* Take this special snippet into account */
 

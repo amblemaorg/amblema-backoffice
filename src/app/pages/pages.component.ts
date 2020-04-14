@@ -38,7 +38,6 @@ export class PagesComponent implements AfterViewInit {
     loading = false;
 
     ngAfterViewInit() {
-        console.log(  'acrgada la vista' );
         this.menuSetUp.renderMenu();
     }
 }

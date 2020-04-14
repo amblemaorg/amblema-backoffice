@@ -1,7 +1,7 @@
-import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
+import { State, NgxsOnInit, StateContext, Action, Selector, getActionTypeFromInstance } from '@ngxs/store';
 import { LapseActivity, Activity, Lapse } from '../models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
-import { patch, updateItem } from '@ngxs/store/operators';
+import { patch, updateItem, append, removeItem } from '@ngxs/store/operators';
 
 export interface LapseActivityModel {
     lapses?: LapseActivity;
@@ -20,10 +20,25 @@ export class UpdateStatusLapseActivity {
             public lapse: string ) {}
 }
 
+export class AddLapseActivity {
+    static readonly type = '[Activity] Add LapseActivity';
+    constructor(
+        public payload: Lapse,
+        public lapse: string) {}
+}
+
 export class SelectActivity {
     static readonly type = '[Activity] Select Activity';
     constructor(
         public payload: Activity
+    ) {}
+}
+
+export class DeleteLapseActivity {
+    static readonly type = '[Activity] Delete Activity';
+    constructor(
+        public id: string,
+        public lapse: string
     ) {}
 }
 
@@ -71,6 +86,7 @@ export class LapseActivityState implements NgxsOnInit {
     }
 
     constructor(
+
         private lapseActivities: LapseActivitiesService
     ) {}
 
@@ -86,6 +102,41 @@ export class LapseActivityState implements NgxsOnInit {
         } );
     }
 
+    @Action( AddLapseActivity )
+    addLapseActivity(ctx: StateContext<LapseActivityModel>, action: AddLapseActivity ) {
+
+        if ( action.lapse === '1' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse1: append([action.payload])
+                })
+            }) );
+        }
+
+        if ( action.lapse === '2' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse2: append([action.payload])
+                })
+            }) );
+        }
+
+        if ( action.lapse === '3' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse3: append([action.payload])
+                })
+            }) );
+        }
+
+    }
+
     @Action( UpdateStatusLapseActivity )
     updateStatusLapseActivity(ctx: StateContext<LapseActivityModel>, action: UpdateStatusLapseActivity ) {
         if ( action.lapse === '1' ) {
@@ -97,10 +148,65 @@ export class LapseActivityState implements NgxsOnInit {
                 })
             }) );
         }
+
+        if ( action.lapse === '2' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse2: updateItem<Lapse>( lapse => lapse.id === action.newLapseActivity.id, action.newLapseActivity )
+                })
+            }) );
+        }
+
+        if ( action.lapse === '3' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse3: updateItem<Lapse>( lapse => lapse.id === action.newLapseActivity.id, action.newLapseActivity )
+                })
+            }) );
+        }
+    }
+
+
+    @Action( DeleteLapseActivity )
+    DeleteLapseActivity(ctx: StateContext<LapseActivityModel>, action: DeleteLapseActivity ) {
+        if ( action.lapse === '1' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse1: removeItem<Lapse>( lapse => lapse.id === action.id )
+                })
+            }) );
+        }
+
+        if ( action.lapse === '2' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse2: removeItem<Lapse>( lapse => lapse.id === action.id )
+                })
+            }) );
+        }
+
+        if ( action.lapse === '3' ) {
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapses: patch({
+                    ...ctx.getState().lapses,
+                    lapse3: removeItem<Lapse>( lapse => lapse.id === action.id )
+                })
+            }) );
+        }
     }
 
     @Action( SelectActivity )
     selectActivity( ctx: StateContext<LapseActivityModel>, action: SelectActivity ) {
+
 
         ctx.setState( patch({
             ...ctx.getState(),

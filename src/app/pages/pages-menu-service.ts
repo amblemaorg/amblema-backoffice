@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { LapseActivity } from '../models/lapse-activities.model';
 import { Injectable } from '@angular/core';
 import { STATUS } from '../helpers/text-content/status';
-import { take } from 'rxjs/operators';
+import { take, takeWhile, first } from 'rxjs/operators';
 
 @Injectable()
 export class MenuSetUp {
@@ -33,9 +33,7 @@ export class MenuSetUp {
 
         /* Get the lapses and activities to configure the menu*/
 
-        this.subscriptionLapse = await this.lapses$.subscribe(response => {
-
-            console.log( response );
+        this.subscriptionLapse = await this.lapses$.pipe( first() ).subscribe(response => {
 
             this.menu.find(value => {
 
@@ -45,7 +43,7 @@ export class MenuSetUp {
                     /* Sub level options */
                     value.children.find(children => {
 
-                        /* Find the correcto option */
+                        /* Find the correct option */
                         if (children.title === 'Ajustes del PECA') {
 
                             /* Find laspes */
@@ -68,7 +66,44 @@ export class MenuSetUp {
                                         if (option.status === STATUS.ACTIVE.CODE) {
                                             lapses.children.push({
                                                 title: option.name,
-                                                link: `${this.ROUTE_LAPSE}/${option.devName.toLocaleLowerCase()}/1`
+                                                link: `${this.ROUTE_LAPSE}/${option.id.toLocaleLowerCase()}/1`
+                                            });
+                                        }
+                                    });
+                                }
+
+                                // Lapse 2
+                                if (lapses.title === 'Lapso 2') {
+
+                                    if ( isUpdate ) {
+                                        lapses.children  = [];
+                                    }
+
+                                    response.lapse2.find(option => {
+                                        // Add activity
+                                        if (option.status === STATUS.ACTIVE.CODE) {
+                                            lapses.children.push({
+                                                title: option.name,
+                                                link: `${this.ROUTE_LAPSE}/${option.id.toLocaleLowerCase()}/2`
+                                            });
+                                        }
+                                    });
+                                }
+
+
+                                // Lapse 3
+                                if (lapses.title === 'Lapso 3') {
+
+                                    if ( isUpdate ) {
+                                        lapses.children  = [];
+                                    }
+
+                                    response.lapse3.find(option => {
+                                        // Add activity
+                                        if (option.status === STATUS.ACTIVE.CODE) {
+                                            lapses.children.push({
+                                                title: option.name,
+                                                link: `${this.ROUTE_LAPSE}/${option.id.toLocaleLowerCase()}/3`
                                             });
                                         }
                                     });

@@ -50,7 +50,7 @@ export class StepsFormComponent implements OnInit {
 
   constructor(
     public store?: Store,
-    private toastr?: CustomToastrService,
+    public toastr?: CustomToastrService,
     public stepService?: StepService,
     public fb?: FormBuilder) {
 
@@ -104,7 +104,6 @@ export class StepsFormComponent implements OnInit {
         this.toastr.registerSuccess('Registro', 'Paso registrado');
       }, (err: any) => {
 
-        console.log( err );
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
         this.progress = false;
       });

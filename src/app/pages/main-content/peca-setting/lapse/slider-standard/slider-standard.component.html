@@ -1,0 +1,54 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p class="font-weight-bold">Diapositiva</p>
+    <div class="row form-group">
+        <div class="col-12 col-xl form-group mt-3">
+            <app-input-img 
+                [id]="'input-slider'"
+                [control]="form.get('image')"></app-input-img>
+        </div>
+        <div class="col-12 col-xl-9">
+            <div class="row">
+                <div class="col-12">
+                    <app-text-area-custom
+                        [max]="56"
+                        [label]="'descripción'"
+                        [placeholder]="'descripción'"
+                        [submitted]="false"
+                        [control]="form.get('description')"></app-text-area-custom>
+                </div>
+                <div class="col-12 text-right">
+                    <button 
+                        [status]="MODE === ACTION.CREATE ? 'success' : 'primary'"
+                        nbButton 
+                        [attr.disabled]="form.invalid ? true : null"
+                        type="submit" 
+                        [ngClass]="{    
+                            'mr-xl-3' : MODE === ACTION.EDIT,
+                            'btn-success': MODE === ACTION.CREATE, 
+                            'btn-primary' : MODE === ACTION.EDIT}"
+                        class="btn col-12 col-xl-auto mr-xl-3 mt-3">
+                        <span *ngIf="MODE === ACTION.CREATE">Registrar</span>
+                        <span *ngIf="MODE === ACTION.EDIT">Actualizar</span>
+                    </button>
+                    <button nbButton
+                        outline
+                        status="basic"
+                        (click)="form.reset(); MODE = ACTION.CREATE"
+                        *ngIf="MODE === ACTION.EDIT" 
+                        class="btn btn-outline-secondary col-12 col-xl-auto mt-3">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-12 form-group">
+            <div class="table-responsive">
+                <ng2-smart-table 
+                    (custom)="onAction($event)" 
+                    [source]='source' 
+                    [settings]="settings"></ng2-smart-table>
+            </div>
+        </div>
+    </div>
+</form>

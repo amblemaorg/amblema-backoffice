@@ -28,19 +28,22 @@ export class LapseActivitiesService {
       );
   }
 
+  updateActivity( id: string, lapse: any, data: FormData ): Observable<any> {
+    return this.httpClient.put<Activity>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`, data).
+      pipe(
+        map( (records: any) => records )
+      );
+  }
+
   statusActivity( data: any ): Observable<any> {
     return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}`, data);
   }
 
-  // setLapseActivitie( data: LapseActivitie ): Observable<LapseActivitie> {
-  //    return this.httpClient.post<LapseActivitie>(`${environment.api}${this.PROJECT}`, data);
-  // }
+  createActivity( lapse: string, data: FormData ): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}/${lapse}`, data);
+  }
 
-  // deleteLapseActivitie(id: string): Observable<string> {
-  //   return this.httpClient.delete<string>(`${environment.api}${this.PROJECT}/${id}`);
-  // }
-
-  // updateLapseActivitie( id: string,  data: LapseActivitie): Observable<LapseActivitie> {
-  //   return this.httpClient.put<LapseActivitie>(`${environment.api}${this.PROJECT}/${id}`, data);
-  // }
+  deleteActivity( id: string, lapse: string ): Observable<any>  {
+    return this.httpClient.delete<any>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`);
+  }
 }

@@ -14,7 +14,7 @@ export class SliderStandardComponent extends FormSliderComponent {
   constructor(
     public toastr: CustomToastrService,
     public sanitizer: DomSanitizer,
-    public formBuilder: FormBuilder 
+    public formBuilder: FormBuilder
   ) {
     super(toastr, sanitizer, formBuilder);
 
@@ -33,10 +33,10 @@ export class SliderStandardComponent extends FormSliderComponent {
         type: 'string'
       },
     };
-    
+
   }
 
-  onAction( event: any ) : void {
+  onAction( event: any ): void {
 
     switch (event.action) {
       case this.ACTION.EDIT:
@@ -47,24 +47,24 @@ export class SliderStandardComponent extends FormSliderComponent {
       case this.ACTION.DELETE:
         this.sliders = this.sliders.filter( value => {
 
-          if( value.description === event.data.description && value.image === event.data.image  ) {
+          if ( value.description === event.data.description && value.image === event.data.image  ) {
             return false;
           }
 
-          return true; 
+          return true;
         } );
-        this.source.load(this.sliders); 
+        this.source.load(this.sliders);
         break;
     }
-  }  
+  }
 
   onSubmit() {
 
-    if( this.MODE === this.ACTION.CREATE ) {
-      if( this.sliders.length < 6 ) {
+    if ( this.MODE === this.ACTION.CREATE ) {
+      if ( this.sliders.length < 6 ) {
         this.source.reset();
         this.sliders.push(this.form.value);
-        this.source.load( this.sliders ); 
+        this.source.load( this.sliders );
         this.form.reset();
         this.form.controls.image.setValue(null);
       } else {
@@ -74,11 +74,11 @@ export class SliderStandardComponent extends FormSliderComponent {
 
       this.sliders = this.sliders.filter( value => {
 
-        if( value.description === this.oldSlider.description && value.image === this.oldSlider.image  ) {
-          
+        if ( value.description === this.oldSlider.description && value.image === this.oldSlider.image  ) {
+
           value.description = this.form.controls.description.value;
           value.image = this.form.controls.image.value;
-          
+
         }
 
         return true;

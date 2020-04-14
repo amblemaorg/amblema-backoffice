@@ -34,7 +34,7 @@ import { ButtonDeleteComponent } from './button-delete/button-delete.component';
   ],
   entryComponents: [
     SpecialToggleComponent,
-    ButtonDeleteComponent, 
+    ButtonDeleteComponent,
   ],
   imports: [
     CommonModule,

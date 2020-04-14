@@ -40,7 +40,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     ReactiveTextAreaModule,
     NbAlertModule,
     ReactiveInputFileModule,
-    Ng2SmartTableModule, 
+    Ng2SmartTableModule,
     NbIconModule,
     ReactiveFormsModule,
     FormsModule,

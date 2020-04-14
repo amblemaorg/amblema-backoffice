@@ -16,9 +16,9 @@ export class ButtonDeleteComponent implements OnInit {
 
   @Output() save: EventEmitter<any> = new EventEmitter();
 
-  constructor( 
+  constructor(
     private toastr: CustomToastrService,
-    private store: Store, 
+    private store: Store,
     private lapseActivityService: LapseActivitiesService ) { }
 
   ngOnInit() {
@@ -26,8 +26,8 @@ export class ButtonDeleteComponent implements OnInit {
 
   onclick() {
     this.lapseActivityService.deleteActivity(this.rowData.id, this.rowData.lapse).subscribe( response => {
-      this.toastr.deleteRegister('Eliminación', 'Se ha eliminado una actividad'); 
-      this.store.dispatch( new DeleteLapseActivity( this.rowData.id, this.rowData.lapse ) ); 
+      this.toastr.deleteRegister('Eliminación', 'Se ha eliminado una actividad');
+      this.store.dispatch( new DeleteLapseActivity( this.rowData.id, this.rowData.lapse ) );
     } );
   }
 }

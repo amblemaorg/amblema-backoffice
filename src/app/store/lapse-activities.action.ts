@@ -37,7 +37,7 @@ export class SelectActivity {
 export class DeleteLapseActivity {
     static readonly type = '[Activity] Delete Activity';
     constructor(
-        public id: string, 
+        public id: string,
         public lapse: string
     ) {}
 }

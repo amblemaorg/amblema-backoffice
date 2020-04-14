@@ -25,7 +25,7 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
   @Input() id: string;
 
   formStandard: FormGroup;
-  formCoin: FormGroup; 
+  formCoin: FormGroup;
 
   readonly DEVNAME_STANDARD = {
     INITIAL_WORKSHOP: 'initialworkshop',
@@ -52,7 +52,7 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
 
   ngOnInit() {
 
-    
+
   }
 
 
@@ -69,7 +69,7 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
         this.createForm(this.id);
         // this.formStandard.patchValue(response);
       }
-    }); 
+    });
   }
 
   onSubmitGeneric(): void {
@@ -187,20 +187,20 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
         teachersMeetingDescription: new FormControl(null, [Validators.required]),
         teachersMeetingFile: new FormControl(null, [Validators.required]),
         piggyBankSlider: new FormControl([], [Validators.required]),
-        piggyBankDescription: new FormControl(null, [Validators.required]), 
-      }); 
+        piggyBankDescription: new FormControl(null, [Validators.required]),
+      });
     } else if ( id === this.DEVNAME_STANDARD.LAPSE_PLANNING ) {
       this.formStandard = new FormGroup({
         proposalFundationDescription: new FormControl(null, [Validators.required]),
         proposalFundationFile: new FormControl(null, [Validators.required]),
-        meetingDescription: new FormControl(null, [Validators.required]), 
+        meetingDescription: new FormControl(null, [Validators.required]),
       });
     } else if ( id === this.DEVNAME_STANDARD.ANNUAL_CONVETION ) {
       this.formStandard = new FormGroup({
         step4Description: new FormControl(null, [Validators.required]),
         step3Description: new FormControl(null, [Validators.required]),
-        step2Description: new FormControl(null, [Validators.required]), 
-        step1Description: new FormControl(null, [Validators.required]), 
+        step2Description: new FormControl(null, [Validators.required]),
+        step1Description: new FormControl(null, [Validators.required]),
       });
     }
   }
@@ -225,7 +225,7 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Taller inicial actualizado');
           }, (err: any) => {
-            
+
       this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
 
@@ -238,18 +238,18 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
 
     formData.append('teachersMeetingFile', prepareData.teachersMeetingFile.url ?
     JSON.stringify(prepareData.teachersMeetingFile) : prepareData.teachersMeetingFile);
-    
+
 
     formData.append('teachersMeetingDescription', prepareData.planningMeetingDescription);
     formData.append('piggyBankDescription', prepareData.teachersMeetingDescription);
-    
+
     formData.append('piggyBankSlider', JSON.stringify(this.sliders) );
-  
+
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'AbLeCoins actualizado');
           }, (err: any) => {
-            console.log( err ); 
-      this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+            console.log( err );
+            this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
 
   }
@@ -261,17 +261,17 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
 
     formData.append('proposalFundationFile', prepareData.proposalFundationFile.url ?
     JSON.stringify(prepareData.proposalFundationFile) : prepareData.proposalFundationFile);
-    
+
 
     formData.append('proposalFundationDescription', prepareData.proposalFundationDescription);
     formData.append('meetingDescription', prepareData.meetingDescription);
-    
-  
+
+
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Planificación inicial actualizado');
           }, (err: any) => {
-            console.log( err ); 
-      this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+            console.log( err );
+            this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
   }
 
@@ -285,14 +285,14 @@ export class ActivityFormComponent extends StepsFormComponent implements OnInit,
     formData.append('step3Description', prepareData.step3Description);
     formData.append('step2Description', prepareData.step2Description);
     formData.append('step1Description', prepareData.step1Description);
-    
-  
+
+
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Convención anual actualizado');
           }, (err: any) => {
-            console.log( err ); 
-      this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
+            console.log( err );
+            this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
   }
-  
+
 }

@@ -116,9 +116,20 @@
         <!-- / Dynamic list -->
 
     </div>
+
+    <div class="col-12 form-group">
+        <app-progress (finish)="finishRequest()" *ngIf="showProgress"></app-progress>
+    </div>
+    
     <div class="col-12 form-group text-right">
         
-        <button [attr.disabled]=" form.invalid ? true : null " nbButton type="submit" status="primary"
+        <button 
+            [attr.disabled]="showProgress ? true : null"
+            [nbSpinner]="showProgress ? true : null" 
+            nbSpinnerStatus="success"
+            [attr.disabled]=" form.invalid ? true : null" 
+            nbButton type="submit" 
+            status="primary"
             class="col-12 col-md-auto">
             Guardar <nb-icon icon="edit-outline"></nb-icon>
         </button>

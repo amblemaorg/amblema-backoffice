@@ -9,6 +9,7 @@ import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/c
 import { FileValidator, EXTENSIONS } from 'src/app/pages/components/shared/file-validator';
 import { Store } from '@ngxs/store';
 import { AddStep } from 'src/app/store/step.action';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-steps-form',
@@ -21,7 +22,7 @@ export class StepsFormComponent implements OnInit {
   @Input() title: string;
   @Input() kind: string;
 
-  progress = false;
+  showProgress = false;
 
   public form: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
@@ -56,7 +57,7 @@ export class StepsFormComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onSubmit(): void {
     // This is to valid the check list if has a check
@@ -67,7 +68,6 @@ export class StepsFormComponent implements OnInit {
 
     if (this.form.valid && checkListValid) {
 
-      this.progress = true;
       const formData = new FormData();
 
       formData.append('name', this.form.controls.name.value);
@@ -98,14 +98,23 @@ export class StepsFormComponent implements OnInit {
       formData.append('hasChecklist', this.form.controls.hasChecklist.value);
       formData.append('hasUpload', this.form.controls.hasUpload.value);
 
-      this.stepService.setStep(formData).subscribe(response => {
-        this.resetForm();
-        this.store.dispatch( new AddStep(response) );
-        this.toastr.registerSuccess('Registro', 'Paso registrado');
-      }, (err: any) => {
+      this.showProgress = true;
 
+      this.stepService.setStep(formData).subscribe((response: HttpEvent<any>) => {
+
+        switch (response.type) {
+          case HttpEventType.Response:
+
+            this.resetForm();
+            this.store.dispatch(new AddStep(response.body));
+            this.toastr.registerSuccess('Registro', 'Paso registrado');
+            break;
+
+        }
+      }, (err: any) => {
+        this.showProgress = false;
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
-        this.progress = false;
+
       });
     }
   }
@@ -145,7 +154,6 @@ export class StepsFormComponent implements OnInit {
   resetForm() {
     this.form.reset();
     this.submitted = false;
-    this.progress = false;
     this.checklist = [];
   }
 
@@ -175,12 +183,12 @@ export class StepsFormComponent implements OnInit {
   }
 
   protected confirmAction() {
-      this.checklist = Object.assign([], this.checklist);
-      if (this.MODE_LIST === ACTION.EDIT) {
-        this.checklist[this.ID_ITEM].name = this.form.controls.checklist.value;
-      }
-      this.MODE_LIST = ACTION.CREATE;
-      this.form.controls.checklist.reset();
+    this.checklist = Object.assign([], this.checklist);
+    if (this.MODE_LIST === ACTION.EDIT) {
+      this.checklist[this.ID_ITEM].name = this.form.controls.checklist.value;
+    }
+    this.MODE_LIST = ACTION.CREATE;
+    this.form.controls.checklist.reset();
   }
 }
 

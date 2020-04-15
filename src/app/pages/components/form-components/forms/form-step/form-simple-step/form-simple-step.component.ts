@@ -8,6 +8,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { VIDEO_PATTERN } from '../../../shared/constant/validation-patterns-list';
 import { Store } from '@ngxs/store';
 import { DeleteStep, UpdateStep } from 'src/app/store/step.action';
+import { HttpEventType, HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-form-simple-step',
@@ -19,6 +20,7 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
   @Input() data: Step;
 
   protected oldData: Step;
+  showProgress = false;
 
   constructor(
     public stores: Store,
@@ -118,8 +120,10 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       formData.append('hasUpload', String(this.data.hasUpload));
       formData.append('status', String(this.data.status));
 
+      this.showProgress = true;
+
       // Update step
-      this.updateStepService.updateStep(this.data.id, formData).subscribe(response => {
+      this.updateStepService.updateStep(this.data.id, formData).subscribe((response: any) => {
         this.toastrService.updateSuccess('Actualización', 'Paso actualizado');
         this.stores.dispatch(new UpdateStep(response, this.oldData));
       }, (err: any) => {
@@ -129,9 +133,13 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
   }
 
+  finishRequest() {
+    this.showProgress = false;
+  }
+
   confirmAction() {
     if (this.MODE_LIST === this.ACTION.EDIT) {
-      this.checklist[this.ID_ITEM] =  { name: this.form.controls.checklist.value, id: this.checklist[this.ID_ITEM].id } ;
+      this.checklist[this.ID_ITEM] = { name: this.form.controls.checklist.value, id: this.checklist[this.ID_ITEM].id };
     }
     this.MODE_LIST = this.ACTION.CREATE;
     this.form.controls.checklist.reset();

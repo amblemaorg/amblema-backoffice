@@ -39,7 +39,7 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
 
     if (this.form.valid && checkListValid) {
 
-      this.progress = true;
+      this.showProgress = true;
       const formData = new FormData();
 
       formData.append('name', this.form.controls.name.value);
@@ -86,7 +86,7 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
       }, (err: any) => {
 
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
-        this.progress = false;
+        this.showProgress = false;
       } );
     }
   }

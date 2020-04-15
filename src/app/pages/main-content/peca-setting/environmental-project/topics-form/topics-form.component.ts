@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopicsFormComponent implements OnInit {
 
+  topics = [{ name: 'Proyecto ambienta' }, { name: 'Proyecto ambienta' }]
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addTopics() {
+    this.topics.push({ name: 'Nuevo tema' });
   }
 
 }

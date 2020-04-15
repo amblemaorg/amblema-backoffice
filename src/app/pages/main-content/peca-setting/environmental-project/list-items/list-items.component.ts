@@ -51,4 +51,6 @@ export class ListItemsComponent implements OnInit {
     this.MODE_LIST = ACTION.CREATE;
     this.control.reset();
   }
+
+  onEnter() {  if( this.control.value ) this.addItem() }
 }

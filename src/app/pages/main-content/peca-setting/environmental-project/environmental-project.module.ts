@@ -7,7 +7,9 @@ import { LapseFormComponent } from './lapse-form/lapse-form.component';
 import { ObjectiveFormComponent } from './objective-form/objective-form.component';
 import { TopicsFormComponent } from './topics-form/topics-form.component';
 import { EnvironmentalProjectComponent } from './environmental-project.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbRadioModule, NbAlertModule, NbIconModule } from '@nebular/theme';
+import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,6 +17,11 @@ import { NbCardModule } from '@nebular/theme';
   imports: [
     CommonModule,
     NbCardModule,
+    ReactiveInputModule,
+    NbRadioModule,
+    FormsModule,
+    NbAlertModule,
+    NbIconModule,
     EnvironmentalProjectRoutingModule
   ]
 })

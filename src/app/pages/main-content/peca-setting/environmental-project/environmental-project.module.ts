@@ -6,15 +6,23 @@ import { MainFormComponent } from './main-form/main-form.component';
 import { ObjectiveFormComponent } from './objective-form/objective-form.component';
 import { TopicsFormComponent } from './topics-form/topics-form.component';
 import { EnvironmentalProjectComponent } from './environmental-project.component';
-import { NbCardModule, NbRadioModule, NbAlertModule, NbIconModule, NbButtonModule, NbListModule, NbAccordionModule } from '@nebular/theme';
+import { NbCardModule, NbRadioModule, NbAlertModule, NbIconModule, NbButtonModule, NbListModule, NbAccordionModule, NbCheckboxModule } from '@nebular/theme';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListItemsComponent } from './list-items/list-items.component';
 import { FormComponent } from './topics-form/form/form.component';
+import { LevelsFormComponent } from './levels-form/levels-form.component';
 
 
 @NgModule({
-  declarations: [MainFormComponent, ObjectiveFormComponent, TopicsFormComponent, EnvironmentalProjectComponent, ListItemsComponent, FormComponent],
+  declarations: [
+    MainFormComponent,
+    ObjectiveFormComponent,
+    TopicsFormComponent,
+    EnvironmentalProjectComponent,
+    ListItemsComponent,
+    FormComponent,
+    LevelsFormComponent],
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -24,6 +32,7 @@ import { FormComponent } from './topics-form/form/form.component';
     FormsModule,
     NbAlertModule,
     NbButtonModule,
+    NbCheckboxModule,
     NbAccordionModule,
     NbListModule,
     NbIconModule,

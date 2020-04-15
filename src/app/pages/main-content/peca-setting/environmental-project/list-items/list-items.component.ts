@@ -52,5 +52,5 @@ export class ListItemsComponent implements OnInit {
     this.control.reset();
   }
 
-  onEnter() {  if( this.control.value ) this.addItem() }
+  onEnter() {  if ( this.control.value ) { this.addItem(); } }
 }

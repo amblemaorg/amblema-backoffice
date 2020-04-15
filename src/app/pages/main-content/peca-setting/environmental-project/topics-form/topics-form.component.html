@@ -1,15 +1,10 @@
 <div class="row">
     <div class="col-12 form-group">
-        <button
-            (click)="addTopics()"
-            nbButton 
-            status="success">Crear Tema <nb-icon icon="plus-outline"></nb-icon> </button>
+        <button (click)="addTopics()" nbButton status="success">Crear Tema <nb-icon icon="plus-outline"></nb-icon>
+        </button>
     </div>
 
-    <div class="col-12 form-group" *ngFor="let item of topics">
-        <app-form></app-form>
-
-        
-    </div>    
-
+    <div class="col-12 form-group" *ngFor="let item of topics; let i = index">
+        <app-form [index]="i"></app-form>
+    </div>
 </div>

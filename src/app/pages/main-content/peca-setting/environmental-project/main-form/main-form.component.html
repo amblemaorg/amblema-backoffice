@@ -3,17 +3,27 @@
         <app-input-custom [id]="'name-project'" [placeholder]="'Nombre del proyecto ambiental'"
             [label]="'Nombre del proyecto ambiental'"></app-input-custom>
     </div>
-    <div class="order-0 order-lg-12 col-12 col-lg-6">
+    <div class="order-0 col-12 col-lg-6">
         <nb-alert outline accent="info">
-            
+
             <p class="font-weight-bold d-flex">
                 <nb-icon icon="alert-circle-outline"></nb-icon>
-                <span class="ml-2">Recuerda que editas el contenido de acuerdo al lapso seleccionado</span></p>
+                <span class="ml-2">Recuerda que editas el contenido de acuerdo al lapso seleccionado</span>
+            </p>
             <nb-radio-group [(ngModel)]="option" status="primary" class="d-flex">
                 <nb-radio *ngFor="let option of options" [value]="option.value">
                     {{ option.label }}
                 </nb-radio>
             </nb-radio-group>
-            </nb-alert>
+        </nb-alert>
+    </div>
+
+    <div class="col-12 text-center">
+        <nb-alert outline="basic">Configurando el lapso: {{ option }}</nb-alert>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <app-input-custom [label]="'Objectivo general'" [placeholder]="'Objectivo general'" [id]="'general-objective'">
+        </app-input-custom>
     </div>
 </div>

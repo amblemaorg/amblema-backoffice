@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopicsFormComponent implements OnInit {
 
-  topics = [{ name: 'Proyecto ambienta' }, { name: 'Proyecto ambienta' }]
+  topics = [{ name: 'Proyecto ambienta' }];
 
   constructor() { }
 

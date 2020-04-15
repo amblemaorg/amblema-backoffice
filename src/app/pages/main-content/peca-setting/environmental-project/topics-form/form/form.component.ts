@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-form',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormComponent implements OnInit {
 
+  @Input() index: number;
+
+  levels = [{ name: 'Grados'  }];
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  addLevel() { this.levels.push({ name: 'Grados' }); }
 
 }

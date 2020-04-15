@@ -72,6 +72,14 @@ button {
     }
 }
 
+.border .border-left .border-right {
+    border-color: $border-primary-color!important;
+}
+
+hr {
+    border-color: $border-primary-color!important;
+}
+
 /* Stepper component */
 
 .step-content { 

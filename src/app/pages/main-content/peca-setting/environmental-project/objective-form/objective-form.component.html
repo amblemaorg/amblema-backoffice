@@ -1,1 +1,18 @@
-<p>objective-form works!</p>
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <app-input-custom
+            [label]="'Objectivo general'" 
+            [placeholder]="'Objectivo general'"
+            [id]="'general-objective'"></app-input-custom>
+    </div>
+    <div class="col-12 col-lg-6">
+        <app-input-custom
+            [label]="'Tema'" 
+            [placeholder]="'Tema'"
+            [id]="'topics'"></app-input-custom>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <app-list-items [title]="'Lista de objetivos'"></app-list-items>
+    </div>
+</div>

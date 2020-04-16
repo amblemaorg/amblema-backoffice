@@ -4,47 +4,45 @@
     <div class="col-12 form-group">
         <div class="row">
             <div class="col">
-                <app-input-custom 
-                    (keydown.enter)=" onEnter() "
-                    [submitted]="false"
-                    [control]="control" 
-                    [id]="title" [label]="title" [placeholder]="title">
+                <app-input-custom (keydown.enter)=" onEnter() " [submitted]="false" [control]="control" [id]="title"
+                    [label]="title" [placeholder]="title">
                 </app-input-custom>
             </div>
 
-            <div class="col-auto">
-                <button 
-                    nbButton 
-                    status="primary" 
-                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                    *ngIf="MODE_LIST === ACTION.CREATE" 
-                    [attr.disabled]="!control.value ? true : null"
-                    (click)="addItem()" class="m-inline-form">
-                        <nb-icon icon="plus"></nb-icon>
+            <div class="col-12 col-lg-auto lg-inline-parcial mb-3 mb-lg-0 text-right">
+                <button nbButton fullWidth status="primary" style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    *ngIf="MODE_LIST === ACTION.CREATE" [attr.disabled]="!control.value ? true : null"
+                    (click)="addItem()">
+                    <nb-icon icon="plus"></nb-icon>
                 </button>
 
-                <div class="btn-group m-inline-parcial" role="group"
-                                                *ngIf="MODE_LIST === ACTION.EDIT">
-                                                <button style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline
-                                                    nbButton status="info" type="button" class="btn btn-outline-info"
-                                                    (click)="confirmAction()">
-                                                    Confirmar
-                                                </button>
-                                                <button nbButton
-                                                    style="padding-top: 0.6rem; padding-bottom: 0.6rem; border-bottom-left-radius: 0; border-top-left-radius: 0;"
-                                                    outline status="danger" type="button" class="btn btn-outline-danger"
-                                                    (click)="MODE_LIST = ACTION.CREATE; 
+                <div class="btn-group" role="group" *ngIf="MODE_LIST === ACTION.EDIT">
+                    <button 
+                        fullWidth
+                        style="padding-top: 0.6rem; padding-bottom: 0.6rem;" 
+                        outline 
+                        nbButton 
+                        status="info"
+                        type="button" class="btn btn-outline-info" (click)="confirmAction()">
+                        Confirmar
+                    </button>
+                    <button nbButton
+                        style="padding-top: 0.6rem; padding-bottom: 0.6rem; border-bottom-left-radius: 0; border-top-left-radius: 0;"
+                        outline 
+                        fullWidth
+                        status="danger" type="button" class="btn btn-outline-danger" (click)="MODE_LIST = ACTION.CREATE; 
                                 control.enable();
                                 control.reset();">
-                                                    Cancelar
-                                                </button>
-                                            </div>
+                        Cancelar
+                    </button>
+                </div>
 
             </div>
-            
+
             <div class="col-12 form-group">
                 <nb-list>
-                    <nb-list-item *ngFor="let item of list; let i = index;" class="d-flex w-100 justify-content-between border-left border-right">
+                    <nb-list-item *ngFor="let item of list; let i = index;"
+                        class="d-flex w-100 justify-content-between border-left border-right">
                         <span *ngIf="item.name">{{ item.name }}</span>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button nbButton status="info" style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline
@@ -56,10 +54,10 @@
                                 outline type="button" class="btn btn-outline-danger" (click)="onDeleteItem(i)">
                                 <nb-icon icon="trash-2-outline"></nb-icon>
                             </button>
-                        </div> 
+                        </div>
                     </nb-list-item>
                 </nb-list>
-            </div> 
+            </div>
         </div>
     </div>
 </div>

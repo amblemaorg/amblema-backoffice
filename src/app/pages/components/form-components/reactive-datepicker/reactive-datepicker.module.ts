@@ -5,9 +5,12 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NbInputModule } from '@nebular/theme';
 import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
+import { DatepickerRangeComponent } from './datepicker-range/datepicker-range.component';
 
 @NgModule({
-  declarations: [DatepickerComponent],
+  declarations: [
+    DatepickerComponent,
+    DatepickerRangeComponent],
   imports: [
     CommonModule,
     BsDatepickerModule.forRoot(),
@@ -17,7 +20,8 @@ import { ReactiveValidationModule } from '../reactive-validation/reactive-valida
     ReactiveValidationModule,
   ],
   exports: [
-    DatepickerComponent
+    DatepickerComponent,
+    DatepickerRangeComponent,
   ],
 })
 export class ReactiveDatepickerModule { }

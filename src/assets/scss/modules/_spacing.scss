@@ -9,3 +9,9 @@
         margin-top: 26px;
     }
 }
+
+.lg-inline-parcial {
+    @include screen( $breakpoint-lg ) {
+        margin-top: 26px;
+    }
+}

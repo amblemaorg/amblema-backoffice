@@ -14,6 +14,8 @@ import { SetCoordinatorUser, CoordinatorUserState, UpdateCoordinatorUser } from 
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { NORMAL_TEXT_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { Observable, Subscription } from 'rxjs';
+import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
+import { RolesState } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-coordinators-users-form',
@@ -21,6 +23,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class CoordinatorsUsersFormComponent extends DetailsForm implements OnInit, OnChanges, OnDestroy {
 
+  @Select(RolesState.roles) role$: Observable<Role[]>;
   @Select(CoordinatorUserState.coordinatorUser) user$: Observable<any>;
   subscription: Subscription;
 
@@ -73,6 +76,16 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
       this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.form.get('password').updateValueAndValidity();
       this.idState = null;
+
+
+      this.subscription = this.role$.subscribe(response => {
+        response.find(value => {
+
+          if (value.devName === DEVNAME_ROLE.COORDINADOR) {
+            this.form.controls.role.setValue(value.id);
+          }
+        });
+      });
     }
   }
 

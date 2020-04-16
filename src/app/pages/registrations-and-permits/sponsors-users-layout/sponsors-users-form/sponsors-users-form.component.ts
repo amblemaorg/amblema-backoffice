@@ -12,6 +12,8 @@ import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
 import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 import { SetSponsorUser, SponsorUserState, UpdateSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
+import { RolesState } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-sponsors-users-form',
@@ -19,6 +21,8 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 })
 export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, OnChanges {
+
+  @Select(RolesState.roles) role$: Observable<Role[]>;
 
   @Select(SponsorUserState.sponsorUser) user$: Observable<any>;
   subscription: Subscription;
@@ -88,6 +92,15 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
       this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.form.get('password').updateValueAndValidity();
       this.idState = null;
+
+      this.subscription = this.role$.subscribe(response => {
+        response.find(value => {
+
+          if (value.devName === DEVNAME_ROLE.SPONSOR) {
+            this.form.controls.role.setValue(value.id);
+          }
+        });
+      });
     }
   }
 

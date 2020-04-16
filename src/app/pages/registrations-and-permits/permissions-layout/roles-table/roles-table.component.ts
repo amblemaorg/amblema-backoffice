@@ -59,7 +59,12 @@ export class RolesTableComponent extends BaseTable implements TableActions, OnIn
       case ACTION.DELETE:
         this.service.deleteRole( event.data.id ).subscribe( (response) => {
           this.store.dispatch( new DeleteRole( event.data ) );
-        });
+        }, () => {
+
+        if ( event.data.isStandard ) {
+          this.toastr.error('Error', 'No puedes eliminar un rol estandarizado');
+        }
+        } );
         break;
     }
   }

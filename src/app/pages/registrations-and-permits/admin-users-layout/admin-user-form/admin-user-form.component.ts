@@ -14,6 +14,8 @@ import { SetAdminUser, AdminUserState, UpdateAdminUser } from 'src/app/store/use
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/models/user/admin-user.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { RolesState } from 'src/app/store/role.action';
+import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-admin-user-form',
@@ -21,6 +23,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 })
 export class AdminUserFormComponent extends DetailsForm implements OnInit, OnChanges, OnDestroy {
 
+  @Select(RolesState.roles) role$: Observable<Role[]>;
   @Select(AdminUserState.adminUser) user$: Observable<any>;
   subscription: Subscription;
 
@@ -82,6 +85,16 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
       this.restar(); // To restar form
       // Title modal
       this.title = 'Registrar usuario administrador';
+
+      this.subscription = this.role$.subscribe(response => {
+        response.find(value => {
+
+          if (value.devName === DEVNAME_ROLE.ADMIN) {
+            this.form.controls.role.setValue(value.id);
+          }
+        });
+      });
+
     }
   }
 

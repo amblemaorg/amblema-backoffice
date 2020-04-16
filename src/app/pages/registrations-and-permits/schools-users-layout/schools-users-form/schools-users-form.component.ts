@@ -16,6 +16,8 @@ import { Store, Select } from '@ngxs/store';
 import { SetSchoolUser, SchoolUserState, UpdateSchoolUser } from 'src/app/store/user-store/school-user.action';
 import { Subscription, Observable } from 'rxjs';
 import { SchoolUser } from 'src/app/models/user/school.model';
+import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
+import { RolesState } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-schools-users-form',
@@ -23,6 +25,7 @@ import { SchoolUser } from 'src/app/models/user/school.model';
 })
 export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnChanges, OnDestroy {
 
+  @Select(RolesState.roles) role$: Observable<Role[]>;
   @Select( SchoolUserState.schoolUser ) user$: Observable<any>;
   subscription: Subscription;
 
@@ -115,6 +118,15 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
       this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.form.get('password').updateValueAndValidity();
       this.idState = null;
+
+      this.subscription = this.role$.subscribe(response => {
+        response.find(value => {
+
+          if (value.devName === DEVNAME_ROLE.SCHOOL) {
+            this.form.controls.role.setValue(value.id);
+          }
+        });
+      });
     }
   }
 

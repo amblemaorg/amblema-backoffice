@@ -1,0 +1,22 @@
+@import '../../../../../../assets/scss/variables';
+
+::ng-deep .bs-datepicker-container {
+    padding: 0!important;
+}
+
+::ng-deep .theme-green .bs-datepicker-head {
+    background-color: $color-primary!important;
+}
+
+::ng-deep .theme-green .bs-datepicker-body 
+table td span.selected, .theme-green .bs-datepicker-body
+table td.selected span, .theme-green .bs-datepicker-body
+table td span[class*="select-"]:after, 
+.theme-green .bs-datepicker-body table td[class*="select-"] span:after {
+    background-color: $color-primary!important;
+}
+
+::ng-deep .bs-datepicker {
+    border-radius: 0.25rem!important;
+    box-shadow: 0 8px 20px 0 rgba(218,224,235,.6)!important;
+}

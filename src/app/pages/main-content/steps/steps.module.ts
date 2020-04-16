@@ -7,6 +7,7 @@ import { ModalModule } from '../../components/shared/modal/modal-forms/modal.mod
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveTextAreaModule } from '../../components/form-components/reactive-text-area/reactive-text-area.module';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [

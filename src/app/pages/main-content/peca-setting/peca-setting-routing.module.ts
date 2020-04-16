@@ -41,6 +41,11 @@ const routes: Routes = [
         path: 'admin-lapses',
         loadChildren: () => import('./admin-year-lapses/admin-lapses/admin-lapses.module').
         then(m => m.AdminLapsesModule)
+      },
+      {
+        path: 'environmental-project',
+        loadChildren: () => import('./environmental-project/environmental-project.module').
+        then(m => m.EnvironmentalProjectModule)
       }
     ]
   }

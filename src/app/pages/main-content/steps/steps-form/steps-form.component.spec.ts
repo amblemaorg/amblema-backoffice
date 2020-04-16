@@ -18,6 +18,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { StepState } from 'src/app/store/step.action';
 import { HttpClientModule } from '@angular/common/http';
+import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
 
 describe('StepsFormComponent', () => {
   let component: StepsFormComponent;
@@ -33,6 +34,7 @@ describe('StepsFormComponent', () => {
         NbRadioModule,
         NbListModule,
         NbAlertModule,
+        ProgressModule,
         ReactiveFormsModule,
         FormsModule,
         NbSpinnerModule,

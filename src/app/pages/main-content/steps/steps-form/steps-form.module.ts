@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
+import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/components/form-component
     CommonModule,
     ReactiveInputModule,
     ModalModule,
+    ProgressModule,
     NbRadioModule,
     NbCheckboxModule,
     NbAlertModule,

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnDestroy, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/helper/loading.service';
 
@@ -9,6 +9,8 @@ import { LoadingService } from 'src/app/services/helper/loading.service';
 })
 export class ProgressComponent implements AfterViewInit, OnDestroy {
 
+  @Output() finish = new EventEmitter<any>();
+
   subscription: Subscription;
 
   constructor(
@@ -18,7 +20,20 @@ export class ProgressComponent implements AfterViewInit, OnDestroy {
   }
 
   /* This code block is for access the data loading services */
-  ngAfterViewInit(): void { }
+  ngAfterViewInit(): void {
+
+    this.subscription = this.loadingService.porcent$.subscribe( response => {
+
+      if ( response === 0 ) {
+
+        setTimeout(() => {
+          this.finish.emit();
+        }, 2500);
+      }
+
+    } );
+
+  }
 
   ngOnDestroy(): void {
     if ( this.subscription ) {

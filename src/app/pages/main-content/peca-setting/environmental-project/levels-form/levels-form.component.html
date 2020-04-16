@@ -1,0 +1,47 @@
+<nb-accordion class="shadow-none border">
+    <nb-accordion-item [expanded]="index === 0 ? true : false">
+        <nb-accordion-item-header>
+            <nb-icon icon="trending-up-outline" class="mr-2"></nb-icon> Nivel escolar {{  index + 1 }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+            <div class="row">
+                <div class="col-12">
+                    <label class="label">Niveles</label>
+                    <div class="d-block">
+                        <nb-checkbox *ngFor="let item of options" status="primary" class="mr-4 mb-2">{{ item.label }}
+                        </nb-checkbox>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <app-datepicker-range [label]="'Semanas'"></app-datepicker-range>
+                </div>
+
+                <div class="col-12 col-lg-6 form-group">
+                    <label class="label">Tiempo estimado de ejecución</label>
+                    <input type="text" class="form-control" fullWidth nbInput mask="00:00" placeholder="HH:MM">
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <app-list-items [title]="'Lista de técnicas'"></app-list-items>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <app-list-items [title]="'Lista de actividades'"></app-list-items>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <app-list-items [title]="'Lista de recursos'"></app-list-items>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <app-list-items [title]="'Lista de evaluación'"></app-list-items>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <app-list-items [title]="'Lista de material de apoyo'"></app-list-items>
+                </div>
+            </div>
+        </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>

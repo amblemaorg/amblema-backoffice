@@ -14,7 +14,10 @@ export class StepService {
   constructor(private httpClient: HttpClient) { }
 
   setStep(data: FormData): Observable<any> {
-    return this.httpClient.post<any>(`${environment.api}${this.STEP}`, data);
+    return this.httpClient.post<any>(`${environment.api}${this.STEP}`, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   getSteps(): Observable<Step[]> {
@@ -25,7 +28,10 @@ export class StepService {
   }
 
   updateStep( id: string,  data: FormData): Observable<any> {
-    return this.httpClient.put<any>(`${environment.api}${this.STEP}/${id}`, data);
+    return this.httpClient.put<any>(`${environment.api}${this.STEP}/${id}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   deleteStep(id: string): Observable<string> {

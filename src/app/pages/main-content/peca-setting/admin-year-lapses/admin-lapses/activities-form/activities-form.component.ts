@@ -5,6 +5,7 @@ import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/
 import { Store } from '@ngxs/store';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
 import { AddLapseActivity } from 'src/app/store/lapse-activities.action';
+import { HttpEventType, HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-activities-form',
@@ -15,16 +16,17 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
 
   @Input() lapse: string;
 
+  showProgress = false;
 
   constructor(
     public store: Store,
     private lapseActivityService: LapseActivitiesService,
     public toastr: CustomToastrService
-    ) {
-      super( store, toastr);
+  ) {
+    super(store, toastr);
   }
 
-  ngOnInit(  ): void {
+  ngOnInit(): void {
     this.form.addControl('hasDate', new FormControl(false));
   }
 
@@ -70,24 +72,24 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
       formData.append('hasChecklist', this.form.controls.hasChecklist.value);
       formData.append('hasUpload', this.form.controls.hasUpload.value);
       formData.append('hasDate', this.form.controls.hasDate.value);
+      this.showProgress = true;
+      this.lapseActivityService.createActivity(this.lapse, formData).subscribe((response: HttpEvent<any>) => {
 
-      this.lapseActivityService.createActivity( this.lapse, formData ).subscribe( response => {
-        this.store.dispatch( new AddLapseActivity( response, this.lapse ) );
-
-        this.resetForm();
-
-        this.form.controls.hasFile.setValue(false);
-        this.form.controls.hasUpload.setValue(false);
-        this.form.controls.hasDate.setValue(false);
-        this.form.controls.hasVideo.setValue(false);
-        this.form.controls.hasChecklist.setValue(false);
-
-        this.toastr.registerSuccess('Registro', 'Actividad registrada');
+        if (HttpEventType.Response === response.type) {
+          this.store.dispatch(new AddLapseActivity(response.body, this.lapse));
+          this.resetForm();
+          this.form.controls.hasFile.setValue(false);
+          this.form.controls.hasUpload.setValue(false);
+          this.form.controls.hasDate.setValue(false);
+          this.form.controls.hasVideo.setValue(false);
+          this.form.controls.hasChecklist.setValue(false);
+          this.toastr.registerSuccess('Registro', 'Actividad registrada');
+        }
       }, (err: any) => {
 
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
         this.showProgress = false;
-      } );
+      });
     }
   }
 

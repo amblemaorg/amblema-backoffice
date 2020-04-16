@@ -38,6 +38,8 @@ export class PagesComponent implements AfterViewInit {
     loading = false;
 
     ngAfterViewInit() {
-        this.menuSetUp.renderMenu();
+        setTimeout(() => {
+            this.menuSetUp.renderMenu();
+        });
     }
 }

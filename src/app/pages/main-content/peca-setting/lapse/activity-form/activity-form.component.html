@@ -39,9 +39,19 @@
                 </app-input-file>
             </div>
 
+
+            <div class="col-12 form-group" *ngIf="showProgress">
+                <app-progress (finish)="showProgress=false"></app-progress>
+            </div>
+
             <div class="col-12">
                 <hr>
-                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                <button 
+                    [nbSpinner]="showProgress" 
+                    nbSpinnerStatus="success"
+                    [disabled]="showProgress" 
+                    
+                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
                     Guardar <nb-icon icon="edit-outline"></nb-icon>
                 </button>
             </div>
@@ -69,9 +79,19 @@
                 [label]="'Descripción del Bank'" [placeholder]="'Descripción del Bank'">
             </app-text-area-custom>
 
+
+            <div class="col-12 form-group" *ngIf="showProgress">
+                <app-progress (finish)="showProgress=false"></app-progress>
+            </div>
+
             <div class="col-12">
                 <hr>
-                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                <button 
+                    [nbSpinner]="showProgress" 
+                    nbSpinnerStatus="success"
+                    [disabled]="showProgress" 
+                
+                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
                     Guardar <nb-icon icon="edit-outline"></nb-icon>
                 </button>
             </div>
@@ -99,9 +119,19 @@
                 </app-text-area-custom>
             </div>
 
+
+            <div class="col-12 form-group" *ngIf="showProgress">
+                <app-progress (finish)="showProgress=false"></app-progress>
+            </div>
+
             <div class="col-12">
                 <hr>
-                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                <button 
+                    [nbSpinner]="showProgress" 
+                    nbSpinnerStatus="success"
+                    [disabled]="showProgress" 
+                
+                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
                     Guardar <nb-icon icon="edit-outline"></nb-icon>
                 </button>
             </div>
@@ -142,9 +172,18 @@
             </div>
 
 
+            <div class="col-12 form-group" *ngIf="showProgress">
+                <app-progress (finish)="showProgress=false"></app-progress>
+            </div>
+
             <div class="col-12">
                 <hr>
-                <button nbButton type="submit" status="primary" class="col-12 col-md-auto">
+                <button 
+                    [nbSpinner]="showProgress" 
+                    nbSpinnerStatus="success"
+                    [disabled]="showProgress" 
+                
+                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
                     Guardar <nb-icon icon="edit-outline"></nb-icon>
                 </button>
             </div>
@@ -254,8 +293,19 @@
                 <!-- / Dynamic list -->
 
             </div>
+
+            <div class="col-12 form-group" *ngIf="showProgress">
+                <app-progress (finish)="showProgress=false"></app-progress>
+            </div>
+
             <div class="col-12 form-group text-right">
-                <button [attr.disabled]="form.invalid ? true : null " nbButton type="submit" status="primary"
+                <button 
+                    [nbSpinner]="showProgress" 
+                    nbSpinnerStatus="success"
+                    [disabled]="showProgress" 
+                    nbButton 
+                    type="submit" 
+                    status="primary"
                     class="col-12 col-md-auto">
                     Guardar <nb-icon icon="edit-outline"></nb-icon>
                 </button>

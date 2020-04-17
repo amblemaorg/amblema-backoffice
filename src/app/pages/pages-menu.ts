@@ -143,10 +143,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
           /* Take this special snippet into account */
           {
+            title: 'Metas',
+            link: '/pages/content/peca-setting/goals',
+          },
+          
+          {
             title: 'Proyecto ambiental',
             link: '/pages/content/peca-setting/environmental-project',
           },
-
           {
             title: 'Estrategias de actividades',
             link: '/pages/content/peca-setting/activity-strategies',

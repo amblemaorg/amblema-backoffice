@@ -43,7 +43,6 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
   constructor(private cd: ChangeDetectorRef) { super(); }
 
   ngOnChanges(): void {
-
     if ( this.control.value !== null ) {
       if (typeof this.control.value.url === 'string' || this.control.value.url instanceof String) {
         this.url = this.control.value.url;

@@ -29,7 +29,10 @@ export class LapseActivitiesService {
   }
 
   updateActivity( id: string, lapse: any, data: FormData ): Observable<any> {
-    return this.httpClient.put<Activity>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`, data).
+    return this.httpClient.put<Activity>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    }).
       pipe(
         map( (records: any) => records )
       );
@@ -40,7 +43,10 @@ export class LapseActivitiesService {
   }
 
   createActivity( lapse: string, data: FormData ): Observable<any> {
-    return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}/${lapse}`, data);
+    return this.httpClient.post<any>(`${environment.api}${this.LAPSE_ACTIVITY}/${lapse}`, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   deleteActivity( id: string, lapse: string ): Observable<any>  {

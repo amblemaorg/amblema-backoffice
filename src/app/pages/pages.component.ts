@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, AfterContentChecked, AfterViewChecked } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { NbAuthService } from '@nebular/auth';
 import { NavigationStart, Router, NavigationEnd, NavigationCancel, NavigationError, Event } from '@angular/router';
 import { MenuSetUp } from './pages-menu-service';
@@ -38,6 +38,8 @@ export class PagesComponent implements AfterViewInit {
     loading = false;
 
     ngAfterViewInit() {
-        this.menuSetUp.renderMenu();
+        setTimeout(() => {
+            this.menuSetUp.renderMenu();
+        }, 500);
     }
 }

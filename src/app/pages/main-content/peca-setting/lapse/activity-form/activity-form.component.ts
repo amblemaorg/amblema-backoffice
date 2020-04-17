@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { StepsFormComponent } from '../../../steps/steps-form/steps-form.component';
 import { Store, Select } from '@ngxs/store';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -10,14 +10,14 @@ import { STATUS } from 'src/app/helpers/text-content/status';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
 import { Slider } from 'src/app/models/web/slider.model';
-import { ThrowStmt } from '@angular/compiler';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.scss']
 })
-export class ActivityFormComponent extends StepsFormComponent implements AfterViewInit, OnChanges {
+export class ActivityFormComponent extends StepsFormComponent implements AfterViewInit {
 
   @Select(LapseActivityState.selectedActivity) activity$: Observable<Activity>;
   subscription: Subscription;
@@ -27,8 +27,6 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
   formStandard: FormGroup;
   formCoin: FormGroup;
-
-
 
   readonly DEVNAME_STANDARD = {
     INITIAL_WORKSHOP: 'initialworkshop',
@@ -40,10 +38,12 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
   data: any;
   sliders: Slider[] = [];
   showSlider = false;
+  showProgress = false;
 
   oldData: any;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private lapseActivityService: LapseActivitiesService,
     public store: Store,
     public toastr: CustomToastrService,
@@ -52,49 +52,32 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     // Toggles
     this.form.addControl('status', new FormControl(false));
+
+    this.subscription = this.activity$.subscribe((response: any) => {
+      this.data = response;
+
+      if (this.data.isStandard) {
+        this.createForm(this.id);
+        if ( this.formStandard  ) {
+          this.formStandard.patchValue(this.data);
+
+        }
+        if (this.id === this.DEVNAME_STANDARD.AMBLE_COINS) {
+          const value: any = JSON.stringify(this.formStandard.controls.piggyBankSlider.value);
+          this.sliders = JSON.parse(value);
+          this.sliders = Object.assign([], this.sliders);
+        }
+      } else {
+        if ( this.form ) {
+          this.form.patchValue(response);
+          this.basicValidation();
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
-    // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    // Add 'implements AfterViewInit' to the class.
-    // Get form
-    this.subscription = this.activity$.subscribe((response: any) => {
-      this.data = response;
-
-      if (this.data.isStandard) {
-        this.createForm(this.id);
-        this.formStandard.patchValue(this.data);
-        if (this.id === this.DEVNAME_STANDARD.AMBLE_COINS) {
-          const value: any = JSON.stringify(this.formStandard.controls.piggyBankSlider.value);
-          this.sliders = JSON.parse(value);
-          this.sliders = Object.assign([], this.sliders);
-        }
-      } else {
-        this.form.patchValue(response);
-        this.basicValidation();
-      }
-    });
-  }
-
-  ngOnChanges(): void {
-
-    // Get form
-    this.subscription = this.activity$.subscribe((response: any) => {
-      this.data = response;
-
-      if (this.data.isStandard) {
-        this.createForm(this.id);
-        this.formStandard.patchValue(this.data);
-        if (this.id === this.DEVNAME_STANDARD.AMBLE_COINS) {
-          const value: any = JSON.stringify(this.formStandard.controls.piggyBankSlider.value);
-          this.sliders = JSON.parse(value);
-          this.sliders = Object.assign([], this.sliders);
-        }
-      } else {
-        this.form.patchValue(response);
-        this.basicValidation();
-      }
-    });
+    this.cd.detectChanges();
   }
 
   onSubmitGeneric(): void {
@@ -144,9 +127,13 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
       formData.append('hasUpload', String(this.data.hasUpload));
       formData.append('status', String(this.data.status));
 
+      this.showProgress = true;
+
       // Update activity
-      this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
-        this.toastr.updateSuccess('Actualización', 'Actividad actualizada');
+      this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe((response: HttpEvent<any>) => {
+        if (HttpEventType.Response === response.type) {
+          this.toastr.updateSuccess('Actualización', 'Actividad actualizada');
+        }
       }, (err: any) => {
         this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
       });
@@ -246,7 +233,7 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     formData.append('planningMeetingDescription', prepareData.planningMeetingDescription);
     formData.append('teachersMeetingDescription', prepareData.teachersMeetingDescription);
-
+    this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Taller inicial actualizado');
     }, (err: any) => {
@@ -269,7 +256,7 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     formData.append('piggyBankSlider', JSON.stringify(this.sliders));
 
-
+    this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'AbLeCoins actualizado');
     }, (err: any) => {
@@ -290,7 +277,7 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     formData.append('proposalFundationDescription', prepareData.proposalFundationDescription);
     formData.append('meetingDescription', prepareData.meetingDescription);
 
-
+    this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Planificación inicial actualizado');
     }, (err: any) => {
@@ -311,7 +298,7 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     formData.append('step2Description', prepareData.step2Description);
     formData.append('step1Description', prepareData.step1Description);
 
-
+    this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       console.log(response);
       this.toastr.updateSuccess('Actualización', 'Convención anual actualizado');

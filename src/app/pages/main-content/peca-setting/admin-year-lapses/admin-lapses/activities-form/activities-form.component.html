@@ -142,8 +142,14 @@
 
         </div>
 
+        <div class="col-12">
+            <app-progress *ngIf="showProgress" (finish)="showProgress=false"></app-progress>
+        </div>
     </form>
     <button 
+        [nbSpinner]="showProgress" 
+        nbSpinnerStatus="success"
+        [disabled]="showProgress"
         (click)="onSubmit()"
         nbButton 
         status="success" 

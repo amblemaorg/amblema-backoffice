@@ -10,7 +10,8 @@ import {
   NbCheckboxModule,
   NbIconModule,
   NbListModule,
-  NbAlertModule } from '@nebular/theme';
+  NbAlertModule,
+  NbSpinnerModule} from '@nebular/theme';
 import { ActivityBoardComponent } from './activity-board/activity-board.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SpecialToggleComponent } from './special-toggle/special-toggle.component';
@@ -22,6 +23,7 @@ import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { ButtonDeleteComponent } from './button-delete/button-delete.component';
+import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { ButtonDeleteComponent } from './button-delete/button-delete.component';
     NbButtonModule,
     ReactiveTextAreaModule,
     ReactiveInputModule,
+    ProgressModule,
+    NbSpinnerModule,
     NbIconModule,
     ReactiveDatepickerModule,
     NbListModule,

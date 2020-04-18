@@ -12,7 +12,7 @@ export class DiagnosticTableComponent extends BaseTable implements OnInit {
   data = [{
     grades: 'Primer grado',
     goals: '30'
-  }]
+  }];
 
   constructor() {
     super();
@@ -32,12 +32,12 @@ export class DiagnosticTableComponent extends BaseTable implements OnInit {
       grades: {
         title: 'Grados',
         type: 'text'
-      }, 
+      },
       goals: {
         title: 'Metas',
         type: 'text'
       }
-    }; 
+    };
 
     this.source.load( this.data );
   }

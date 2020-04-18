@@ -7,6 +7,7 @@ import { NbCardModule, NbRadioModule, NbAlertModule } from '@nebular/theme';
 import { DiagnosticRadioComponent } from './diagnostic-radio/diagnostic-radio.component';
 import { DiagnosticTableComponent } from './diagnostic-table/diagnostic-table.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     NbRadioModule,
     NbAlertModule,
+    Ng2SmartTableModule,
     NbCardModule,
     ReactiveFormsModule,
     FormsModule,

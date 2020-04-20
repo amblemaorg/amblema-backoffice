@@ -237,7 +237,6 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Taller inicial actualizado');
     }, (err: any) => {
-
       this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
 

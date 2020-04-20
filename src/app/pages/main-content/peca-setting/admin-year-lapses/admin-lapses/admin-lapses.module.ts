@@ -59,8 +59,7 @@ import { ProgressModule } from 'src/app/pages/components/shared/progress/progres
     ReactiveFormsModule,
     NbAlertModule,
     ModalModule,
-    // Call custom module
-
+    ProgressModule,
   ]
 })
 export class AdminLapsesModule { }

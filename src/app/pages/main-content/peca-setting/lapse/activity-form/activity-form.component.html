@@ -39,20 +39,15 @@
                 </app-input-file>
             </div>
 
-
             <div class="col-12 form-group" *ngIf="showProgress">
                 <app-progress (finish)="showProgress=false"></app-progress>
             </div>
 
             <div class="col-12">
                 <hr>
-                <button 
-                    [nbSpinner]="showProgress" 
-                    nbSpinnerStatus="success"
-                    [disabled]="showProgress" 
-                    
-                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
-                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
+                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
+                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
                 </button>
             </div>
         </form>
@@ -71,14 +66,11 @@
                 [submitted]="false" [control]="formStandard.get('teachersMeetingFile')">
             </app-input-file>
 
-            <app-slider-standard 
-              
-                [sliders]="sliders"></app-slider-standard>
+            <app-slider-standard [sliders]="sliders"></app-slider-standard>
             <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [submitted]="false"
                 [control]="formStandard.get('piggyBankDescription')" [id]="data.id + 'piggyBankDescription'"
                 [label]="'Descripción del Bank'" [placeholder]="'Descripción del Bank'">
             </app-text-area-custom>
-
 
             <div class="col-12 form-group" *ngIf="showProgress">
                 <app-progress (finish)="showProgress=false"></app-progress>
@@ -86,13 +78,10 @@
 
             <div class="col-12">
                 <hr>
-                <button 
-                    [nbSpinner]="showProgress" 
-                    nbSpinnerStatus="success"
-                    [disabled]="showProgress" 
-                
-                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
-                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+
+                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
+                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
+                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
                 </button>
             </div>
         </form>
@@ -100,7 +89,7 @@
         <!-- ######################################### -->
         <!-- Lapse Planning form -->
         <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitLapsePlanning()" [formGroup]="formStandard" 
+        <form (ngSubmit)="onSubmitLapsePlanning()" [formGroup]="formStandard"
             *ngIf="id === this.DEVNAME_STANDARD.LAPSE_PLANNING && data.isStandard && formStandard">
 
             <div class="col-12 col-md ">
@@ -126,13 +115,10 @@
 
             <div class="col-12">
                 <hr>
-                <button 
-                    [nbSpinner]="showProgress" 
-                    nbSpinnerStatus="success"
-                    [disabled]="showProgress" 
-                
-                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
-                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+
+                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
+                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
+                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
                 </button>
             </div>
         </form>
@@ -140,34 +126,30 @@
         <!-- ######################################### -->
         <!-- Anual convention -->
         <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard" 
-        *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_CONVETION && data.isStandard && formStandard">
+        <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard"
+            *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_CONVETION && data.isStandard && formStandard">
 
             <div class="col-12 col-md ">
                 <app-text-area-custom [submitted]="false" [control]="formStandard.get('step1Description')"
-                    [id]="data.id + 'step1Description'" [label]="'Paso 1'"
-                    [placeholder]="'Paso 1'">
+                    [id]="data.id + 'step1Description'" [label]="'Paso 1'" [placeholder]="'Paso 1'">
                 </app-text-area-custom>
-                </div>
+            </div>
 
             <div class="col-12 col-md ">
                 <app-text-area-custom [submitted]="false" [control]="formStandard.get('step2Description')"
-                    [id]="data.id + 'step2Description'" [label]="'Paso 2'"
-                    [placeholder]="'Paso 2'">
+                    [id]="data.id + 'step2Description'" [label]="'Paso 2'" [placeholder]="'Paso 2'">
                 </app-text-area-custom>
             </div>
 
             <div class="col-12 col-md ">
                 <app-text-area-custom [submitted]="false" [control]="formStandard.get('step3Description')"
-                    [id]="data.id + 'step3Description'" [label]="'Paso 3'"
-                    [placeholder]="'Paso 3'">
+                    [id]="data.id + 'step3Description'" [label]="'Paso 3'" [placeholder]="'Paso 3'">
                 </app-text-area-custom>
             </div>
 
             <div class="col-12 col-md ">
                 <app-text-area-custom [submitted]="false" [control]="formStandard.get('step4Description')"
-                    [id]="data.id + 'step4Description'" [label]="'Paso 4'"
-                    [placeholder]="'Paso 4'">
+                    [id]="data.id + 'step4Description'" [label]="'Paso 4'" [placeholder]="'Paso 4'">
                 </app-text-area-custom>
             </div>
 
@@ -178,13 +160,9 @@
 
             <div class="col-12">
                 <hr>
-                <button 
-                    [nbSpinner]="showProgress" 
-                    nbSpinnerStatus="success"
-                    [disabled]="showProgress" 
-                
-                    nbButton type="submit" status="primary" class="col-12 col-md-auto">
-                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
+                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
+                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
                 </button>
             </div>
         </form>
@@ -201,12 +179,8 @@
                 </app-text-area-custom>
             </div>
             <div class="col-12">
-                <app-input-custom 
-                    *ngIf="data.hasVideo" 
-                    [id]="data.id + 'video'" 
-                    [submitted]="false"
-                    [control]="form.get('video')" 
-                    [placeholder]="'URL del video'" [label]="'URL del video'">
+                <app-input-custom *ngIf="data.hasVideo" [id]="data.id + 'video'" [submitted]="false"
+                    [control]="form.get('video')" [placeholder]="'URL del video'" [label]="'URL del video'">
                 </app-input-custom>
             </div>
 
@@ -299,15 +273,10 @@
             </div>
 
             <div class="col-12 form-group text-right">
-                <button 
-                    [nbSpinner]="showProgress" 
-                    nbSpinnerStatus="success"
-                    [disabled]="showProgress" 
-                    nbButton 
-                    type="submit" 
-                    status="primary"
-                    class="col-12 col-md-auto">
-                    Guardar <nb-icon icon="edit-outline"></nb-icon>
+
+                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
+                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
+                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
                 </button>
             </div>
         </form>

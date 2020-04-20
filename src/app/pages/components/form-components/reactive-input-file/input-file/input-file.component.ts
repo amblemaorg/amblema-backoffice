@@ -6,7 +6,7 @@ import { FileValidator, EXTENSIONS } from '../../../shared/file-validator';
 @Component({
   selector: 'app-input-file',
   template: `
-    <div class="form-group">
+    <div class="form-group" *ngIf="control">
 
       <button
         nbButton
@@ -43,16 +43,19 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
   constructor(private cd: ChangeDetectorRef) { super(); }
 
   ngOnChanges(): void {
-    if ( this.control.value !== null ) {
-      if (typeof this.control.value.url === 'string' || this.control.value.url instanceof String) {
-        this.url = this.control.value.url;
-        this.nameFile = this.control.value.name;
-        this.control.setValidators([Validators.required]);
-        this.control.updateValueAndValidity();
-      } else {
-        this.url = null;
-        this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
-        this.control.updateValueAndValidity();
+
+    if (this.control) {
+      if (this.control.value !== null) {
+        if (typeof this.control.value.url === 'string' || this.control.value.url instanceof String) {
+          this.url = this.control.value.url;
+          this.nameFile = this.control.value.name;
+          this.control.setValidators([Validators.required]);
+          this.control.updateValueAndValidity();
+        } else {
+          this.url = null;
+          this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
+          this.control.updateValueAndValidity();
+        }
       }
     }
   }

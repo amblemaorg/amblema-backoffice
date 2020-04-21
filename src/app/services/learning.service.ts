@@ -21,12 +21,18 @@ export class LearningService {
       );
   }
 
-  updateLearning( id: string, data: Learning ): Observable<Learning> {
-    return this.httpClient.put<Learning>(`${environment.api}${this.LEARNING}/${id}`, data);
+  updateLearning( id: string, data: Learning ): Observable<any> {
+    return this.httpClient.put<Learning>(`${environment.api}${this.LEARNING}/${id}`, data, {
+      reportProgress: true,
+      observe:'body'
+    });
   }
 
-  setLearning(data: Learning): Observable<Learning> {
-      return this.httpClient.post<Learning>(`${environment.api}${this.LEARNING}`, data );
+  setLearning(data: Learning): Observable<any> {
+      return this.httpClient.post<Learning>(`${environment.api}${this.LEARNING}`, data, {
+        reportProgress: true,
+        observe: 'events'
+      } );
   }
 
   deleteLearning(id: string): Observable<Learning> {

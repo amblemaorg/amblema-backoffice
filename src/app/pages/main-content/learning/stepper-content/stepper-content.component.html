@@ -76,8 +76,13 @@
         <!-- Final step -->
         <nb-step [hidden]="true">
             <div class="step-container text-center">
-                <h3 class="mb-4">Registro guardado exitosamente</h3>
-    
+                
+                <h3 *ngIf="showProgress" class="mb-4">Por favor, espere.</h3>
+                <app-progress *ngIf="showProgress" (finish)="showProgress=false"></app-progress>
+                
+
+                <div *ngIf="!showProgress">
+                    <h3 class="mb-4">Registro guardado exitosamente</h3>
                 <div class="text-center row d-flex justify-content-center">
                     <div class="col-6 col-lg-auto">
                         <button nbButton class="btn btn-primary col-12 col-lg-auto" (click)="stepper.reset()">
@@ -97,6 +102,8 @@
                             class="btn btn-outline-secondary col-12 col-lg-auto" >Finalizar</button>
                     </div>
                 </div>
+                </div>
+                
             </div>
         </nb-step><!-- / End -->
     </nb-stepper>

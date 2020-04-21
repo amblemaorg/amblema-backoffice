@@ -5,12 +5,12 @@ import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/m
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { NbCheckboxModule
-  ,NbIconModule
-  ,NbListModule
-  ,NbToastrModule
-  ,NbThemeModule
-  ,NbAlertModule
-  ,NbSpinnerModule } from '@nebular/theme';
+  , NbIconModule
+  , NbListModule
+  , NbToastrModule
+  , NbThemeModule
+  , NbAlertModule
+  , NbSpinnerModule } from '@nebular/theme';
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

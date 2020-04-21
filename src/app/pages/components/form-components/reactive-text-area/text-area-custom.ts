@@ -4,7 +4,7 @@ import { AbstractReactive } from '../abstract-reactive';
 @Component({
     selector: 'app-text-area-custom',
     template: `
-        <div *ngIf="show">
+        <div *ngIf="show && control">
             <label [for]='id' class="label">{{label}}</label>
             <textarea
                 [id]='id'
@@ -34,7 +34,7 @@ export class TextAreaCustomComponent extends AbstractReactive implements AfterCo
     value: string;
     show = false;
 
-    constructor( private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef) {
         super();
     }
 
@@ -48,9 +48,15 @@ export class TextAreaCustomComponent extends AbstractReactive implements AfterCo
     // }
 
     ngAfterContentChecked() {
-        this.show = true;
-        this.value = this.control.value ? this.control.value : null;
-        this.length = this.value ? this.value.length : 0;
+
+        if (this.control) {
+            this.show = true;
+            if (this.max > 0) {
+                this.value = this.control.value ? this.control.value : null;
+                this.length = this.value ? this.value.length : 0;
+
+            }
+        }
         this.cd.detectChanges();
     }
 

@@ -25,6 +25,7 @@ import { ModalModule } from '../../components/shared/modal/modal-forms/modal.mod
 import { DropdownPriorityComponent } from './dropdown-priority/dropdown-priority.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     Ng2SearchPipeModule,
     NgSelectModule,
     NbButtonModule,
+    ProgressModule,
     FormsModule,
 
     // Add custom module

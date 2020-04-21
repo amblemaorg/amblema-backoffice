@@ -17,7 +17,8 @@ export class TypeCompanyComponent implements AfterViewInit, OnInit {
     { value: '1', label: 'Fabrica' },
     { value: '2', label: 'Tienda' },
     { value: '3', label: 'Negocio personal' },
-    { value: '4', label: 'Otro' }
+    { value: '4', label: 'Hacienda' },
+    { value: '5', label: 'Otro' }
   ];
 
   ngOnInit(): void {

@@ -65,7 +65,11 @@
                                             [href]="requestSelected.webSite">{{ requestSelected.webSite }}</a></p>
                                     <p class="d-flex w-100" *ngIf="requestSelected.companyType !== '4'"><span
                                             class="pl-0 font-weight-bold col-5">Tipo de
-                                            empresa:</span><span>{{ requestSelected.companyType === '1' ?  'Fabrica' :  requestSelected.companyType === '2' ? 'Tienda' : 'Negocio personal' }}</span>
+                                            empresa:</span><span>{{ 
+                                                requestSelected.companyType === '1' ?  'Fabrica' :  
+                                                requestSelected.companyType === '2' ? 'Tienda' : 
+                                                requestSelected.companyType === '3' ? 'Negocio personal' :
+                                                requestSelected.companyType === '4' ? 'Hacienda' : 'Otro' }}</span>
                                     </p>
 
                                     <p *ngIf="requestSelected.companyType === '4'" class="d-flex w-100"><span
@@ -546,7 +550,13 @@
                                             </p>
                                             <p class="d-flex w-100" *ngIf="requestSelected.sponsorCompanyType !== '4'">
                                                 <span class="pl-0 font-weight-bold col-5">Tipo de
-                                                    empresa:</span><span>{{ requestSelected.sponsorCompanyType === '1' ?  'Fabrica' :  requestSelected.sponsorCompanyType === '2' ? 'Tienda' : 'Negocio personal' }}</span>
+                                                    empresa:</span><span>{{ 
+                                                        
+                                                requestSelected.companyType === '1' ?  'Fabrica' :  
+                                                requestSelected.companyType === '2' ? 'Tienda' : 
+                                                requestSelected.companyType === '3' ? 'Negocio personal' :
+                                                requestSelected.companyType === '4' ? 'Hacienda' : 'Otro'    
+                                                    }}</span>
                                             </p>
 
                                             <p *ngIf="requestSelected.sponsorCompanyType === '4'" class="d-flex w-100">

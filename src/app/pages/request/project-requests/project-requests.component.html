@@ -91,6 +91,10 @@
                                         <span>{{ requestSelected.contactLastName }}</span></p>
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Teléfono:</span>
                                         <span>{{ requestSelected.contactPhone }}</span></p>
+
+
+                                    <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Correo:</span>
+                                        <span>{{ requestSelected.contactEmail }}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +256,8 @@
                                                         class="pl-0 font-weight-bold col-5">Cantidad de
                                                         docentes:</span><span>{{ requestSelected.schoolNTeachers }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolNAdministrativeStaff" class="d-flex w-100">
+                                                <p *ngIf="requestSelected.schoolNAdministrativeStaff"
+                                                    class="d-flex w-100">
                                                     <span class="pl-0 font-weight-bold col-5">Cantidad de personal
                                                         administrativo:</span><span>{{ requestSelected.schoolNAdministrativeStaff }}</span>
                                                 </p>
@@ -582,6 +587,10 @@
                                             <p class="d-flex w-100"><span
                                                     class="pl-0 col-5 font-weight-bold">Teléfono:</span>
                                                 <span>{{ requestSelected.sponsorContactPhone }}</span></p>
+
+                                                <p class="d-flex w-100"><span
+                                                    class="pl-0 col-5 font-weight-bold">Correo:</span>
+                                                <span>{{ requestSelected.sponsorContactEmail }}</span></p>
                                         </div>
                                     </div>
                                 </div>

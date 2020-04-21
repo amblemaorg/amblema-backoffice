@@ -110,6 +110,18 @@
                     [placeholder]="'Teléfono de la persona de contacto'"
                     [submitted]="submitted"></app-input-phone>
             </div>
+
+
+            <div class="col-12 col-lg-6">
+                <app-input-email 
+                    [label]="'Correo de la persona de contacto'"
+                    [placeholder]="'Correo de la persona de contacto'"
+        
+                    [control]="form.get('contactEmail')" 
+                    [submitted]="submitted"></app-input-email>
+            </div>
+
+            
         </div> 
 
         <!-- address data -->

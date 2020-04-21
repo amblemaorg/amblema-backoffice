@@ -17,7 +17,8 @@ export class TypeCompanyComponent implements AfterViewInit, OnInit {
     { value: '1', label: 'Fabrica' },
     { value: '2', label: 'Tienda' },
     { value: '3', label: 'Negocio personal' },
-    { value: '4', label: 'Otro' }
+    { value: '4', label: 'Hacienda' },
+    { value: '5', label: 'Otro' }
   ];
 
   ngOnInit(): void {
@@ -32,7 +33,7 @@ export class TypeCompanyComponent implements AfterViewInit, OnInit {
 
   onSelectTypeCompany() {
 
-    if (this.companyType.value === this.option[3].value) {
+    if (this.companyType.value === this.option[4].value) {
       this.companyOtherType.setValidators([Validators.required]);
     } else {
       this.companyOtherType.setValue('');

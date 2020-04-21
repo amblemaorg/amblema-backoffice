@@ -27,9 +27,10 @@ export class SponsorsUsersViewComponent implements OnInit, OnDestroy {
 
       this.data.phase = this.data.phase === '1' ? 'Inicio' :
       this.data.phase === '2' ? 'Interesado' : 'PECA';
+
       this.data.companyType = this.data.companyType === '1' ? 'Fabrica' :
-        this.data.companyType === '2' ? 'Tienda' : this.data.companyType === 3 ? 'Negocio personal' :  'Otro';
-      console.log( this.data );
+         this.data.companyType === '2' ? 'Tienda' : this.data.companyType === '3' ? 'Negocio personal'
+         : this.data.companyType === '4' ? 'Hacienda' : 'Otro' ;
     });
   }
 

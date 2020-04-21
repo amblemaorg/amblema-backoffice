@@ -22,29 +22,29 @@ export class GetLearnings {
 
 export class AddLearning {
     static readonly type = '[Learning] Add Learning';
-    constructor( public payload: Learning ) {}
+    constructor(public payload: Learning) { }
 }
 
 export class UpdateLearning {
     static readonly type = '[Learning] Update Learning';
-    constructor( public newLearning: Learning ) {  }
+    constructor(public newLearning: Learning) { }
 }
 
 export class DeleteLearning {
     static readonly type = '[Learning] Delete Learning';
-    constructor( public payload: Learning ) {}
+    constructor(public payload: Learning) { }
 }
 
 /* Previous selection */
 export class SelectedLearning {
     static readonly type = '[Learning] Selected Learning';
-    constructor( public payload: Learning ) { }
+    constructor(public payload: Learning) { }
 }
 
 /* Clear state selected */
 export class ClearLearning {
     static readonly type = '[Learning] Clear Learning';
-    constructor( ) {}
+    constructor() { }
 }
 
 // -- Step One --
@@ -85,41 +85,41 @@ export class UpdateMedia {
 
 export class SetLearningTwo {
     static readonly type = '[Learning] Set Learning Two';
-    constructor( public payload: Learning ) {}
+    constructor(public payload: Learning) { }
 }
 
 // -- Step Four --
 
 export class SetImage {
     static readonly type = '[Image] Set Image';
-    constructor( public payload: Slider ) { }
+    constructor(public payload: Slider) { }
 }
 
 export class UpdateImage {
     static readonly type = '[Image] Update Image';
-    constructor( public oldImage: Slider, public newImage: Slider ) {}
+    constructor(public oldImage: Slider, public newImage: Slider) { }
 }
 
 export class DeleteImage {
     static readonly type = '[Image] Delete Image';
-    constructor( public payload: Slider ) {}
+    constructor(public payload: Slider) { }
 }
 
 // -- Step Five --
 
 export class SetQuizze {
     static readonly type = '[Quizz] Set Quizze';
-    constructor( public payload: Quizze ) {}
+    constructor(public payload: Quizze) { }
 }
 
 export class UpdateQuizze {
     static readonly type = '[Quizz] Update Quizze';
-    constructor( public oldQuizze: Quizze, public newQuizze: Quizze ) {}
+    constructor(public oldQuizze: Quizze, public newQuizze: Quizze) { }
 }
 
 export class DeleteQuizze {
     static readonly type = '[Quizz] Delete Quizze';
-    constructor( public payload: Quizze ) {}
+    constructor(public payload: Quizze) { }
 }
 
 
@@ -166,7 +166,7 @@ export class LearningState implements NgxsOnInit {
     }
 
     @Selector()
-    static learnings(state: LearningStateModel): Learning[ ] | null {
+    static learnings(state: LearningStateModel): Learning[] | null {
         return state.learnings;
     }
 
@@ -194,7 +194,7 @@ export class LearningState implements NgxsOnInit {
 
     @Action(GetLearnings)
     getLearnings(ctx: StateContext<LearningStateModel>) {
-        this.learningService.getLearnings().subscribe( response => {
+        this.learningService.getLearnings().subscribe(response => {
             response.forEach(value => {
                 value.slider = this.helper.mediaNumberToString(value.slider);
             });
@@ -206,17 +206,17 @@ export class LearningState implements NgxsOnInit {
         });
     }
 
-    @Action( SelectedLearning )
+    @Action(SelectedLearning)
     selectedLearning(ctx: StateContext<LearningStateModel>, action: SelectedLearning) {
-        ctx.setState( {
+        ctx.setState({
             ...ctx.getState(),
             oldLearning: action.payload,
             learning: action.payload
         });
     }
 
-    @Action( ClearLearning )
-    clearLearning( ctx: StateContext<LearningStateModel> ) {
+    @Action(ClearLearning)
+    clearLearning(ctx: StateContext<LearningStateModel>) {
         ctx.setState({
             ...ctx.getState(),
             oldLearning: {
@@ -250,59 +250,55 @@ export class LearningState implements NgxsOnInit {
         });
     }
 
-    @Action( UpdateLearning )
-    updateLearning( ctx: StateContext<LearningStateModel>, action: UpdateLearning ) {
+    @Action(UpdateLearning)
+    updateLearning(ctx: StateContext<LearningStateModel>, action: UpdateLearning) {
 
-        this.learningService.updateLearning( action.newLearning.id, action.newLearning ).subscribe( reponse => {
-            ctx.setState( patch({
+        this.learningService.updateLearning(action.newLearning.id, action.newLearning).subscribe(reponse => {
+            ctx.setState(patch({
                 ...ctx.getState(),
                 learnings: updateItem<Learning>(learning => learning.id === action.newLearning.id, action.newLearning)
-            }) );
+            }));
 
             this.toastr.updateSuccess('Actualización', 'Módulo de aprendizaje actualizado.');
         });
     }
 
     @Action(AddLearning)
-    addLearning(ctx: StateContext<LearningStateModel>, action: AddLearning ) {
+    addLearning(ctx: StateContext<LearningStateModel>, action: AddLearning) {
 
-        this.learningService.setLearning(action.payload).subscribe( response => {
-            response.slider = this.helper.mediaNumberToString(response.slider);
+        action.payload.slider = this.helper.mediaNumberToString(action.payload.slider);
 
-            ctx.setState(patch({
-                ...ctx.getState(),
-                learnings: append([response]),
-            }));
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learnings: append([action.payload]),
+        }));
 
-            // -- Clear learning register --
-            ctx.patchState({
-                learning: {
-                    id: '',
-                    title: '',
-                    name: '',
-                    priority: null,
-                    description: '',
-                    secondaryTitle: '',
-                    secondaryDescription: '',
-                    objectives: [],
-                    slider: [],
-                    images: [],
-                    duration: ' ',
-                    quizzes: []
-                }
-            });
-            this.toastr.registerSuccess('Registro', 'Modulo de aprendizaje registrado correctamente.');
-        }, (err: any) => {
+        // -- Clear learning register --
+        ctx.patchState({
+            learning: {
+                id: '',
+                title: '',
+                name: '',
+                priority: null,
+                description: '',
+                secondaryTitle: '',
+                secondaryDescription: '',
+                objectives: [],
+                slider: [],
+                images: [],
+                duration: ' ',
+                quizzes: []
+            }
         });
     }
 
     @Action(DeleteLearning)
-    deleteLearning( ctx: StateContext<LearningStateModel>, action: DeleteLearning ) {
-        this.learningService.deleteLearning( action.payload.id ).subscribe( response => {
-            ctx.setState( patch({
+    deleteLearning(ctx: StateContext<LearningStateModel>, action: DeleteLearning) {
+        this.learningService.deleteLearning(action.payload.id).subscribe(response => {
+            ctx.setState(patch({
                 ...ctx.getState(),
                 learnings: removeItem<Learning>(learning => learning === action.payload)
-            }) );
+            }));
 
             this.toastr.deleteRegister('Eliminación', 'Modulo de aprendizaje eliminado');
         });
@@ -350,7 +346,7 @@ export class LearningState implements NgxsOnInit {
         ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
-                slider: removeItem<SliderMedia>( sliderMedia => sliderMedia === action.payload )
+                slider: removeItem<SliderMedia>(sliderMedia => sliderMedia === action.payload)
             })
         }));
     }
@@ -380,9 +376,9 @@ export class LearningState implements NgxsOnInit {
 
     // -- Step Four --
 
-    @Action( SetImage )
+    @Action(SetImage)
     setImage(ctx: StateContext<LearningStateModel>, action: SetImage) {
-        ctx.setState( patch({
+        ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
                 ...ctx.getState().learning,
@@ -391,33 +387,33 @@ export class LearningState implements NgxsOnInit {
         }));
     }
 
-    @Action( UpdateImage )
-    updateImage( ctx: StateContext<LearningStateModel>, action: UpdateImage ) {
-        ctx.setState( patch({
+    @Action(UpdateImage)
+    updateImage(ctx: StateContext<LearningStateModel>, action: UpdateImage) {
+        ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
                 ...ctx.getState().learning,
                 images: updateItem<Slider>(image => image === action.oldImage, action.newImage)
             })
-        }) );
+        }));
     }
 
-    @Action( DeleteImage )
-    deleteImage( ctx: StateContext<LearningStateModel>, action: DeleteImage ) {
-        ctx.setState( patch({
+    @Action(DeleteImage)
+    deleteImage(ctx: StateContext<LearningStateModel>, action: DeleteImage) {
+        ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
                 ...ctx.getState().learning,
                 images: removeItem<Slider>(image => image === action.payload)
             })
-        }) );
+        }));
     }
 
     // -- Step Five --
 
-    @Action( SetQuizze )
+    @Action(SetQuizze)
     setQuizze(ctx: StateContext<LearningStateModel>, action: SetQuizze) {
-        ctx.setState( patch({
+        ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
                 ...ctx.getState().learning,
@@ -426,26 +422,26 @@ export class LearningState implements NgxsOnInit {
         }));
     }
 
-    @Action( UpdateQuizze )
-    updateQuizze( ctx: StateContext<LearningStateModel>, action: UpdateQuizze ) {
-        ctx.setState( patch({
+    @Action(UpdateQuizze)
+    updateQuizze(ctx: StateContext<LearningStateModel>, action: UpdateQuizze) {
+        ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
                 ...ctx.getState().learning,
                 quizzes: updateItem<Quizze>(quizze => quizze === action.oldQuizze, action.newQuizze)
             })
-        }) );
+        }));
     }
 
-    @Action( DeleteQuizze )
-    deleteQuizze( ctx: StateContext<LearningStateModel>, action: DeleteQuizze ) {
-        ctx.setState( patch({
+    @Action(DeleteQuizze)
+    deleteQuizze(ctx: StateContext<LearningStateModel>, action: DeleteQuizze) {
+        ctx.setState(patch({
             ...ctx.getState(),
             learning: patch({
                 ...ctx.getState().learning,
                 quizzes: removeItem<Quizze>(quizze => quizze === action.payload)
             })
-        }) );
+        }));
     }
 
 }

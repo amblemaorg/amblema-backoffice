@@ -25,6 +25,7 @@ export interface SponsorUser extends User {
     companyPhone: string;
     contactFirstName: string;
     contactLastName: string;
+    contactEmail: string;
     contactPhone: string;
     image: string;
     webSite: string;

@@ -59,6 +59,7 @@ export class DeleteSponsorUser {
             contactFirstName: '',
             contactLastName: ' ',
             contactPhone: '',
+            contactEmail: '',
             image: '',
             webSite: '',
             status: ' '

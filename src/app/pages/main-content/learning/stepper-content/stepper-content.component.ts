@@ -81,9 +81,9 @@ export class StepperContentComponent implements OnInit, OnChanges {
     } else {
       this.showProgress = true;
       this.learningService.updateLearning( learning.id, learning ).subscribe( response => {
-        this.store.dispatch( new UpdateLearning( response ) )
-      }, ( err:any ) => {
-        console.log(err); 
+        this.store.dispatch( new UpdateLearning( response ) );
+      }, ( err: any ) => {
+        console.log(err);
       });
     }
   }

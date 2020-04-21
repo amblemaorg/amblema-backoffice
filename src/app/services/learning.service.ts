@@ -24,7 +24,7 @@ export class LearningService {
   updateLearning( id: string, data: Learning ): Observable<any> {
     return this.httpClient.put<Learning>(`${environment.api}${this.LEARNING}/${id}`, data, {
       reportProgress: true,
-      observe:'body'
+      observe: 'body'
     });
   }
 

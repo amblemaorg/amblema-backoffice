@@ -18,6 +18,7 @@ import { UserCreationRequestService } from 'src/app/services/request/user-creati
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
+import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
 
 @Component({
   selector: 'app-creation-requests',
@@ -42,11 +43,11 @@ export class CreationRequestsComponent extends BaseTable {
 
   constructor(
 
-     private toast: CustomToastrService,
-     private store: Store,
-     private userCreationRequestService: UserCreationRequestService,
-     private modalService: ModalService,
-     private helper: Utility
+    private toast: CustomToastrService,
+    private store: Store,
+    private userCreationRequestService: UserCreationRequestService,
+    private modalService: ModalService,
+    private helper: Utility
   ) {
     super();
 
@@ -144,10 +145,10 @@ export class CreationRequestsComponent extends BaseTable {
             this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicitud de crear usuario');
           });
         } else {
-           this.userCreationRequestService.deleteUserCreationRequestCoordinator(event.data.id).subscribe(response => {
-             this.store.dispatch(new DeleteUserCreationRequest(event.data));
-             this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicitud de crear usuario');
-           });
+          this.userCreationRequestService.deleteUserCreationRequestCoordinator(event.data.id).subscribe(response => {
+            this.store.dispatch(new DeleteUserCreationRequest(event.data));
+            this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicitud de crear usuario');
+          });
         }
 
         break;
@@ -155,70 +156,71 @@ export class CreationRequestsComponent extends BaseTable {
   }
 
 
-   onApprovedRequest(): void {
-     this.requestSelected = Object.assign({}, this.requestSelected);
-     switch (this.requestSelected.type) {
-       case TYPE_REQUEST.COORDINATOR.ORIGINAL:
-         this.userCreationRequestService.putUserCreationRequestCoordinator(
-           this.requestSelected.id,
-           this.statusSelected.toString()).subscribe(response => {
+  onApprovedRequest(): void {
+    this.requestSelected = Object.assign({}, this.requestSelected);
+    switch (this.requestSelected.type) {
+      case TYPE_REQUEST.COORDINATOR.ORIGINAL:
+        this.userCreationRequestService.putUserCreationRequestCoordinator(
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
 
+            if (this.statusSelected === '2') {
 
-             this.store.dispatch( new SetCoordinatorUser( response ) );
+              this.store.dispatch(new SetCoordinatorUser(response));
 
-             this.requestSelected.status = this.statusSelected;
-
-             this.store.dispatch(new UpdateUserCreationRequest(this.requestSelected, this.oldRequest));
-
-             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
-
-            });
-         break;
-       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-         this.userCreationRequestService.putUserCreationRequestSchool(
-           this.requestSelected.id,
-           this.statusSelected.toString()).subscribe(response => {
-
-             this.store.dispatch(new UpdateUserCreationRequest(this.requestSelected, this.oldRequest));
-
-             //  if (this.requestSelected === '2') {
-             //    this.store.dispatch(new AddProject(response.project));
-             //    this.store.dispatch(new SetSchoolUser(response.school));
-             //    if (response.sponsor.id) {
-             //      this.store.dispatch(new SetSponsorUser(response.sponsor));
-             //    }
-             //  }
-
-             this.requestSelected.status = response.record.status.toString();
-             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
-           });
-         break;
-       case TYPE_REQUEST.SPONSOR.ORIGINAL:
-          this.userCreationRequestService.putUserCreationRequestSponsor(
-            this.requestSelected.id,
-            this.statusSelected.toString()).subscribe(response => {
+              this.requestSelected.status = this.statusSelected;
 
               this.store.dispatch(new UpdateUserCreationRequest(this.requestSelected, this.oldRequest));
 
-             //  if (this.requestSelected === '2') {
-             //    this.store.dispatch(new AddProject(response.project));
-             //    this.store.dispatch(new SetSponsorUser(response.sponsor));
-
-           //    if (response.school.id) {
-           //      this.store.dispatch(new SetSchoolUser(response.school));
-           //    }
-           //  }
-
-
-              this.requestSelected.status = response.record.status.toString();
               this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
-            });
-          break;
-     }
 
-     // ==============================
-     this.store.dispatch(new GetUserCreationRequests());
-   }
+            }
+          });
+        break;
+      case TYPE_REQUEST.SCHOOL.ORIGINAL:
+        this.userCreationRequestService.putUserCreationRequestSchool(
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
+
+            if (this.statusSelected === '2') {
+
+              this.store.dispatch(new SetSchoolUser(response));
+
+              this.requestSelected.status = this.statusSelected;
+
+              this.store.dispatch(new UpdateUserCreationRequest(this.requestSelected, this.oldRequest));
+
+              this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+
+            }
+          });
+        break;
+      case TYPE_REQUEST.SPONSOR.ORIGINAL:
+        this.userCreationRequestService.putUserCreationRequestSponsor(
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
+
+            this.store.dispatch(new UpdateUserCreationRequest(this.requestSelected, this.oldRequest));
+
+            //  if (this.requestSelected === '2') {
+            //    this.store.dispatch(new AddProject(response.project));
+            //    this.store.dispatch(new SetSponsorUser(response.sponsor));
+
+            //    if (response.school.id) {
+            //      this.store.dispatch(new SetSchoolUser(response.school));
+            //    }
+            //  }
+
+
+            this.requestSelected.status = response.record.status.toString();
+            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+          });
+        break;
+    }
+
+    // ==============================
+    this.store.dispatch(new GetUserCreationRequests());
+  }
 
 
   // @Select(UserCreationRequestState.creationRequests) data$: Observable<UserCreationRequest[]>;

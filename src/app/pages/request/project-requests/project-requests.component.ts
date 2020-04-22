@@ -4,7 +4,7 @@ import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
 import { ProjectRequestState, UpdateProjectRequests, DeleteProjectRequests } from 'src/app/store/request/project-requests.action';
 import { Observable } from 'rxjs';
-import { ProjectRequest } from 'src/app/models/request/project-requests.model';
+import { ProjectRequest } from 'src/app/models/request/project-request.model';
 import { Utility } from 'src/app/helpers/utility';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
 import { DatePipe } from '@angular/common';

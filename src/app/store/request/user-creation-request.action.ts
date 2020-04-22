@@ -52,6 +52,7 @@ export class UserCreationRequestState implements NgxsOnInit {
 
     @Action(UpdateUserCreationRequest)
     updateUserCreationRequest(ctx: StateContext<UserCreationRequestModel>, action: UpdateUserCreationRequest) {
+
         ctx.setState(patch({
             ...ctx.getState(),
             userCreationRequests: updateItem<UserCreationRequest>(userCreationRequests =>

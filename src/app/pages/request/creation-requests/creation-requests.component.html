@@ -2,13 +2,14 @@
     <nb-card-header>Solicitudes de nuevo usuario</nb-card-header>
     <nb-card-body>
         <div class="table-responsive">
-            <ng2-smart-table (custom)="onAction($event)" [settings]="settings" [source]="data$ | async"></ng2-smart-table>
+            <ng2-smart-table
+                (custom)="onAction($event)" [settings]="settings" [source]="(data$ | async)"></ng2-smart-table>
         </div>
     </nb-card-body>
 </nb-card>
 
 
-<app-modal [ID]="modal" [title]="'Solicitud de proyecto'" [size]="'lg'" *ngIf="data$ | async">
+<app-modal [ID]="modal" [title]="'Solicitud de proyecto'" [size]="'lg'" *ngIf="(data$ | async)">
     <div content>
         <div class="row">
             <div class="col-12">
@@ -621,7 +622,7 @@
             <!-- ============================================= -->
             <!-- Actions to approved -->
             <!-- ============================================= -->
-            <div class="col-12" *ngIf="status === '1'">
+            <div class="col-12" *ngIf="requestSelected.status === '1'">
                 <hr>
                 <div *ngIf="confirmAction">
                     <label class="label"> Acciones para la solicitud</label>

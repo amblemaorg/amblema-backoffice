@@ -1,15 +1,25 @@
 import { UserCreationRequest } from 'src/app/models/request/user-creation-request.model';
 import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
+import { patch, updateItem, removeItem } from '@ngxs/store/operators';
 
 export interface UserCreationRequestModel {
     userCreationRequests: UserCreationRequest[];
 }
 
 export class GetUserCreationRequests {
-    static readonly type = '[User Creation Requests] Get User Creation Requests';
+    static readonly type = '[User Creation Requests] Get UserCreationRequests';
 }
 
+export class UpdateUserCreationRequest {
+    static readonly type = '[User Creation Request] Update UserCreationRequest';
+    constructor( public newRequest: UserCreationRequest, public oldRequest: UserCreationRequest ) {}
+}
+
+export class DeleteUserCreationRequest {
+    static readonly type = '[User Creation Request] Delete UserCreationRequest';
+    constructor( public payload: UserCreationRequest ) {}
+}
 
 @State<UserCreationRequestModel>({
     name: 'usercreationrequest',
@@ -30,15 +40,30 @@ export class UserCreationRequestState implements NgxsOnInit {
 
     constructor( private userCreationRequestService: UserCreationRequestService ) {}
 
-
     @Action( GetUserCreationRequests )
     getUserCreationRequests(ctx: StateContext<UserCreationRequestModel>) {
-
         this.userCreationRequestService.getUserCreationRequests().subscribe( response => {
             ctx.setState({
+                ...ctx.getState(),
                 userCreationRequests: response
             });
         } );
     }
 
+    @Action(UpdateUserCreationRequest)
+    updateUserCreationRequest(ctx: StateContext<UserCreationRequestModel>, action: UpdateUserCreationRequest) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            userCreationRequests: updateItem<UserCreationRequest>(userCreationRequests =>
+                userCreationRequests.id === action.oldRequest.id, action.newRequest)
+        }));
+    }
+
+    @Action(DeleteUserCreationRequest)
+    deleteUserCreationRequest( ctx: StateContext<UserCreationRequestModel>, action: DeleteUserCreationRequest ) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            userCreationRequests: removeItem<UserCreationRequest>(  userCreationRequests => userCreationRequests.id === action.payload.id )
+        }));
+    }
 }

@@ -26,4 +26,29 @@ export class UserCreationRequestService {
         map((data: any) => data.records)
       );
   }
+
+  putUserCreationRequestSchool( id: string, status: string ): Observable<any> {
+    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`, { status });
+  }
+
+  putUserCreationRequestCoordinator( id: string, status: string ): Observable<any> {
+    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`, { status });
+  }
+
+  putUserCreationRequestSponsor( id: string, status: string ): Observable<any> {
+    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, { status });
+  }
+
+
+  deleteUserCreationRequestSchool( id: string ): Observable<any> {
+    return this.httpClient.delete<string>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`);
+  }
+
+  deleteUserCreationRequestCoordinator( id: string ): Observable<any> {
+    return this.httpClient.delete<string>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`);
+  }
+
+  deleteUserCreationRequestSponsor( id: string ): Observable<any> {
+    return this.httpClient.delete<string>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`);
+  }
 }

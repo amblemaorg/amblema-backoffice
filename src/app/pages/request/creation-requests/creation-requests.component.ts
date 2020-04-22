@@ -1,14 +1,20 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
-import { Select } from '@ngxs/store';
-import { UserCreationRequestState } from 'src/app/store/request/user-creation-request.action';
+import { Select, Store } from '@ngxs/store';
+import { UserCreationRequestState
+  , DeleteUserCreationRequest
+  , UpdateUserCreationRequest
+  , GetUserCreationRequests } from 'src/app/store/request/user-creation-request.action';
 import { Observable } from 'rxjs';
 import { UserCreationRequest } from 'src/app/models/request/user-creation-request.model';
 import { TYPE_REQUEST, REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
 import { DatePipe } from '@angular/common';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
 import { Utility } from 'src/app/helpers/utility';
+import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { ModalService } from 'src/app/services/helper/modal.service';
 
 @Component({
   selector: 'app-creation-requests',
@@ -19,25 +25,24 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
 
   @Select(UserCreationRequestState.creationRequests) data$: Observable<UserCreationRequest[]>;
 
-  data: any = [
-    {
-      idRequest: '000',
-      idProject: '101101',
-      applicant: 'Jose Jose',
-      date: '09/80/2000',
-      status: 'Activo',
-      type: 'Coordinador'
-    }
-  ];
+  modal = 'project-request-modal';
+  requestSelected: any = {};
 
-  constructor( private helper: Utility ) { super(); }
+  status: any;
+
+  statusSelected = '2';
+
+  confirmAction = true;
+  type = TYPE_REQUEST;
+
+  constructor(
+    private toast: CustomToastrService,
+    private store: Store,
+    private userCreationRequestService: UserCreationRequestService,
+    private modalService: ModalService,
+    private helper: Utility ) { super(); }
 
   ngOnInit() {
-
-
-    this.data$.subscribe( response => {
-      console.log( response );
-    } );
 
     this.settings.actions = {
       columnTitle: 'Acciones',
@@ -109,4 +114,96 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
       };
   }
 
+  onAction(event: any): void {
+
+
+    switch (event.action) {
+      case this.ACTION.VIEW:
+        this.requestSelected = event.data;
+        this.status = event.data.record.status;
+        this.modalService.open(this.modal);
+        break;
+      case this.ACTION.DELETE:
+
+        if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
+          this.userCreationRequestService.deleteUserCreationRequestSponsor(event.data.id).subscribe(response => {
+            this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicitud de crear usuario');
+            this.store.dispatch(new DeleteUserCreationRequest(event.data));
+          });
+        } else if (event.data.type === TYPE_REQUEST.SCHOOL.ORIGINAL) {
+
+          this.userCreationRequestService.deleteUserCreationRequestSchool(event.data.id).subscribe(response => {
+            this.store.dispatch(new DeleteUserCreationRequest(event.data));
+            this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicitud de crear usuario');
+          });
+        } else {
+           this.userCreationRequestService.deleteUserCreationRequestCoordinator(event.data.id).subscribe(response => {
+             this.store.dispatch(new DeleteUserCreationRequest(event.data));
+             this.toast.deleteRegister('Eliminación', 'Se ha eliminado una solicitud de crear usuario');
+           });
+        }
+
+        break;
+    }
+  }
+
+
+
+  onApprovedRequest(): void {
+    this.requestSelected = Object.assign({}, this.requestSelected);
+    switch (this.requestSelected.type) {
+      case TYPE_REQUEST.COORDINATOR.ORIGINAL:
+        this.userCreationRequestService.putUserCreationRequestCoordinator(
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
+            this.store.dispatch(new UpdateUserCreationRequest(response, this.requestSelected));
+            this.requestSelected.status = response.status.toString();
+            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+          });
+        break;
+      case TYPE_REQUEST.SCHOOL.ORIGINAL:
+        this.userCreationRequestService.putUserCreationRequestSchool(
+          this.requestSelected.id,
+          this.statusSelected.toString()).subscribe(response => {
+
+            this.store.dispatch(new UpdateUserCreationRequest(response.record, this.requestSelected));
+
+            //  if (this.requestSelected === '2') {
+            //    this.store.dispatch(new AddProject(response.project));
+            //    this.store.dispatch(new SetSchoolUser(response.school));
+            //    if (response.sponsor.id) {
+            //      this.store.dispatch(new SetSponsorUser(response.sponsor));
+            //    }
+            //  }
+
+            this.requestSelected.status = response.record.status.toString();
+            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+          });
+        break;
+      case TYPE_REQUEST.SPONSOR.ORIGINAL:
+         this.userCreationRequestService.putUserCreationRequestSponsor(
+           this.requestSelected.id,
+           this.statusSelected.toString()).subscribe(response => {
+
+             this.store.dispatch(new UpdateUserCreationRequest(response.record, this.requestSelected));
+
+            //  if (this.requestSelected === '2') {
+            //    this.store.dispatch(new AddProject(response.project));
+            //    this.store.dispatch(new SetSponsorUser(response.sponsor));
+
+            //    if (response.school.id) {
+            //      this.store.dispatch(new SetSchoolUser(response.school));
+            //    }
+            //  }
+
+
+             this.requestSelected.status = response.record.status.toString();
+             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+           });
+         break;
+    }
+
+    // ==============================
+    this.store.dispatch(new GetUserCreationRequests());
+  }
 }

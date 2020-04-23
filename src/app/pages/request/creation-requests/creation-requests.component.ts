@@ -210,8 +210,6 @@ export class CreationRequestsComponent extends BaseTable {
             //      this.store.dispatch(new SetSchoolUser(response.school));
             //    }
             //  }
-
-
             this.requestSelected.status = response.record.status.toString();
             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
@@ -221,93 +219,4 @@ export class CreationRequestsComponent extends BaseTable {
     // ==============================
     this.store.dispatch(new GetUserCreationRequests());
   }
-
-
-  // @Select(UserCreationRequestState.creationRequests) data$: Observable<UserCreationRequest[]>;
-
-
-  // constructor(
-  //   private toast: CustomToastrService,
-  //   private store: Store,
-  //   private userCreationRequestService: UserCreationRequestService,
-  //   private modalService: ModalService,
-  //   private helper: Utility ) { super(); }
-
-  // ngOnInit() {
-
-  //   this.data$.subscribe( response => {
-  //     console.log(response);
-  //   } );
-
-  //   this.settings.actions = {
-  //     columnTitle: 'Acciones',
-  //     add: false,
-  //     edit: false,
-  //     //  Fake action
-  //     delete: true,
-  //     custom: [
-  //       { name: ACTION.VIEW, title: '<i class="far fa-eye fa-sm"></i>' },
-  //       { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' }
-  //     ]
-  //   },
-
-  //     this.settings.columns = {
-  //       requestCode: {
-  //         title: 'N° de la solicitud',
-  //         type: 'string',
-  //       },
-  //       projectCode: {
-  //         title: 'ID del proyecto',
-  //         type: 'string'
-  //       },
-  //       type: {
-  //         title: 'Tipo de solicitante',
-  //         type: 'text',
-  //         valuePrepareFunction: (row: any) => {
-  //           const value: string = row === TYPE_REQUEST.COORDINATOR.ORIGINAL ? TYPE_REQUEST.COORDINATOR.CONVERTION :
-  //             row === TYPE_REQUEST.SCHOOL.ORIGINAL ? TYPE_REQUEST.SCHOOL.CONVERTION : TYPE_REQUEST.SPONSOR.CONVERTION;
-  //           return value;
-  //         },
-  //         filterFunction(cell?: any, search?: string): boolean {
-  //           let value: string = cell === TYPE_REQUEST.COORDINATOR.ORIGINAL ? TYPE_REQUEST.COORDINATOR.CONVERTION :
-  //             cell === TYPE_REQUEST.SCHOOL.ORIGINAL ? TYPE_REQUEST.SCHOOL.CONVERTION : TYPE_REQUEST.SPONSOR.CONVERTION;
-
-  //           value = value.toUpperCase();
-  //           if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
-  //             return true;
-  //           } else { return false; }
-  //         }
-  //       },
-  //       user: {
-  //         title: 'Solicitante',
-  //         type: 'string'
-  //       },
-  //       createdAt: {
-  //         title: 'Fecha',
-  //         type: 'string',
-  //         compareFunction: sortDate,
-  //         valuePrepareFunction: (lastLoginTime: any) => {
-  //           return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
-  //         }
-  //       },
-  //       record: {
-  //         title: 'Estatus',
-  //         type: 'text ',
-  //         valuePrepareFunction: (row: any) => {
-  //           return this.helper.readlyRequestStatus(row.status);
-  //         },
-  //         filterFunction(cell?: any, search?: string): boolean {
-  //           let value: string = cell.status === REQUEST_STATUS.PENDING.CODE ? REQUEST_STATUS.PENDING.VALUE :
-  //           cell.status === REQUEST_STATUS.ACCEPTED.CODE ? REQUEST_STATUS.ACCEPTED.VALUE : REQUEST_STATUS.REJECTED.VALUE;
-
-  //           value = value.toUpperCase();
-  //           if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
-  //             return true;
-  //           } else { return false; }
-  //         }
-  //       }
-  //     };
-  // }
-
-
 }

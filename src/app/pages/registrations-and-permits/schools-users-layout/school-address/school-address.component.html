@@ -99,4 +99,28 @@
             [control]="control" 
             [submitted]="submitted"></app-input-custom>
     </div>
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col-auto">
+                <label class="label">Tipo de zona</label>
+                <select [formControl]="addressZoneType" class="form-control form-group">
+                    <option value="null" disabled>- Seleccione una zona -</option>
+                    <option *ngFor="let item of zoneType" [value]="item.value">{{ item.label }}</option>
+                </select>
+                <div class="alert alert-primary" *ngIf="submitted && !addressZoneType.value">
+                    <strong> Selección requerida </strong>
+                </div>
+            </div>
+            <div class="col">
+                <app-input-custom 
+                    [attr.disabled]="addressZoneType"
+                    [submitted]="submitted"
+                    [control]="addressZone"
+                    [id]="'address-zone'"
+                    [label]="'Dirección de la zona'" 
+                    [placeholder]="'Dirección de la zona'"></app-input-custom>
+            </div>
+        </div>
+    </div>
 </div>

@@ -72,6 +72,16 @@
                                         <span>{{ data.address }}</span></p>
                                 <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
                                         <span>{{ data.addressCity }}</span></p>
+
+
+                                <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Tipo de zona:</span>
+                                        <span>{{ data.addressZoneType === '1' ? 'Sector' : 
+                                                data.addressZoneType === '2' ? 'Barrio' : 'Caserio' }}</span></p>
+
+                                        <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección de la zona:</span>
+                                                <span>{{ data.addressZone }}</span></p>
+        
+                                                
                         </div>
                 </div>
         </div>
@@ -176,14 +186,17 @@
 
                                 <tr>
                                         <th scope="row">{{ data.project.code }}</th>
-                                        <td><span *ngIf="data.project.coordinator">{{ data.project.coordinator.name }}</span>
-                                            <span *ngIf="!data.project.coordinator">No hay coordinador asociada</span></td>
-                                        <td><span *ngIf="data.project.sponsor">{{ data.project.sponsor.name }}</span><span
+                                        <td><span
+                                                        *ngIf="data.project.coordinator">{{ data.project.coordinator.name }}</span>
+                                                <span *ngIf="!data.project.coordinator">No hay coordinador
+                                                        asociada</span></td>
+                                        <td><span
+                                                        *ngIf="data.project.sponsor">{{ data.project.sponsor.name }}</span><span
                                                         *ngIf="!data.project.sponsor">No hay
-                                                        padrino asociado</span></td> 
+                                                        padrino asociado</span></td>
                                 </tr>
 
                         </tbody>
                 </table>
-        </div> 
+        </div>
 </div>

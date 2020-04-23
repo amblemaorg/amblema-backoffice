@@ -80,6 +80,8 @@ export class SelectedSchoolUser {
             schoolShift: '',
 
             status: '',
+            addressZone: '',
+            addressZoneType: ''
         },
         schoolUsers: []
     }

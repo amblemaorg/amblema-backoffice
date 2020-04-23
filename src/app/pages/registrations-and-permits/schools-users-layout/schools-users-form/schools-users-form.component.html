@@ -64,6 +64,8 @@
             </div>
             <div class="col-12">
                 <app-school-address 
+                    [addressZoneType]="form.get('addressZoneType')"
+                    [addressZone]="form.get('addressZone')"
                     [idState]="idState"
                     [state]="form.get('addressState')" 
                     [control]="form.get('address')"

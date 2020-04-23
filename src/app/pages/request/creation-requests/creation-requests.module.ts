@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { CreationRequestsRoutingModule } from './creation-requests-routing.module';
 import { CreationRequestsComponent } from './creation-requests.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbAlertModule, NbButtonModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,6 +15,11 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbCardModule,
     Ng2SmartTableModule,
     CommonModule,
+    ModalModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NbButtonModule,
+    NbAlertModule,
     CreationRequestsRoutingModule
   ]
 })

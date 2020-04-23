@@ -1,8 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreationRequestsComponent } from './creation-requests.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbAlertModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { UserCreationRequestState } from 'src/app/store/request/user-creation-request.action';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Utility } from 'src/app/helpers/utility';
 
 describe('CreationRequestsComponent', () => {
   let component: CreationRequestsComponent;
@@ -13,8 +19,18 @@ describe('CreationRequestsComponent', () => {
       declarations: [ CreationRequestsComponent ],
       imports: [
         NbCardModule,
-        Ng2SmartTableModule
-      ]
+        Ng2SmartTableModule,
+        ModalModule,
+        NbAlertModule,
+        FormsModule,
+        HttpClientModule,
+        NgxsModule.forRoot([ UserCreationRequestState ]),
+        ReactiveFormsModule,
+        NbThemeModule.forRoot(),
+        NbToastrModule.forRoot()
+      ],
+
+      providers: [Utility]
     })
     .compileComponents();
   }));

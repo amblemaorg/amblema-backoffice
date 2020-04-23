@@ -42,7 +42,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
   ];
 
   backupOldData: SchoolUser;
-  idState = ' ';
+  idState = '';
   idMunicipality = '';
 
   showProgress = false;
@@ -67,6 +67,9 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
     // Data address
     this.form.addControl('addressCity', new FormControl('', [Validators.required]));
+    this.form.addControl('addressZoneType', new FormControl(null, [Validators.required]));
+    this.form.addControl('addressZone', new FormControl(null, [Validators.required]));
+
 
     // Data principal
     this.form.addControl('principalFirstName', new FormControl(''));
@@ -148,6 +151,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
         const data: any = this.form.value;
         data.userType = USER_TYPE.SCHOOL.CODE.toString();
+        data.addressZoneType = data.addressZoneType.toString();
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
 

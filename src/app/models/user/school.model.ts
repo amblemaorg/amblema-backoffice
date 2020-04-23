@@ -25,5 +25,7 @@ export interface SchoolUser extends User {
     schoolShift?: string;
     // ----------------
 
+    addressZoneType: string;
+    addressZone: string;
     status: string;
 }

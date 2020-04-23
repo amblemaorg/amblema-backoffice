@@ -4,7 +4,7 @@ import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
 import { ProjectRequestState, UpdateProjectRequests, DeleteProjectRequests } from 'src/app/store/request/project-requests.action';
 import { Observable } from 'rxjs';
-import { ProjectRequest } from 'src/app/models/request/project-requests.model';
+import { ProjectRequest } from 'src/app/models/request/project-request.model';
 import { Utility } from 'src/app/helpers/utility';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
 import { DatePipe } from '@angular/common';
@@ -114,6 +114,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
         this.modalService.open(this.modal);
+        console.log( this.requestSelected );
         break;
       case this.ACTION.DELETE:
         if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
@@ -150,12 +151,15 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           this.requestSelected.id,
           this.statusSelected.toString()).subscribe(response => {
             this.store.dispatch(new UpdateProjectRequests(response, this.requestSelected));
+
+
             this.requestSelected.status = response.status.toString();
             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-        this.projectRequestService.putProjectRequestSchool(
+
+      this.projectRequestService.putProjectRequestSchool(
           this.requestSelected.id,
           this.statusSelected.toString()).subscribe(response => {
 
@@ -174,7 +178,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.status = response.record.status.toString();
             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
-        break;
+      break;
       case TYPE_REQUEST.SPONSOR.ORIGINAL:
         this.projectRequestService.putProjectRequestSponsor(
           this.requestSelected.id,

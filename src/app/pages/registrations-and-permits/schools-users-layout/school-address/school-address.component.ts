@@ -24,4 +24,14 @@ import { AbstractControl, FormControl } from '@angular/forms';
 })
 export class SchooladdressComponent extends FormRegionaladdressComponent {
   @Input() addressCity: AbstractControl | null = new FormControl();
+
+  @Input() addressZoneType: AbstractControl | null = new FormControl();
+  @Input() addressZone: AbstractControl | null = new FormControl();
+
+
+  zoneType = [
+    { value: '1', label: 'Sector' },
+    { value: '2', label: 'Barrio' },
+    { value: '3', label: 'Caserio' }
+  ];
 }

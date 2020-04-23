@@ -34,6 +34,7 @@ import { LapseActivityState } from './store/lapse-activities.action';
 import { ProjectRequestState } from './store/request/project-requests.action';
 import { RolesState } from './store/role.action';
 import { LoadingInterceptorService } from './intercepts/loading-intercept';
+import { UserCreationRequestState } from './store/request/user-creation-request.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -74,8 +75,11 @@ registerLocaleData(localeVe, 'es-VE');
       /* PECA */
       LapseActivityState,
       ProjectState,
-      ProjectRequestState,
       StepState,
+
+      // -- Requests --
+      UserCreationRequestState,
+      ProjectRequestState
     ],
     {
       compatibility: {

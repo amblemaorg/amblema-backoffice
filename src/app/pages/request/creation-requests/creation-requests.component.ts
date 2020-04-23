@@ -19,6 +19,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
 import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
+import { SetSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 
 @Component({
   selector: 'app-creation-requests',
@@ -127,8 +128,10 @@ export class CreationRequestsComponent extends BaseTable {
 
     switch (event.action) {
       case this.ACTION.VIEW:
+
         this.requestSelected = event.data;
         this.oldRequest = event.data;
+
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
@@ -193,6 +196,8 @@ export class CreationRequestsComponent extends BaseTable {
               this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
 
             }
+          }, (err: any) => {
+            console.log(err);
           });
         break;
       case TYPE_REQUEST.SPONSOR.ORIGINAL:
@@ -200,18 +205,18 @@ export class CreationRequestsComponent extends BaseTable {
           this.requestSelected.id,
           this.statusSelected.toString()).subscribe(response => {
 
-            this.store.dispatch(new UpdateUserCreationRequest(this.requestSelected, this.oldRequest));
 
-            //  if (this.requestSelected === '2') {
-            //    this.store.dispatch(new AddProject(response.project));
-            //    this.store.dispatch(new SetSponsorUser(response.sponsor));
+            if (this.statusSelected === '2') {
 
-            //    if (response.school.id) {
-            //      this.store.dispatch(new SetSchoolUser(response.school));
-            //    }
-            //  }
-            this.requestSelected.status = response.record.status.toString();
-            this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+              this.store.dispatch(new SetSponsorUser(response));
+
+              this.requestSelected.status = this.statusSelected;
+
+              this.store.dispatch(new UpdateUserCreationRequest(this.requestSelected, this.oldRequest));
+
+              this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
+
+            }
           });
         break;
     }

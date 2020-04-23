@@ -27,7 +27,7 @@ export class SchooladdressComponent extends FormRegionaladdressComponent {
 
   @Input() addressZoneType: AbstractControl | null = new FormControl();
   @Input() addressZone: AbstractControl | null = new FormControl();
-  
+
 
   zoneType = [
     { value: '1', label: 'Sector' },

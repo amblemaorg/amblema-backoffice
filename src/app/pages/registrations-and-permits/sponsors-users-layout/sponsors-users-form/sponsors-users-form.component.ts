@@ -123,6 +123,7 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
     }
 
     if (this.form.valid) {
+
       const data: any = this.form.value;
       data.userType = USER_TYPE.SPONSOR.CODE.toString();
 

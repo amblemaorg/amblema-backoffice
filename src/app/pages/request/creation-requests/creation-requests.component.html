@@ -44,34 +44,34 @@
                             <div class="row">
                                 <div class="col-12">
                                     <p class="d-flex w-100"><span
-                                            class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.name }}</span>
+                                            class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.record.name }}</span>
                                     </p>
 
                                     <p class="d-flex w-100"><span
-                                            class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.companyPhone }}</span>
+                                            class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.record.companyPhone }}</span>
                                     </p>
 
                                     <p class="d-flex w-100"><span
-                                            class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.email }}</span>
+                                            class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.record.email }}</span>
                                     </p>
                                     <p class="d-flex w-100"><span class="pl-0 font-weight-bold col-5">Documento de
-                                            identidad:</span><span>J-{{ requestSelected.rif }}</span></p>
-                                    <p class="d-flex w-100" *ngIf="requestSelected.webSite"><span
+                                            identidad:</span><span>J-{{ requestSelected.record.rif }}</span></p>
+                                    <p class="d-flex w-100" *ngIf="requestSelected.record.webSite"><span
                                             class="pl-0 font-weight-bold col-5">Sitio
                                             web:</span><a
-                                            [href]="requestSelected.webSite">{{ requestSelected.webSite }}</a></p>
-                                    <p class="d-flex w-100" *ngIf="requestSelected.companyType !== '4'"><span
+                                            [href]="requestSelected.record.webSite">{{ requestSelected.record.webSite }}</a></p>
+                                    <p class="d-flex w-100" *ngIf="requestSelected.record.companyType !== '0'"><span
                                             class="pl-0 font-weight-bold col-5">Tipo de
                                             empresa:</span><span>{{ 
-                                                requestSelected.companyType === '1' ?  'Fabrica' :  
-                                                requestSelected.companyType === '2' ? 'Tienda' : 
-                                                requestSelected.companyType === '3' ? 'Negocio personal' :
-                                                requestSelected.companyType === '4' ? 'Hacienda' : 'Otro' }}</span>
+                                                requestSelected.record.companyType === '1' ?  'Fabrica' :  
+                                                requestSelected.record.companyType === '2' ? 'Tienda' : 
+                                                requestSelected.record.companyType === '3' ? 'Negocio personal' :
+                                                requestSelected.record.companyType === '4' ? 'Hacienda' : 'Otro' }}</span>
                                     </p>
 
-                                    <p *ngIf="requestSelected.companyType === '4'" class="d-flex w-100"><span
+                                    <p *ngIf="requestSelected.record.companyType === '0'" class="d-flex w-100"><span
                                             class="pl-0 font-weight-bold col-5">Otro tipo de
-                                            empresa:</span><span>{{ requestSelected.companyOtherType }}</span></p>
+                                            empresa:</span><span>{{ requestSelected.record.companyOtherType }}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -83,15 +83,15 @@
                             <div class="row">
                                 <div class="col-12">
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Nombre:</span>
-                                        <span>{{ requestSelected.contactFirstName }}</span> </p>
+                                        <span>{{ requestSelected.record.contactFirstName }}</span> </p>
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Apellido:</span>
-                                        <span>{{ requestSelected.contactLastName }}</span></p>
+                                        <span>{{ requestSelected.record.contactLastName }}</span></p>
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Teléfono:</span>
-                                        <span>{{ requestSelected.contactPhone }}</span></p>
+                                        <span>{{ requestSelected.record.contactPhone }}</span></p>
 
 
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Correo:</span>
-                                        <span>{{ requestSelected.contactEmail }}</span></p>
+                                        <span>{{ requestSelected.record.contactEmail }}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -102,25 +102,25 @@
                             <div class="row">
                                 <div class="col-12">
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Estado:</span>
-                                        <span>{{ requestSelected.addressState.name }}</span> </p>
+                                        <span>{{ requestSelected.record.addressState.name }}</span> </p>
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Municipio:</span>
-                                        <span>{{ requestSelected.addressMunicipality.name }}</span></p>
+                                        <span>{{ requestSelected.record.addressMunicipality.name }}</span></p>
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Dirección:</span>
-                                        <span>{{ requestSelected.address }}</span></p>
+                                        <span>{{ requestSelected.record.address }}</span></p>
                                     <p class="d-flex w-100"><span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
-                                        <span>{{ requestSelected.addressCity }}</span></p>
+                                        <span>{{ requestSelected.record.addressCity }}</span></p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Sponsor has School -->
-                        <div *ngIf="requestSelected.hasSchool" class="col-12 form-group">
+                        <div *ngIf="requestSelected.record.hasSchool" class="col-12 form-group">
                             <p class="font-weight-bold text-primary mb-0">El padrino tiene escuela</p>
                             <hr>
                         </div>
 
                         <!-- Sponsor has School -->
-                        <div *ngIf="requestSelected.hasSchool" class="col-12 form-group">
+                        <div *ngIf="requestSelected.record.hasSchool" class="col-12 form-group">
                             <div class="row">
 
                                 <!-- Normal data -->
@@ -131,19 +131,19 @@
                                         <hr>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p *ngIf="requestSelected.schoolPhone" class="d-flex w-100"><span
-                                                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.schoolPhone }}</span>
+                                                <p *ngIf="requestSelected.record.schoolPhone" class="d-flex w-100"><span
+                                                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.record.schoolPhone }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolCode" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolCode" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Código del
-                                                        plantel:</span><span>{{ requestSelected.schoolCode }}</span></p>
-                                                <p *ngIf="requestSelected.schoolType" class="d-flex w-100"><span
+                                                        plantel:</span><span>{{ requestSelected.record.schoolCode }}</span></p>
+                                                <p *ngIf="requestSelected.record.schoolType" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Tipo de
                                                         escuela:</span>
-                                                    <span *ngIf="requestSelected.schoolType === '3'">Municipal</span>
+                                                    <span *ngIf="requestSelected.record.schoolType === '3'">Municipal</span>
 
-                                                    <span *ngIf="requestSelected.schoolType === '2'">Estadal</span>
-                                                    <span *ngIf="requestSelected.schoolType === '1'">Nacional</span></p>
+                                                    <span *ngIf="requestSelected.record.schoolType === '2'">Estadal</span>
+                                                    <span *ngIf="requestSelected.record.schoolType === '1'">Nacional</span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -157,20 +157,20 @@
                                         <hr>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p *ngIf="requestSelected.schoolAddressState.name" class="d-flex w-100">
+                                                <p *ngIf="requestSelected.record.schoolAddressState.name" class="d-flex w-100">
                                                     <span class="pl-0 col-5 font-weight-bold">Estado:</span>
-                                                    <span>{{ requestSelected.schoolAddressState.name }}</span> </p>
-                                                <p *ngIf="requestSelected.schoolAddressMunicipality.name"
+                                                    <span>{{ requestSelected.record.schoolAddressState.name }}</span> </p>
+                                                <p *ngIf="requestSelected.record.schoolAddressMunicipality.name"
                                                     class="d-flex w-100"><span
                                                         class="pl-0 col-5 font-weight-bold">Municipio:</span>
-                                                    <span>{{ requestSelected.schoolAddressMunicipality.name }}</span>
+                                                    <span>{{ requestSelected.record.schoolAddressMunicipality.name }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolAddress" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolAddress" class="d-flex w-100"><span
                                                         class="pl-0 col-5 font-weight-bold">Dirección:</span>
-                                                    <span>{{ requestSelected.schoolAddress }}</span></p>
-                                                <p *ngIf="requestSelected.schoolAddressCity" class="d-flex w-100"><span
+                                                    <span>{{ requestSelected.record.schoolAddress }}</span></p>
+                                                <p *ngIf="requestSelected.record.schoolAddressCity" class="d-flex w-100"><span
                                                         class="pl-0 col-5 font-weight-bold">Ciudad:</span>
-                                                    <span>{{ requestSelected.schoolAddressCity }}</span></p>
+                                                    <span>{{ requestSelected.record.schoolAddressCity }}</span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -186,21 +186,21 @@
                                         <hr>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p *ngIf="requestSelected.schoolPrincipalFirstName"
+                                                <p *ngIf="requestSelected.record.schoolPrincipalFirstName"
                                                     class="d-flex w-100"><span
-                                                        class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.schoolPrincipalFirstName }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.record.schoolPrincipalFirstName }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolPrincipalLastName" class="d-flex w-100">
+                                                <p *ngIf="requestSelected.record.schoolPrincipalLastName" class="d-flex w-100">
                                                     <span
-                                                        class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ requestSelected.schoolPrincipalLastName }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ requestSelected.record.schoolPrincipalLastName }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolPrincipalEmail" class="d-flex w-100">
+                                                <p *ngIf="requestSelected.record.schoolPrincipalEmail" class="d-flex w-100">
                                                     <span
-                                                        class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.schoolPrincipalEmail }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.record.schoolPrincipalEmail }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolPrincipalPhone" class="d-flex w-100">
+                                                <p *ngIf="requestSelected.record.schoolPrincipalPhone" class="d-flex w-100">
                                                     <span
-                                                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.schoolPrincipalPhone }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.record.schoolPrincipalPhone }}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -209,30 +209,30 @@
 
                                 <!-- Sub Principal Data -->
                                 <div class="col-12 col-lg-6 form-group"
-                                    *ngIf="requestSelected.schoolSubPrincipalFirstName || requestSelected.schoolSubPrincipalLastName || requestSelected.schoolSubPrincipalEmail || requestSelected.schoolSubPrincipalPhone">
+                                    *ngIf="requestSelected.record.schoolSubPrincipalFirstName || requestSelected.record.schoolSubPrincipalLastName || requestSelected.record.schoolSubPrincipalEmail || requestSelected.record.schoolSubPrincipalPhone">
 
                                     <div>
                                         <p class="font-weight-bold text-info mb-0">Datos del subdirector</p>
                                         <hr>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p *ngIf="requestSelected.schoolSubPrincipalFirstName"
+                                                <p *ngIf="requestSelected.record.schoolSubPrincipalFirstName"
                                                     class="d-flex w-100">
                                                     <span
-                                                        class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.schoolSubPrincipalFirstName }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Nombre:</span><span>{{ requestSelected.record.schoolSubPrincipalFirstName }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolSubPrincipalLastName"
+                                                <p *ngIf="requestSelected.record.schoolSubPrincipalLastName"
                                                     class="d-flex w-100">
                                                     <span
-                                                        class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ requestSelected.schoolSubPrincipalLastName }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Apellido:</span><span>{{ requestSelected.record.schoolSubPrincipalLastName }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolSubPrincipalEmail" class="d-flex w-100">
+                                                <p *ngIf="requestSelected.record.schoolSubPrincipalEmail" class="d-flex w-100">
                                                     <span
-                                                        class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.schoolSubPrincipalEmail }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Correo:</span><span>{{ requestSelected.record.schoolSubPrincipalEmail }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolSubPrincipalPhone" class="d-flex w-100">
+                                                <p *ngIf="requestSelected.record.schoolSubPrincipalPhone" class="d-flex w-100">
                                                     <span
-                                                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.schoolSubPrincipalPhone }}</span>
+                                                        class="pl-0 font-weight-bold col-5">Teléfono:</span><span>{{ requestSelected.record.schoolSubPrincipalPhone }}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -242,44 +242,44 @@
 
                                 <!-- Additional data -->
                                 <div class="col-12 col-lg-6 form-group"
-                                    *ngIf="requestSelected.schoolShift || requestSelected.schoolNTeachers || requestSelected.schoolNAdministrativeStaff || requestSelected.schoolNLaborStaff || requestSelected.schoolNStudents || requestSelected.schoolNGrades || requestSelected.schoolNSections">
+                                    *ngIf="requestSelected.record.schoolShift || requestSelected.record.schoolNTeachers || requestSelected.record.schoolNAdministrativeStaff || requestSelected.record.schoolNLaborStaff || requestSelected.record.schoolNStudents || requestSelected.record.schoolNGrades || requestSelected.record.schoolNSections">
 
                                     <div>
                                         <p class="font-weight-bold text-info mb-0">Datos adicionales</p>
                                         <hr>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p *ngIf="requestSelected.schoolNTeachers" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolNTeachers" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Cantidad de
-                                                        docentes:</span><span>{{ requestSelected.schoolNTeachers }}</span>
+                                                        docentes:</span><span>{{ requestSelected.record.schoolNTeachers }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolNAdministrativeStaff"
+                                                <p *ngIf="requestSelected.record.schoolNAdministrativeStaff"
                                                     class="d-flex w-100">
                                                     <span class="pl-0 font-weight-bold col-5">Cantidad de personal
-                                                        administrativo:</span><span>{{ requestSelected.schoolNAdministrativeStaff }}</span>
+                                                        administrativo:</span><span>{{ requestSelected.record.schoolNAdministrativeStaff }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolNLaborStaff" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolNLaborStaff" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Cantidad de personal
-                                                        obrero:</span><span>{{ requestSelected.schoolNLaborStaff }}</span>
+                                                        obrero:</span><span>{{ requestSelected.record.schoolNLaborStaff }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolNStudents" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolNStudents" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Cantidad de
-                                                        estudiantes:</span><span>{{ requestSelected.schoolNStudents }}</span>
+                                                        estudiantes:</span><span>{{ requestSelected.record.schoolNStudents }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolNGrades" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolNGrades" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Cantidad de
-                                                        grados:</span><span>{{ requestSelected.schoolNGrades }}</span>
+                                                        grados:</span><span>{{ requestSelected.record.schoolNGrades }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolNSections" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolNSections" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Cantidad de
-                                                        secciones:</span><span>{{ requestSelected.schoolNSections }}</span>
+                                                        secciones:</span><span>{{ requestSelected.record.schoolNSections }}</span>
                                                 </p>
-                                                <p *ngIf="requestSelected.schoolShift" class="d-flex w-100"><span
+                                                <p *ngIf="requestSelected.record.schoolShift" class="d-flex w-100"><span
                                                         class="pl-0 font-weight-bold col-5">Turno de
                                                         clases:</span>
-                                                    <span *ngIf="requestSelected.schoolShift === '1'">Mañana</span>
-                                                    <span *ngIf="requestSelected.schoolShift === '2'">Tarde</span>
-                                                    <span *ngIf="requestSelected.schoolShift === '3'">Ambos</span>
+                                                    <span *ngIf="requestSelected.record.schoolShift === '1'">Mañana</span>
+                                                    <span *ngIf="requestSelected.record.schoolShift === '2'">Tarde</span>
+                                                    <span *ngIf="requestSelected.record.schoolShift === '3'">Ambos</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -566,7 +566,7 @@
                                                     [href]="requestSelected.record.sponsorwebSite">{{ requestSelected.record.sponsorWebSite }}</a>
                                             </p>
                                             <p class="d-flex w-100"
-                                                *ngIf="requestSelected.record.sponsorCompanyType !== '4'">
+                                                *ngIf="requestSelected.record.sponsorCompanyType !== '0'">
                                                 <span class="pl-0 font-weight-bold col-5">Tipo de
                                                     empresa:</span><span>{{ 
                                                         
@@ -577,7 +577,7 @@
                                                     }}</span>
                                             </p>
 
-                                            <p *ngIf="requestSelected.record.sponsorCompanyType === '4'"
+                                            <p *ngIf="requestSelected.record.sponsorCompanyType === '0'"
                                                 class="d-flex w-100">
                                                 <span class="pl-0 font-weight-bold col-5">Otro tipo de
                                                     empresa:</span><span>{{ requestSelected.record.sponsorCompanyOtherType }}</span>

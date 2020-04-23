@@ -63,7 +63,7 @@
                                             class="pl-0 font-weight-bold col-5">Sitio
                                             web:</span><a
                                             [href]="requestSelected.webSite">{{ requestSelected.webSite }}</a></p>
-                                    <p class="d-flex w-100" *ngIf="requestSelected.companyType !== '4'"><span
+                                    <p class="d-flex w-100" *ngIf="requestSelected.companyType !== '0'"><span
                                             class="pl-0 font-weight-bold col-5">Tipo de
                                             empresa:</span><span>{{ 
                                                 requestSelected.companyType === '1' ?  'Fabrica' :  
@@ -72,7 +72,7 @@
                                                 requestSelected.companyType === '4' ? 'Hacienda' : 'Otro' }}</span>
                                     </p>
 
-                                    <p *ngIf="requestSelected.companyType === '4'" class="d-flex w-100"><span
+                                    <p *ngIf="requestSelected.companyType === '0'" class="d-flex w-100"><span
                                             class="pl-0 font-weight-bold col-5">Otro tipo de
                                             empresa:</span><span>{{ requestSelected.companyOtherType }}</span></p>
                                 </div>
@@ -416,6 +416,17 @@
                                         <p *ngIf="requestSelected.addressCity" class="d-flex w-100"><span
                                                 class="pl-0 col-5 font-weight-bold">Ciudad:</span>
                                             <span>{{ requestSelected.addressCity }}</span></p>
+
+                                            <p *ngIf="requestSelected.addressZoneType" class="d-flex w-100"><span
+                                                class="pl-0 col-5 font-weight-bold">Tipo de zona:</span>
+                                            <span>{{ requestSelected.addressZoneType === '1' ? 'Sector' : 
+                                            requestSelected.addressZoneType === '2' ? 'Barrio' : 'Caserio' }}</span>
+                                        </p>
+
+                                        <p *ngIf="requestSelected.addressZone" class="d-flex w-100"><span
+                                                class="pl-0 col-5 font-weight-bold">Dirección de la zona:</span>
+                                            <span>{{ requestSelected.addressZone }}</span></p>
+
                                     </div>
                                 </div>
                             </div>
@@ -553,7 +564,7 @@
                                                     web:</span><a
                                                     [href]="requestSelected.sponsorwebSite">{{ requestSelected.sponsorWebSite }}</a>
                                             </p>
-                                            <p class="d-flex w-100" *ngIf="requestSelected.sponsorCompanyType !== '4'">
+                                            <p class="d-flex w-100" *ngIf="requestSelected.sponsorCompanyType !== '0'">
                                                 <span class="pl-0 font-weight-bold col-5">Tipo de
                                                     empresa:</span><span>{{ 
                                                         
@@ -564,7 +575,7 @@
                                                     }}</span>
                                             </p>
 
-                                            <p *ngIf="requestSelected.sponsorCompanyType === '4'" class="d-flex w-100">
+                                            <p *ngIf="requestSelected.sponsorCompanyType === '0'" class="d-flex w-100">
                                                 <span class="pl-0 font-weight-bold col-5">Otro tipo de
                                                     empresa:</span><span>{{ requestSelected.sponsorCompanyOtherType }}</span>
                                             </p>

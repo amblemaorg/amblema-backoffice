@@ -28,7 +28,7 @@ export class UserCreationRequestService {
   }
 
   putUserCreationRequestSchool( id: string, status: string ): Observable<any> {
-    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`, { status });
+    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`,  {status});
   }
 
   putUserCreationRequestCoordinator( id: string, status: string ): Observable<any> {

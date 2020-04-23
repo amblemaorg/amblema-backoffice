@@ -114,6 +114,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
         this.modalService.open(this.modal);
+        console.log( this.requestSelected );
         break;
       case this.ACTION.DELETE:
         if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
@@ -157,7 +158,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-        this.projectRequestService.putProjectRequestSchool(
+
+      this.projectRequestService.putProjectRequestSchool(
           this.requestSelected.id,
           this.statusSelected.toString()).subscribe(response => {
 
@@ -176,7 +178,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.status = response.record.status.toString();
             this.toast.info('Solicitud', 'Se ha cambiado de estatus la solicitud');
           });
-        break;
+      break;
       case TYPE_REQUEST.SPONSOR.ORIGINAL:
         this.projectRequestService.putProjectRequestSponsor(
           this.requestSelected.id,

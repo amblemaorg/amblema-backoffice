@@ -1,7 +1,6 @@
 <!-- Register -->
 <div class="mb-3">
-    <button nbButton status="success" class="btn btn-success col-12 col-md-auto" data-toggle="modal" [attr.data-target]="'#'+ID_FORM"
-        (click)='MODE=ACTION.CREATE'>Registrar</button>
+    <button nbButton status="success" class="btn btn-success col-12 col-md-auto" (click)="onRegister()">Registrar</button>
 </div>
 
 <!-- Table -->
@@ -10,7 +9,7 @@
 </div>
 
 <!-- Modal -->
-<app-sponsors-users-form [ID]="ID_FORM" [MODE]="MODE"></app-sponsors-users-form>
+<app-sponsors-users-form [mode]="MODE"></app-sponsors-users-form>
 
 <app-modal 
     [ID]="'sponsor-users-view'" 

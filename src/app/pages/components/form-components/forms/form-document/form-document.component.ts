@@ -58,6 +58,8 @@ export class FormDocumentComponent extends AbstractReactive implements OnChanges
             this.placeholderDocument = 'RIF de la empresa';
             this.updateDocumentValidation(8, 9);
             this.message = this.MESSAGES.RIF_MESSAGE;
+            this.control.updateValueAndValidity();
+            this.controlSelect.updateValueAndValidity();
         } else  {
             this.labelDocument = 'Identidad';
             this.placeholderDocument = 'Identidad';

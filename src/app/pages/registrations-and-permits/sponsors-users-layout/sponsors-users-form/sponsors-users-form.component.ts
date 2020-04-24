@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnDestroy, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { BaseForm } from '../../shared/base-form';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { VIDEO_PATTERN
+  , NORMAL_TEXT_PATTERN
+  , NUMBER_PATTERN
+  , EMAIL_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { Store, Select } from '@ngxs/store';
-import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
 import { Subscription, Observable } from 'rxjs';
 import { STATUS } from 'src/app/helpers/text-content/status';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
@@ -14,96 +15,66 @@ import { SetSponsorUser, SponsorUserState, UpdateSponsorUser } from 'src/app/sto
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
+import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sponsors-users-form',
   templateUrl: './sponsors-users-form.component.html',
 
 })
-export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, OnChanges {
+export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
+
+  @Input() mode: string;
 
   @Select(RolesState.roles) role$: Observable<Role[]>;
-
   @Select(SponsorUserState.sponsorUser) user$: Observable<any>;
   subscription: Subscription;
 
-  backupOldData: SponsorUser;
-
-  idState = ' ';
-  idMunicipality = '';
-  form: FormGroup;
-
+  backUpData: any;
   showProgress = false;
+  submitted = false;
+  idState;
+
+  ACTION = ACTION;
+
+  form: FormGroup = new FormGroup({
+    // -- Normal data --
+    name: new FormControl(null, [Validators.required]),
+    email: new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
+    password: new FormControl(null, [Validators.required]),
+    userType: new FormControl(USER_TYPE.SPONSOR.CODE.toString()),
+    role: new FormControl(null, [Validators.required]),
+    status: new FormControl(),
+
+    // -- Company data --
+    image: new FormControl(null, Validators.required),
+    webSite: new FormControl(null, [Validators.required, Validators.pattern(VIDEO_PATTERN)]),
+    companyRif: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(9)]),
+    cardType: new FormControl('J'),
+    companyType: new FormControl(null, [Validators.required]),
+    companyOtherType: new FormControl(null),
+    companyPhone: new FormControl(null, [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
+
+    // -- Contact data --
+    contactFirstName: new FormControl(null, [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
+    contactLastName: new FormControl(null, [Validators.required, Validators.pattern(NORMAL_TEXT_PATTERN)]),
+    contactEmail: new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
+    contactPhone: new FormControl(null, [Validators.required, Validators.pattern(NUMBER_PATTERN)]),
+
+    // -- Address data --
+    addressState: new FormControl(null, [Validators.required]),
+    addressMunicipality: new FormControl(null, [Validators.required]),
+    addressCity: new FormControl(null, [Validators.required]),
+    address: new FormControl(null, [Validators.required]),
+  });
 
   constructor(
-    private fb: FormBuilder,
+    private validatorService: ValidationService,
+    private toastr: CustomToastrService,
     private store: Store,
-    private toast: CustomToastrService,
-    private sponsorUserService: SponsorUserService,
-    private validationService: ValidationService) {
-    super('un padrino'); // <-- Title modal
-
-    // this.type.setValue('J');
-
-    this.form = this.fb.group({
-      image: new FormControl('', [Validators.required]),
-      webSite: new FormControl('', [Validators.required, Validators.pattern(VIDEO_PATTERN)]),
-      name: new FormControl('', [Validators.required]),
-      cardType: new FormControl('J'), // <-- Remove card type when is send it
-      companyRif: new FormControl(''),
-      companyPhone: new FormControl(),
-      email: new FormControl(),
-      password: new FormControl(),
-      companyType: new FormControl(null),
-      role: new FormControl(),
-      companyOtherType: new FormControl(null),
-      contactFirstName: new FormControl(),
-      contactLastName: new FormControl(),
-      contactPhone: new FormControl(),
-      contactEmail: new FormControl(),
-      addressState: new FormControl(),
-      addressMunicipality: new FormControl(),
-      address: new FormControl('', [Validators.required]),
-      addressCity: new FormControl('', [Validators.required]),
-      status: new FormControl()
-    });
-  }
-
-  ngOnChanges() {
-    if (this.MODE === this.ACTION.EDIT) {
-
-      this.subscription = this.user$.subscribe( response => {
-        this.title = 'Actualizar usuario padrino';
-        this.backupOldData = response;
-        this.restar();
-        this.form.patchValue( response );
-        this.idState = this.form.controls.addressState.value;
-        this.form.controls.addressState.setValue(response.addressState.id);
-        this.form.controls.role.setValue(response.role.id);
-
-        this.form.get('password').setValue(null);
-        this.form.get('password').clearValidators();
-        this.form.get('password').updateValueAndValidity();
-
-      });
-    } else if (this.MODE === this.ACTION.CREATE) {
-      this.title = 'Registrar usuario padrino';
-      this.restar();
-
-      this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
-      this.form.get('password').updateValueAndValidity();
-      this.idState = null;
-
-      this.subscription = this.role$.subscribe(response => {
-        response.find(value => {
-
-          if (value.devName === DEVNAME_ROLE.SPONSOR) {
-            this.form.controls.role.setValue(value.id);
-          }
-        });
-      });
-    }
-  }
+    private sponsorUserService: SponsorUserService
+  ) { }
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -111,88 +82,86 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
     }
   }
 
-  onSubmit() {
-    this.submitted = true;
+  ngOnChanges(changes: SimpleChanges): void {
 
-    if (this.form.controls.image.invalid) {
-      if (this.MODE === this.ACTION.CREATE) {
-        this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de padrino');
-      } else if (this.MODE === this.ACTION.EDIT) {
-        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de padrino');
-      }
+    if (changes.mode.currentValue === ACTION.CREATE) {
+
+      // -- Default role --
+      this.subscription = this.role$.subscribe(response => {
+
+        this.restar();
+
+        this.form.get('password').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+        this.form.get('password').updateValueAndValidity();
+
+        response.find(value => {
+          if (value.devName === DEVNAME_ROLE.SPONSOR) {
+            this.form.controls.role.setValue(value.id);
+          }
+        });
+      });
+    } else {
+
+      this.subscription = this.user$.pipe(take(1)).subscribe((response: any) => {
+        this.backUpData = response;
+
+        this.form.patchValue(response);
+        this.form.controls.role.setValue(response.role.id);
+        this.form.controls.addressState.setValue(response.addressState.id);
+        this.idState = response.addressState;
+        this.form.get('password').clearValidators();
+        this.form.get('password').updateValueAndValidity();
+        this.form.updateValueAndValidity();
+
+        this.form.get('companyRif').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(9)]);
+        this.form.get('companyRif').updateValueAndValidity();
+
+      });
     }
+  }
+
+  onSubmit() {
+
+    this.submitted = true;
 
     if (this.form.valid) {
 
       const data: any = this.form.value;
-      data.userType = USER_TYPE.SPONSOR.CODE.toString();
 
-      delete data.cardType;
+      delete data.cardType; // <-- Deleting this data prevents errors
 
-      if (this.MODE === this.ACTION.CREATE) {
+      this.toastr.info('Guardando', 'Enviando información, espere...');
+      this.showProgress = true;
 
-        this.toast.info('Guardando', 'Enviando información, espere...');
-
-        this.showProgress = true;
-
-        this.sponsorUserService.getSponsorUsers().subscribe(response => { });
+      if (this.mode === ACTION.CREATE) {
 
         this.sponsorUserService.setSponsorUser(data).subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.Response:
               this.store.dispatch(new SetSponsorUser(event.body));
-              this.toast.registerSuccess('Registro', 'Padrino registrado satisfactoriamente');
+              this.toastr.registerSuccess('Registro', 'Padrino registrado satisfactoriamente');
               this.restar();
               break;
           }
-        }, (err: any) => {
+        }, (err: any) => this.errorResponse(err));
 
-          this.showProgress = false;
-
-          if (err.error.status === 0) {
-            this.toast.error('Error de datos', 'Verifica los datos del formulario');
-          }
-
-          if (err.error.cardId) {
-            if (String(err.error.cardId[0].status) === '5') {
-              this.toast.error('Error de indentidad', 'El documento de identidad ya esta registrado');
-            }
-          }
-
-          if (err.error.email) {
-            if (String(err.error.email[0].status) === '5') {
-              this.toast.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
-            }
-          }
-        });
-      } else if ( this.MODE === this.ACTION.EDIT )  {
-
-
-        const updateData: any = this.form.value;
-
-        if (updateData.password === '' || updateData.password === null) {
-          delete updateData.password;
+      } else {
+        if (data.password === '' || data.password === null) {
+          delete data.password;
         }
-        this.showProgress = true;
 
-        this.sponsorUserService.updateSponsorUser(this.backupOldData.id, updateData).subscribe((event: any) => {
-          this.store.dispatch(new UpdateSponsorUser(this.backupOldData, event));
-          this.toast.updateSuccess('Actualización', 'Usuario actualizado satisfactoriamente');
+        this.sponsorUserService.updateSponsorUser(this.backUpData.id, data).subscribe((event: any) => {
+          this.store.dispatch(new UpdateSponsorUser(this.backUpData, event));
+          this.toastr.updateSuccess('Actualización', 'Usuario actualizado satisfactoriamente');
           this.submitted = false;
-          this.form.get('password').setValue('');
-          this.form.get('password').setValidators([]);
+          this.form.get('password').reset();
+          this.form.get('password').clearValidators();
           this.form.get('password').updateValueAndValidity();
-
-          setTimeout(() => {
-              this.showProgress = false;
-          }, 2500);
-
-        });
-
+        }, (err: any) => this.errorResponse(err));
       }
+
     } else {
-      // Call error messages
-      this.validationService.markAllFormFieldsAsTouched(this.form);
+      this.validatorService.markAllFormFieldsAsTouched(this.form);
     }
   }
 
@@ -204,13 +173,25 @@ export class SponsorsUsersFormComponent extends BaseForm implements OnDestroy, O
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
-
-    setTimeout(() => {
-      this.showProgress = false;
-    }, 2500);
   }
 
-  // -- Event selected rol --
-  onselected(event: any) { this.form.controls.role.setValue(event); }
+  errorResponse(err: any) {
+    this.showProgress = false;
 
+    if (err.error.status === 0) {
+      this.toastr.error('Error de datos', 'Verifica los datos del formulario');
+    }
+
+    if (err.error.cardId) {
+      if (String(err.error.cardId[0].status) === '5') {
+        this.toastr.error('Error de indentidad', 'El documento de identidad ya esta registrado');
+      }
+    }
+
+    if (err.error.email) {
+      if (String(err.error.email[0].status) === '5') {
+        this.toastr.error('Datos duplicados', 'El correo que se intenta registra ya existe.');
+      }
+    }
+  }
 }

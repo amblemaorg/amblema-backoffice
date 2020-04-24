@@ -14,7 +14,8 @@ import { NbCardModule
     , NbListModule
     , NbAccordionModule
     , NbCheckboxModule
-    , NbInputModule } from '@nebular/theme';
+    , NbInputModule, 
+    NbTooltipModule} from '@nebular/theme';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListItemsComponent } from './list-items/list-items.component';
@@ -46,6 +47,7 @@ import { NgxMaskModule } from 'ngx-mask';
     ReactiveDatepickerModule,
     NbInputModule,
 
+    NbTooltipModule,
     NgxMaskModule.forRoot(),
     NbAccordionModule,
     NbListModule,

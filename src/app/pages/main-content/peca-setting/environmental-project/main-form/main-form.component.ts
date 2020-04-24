@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { SelectLapse } from 'src/app/store/environmental-project.action';
 
 @Component({
   selector: 'app-main-form',
@@ -12,11 +14,15 @@ export class MainFormComponent implements OnInit {
     { value: '2', label: 'Segundo lapso' },
     { value: '3', label: 'Tercer lapso' },
   ];
+
   option = this.options[0].value;
 
-  constructor() { }
+  
+  constructor( private store: Store ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onSelectLapse(item: string) {
+    this.store.dispatch( new SelectLapse(item) );
   }
-
 }

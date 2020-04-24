@@ -1,17 +1,16 @@
 <div class="row">
-    <div class="order-12 order-lg-0 col-12 col-lg-6">
+    <div class="order-lg-0 col-12 col-lg-6">
         <app-input-custom [id]="'name-project'" [placeholder]="'Nombre del proyecto ambiental'"
             [label]="'Nombre del proyecto ambiental'"></app-input-custom>
     </div>
     <div class="order-0 col-12 col-lg-6">
         <nb-alert outline accent="info">
-
             <p class="font-weight-bold d-flex">
                 <nb-icon icon="alert-circle-outline"></nb-icon>
                 <span class="ml-2">Recuerda que editas el contenido de acuerdo al lapso seleccionado</span>
             </p>
             <nb-radio-group [(ngModel)]="option" status="primary" class="d-flex">
-                <nb-radio *ngFor="let option of options" [value]="option.value">
+                <nb-radio *ngFor="let option of options" (click)="onSelectLapse(option.value)" [value]="option.value">
                     {{ option.label }}
                 </nb-radio>
             </nb-radio-group>

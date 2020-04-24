@@ -1,10 +1,20 @@
 <nb-accordion class="shadow-none border">
     <nb-accordion-item [expanded]="index === 0 ? true : false">
         <nb-accordion-item-header>
-            <nb-icon icon="bookmark-outline" class="mr-2"></nb-icon> Tema
+            <div>
+                <nb-icon icon="bookmark-outline" class="mr-2"></nb-icon> Tema
+            </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body>
             <div class="row">
+                <div class="col-12 form-group">
+                    <button 
+                        class="col-12 col-lg-auto"
+                        nbButton 
+                        size="small" status="danger" size="small" nbTooltip="Eliminar tema">
+                        Eliminar tema<nb-icon icon="trash-2-outline"></nb-icon>
+                    </button>
+                </div>
 
                 <div class="col-12">
                     <app-input-custom [label]="'Tema'" [placeholder]="'Tema'" [id]="'topics'"></app-input-custom>
@@ -23,7 +33,8 @@
                 </div>
                 <div class="col-12">
                     <hr>
-                    <button nbButton status="success" (click)="addLevel()" class="form-group">CREAR NIVEL <nb-icon icon="plus-outline"></nb-icon></button>
+                    <button nbButton status="success" (click)="addLevel()" class="form-group">CREAR NIVEL <nb-icon
+                            icon="plus-outline"></nb-icon></button>
                     <div class="row">
                         <div class="col-12 form-group" *ngFor="let item of levels; let i = index">
                             <app-levels-form [index]="i"></app-levels-form>

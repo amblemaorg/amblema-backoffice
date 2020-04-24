@@ -19,7 +19,7 @@ export interface Topic {
     objectives: string[];
     strategies: string[];
     contents: string[];
-    levels: Level[];
+    levels?: Level[];
 }
 
 export interface Lapse {

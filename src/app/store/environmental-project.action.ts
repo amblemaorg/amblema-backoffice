@@ -1,10 +1,10 @@
 
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { EnvironmentalProject, Lapse } from '../models/environmental-project.model';
+import { EnvironmentalProject, Lapse, Topic, Level } from '../models/environmental-project.model';
 import { OnDestroy } from '@angular/core';
 import { EnvironmentalProjectService } from '../services/environmental-project.service';
 import { Subscription } from 'rxjs';
-import { patch } from '@ngxs/store/operators';
+import { patch, append } from '@ngxs/store/operators';
 
 export interface EnvironmentalProjectModel extends EnvironmentalProject {
     lapseSelected?: Lapse;
@@ -19,6 +19,16 @@ export class GetEnvironmentalProject {
 export class SelectLapse {
     static readonly type = '[EnvironmentalProject] Select A EnvironmentalProject';
     constructor(public lapse: string) { }
+}
+
+export class AddTopic {
+    static readonly type = '[EnvironmentalProject] Add Topic EnvironmentalProject';
+    constructor(public topic: Topic) { }
+}
+
+export class AddSchoolLevel {
+    static readonly type = '[EnvironmentalProject] Add School level EnvironmentalProject'
+    constructor(public schoolLevel: Level) { }    
 }
 
 @State<EnvironmentalProjectModel>({
@@ -37,7 +47,10 @@ export class SelectLapse {
             generalObjective: '',
             topics: []
         },
-        lapseSelected: null
+        lapseSelected: {
+            generalObjective: '',
+            topics: []
+        },
     }
 })
 
@@ -70,6 +83,12 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         return state.lapseSelected;
     }
 
+
+    @Selector()
+    static topics(state: EnvironmentalProjectModel): Topic[] | null {
+        return state.lapseSelected.topics;
+    }
+
     constructor(
         private environmentalProjectServivce: EnvironmentalProjectService) { }
 
@@ -86,7 +105,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
     @Action(GetEnvironmentalProject)
     getEnvironmentalProject(ctx: StateContext<EnvironmentalProjectModel>, action: GetEnvironmentalProject) {
         this.subscriptionEnvironmentalProject = this.environmentalProjectServivce.getEnvironmentalProject().subscribe(response => {
-            ctx.setState(response);
+            ctx.setState(patch(response));
         });
     }
 
@@ -109,5 +128,16 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                 }));
                 break;
         }
+    }
+
+    @Action(AddTopic)
+    addTopic(ctx: StateContext<EnvironmentalProjectModel>, action: AddTopic) {
+        ctx.setState(patch({
+            ...ctx.getState(),
+            lapseSelected: patch({
+                ...ctx.getState().lapseSelected,
+                topics: append([action.topic])
+            })
+        }));
     }
 }

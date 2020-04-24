@@ -14,7 +14,7 @@ import { NbCardModule
     , NbListModule
     , NbAccordionModule
     , NbCheckboxModule
-    , NbInputModule, 
+    , NbInputModule,
     NbTooltipModule} from '@nebular/theme';
 import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

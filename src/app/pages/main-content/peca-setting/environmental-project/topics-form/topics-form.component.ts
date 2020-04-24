@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
+import { Topic } from 'src/app/models/environmental-project.model';
+import { AddTopic, EnvironmentalProjectState } from 'src/app/store/environmental-project.action';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-topics-form',
@@ -8,15 +11,21 @@ import { Select } from '@ngxs/store';
 })
 export class TopicsFormComponent implements OnInit {
 
-  topics = [{ name: 'Proyecto ambienta' }];
+  @Select( EnvironmentalProjectState.topics ) topics$: Observable<Topic[]>;
 
-  constructor() { }
+  value: Topic;
 
-  ngOnInit() {
+  constructor( private store: Store ) { }
+
+  ngOnInit() {}
+
+  addTopic() {
+
+    this.store.dispatch( new AddTopic({
+      name: '',
+      objectives: [],
+      strategies: [],
+      contents: []
+    }));
   }
-
-  addTopics() {
-    this.topics.push({ name: 'Nuevo tema' });
-  }
-
 }

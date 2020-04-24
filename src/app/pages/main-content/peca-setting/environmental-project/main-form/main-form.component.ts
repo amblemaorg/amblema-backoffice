@@ -17,7 +17,7 @@ export class MainFormComponent implements OnInit {
 
   option = this.options[0].value;
 
-  
+
   constructor( private store: Store ) { }
 
   ngOnInit() {}

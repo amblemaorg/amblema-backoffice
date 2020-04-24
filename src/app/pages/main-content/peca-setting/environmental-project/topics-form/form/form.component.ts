@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-form',
@@ -11,11 +12,10 @@ export class FormComponent implements OnInit {
 
   levels = [{ name: 'Grados'  }];
 
-  constructor() { }
+  constructor( ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  addLevel() { this.levels.push({ name: 'Grados' }); }
-
+  addLevel() {
+    this.levels.push({ name: 'Grados' }); }
 }

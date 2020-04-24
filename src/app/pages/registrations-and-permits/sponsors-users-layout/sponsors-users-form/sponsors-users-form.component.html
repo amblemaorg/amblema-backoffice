@@ -1,8 +1,6 @@
-<app-modal [ID]='ID' [size]="'lg'" [title]="title" extra="true">
+<app-modal [ID]="'form-sponsor-user'" [size]="'lg'" [title]="'Registro de padrino'" extra="true">
 
-    <!-- Main content -->
-    <form [formGroup]="form" (keydown.enter)="onSubmit()" content>
-
+    <form [formGroup]="form" content>
         <!-- Personal data -->
         <div class="row">
             <div class="col-12">
@@ -13,55 +11,39 @@
                 <div class="row">
                     <div class="col-12 form-group">
                         <label class="label w-100 text-center text-lg-left">Cargar imagen</label>
-                        <app-input-img 
-                            [control]="form.get('image')"
-                            [align]="'left'"></app-input-img>
+                        <app-input-img [control]="form.get('image')" [align]="'left'"></app-input-img>
                     </div>
                     <div class="col-12">
-                        <app-input-custom 
-                            [id]="'URL'"
-                            [control]="form.get('webSite')"
-                            [submitted]="submitted"
-                            [patternMsg]="'Introduzca una URL valida'"
-                            [label]="'URL del sitio web'"  
+                        <app-input-custom [id]="'URL'" [control]="form.get('webSite')" [submitted]="submitted"
+                            [patternMsg]="'Introduzca una URL valida'" [label]="'URL del sitio web'"
                             [placeholder]="'URL del sitio web'"></app-input-custom>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <app-input-custom 
-                            [placeholder]="'Nombre de la empresa'"
-                            [label]="'Nombre de la empresa'"
-                            [control]="form.get('name')" 
-                            [submitted]="submitted"></app-input-custom>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <app-form-document 
-                            [onlyCompany]="true"
-                            [submitted]="submitted"
-                            [control]="form.get('companyRif')"
-                            [controlSelect]="form.get('cardType')"></app-form-document>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <app-input-phone 
-                            [control]="form.get('companyPhone')"
-                            [id]="'company-phone'"
-                            [label]="'Teléfono de la empresa'"
-                            [placeholder]="'Teléfono de la empresa'"
-                            [submitted]="submitted"></app-input-phone>
-                    </div>                   
-                    
+                        <app-input-custom [placeholder]="'Nombre de la empresa'" [label]="'Nombre de la empresa'"
+                            [control]="form.get('name')" [submitted]="submitted"></app-input-custom>
+                    </div>
                     <div class="col-12 col-lg-6">
-                        <app-select-role 
-                            (onselected)="onselected($event)" 
-                            [control]="form.get('role')"
+                        <app-form-document [onlyCompany]="true" [submitted]="submitted"
+                            [control]="form.get('companyRif')" [controlSelect]="form.get('cardType')">
+                        </app-form-document>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <app-input-phone [control]="form.get('companyPhone')" [id]="'company-phone'"
+                            [label]="'Teléfono de la empresa'" [placeholder]="'Teléfono de la empresa'"
+                            [submitted]="submitted"></app-input-phone>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <app-select-role [control]="form.get('role')"
                             [submitted]="submitted"></app-select-role>
                     </div>
-                    
+
                     <div class="col-12 col-lg-6">
                         <app-input-email [control]="form.get('email')" [submitted]="submitted"></app-input-email>
                     </div>
@@ -71,11 +53,10 @@
                         </app-input-password>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <app-type-company 
-                            [companyType]="form.get('companyType')"
-                            [companyOtherType]="form.get('companyOtherType')"
-                            [submitted]="submitted"></app-type-company>
-                    </div> 
+                        <app-type-company [companyType]="form.get('companyType')"
+                            [companyOtherType]="form.get('companyOtherType')" [submitted]="submitted">
+                        </app-type-company>
+                    </div>
                 </div>
             </div>
         </div><!-- / End personal data -->
@@ -86,43 +67,31 @@
                 <hr>
             </div>
             <div class="col-12 col-lg-6">
-                <app-input-name 
-                    [id]="'contact-name'"
-                    [control]="form.get('contactFirstName')"
-                    [label]="'Nombre de la persona de contacto'"
-                    [placeholder]="'Nombre de la persona de contacto'"
+                <app-input-name [id]="'contact-name'" [control]="form.get('contactFirstName')"
+                    [label]="'Nombre de la persona de contacto'" [placeholder]="'Nombre de la persona de contacto'"
                     [submitted]="submitted"></app-input-name>
             </div>
             <div class="col-12 col-lg-6">
-                <app-input-last-name 
-                    [id]="'contact-last-name'"
-                    [control]="form.get('contactLastName')"
-                    [label]="'Apellido de la persona de contacto'"
-                    [placeholder]="'Apellido de la persona de contacto'"
+                <app-input-last-name [id]="'contact-last-name'" [control]="form.get('contactLastName')"
+                    [label]="'Apellido de la persona de contacto'" [placeholder]="'Apellido de la persona de contacto'"
                     [submitted]="submitted"></app-input-last-name>
             </div>
 
             <div class="col-12 col-lg-6">
-                <app-input-phone 
-                    [id]="'personal-phone'"
-                    [control]="form.get('contactPhone')"
-                    [label]="'Teléfono de la persona de contacto'"
-                    [placeholder]="'Teléfono de la persona de contacto'"
+                <app-input-phone [id]="'personal-phone'" [control]="form.get('contactPhone')"
+                    [label]="'Teléfono de la persona de contacto'" [placeholder]="'Teléfono de la persona de contacto'"
                     [submitted]="submitted"></app-input-phone>
             </div>
 
 
             <div class="col-12 col-lg-6">
-                <app-input-email 
-                    [label]="'Correo de la persona de contacto'"
-                    [placeholder]="'Correo de la persona de contacto'"
-        
-                    [control]="form.get('contactEmail')" 
+                <app-input-email [label]="'Correo de la persona de contacto'"
+                    [placeholder]="'Correo de la persona de contacto'" [control]="form.get('contactEmail')"
                     [submitted]="submitted"></app-input-email>
             </div>
 
-            
-        </div> 
+
+        </div>
 
         <!-- address data -->
         <div class="row mt-3">
@@ -133,10 +102,10 @@
             <div class="col-12">
                 <app-address-sponsor 
                     [idState]="idState"
-                    [state]="form.get('addressState')" 
-                    [municipality]="form.get('addressMunicipality')"
-                    [control]="form.get('address')" 
-                    [addressCity]="form.get('addressCity')"
+                    [state]="form.get('addressState')"
+                    [municipality]="form.get('addressMunicipality')" 
+                    [control]="form.get('address')"
+                    [addressCity]="form.get('addressCity')" 
                     [submitted]="submitted"></app-address-sponsor>
             </div>
         </div><!-- / End address data -->
@@ -151,18 +120,21 @@
             </div>
         </div>
 
-        <app-progress *ngIf="showProgress"></app-progress>
-
-    </form><!-- / End main content -->
-
-    <!-- Footer content -->
-    <button nbButton
-        nbButton
-        [status]="MODE == ACTION.EDIT ? 'primary' : 'success'"
-        [attr.disabled]="showProgress ? true : null"
-        [nbSpinner]="showProgress ? true : null" nbSpinnerStatus="success" button type="submit" (click)="onSubmit()" class="col-6 col-md-auto">
-        <span *ngIf="MODE == ACTION.CREATE && !showProgress">Guardar</span>
-        <span *ngIf="showProgress">Guardando...</span>
-        <span *ngIf="MODE == ACTION.EDIT && !showProgress">Editar</span>
-    </button>
+        <app-progress *ngIf="showProgress" (finish)="showProgress=false"></app-progress>
+        
+    </form>
+    <button 
+            (click)="onSubmit()"
+            button
+            nbButton
+            [status]="mode === ACTION.EDIT ? 'primary' : 'success'"
+            [attr.disabled]="showProgress ? true : null"
+            [nbSpinner]="showProgress ? true : null" 
+            nbSpinnerStatus="success" 
+            type="submit" 
+            class="col-6 col-md-auto">
+                <span *ngIf="mode === ACTION.CREATE && !showProgress">Guardar</span>
+                <span *ngIf="showProgress">Guardando...</span>
+                <span *ngIf="mode === ACTION.EDIT && !showProgress">Editar</span>
+        </button>
 </app-modal>

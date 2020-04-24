@@ -5,6 +5,7 @@ import { SponsorUserState, DeleteSponsorUser, SelectedSponsorUser } from 'src/ap
 import { Observable } from 'rxjs';
 import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
 import { Utility } from 'src/app/helpers/utility';
+import { ModalService } from 'src/app/services/helper/modal.service';
 
 // JQuery call
 declare var $: any;
@@ -13,11 +14,12 @@ declare var $: any;
   selector: 'app-sponsors-users-table',
   templateUrl: './sponsors-users-table.component.html'
 })
-export class SponsorsUsersTableComponent extends BaseTable implements TableActions, OnInit {
+export class SponsorsUsersTableComponent extends BaseTable implements TableActions {
 
   @Select( SponsorUserState.sponsorUsers ) data$: Observable<SponsorUser[]>;
 
   constructor(
+    private modalServices: ModalService,
     private helper: Utility,
     private store: Store,
   ) {
@@ -49,8 +51,6 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
           return this.helper.readlyStatus( [{ status: row }] )[0].status;
         },
         filterFunction(cell?: any, search?: string): boolean {
-
-
             let value: string = cell === '1' ? 'Activo' : 'Inactivo';
 
             value = value.toUpperCase();
@@ -62,9 +62,6 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
     };
   }
 
-  ngOnInit() {
-  }
-
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
@@ -74,6 +71,7 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         break;
       case this.ACTION.EDIT:
         // Change mode purpose
+        this.modalServices.open('form-sponsor-user');
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
         this.store.dispatch( new SelectedSponsorUser( event.data ) );
@@ -84,4 +82,8 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
     }
   }
 
+  onRegister() {
+    this.modalServices.open('form-sponsor-user');
+    this.MODE = this.ACTION.CREATE;
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngxs/store';
+import { AddSchoolLevel } from 'src/app/store/environmental-project.action';
 
 @Component({
   selector: 'app-form',
@@ -8,14 +9,16 @@ import { Store } from '@ngxs/store';
 })
 export class FormComponent implements OnInit {
 
-  @Input() index: number;
+
+  @Input() index: number; // <-- This is the topic indexing
 
   levels = [{ name: 'Grados'  }];
 
-  constructor( ) { }
+  constructor(  private store: Store ) { }
 
   ngOnInit() {}
 
   addLevel() {
-    this.levels.push({ name: 'Grados' }); }
+    this.store.dispatch( new AddSchoolLevel( null, 0 ) );
+  }
 }

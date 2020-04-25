@@ -27,8 +27,8 @@ export class AddTopic {
 }
 
 export class AddSchoolLevel {
-    static readonly type = '[EnvironmentalProject] Add School level EnvironmentalProject'
-    constructor(public schoolLevel: Level) { }    
+    static readonly type = '[EnvironmentalProject] Add School level EnvironmentalProject';
+    constructor(public schoolLevel: Level, public indexTopic: number) { }
 }
 
 @State<EnvironmentalProjectModel>({
@@ -57,6 +57,8 @@ export class AddSchoolLevel {
 export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
 
     subscriptionEnvironmentalProject: Subscription;
+
+    referencingLapse = '1';
 
     @Selector()
     static environmentalProject(state: EnvironmentalProjectModel): EnvironmentalProjectModel | null {
@@ -116,16 +118,19 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                 ctx.setState(patch({
                     lapseSelected: ctx.getState().lapse1
                 }));
+                this.referencingLapse = '1';
                 break;
             case '2':
                 ctx.setState(patch({
                     lapseSelected: ctx.getState().lapse2
                 }));
+                this.referencingLapse = '2';
                 break;
             case '3':
                 ctx.setState(patch({
                     lapseSelected: ctx.getState().lapse3
                 }));
+                this.referencingLapse = '3';
                 break;
         }
     }
@@ -139,5 +144,53 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                 topics: append([action.topic])
             })
         }));
+
+        this.InternalLapseUpdate(ctx); // <-- Update lapse
+    }
+
+    @Action(AddSchoolLevel)
+    addSchoolLevel(ctx: StateContext<EnvironmentalProjectModel>, action: AddSchoolLevel) {
+        
+        let topic: Array<Topic> = ctx.getState().lapseSelected.topics; 
+
+        topic.forEach( (value, key) => {
+
+            if(key === 0) {
+                value.levels.push( action.schoolLevel )   
+            }
+        } );
+
+        ctx.setState( patch({
+            ...ctx.getState(),
+            lapseSelected: patch({
+                ...ctx.getState().lapseSelected,
+                topics: topic
+            })
+        }) )
+
+        this.InternalLapseUpdate(ctx); // <-- Update lapse
+    }
+    
+    // -- Selecting lapse updates one of the three lapses --
+    InternalLapseUpdate(ctx?: StateContext<EnvironmentalProjectModel>): void {
+
+        switch (this.referencingLapse) {
+            case '1':
+                ctx.setState(patch({
+                    lapse1: ctx.getState().lapseSelected
+                }));
+                break;
+            case '2':
+                ctx.setState(patch({
+                    lapse2: ctx.getState().lapseSelected
+                }));
+                break;
+            case '3':
+                ctx.setState(patch({
+                    lapse3: ctx.getState().lapseSelected
+                }));
+
+                break;
+        }
     }
 }

@@ -4,6 +4,7 @@ export interface Target {
 }
 
 export interface Level {
+    index?: number;
     target: Target[];
     week: string[];
     duration: string;
@@ -15,11 +16,12 @@ export interface Level {
 }
 
 export interface Topic {
+    index?: number;
     name: string;
     objectives: string[];
     strategies: string[];
     contents: string[];
-    levels?: Level[];
+    levels: Level[];
 }
 
 export interface Lapse {

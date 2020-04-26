@@ -5,6 +5,6 @@
     </div>
 
     <div class="col-12 form-group" *ngFor="let item of (topics$ | async); let i = index">
-        <app-form [index]="i"></app-form>
+        <app-form [index]="i" [levels]="item.levels"></app-form>
     </div>
 </div>

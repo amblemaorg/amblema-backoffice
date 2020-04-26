@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { NbAuthService } from '@nebular/auth';
 import { NavigationStart, Router, NavigationEnd, NavigationCancel, NavigationError, Event } from '@angular/router';
 import { MenuSetUp } from './pages-menu-service';
@@ -8,7 +8,7 @@ import { MenuSetUp } from './pages-menu-service';
     templateUrl: 'pages.component.html'
 })
 
-export class PagesComponent implements AfterViewInit {
+export class PagesComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         public menuSetUp: MenuSetUp,
@@ -41,5 +41,12 @@ export class PagesComponent implements AfterViewInit {
         setTimeout(() => {
             this.menuSetUp.renderMenu();
         }, 500);
+    }
+
+    ngOnDestroy(): void {
+        if(this.menuSetUp.subscriptionLapse) {
+            this.menuSetUp.subscriptionLapse.unsubscribe();
+        }
+                
     }
 }

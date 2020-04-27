@@ -61,7 +61,6 @@ export class MainFormComponent implements OnInit, OnDestroy {
         // -- Get all data --
         this.subscription = this.storable$.subscribe( value => {
 
-          console.log( value );
           if ( this.submitted ) { // <-- Must be submitted
 
             // -- Send data to the server --

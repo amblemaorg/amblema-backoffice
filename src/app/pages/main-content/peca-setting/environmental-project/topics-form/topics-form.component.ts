@@ -50,12 +50,14 @@ export class TopicsFormComponent implements OnInit, OnDestroy {
         this.subscription = this.storable$.subscribe( value => {
 
           this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( resp => {
-            console.log( resp );
-          },  ( err ) => console.log(err) );
+            // Success
+          },  ( err ) => {
+            // Error
+          } );
 
         } );
 
-      } );
+      });
     });
   }
 }

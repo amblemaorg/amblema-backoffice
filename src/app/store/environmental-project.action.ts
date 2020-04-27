@@ -57,6 +57,15 @@ export class SetNameEnvironmentalProject {
     constructor( public name: string ) {}
 }
 
+export class DeleteTopic {
+    static readonly type = '[EnvironmentalProject] Delete Topic EnvironmentalProject';
+    constructor( topic: Topic, index: number ) {}
+}
+
+export class DeleteSchoolLevel {
+    static readonly type = '[EnvironmentalProject] Delete School Level EnvironmentalProject';
+}
+
 @State<EnvironmentalProjectModel>({
     name: 'environmentalproject',
     defaults: {
@@ -248,6 +257,13 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             ...ctx.getState(),
             name: action.name
         }) );
+    }
+
+    @Action( DeleteTopic )
+    deleteTopic(ctx: StateContext<EnvironmentalProjectModel>, action: DeleteTopic ) {
+
+        
+
     }
 
     // -- Selecting lapse updates one of the three lapses --

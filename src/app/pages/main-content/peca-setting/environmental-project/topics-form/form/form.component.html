@@ -6,34 +6,59 @@
             </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-            <div class="row">
-                <div class="col-12 form-group">
+            <form [formGroup]="form" (ngSubmit)="onUpdateTopic()" class="row">
+                <div class="col-12 form-group text-right">
                     <button 
-                        class="col-12 col-lg-auto"
+                        class="col-12 col-lg-auto mr-3"
                         nbButton 
-                        size="small" status="danger" size="small" nbTooltip="Eliminar tema">
+                        size="small" 
+                        outline 
+                        status="danger" 
+                        type="button" 
+                        nbTooltip="Eliminar tema">
                         Eliminar tema<nb-icon icon="trash-2-outline"></nb-icon>
                     </button>
+                    <button 
+                        size="small"
+                        nbButton 
+                        type="submit" 
+                        status="primary">Guardar datos del tema<nb-icon icon="save-outline"></nb-icon></button>
                 </div>
 
                 <div class="col-12">
-                    <app-input-custom [label]="'Tema'" [placeholder]="'Tema'" [id]="'topics'"></app-input-custom>
+                    <app-input-custom 
+                        [control]="form.get('name')"
+                        [label]="'Tema'" 
+                        [placeholder]="'Tema'" 
+                        [id]="'topics'"></app-input-custom>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de objetivos'"></app-list-items>
+                    <app-list-items 
+                        [list]="objectives"
+                        [title]="'Lista de objetivos'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de estrategias'"></app-list-items>
+                    <app-list-items 
+                        [list]="strategies"
+                        [title]="'Lista de estrategias'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de contenido'"></app-list-items>
+                    <app-list-items 
+                        [list]="contents"
+                        [title]="'Lista de contenido'"></app-list-items>
                 </div>
+
                 <div class="col-12">
                     <hr>
-                    <button nbButton status="success" (click)="addLevel()" class="form-group">CREAR NIVEL <nb-icon
+                    <button 
+                        size="small"
+                        nbButton 
+                        type="button"
+                        status="success" 
+                        (click)="addLevel()" class="form-group">CREAR NIVEL <nb-icon
                             icon="plus-outline"></nb-icon></button>
                     <div class="row">
                         <div class="col-12 form-group" *ngFor="let item of levels; let i = index">
@@ -41,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </nb-accordion-item-body>
     </nb-accordion-item>
 </nb-accordion>

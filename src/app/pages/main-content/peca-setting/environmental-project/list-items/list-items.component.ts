@@ -11,12 +11,12 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 export class ListItemsComponent implements OnInit {
 
   @Input() title: string;
+  @Input()list = new Array<any>();
 
   MODE_LIST;
   ACTION = ACTION;
   ID_ITEM: number;
-  list = new Array<any>();
-
+  
   control: AbstractControl | null = new FormControl();
 
   constructor( private toastr: CustomToastrService ) { }

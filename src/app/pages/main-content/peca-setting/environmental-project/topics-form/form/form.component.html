@@ -9,6 +9,7 @@
             <form [formGroup]="form" (ngSubmit)="onUpdateTopic()" class="row">
                 <div class="col-12 form-group text-right">
                     <button 
+                        (click)="deleteHimself()"
                         class="col-12 col-lg-auto mr-3"
                         nbButton 
                         size="small" 
@@ -29,8 +30,7 @@
                     <app-input-custom 
                         [control]="form.get('name')"
                         [label]="'Tema'" 
-                        [placeholder]="'Tema'" 
-                        [id]="'topics'"></app-input-custom>
+                        [placeholder]="'Tema'" ></app-input-custom>
                 </div>
 
                 <div class="col-12 col-lg-6">

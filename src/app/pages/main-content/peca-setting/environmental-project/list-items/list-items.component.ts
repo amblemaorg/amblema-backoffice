@@ -16,7 +16,7 @@ export class ListItemsComponent implements OnInit {
   MODE_LIST;
   ACTION = ACTION;
   ID_ITEM: number;
-  
+
   control: AbstractControl | null = new FormControl();
 
   constructor( private toastr: CustomToastrService ) { }

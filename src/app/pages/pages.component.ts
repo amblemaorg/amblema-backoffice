@@ -44,9 +44,9 @@ export class PagesComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if(this.menuSetUp.subscriptionLapse) {
+        if (this.menuSetUp.subscriptionLapse) {
             this.menuSetUp.subscriptionLapse.unsubscribe();
         }
-                
+
     }
 }

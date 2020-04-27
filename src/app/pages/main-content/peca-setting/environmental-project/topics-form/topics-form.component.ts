@@ -1,45 +1,61 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Store, Select } from "@ngxs/store";
-import { Topic } from "src/app/models/environmental-project.model";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store, Select } from '@ngxs/store';
+import { Topic } from 'src/app/models/environmental-project.model';
 import {
   AddTopic,
   EnvironmentalProjectState,
-} from "src/app/store/environmental-project.action";
-import { Observable, Subscription } from "rxjs";
+  EnvironmentalProjectModel,
+} from 'src/app/store/environmental-project.action';
+import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
 
 @Component({
-  selector: "app-topics-form",
-  templateUrl: "./topics-form.component.html",
-  styleUrls: ["./topics-form.component.scss"],
+  selector: 'app-topics-form',
+  templateUrl: './topics-form.component.html',
+  styleUrls: ['./topics-form.component.scss'],
 })
 export class TopicsFormComponent implements OnInit, OnDestroy {
   @Select(EnvironmentalProjectState.topics) topics$: Observable<Topic[]>;
+  @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
+
   subscription: Subscription;
 
   value: Topic;
 
-  constructor(private store: Store) {}
+  constructor(
+    private environmentalProjectService: EnvironmentalProjectService,
+    private store: Store) {}
 
   ngOnInit() {}
 
   ngOnDestroy(): void {
-    if( this.subscription ) {
+    if ( this.subscription ) {
       this.subscription.unsubscribe();
     }
   }
 
   addTopic() {
       this.subscription = this.topics$.pipe(take(1)).subscribe((response) => {
-      this.store.dispatch(
+      this.subscription = this.store.dispatch(
         new AddTopic({
-          name: "",
+          name: '',
           objectives: [],
           strategies: [],
           contents: [],
           levels: [],
         })
-      );
+      ).subscribe( () => {
+
+        this.subscription = this.storable$.subscribe( value => {
+
+          this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( resp => {
+            console.log( resp );
+          },  ( err ) => console.log(err) );
+
+        } );
+
+      } );
     });
   }
 }

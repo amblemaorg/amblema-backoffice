@@ -1,8 +1,17 @@
 <div class="row">
-    <div class="order-lg-0 col-12 col-lg-6">
-        <app-input-custom [id]="'name-project'" [placeholder]="'Nombre del proyecto ambiental'"
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="order-lg-0 col-12 col-lg-6 form-group">
+        <app-input-custom 
+            [control]="form.get('name')"
+            [submitted]="submitted"
+            [id]="'name-project'" 
+            [placeholder]="'Nombre del proyecto ambiental'"
             [label]="'Nombre del proyecto ambiental'"></app-input-custom>
-    </div>
+        <button 
+            type="submit"
+            nbButton 
+            class="col-12 col-lg-auto" 
+            status='primary'>Guardar <nb-icon icon="save-outline"></nb-icon></button>    
+    </form>
     <div class="order-0 col-12 col-lg-6">
         <nb-alert outline accent="info">
             <p class="font-weight-bold d-flex">

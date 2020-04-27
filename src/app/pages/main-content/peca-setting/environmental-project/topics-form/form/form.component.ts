@@ -27,6 +27,7 @@ export class FormComponent implements OnInit, OnDestroy {
     name: new FormControl()
   });
 
+
   objectives = new Array<any>();
   strategies = new Array<any>();
   contents = new Array<any>();
@@ -74,8 +75,6 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   onUpdateTopic(): void {
-
-
     this.subcription = this.store.dispatch(new UpdateTopic({
       name: this.form.controls.name.value,
       objectives: this.objectives,
@@ -95,4 +94,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
     });
   }
+
+
 }

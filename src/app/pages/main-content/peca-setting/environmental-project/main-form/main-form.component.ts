@@ -7,6 +7,7 @@ import { SelectLapse
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
+import { EnvironmentalProject } from 'src/app/models/environmental-project.model';
 
 @Component({
   selector: 'app-main-form',
@@ -16,6 +17,7 @@ import { EnvironmentalProjectService } from 'src/app/services/environmental-proj
 export class MainFormComponent implements OnInit, OnDestroy {
 
   @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
+  @Select( EnvironmentalProjectState.environmentalProject ) environmentalProjectSelected:  Observable<EnvironmentalProject>;
   subscription: Subscription;
 
   options = [
@@ -30,13 +32,22 @@ export class MainFormComponent implements OnInit, OnDestroy {
     name: new FormControl(null, [Validators.required])
   });
 
+  formGeneralObjective: FormGroup = new FormGroup({
+    generalObjective: new FormControl()
+  })
+
   submitted = false;
 
   constructor(
     private environmentalProjectService: EnvironmentalProjectService,
     private store: Store ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription = this.environmentalProjectSelected.subscribe( response => {
+
+      this.form.patchValue( response ); 
+    });
+  }
 
   ngOnDestroy(): void {
     if ( this.subscription ) {
@@ -65,9 +76,7 @@ export class MainFormComponent implements OnInit, OnDestroy {
 
             // -- Send data to the server --
             this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( response => {
-              console.log( response );
             }, (err) => {
-              console.log( err );
             } );
           }
         } );
@@ -75,8 +84,10 @@ export class MainFormComponent implements OnInit, OnDestroy {
 
       // -- Reset --
       this.submitted = false;
-      this.form.reset();
     }
+  }
 
+  onUpdateGeneralObjective() {
+  
   }
 }

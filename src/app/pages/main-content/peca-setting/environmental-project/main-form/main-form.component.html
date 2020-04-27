@@ -30,8 +30,11 @@
         <nb-alert outline="basic">Configurando el lapso: {{ option }}</nb-alert>
     </div>
 
-    <div class="col-12 col-lg-6">
-        <app-input-custom [label]="'Objectivo general'" [placeholder]="'Objectivo general'" [id]="'general-objective'">
+    <form [formGroup]="formGeneralObjective" (ngSubmit)="onUpdateGeneralObjective()" class="col-12 col-lg-6">
+        <app-input-custom 
+            [control]="formGeneralObjective.get('generalObjective')"
+            [label]="'Objectivo general'" 
+            [placeholder]="'Objectivo general'" [id]="'general-objective'">
         </app-input-custom>
-    </div>
+    </form>
 </div>

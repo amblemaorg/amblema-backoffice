@@ -58,6 +58,11 @@ export class SetNameEnvironmentalProject {
     constructor( public name: string ) {}
 }
 
+export class SetGeneralObjective {
+    static readonly type = '[EnvironmentalProject] Set General Objective EnvironmentalProject';
+    constructor( public generalObjective: string ) {}    
+}
+
 export class DeleteTopic {
     static readonly type = '[EnvironmentalProject] Delete Topic EnvironmentalProject';
     constructor( public indexTopic: number ) {}
@@ -163,7 +168,6 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.subscriptionEnvironmentalProject = this.environmentalProjectServivce
             .getEnvironmentalProject()
             .subscribe((response) => {
-
                 if ( JSON.stringify( response ) !== '{}' ) { // <-- Is not empty
                     ctx.setState(patch(response));
                 }
@@ -337,6 +341,22 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             ...ctx.getState(),
             name: action.name
         }) );
+    }
+
+    /**
+     * Set general objective
+     */
+    @Action( SetGeneralObjective )
+    SetGeneralObjective(ctx: StateContext<EnvironmentalProjectModel>, action: SetGeneralObjective) {
+        ctx.setState( patch({
+            ...ctx.getState(),
+            lapseSelected: patch({
+                ...ctx.getState().lapseSelected,
+                generalObjective: action.generalObjective
+            })
+        }) );
+
+        this.InternalLapseUpdate(ctx);
     }
 
     // -- Selecting lapse updates one of the three lapses --

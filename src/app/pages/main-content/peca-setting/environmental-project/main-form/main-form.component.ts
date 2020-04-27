@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { SelectLapse
+import {
+  SelectLapse
   , SetNameEnvironmentalProject
   , EnvironmentalProjectModel
-  , EnvironmentalProjectState } from 'src/app/store/environmental-project.action';
+  , EnvironmentalProjectState,
+  SetGeneralObjective
+} from 'src/app/store/environmental-project.action';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
-import { EnvironmentalProject } from 'src/app/models/environmental-project.model';
-
 @Component({
   selector: 'app-main-form',
   templateUrl: './main-form.component.html',
@@ -17,7 +18,7 @@ import { EnvironmentalProject } from 'src/app/models/environmental-project.model
 export class MainFormComponent implements OnInit, OnDestroy {
 
   @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
-  @Select( EnvironmentalProjectState.environmentalProject ) environmentalProjectSelected:  Observable<EnvironmentalProject>;
+  @Select(EnvironmentalProjectState.environmentalProject) environmentalProjectSelected: Observable<EnvironmentalProjectModel>;
   subscription: Subscription;
 
   options = [
@@ -33,53 +34,58 @@ export class MainFormComponent implements OnInit, OnDestroy {
   });
 
   formGeneralObjective: FormGroup = new FormGroup({
-    generalObjective: new FormControl()
-  })
+    generalObjective: new FormControl(null)
+  });
 
   submitted = false;
+  submittedObjective = false;
+
 
   constructor(
     private environmentalProjectService: EnvironmentalProjectService,
-    private store: Store ) { }
+    private store: Store) { }
 
   ngOnInit() {
-    this.subscription = this.environmentalProjectSelected.subscribe( response => {
-
-      this.form.patchValue( response ); 
+    this.subscription = this.environmentalProjectSelected.subscribe(response => {
+      this.form.patchValue(response);
+      this.formGeneralObjective.patchValue(response.lapseSelected);
     });
+
+    // -- Previous selection ---
+    this.onSelectLapse('1');
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
   onSelectLapse(item: string) {
-    this.store.dispatch( new SelectLapse(item) );
+    this.store.dispatch(new SelectLapse(item));
   }
 
   onSubmit(): void {
 
     this.submitted = true;
 
-    if ( this.form.valid ) {
+    if (this.form.valid) {
 
 
       // -- Set name --
-      this.subscription = this.store.dispatch( new SetNameEnvironmentalProject( this.form.controls.name.value ) ).subscribe( () => {
+      this.subscription = this.store.dispatch(new SetNameEnvironmentalProject(this.form.controls.name.value)).subscribe(() => {
 
         // -- Get all data --
-        this.subscription = this.storable$.subscribe( value => {
+        this.subscription = this.storable$.subscribe(value => {
 
-          if ( this.submitted ) { // <-- Must be submitted
+          if (this.submitted) { // <-- Must be submitted
 
             // -- Send data to the server --
-            this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( response => {
+            this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
             }, (err) => {
-            } );
+            });
           }
-        } );
+        });
       });
 
       // -- Reset --
@@ -88,6 +94,26 @@ export class MainFormComponent implements OnInit, OnDestroy {
   }
 
   onUpdateGeneralObjective() {
-  
+
+
+    // -- Set name --
+    this.subscription = this.store.dispatch(new SetGeneralObjective(this.formGeneralObjective.controls.generalObjective.value))
+      .subscribe(() => {
+
+        // -- Get all data --
+        this.subscription = this.storable$.subscribe(value => {
+
+          if (this.submittedObjective) { // <-- Must be.submittedObjective
+
+            // -- Send data to the server --
+            this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
+
+
+            }, (err) => {
+            });
+          }
+        });
+      });
+
   }
 }

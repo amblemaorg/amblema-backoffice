@@ -7,6 +7,8 @@
             [placeholder]="'Nombre del proyecto ambiental'"
             [label]="'Nombre del proyecto ambiental'"></app-input-custom>
         <button 
+            [attr.disabled]="form.invalid ? true : null"
+            size="small"
             type="submit"
             nbButton 
             class="col-12 col-lg-auto" 
@@ -32,9 +34,16 @@
 
     <form [formGroup]="formGeneralObjective" (ngSubmit)="onUpdateGeneralObjective()" class="col-12 col-lg-6">
         <app-input-custom 
+            [submitted]="false"
             [control]="formGeneralObjective.get('generalObjective')"
             [label]="'Objectivo general'" 
             [placeholder]="'Objectivo general'" [id]="'general-objective'">
         </app-input-custom>
+
+        <button  
+            type="submit"
+            size="small"
+            nbButton 
+            state="primary">Guardar <nb-icon icon="save-outline"></nb-icon></button>
     </form>
 </div>

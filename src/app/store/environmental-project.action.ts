@@ -60,7 +60,7 @@ export class SetNameEnvironmentalProject {
 
 export class SetGeneralObjective {
     static readonly type = '[EnvironmentalProject] Set General Objective EnvironmentalProject';
-    constructor( public generalObjective: string ) {}    
+    constructor( public generalObjective: string ) {}
 }
 
 export class DeleteTopic {

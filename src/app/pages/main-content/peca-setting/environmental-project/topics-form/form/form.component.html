@@ -28,6 +28,7 @@
 
                 <div class="col-12">
                     <app-input-custom 
+                        [submitted]="false"
                         [control]="form.get('name')"
                         [label]="'Tema'" 
                         [placeholder]="'Tema'" ></app-input-custom>
@@ -35,18 +36,21 @@
 
                 <div class="col-12 col-lg-6">
                     <app-list-items 
+                        (delete)="objectives=$event"
                         [list]="objectives"
                         [title]="'Lista de objetivos'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
                     <app-list-items 
+                        (delete)="strategies=$event"
                         [list]="strategies"
                         [title]="'Lista de estrategias'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
                     <app-list-items 
+                        (delete)="contents=$event"
                         [list]="contents"
                         [title]="'Lista de contenido'"></app-list-items>
                 </div>

@@ -7,25 +7,21 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LevelsFormComponent implements OnInit {
 
-  @Input() index: number;
+  @Input() indexTopic: number; // <-- Index Topic
+  @Input() index: number; // <-- Index level
 
   options = [
-
-    { value: '1', label: 'Preescolar' },
-    { value: '2', label: 'Primer grado' },
-    { value: '3', label: 'Segundo grado' },
-    { value: '4', label: 'Tercer grado' },
-    { value: '5', label: 'Cuarto grado' },
-
-    { value: '6', label: 'Quinto grado' },
-    { value: '7', label: 'Sexto grado' },
-
+    { value: false, label: 'Preescolar' }, // <-- Prescolar
+    { value: false, label: 'Primer grado' }, // <-- Primer grado
+    { value: false, label: 'Segundo grado' }, // <-- Segundo grado
+    { value: false, label: 'Tercer grado' }, // <-- Tercer grado
+    { value: false, label: 'Cuarto grado' }, // <-- Cuarto grado
+    { value: false, label: 'Quinto grado' }, // <-- Quinto grado
+    { value: false, label: 'Sexto grado' }, // <-- Sexto grado
   ];
-
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }

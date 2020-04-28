@@ -10,7 +10,7 @@
                 <div class="col-12 form-group text-right">
                     <button 
                         (click)="deleteHimself()"
-                        class="col-12 col-lg-auto mr-3"
+                        class="col-12 col-lg-auto mr-0 mr-lg-3 mb-3 mb-lg-0"
                         nbButton 
                         size="small" 
                         outline 
@@ -20,6 +20,7 @@
                         Eliminar tema<nb-icon icon="trash-2-outline"></nb-icon>
                     </button>
                     <button 
+                        class="col-12 col-lg-auto"
                         size="small"
                         nbButton 
                         type="submit" 
@@ -66,7 +67,7 @@
                             icon="plus-outline"></nb-icon></button>
                     <div class="row">
                         <div class="col-12 form-group" *ngFor="let item of levels; let i = index">
-                            <app-levels-form [index]="i"></app-levels-form>
+                            <app-levels-form [index]="i" [indexTopic]="index"></app-levels-form>
                         </div>
                     </div>
                 </div>

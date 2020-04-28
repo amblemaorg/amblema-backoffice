@@ -30,28 +30,7 @@ export interface EnvironmentalProjectModel extends EnvironmentalProject {
     lapseSelected?: Lapse;
 }
 
-// -- Actions --
-
-export class GetEnvironmentalProject {
-    static readonly type = '[EnvironmentalProject] Get All EnvironmentalProject';
-}
-
-export class SelectLapse {
-    static readonly type = '[EnvironmentalProject] Select A EnvironmentalProject';
-    constructor(public lapse: string) { }
-}
-
-export class AddTopic {
-    static readonly type =
-        '[EnvironmentalProject] Add Topic EnvironmentalProject';
-    constructor(public topic: Topic) { }
-}
-
-export class AddSchoolLevel {
-    static readonly type =
-        '[EnvironmentalProject] Add School level EnvironmentalProject';
-    constructor(public schoolLevel: Level, public indexTopic: number) { }
-}
+// -- Action project --
 
 export class SetNameEnvironmentalProject {
     static readonly type = '[EnvironmentalProject] Set Name EnvironmentalProject';
@@ -63,6 +42,37 @@ export class SetGeneralObjective {
     constructor( public generalObjective: string ) {}
 }
 
+export class GetEnvironmentalProject {
+    static readonly type = '[EnvironmentalProject] Get All EnvironmentalProject';
+}
+
+export class SelectLapse {
+    static readonly type = '[EnvironmentalProject] Select A EnvironmentalProject';
+    constructor(public lapse: string) { }
+}
+
+// -- Action school --
+
+export class AddSchoolLevel {
+    static readonly type =
+        '[EnvironmentalProject] Add School level EnvironmentalProject';
+    constructor(public schoolLevel: Level, public indexTopic: number) { }
+}
+
+export class DeleteSchoolLevel {
+    static readonly type =
+        '[EnvironmentalProject] Delete School level EnvironmentalProject';
+    constructor( public indexTopic: number, public indexLevel: number) { }
+}
+
+// -- Action Topic --
+
+export class AddTopic {
+    static readonly type =
+        '[EnvironmentalProject] Add Topic EnvironmentalProject';
+    constructor(public topic: Topic) { }
+}
+
 export class DeleteTopic {
     static readonly type = '[EnvironmentalProject] Delete Topic EnvironmentalProject';
     constructor( public indexTopic: number ) {}
@@ -71,10 +81,6 @@ export class DeleteTopic {
 export class UpdateTopic {
     static readonly type = '[EnvironmentalProject] Update Topic EnvironmentalProject';
     constructor( public topic: Topic, public indexTopic: number ) {}
-}
-
-export class DeleteSchoolLevel {
-    static readonly type = '[EnvironmentalProject] Delete School Level EnvironmentalProject';
 }
 
 @State<EnvironmentalProjectModel>({
@@ -329,6 +335,23 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         );
 
         this.InternalLapseUpdate(ctx); // <-- Update lapse
+    }
+
+    @Action( DeleteSchoolLevel )
+    deleteSchoolLevel( 
+        ctx: StateContext<EnvironmentalProjectModel>,
+        action: DeleteSchoolLevel ) {
+
+            // -- Match topic
+            let topicMatch: Topic;
+            let isMatchTopic = false;
+            
+
+            //  -- Match level
+            let levelMatch: Topic;
+            let isMatchLevel = false;
+
+            
     }
 
     /**

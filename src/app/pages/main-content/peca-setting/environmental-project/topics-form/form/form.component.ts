@@ -21,7 +21,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
   @Select(EnvironmentalProjectState.lapseSelected) lapse$: Observable<Lapse>;
-  subcription: Subscription;
+  subscription: Subscription;
 
   @Input() levels: Array<Level>; // <-- Obtain the school levels according to the topic
   @Input() index: number; // <-- This is the topic indexing
@@ -41,7 +41,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subcription = this.lapse$.subscribe(response => {
+    this.subscription = this.lapse$.subscribe(response => {
 
       response.topics.forEach((value, key) => {
 
@@ -65,8 +65,8 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subcription) {
-      this.subcription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
@@ -80,17 +80,30 @@ export class FormComponent implements OnInit, OnDestroy {
       resources: [],
       evaluations: [],
       supportMaterial: [],
-    }, this.index));
+    }, this.index)).subscribe( () => {
+
+      this.subscription = this.storable$.subscribe( value => {
+
+
+        this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( response => {
+
+        
+
+        });
+      } );
+
+    });
+
   }
 
   // -- Action to delete topic --
   deleteHimself(): void {
 
-    this.subcription = this.store.dispatch(new DeleteTopic(this.index)).subscribe(() => {
+    this.subscription = this.store.dispatch(new DeleteTopic(this.index)).subscribe(() => {
 
-      this.subcription = this.storable$.subscribe(value => {
+      this.subscription = this.storable$.subscribe(value => {
 
-        this.subcription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
+        this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
           // -- Successfully mock delete topic --
 
         });
@@ -101,16 +114,16 @@ export class FormComponent implements OnInit, OnDestroy {
 
   onUpdateTopic(): void {
 
-    this.subcription = this.store.dispatch(new UpdateTopic({
+    this.subscription = this.store.dispatch(new UpdateTopic({
       name: this.form.controls.name.value,
       objectives: this.objectives,
       strategies: this.strategies,
       contents: this.contents
     }, this.index)).subscribe(() => {
 
-      this.subcription = this.storable$.subscribe(value => {
+      this.subscription = this.storable$.subscribe(value => {
 
-        this.subcription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
+        this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
           // -- Successfully mock delete topic --
 
         });

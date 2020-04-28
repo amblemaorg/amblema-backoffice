@@ -5,6 +5,27 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
             <div class="row">
+                <div class="col-12 form-group text-right">
+                    <button 
+
+                        (click)="deleteHimself()"
+                        class="col-12 col-lg-auto mr-0 mr-lg-3 mb-3 mb-lg-0"
+                        nbButton 
+                        size="small" 
+                        outline 
+                        status="danger" 
+                        type="button" 
+                        nbTooltip="Eliminar tema">
+                        Eliminar nivel escolar<nb-icon icon="trash-2-outline"></nb-icon>
+                    </button>
+                    <button 
+                        class="col-12 col-lg-auto"
+                        size="small"
+                        nbButton 
+                        type="submit" 
+                        status="primary">Guardar datos<nb-icon icon="save-outline"></nb-icon></button>
+                </div>
+
                 <div class="col-12">
                     <label class="label">Niveles</label>
                     <div class="d-block">

@@ -346,12 +346,46 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             let topicMatch: Topic;
             let isMatchTopic = false;
             
-
             //  -- Match level
-            let levelMatch: Topic;
+            let levelMatch: Level;
             let isMatchLevel = false;
 
-            
+            ctx.setState( patch({
+                ...ctx.getState(),
+                lapseSelected: patch({
+                    ...ctx.getState().lapseSelected,
+                    topics: iif<Topic[]>(  // <-- Conditional match
+                        (topics) => {
+                            topics.forEach((value, key) => {
+                                if (key === action.indexTopic) { // <-- Match index topic
+                                    topicMatch = value; // <-- Save topic to match update
+                                    isMatchTopic = true;
+                                }
+                            });
+                            return isMatchTopic;
+                        },
+                        updateItem<Topic>(
+                            (topic) => topic === topicMatch, // <-- Match the update by topic
+                            patch({
+                                ...topicMatch,
+                                levels: iif<Level[]>( (levels) => { // <-- This is for remove the school level
+
+                                    levels.forEach((value, key) => {
+                                        if (key === action.indexTopic) {
+                                            levelMatch = value; 
+                                            isMatchLevel = true;
+                                        }
+                                    });
+                                    return isMatchLevel;
+
+                                }, removeItem<Level>( level => level === levelMatch ) )
+                            })
+                        )
+                    ),
+                })
+            }) )            
+
+            this.InternalLapseUpdate(ctx);
     }
 
     /**

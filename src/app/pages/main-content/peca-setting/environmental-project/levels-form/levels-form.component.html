@@ -4,7 +4,7 @@
             <nb-icon icon="trending-up-outline" class="mr-2"></nb-icon> Nivel escolar {{  index + 1 }}
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-            <div class="row">
+            <form [formGroup]="form" (ngSubmit)="onUpdateLevel()" class="row">
                 <div class="col-12 form-group text-right">
                     <button 
 
@@ -35,12 +35,15 @@
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-datepicker-range [label]="'Semanas'"></app-datepicker-range>
+                    <app-datepicker-range 
+                        [control]="form.get('week')"
+                        [label]="'Semanas'"></app-datepicker-range>
                 </div>
 
                 <div class="col-12 col-lg-6 form-group">
                     <label class="label">Tiempo estimado de ejecución</label>
                     <input 
+                        formControlName="duration"
                         type="text" 
                         class="form-control" 
                         fullWidth 
@@ -49,25 +52,35 @@
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de técnicas'"></app-list-items>
+                    <app-list-items 
+                        [list]="techniques"                    
+                        [title]="'Lista de técnicas'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de actividades'"></app-list-items>
+                    <app-list-items 
+                        [list]="activities"
+                        [title]="'Lista de actividades'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de recursos'"></app-list-items>
+                    <app-list-items 
+                        [list]="resources"
+                        [title]="'Lista de recursos'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de evaluación'"></app-list-items>
+                    <app-list-items 
+                        [list]="evaluations"
+                        [title]="'Lista de evaluación'"></app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de material de apoyo'"></app-list-items>
+                    <app-list-items 
+                        [list]="supportMaterial"
+                        [title]="'Lista de material de apoyo'"></app-list-items>
                 </div>
-            </div>
+            </form>
         </nb-accordion-item-body>
     </nb-accordion-item>
 </nb-accordion>

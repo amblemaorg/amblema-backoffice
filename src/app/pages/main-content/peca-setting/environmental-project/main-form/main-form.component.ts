@@ -43,7 +43,9 @@ export class MainFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private environmentalProjectService: EnvironmentalProjectService,
-    private store: Store) { }
+    private store: Store) {
+
+  }
 
   ngOnInit() {
     this.subscription = this.environmentalProjectSelected.subscribe(response => {
@@ -51,9 +53,14 @@ export class MainFormComponent implements OnInit, OnDestroy {
       this.formGeneralObjective.patchValue(response.lapseSelected);
     });
 
-    // -- Previous selection ---
-    this.onSelectLapse('1');
+
+    setTimeout(() => {
+      // -- Previous selection ---
+      this.onSelectLapse('1');
+
+    });
   }
+
 
   ngOnDestroy(): void {
     if (this.subscription) {

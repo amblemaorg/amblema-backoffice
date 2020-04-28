@@ -3,6 +3,7 @@ import { Subscription, Observable } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
 import { EnvironmentalProjectState, EnvironmentalProjectModel, DeleteSchoolLevel } from 'src/app/store/environmental-project.action';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-levels-form',
@@ -18,14 +19,26 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   @Input() index: number; // <-- Index level
 
   options = [
-    { value: false, label: 'Preescolar' }, // <-- Prescolar
-    { value: false, label: 'Primer grado' }, // <-- Primer grado
-    { value: false, label: 'Segundo grado' }, // <-- Segundo grado
-    { value: false, label: 'Tercer grado' }, // <-- Tercer grado
-    { value: false, label: 'Cuarto grado' }, // <-- Cuarto grado
-    { value: false, label: 'Quinto grado' }, // <-- Quinto grado
-    { value: false, label: 'Sexto grado' }, // <-- Sexto grado
+    { value: false, label: 'Preescolar' }, // <-- Prescolar 0
+    { value: false, label: 'Primer grado' }, // <-- Primer grado 1
+    { value: false, label: 'Segundo grado' }, // <-- Segundo grado 2
+    { value: false, label: 'Tercer grado' }, // <-- Tercer grado 3
+    { value: false, label: 'Cuarto grado' }, // <-- Cuarto grado 4
+    { value: false, label: 'Quinto grado' }, // <-- Quinto grado 5
+    { value: false, label: 'Sexto grado' }, // <-- Sexto grado 6
   ];
+
+  form: FormGroup = new FormGroup( {
+    week: new FormControl(),
+    duration: new FormControl()
+  }); 
+
+  target = new Array<string>();
+  techniques = new Array<string>();
+  activities = new Array<string>();
+  resources = new Array<string>();
+  evaluations = new Array<string>();
+  supportMaterial = new Array<string>();
 
   constructor(
     private environmentalProjectService: EnvironmentalProjectService,
@@ -54,6 +67,17 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
         });
       });
 
+    });
+  }
+
+  onUpdateLevel() {
+
+    // -- Get values --
+    let levels: any[] = this.options;
+
+    // -- Convert the label so that the backend can read it --
+    levels.forEach( ( value, key ) => {
+      value.label = key.toString();
     });
 
   }

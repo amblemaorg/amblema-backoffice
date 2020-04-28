@@ -29,7 +29,17 @@
                 <div class="col-12">
                     <label class="label">Niveles</label>
                     <div class="d-block">
-                        <nb-checkbox *ngFor="let item of options" status="primary" class="mr-4 mb-2">{{ item.label }}
+                        <nb-checkbox *ngFor="let item of options"
+                            (change)="item.value=!item.value"
+                            status="primary" class="mr-4 mb-2">{{ 
+                            item.label === '0' ? 'Prescolar' 
+                            : item.label === '1' ? 'Primer grado'
+                            : item.label === '2' ? 'Segundo grado'
+                            : item.label === '3' ? 'Tercer grado'
+                            : item.label === '4' ? 'Cuarto grado'
+                            : item.label === '5' ? 'Quinto grado'
+                            : 'Sexto grado'
+                        }}
                         </nb-checkbox>
                     </div>
                 </div>

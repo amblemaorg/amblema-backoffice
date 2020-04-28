@@ -19,13 +19,13 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   @Input() index: number; // <-- Index level
 
   options = [
-    { value: false, label: 'Preescolar' }, // <-- Prescolar 0
-    { value: false, label: 'Primer grado' }, // <-- Primer grado 1
-    { value: false, label: 'Segundo grado' }, // <-- Segundo grado 2
-    { value: false, label: 'Tercer grado' }, // <-- Tercer grado 3
-    { value: false, label: 'Cuarto grado' }, // <-- Cuarto grado 4
-    { value: false, label: 'Quinto grado' }, // <-- Quinto grado 5
-    { value: false, label: 'Sexto grado' }, // <-- Sexto grado 6
+    { value: false, label: '0' }, // <-- Prescolar 0
+    { value: false, label: '1' }, // <-- Primer grado 1
+    { value: false, label: '2' }, // <-- Segundo grado 2
+    { value: false, label: '3' }, // <-- Tercer grado 3
+    { value: false, label: '4' }, // <-- Cuarto grado 4
+    { value: false, label: '5' }, // <-- Quinto grado 5
+    { value: false, label: '6' }, // <-- Sexto grado 6
   ];
 
   form: FormGroup = new FormGroup( {
@@ -55,6 +55,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   // -- Action to delete level --
   deleteHimself(): void {
+
     this.subscription = this.store.dispatch(new DeleteSchoolLevel(
       this.indexTopic,
       this.index
@@ -72,13 +73,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   onUpdateLevel() {
 
-    // -- Get values --
-    let levels: any[] = this.options;
 
-    // -- Convert the label so that the backend can read it --
-    levels.forEach( ( value, key ) => {
-      value.label = key.toString();
-    });
 
   }
 }

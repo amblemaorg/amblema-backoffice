@@ -356,8 +356,9 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                 lapseSelected: patch({
                     ...ctx.getState().lapseSelected,
                     topics: iif<Topic[]>(  // <-- Conditional match
-                        (topics) => {
-                            topics.forEach((value, key) => {
+                        topics => {
+                            topics.forEach((value: any, key) => {
+
                                 if (key === action.indexTopic) { // <-- Match index topic
                                     topicMatch = value; // <-- Save topic to match update
                                     isMatchTopic = true;
@@ -366,13 +367,13 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                             return isMatchTopic;
                         },
                         updateItem<Topic>(
-                            (topic) => topic === topicMatch, // <-- Match the update by topic
+                            topic => topic === topicMatch, // <-- Match the update by topic
                             patch({
                                 ...topicMatch,
-                                levels: iif<Level[]>( (levels) => { // <-- This is for remove the school level
+                                levels: iif<Level[]>( levels => { // <-- This is for remove the school level
 
                                     levels.forEach((value, key) => {
-                                        if (key === action.indexTopic) {
+                                        if (key === action.indexLevel) {
                                             levelMatch = value;
                                             isMatchLevel = true;
                                         }

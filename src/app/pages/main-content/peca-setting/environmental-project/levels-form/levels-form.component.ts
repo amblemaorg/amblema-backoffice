@@ -27,7 +27,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
     { value: false, label: 'Sexto grado' }, // <-- Sexto grado
   ];
 
-  constructor( 
+  constructor(
     private environmentalProjectService: EnvironmentalProjectService,
     private store: Store ) { }
 
@@ -35,13 +35,13 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      if( this.subscription ) {
+      if ( this.subscription ) {
         this.subscription.unsubscribe();
       }
   }
 
   // -- Action to delete level --
-  deleteHimself() : void {
+  deleteHimself(): void {
     this.subscription = this.store.dispatch(new DeleteSchoolLevel(
       this.indexTopic,
       this.index

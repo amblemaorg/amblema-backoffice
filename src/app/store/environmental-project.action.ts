@@ -338,14 +338,14 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
     }
 
     @Action( DeleteSchoolLevel )
-    deleteSchoolLevel( 
+    deleteSchoolLevel(
         ctx: StateContext<EnvironmentalProjectModel>,
         action: DeleteSchoolLevel ) {
 
             // -- Match topic
             let topicMatch: Topic;
             let isMatchTopic = false;
-            
+
             //  -- Match level
             let levelMatch: Level;
             let isMatchLevel = false;
@@ -372,7 +372,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
 
                                     levels.forEach((value, key) => {
                                         if (key === action.indexTopic) {
-                                            levelMatch = value; 
+                                            levelMatch = value;
                                             isMatchLevel = true;
                                         }
                                     });
@@ -383,7 +383,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                         )
                     ),
                 })
-            }) )            
+            }) );
 
             this.InternalLapseUpdate(ctx);
     }

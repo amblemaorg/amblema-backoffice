@@ -84,11 +84,14 @@ export class FormComponent implements OnInit, OnDestroy {
 
       this.subscription = this.storable$.subscribe( value => {
 
-
+        console.log( value );
         this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( response => {
 
-        
 
+          console.log( response );
+
+        }, (err) => {
+          console.log(err);
         });
       } );
 

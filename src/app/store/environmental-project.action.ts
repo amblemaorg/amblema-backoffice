@@ -65,6 +65,12 @@ export class DeleteSchoolLevel {
     constructor( public indexTopic: number, public indexLevel: number) { }
 }
 
+export class UpdateSchoolLevel {
+    static readonly type =
+    '[EnvironmentalProject] Update School level EnvironmentalProject';
+    constructor( public schoolLevel: Level, public indexTopic: number, public indexLevel: number) { }
+}
+
 // -- Action Topic --
 
 export class AddTopic {
@@ -174,7 +180,6 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.subscriptionEnvironmentalProject = this.environmentalProjectServivce
             .getEnvironmentalProject()
             .subscribe((response) => {
-                console.log( response );
                 if ( JSON.stringify( response ) !== '{}' ) { // <-- Is not empty
                     ctx.setState(patch(response));
                 }
@@ -388,6 +393,59 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             }) );
 
             this.InternalLapseUpdate(ctx);
+    }
+
+    @Action( UpdateSchoolLevel )
+    updateSchoolLevel(
+        ctx: StateContext<EnvironmentalProjectModel>,
+        action: UpdateSchoolLevel
+    ) {
+
+        // -- Match topic
+        let topicMatch: Topic;
+        let isMatchTopic = false;
+
+        //  -- Match level
+        let levelMatch: Level;
+        let isMatchLevel = false;
+
+        ctx.setState( patch({
+            ...ctx.getState(),
+            lapseSelected: patch({
+                ...ctx.getState().lapseSelected,
+                topics: iif<Topic[]>(  // <-- Conditional match
+                    topics => {
+                        topics.forEach((value: any, key) => {
+
+                            if (key === action.indexTopic) { // <-- Match index topic
+                                topicMatch = value; // <-- Save topic to match update
+                                isMatchTopic = true;
+                            }
+                        });
+                        return isMatchTopic;
+                    },
+                    updateItem<Topic>(
+                        topic => topic === topicMatch, // <-- Match the update by topic
+                        patch({
+                            ...topicMatch,
+                            levels: iif<Level[]>( levels => { // <-- This is for remove the school level
+
+                                levels.forEach((value, key) => {
+                                    if (key === action.indexLevel) {
+                                        levelMatch = value;
+                                        isMatchLevel = true;
+                                    }
+                                });
+                                return isMatchLevel;
+
+                            }, updateItem<Level>( level => level === levelMatch, action.schoolLevel ) )
+                        })
+                    )
+                ),
+            })
+        }) );
+
+        this.InternalLapseUpdate(ctx);
     }
 
     /**

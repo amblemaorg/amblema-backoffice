@@ -2,7 +2,7 @@
     <nb-accordion-item [expanded]="true">
         <nb-accordion-item-header>
             <div>
-                <nb-icon icon="bookmark-outline" class="mr-2"></nb-icon> Tema
+                <nb-icon icon="bookmark-outline" class="mr-2"></nb-icon> {{form.get('name').value ? form.get('name').value : 'Tema' }} #{{index + 1}}
             </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body>

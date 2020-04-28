@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
-import { EnvironmentalProjectState, EnvironmentalProjectModel, DeleteSchoolLevel } from 'src/app/store/environmental-project.action';
+import { EnvironmentalProjectState, EnvironmentalProjectModel, DeleteSchoolLevel, UpdateSchoolLevel } from 'src/app/store/environmental-project.action';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -13,25 +13,23 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class LevelsFormComponent implements OnInit, OnDestroy {
 
   @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
+  @Select(EnvironmentalProjectState.environmentalProject) environmentalProjectSelected: Observable<EnvironmentalProjectModel>;
   subscription: Subscription;
 
   @Input() indexTopic: number; // <-- Index Topic
   @Input() index: number; // <-- Index level
 
   options = [
-    { value: false, label: '0' }, // <-- Prescolar 0
-    { value: false, label: '1' }, // <-- Primer grado 1
-    { value: false, label: '2' }, // <-- Segundo grado 2
-    { value: false, label: '3' }, // <-- Tercer grado 3
-    { value: false, label: '4' }, // <-- Cuarto grado 4
-    { value: false, label: '5' }, // <-- Quinto grado 5
-    { value: false, label: '6' }, // <-- Sexto grado 6
+    { label: '0', value: false }, // <-- Prescolar 0
+    { label: '1', value: false }, // <-- Primer grado 1
+    { label: '2', value: false }, // <-- Segundo grado 2
+    { label: '3', value: false }, // <-- Tercer grado 3
+    { label: '4', value: false }, // <-- Cuarto grado 4
+    { label: '5', value: false }, // <-- Quinto grado 5
+    { label: '6', value: false }, // <-- Sexto grado 6
   ];
 
-  form: FormGroup = new FormGroup( {
-    week: new FormControl(),
-    duration: new FormControl()
-  }); 
+  form: FormGroup;
 
   target = new Array<string>();
   techniques = new Array<string>();
@@ -41,16 +39,55 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   supportMaterial = new Array<string>();
 
   constructor(
+    private cd: ChangeDetectorRef,
     private environmentalProjectService: EnvironmentalProjectService,
-    private store: Store ) { }
+    private store: Store) { }
 
   ngOnInit() {
+
+    this.form = new FormGroup({
+      week: new FormControl(),
+      duration: new FormControl()
+    });
+
+    // -- Set the value to the form --
+    this.subscription = this.environmentalProjectSelected.subscribe(response => {
+
+      response.lapseSelected.topics.forEach((value, key) => {
+
+        if (this.indexTopic === key) {
+
+          if (value.levels.length >= 0) {
+
+            value.levels.forEach((value, key) => {
+
+              if (key === this.index) {
+
+                this.form.patchValue(value);
+
+                this.options = value.target.length > 0 ? JSON.parse(JSON.stringify(value.target)) : this.options;
+
+                this.techniques = Object.assign([], value.techniques);
+                this.activities = Object.assign([], value.activities);
+                this.resources = Object.assign([], value.resources);
+                this.evaluations = Object.assign([], value.evaluations);
+                this.supportMaterial = Object.assign([], value.supportMaterial);
+              }
+
+            });
+          }
+
+        }
+      });
+    });
+
+    this.cd.detectChanges();
   }
 
   ngOnDestroy(): void {
-      if ( this.subscription ) {
-        this.subscription.unsubscribe();
-      }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   // -- Action to delete level --
@@ -72,8 +109,25 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   }
 
   onUpdateLevel() {
+    this.subscription = this.store.dispatch(new UpdateSchoolLevel({
+      target: this.options,
+      week: this.form.controls.week.value,
+      duration: this.form.controls.duration.value,
+      techniques: this.techniques,
+      activities: this.activities,
+      resources: this.resources,
+      evaluations: this.evaluations,
+      supportMaterial: this.supportMaterial
+    },
+      this.indexTopic,
+      this.index
+    )).subscribe(() => {
 
-
-
+      this.subscription = this.storable$.subscribe(value => {
+        this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
+          // -- Successfully mock delete topic --
+        });
+      });
+    });
   }
 }

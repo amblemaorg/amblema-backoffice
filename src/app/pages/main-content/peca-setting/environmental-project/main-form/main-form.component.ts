@@ -114,8 +114,6 @@ export class MainFormComponent implements OnInit, OnDestroy {
 
             // -- Send data to the server --
             this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
-
-
             }, (err) => {
             });
           }

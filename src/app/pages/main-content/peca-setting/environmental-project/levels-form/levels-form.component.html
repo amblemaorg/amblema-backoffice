@@ -27,10 +27,12 @@
                 </div>
 
                 <div class="col-12">
-                    <label class="label">Niveles</label>
+                    <label class="label" *ngIf="environmentalProjectSelected | async">Niveles</label>
                     <div class="d-block">
-                        <nb-checkbox *ngFor="let item of options"
+                        <nb-checkbox 
+                            *ngFor="let item of options"
                             (change)="item.value=!item.value"
+                            [checked]="item.value"
                             status="primary" class="mr-4 mb-2">{{ 
                             item.label === '0' ? 'Prescolar' 
                             : item.label === '1' ? 'Primer grado'

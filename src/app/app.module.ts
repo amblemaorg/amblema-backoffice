@@ -35,6 +35,7 @@ import { ProjectRequestState } from './store/request/project-requests.action';
 import { RolesState } from './store/role.action';
 import { LoadingInterceptorService } from './intercepts/loading-intercept';
 import { UserCreationRequestState } from './store/request/user-creation-request.action';
+import { EnvironmentalProjectState } from './store/environmental-project.action';
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -76,6 +77,7 @@ registerLocaleData(localeVe, 'es-VE');
       LapseActivityState,
       ProjectState,
       StepState,
+      EnvironmentalProjectState,
 
       // -- Requests --
       UserCreationRequestState,

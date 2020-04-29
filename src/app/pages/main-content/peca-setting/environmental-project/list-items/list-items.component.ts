@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -11,11 +11,13 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 export class ListItemsComponent implements OnInit {
 
   @Input() title: string;
+  @Input()list = new Array<string>();
+
+  @Output() delete = new EventEmitter<any>();
 
   MODE_LIST;
   ACTION = ACTION;
   ID_ITEM: number;
-  list = new Array<any>();
 
   control: AbstractControl | null = new FormControl();
 
@@ -28,25 +30,32 @@ export class ListItemsComponent implements OnInit {
 
 
   addItem() {
-    this.list.push({ name: this.control.value });
+    this.list.push(this.control.value);
     this.control.reset();
   }
 
   public onEditItem(index: number): void {
     this.MODE_LIST = ACTION.EDIT;
     this.ID_ITEM = index;
-    this.control.setValue(this.list[index].name);
+    this.control.setValue(this.list[index]);
   }
 
   public onDeleteItem(index: number): void {
     this.list = this.list.filter((value, key) => key !== index);
+
+    /**
+     * In case the object is read only. Elimination is ermetic
+     */
+    this.delete.emit( this.list ); // <-- Emit the delete to state
+
     this.toastr.deleteRegister('Eliminado', 'Se ha eliminado una opción de la lista');
   }
 
   confirmAction() {
-    this.list = Object.assign([], this.list);
+    //
     if (this.MODE_LIST === ACTION.EDIT) {
-      this.list[this.ID_ITEM].name = this.control.value;
+
+      this.list[this.ID_ITEM] = this.control.value;
     }
     this.MODE_LIST = ACTION.CREATE;
     this.control.reset();

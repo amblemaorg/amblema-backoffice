@@ -1,32 +1,83 @@
 <nb-accordion class="shadow-none border">
-    <nb-accordion-item [expanded]="index === 0 ? true : false">
+    <nb-accordion-item [expanded]="true">
         <nb-accordion-item-header>
-            <nb-icon icon="bookmark-outline" class="mr-2"></nb-icon> Tema
+            <div>
+                <nb-icon icon="bookmark-outline" class="mr-2"></nb-icon>
+                {{form.get('name').value ? form.get('name').value : 'Tema' }} #{{index + 1}}
+            </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-            <div class="row">
+            <form [formGroup]="form" (ngSubmit)="onUpdateTopic()" class="row">
+                <div class="col-12 form-group text-right">
+                    <button (click)="deleteHimself()" class="col-12 col-lg-auto mr-0 mr-lg-3 mb-3 mb-lg-0" nbButton
+                        size="small" outline status="danger" type="button" nbTooltip="Eliminar tema">
+                        Eliminar tema<nb-icon icon="trash-2-outline"></nb-icon>
+                    </button>
+                    <button class="col-12 col-lg-auto" size="small" nbButton type="submit" status="primary">Guardar
+                        datos del tema<nb-icon icon="save-outline"></nb-icon></button>
+                </div>
 
                 <div class="col-12">
-                    <app-input-custom [label]="'Tema'" [placeholder]="'Tema'" [id]="'topics'"></app-input-custom>
+                    <app-input-custom [submitted]="false" [control]="form.get('name')" [label]="'Tema'"
+                        [placeholder]="'Tema'"></app-input-custom>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de objetivos'"></app-list-items>
+                    <app-list-items (delete)="objectives=$event" [list]="objectives" [title]="'Lista de objetivos'">
+                    </app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de estrategias'"></app-list-items>
+                    <app-list-items (delete)="strategies=$event" [list]="strategies" [title]="'Lista de estrategias'">
+                    </app-list-items>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <app-list-items [title]="'Lista de contenido'"></app-list-items>
+                    <app-list-items (delete)="contents=$event" [list]="contents" [title]="'Lista de contenido'">
+                    </app-list-items>
                 </div>
+            </form>
+
+            <div class="row">
                 <div class="col-12">
                     <hr>
-                    <button nbButton status="success" (click)="addLevel()" class="form-group">CREAR NIVEL <nb-icon icon="plus-outline"></nb-icon></button>
+                    <button 
+                        [disabled]="!optionsSelected.length"
+                        size="small" 
+                        nbButton 
+                        type="button" 
+                        status="success" (click)="addLevel()"
+                        class="form-group">CREAR NIVEL <nb-icon icon="plus-outline"></nb-icon></button>
+
+                    <div class="row">
+
+                        <div class="col-12 form-group">
+                            <label class="label">Grados escolares</label>
+                            <ng-select *ngIf="lapse$ | async" [placeholder]="'Grados escolares'" [multiple]="true" [(ngModel)]="optionsSelected">
+                                <ng-option 
+                                    *ngFor="let item of options"
+                                    [disabled]="item.value"
+                                    [value]="item">{{ 
+                                    item.label === '0' ? 'Prescolar' 
+                                  : item.label === '1' ? 'Primer grado'
+                                  : item.label === '2' ? 'Segundo grado'
+                                  : item.label === '3' ? 'Tercer grado'
+                                  : item.label === '4' ? 'Cuarto grado'
+                                  : item.label === '5' ? 'Quinto grado'
+                                  : 'Sexto grado'
+                              }}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+
+
+
                     <div class="row">
                         <div class="col-12 form-group" *ngFor="let item of levels; let i = index">
-                            <app-levels-form [index]="i"></app-levels-form>
+
+                            <app-levels-form *ngIf="lapse$ | async" [index]="i" [options]='options'
+                                [indexTopic]="index"></app-levels-form>
                         </div>
                     </div>
                 </div>

@@ -11,14 +11,14 @@
                         <h6>Configuración del reporte</h6>
                         <hr>
                     </div> 
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-lg-6 form-group">
                         <label class="label">Escuela</label>
                         <ng-select [items]="schools" bindLabel="name" placeholder="Buscar escuela"
                             [(ngModel)]="selectedSchool">
                         </ng-select>
                     </div>
 
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-lg-6 form-group">
                         <label class="label d-block">Diagnóstico</label>
                         <div class="d-inline">
                             <nb-checkbox 
@@ -30,7 +30,7 @@
                                 {{ item.label }}</nb-checkbox>
                         </div>
                     </div>
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-lg-6 form-group">
                         <label class="label">Período academico</label>
                         <ng-select [items]="year" bindLabel="name" placeholder="Seleccionar el periodo escolar"
                             [(ngModel)]="selectedYear">
@@ -44,6 +44,7 @@
     </nb-card-body>
     <nb-card-footer class="w-100 text-right">
         <button 
+            class="col-12 col-lg-auto"
             [attr.disabled]="selectedSchool && 
             selectedYear && ( diagnostics[0].value || diagnostics[1].value || diagnostics[2].value  ) ? null : true"
             nbButton 

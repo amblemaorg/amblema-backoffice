@@ -23,7 +23,7 @@ export class DiagnosticReportComponent implements OnInit {
     { label: 'Lógica', value: false }
   ];
 
-  oneCheck: boolean = false;
+  oneCheck = false;
 
   year = [
     { id: 1, name: '2020' },
@@ -34,7 +34,7 @@ export class DiagnosticReportComponent implements OnInit {
   ];
 
   selectedYear;
-  
+
 
   constructor() { }
 

@@ -2,7 +2,10 @@ import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef } from '@angular
 import { Subscription, Observable } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
-import { EnvironmentalProjectState, EnvironmentalProjectModel, DeleteSchoolLevel, UpdateSchoolLevel } from 'src/app/store/environmental-project.action';
+import { EnvironmentalProjectState
+  , EnvironmentalProjectModel
+  , DeleteSchoolLevel
+  , UpdateSchoolLevel } from 'src/app/store/environmental-project.action';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -18,16 +21,18 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   @Input() indexTopic: number; // <-- Index Topic
   @Input() index: number; // <-- Index level
+  @Input() options: any[];
 
-  options = [
-    { label: '0', value: false }, // <-- Prescolar 0
-    { label: '1', value: false }, // <-- Primer grado 1
-    { label: '2', value: false }, // <-- Segundo grado 2
-    { label: '3', value: false }, // <-- Tercer grado 3
-    { label: '4', value: false }, // <-- Cuarto grado 4
-    { label: '5', value: false }, // <-- Quinto grado 5
-    { label: '6', value: false }, // <-- Sexto grado 6
-  ];
+
+  // options = [
+  //   { label: '0', value: false }, // <-- Prescolar 0
+  //   { label: '1', value: false }, // <-- Primer grado 1
+  //   { label: '2', value: false }, // <-- Segundo grado 2
+  //   { label: '3', value: false }, // <-- Tercer grado 3
+  //   { label: '4', value: false }, // <-- Cuarto grado 4
+  //   { label: '5', value: false }, // <-- Quinto grado 5
+  //   { label: '6', value: false }, // <-- Sexto grado 6
+  // ];
 
   form: FormGroup;
 
@@ -45,6 +50,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+
     this.form = new FormGroup({
       week: new FormControl(),
       duration: new FormControl()
@@ -53,13 +59,13 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
     // -- Set the value to the form --
     this.subscription = this.environmentalProjectSelected.subscribe(response => {
 
-      response.lapseSelected.topics.forEach((value, key) => {
+      response.lapseSelected.topics.forEach((topic, index) => {
 
-        if (this.indexTopic === key) {
+        if (this.indexTopic === index ) {
 
-          if (value.levels.length >= 0) {
+          if (topic.levels.length >= 0) {
 
-            value.levels.forEach((value, key) => {
+            topic.levels.forEach((value, key) => {
 
               if (key === this.index) {
 

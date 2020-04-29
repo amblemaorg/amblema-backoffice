@@ -26,20 +26,28 @@ import {
     removeItem,
 } from '@ngxs/store/operators';
 
+// -- Interfaces --
+
+export interface OptionsGrade {
+    label: string;
+    value: boolean;
+}
+
 export interface EnvironmentalProjectModel extends EnvironmentalProject {
     lapseSelected?: Lapse;
 }
+
 
 // -- Action project --
 
 export class SetNameEnvironmentalProject {
     static readonly type = '[EnvironmentalProject] Set Name EnvironmentalProject';
-    constructor( public name: string ) {}
+    constructor(public name: string) { }
 }
 
 export class SetGeneralObjective {
     static readonly type = '[EnvironmentalProject] Set General Objective EnvironmentalProject';
-    constructor( public generalObjective: string ) {}
+    constructor(public generalObjective: string) { }
 }
 
 export class GetEnvironmentalProject {
@@ -62,13 +70,13 @@ export class AddSchoolLevel {
 export class DeleteSchoolLevel {
     static readonly type =
         '[EnvironmentalProject] Delete School level EnvironmentalProject';
-    constructor( public indexTopic: number, public indexLevel: number) { }
+    constructor(public indexTopic: number, public indexLevel: number) { }
 }
 
 export class UpdateSchoolLevel {
     static readonly type =
-    '[EnvironmentalProject] Update School level EnvironmentalProject';
-    constructor( public schoolLevel: Level, public indexTopic: number, public indexLevel: number) { }
+        '[EnvironmentalProject] Update School level EnvironmentalProject';
+    constructor(public schoolLevel: Level, public indexTopic: number, public indexLevel: number) { }
 }
 
 // -- Action Topic --
@@ -81,12 +89,12 @@ export class AddTopic {
 
 export class DeleteTopic {
     static readonly type = '[EnvironmentalProject] Delete Topic EnvironmentalProject';
-    constructor( public indexTopic: number ) {}
+    constructor(public indexTopic: number) { }
 }
 
 export class UpdateTopic {
     static readonly type = '[EnvironmentalProject] Update Topic EnvironmentalProject';
-    constructor( public topic: Topic, public indexTopic: number ) {}
+    constructor(public topic: Topic, public indexTopic: number) { }
 }
 
 @State<EnvironmentalProjectModel>({
@@ -117,7 +125,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
     referencingLapse = '1';
 
     @Selector()
-    static environmentalProjectStorable( state: EnvironmentalProjectModel ): EnvironmentalProjectModel | null {
+    static environmentalProjectStorable(state: EnvironmentalProjectModel): EnvironmentalProjectModel | null {
         return {
             name: state.name,
             lapse1: state.lapse1,
@@ -180,7 +188,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.subscriptionEnvironmentalProject = this.environmentalProjectServivce
             .getEnvironmentalProject()
             .subscribe((response) => {
-                if ( JSON.stringify( response ) !== '{}' ) { // <-- Is not empty
+                if (JSON.stringify(response) !== '{}') { // <-- Is not empty
                     ctx.setState(patch(response));
                 }
             });
@@ -238,8 +246,8 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.InternalLapseUpdate(ctx); // <-- Update lapse
     }
 
-    @Action( DeleteTopic )
-    deleteTopic(ctx: StateContext<EnvironmentalProjectModel>, action: DeleteTopic ) {
+    @Action(DeleteTopic)
+    deleteTopic(ctx: StateContext<EnvironmentalProjectModel>, action: DeleteTopic) {
 
         let topicMatch: Topic;
         let match = false;
@@ -249,7 +257,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                 ...ctx.getState(),
                 lapseSelected: patch({
                     ...ctx.getState().lapseSelected,
-                    topics: iif<Topic[]>( (topics) => {
+                    topics: iif<Topic[]>((topics) => {
                         topics.forEach((value, key) => {
                             if (key === action.indexTopic) { // <-- Match index topic
                                 topicMatch = value; // <-- Save topic to match update
@@ -259,7 +267,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
 
                         return match;
 
-                    }, removeItem<Topic>( topic => topic === topicMatch ))
+                    }, removeItem<Topic>(topic => topic === topicMatch))
                 }),
             })
         );
@@ -267,7 +275,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.InternalLapseUpdate(ctx); // <-- Update lapse
     }
 
-    @Action( UpdateTopic )
+    @Action(UpdateTopic)
     updateTopic(ctx: StateContext<EnvironmentalProjectModel>, action: UpdateTopic) {
         let topicMatch: Topic;
         let match = false;
@@ -277,7 +285,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                 ...ctx.getState(),
                 lapseSelected: patch({
                     ...ctx.getState().lapseSelected,
-                    topics: iif<Topic[]>( (topics) => {
+                    topics: iif<Topic[]>((topics) => {
                         topics.forEach((value, key) => {
                             if (key === action.indexTopic) { // <-- Match index topic
                                 topicMatch = value; // <-- Save topic to match update
@@ -287,13 +295,13 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
 
                         return match;
 
-                    }, updateItem<Topic>( topic => topic === topicMatch, {
+                    }, updateItem<Topic>(topic => topic === topicMatch, {
                         ...topicMatch,
                         name: action.topic.name,
                         objectives: action.topic.objectives,
                         strategies: action.topic.strategies,
                         contents: action.topic.contents
-                    } ))
+                    }))
                 }),
             })
         );
@@ -343,63 +351,10 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.InternalLapseUpdate(ctx); // <-- Update lapse
     }
 
-    @Action( DeleteSchoolLevel )
+    @Action(DeleteSchoolLevel)
     deleteSchoolLevel(
         ctx: StateContext<EnvironmentalProjectModel>,
-        action: DeleteSchoolLevel ) {
-
-            // -- Match topic
-            let topicMatch: Topic;
-            let isMatchTopic = false;
-
-            //  -- Match level
-            let levelMatch: Level;
-            let isMatchLevel = false;
-
-            ctx.setState( patch({
-                ...ctx.getState(),
-                lapseSelected: patch({
-                    ...ctx.getState().lapseSelected,
-                    topics: iif<Topic[]>(  // <-- Conditional match
-                        topics => {
-                            topics.forEach((value: any, key) => {
-
-                                if (key === action.indexTopic) { // <-- Match index topic
-                                    topicMatch = value; // <-- Save topic to match update
-                                    isMatchTopic = true;
-                                }
-                            });
-                            return isMatchTopic;
-                        },
-                        updateItem<Topic>(
-                            topic => topic === topicMatch, // <-- Match the update by topic
-                            patch({
-                                ...topicMatch,
-                                levels: iif<Level[]>( levels => { // <-- This is for remove the school level
-
-                                    levels.forEach((value, key) => {
-                                        if (key === action.indexLevel) {
-                                            levelMatch = value;
-                                            isMatchLevel = true;
-                                        }
-                                    });
-                                    return isMatchLevel;
-
-                                }, removeItem<Level>( level => level === levelMatch ) )
-                            })
-                        )
-                    ),
-                })
-            }) );
-
-            this.InternalLapseUpdate(ctx);
-    }
-
-    @Action( UpdateSchoolLevel )
-    updateSchoolLevel(
-        ctx: StateContext<EnvironmentalProjectModel>,
-        action: UpdateSchoolLevel
-    ) {
+        action: DeleteSchoolLevel) {
 
         // -- Match topic
         let topicMatch: Topic;
@@ -409,7 +364,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         let levelMatch: Level;
         let isMatchLevel = false;
 
-        ctx.setState( patch({
+        ctx.setState(patch({
             ...ctx.getState(),
             lapseSelected: patch({
                 ...ctx.getState().lapseSelected,
@@ -428,7 +383,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                         topic => topic === topicMatch, // <-- Match the update by topic
                         patch({
                             ...topicMatch,
-                            levels: iif<Level[]>( levels => { // <-- This is for remove the school level
+                            levels: iif<Level[]>(levels => { // <-- This is for remove the school level
 
                                 levels.forEach((value, key) => {
                                     if (key === action.indexLevel) {
@@ -438,12 +393,65 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                                 });
                                 return isMatchLevel;
 
-                            }, updateItem<Level>( level => level === levelMatch, action.schoolLevel ) )
+                            }, removeItem<Level>(level => level === levelMatch))
                         })
                     )
                 ),
             })
-        }) );
+        }));
+
+        this.InternalLapseUpdate(ctx);
+    }
+
+    @Action(UpdateSchoolLevel)
+    updateSchoolLevel(
+        ctx: StateContext<EnvironmentalProjectModel>,
+        action: UpdateSchoolLevel
+    ) {
+
+        // -- Match topic
+        let topicMatch: Topic;
+        let isMatchTopic = false;
+
+        //  -- Match level
+        let levelMatch: Level;
+        let isMatchLevel = false;
+
+        ctx.setState(patch({
+            ...ctx.getState(),
+            lapseSelected: patch({
+                ...ctx.getState().lapseSelected,
+                topics: iif<Topic[]>(  // <-- Conditional match
+                    topics => {
+                        topics.forEach((value: any, key) => {
+
+                            if (key === action.indexTopic) { // <-- Match index topic
+                                topicMatch = value; // <-- Save topic to match update
+                                isMatchTopic = true;
+                            }
+                        });
+                        return isMatchTopic;
+                    },
+                    updateItem<Topic>(
+                        topic => topic === topicMatch, // <-- Match the update by topic
+                        patch({
+                            ...topicMatch,
+                            levels: iif<Level[]>(levels => { // <-- This is for remove the school level
+
+                                levels.forEach((value, key) => {
+                                    if (key === action.indexLevel) {
+                                        levelMatch = value;
+                                        isMatchLevel = true;
+                                    }
+                                });
+                                return isMatchLevel;
+
+                            }, updateItem<Level>(level => level === levelMatch, action.schoolLevel))
+                        })
+                    )
+                ),
+            })
+        }));
 
         this.InternalLapseUpdate(ctx);
     }
@@ -452,26 +460,26 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
      * Set name environmental project
      */
 
-    @Action( SetNameEnvironmentalProject )
+    @Action(SetNameEnvironmentalProject)
     setNameEnvironmentalProject(ctx: StateContext<EnvironmentalProjectModel>, action: SetNameEnvironmentalProject) {
-        ctx.setState( patch({
+        ctx.setState(patch({
             ...ctx.getState(),
             name: action.name
-        }) );
+        }));
     }
 
     /**
      * Set general objective
      */
-    @Action( SetGeneralObjective )
+    @Action(SetGeneralObjective)
     SetGeneralObjective(ctx: StateContext<EnvironmentalProjectModel>, action: SetGeneralObjective) {
-        ctx.setState( patch({
+        ctx.setState(patch({
             ...ctx.getState(),
             lapseSelected: patch({
                 ...ctx.getState().lapseSelected,
                 generalObjective: action.generalObjective
             })
-        }) );
+        }));
 
         this.InternalLapseUpdate(ctx);
     }

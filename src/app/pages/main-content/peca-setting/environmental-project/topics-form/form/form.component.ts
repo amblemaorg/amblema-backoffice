@@ -5,12 +5,13 @@ import {
   , DeleteTopic
   , EnvironmentalProjectModel
   , EnvironmentalProjectState
-  , UpdateTopic
+  , UpdateTopic,
 } from 'src/app/store/environmental-project.action';
 import { Level, Lapse } from 'src/app/models/environmental-project.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
@@ -21,19 +22,35 @@ export class FormComponent implements OnInit, OnDestroy {
 
   @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
   @Select(EnvironmentalProjectState.lapseSelected) lapse$: Observable<Lapse>;
+
   subscription: Subscription;
 
   @Input() levels: Array<Level>; // <-- Obtain the school levels according to the topic
   @Input() index: number; // <-- This is the topic indexing
 
+  // -- General grades selected --
+  options = [
+    { label: '0', value: false }, // <-- Prescolar 0
+    { label: '1', value: false }, // <-- Primer grado 1
+    { label: '2', value: false }, // <-- Segundo grado 2
+    { label: '3', value: false }, // <-- Tercer grado 3
+    { label: '4', value: false }, // <-- Cuarto grado 4
+    { label: '5', value: false }, // <-- Quinto grado 5
+    { label: '6', value: false }, // <-- Sexto grado 6
+  ];
+
+  // -- Options selected --
+  optionsSelected: any[] = [];
+
+  // -- Forms --
   form: FormGroup = new FormGroup({
     name: new FormControl(null)
   });
+
   EnvironmentalProjectService;
   objectives = new Array<string>();
   strategies = new Array<string>();
   contents = new Array<string>();
-
 
   constructor(
     private environmentalProjectService: EnvironmentalProjectService,
@@ -41,8 +58,9 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.lapse$.subscribe(response => {
+    this.subscription = this.lapse$.pipe(take(1)).subscribe(response => {
 
+      // -- Set the values to the form --
       response.topics.forEach((value, key) => {
 
         if (key === this.index) {
@@ -56,11 +74,21 @@ export class FormComponent implements OnInit, OnDestroy {
           this.objectives = Object.assign([], this.objectives);
           this.strategies = Object.assign([], this.strategies);
           this.contents = Object.assign([], this.contents);
-
         }
-
       });
 
+      // -- Get available degrees --
+      if (response.topics[this.index].levels) {
+        response.topics[this.index].levels.forEach(level => {
+          level.target.forEach(target => {
+            this.options.forEach(option => {
+              if (target.label === option.label && target.value) {
+                option.value = target.value;
+              }
+            });
+          });
+        });
+      } // <-- End searching grades
     });
   }
 
@@ -71,8 +99,13 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   addLevel() {
+    // -- Change values to true --
+    this.optionsSelected.forEach( option => {
+      option.value = true;
+    } );
+
     this.store.dispatch(new AddSchoolLevel({
-      target: [],
+      target: this.optionsSelected,
       week: [],
       duration: '',
       techniques: [],
@@ -80,16 +113,16 @@ export class FormComponent implements OnInit, OnDestroy {
       resources: [],
       evaluations: [],
       supportMaterial: [],
-    }, this.index)).subscribe( () => {
+    }, this.index)).subscribe(() => {
 
-      this.subscription = this.storable$.subscribe( value => {
+      this.optionsSelected = []; // <-- Clear options selected
 
-        console.info('Estado del proyecto ambiental');
-        console.log( value );
-        this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( response => {
+      this.subscription = this.storable$.subscribe(value => {
+
+        this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
         }, (err) => {
         });
-      } );
+      });
 
     });
 

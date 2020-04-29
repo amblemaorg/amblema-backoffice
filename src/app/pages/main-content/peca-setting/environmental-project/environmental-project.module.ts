@@ -23,6 +23,7 @@ import { FormComponent } from './topics-form/form/form.component';
 import { LevelsFormComponent } from './levels-form/levels-form.component';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { NgxMaskModule } from 'ngx-mask';
     NbCheckboxModule,
     ReactiveDatepickerModule,
     NbInputModule,
+    NgSelectModule,
 
     NbTooltipModule,
     NgxMaskModule.forRoot(),

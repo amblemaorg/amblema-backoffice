@@ -185,6 +185,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   {
     icon: 'file-text-outline',
-    title: 'Reportes'
+    title: 'Reportes',
+    children: [
+      {
+        title: 'Reporte de diagnósticos',
+        link: '/pages/report/diagnostic-report'
+      }
+    ]
   },
 ];

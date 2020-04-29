@@ -34,7 +34,14 @@
                 </div>
             </div>
 
-        </div>
 
+        </div>
     </nb-card-body>
+    <nb-card-footer class="w-100 text-right">
+        <button 
+            [attr.disabled]="
+            selectedSchool && selectedYear ? null : true"
+            nbButton 
+            status="success">Generar reporte<nb-icon icon="download-outline"></nb-icon></button>
+    </nb-card-footer>
 </nb-card>

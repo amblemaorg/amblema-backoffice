@@ -18,9 +18,9 @@ export class DiagnosticReportComponent implements OnInit {
   selectedSchool;
 
   diagnostics = [
-    { label: 'Matemática', value : 'math' },
-    { label: 'Lectura', value: 'reading' },
-    { label: 'Lógica', value: 'logic' }
+    { label: 'Matemática', value : false },
+    { label: 'Lectura', value: false },
+    { label: 'Lógica', value: false }
   ];
 
   year = [

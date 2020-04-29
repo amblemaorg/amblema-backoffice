@@ -7,11 +7,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiagnosticReportComponent implements OnInit {
 
-  schools: any = [
-    { name: 'Escuela patricio', value: 'any' },
-    { name: 'Escuela Mayorca', value: 'any' }
-  ]
+  schools = [
+    { id: 1, name: '' },
+    { id: 2, name: 'Kaunas' },
+    { id: 3, name: 'Pavilnys' },
+    { id: 4, name: 'Pabradė' },
+    { id: 5, name: 'Klaipėda' }
+  ];
 
+  selectedSchool;
+
+  diagnostics = [
+    { label: 'Matemática', value : 'math' },
+    { label: 'Lectura', value: 'reading' },
+    { label: 'Lógica', value: 'logic' }
+  ];
+
+  year = [
+    { id: 1, name: '2020' },
+    { id: 2, name: '2021' },
+    { id: 3, name: '2023' },
+    { id: 4, name: '2025' },
+    { id: 5, name: '2029' }
+  ];
+
+  selectedYear;
+  
   constructor() { }
 
   ngOnInit() {

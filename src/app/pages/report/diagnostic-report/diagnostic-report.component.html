@@ -1,21 +1,39 @@
-<nb-card>
+<nb-card >
     <nb-card-header>
         Reporte de diagnósticos
     </nb-card-header>
     <nb-card-body>
 
         <div class="row">
-            <div class="col-6">
-                
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <h6>Configuración del reporte</h6>
+                        <hr>
+                    </div> 
+                    <div class="col-6 form-group">
+                        <label class="label">Escuela</label>
+                        <ng-select [items]="schools" bindLabel="name" placeholder="Buscar escuela"
+                            [(ngModel)]="selectedSchool">
+                        </ng-select>
+                    </div>
+
+                    <div class="col-6 form-group">
+                        <label class="label d-block">Diagnóstico</label>
+                        <div class="d-inline">
+                            <nb-checkbox class="mr-4 mb-2" status="primary" *ngFor="let item of diagnostics">
+                                {{ item.label }}</nb-checkbox>
+                        </div>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label class="label">Período academico</label>
+                        <ng-select [items]="year" bindLabel="name" placeholder="Seleccionar el periodo escolar"
+                            [(ngModel)]="selectedYear">
+                        </ng-select>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-6">
-
-            </div>
-
-            <div class="col-6">
-                
-            </div>
         </div>
 
     </nb-card-body>

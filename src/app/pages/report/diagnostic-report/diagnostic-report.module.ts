@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { DiagnosticReportRoutingModule } from './diagnostic-report-routing.module';
 import { DiagnosticReportComponent } from './diagnostic-report.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbCheckboxModule } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,6 +14,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CommonModule,
     NbCardModule,
     NgSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NbCheckboxModule,
     DiagnosticReportRoutingModule
   ]
 })

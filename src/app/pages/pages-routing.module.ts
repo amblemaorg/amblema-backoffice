@@ -91,6 +91,17 @@ const routes: Routes = [
                 loadChildren: () => import('./projects/projects.module').
                     then(m => m.ProjectsModule)
             },
+            {
+                path: 'report',
+                loadChildren: () => import('./report/report.module').then(m => m.ReportModule),
+                children: [
+                    {
+                        path: 'diagnostic-report',
+                        loadChildren: () => import('./report/diagnostic-report/diagnostic-report.module')
+                        .then(m => m.DiagnosticReportModule),
+                    }
+                ]
+            },
             // Redirect To
             {
                 path: '',

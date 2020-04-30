@@ -15,7 +15,7 @@ export class DiagnosticReportService {
   getReport(schoolYearId: string, schoolId: string, diagnostics: Array<any>) {
     return this.httpClient.get<DiagnosticReport>(`${environment.api}${this.DIAGNOSTIC_REPORT}/${schoolYearId}/${schoolId}?diagnostics=${this.prepareDiagnosticsString(diagnostics)}`)
       .pipe(
-        map((data: any) => data.records)
+        map((data: any) => data)
       );
   }
 
@@ -26,8 +26,8 @@ export class DiagnosticReportService {
     diagnostics.forEach(diagnostic => {
       if (diagnostic.value) {
         compose = diagnostic.label === 'Matemática' ? 'math'
-          : diagnostic.label === 'Lectura' ? `${compose ? compose + ', ' : ''}reading`
-            : diagnostic.label === 'Lógica' ? `${compose ? compose + ', ' : ''}logic` : '';
+          : diagnostic.label === 'Lectura' ? `${compose ? compose + ',' : ''}reading`
+            : diagnostic.label === 'Lógica' ? `${compose ? compose + ',' : ''}logic` : '';
       }
     });
 

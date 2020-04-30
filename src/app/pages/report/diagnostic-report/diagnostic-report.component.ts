@@ -4,12 +4,13 @@ import { Subscription } from 'rxjs';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { DatePipe } from '@angular/common';
 import { DiagnosticReportService } from 'src/app/services/report/diagnostic-report.service';
+import { PDFReport } from '../pdf-report.service';
 
 @Component({
   selector: 'app-diagnostic-report',
   templateUrl: './diagnostic-report.component.html',
   styleUrls: ['./diagnostic-report.component.scss'],
-  providers: [DatePipe]
+  providers: [DatePipe, PDFReport]
 })
 export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
@@ -31,10 +32,15 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
   selectedSchoolYears;
 
   constructor(
+    private generatorReport: PDFReport,
     private datePipe: DatePipe,
     private diagnosticsReportService: DiagnosticReportService,
     private schoolUsersService: SchoolUserService,
     private schoolYearService: SchoolYearService) {
+
+  }
+
+  ngOnInit() {
 
     // -- Init school list --
     this.subscriptionService = this.schoolUsersService.getSchoolUsers().subscribe(schoolUsers => {
@@ -56,8 +62,6 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() { }
-
   ngOnDestroy(): void {
     if (this.subscriptionService) {
       this.subscriptionService.unsubscribe();
@@ -66,9 +70,9 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   onGenerateReport() {
 
+    this.generatorReport.onGenerateDiagnosticReport(null);
 
-
-    this.diagnosticsReportService.getReport(
+    this.subscriptionService = this.diagnosticsReportService.getReport(
       this.selectedSchoolYears.id,
       this.selectedSchool.id,
       this.diagnostics ).subscribe( response => {
@@ -77,13 +81,4 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
         console.log(err);
       } );
   }
-}
-
-
-export class GenerateReportDiagnostic {
-
-  constructor() {
-
-  }
-
 }

@@ -3,6 +3,7 @@ import { SchoolYearService } from 'src/app/services/school-year.service';
 import { Subscription } from 'rxjs';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { DatePipe } from '@angular/common';
+import { DiagnosticReportService } from 'src/app/services/report/diagnostic-report.service';
 
 @Component({
   selector: 'app-diagnostic-report',
@@ -31,6 +32,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   constructor(
     private datePipe: DatePipe,
+   private diagnosticsReportService: DiagnosticReportService,
     private schoolUsersService: SchoolUserService,
     private schoolYearService: SchoolYearService) {
 
@@ -60,5 +62,12 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
     if (this.subscriptionService) {
       this.subscriptionService.unsubscribe();
     }
+  }
+
+  onGenerateReport() {
+    
+    
+    
+    //this.diagnosticsReportService.getReport( this.diagnostics );
   }
 }

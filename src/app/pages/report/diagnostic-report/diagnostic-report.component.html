@@ -44,6 +44,7 @@
     </nb-card-body>
     <nb-card-footer class="w-100 text-right">
         <button 
+            (click)="onGenerateReport()"
             class="col-12 col-lg-auto"
             [attr.disabled]="selectedSchool && 
             selectedSchoolYears && ( diagnostics[0].value || diagnostics[1].value || diagnostics[2].value  ) ? null : true"

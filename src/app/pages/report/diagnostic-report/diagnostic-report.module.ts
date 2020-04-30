@@ -6,6 +6,7 @@ import { DiagnosticReportComponent } from './diagnostic-report.component';
 import { NbCardModule, NbCheckboxModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SchoolYearService } from 'src/app/services/school-year.service';
 
 
 @NgModule({
@@ -20,6 +21,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     NbButtonModule,
     NbIconModule,
     DiagnosticReportRoutingModule
+  ],
+  providers: [
+    SchoolYearService
   ]
 })
 export class DiagnosticReportModule { }

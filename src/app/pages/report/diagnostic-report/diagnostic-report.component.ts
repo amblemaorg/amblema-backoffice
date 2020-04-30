@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SchoolYearService } from 'src/app/services/school-year.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-diagnostic-report',
   templateUrl: './diagnostic-report.component.html',
   styleUrls: ['./diagnostic-report.component.scss']
 })
-export class DiagnosticReportComponent implements OnInit {
+export class DiagnosticReportComponent implements OnInit, OnDestroy {
+
+  subscriptionService: Subscription;
 
   schools = [
     { id: 1, name: '' },
@@ -35,10 +39,19 @@ export class DiagnosticReportComponent implements OnInit {
 
   selectedYear;
 
-
-  constructor() { }
+  constructor( private schoolYearService: SchoolYearService ) {}
 
   ngOnInit() {
+
+    this.schoolYearService.getSchoolYears().subscribe( response => {
+      console.log( 'realizando la subscripton' );
+    });
+  }
+
+  ngOnDestroy(): void {
+    if ( this.subscriptionService ) {
+      this.subscriptionService.unsubscribe();
+    }
   }
 
 }

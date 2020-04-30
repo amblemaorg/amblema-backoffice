@@ -76,6 +76,8 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
       this.lapseActivityService.createActivity(this.lapse, formData).subscribe((response: HttpEvent<any>) => {
 
         if (HttpEventType.Response === response.type) {
+
+
           this.store.dispatch(new AddLapseActivity(response.body, this.lapse));
           this.resetForm();
           this.form.controls.hasFile.setValue(false);

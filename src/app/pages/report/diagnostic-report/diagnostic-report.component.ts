@@ -47,7 +47,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
       schoolYears.forEach(schoolYear => {
         this.schoolYears.push({
           id: schoolYear.id,
-          name: `${this.datePipe.transform(schoolYear.startDate, 'dd/MM/yyyy')} 
+          name: `${this.datePipe.transform(schoolYear.startDate, 'dd/MM/yyyy')}
           - ${this.datePipe.transform(schoolYear.endDate, 'dd/MM/yyyy')}`
         });
       });

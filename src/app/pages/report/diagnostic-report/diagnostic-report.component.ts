@@ -1,57 +1,64 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SchoolYearService } from 'src/app/services/school-year.service';
 import { Subscription } from 'rxjs';
+import { SchoolUserService } from 'src/app/services/user/school-user.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-diagnostic-report',
   templateUrl: './diagnostic-report.component.html',
-  styleUrls: ['./diagnostic-report.component.scss']
+  styleUrls: ['./diagnostic-report.component.scss'],
+  providers: [DatePipe]
 })
 export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   subscriptionService: Subscription;
 
-  schools = [
-    { id: 1, name: '' },
-    { id: 2, name: 'Kaunas' },
-    { id: 3, name: 'Pavilnys' },
-    { id: 4, name: 'Pabradė' },
-    { id: 5, name: 'Klaipėda' }
-  ];
-
+  // -- School --
+  schools = Array<any>();
   selectedSchool;
 
+  // -- Setting checks --
   diagnostics = [
-    { label: 'Matemática', value : false },
+    { label: 'Matemática', value: false },
     { label: 'Lectura', value: false },
     { label: 'Lógica', value: false }
   ];
 
-  oneCheck = false;
+  // -- School Year --
+  schoolYears = Array<any>();
+  selectedSchoolYears;
 
-  year = [
-    { id: 1, name: '2020' },
-    { id: 2, name: '2021' },
-    { id: 3, name: '2023' },
-    { id: 4, name: '2025' },
-    { id: 5, name: '2029' }
-  ];
+  constructor(
+    private datePipe: DatePipe,
+    private schoolUsersService: SchoolUserService,
+    private schoolYearService: SchoolYearService) {
 
-  selectedYear;
+    // -- Init school list --
+    this.subscriptionService = this.schoolUsersService.getSchoolUsers().subscribe(schoolUsers => {
+      schoolUsers.forEach(schoolUser => {
+        this.schools.push({ id: schoolUser.id, name: schoolUser.name });
+      });
+    });
 
-  constructor( private schoolYearService: SchoolYearService ) {}
+    // -- School year list --
+    this.subscriptionService = this.schoolYearService.getSchoolYears().subscribe(schoolYears => {
 
-  ngOnInit() {
-
-    this.schoolYearService.getSchoolYears().subscribe( response => {
-      console.log( 'realizando la subscripton' );
+      schoolYears.forEach(schoolYear => {
+        this.schoolYears.push({
+          id: schoolYear.id,
+          name: `${this.datePipe.transform(schoolYear.startDate, 'dd/MM/yyyy')} 
+          - ${this.datePipe.transform(schoolYear.endDate, 'dd/MM/yyyy')}`
+        });
+      });
     });
   }
 
+  ngOnInit() { }
+
   ngOnDestroy(): void {
-    if ( this.subscriptionService ) {
+    if (this.subscriptionService) {
       this.subscriptionService.unsubscribe();
     }
   }
-
 }

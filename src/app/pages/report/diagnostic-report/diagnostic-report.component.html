@@ -13,7 +13,7 @@
                     </div> 
                     <div class="col-12 col-lg-6 form-group">
                         <label class="label">Escuela</label>
-                        <ng-select [items]="schools" bindLabel="name" placeholder="Buscar escuela"
+                        <ng-select *ngIf="schools.length" [items]="schools" bindLabel="name" placeholder="Buscar escuela"
                             [(ngModel)]="selectedSchool">
                         </ng-select>
                     </div>
@@ -32,8 +32,8 @@
                     </div>
                     <div class="col-12 col-lg-6 form-group">
                         <label class="label">Período academico</label>
-                        <ng-select [items]="year" bindLabel="name" placeholder="Seleccionar el periodo escolar"
-                            [(ngModel)]="selectedYear">
+                        <ng-select *ngIf="schoolYears.length" [items]="schoolYears" bindLabel="name" placeholder="Seleccionar el periodo escolar"
+                            [(ngModel)]="selectedSchoolYears">
                         </ng-select>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
         <button 
             class="col-12 col-lg-auto"
             [attr.disabled]="selectedSchool && 
-            selectedYear && ( diagnostics[0].value || diagnostics[1].value || diagnostics[2].value  ) ? null : true"
+            selectedSchoolYears && ( diagnostics[0].value || diagnostics[1].value || diagnostics[2].value  ) ? null : true"
             nbButton 
             status="success">Generar reporte<nb-icon icon="download-outline"></nb-icon></button>
     </nb-card-footer>

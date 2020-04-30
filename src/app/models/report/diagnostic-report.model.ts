@@ -7,20 +7,20 @@ interface DiagnosticReport {
     sections: Section[];
     yearSummary: YearSummary;
   }
-  
-  interface YearSummary {
+
+interface YearSummary {
     reading: ReadingYearSummary;
     math: ReadingYearSummary;
     logic: ReadingYearSummary;
   }
-  
-  interface ReadingYearSummary {
+
+interface ReadingYearSummary {
     totalResultAverage: number;
     improvementPercentageAverage: number;
     sections: SectionYearSummary[];
   }
-  
-  interface SectionYearSummary {
+
+interface SectionYearSummary {
     grade: string;
     name: string;
     goal: number;
@@ -29,8 +29,8 @@ interface DiagnosticReport {
     lapse2: Score;
     lapse3: Score;
   }
-  
-  interface Section {
+
+interface Section {
     grade: string;
     name: string;
     teacher: string;
@@ -41,34 +41,34 @@ interface DiagnosticReport {
     lapse3: Lapse;
     sectionSummary: SectionSummary;
   }
-  
-  interface SectionSummary {
+
+interface SectionSummary {
     reading: Reading;
   }
-  
-  interface Reading {
+
+interface Reading {
     totalIndexAverage: number;
     improvementPercentage: number;
     lapse1: Score;
     lapse2: Score;
     lapse3: Score;
   }
-  
-  interface Score {
+
+interface Score {
     overGoalStudents: number;
     resultAverage: number;
     indexAverage: number;
   }
-  
-  interface Lapse {
+
+interface Lapse {
     available: boolean;
     reading: Statistics;
     math: Statistics;
     logic: Statistics;
     students: Student[];
   }
-  
-  interface Student {
+
+interface Student {
     firstName: string;
     lastName: string;
     cardType: string;
@@ -80,8 +80,8 @@ interface DiagnosticReport {
     operationsPerMin: number;
     operationsPerMinIndex: number;
   }
-  
-  interface Statistics {
+
+interface Statistics {
     available: boolean;
     goal: number;
     participants: number;

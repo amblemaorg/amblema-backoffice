@@ -32,7 +32,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   constructor(
     private datePipe: DatePipe,
-   private diagnosticsReportService: DiagnosticReportService,
+    private diagnosticsReportService: DiagnosticReportService,
     private schoolUsersService: SchoolUserService,
     private schoolYearService: SchoolYearService) {
 
@@ -65,9 +65,25 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
   }
 
   onGenerateReport() {
-    
-    
-    
-    //this.diagnosticsReportService.getReport( this.diagnostics );
+
+
+
+    this.diagnosticsReportService.getReport(
+      this.selectedSchoolYears.id,
+      this.selectedSchool.id,
+      this.diagnostics ).subscribe( response => {
+        console.log( response );
+      }, err => {
+        console.log(err);
+      } );
   }
+}
+
+
+export class GenerateReportDiagnostic {
+
+  constructor() {
+
+  }
+
 }

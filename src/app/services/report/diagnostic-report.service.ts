@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +16,7 @@ export class DiagnosticReportService {
     return this.httpClient.get<DiagnosticReport>(`${environment.api}${this.DIAGNOSTIC_REPORT}/${schoolYearId}/${schoolId}?diagnostics=${this.prepareDiagnosticsString(diagnostics)}`)
       .pipe(
         map((data: any) => data.records)
-      );;
+      );
   }
 
   prepareDiagnosticsString(diagnostics: Array<any>): string {
@@ -28,7 +27,7 @@ export class DiagnosticReportService {
       if (diagnostic.value) {
         compose = diagnostic.label === 'Matemática' ? 'math'
           : diagnostic.label === 'Lectura' ? `${compose ? compose + ', ' : ''}reading`
-            : diagnostic.label === 'Lógica' ? `${compose ? compose + ', ' : ''}logic` : ''
+            : diagnostic.label === 'Lógica' ? `${compose ? compose + ', ' : ''}logic` : '';
       }
     });
 

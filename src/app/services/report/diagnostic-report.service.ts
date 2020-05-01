@@ -13,7 +13,8 @@ export class DiagnosticReportService {
   constructor(private httpClient: HttpClient) { }
 
   getReport(schoolYearId: string, schoolId: string, diagnostics: Array<any>) {
-    return this.httpClient.get<DiagnosticReport>(`${environment.api}${this.DIAGNOSTIC_REPORT}/${schoolYearId}/${schoolId}?diagnostics=${this.prepareDiagnosticsString(diagnostics)}`)
+    return this.httpClient.get<DiagnosticReport>(`
+    ${environment.api}${this.DIAGNOSTIC_REPORT}/${schoolYearId}/${schoolId}?diagnostics=${this.prepareDiagnosticsString(diagnostics)}`)
       .pipe(
         map((data: any) => data)
       );

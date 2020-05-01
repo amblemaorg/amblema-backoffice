@@ -70,15 +70,12 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   onGenerateReport() {
 
-    this.generatorReport.onGenerateDiagnosticReport(null);
-
     this.subscriptionService = this.diagnosticsReportService.getReport(
       this.selectedSchoolYears.id,
       this.selectedSchool.id,
       this.diagnostics ).subscribe( response => {
-        console.log( response );
+        this.generatorReport.onGenerateDiagnosticReport( response );
       }, err => {
-        console.log(err);
       } );
   }
 }

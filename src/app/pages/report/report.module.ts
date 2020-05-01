@@ -9,6 +9,6 @@ import { ReportRoutingModule } from './report-routing.module';
   imports: [
     CommonModule,
     ReportRoutingModule
-  ]
+  ],
 })
 export class ReportModule { }

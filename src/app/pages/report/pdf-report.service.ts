@@ -5,6 +5,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { OnInit, Inject } from '@angular/core';
 import { DOCUMENT, DatePipe, formatDate } from '@angular/common';
 import { IMAGE } from './img-base-64';
+import { compose } from '@ngxs/store/operators';
 
 export class PDFReport implements OnInit {
 
@@ -20,16 +21,16 @@ export class PDFReport implements OnInit {
         this.pdf.pageSize('A4');
     }
 
-    constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe ) { }
+    constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe) { }
 
     async onGenerateDiagnosticReport(report: DiagnosticReport) {
 
 
-        console.log( report );
+        console.log(report);
 
         /**
          * ========================================
-         * == Sub Header
+         * == Sub header document
          * ========================================
          */
 
@@ -49,6 +50,151 @@ export class PDFReport implements OnInit {
             ]
         ];
 
+
+        /**
+         * ========================================
+         * == Sections
+         * ========================================
+         */
+
+        const sectionRegister: any[] = [];
+
+        // -- All sections --
+        report.sections.forEach(section => {
+            sectionRegister.push(
+                ['Grado: ', section.grade],
+                ['Seccion: ', section.name],
+            );
+        });
+
+        let sectionResult = new Array<any>();
+        let customSectionHeader: any = [];
+
+        let testing = new Array<any>();
+
+        report.sections.forEach(section => {
+
+            let firtsRow: any;
+            let secondRow: any;
+            let thirdRow: any;
+
+            // -- AAA --
+            if (section.lapse1.math !== undefined && section.lapse1.reading !== undefined && section.lapse1.logic !== undefined) {
+                firtsRow = [{ text: 'Grado: ' }, { text: section.grade, colSpan: 3 }, {}, {},
+                { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, },
+                { text: 'Diagnóstico de lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, },
+                { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, }
+                ];
+
+                secondRow = [
+                    { text: 'Seccion: ' },
+                    { text: section.name },
+                    { text: 'Lapso: ' },
+                    { text: '1' },
+                    { text: `Fecha del diagnóstico: ${section.lapse1.math.lastTestDate}` },
+                    { text: `Fecha del diagnóstico: ${section.lapse1.reading.lastTestDate}` },
+                    { text: `Fecha del diagnóstico: ${section.lapse1.logic.lastTestDate}` }
+                ];
+
+                // -- AAI --
+            } else if (section.lapse1.math !== undefined && section.lapse1.reading !== undefined && section.lapse1.logic === undefined) {
+
+                firtsRow = [{ text: 'Grado: ' }, { text: section.grade, colSpan: 3 }, {}, {},
+                { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, },
+                { text: 'Diagnóstico de lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
+                {}];
+
+                secondRow = [
+                    { text: 'Seccion: ' },
+                    { text: section.name },
+                    { text: 'Lapso: ' },
+                    { text: '1' },
+                    { text: `Fecha del diagnóstico: ${section.lapse1.math.lastTestDate}` },
+                    { text: `Fecha del diagnóstico: ${section.lapse1.reading.lastTestDate}`, colSpan: 2 },
+                    {}
+                ];
+
+                // -- AIA --
+            } else if (section.lapse1.math !== undefined && section.lapse1.reading === undefined && section.lapse1.logic !== undefined) {
+
+                firtsRow = [{ text: 'Grado: ' }, { text: section.grade, colSpan: 3 }, {}, {},
+                { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 }, {},
+                { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, }
+                ];
+
+                // -- IAA --
+            } else if (section.lapse1.math === undefined && section.lapse1.reading !== undefined && section.lapse1.logic !== undefined) {
+                firtsRow = [{ text: 'Grado: ' }, { text: section.grade, colSpan: 4 }, {}, {}, {},
+                { text: 'Diagnóstico de lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, },
+                { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, }
+                ];
+
+            } else if (section.lapse1.math !== undefined && section.lapse1.reading === undefined && section.lapse1.logic === undefined) {
+                // -- AII --
+
+                firtsRow = [{ text: 'Grado: ' }, { text: section.grade, colSpan: 3 }, {}, {},
+                { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 3 },
+                {}, {}
+                ];
+            } else if (section.lapse1.math === undefined && section.lapse1.reading !== undefined && section.lapse1.logic === undefined) {
+                // -- IAI --
+                firtsRow = [{ text: 'Grado: ' }, { text: section.grade, colSpan: 4 }, {}, {}, {},
+                { text: 'Diagnóstico de lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 }, {}
+                ];
+            } else if (section.lapse1.math === undefined && section.lapse1.reading === undefined && section.lapse1.logic !== undefined) {
+                // -- IIA --
+                firtsRow = [{ text: 'Grado: ' }, { text: section.grade, colSpan: 4 }, {}, {}, {}, {},
+                { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, }
+                ];
+            }
+
+            customSectionHeader = {
+                table: {
+                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', '*'],
+                    body: [
+                        firtsRow,
+                        secondRow
+                        // [
+                        //     { text: 'Seccion: ' },
+                        //     { text: section.name },
+                        //     { text: 'Lapso: ' },
+                        //     { text: '1' },
+                        //     section.lapse1.reading !== undefined ? { text: `Fecha del diagnóstico: ${section.lapse1.reading.lastTestDate}` } : {},
+                        //     section.lapse1.math !== undefined ? { text: `Fecha del diagnóstico: ${section.lapse1.math.lastTestDate}` } : {},
+                        //     section.lapse1.logic !== undefined ? { text: `Fecha del diagnóstico: ${section.lapse1.logic.lastTestDate}` } : {},
+                        // ],
+                        // [
+                        //     { text: 'Docente: ' },
+                        //     { text: section.teacher },
+                        //     { text: 'Matrícula de la sección: ' },
+                        //     { text: section.enrollment },
+                        //     section.lapse1.reading !== undefined ? { text: `Meta: ${section.lapse1.reading.overGoalAverage}` } : {},
+                        //     section.lapse1.math !== undefined ? { text: `Meta: ${section.lapse1.math.overGoalAverage}` } : {},
+                        //     section.lapse1.logic !== undefined ? { text: `Meta: ${section.lapse1.logic.overGoalAverage}` } : {},
+                        // ],
+                    ],
+                },
+                margin: [0, 0, 0, 40]
+            };
+
+            // -- Header studiants -- 
+            // customSectionHeader.table.body.push([
+            //     { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
+            //     { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
+            //     { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 1 },
+            //     {},
+            //     { text: 'resultado - indice', fillColor: '#42b16a', color: '#FFF', bold: true },
+            //     { text: 'resultado - indice', fillColor: '#42b16a', color: '#FFF', bold: true },
+            //     { text: 'resultado - indice', fillColor: '#42b16a', color: '#FFF', bold: true },
+
+            // ])
+            testing.push(customSectionHeader)
+        });
+
+
+        // -- Prepare the data --
+        // ========================================
+
         const docDefinition = {
             pageSize: 'A3',
             info: {
@@ -63,7 +209,7 @@ export class PDFReport implements OnInit {
                 {
                     image: IMAGE,
                     width: 100,
-                    absolutePosition: { x: 30, y: 60}
+                    absolutePosition: { x: 30, y: 60 }
                 },
                 {
                     alignment: 'center',
@@ -86,22 +232,14 @@ export class PDFReport implements OnInit {
                     table: {
                         body: subHeaderData
                     },
-                },
-
-                // -- Margin --
-                {
-                    text: '', margin: [0, 0, 0, 20]
+                    margin: [0, 0, 0, 40]
                 },
 
                 {
-                    style: 'tableExample',
-                    table: {
-                        body: [
-                            ['Grado:', '1re Grado', '', ''],
-                            ['Sección:', 'A', 'Lapso:', '1'],
-                            ['Docente:', 'Juan Gallegos', 'Matrícula de la sección:', '23423#'],
-                        ]
-                    }
+                    columns: [
+                        testing,
+
+                    ]
                 },
 
                 {
@@ -123,11 +261,9 @@ export class PDFReport implements OnInit {
                                 { text: 'Resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
                                 { text: 'Índice', fillColor: '#42b16a', color: '#FFF', bold: true },
                             ],
-
                             /**
                              * Table body insert records
                              */
-
                         ]
                     }
                 }

@@ -31,7 +31,6 @@ export class DiagnosticReportService {
             : diagnostic.label === 'Lógica' ? `${compose ? compose + ',' : ''}logic` : '';
       }
     });
-
     return compose;
   }
 }

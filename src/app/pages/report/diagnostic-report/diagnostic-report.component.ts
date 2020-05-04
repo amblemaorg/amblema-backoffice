@@ -40,23 +40,30 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     // -- Init school list --
-    this.subscriptionService = this.schoolUsersService.getSchoolUsers().subscribe(schoolUsers => {
-      schoolUsers.forEach(schoolUser => {
-        this.schools.push({ id: schoolUser.id, name: schoolUser.name });
+
+    setTimeout(() => {
+      this.subscriptionService = this.schoolUsersService.getSchoolUsers().subscribe(schoolUsers => {
+        schoolUsers.forEach(schoolUser => {
+          this.schools.push({ id: schoolUser.id, name: schoolUser.name });
+        });
       });
+
     });
 
     // -- School year list --
-    this.subscriptionService = this.schoolYearService.getSchoolYears().subscribe(schoolYears => {
 
-      schoolYears.forEach(schoolYear => {
-        this.schoolYears.push({
-          id: schoolYear.id,
-          name: `${this.datePipe.transform(schoolYear.startDate, 'dd/MM/yyyy')}
-          - ${this.datePipe.transform(schoolYear.endDate, 'dd/MM/yyyy')}`
+    setTimeout(() => {
+      this.subscriptionService = this.schoolYearService.getSchoolYears().subscribe(schoolYears => {
+
+        schoolYears.forEach(schoolYear => {
+          this.schoolYears.push({
+            id: schoolYear.id,
+            name: `${this.datePipe.transform(schoolYear.startDate, 'dd/MM/yyyy')}
+            - ${this.datePipe.transform(schoolYear.endDate, 'dd/MM/yyyy')}`
+          });
         });
       });
     });

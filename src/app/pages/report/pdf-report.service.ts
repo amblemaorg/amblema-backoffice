@@ -5,8 +5,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { OnInit, Inject } from '@angular/core';
 import { DOCUMENT, DatePipe, formatDate } from '@angular/common';
 import { IMAGE } from './img-base-64';
-import { compose } from '@ngxs/store/operators';
-import { isUndefined } from 'util';
 
 export class PDFReport implements OnInit {
 
@@ -24,82 +22,308 @@ export class PDFReport implements OnInit {
 
     constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe) { }
 
+    async onGenerate(report: DiagnosticReport) {
+
+        const finalReport: any = {
+            pageSize: 'A4',
+            content: [],
+        };
+
+        // -- Title --
+        const titleDocument: any = [
+            {
+                image: IMAGE,
+                width: 100,
+                absolutePosition: { x: 30, y: 60 }
+            },
+            {
+                alignment: 'center',
+                columns: [
+                    {
+                        width: '*',
+                        text: 'Reporte de diagnósticos',
+                        color: '#2e8aaa',
+                        alignment: 'center',
+                        fontSize: 20,
+                        bold: true,
+                        margin: [0, 60],
+                    },
+                ]
+            },
+        ];
+
+        // -- Header document --
+
+        const documentSubHeaderData: any = {
+            table: {
+                body: [
+                    [
+                        { text: 'Escuela:' },
+                        { text: report.school },
+                        { text: 'Fecha:' },
+                        { text: formatDate(report.date, 'd MMMM y', 'es-VE') },
+                    ],
+                    [
+                        { text: 'Coordinador:' },
+                        { text: report.coordinator },
+                        { text: 'Período académico:' },
+                        { text: report.schoolYear },
+                    ]
+                ]
+            },
+            margin: [0, 0, 0, 30]
+        };
+
+        // -- / End header document --
+
+        /**
+         * The maximum number of column is 9
+         */
+
+        const tableLapseOne: any = [];
+        const tableLapseTwo: any = {};
+        const tableLapseThree: any = {};
+
+        // -- Variables style --
+
+        const colorRowOne: any = { fillColor: '#2e8aaa', color: '#FFF', bold: true };
+        const colorRowTwo: any = { fillColor: '#42b16a', color: '#FFF', bold: true };
+
+        // -- Variables style --
 
 
+        report.sections.forEach((section, index) => {
+            if (section.lapse1.available) {
 
-    async onGenerate( report: DiagnosticReport ) {
+                // -- Prepare table header --
 
-        let finalReport: any = {
-            content: [
-                
-            ]
-        }
+                let firstRowHeaderTable: any = [
+                    { text: 'Grado: ' },
+                    { text: section.grade, colSpan: 2 },
+                    { text: `` }
+                ];
 
-        let tableLapseOne: any = [];
-    
-        let tableLapseTwo: any = {};
-        let tableLapseThree: any = {};
+                let penultimateRowHeaderTable: any = [
+                    { text: 'Sección: ' },
+                    { text: section.name },
+                    { text: `Lapso: 1` }
+                ];
 
-        console.log( report );
-        report.sections.forEach( (section, index) => {
+                let latestRowHeaderTable: any = [
+                    { text: 'Docente: ' },
+                    { text: section.teacher },
+                    { text: ` Matrícula de la sección: ${section.enrollment}` }
+                ];
 
-            
-            if( section.lapse1.available ) {
+                // -- End --
 
-                let prepareStudent:any;
-                let allStudent: any = [];
-                let diagnosticResult: any = [];
+                let prepareStudent: any;
+                const allStudent: any = [];
 
-                section.lapse1.students.forEach( (student, index) => {
+                let columnsNameStudent: any = [
+                    { ...colorRowTwo, text: 'Nombre' },
+                    { ...colorRowTwo, text: 'Apellido' },
+                    { ...colorRowTwo, text: 'Cédula' }];
 
+                const diagnosticResult: any = [
+                    [{ ...colorRowOne, text: 'Resultados del diagnóstico:' }],
+                    [{ ...colorRowOne, text: 'Estudiantes participantes:' }],
+                    [{ ...colorRowTwo, text: 'Promedio del resultado:' }],
+                    [{ text: 'Estudiantes sobre la meta:' }],
+                    [{ ...colorRowOne, text: 'Porcentaje sobre la meta:' }],
+                    [{ ...colorRowTwo, text: 'Promedio del índice:' }],
+                ];
+
+                // -- Creating table students --
+                section.lapse1.students.forEach((student, key) => {
+
+                    // -- Initial data --
                     prepareStudent = [
                         { text: student.firstName },
                         { text: student.lastName },
-                        { text: `${ student.cardType }-${student.cardId}`},
-                    ]
+                        { text: `${student.cardType === '1' ? 'V' : 'E' }-${student.cardId}` },
+                    ];
 
                     // =======================
-                    // Columnns
+                    // Columns
 
-                     if( section.lapse1.math !== undefined ) {
+                    if (section.lapse1.math !== undefined) {
                         prepareStudent = [
-                             ...prepareStudent,
-                             { text: student.multiplicationsPerMin },
-                             { text: student.multiplicationsPerMinIndex },
-                         ];
-                     }
-    
-                    if(section.lapse1.reading !== undefined) {
+                            ...prepareStudent,
+                            { text: student.multiplicationsPerMin },
+                            { text: student.multiplicationsPerMinIndex },
+                        ];
+                    }
 
+                    if (section.lapse1.reading !== undefined) {
                         prepareStudent = [
-                              ...prepareStudent,
-                              { text: student.wordsPerMin },
-                              { text: student.wordsPerMinIndex },
-                          ];
+                            ...prepareStudent,
+                            { text: student.wordsPerMin },
+                            { text: student.wordsPerMinIndex },
+                        ];
 
                     }
-    
-                    if( section.lapse1.logic !== undefined) {
-                          prepareStudent = [
-                              ...prepareStudent,
-                              { text: student.operationsPerMin },
-                              { text: student.operationsPerMinIndex },
-                          ];
+
+                    if (section.lapse1.logic !== undefined) {
+                        prepareStudent = [
+                            ...prepareStudent,
+                            { text: student.operationsPerMin },
+                            { text: student.operationsPerMinIndex },
+                        ];
                     }
-                    // Columnns
+                    // -- Columnns --
                     // =======================
 
+                    // -- Add rows --
                     allStudent.push(prepareStudent);
                 });
-            
 
+                // ==========================
+                // -- Creating diagnostics --
+
+                if (section.lapse1.math !== undefined) {
+
+                    diagnosticResult[0].push({ text: 'Diagnóstico de multiplicación' });
+                    diagnosticResult[1].push({ text: section.lapse1.math.participants });
+                    diagnosticResult[2].push({ text: section.lapse1.math.resultAverage });
+                    diagnosticResult[3].push({ text: section.lapse1.math.overGoalStudents });
+                    diagnosticResult[4].push({ text: section.lapse1.math.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse1.math.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse1.math.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+
+                    const datePrepare: any = section.lapse1.math.lastTestDate === '' ? ''
+                        : formatDate(section.lapse1.math.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        { ...colorRowOne, text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2 },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de multiplicación`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                if (section.lapse1.reading !== undefined) {
+
+
+                    diagnosticResult[0].push({ text: 'Diagnóstico de lectura' });
+                    diagnosticResult[1].push({ text: section.lapse1.reading.participants });
+                    diagnosticResult[2].push({ text: section.lapse1.reading.resultAverage });
+                    diagnosticResult[3].push({ text: section.lapse1.reading.overGoalStudents });
+                    diagnosticResult[4].push({ text: section.lapse1.reading.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse1.reading.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse1.reading.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+                    const datePrepare: any = section.lapse1.reading.lastTestDate === '' ? ''
+                    : formatDate(section.lapse1.reading.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        { ...colorRowOne, text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2 },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                if (section.lapse1.logic !== undefined) {
+
+
+                    diagnosticResult[0].push({ text: 'Diagnóstico de razonamiento lógico - mtemático' });
+                    diagnosticResult[1].push({ text: section.lapse1.logic.participants });
+                    diagnosticResult[2].push({ text: section.lapse1.logic.resultAverage });
+                    diagnosticResult[3].push({ text: section.lapse1.logic.overGoalStudents });
+                    diagnosticResult[4].push({ text: section.lapse1.logic.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse1.logic.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse1.logic.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+                    const datePrepare: any = section.lapse1.logic.lastTestDate === '' ? ''
+                    : formatDate(section.lapse1.logic.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        {
+                            ...colorRowOne,
+                            text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2
+                        },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - mtemático`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                // -- End --
+                // ==========================
+
+                // =================================
+                // -- Prepare header table
+
+                allStudent.unshift(columnsNameStudent);
+                allStudent.unshift(latestRowHeaderTable);
+                allStudent.unshift(penultimateRowHeaderTable);
+                allStudent.unshift(firstRowHeaderTable);
+
+                // -- End --
+                // ==========================
+
+                // -- Create table students --
                 tableLapseOne.push({
                     table: {
                         body: allStudent
                     },
-                    margin: [0,0,0,30]
+                    margin: [0, 0, 0, 30]
                 });
 
+                // -- Diagnostic --
+                tableLapseOne.push({
+                    table: {
+                        body: diagnosticResult
+                    },
+                    margin: [0, 0, 0, 30]
+                });
             }
 
             // if( section.lapse2.available ) {
@@ -115,7 +339,7 @@ export class PDFReport implements OnInit {
 
             //     }
             // }
-            
+
 
             // if( section.lapse3.available ) {
 
@@ -134,749 +358,13 @@ export class PDFReport implements OnInit {
         });
 
 
+        // ===========================================
+        // -- Set body all table lapse and sections --
+        // ===========================================
         finalReport.content.push(tableLapseOne);
-
+        finalReport.content.unshift(documentSubHeaderData);
+        finalReport.content.unshift(titleDocument);
         pdfMake.createPdf(finalReport).open();
     }
 
-    async onGenerateDiagnosticReport(report: DiagnosticReport) {
-
-
-        console.log(report);
-
-        /**
-         * ========================================
-         * == Sub header document
-         * ========================================
-         */
-
-        const marginSubHeader = [0, 0, 5, 10];
-        const subHeaderData: any = [
-            [
-                { text: 'Escuela:', margin: marginSubHeader },
-                { text: report.school, margin: marginSubHeader },
-                { text: 'Fecha:', margin: marginSubHeader },
-                { text: formatDate(report.date, 'd MMMM, y', 'es-VE'), margin: marginSubHeader },
-            ],
-            [
-                { text: 'Coordinador:', margin: marginSubHeader },
-                { text: report.coordinator, margin: marginSubHeader },
-                { text: 'Período académico:', margin: marginSubHeader },
-                { text: report.schoolYear, margin: marginSubHeader },
-            ]
-        ];
-
-
-        /**
-         * ========================================
-         * == Sections
-         * ========================================
-         */
-
-        const sectionRegister: any[] = [];
-
-        // -- All sections --
-        report.sections.forEach(section => {
-            sectionRegister.push(
-                ['Grado: ', section.grade],
-                ['Seccion: ', section.name],
-            );
-        });
-
-        let sectionResult: any = [];
-        const sectionResultTTwo: any = [];
-
-        let customSectionHeader: any = [];
-        let customSectionHeaderTwo: any = [];
-
-        let totalAverage: any = [];
-        const totalAverageTwo: any = [];
-
-        const testing = new Array<any>();
-        const testingTwo = new Array<any>();
-
-        report.sections.forEach(section => {
-
-            /**
-             * ========================================================
-             * == Primer lapso
-             * ========================================================
-             */
-
-            let firtsRow: any = [];
-            let secondRow: any = [];
-            let thirdRow: any = [];
-            let students: any = [];
-
-            if (section.lapse1.available) {
-
-
-                // -- AAA --
-                if (section.lapse1.math !== undefined && section.lapse1.reading !== undefined && section.lapse1.logic !== undefined) {
-
-                    firtsRow = [
-                        { text: 'Grado: ' },
-                        { text: section.grade, colSpan: 3 },
-                        {},
-                        {},
-                        { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        { text: '' },
-                        { text: 'Diagnóstico de lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        { text: '' },
-                        { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        { text: '' }
-                    ];
-
-                    secondRow = [
-                        { text: 'Seccion: ' },
-                        { text: section.name },
-                        { text: 'Lapso: ' },
-                        { text: '1' },
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.math.lastTestDate}`, colSpan: 2 },
-                        { text: '' },
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.reading.lastTestDate}`, colSpan: 2 },
-                        { text: '' },
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.logic.lastTestDate}`, colSpan: 2 },
-                        { text: '' }
-                    ];
-
-                    thirdRow = [
-                        { text: 'Docente: ' },
-                        { text: section.teacher },
-                        { text: 'Matrícula de la sección: ' },
-                        { text: section.enrollment },
-                        { text: `Meta: ${section.lapse1.math.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        { text: '' },
-                        { text: `Meta: ${section.lapse1.reading.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        { text: '' },
-                        { text: `Meta: ${section.lapse1.logic.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        { text: '' }
-                    ];
-
-                    sectionResult = [
-                        { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                    ];
-
-
-                    section.lapse1.students.forEach(studend => {
-
-                        students.push([
-                            { text: studend.firstName },
-                            { text: studend.lastName },
-                            { text: `${studend.cardType} - ${studend.cardId}`, colSpan: 2 },
-                            {},
-                            { text: studend.multiplicationsPerMin },
-                            { text: studend.multiplicationsPerMinIndex },
-                            { text: studend.wordsPerMin },
-                            { text: studend.wordsPerMinIndex },
-                            { text: studend.operationsPerMin },
-                            { text: studend.operationsPerMinIndex },
-                        ]);
-                    });
-
-                    totalAverage = {
-                        table: {
-                            widths: ['*', '*', '*', '*', ],
-                            body: [
-                                [
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: 'Resultados del diagnóstico' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text:  '' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: '' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: '' }
-                                ],
-                                [
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: 'Estudiantes participantes:' },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.math.participants },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.reading.participants },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.logic.participants }
-                                ],
-                                [
-                                    { text: 'Promedio del resultado:' },
-                                    { text: section.lapse1.math.resultAverage },
-                                    { text: section.lapse1.reading.resultAverage },
-                                    { text: section.lapse1.logic.resultAverage}
-                                ],
-                                [
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: 'Estudiantes sobre la meta:' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: section.lapse1.math.overGoalStudents },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: section.lapse1.reading.overGoalStudents },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: section.lapse1.logic.overGoalStudents }
-                                ],
-                                [
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: 'Porcentaje sobre la meta:' },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.math.overGoalAverage },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.reading.overGoalAverage },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.logic.overGoalAverage }
-                                ],
-                                [
-                                    { text: 'Promedio del índice:' },
-                                    { text: section.lapse1.math.indexAverage },
-                                    { text: section.lapse1.reading.indexAverage },
-                                    { text: section.lapse1.logic.indexAverage }
-                                ],
-                            ],
-                        },
-                        margin: [60, 0, 0, 50]
-                    };
-
-                    // -- AAI --
-                } else if (section.lapse1.math !== undefined && section.lapse1.reading !== undefined && section.lapse1.logic === undefined) {
-
-                    firtsRow = [
-                        { text: 'Grado: ' },
-                        { text: section.grade, colSpan: 3 },
-                        {},
-                        {},
-                        { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'Diagnóstico de lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-                    secondRow = [
-                        { text: 'Seccion: ' },
-                        { text: section.name },
-                        { text: 'Lapso: ' },
-                        { text: '1' },
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.math.lastTestDate}`, colSpan: 2 },
-                        {},
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.reading.lastTestDate}`, colSpan: 2 },
-                        {},
-                    ];
-
-                    thirdRow = [
-                        { text: 'Docente: ' },
-                        { text: section.teacher },
-                        { text: 'Matrícula de la sección: ' },
-                        { text: section.enrollment },
-                        { text: `Meta: ${section.lapse1.reading.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: `Meta: ${section.lapse1.math.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                    ];
-
-                    sectionResult = [
-                        { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                    ];
-
-                    section.lapse1.students.forEach(studend => {
-
-                        students.push([
-                            { text: studend.firstName },
-                            { text: studend.lastName },
-                            { text: `${studend.cardType} - ${studend.cardId}`, colSpan: 2 },
-                            {},
-                            { text: studend.multiplicationsPerMin },
-                            { text: studend.multiplicationsPerMinIndex },
-                            { text: studend.wordsPerMin },
-                            { text: studend.wordsPerMinIndex },
-                        ]);
-                    });
-
-
-                    totalAverage = {
-                        table: {
-                            widths: ['*', '*', '*' ],
-                            body: [
-                                [
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: 'Resultados del diagnóstico' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text:  '' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: '' },
-                                ],
-                                [
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: 'Estudiantes participantes:' },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.math.participants },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.reading.participants },
-                                ],
-                                [
-                                    { text: 'Promedio del resultado:' },
-                                    { text: section.lapse1.math.resultAverage },
-                                    { text: section.lapse1.reading.resultAverage },
-                                ],
-                                [
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: 'Estudiantes sobre la meta:' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: section.lapse1.math.overGoalStudents },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: section.lapse1.reading.overGoalStudents },
-                                ],
-                                [
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: 'Porcentaje sobre la meta:' },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.math.overGoalAverage },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.reading.overGoalAverage },
-                                ],
-                                [
-                                    { text: 'Promedio del índice:' },
-                                    { text: section.lapse1.math.indexAverage },
-                                    { text: section.lapse1.reading.indexAverage },
-                                ],
-                            ],
-                        },
-                        margin: [60, 0, 0, 50]
-                    };
-
-                    // -- AIA --
-                } else if (section.lapse1.math !== undefined && section.lapse1.reading === undefined && section.lapse1.logic !== undefined) {
-
-                    firtsRow = [
-                        { text: 'Grado: ' },
-                        { text: section.grade, colSpan: 3 },
-                        {},
-                        {},
-                        { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                    ];
-
-                    secondRow = [
-                        { text: 'Seccion: ' },
-                        { text: section.name },
-                        { text: 'Lapso: ' },
-                        { text: '1' },
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.math.lastTestDate}`, colSpan: 2 },
-                        {},
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.logic.lastTestDate}`, colSpan: 2 },
-                        {},
-                    ];
-
-                    thirdRow = [
-                        { text: 'Docente: ' },
-                        { text: section.teacher },
-                        { text: 'Matrícula de la sección: ' },
-                        { text: section.enrollment },
-                        { text: `Meta: ${section.lapse1.math.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: `Meta: ${section.lapse1.logic.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                    ];
-
-                    sectionResult = [
-                        { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                    ];
-
-
-                    section.lapse1.students.forEach(studend => {
-
-                        students.push([
-                            { text: studend.firstName },
-                            { text: studend.lastName },
-                            { text: `${studend.cardType} - ${studend.cardId}`, colSpan: 2 },
-                            {},
-                            { text: studend.multiplicationsPerMin },
-                            { text: studend.multiplicationsPerMinIndex },
-                            { text: studend.operationsPerMin },
-                            { text: studend.operationsPerMinIndex },
-                        ]);
-                    });
-
-                    // -- IAA --
-                } else if (section.lapse1.math === undefined && section.lapse1.reading !== undefined && section.lapse1.logic !== undefined) {
-                    firtsRow = [
-                        { text: 'Grado: ' },
-                        { text: section.grade, colSpan: 3 },
-
-                        {},
-                        {},
-                        { text: 'Diagnóstico de lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                    ];
-
-                    secondRow = [
-                        { text: 'Seccion: ' },
-                        { text: section.name },
-                        { text: 'Lapso: ' },
-                        { text: '1', colSpan: 0 },
-
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.reading.lastTestDate}`, colSpan: 2 },
-                        {},
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.logic.lastTestDate}`, colSpan: 2 },
-                        {}
-                    ];
-
-                    thirdRow = [
-                        { text: 'Docente: ' },
-                        { text: section.teacher },
-                        { text: 'Matrícula de la sección: ' },
-                        { text: section.enrollment, colSpan: 0 },
-
-                        { text: `Meta: ${section.lapse1.reading.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: `Meta: ${section.lapse1.logic.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-                    sectionResult = [
-                        { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                    ];
-
-
-                    section.lapse1.students.forEach(studend => {
-
-                        students.push([
-                            { text: studend.firstName },
-                            { text: studend.lastName },
-                            { text: `${studend.cardType} - ${studend.cardId}`, colSpan: 2 },
-                            {},
-                            { text: studend.wordsPerMin },
-                            { text: studend.wordsPerMinIndex },
-                            { text: studend.operationsPerMin },
-                            { text: studend.operationsPerMinIndex },
-                        ]);
-                    });
-
-                    totalAverage = {
-                        table: {
-                            widths: ['*', '*', '*', '*', ],
-                            body: [
-                                [
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: 'Resultados del diagnóstico' },
-                                
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: '' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: '' }
-                                ],
-                                [
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: 'Estudiantes participantes:' },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.reading.participants },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.logic.participants }
-                                ],
-                                [
-                                    { text: 'Promedio del resultado:' },
-                                    { text: section.lapse1.reading.resultAverage },
-                                    { text: section.lapse1.logic.resultAverage}
-                                ],
-                                [
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: 'Estudiantes sobre la meta:' },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: section.lapse1.reading.overGoalStudents },
-                                    { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: section.lapse1.logic.overGoalStudents }
-                                ],
-                                [
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: 'Porcentaje sobre la meta:' },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.reading.overGoalAverage },
-                                    { fillColor: '#42b16a', color: '#FFF', bold: true, text: section.lapse1.logic.overGoalAverage }
-                                ],
-                                [
-                                    { text: 'Promedio del índice:' },
-                                  
-                                    { text: section.lapse1.reading.indexAverage },
-                                    { text: section.lapse1.logic.indexAverage }
-                                ],
-                            ],
-                        },
-                        margin: [60, 0, 0, 50]
-                    };
-
-
-                } else if (section.lapse1.math !== undefined && section.lapse1.reading === undefined && section.lapse1.logic === undefined) {
-                    // -- AII --
-
-                    firtsRow = [
-                        { text: 'Grado: ' },
-                        { text: section.grade, colSpan: 3 },
-                        {},
-                        {},
-                        { text: 'Diagnóstico de multiplicación', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-                    secondRow = [
-                        { text: 'Seccion: ' },
-                        { text: section.name },
-                        { text: 'Lapso: ' },
-                        { text: '1' },
-
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.math.lastTestDate}`, colSpan: 2, width: '*' },
-                        {}
-                    ];
-
-                    thirdRow = [
-                        { text: 'Docente: ' },
-                        { text: section.teacher },
-                        { text: 'Matrícula de la sección: ' },
-                        { text: section.enrollment },
-                        { text: `Meta: ${section.lapse1.math.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-
-                    sectionResult = [
-                        { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                    ];
-
-
-                    section.lapse1.students.forEach(studend => {
-
-                        students.push([
-                            { text: studend.firstName },
-                            { text: studend.lastName },
-                            { text: `${studend.cardType} - ${studend.cardId}`, colSpan: 2 },
-                            {},
-                            { text: studend.multiplicationsPerMin },
-                            { text: studend.multiplicationsPerMinIndex },
-
-                        ]);
-                    });
-
-                } else if (section.lapse1.math === undefined && section.lapse1.reading !== undefined && section.lapse1.logic === undefined) {
-                    // -- IAI --
-                    firtsRow = [
-                        { text: 'Grado: ' },
-                        { text: section.grade, colSpan: 3 },
-                        {},
-                        {},
-                        { text: 'Diagnóstico de Lectura', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-                    secondRow = [
-                        { text: 'Seccion: ' },
-                        { text: section.name },
-                        { text: 'Lapso: ' },
-                        { text: '1' },
-
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.reading.lastTestDate}`, colSpan: 2 },
-                        {}
-                    ];
-
-                    thirdRow = [
-                        { text: 'Docente: ' },
-                        { text: section.teacher },
-                        { text: 'Matrícula de la sección: ' },
-                        { text: section.enrollment },
-                        { text: `Meta: ${section.lapse1.reading.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-
-                    sectionResult = [
-                        { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                    ];
-
-
-                    section.lapse1.students.forEach(studend => {
-
-                        students.push([
-                            { text: studend.firstName },
-                            { text: studend.lastName },
-                            { text: `${studend.cardType} - ${studend.cardId}`, colSpan: 2 },
-                            {},
-                            { text: studend.wordsPerMin },
-                            { text: studend.wordsPerMinIndex },
-
-                        ]);
-                    });
-
-
-
-                } else if (section.lapse1.math === undefined && section.lapse1.reading === undefined && section.lapse1.logic !== undefined) {
-
-                    // ======================================================
-
-                    firtsRow = [
-                        { text: 'Grado: ' },
-                        { text: section.grade, colSpan: 3 },
-                        {},
-                        {},
-                        { text: 'Diagnóstico de razonamiento lógico - matemático', fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-                    secondRow = [
-                        { text: 'Seccion: ' },
-                        { text: section.name },
-                        { text: 'Lapso: ' },
-                        { text: '1' },
-
-                        { fillColor: '#2e8aaa', color: '#FFF', bold: true, text: `Fecha del diagnóstico: ${section.lapse1.logic.lastTestDate}`, colSpan: 2 },
-                        {}
-                    ];
-
-                    thirdRow = [
-                        { text: 'Docente: ' },
-                        { text: section.teacher },
-                        { text: 'Matrícula de la sección: ' },
-                        { text: section.enrollment },
-                        { text: `Meta: ${section.lapse1.logic.overGoalAverage}`, fillColor: '#2e8aaa', color: '#FFF', bold: true, colSpan: 2 },
-                        {}
-                    ];
-
-
-                    sectionResult = [
-                        { text: 'Nombre', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Apellido', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'Cedula', fillColor: '#42b16a', color: '#FFF', bold: true, colSpan: 2 },
-                        {},
-                        { text: 'resultado', fillColor: '#42b16a', color: '#FFF', bold: true },
-                        { text: 'indice', fillColor: '#42b16a', color: '#FFF', bold: true },
-                    ];
-
-
-                    section.lapse1.students.forEach(studend => {
-
-                        students.push([
-                            { text: studend.firstName },
-                            { text: studend.lastName },
-                            { text: `${studend.cardType} - ${studend.cardId}`, colSpan: 2 },
-                            {},
-                            { text: studend.operationsPerMin },
-                            { text: studend.operationsPerMinIndex },
-                        ]);
-                    });
-                }
-            }
-
-            /**
-             * ========================================================
-             * == Primer lapso
-             * ========================================================
-             */
-
-            let firtsRowTwo: any = [];
-            let secondRowTwo: any = [];
-            let thirdRowTwo: any = [];
-            let studentsTwo: any = [];
-
-
-            if( section.lapse2.available ) {
-
-            }
-
-             /**
-             * ========================================================
-             * == Segundo lapso
-             * ========================================================
-             */
-
-            customSectionHeader = {
-                table: {
-                    // widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', '*'],
-                    body: [
-                        firtsRow,
-                        secondRow,
-                        thirdRow,
-                        sectionResult,
-                    ],
-                },
-                margin: [0, 0, 0, 40]
-            };
-
-
-            students.forEach(student => {
-                customSectionHeader.table.body.push(student);
-            });
-
-            customSectionHeaderTwo = {
-                table: {
-                    body: [
-                        [ {  text: 'Registro de la tabla' } ]
-                    ]
-                }
-            };
-
-            testing.push(customSectionHeader);
-            //testing.push( totalAverage );
-            // testing.push( {
-            //     table: {
-            //         body: [
-            //             [ { text: 'registro' } ]
-            //         ]
-            //     }
-            // } );
-            testing.push(customSectionHeaderTwo);
-        });
-
-        // ========================================
-        // -- Prepare the data --
-        // ========================================
-
-        const docDefinition = {
-            pageSize: 'A3',
-            info: {
-                title: 'Reporte de diagnósticos',
-                author: 'Franklin Perdomo, Stephanie Soteldo',
-                subject: 'Reporte',
-                keywords: 'Grados, escuelas, reportes, puntuación',
-            },
-            content: [
-
-                // -- Header document --
-                {
-                    image: IMAGE,
-                    width: 100,
-                    absolutePosition: { x: 30, y: 60 }
-                },
-                {
-                    alignment: 'center',
-                    columns: [
-                        {
-                            width: '*',
-                            text: 'Reporte de diagnósticos',
-                            color: '#2e8aaa',
-                            alignment: 'center',
-                            fontSize: 20,
-                            bold: true,
-                            margin: [0, 60],
-                        },
-                    ]
-                },
-
-                // -- Sub header data ---
-                {
-
-                    table: {
-                        body: subHeaderData
-                    },
-                    margin: [0, 0, 0, 40]
-                },
-
-                {
-                    columns: [
-                        testing,
-
-                    ]
-                },
-            ],
-        };
-        pdfMake.createPdf(docDefinition).open();
-    }
 }

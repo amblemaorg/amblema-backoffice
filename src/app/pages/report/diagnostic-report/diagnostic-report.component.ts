@@ -81,7 +81,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
       this.selectedSchoolYears.id,
       this.selectedSchool.id,
       this.diagnostics ).subscribe( response => {
-        this.generatorReport.onGenerateDiagnosticReport( response );
+        this.generatorReport.onGenerate( response );
       }, err => {
       } );
   }

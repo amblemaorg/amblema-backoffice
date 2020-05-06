@@ -81,8 +81,8 @@ export class PDFReport implements OnInit {
          */
 
         const tableLapseOne: any = [];
-        const tableLapseTwo: any = {};
-        const tableLapseThree: any = {};
+        const tableLapseTwo: any = [];
+        const tableLapseThree: any = [];
 
         // -- Variables style --
 
@@ -127,11 +127,11 @@ export class PDFReport implements OnInit {
 
                 const diagnosticResult: any = [
                     [{ ...colorRowOne, text: 'Resultados del diagnóstico:' }],
-                    [{ ...colorRowOne, text: 'Estudiantes participantes:' }],
-                    [{ ...colorRowTwo, text: 'Promedio del resultado:' }],
-                    [{ text: 'Estudiantes sobre la meta:' }],
-                    [{ ...colorRowOne, text: 'Porcentaje sobre la meta:' }],
-                    [{ ...colorRowTwo, text: 'Promedio del índice:' }],
+                    [{ ...colorRowTwo, text: 'Estudiantes participantes:' }],
+                    [{ text: 'Promedio del resultado:' }],
+                    [{ ...colorRowOne, text: 'Estudiantes sobre la meta:' }],
+                    [{ ...colorRowTwo, text: 'Porcentaje sobre la meta:' }],
+                    [{ text: 'Promedio del índice:' }],
                 ];
 
                 // -- Creating table students --
@@ -141,7 +141,7 @@ export class PDFReport implements OnInit {
                     prepareStudent = [
                         { text: student.firstName },
                         { text: student.lastName },
-                        { text: `${student.cardType === '1' ? 'V' : 'E' }-${student.cardId}` },
+                        { text: `${student.cardType === '1' ? 'V' : 'E'}-${student.cardId}` },
                     ];
 
                     // =======================
@@ -183,11 +183,11 @@ export class PDFReport implements OnInit {
 
                 if (section.lapse1.math !== undefined) {
 
-                    diagnosticResult[0].push({ text: 'Diagnóstico de multiplicación' });
-                    diagnosticResult[1].push({ text: section.lapse1.math.participants });
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de multiplicación' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse1.math.participants });
                     diagnosticResult[2].push({ text: section.lapse1.math.resultAverage });
-                    diagnosticResult[3].push({ text: section.lapse1.math.overGoalStudents });
-                    diagnosticResult[4].push({ text: section.lapse1.math.overGoalAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse1.math.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse1.math.overGoalAverage });
                     diagnosticResult[5].push({ text: section.lapse1.math.indexAverage });
 
                     columnsNameStudent = [
@@ -221,11 +221,11 @@ export class PDFReport implements OnInit {
                 if (section.lapse1.reading !== undefined) {
 
 
-                    diagnosticResult[0].push({ text: 'Diagnóstico de lectura' });
-                    diagnosticResult[1].push({ text: section.lapse1.reading.participants });
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de lectura' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse1.reading.participants });
                     diagnosticResult[2].push({ text: section.lapse1.reading.resultAverage });
-                    diagnosticResult[3].push({ text: section.lapse1.reading.overGoalStudents });
-                    diagnosticResult[4].push({ text: section.lapse1.reading.overGoalAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse1.reading.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse1.reading.overGoalAverage });
                     diagnosticResult[5].push({ text: section.lapse1.reading.indexAverage });
 
                     columnsNameStudent = [
@@ -241,7 +241,7 @@ export class PDFReport implements OnInit {
                     ];
 
                     const datePrepare: any = section.lapse1.reading.lastTestDate === '' ? ''
-                    : formatDate(section.lapse1.reading.lastTestDate, 'd MMMM y', 'es-VE');
+                        : formatDate(section.lapse1.reading.lastTestDate, 'd MMMM y', 'es-VE');
                     penultimateRowHeaderTable = [
                         ...penultimateRowHeaderTable,
                         { ...colorRowOne, text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2 },
@@ -258,11 +258,11 @@ export class PDFReport implements OnInit {
                 if (section.lapse1.logic !== undefined) {
 
 
-                    diagnosticResult[0].push({ text: 'Diagnóstico de razonamiento lógico - mtemático' });
-                    diagnosticResult[1].push({ text: section.lapse1.logic.participants });
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - mtemático' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse1.logic.participants });
                     diagnosticResult[2].push({ text: section.lapse1.logic.resultAverage });
-                    diagnosticResult[3].push({ text: section.lapse1.logic.overGoalStudents });
-                    diagnosticResult[4].push({ text: section.lapse1.logic.overGoalAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse1.logic.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse1.logic.overGoalAverage });
                     diagnosticResult[5].push({ text: section.lapse1.logic.indexAverage });
 
                     columnsNameStudent = [
@@ -278,7 +278,7 @@ export class PDFReport implements OnInit {
                     ];
 
                     const datePrepare: any = section.lapse1.logic.lastTestDate === '' ? ''
-                    : formatDate(section.lapse1.logic.lastTestDate, 'd MMMM y', 'es-VE');
+                        : formatDate(section.lapse1.logic.lastTestDate, 'd MMMM y', 'es-VE');
                     penultimateRowHeaderTable = [
                         ...penultimateRowHeaderTable,
                         {
@@ -320,41 +320,484 @@ export class PDFReport implements OnInit {
                 // -- Diagnostic --
                 tableLapseOne.push({
                     table: {
+                        widths: 'auto',
                         body: diagnosticResult
                     },
                     margin: [0, 0, 0, 30]
                 });
             }
 
-            // if( section.lapse2.available ) {
+            if (section.lapse2.available) {
 
-            //     if( section.lapse2.math.available ) {
+                // -- Prepare table header --
 
-            //     }
+                let firstRowHeaderTable: any = [
+                    { text: 'Grado: ' },
+                    { text: section.grade, colSpan: 2 },
+                    { text: `` }
+                ];
 
-            //     if(section.lapse2.reading.available) {
+                let penultimateRowHeaderTable: any = [
+                    { text: 'Sección: ' },
+                    { text: section.name },
+                    { text: `Lapso: 2` }
+                ];
 
-            //     }
-            //     if(section.lapse2.logic.available) {
+                let latestRowHeaderTable: any = [
+                    { text: 'Docente: ' },
+                    { text: section.teacher },
+                    { text: ` Matrícula de la sección: ${section.enrollment}` }
+                ];
 
-            //     }
-            // }
+                // -- End --
+
+                let prepareStudent: any;
+                const allStudent: any = [];
+
+                let columnsNameStudent: any = [
+                    { ...colorRowTwo, text: 'Nombre' },
+                    { ...colorRowTwo, text: 'Apellido' },
+                    { ...colorRowTwo, text: 'Cédula' }];
+
+                const diagnosticResult: any = [
+                    [{ ...colorRowOne, text: 'Resultados del diagnóstico:' }],
+                    [{ ...colorRowTwo, text: 'Estudiantes participantes:' }],
+                    [{ text: 'Promedio del resultado:' }],
+                    [{ ...colorRowOne, text: 'Estudiantes sobre la meta:' }],
+                    [{ ...colorRowTwo, text: 'Porcentaje sobre la meta:' }],
+                    [{ text: 'Promedio del índice:' }],
+                ];
+
+                // -- Creating table students --
+                section.lapse2.students.forEach((student, key) => {
+
+                    // -- Initial data --
+                    prepareStudent = [
+                        { text: student.firstName },
+                        { text: student.lastName },
+                        { text: `${student.cardType === '1' ? 'V' : 'E'}-${student.cardId}` },
+                    ];
+
+                    // =======================
+                    // Columns
+
+                    if (section.lapse2.math !== undefined) {
+                        prepareStudent = [
+                            ...prepareStudent,
+                            { text: student.multiplicationsPerMin },
+                            { text: student.multiplicationsPerMinIndex },
+                        ];
+                    }
+
+                    if (section.lapse2.reading !== undefined) {
+                        prepareStudent = [
+                            ...prepareStudent,
+                            { text: student.wordsPerMin },
+                            { text: student.wordsPerMinIndex },
+                        ];
+
+                    }
+
+                    if (section.lapse2.logic !== undefined) {
+                        prepareStudent = [
+                            ...prepareStudent,
+                            { text: student.operationsPerMin },
+                            { text: student.operationsPerMinIndex },
+                        ];
+                    }
+                    // -- Columnns --
+                    // =======================
+
+                    // -- Add rows --
+                    allStudent.push(prepareStudent);
+                });
+
+                // ==========================
+                // -- Creating diagnostics --
+
+                if (section.lapse2.math !== undefined) {
+
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de multiplicación' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse2.math.participants });
+                    diagnosticResult[2].push({ text: section.lapse2.math.resultAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse2.math.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse2.math.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse2.math.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse2.math.goal}`, colSpan: 2 },
+                        {}
+                    ];
 
 
-            // if( section.lapse3.available ) {
+                    const datePrepare: any = section.lapse2.math.lastTestDate === '' ? ''
+                        : formatDate(section.lapse2.math.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        { ...colorRowOne, text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2 },
+                        {}
+                    ];
 
-            //     if( section.lapse3.math.available ) {
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de multiplicación`, colSpan: 2 },
+                        {}
+                    ];
+                }
 
-            //     }
+                if (section.lapse2.reading !== undefined) {
 
-            //     if(section.lapse3.reading.available) {
 
-            //     }
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de lectura' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse2.reading.participants });
+                    diagnosticResult[2].push({ text: section.lapse2.reading.resultAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse2.reading.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse2.reading.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse2.reading.indexAverage });
 
-            //     if(section.lapse3.logic.available) {
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
 
-            //     }
-            // }
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse2.reading.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+                    const datePrepare: any = section.lapse2.reading.lastTestDate === '' ? ''
+                        : formatDate(section.lapse2.reading.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        { ...colorRowOne, text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2 },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                if (section.lapse2.logic !== undefined) {
+
+
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - mtemático' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse2.logic.participants });
+                    diagnosticResult[2].push({ text: section.lapse2.logic.resultAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse2.logic.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse2.logic.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse2.logic.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse2.logic.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+                    const datePrepare: any = section.lapse2.logic.lastTestDate === '' ? ''
+                        : formatDate(section.lapse2.logic.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        {
+                            ...colorRowOne,
+                            text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2
+                        },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - mtemático`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                // -- End --
+                // ==========================
+
+                // =================================
+                // -- Prepare header table
+
+                allStudent.unshift(columnsNameStudent);
+                allStudent.unshift(latestRowHeaderTable);
+                allStudent.unshift(penultimateRowHeaderTable);
+                allStudent.unshift(firstRowHeaderTable);
+
+                // -- End --
+                // ==========================
+
+                // -- Create table students --
+                tableLapseTwo.push({
+                    table: {
+                        body: allStudent
+                    },
+                    margin: [0, 0, 0, 30]
+                });
+
+                // -- Diagnostic --
+                tableLapseTwo.push({
+                    table: {
+                        widths: 'auto',
+                        body: diagnosticResult
+                    },
+                    margin: [0, 0, 0, 30]
+                });
+            }
+
+
+            if (section.lapse3.available) {
+
+                // -- Prepare table header --
+
+                let firstRowHeaderTable: any = [
+                    { text: 'Grado: ' },
+                    { text: section.grade, colSpan: 2 },
+                    { text: `` }
+                ];
+
+                let penultimateRowHeaderTable: any = [
+                    { text: 'Sección: ' },
+                    { text: section.name },
+                    { text: `Lapso: 3` }
+                ];
+
+                let latestRowHeaderTable: any = [
+                    { text: 'Docente: ' },
+                    { text: section.teacher },
+                    { text: ` Matrícula de la sección: ${section.enrollment}` }
+                ];
+
+                // -- End --
+
+                let prepareStudent: any;
+                const allStudent: any = [];
+
+                let columnsNameStudent: any = [
+                    { ...colorRowTwo, text: 'Nombre' },
+                    { ...colorRowTwo, text: 'Apellido' },
+                    { ...colorRowTwo, text: 'Cédula' }];
+
+                const diagnosticResult: any = [
+                    [{ ...colorRowOne, text: 'Resultados del diagnóstico:' }],
+                    [{ ...colorRowTwo, text: 'Estudiantes participantes:' }],
+                    [{ text: 'Promedio del resultado:' }],
+                    [{ ...colorRowOne, text: 'Estudiantes sobre la meta:' }],
+                    [{ ...colorRowTwo, text: 'Porcentaje sobre la meta:' }],
+                    [{ text: 'Promedio del índice:' }],
+                ];
+
+                // -- Creating table students --
+                section.lapse3.students.forEach((student, key) => {
+
+                    // -- Initial data --
+                    prepareStudent = [
+                        { text: student.firstName },
+                        { text: student.lastName },
+                        { text: `${student.cardType === '1' ? 'V' : 'E'}-${student.cardId}` },
+                    ];
+
+                    // =======================
+                    // Columns
+
+                    if (section.lapse3.math !== undefined) {
+                        prepareStudent = [
+                            ...prepareStudent,
+                            { text: student.multiplicationsPerMin },
+                            { text: student.multiplicationsPerMinIndex },
+                        ];
+                    }
+
+                    if (section.lapse3.reading !== undefined) {
+                        prepareStudent = [
+                            ...prepareStudent,
+                            { text: student.wordsPerMin },
+                            { text: student.wordsPerMinIndex },
+                        ];
+
+                    }
+
+                    if (section.lapse3.logic !== undefined) {
+                        prepareStudent = [
+                            ...prepareStudent,
+                            { text: student.operationsPerMin },
+                            { text: student.operationsPerMinIndex },
+                        ];
+                    }
+                    // -- Columnns --
+                    // =======================
+
+                    // -- Add rows --
+                    allStudent.push(prepareStudent);
+                });
+
+                // ==========================
+                // -- Creating diagnostics --
+
+                if (section.lapse3.math !== undefined) {
+
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de multiplicación' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse3.math.participants });
+                    diagnosticResult[2].push({ text: section.lapse3.math.resultAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse3.math.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse3.math.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse3.math.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse3.math.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+
+                    const datePrepare: any = section.lapse3.math.lastTestDate === '' ? ''
+                        : formatDate(section.lapse3.math.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        { ...colorRowOne, text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2 },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de multiplicación`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                if (section.lapse3.reading !== undefined) {
+
+
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de lectura' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse3.reading.participants });
+                    diagnosticResult[2].push({ text: section.lapse3.reading.resultAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse3.reading.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse3.reading.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse3.reading.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse3.reading.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+                    const datePrepare: any = section.lapse3.reading.lastTestDate === '' ? ''
+                        : formatDate(section.lapse3.reading.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        { ...colorRowOne, text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2 },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                if (section.lapse3.logic !== undefined) {
+
+
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - mtemático' });
+                    diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse3.logic.participants });
+                    diagnosticResult[2].push({ text: section.lapse3.logic.resultAverage });
+                    diagnosticResult[3].push({ ...colorRowOne, text: section.lapse3.logic.overGoalStudents });
+                    diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse3.logic.overGoalAverage });
+                    diagnosticResult[5].push({ text: section.lapse3.logic.indexAverage });
+
+                    columnsNameStudent = [
+                        ...columnsNameStudent,
+                        { ...colorRowTwo, text: 'Resultado' },
+                        { ...colorRowTwo, text: 'Índice' },
+                    ];
+
+                    latestRowHeaderTable = [
+                        ...latestRowHeaderTable,
+                        { ...colorRowOne, text: `Meta: ${section.lapse3.logic.goal}`, colSpan: 2 },
+                        {}
+                    ];
+
+                    const datePrepare: any = section.lapse3.logic.lastTestDate === '' ? ''
+                        : formatDate(section.lapse3.logic.lastTestDate, 'd MMMM y', 'es-VE');
+                    penultimateRowHeaderTable = [
+                        ...penultimateRowHeaderTable,
+                        {
+                            ...colorRowOne,
+                            text: 'Fecha del diagnóstico: \n' + datePrepare, colSpan: 2
+                        },
+                        {}
+                    ];
+
+                    firstRowHeaderTable = [
+                        ...firstRowHeaderTable,
+                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - mtemático`, colSpan: 2 },
+                        {}
+                    ];
+                }
+
+                // -- End --
+                // ==========================
+
+                // =================================
+                // -- Prepare header table
+
+                allStudent.unshift(columnsNameStudent);
+                allStudent.unshift(latestRowHeaderTable);
+                allStudent.unshift(penultimateRowHeaderTable);
+                allStudent.unshift(firstRowHeaderTable);
+
+                // -- End --
+                // ==========================
+
+                // -- Create table students --
+                tableLapseThree.push({
+                    table: {
+                        body: allStudent
+                    },
+                    margin: [0, 0, 0, 30]
+                });
+
+                // -- Diagnostic --
+                tableLapseThree.push({
+                    table: {
+                        widths: 'auto',
+                        body: diagnosticResult
+                    },
+                    margin: [0, 0, 0, 30]
+                });
+            }
+
+
+
         });
 
 
@@ -362,6 +805,8 @@ export class PDFReport implements OnInit {
         // -- Set body all table lapse and sections --
         // ===========================================
         finalReport.content.push(tableLapseOne);
+        finalReport.content.push(tableLapseTwo);
+        finalReport.content.push(tableLapseThree);
         finalReport.content.unshift(documentSubHeaderData);
         finalReport.content.unshift(titleDocument);
         pdfMake.createPdf(finalReport).open();

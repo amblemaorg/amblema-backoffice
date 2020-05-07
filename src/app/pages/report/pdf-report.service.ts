@@ -30,7 +30,7 @@ export class PDFReport implements OnInit {
 
         // -- Mock data --
 
-        const dataSponsor: any = {
+        const dataSponsors: any = {
             type: '0', // <-- Type user
             users: [
                 {
@@ -47,6 +47,34 @@ export class PDFReport implements OnInit {
             ],
         };
 
+        const dataCoordinators: any = {
+            type: '1', // <-- Type user
+            users: [
+                {
+                    name: 'Coca Cola',
+                    lastName: '',
+                    email: 'coca@gmail.com',
+                    phone: '324234',
+                    state: 'Lara',
+                    municipality: 'Catedral',
+                    city: 'Barquisimeto',
+                    schoolYouSponsor: 'Alis Rafael',
+                    status: 'Activo'
+                }
+            ],
+        };
+
+        const dataSchools: any = {
+
+            type: '2', // <-- Type user
+            users: [
+                {
+
+                }
+            ],
+
+        }
+        
         // -- End --
 
         const finalReport: any = {
@@ -56,9 +84,13 @@ export class PDFReport implements OnInit {
                 subject: 'Reporte de usuarios',
                 keywords: 'Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante',
             },
+            pageOrientation: 'landscape',
             pageSize: 'A4',
             content: [
             ],
+            defaultStyle: {
+                fontSize: 10,
+            }
         };
 
         const colorHeaderRow: any = { fillColor: '#42b16a', color: '#FFF', bold: true };
@@ -87,8 +119,7 @@ export class PDFReport implements OnInit {
 
 
         // -- Type user --
-
-        if ('0' === '0') {
+        if ( '0' === undefined ) {
 
             const sponsorHeaderRecord: any = [
                 { ...colorHeaderRow, text: 'Nombre de la empresa' },
@@ -105,10 +136,8 @@ export class PDFReport implements OnInit {
             const sponsorRecords: any = [];
 
             // -- Inser the records
-            dataSponsor.users.forEach(sponsor => {
-
+            dataSponsors.users.forEach(sponsor => {
                 sponsorRecords.push([
-
                 { text: 'Lorem' },
                 { text: 'Lorem' },
                 { text: 'Lorem' },
@@ -119,16 +148,75 @@ export class PDFReport implements OnInit {
                 { text: 'Lorem' },
                 { text: 'Lorem' },
                 ]);
-
             });
 
             sponsorRecords.unshift( sponsorHeaderRecord );
 
             finalReport.content.push({
                 table: {
+                    widths: '*',
                     body: sponsorRecords
                 }
             });
+        } else if (dataCoordinators === undefined) {
+
+            const coordinatorRecords: any = [];
+
+            const coordinatorHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre' },
+                { ...colorHeaderRow, text: 'Apellido' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Identidad' },
+                { ...colorHeaderRow, text: 'Teléfono Móvil' },
+                { ...colorHeaderRow, text: 'Teléfono de habitación' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Casa / Edificio' },
+                { ...colorHeaderRow, text: 'Profesión' },
+                { ...colorHeaderRow, text: 'Escuelas' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            coordinatorRecords.unshift( coordinatorHeaderRecord );
+
+            finalReport.content.push({
+                table: {
+                    widths: '*',
+                    body: coordinatorRecords
+                }
+            });
+        } else if ( dataSchools ) {
+
+            const schoolRecords: any = [];
+
+            const schoolHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre' },
+                { ...colorHeaderRow, text: 'Código' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Teléfono' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Ciudad' },
+                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Zona' },
+                { ...colorHeaderRow, text: 'Dirección de la zona' },
+                { ...colorHeaderRow, text: 'N° de grados' },
+                { ...colorHeaderRow, text: 'N° de secciones' },
+                { ...colorHeaderRow, text: 'Padrino' },
+                { ...colorHeaderRow, text: 'Coordinador' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            schoolRecords.unshift( schoolHeaderRecord );
+
+            finalReport.content.push({
+                table: {
+                    widths: '*',
+                    body: schoolRecords
+                }
+            });
+
         }
 
         pdfMake.createPdf(finalReport).open();

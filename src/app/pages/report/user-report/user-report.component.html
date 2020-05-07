@@ -10,10 +10,6 @@
                 <select [(ngModel)]="typeUserSelected" class="form-control form-group">
                     <option *ngFor="let item of typeUsers" [value]="item.value">{{ item.label }}</option>
                 </select>
-
-                <div *ngIf="typeUserSelected === '1'">
-                    <label class="label">Mostrar los coordinadores que terminaron en AmbLemPensum?</label>    
-                </div>
             </div>
             <div class="col-6">
                 <label class="label">Estatus: </label>
@@ -21,10 +17,20 @@
                     <option *ngFor="let item of status" [value]="item.value">{{ item.label }}</option>
                 </select>
             </div>
+            <div class="col-6">
+                <div *ngIf="typeUserSelected === '1'">
+                    <label class="label">Mostrar los coordinadores que terminaron el AmbLemPensum?</label>    
+                    <nb-radio-group [(ngModel)]="selectedAmbLePensum" class="d-flex">
+                        <nb-radio value="0">Sin condición</nb-radio>
+                        <nb-radio value="1">Si</nb-radio>
+                        <nb-radio value="2">No</nb-radio>
+                      </nb-radio-group>
+                </div>
+            </div>
         </div>
         
     </nb-card-body>
     <nb-card-footer class="text-right">
-        <button nbButton status="success">Generar reporte<nb-icon icon="download-outline"></nb-icon></button>
+        <button nbButton (click)="onGenerateReport()" status="success">Generar reporte<nb-icon icon="download-outline"></nb-icon></button>
     </nb-card-footer>
 </nb-card>

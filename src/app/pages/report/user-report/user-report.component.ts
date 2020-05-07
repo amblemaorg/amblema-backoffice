@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { PDFReport } from '../pdf-report.service';
 
 @Component({
   selector: 'app-user-report',
   templateUrl: './user-report.component.html',
-  styleUrls: ['./user-report.component.scss']
+  styleUrls: ['./user-report.component.scss'],
+  providers: [ PDFReport ]
 })
 export class UserReportComponent implements OnInit {
 
@@ -14,20 +16,28 @@ export class UserReportComponent implements OnInit {
     { label: 'Docente', value: 3 },
   ];
 
-  typeUserSelected:number = 0;
+  typeUserSelected = 0;
 
   status = [
     { label: 'Activo', value: '0' },
     { label: 'Inactivo', value: '1' },
   ];
 
-  statusSelected:string = '1';
+  statusSelected = '0';
+  selectedAmbLePensum = '0';
 
-  showCoordinatorCondition = false;
-
-  constructor() { }
+  constructor(
+    private generatorReport: PDFReport,
+  ) { }
 
   ngOnInit() {
   }
 
+  onGenerateReport(): void {
+
+
+    this.generatorReport.generateUserReport();
+
+
+  }
 }

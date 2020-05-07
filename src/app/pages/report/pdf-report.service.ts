@@ -22,9 +22,131 @@ export class PDFReport implements OnInit {
 
     constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe) { }
 
+    /**
+     * User report
+     */
+
+    async generateUserReport() {
+
+        // -- Mock data --
+
+        const dataSponsor: any = {
+            type: '0', // <-- Type user
+            users: [
+                {
+                    name: 'Coca Cola',
+                    rif: '23423',
+                    email: 'coca@gmail.com',
+                    phone: '324234',
+                    state: 'Lara',
+                    municipality: 'Catedral',
+                    city: 'Barquisimeto',
+                    schoolYouSponsor: 'Alis Rafael',
+                    status: 'Activo'
+                }
+            ],
+        };
+
+        // -- End --
+
+        const finalReport: any = {
+            info: {
+                title: 'Reporte de usuarios',
+                author: 'Binaural C.A',
+                subject: 'Reporte de usuarios',
+                keywords: 'Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante',
+            },
+            pageSize: 'A4',
+            content: [
+            ],
+        };
+
+        const colorHeaderRow: any = { fillColor: '#42b16a', color: '#FFF', bold: true };
+
+        const headerDocument: any = [
+            {
+                image: IMAGE,
+                width: 100,
+                absolutePosition: { x: 30, y: 60 }
+            },
+            {
+                alignment: 'center',
+                columns: [
+                    {
+                        width: '*',
+                        text: 'Reporte de diagnósticos',
+                        color: '#2e8aaa',
+                        alignment: 'center',
+                        fontSize: 20,
+                        bold: true,
+                        margin: [0, 60],
+                    },
+                ]
+            },
+        ];
+
+
+        // -- Type user --
+
+        if ('0' === '0') {
+
+            const sponsorHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre de la empresa' },
+                { ...colorHeaderRow, text: 'RIF' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Teléfono' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Ciudad' },
+                { ...colorHeaderRow, text: 'Escuela(s) que apadrina' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            const sponsorRecords: any = [];
+
+            // -- Inser the records
+            dataSponsor.users.forEach(sponsor => {
+
+                sponsorRecords.push([
+
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                ]);
+
+            });
+
+            sponsorRecords.unshift( sponsorHeaderRecord );
+
+            finalReport.content.push({
+                table: {
+                    body: sponsorRecords
+                }
+            });
+        }
+
+        pdfMake.createPdf(finalReport).open();
+    }
+
+    /**
+     *  Diagnostic report
+     */
+
     async onGenerate(report: DiagnosticReport) {
 
         const finalReport: any = {
+            info: {
+                title: 'Reporte de diagnósticos',
+                author: 'Binaural C.A',
+                subject: 'Reporte de diagnósticos',
+                keywords: 'Reporte, diagnósticos, lectura, lógica, matemática',
+            },
             pageSize: 'A4',
             content: [],
         };

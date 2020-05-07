@@ -7,6 +7,11 @@ const routes: Routes = [
     loadChildren: () => import('./diagnostic-report/diagnostic-report.module').
     then(m => m.DiagnosticReportModule)
   },
+  {
+    path: 'user-report',
+    loadChildren: () => import('./user-report/user-report.module').
+    then(m => m.UserReportModule)
+  },
 ];
 
 @NgModule({

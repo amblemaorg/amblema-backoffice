@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UserReportRoutingModule } from './user-report-routing.module';
 import { UserReportComponent } from './user-report.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule, NbButtonModule } from '@nebular/theme';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
@@ -14,7 +14,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     UserReportRoutingModule,
     NbCardModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NbIconModule,
+    NbButtonModule
   ]
 })
 export class UserReportModule { }

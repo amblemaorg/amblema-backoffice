@@ -7,24 +7,24 @@
         <div class="row">
             <div class="col-6">
                 <label class="label">Usuario: </label>
-                <select class="form-control form-group">
+                <select [(ngModel)]="typeUserSelected" class="form-control form-group">
                     <option *ngFor="let item of typeUsers" [value]="item.value">{{ item.label }}</option>
                 </select>
 
-
-                <div *ngIf="showCoordinatorCondition">
-                    <label class="label">Mostros los coordinadores que terminaron en AmbLemPensum?</label>
+                <div *ngIf="typeUserSelected === '1'">
+                    <label class="label">Mostrar los coordinadores que terminaron en AmbLemPensum?</label>    
                 </div>
-                
             </div>
             <div class="col-6">
                 <label class="label">Estatus: </label>
-                <select class="form-control">
+                <select [(ngModel)]="statusSelected" class="form-control">
                     <option *ngFor="let item of status" [value]="item.value">{{ item.label }}</option>
                 </select>
             </div>
         </div>
-
         
     </nb-card-body>
+    <nb-card-footer class="text-right">
+        <button nbButton status="success">Generar reporte<nb-icon icon="download-outline"></nb-icon></button>
+    </nb-card-footer>
 </nb-card>

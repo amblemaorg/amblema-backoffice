@@ -14,14 +14,16 @@ export class UserReportComponent implements OnInit {
     { label: 'Docente', value: 3 },
   ];
 
+  typeUserSelected:number = 0;
+
   status = [
     { label: 'Activo', value: '0' },
     { label: 'Inactivo', value: '1' },
   ];
 
-  showCoordinatorCondition: boolean = false;
+  statusSelected:string = '1';
 
-  
+  showCoordinatorCondition = false;
 
   constructor() { }
 

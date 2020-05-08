@@ -22,9 +22,244 @@ export class PDFReport implements OnInit {
 
     constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe) { }
 
+    /**
+     * User report
+     */
+
+    async generateUserReport() {
+
+        // -- Mock data --
+
+        const dataSponsors: any = {
+            type: '0', // <-- Type user
+            users: [
+                {
+                }
+            ],
+        };
+
+        const dataCoordinators: any = {
+            type: '1', // <-- Type user
+            users: [
+                {
+                }
+            ],
+        };
+
+        const dataSchools: any = {
+
+            type: '2', // <-- Type user
+            users: [
+                {
+
+                }
+            ],
+        };
+
+        const dataTeachers: any = {
+
+            type: '3',
+            users: [
+                {
+
+                }
+            ],
+
+        };
+
+        // -- End --
+
+        const finalReport: any = {
+            info: {
+                title: 'Reporte de usuarios',
+                author: 'Binaural C.A',
+                subject: 'Reporte de usuarios',
+                keywords: 'Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante',
+            },
+            pageOrientation: 'landscape',
+            pageSize: 'A4',
+            content: [
+            ],
+            defaultStyle: {
+                fontSize: 10,
+            }
+        };
+
+        const colorHeaderRow: any = { fillColor: '#42b16a', color: '#FFF', bold: true };
+
+        const headerDocument: any = [
+            {
+                image: IMAGE,
+                width: 100,
+                absolutePosition: { x: 30, y: 60 }
+            },
+            {
+                alignment: 'center',
+                columns: [
+                    {
+                        width: '*',
+                        text: 'Reporte de diagnósticos',
+                        color: '#2e8aaa',
+                        alignment: 'center',
+                        fontSize: 20,
+                        bold: true,
+                        margin: [0, 60],
+                    },
+                ]
+            },
+        ];
+
+
+        // -- Type user --
+        if ( dataSponsors === undefined ) {
+
+            const sponsorHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre de la empresa' },
+                { ...colorHeaderRow, text: 'RIF' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Teléfono' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Ciudad' },
+                { ...colorHeaderRow, text: 'Escuela(s) que apadrina' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            const sponsorRecords: any = [];
+
+            // -- Inser the records
+            dataSponsors.users.forEach(sponsor => {
+                sponsorRecords.push([
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                { text: 'Lorem' },
+                ]);
+            });
+
+            sponsorRecords.unshift( sponsorHeaderRecord );
+            finalReport.content.push({
+                table: {
+                    widths: '*',
+                    body: sponsorRecords
+                },
+                margin: [0, 0, 0, 30]
+
+            });
+        } else if (dataCoordinators === undefined) {
+
+            const coordinatorRecords: any = [];
+
+            const coordinatorHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre' },
+                { ...colorHeaderRow, text: 'Apellido' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Identidad' },
+                { ...colorHeaderRow, text: 'Teléfono Móvil' },
+                { ...colorHeaderRow, text: 'Teléfono de habitación' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Casa / Edificio' },
+                { ...colorHeaderRow, text: 'AmbLePensum' },
+                { ...colorHeaderRow, text: 'Profesión' },
+                { ...colorHeaderRow, text: 'Escuelas' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            coordinatorRecords.unshift( coordinatorHeaderRecord );
+
+            finalReport.content.push({
+                table: {
+                    body: coordinatorRecords
+                },
+                margin: [0, 0, 0, 30]
+            });
+        } else if ( dataSchools === undefined ) {
+
+            const schoolRecords: any = [];
+
+            const schoolHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre' },
+                { ...colorHeaderRow, text: 'Código' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Teléfono' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Ciudad' },
+                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Zona' },
+                { ...colorHeaderRow, text: 'Dirección de la zona' },
+                { ...colorHeaderRow, text: 'N° de grados' },
+                { ...colorHeaderRow, text: 'N° de secciones' },
+                { ...colorHeaderRow, text: 'Padrino' },
+                { ...colorHeaderRow, text: 'Coordinador' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            schoolRecords.unshift( schoolHeaderRecord );
+
+            finalReport.content.push({
+                table: {
+                    body: schoolRecords
+                },
+                margin: [0, 0, 0, 30]
+            });
+        } else if (dataTeachers) {
+
+
+            const teacherRecords: any = [];
+
+            const teacherHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre' },
+                { ...colorHeaderRow, text: 'Apellido' },
+                { ...colorHeaderRow, text: 'Identificación' },
+                { ...colorHeaderRow, text: 'Género' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Teléfono' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Ciudad' },
+                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Estatus' },
+                { ...colorHeaderRow, text: 'Padrino' },
+                { ...colorHeaderRow, text: 'Coordinador' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            teacherRecords.unshift( teacherHeaderRecord );
+
+            finalReport.content.push({
+                table: {
+                    body: teacherRecords
+                },
+                margin: [0, 0, 0, 30]
+            });
+        }
+
+        finalReport.content.unshift( headerDocument );
+
+        pdfMake.createPdf(finalReport).open();
+    }
+
+    /**
+     *  Diagnostic report
+     */
+
     async onGenerate(report: DiagnosticReport) {
 
         const finalReport: any = {
+            info: {
+                title: 'Reporte de diagnósticos',
+                author: 'Binaural C.A',
+                subject: 'Reporte de diagnósticos',
+                keywords: 'Reporte, diagnósticos, lectura, lógica, matemática',
+            },
             pageSize: 'A4',
             content: [],
         };

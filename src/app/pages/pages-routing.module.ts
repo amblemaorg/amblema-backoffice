@@ -99,6 +99,11 @@ const routes: Routes = [
                         path: 'diagnostic-report',
                         loadChildren: () => import('./report/diagnostic-report/diagnostic-report.module')
                         .then(m => m.DiagnosticReportModule),
+                    },
+                    {
+                        path: 'user-report',
+                        loadChildren: () => import('./report/user-report/user-report.module')
+                        .then(m => m.UserReportModule),
                     }
                 ]
             },

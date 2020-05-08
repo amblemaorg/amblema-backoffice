@@ -190,6 +190,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Reporte de diagnósticos',
         link: '/pages/report/diagnostic-report'
+      },
+      {
+        title: 'Reporte de Usuarios',
+        link: '/pages/report/user-report'
       }
     ]
   },

@@ -13,7 +13,7 @@ export class PDFReportMath {
 
         // -- Mock data --
 
-        let mockData: any = {
+        const mockData: any = {
             allPeriods: [
                 {
                     academicPeriod: ['2016', '2017'],
@@ -58,53 +58,51 @@ export class PDFReportMath {
                     }
                 },
                 {
-                    academicPeriod: {
-                        since: ['2017', '2018'],
-                        schools: [
-                            {
-                                meta: {
-                                    name: 'Rivas',
-                                    coordinator: 'Jose',
-                                    sponsor: 'Pepsi'
+                    academicPeriod: ['2017', '2018'],
+                    schools: [
+                        {
+                            meta: {
+                                name: 'Maestra',
+                                coordinator: 'Jose',
+                                sponsor: 'Pepsi cola'
+                            },
+                            grade: [
+                                {
+                                    name: '1',
+                                    sections: [
+                                        {
+                                            name: 'A',
+                                            inscribed: 3,
+                                            classified: 9,
+                                            medalsGold: 10,
+                                            medalsSilver: 9,
+                                            medalsBronze: 9
+                                        },
+                                    ]
                                 },
-                                grade: [
-                                    {
-                                        name: '1',
-                                        sections: [
-                                            {
-                                                name: 'A',
-                                                inscribed: 3,
-                                                classified: 9,
-                                                medalsGold: 10,
-                                                medalsSilver: 9,
-                                                medalsBronze: 9
-                                            },
-                                        ]
-                                    },
-                                    {
-                                        name: '2',
-                                        sections: [
-                                            {
-                                                name: 'C',
-                                                inscribed: 3,
-                                                classified: 9,
-                                                medalsGold: 10,
-                                                medalsSilver: 9,
-                                                medalsBronze: 9
-                                            },
-                                        ]
-                                    },
-                                ]
-                            }
-                        ],
-                        total: {
-                            totalEnrolled: 20,
-                            totalClassified: 10,
-                            totalGoldMedals: 10,
-                            totalSilverMedals: 10,
-                            totalBronzeMedals: 10,
+                                {
+                                    name: '2',
+                                    sections: [
+                                        {
+                                            name: 'B',
+                                            inscribed: 3,
+                                            classified: 9,
+                                            medalsGold: 10,
+                                            medalsSilver: 9,
+                                            medalsBronze: 9
+                                        },
+                                    ]
+                                },
+                            ]
                         }
-                    },
+                    ],
+                    total: {
+                        totalEnrolled: 20,
+                        totalClassified: 10,
+                        totalGoldMedals: 10,
+                        totalSilverMedals: 10,
+                        totalBronzeMedals: 10,
+                    }
                 },
             ],
             finalScore: {
@@ -114,9 +112,9 @@ export class PDFReportMath {
                 studentsSilverMedal: 20,
                 studentsBronzeMedal: 20,
             }
-        }
+        };
 
-        // -- / End -- 
+        // -- / End --
 
         const documentHeader: any = [
             {
@@ -138,9 +136,9 @@ export class PDFReportMath {
                     },
                 ]
             },
-        ]
+        ];
 
-        let finalDocument: any = {
+        const finalDocument: any = {
             info: {
                 title: 'Reporte de usuarios',
                 author: 'Binaural C.A',
@@ -150,25 +148,51 @@ export class PDFReportMath {
             pageSize: 'A4',
             content: [
                 documentHeader,
-                [
-                    {
-                        fontSize: 15,
-                        text: 'Período académico: 2016 - 2017', alignment: 'left', bold: true
-                    }
-                ]
             ],
             defaultStyle: {
-                fontSize: 10,
+                fontSize: 12,
             }
-        }
+        };
 
 
         /**
          * Insert the records bo
          */
-        let records: any = [];
+        const records: any = [];
 
-        mockData.forEach();
+        mockData.allPeriods.forEach(period => {
+
+            records.push( { 
+                margin:[0,0,0,10], 
+                bold: true, 
+                fontSize: 14, 
+                text: `Período académico: ${period.academicPeriod[0]} - ${period.academicPeriod[1]}` } );
+
+            period.schools.forEach( school => {
+
+                let meta:any = {
+                    alialignment: 'left',
+                    columns: [
+                        {
+                            margin:[0,0,0,10], bold:true, text: `Escuela: ${school.meta.name}`
+                        },
+                        {
+                            margin:[0,0,0,10], bold:true, text: `Coordinador: ${school.meta.coordinator}`
+                        },
+                        {
+                            margin:[0,0,0,10], bold:true, text: `Padrino: ${school.meta.sponsor}`
+                        },
+                    ]
+                };
+
+                let tableSchools: any = [];
+            
+                tableSchools.push(meta);
+                records.push(tableSchools);
+            });
+        });
+
+        finalDocument.content.push(records);
 
         pdfMake.createPdf(finalDocument).open();
     }

@@ -24,7 +24,7 @@ export class PDFReportMath {
                                 coordinator: 'Jose',
                                 sponsor: 'Coca cola'
                             },
-                            grade: [
+                            grades: [
                                 {
                                     name: '1',
                                     sections: [
@@ -66,7 +66,7 @@ export class PDFReportMath {
                                 coordinator: 'Jose',
                                 sponsor: 'Pepsi cola'
                             },
-                            grade: [
+                            grades: [
                                 {
                                     name: '1',
                                     sections: [
@@ -116,6 +116,8 @@ export class PDFReportMath {
 
         // -- / End --
 
+        const colorHeaderRow: any = { fillColor: '#42b16a', color: '#FFF', bold: true };
+
         const documentHeader: any = [
             {
                 image: IMAGE,
@@ -162,32 +164,55 @@ export class PDFReportMath {
 
         mockData.allPeriods.forEach(period => {
 
-            records.push( { 
-                margin:[0,0,0,10], 
-                bold: true, 
-                fontSize: 14, 
+            records.push( {
+                margin: [0, 0, 0, 10],
+                bold: true,
+                fontSize: 14,
                 text: `Período académico: ${period.academicPeriod[0]} - ${period.academicPeriod[1]}` } );
 
             period.schools.forEach( school => {
 
-                let meta:any = {
+                const meta: any = {
                     alialignment: 'left',
                     columns: [
                         {
-                            margin:[0,0,0,10], bold:true, text: `Escuela: ${school.meta.name}`
+                            margin: [0, 0, 0, 10], bold: true, text: `Escuela: ${school.meta.name}`
                         },
                         {
-                            margin:[0,0,0,10], bold:true, text: `Coordinador: ${school.meta.coordinator}`
+                            margin: [0, 0, 0, 10], bold: true, text: `Coordinador: ${school.meta.coordinator}`
                         },
                         {
-                            margin:[0,0,0,10], bold:true, text: `Padrino: ${school.meta.sponsor}`
+                            margin: [0, 0, 0, 10], bold: true, text: `Padrino: ${school.meta.sponsor}`
                         },
                     ]
                 };
 
-                let tableSchools: any = [];
-            
-                tableSchools.push(meta);
+                const tableSchools: any = [
+                    meta,
+                    {
+                        table: {
+                            body: [
+                                [
+                                    { ...colorHeaderRow, text: 'Grado' },
+                                    { ...colorHeaderRow, text: 'Sección' },
+                                    { ...colorHeaderRow, text: 'Inscritos' },
+                                    { ...colorHeaderRow, text: 'Clasificados'},
+                                    { ...colorHeaderRow, text: 'Medalla de oro' },
+                                    { ...colorHeaderRow, text: 'Medalla de plata' },
+                                    { ...colorHeaderRow, text: 'Medalla de bronce' },
+                                ]
+                            ]
+                        }, 
+                        margin: [0,0,0,30]
+                    }
+                    
+                ];
+
+                school.grades.forEach( grade => {
+                    
+
+                });
+
                 records.push(tableSchools);
             });
         });

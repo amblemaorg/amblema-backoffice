@@ -7,23 +7,114 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export class PDFReportMath {
 
-    constructor(@Inject( DOCUMENT ) private document: any, private datePipe: DatePipe,) {}
+    constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe, ) { }
 
     async generateMathOlympics() {
 
         // -- Mock data --
 
-        let mockData: any = [
-            {
-                academicPeriod: {
-                    since: [ '2016', '2018' ],
-                    until: [ '2018', '2019' ]
+        let mockData: any = {
+            allPeriods: [
+                {
+                    academicPeriod: ['2016', '2017'],
+                    schools: [
+                        {
+                            meta: {
+                                name: 'Rafael',
+                                coordinator: 'Jose',
+                                sponsor: 'Coca cola'
+                            },
+                            grade: [
+                                {
+                                    name: '1',
+                                    sections: [
+                                        {
+                                            name: 'A',
+                                            inscribed: 3,
+                                            classified: 9,
+                                            medalsGold: 10,
+                                            medalsSilver: 9,
+                                            medalsBronze: 9
+                                        },
+                                        {
+                                            name: 'B',
+                                            inscribed: 3,
+                                            classified: 9,
+                                            medalsGold: 10,
+                                            medalsSilver: 9,
+                                            medalsBronze: 9
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    total: {
+                        totalEnrolled: 20,
+                        totalClassified: 10,
+                        totalGoldMedals: 10,
+                        totalSilverMedals: 10,
+                        totalBronzeMedals: 10,
+                    }
                 },
-
-                
-
+                {
+                    academicPeriod: {
+                        since: ['2017', '2018'],
+                        schools: [
+                            {
+                                meta: {
+                                    name: 'Rivas',
+                                    coordinator: 'Jose',
+                                    sponsor: 'Pepsi'
+                                },
+                                grade: [
+                                    {
+                                        name: '1',
+                                        sections: [
+                                            {
+                                                name: 'A',
+                                                inscribed: 3,
+                                                classified: 9,
+                                                medalsGold: 10,
+                                                medalsSilver: 9,
+                                                medalsBronze: 9
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        name: '2',
+                                        sections: [
+                                            {
+                                                name: 'C',
+                                                inscribed: 3,
+                                                classified: 9,
+                                                medalsGold: 10,
+                                                medalsSilver: 9,
+                                                medalsBronze: 9
+                                            },
+                                        ]
+                                    },
+                                ]
+                            }
+                        ],
+                        total: {
+                            totalEnrolled: 20,
+                            totalClassified: 10,
+                            totalGoldMedals: 10,
+                            totalSilverMedals: 10,
+                            totalBronzeMedals: 10,
+                        }
+                    },
+                },
+            ],
+            finalScore: {
+                enrolledStudents: 100,
+                classifiedStudents: 80,
+                studentsGoldMedal: 10,
+                studentsSilverMedal: 20,
+                studentsBronzeMedal: 20,
             }
-        ]
+        }
 
         // -- / End -- 
 
@@ -60,9 +151,10 @@ export class PDFReportMath {
             content: [
                 documentHeader,
                 [
-                    { 
+                    {
                         fontSize: 15,
-                        text: 'Período académico: 2016 - 2017', alignment: 'left', bold: true }
+                        text: 'Período académico: 2016 - 2017', alignment: 'left', bold: true
+                    }
                 ]
             ],
             defaultStyle: {
@@ -71,7 +163,12 @@ export class PDFReportMath {
         }
 
 
+        /**
+         * Insert the records bo
+         */
+        let records: any = [];
 
+        mockData.forEach();
 
         pdfMake.createPdf(finalDocument).open();
     }

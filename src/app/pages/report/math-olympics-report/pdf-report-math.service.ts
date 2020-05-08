@@ -15,7 +15,13 @@ export class PDFReportMath {
 
         let mockData: any = [
             {
-                academicPeriod: ['2016-20']
+                academicPeriod: {
+                    since: [ '2016', '2018' ],
+                    until: [ '2018', '2019' ]
+                },
+
+                
+
             }
         ]
 

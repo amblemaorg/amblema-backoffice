@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MathOlympicsReportRoutingModule } from './math-olympics-report-routing.module';
 import { MathOlympicsReportComponent } from './math-olympics-report.component';
-import { NbCardModule, NbButtonModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 
 
 @NgModule({
@@ -11,6 +11,7 @@ import { NbCardModule, NbButtonModule } from '@nebular/theme';
   imports: [
     CommonModule,
     NbCardModule,
+    NbIconModule,
     NbButtonModule,
     MathOlympicsReportRoutingModule
   ]

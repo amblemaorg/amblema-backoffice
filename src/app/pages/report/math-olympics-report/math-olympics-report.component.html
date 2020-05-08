@@ -7,16 +7,28 @@
 
         <div class="row">
             <div class="col-12">
-                
+                <h6>Filtro por rango de período académico</h6>
             </div>
-            <div class="col-6">
-
+            <div class="col-12 col-lg-6">
+                <label class="label">Inicio</label>
+                <select class="form-control form-group">
+                    <option value="">Período académico 2001-2002</option>
+                </select>
             </div>
 
-            <div class="col-6">
-
+            <div class="col-12 col-lg-6">
+                <label class="label">Fin</label>
+                <select class="form-control form-group">
+                    <option value="">Período académico 2001-2002</option>
+                </select>
             </div>
         </div>
 
     </nb-card-body>
+    <nb-card-footer class="text-right">
+        <button 
+            class="col-12 col-lg-auto"
+            nbButton 
+            status="success" (click)="onGenerateReporte()">Ir al reporte<nb-icon icon="download-outline"></nb-icon></button>
+    </nb-card-footer>
 </nb-card>

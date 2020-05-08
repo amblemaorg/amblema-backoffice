@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PDFReport } from '../pdf-report.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-report',
   templateUrl: './user-report.component.html',
   styleUrls: ['./user-report.component.scss'],
-  providers: [ PDFReport ]
+  providers: [ PDFReport, DatePipe ]
 })
 export class UserReportComponent implements OnInit {
 
@@ -16,7 +17,7 @@ export class UserReportComponent implements OnInit {
     { label: 'Docente', value: 3 },
   ];
 
-  typeUserSelected = 0;
+  typeUserSelected = '0';
 
   status = [
     { label: 'Activo', value: '0' },
@@ -25,6 +26,7 @@ export class UserReportComponent implements OnInit {
 
   statusSelected = '0';
   selectedAmbLePensum = '0';
+  sleectedAnnualConvention = '0';
 
   constructor(
     private generatorReport: PDFReport,

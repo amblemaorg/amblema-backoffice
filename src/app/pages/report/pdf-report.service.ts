@@ -34,15 +34,6 @@ export class PDFReport implements OnInit {
             type: '0', // <-- Type user
             users: [
                 {
-                    name: 'Coca Cola',
-                    rif: '23423',
-                    email: 'coca@gmail.com',
-                    phone: '324234',
-                    state: 'Lara',
-                    municipality: 'Catedral',
-                    city: 'Barquisimeto',
-                    schoolYouSponsor: 'Alis Rafael',
-                    status: 'Activo'
                 }
             ],
         };
@@ -51,15 +42,6 @@ export class PDFReport implements OnInit {
             type: '1', // <-- Type user
             users: [
                 {
-                    name: 'Coca Cola',
-                    lastName: '',
-                    email: 'coca@gmail.com',
-                    phone: '324234',
-                    state: 'Lara',
-                    municipality: 'Catedral',
-                    city: 'Barquisimeto',
-                    schoolYouSponsor: 'Alis Rafael',
-                    status: 'Activo'
                 }
             ],
         };
@@ -72,9 +54,19 @@ export class PDFReport implements OnInit {
 
                 }
             ],
+        };
 
-        }
-        
+        const dataTeachers: any = {
+
+            type: '3',
+            users: [
+                {
+
+                }
+            ],
+
+        };
+
         // -- End --
 
         const finalReport: any = {
@@ -119,7 +111,7 @@ export class PDFReport implements OnInit {
 
 
         // -- Type user --
-        if ( '0' === undefined ) {
+        if ( dataSponsors === undefined ) {
 
             const sponsorHeaderRecord: any = [
                 { ...colorHeaderRow, text: 'Nombre de la empresa' },
@@ -151,12 +143,13 @@ export class PDFReport implements OnInit {
             });
 
             sponsorRecords.unshift( sponsorHeaderRecord );
-
             finalReport.content.push({
                 table: {
                     widths: '*',
                     body: sponsorRecords
-                }
+                },
+                margin: [0, 0, 0, 30]
+
             });
         } else if (dataCoordinators === undefined) {
 
@@ -173,6 +166,7 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Municipio' },
                 { ...colorHeaderRow, text: 'Calles / carreras' },
                 { ...colorHeaderRow, text: 'Casa / Edificio' },
+                { ...colorHeaderRow, text: 'AmbLePensum' },
                 { ...colorHeaderRow, text: 'Profesión' },
                 { ...colorHeaderRow, text: 'Escuelas' },
                 { ...colorHeaderRow, text: 'Estatus' },
@@ -182,11 +176,11 @@ export class PDFReport implements OnInit {
 
             finalReport.content.push({
                 table: {
-                    widths: '*',
                     body: coordinatorRecords
-                }
+                },
+                margin: [0, 0, 0, 30]
             });
-        } else if ( dataSchools ) {
+        } else if ( dataSchools === undefined ) {
 
             const schoolRecords: any = [];
 
@@ -212,12 +206,43 @@ export class PDFReport implements OnInit {
 
             finalReport.content.push({
                 table: {
-                    widths: '*',
                     body: schoolRecords
-                }
+                },
+                margin: [0, 0, 0, 30]
             });
+        } else if (dataTeachers) {
 
+
+            const teacherRecords: any = [];
+
+            const teacherHeaderRecord: any = [
+                { ...colorHeaderRow, text: 'Nombre' },
+                { ...colorHeaderRow, text: 'Apellido' },
+                { ...colorHeaderRow, text: 'Identificación' },
+                { ...colorHeaderRow, text: 'Género' },
+                { ...colorHeaderRow, text: 'Correo' },
+                { ...colorHeaderRow, text: 'Teléfono' },
+                { ...colorHeaderRow, text: 'Estado' },
+                { ...colorHeaderRow, text: 'Municipio' },
+                { ...colorHeaderRow, text: 'Ciudad' },
+                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Estatus' },
+                { ...colorHeaderRow, text: 'Padrino' },
+                { ...colorHeaderRow, text: 'Coordinador' },
+                { ...colorHeaderRow, text: 'Estatus' },
+            ];
+
+            teacherRecords.unshift( teacherHeaderRecord );
+
+            finalReport.content.push({
+                table: {
+                    body: teacherRecords
+                },
+                margin: [0, 0, 0, 30]
+            });
         }
+
+        finalReport.content.unshift( headerDocument );
 
         pdfMake.createPdf(finalReport).open();
     }

@@ -5,19 +5,12 @@
     <nb-card-body>
 
         <div class="row">
-            <div class="col-6">
+            <div class=" col-lg-6">
                 <label class="label">Usuario: </label>
                 <select [(ngModel)]="typeUserSelected" class="form-control form-group">
                     <option *ngFor="let item of typeUsers" [value]="item.value">{{ item.label }}</option>
                 </select>
-            </div>
-            <div class="col-6">
-                <label class="label">Estatus: </label>
-                <select [(ngModel)]="statusSelected" class="form-control">
-                    <option *ngFor="let item of status" [value]="item.value">{{ item.label }}</option>
-                </select>
-            </div>
-            <div class="col-6">
+                
                 <div *ngIf="typeUserSelected === '1'">
                     <label class="label">Mostrar los coordinadores que terminaron el AmbLemPensum?</label>    
                     <nb-radio-group [(ngModel)]="selectedAmbLePensum" class="d-flex">
@@ -26,7 +19,24 @@
                         <nb-radio value="2">No</nb-radio>
                       </nb-radio-group>
                 </div>
+
+                <div *ngIf="typeUserSelected === '3'">
+                    <label class="label">Mostrar los docentes inscriptos en la convención anual?</label>    
+                    <nb-radio-group [(ngModel)]="sleectedAnnualConvention" class="d-flex">
+                        <nb-radio value="0">Sin condición</nb-radio>
+                        <nb-radio value="1">Si</nb-radio>
+                        <nb-radio value="2">No</nb-radio>
+                      </nb-radio-group>
+                </div>
+
             </div>
+            <div class=" col-lg-6">
+                <label class="label">Estatus: </label>
+                <select [(ngModel)]="statusSelected" class="form-control">
+                    <option *ngFor="let item of status" [value]="item.value">{{ item.label }}</option>
+                </select>
+            </div>
+
         </div>
         
     </nb-card-body>

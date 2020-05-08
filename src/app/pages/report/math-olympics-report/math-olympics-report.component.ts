@@ -15,4 +15,9 @@ export class MathOlympicsReportComponent implements OnInit {
   ngOnInit() {
   }
 
+  onGenerateReport() {
+
+    this.generateReporte.generateMathOlympics();
+
+  }
 }

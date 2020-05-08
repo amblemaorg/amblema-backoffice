@@ -104,7 +104,12 @@ const routes: Routes = [
                         path: 'user-report',
                         loadChildren: () => import('./report/user-report/user-report.module')
                         .then(m => m.UserReportModule),
-                    }
+                    },
+                    {
+                        path: 'math-olympics-report',
+                        loadChildren: () => import('./report/math-olympics-report/math-olympics-report.module').
+                        then(m => m.MathOlympicsReportModule)
+                      },
                 ]
             },
             // Redirect To

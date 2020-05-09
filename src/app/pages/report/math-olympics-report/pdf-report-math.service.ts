@@ -46,16 +46,18 @@ export class PDFReportMath {
                                         }
                                     ]
                                 }
-                            ]
-                        }
+                            ],
+                            total: {
+                                totalEnrolled: 20,
+                                totalClassified: 10,
+                                totalGoldMedals: 10,
+                                totalSilverMedals: 10,
+                                totalBronzeMedals: 10,
+                            }
+                        },
+                            
                     ],
-                    total: {
-                        totalEnrolled: 20,
-                        totalClassified: 10,
-                        totalGoldMedals: 10,
-                        totalSilverMedals: 10,
-                        totalBronzeMedals: 10,
-                    }
+                    
                 },
                 {
                     academicPeriod: ['2017', '2018'],
@@ -93,16 +95,17 @@ export class PDFReportMath {
                                         },
                                     ]
                                 },
-                            ]
+                            ],
+                            total: {
+                                totalEnrolled: 20,
+                                totalClassified: 10,
+                                totalGoldMedals: 10,
+                                totalSilverMedals: 10,
+                                totalBronzeMedals: 10,
+                            }
                         }
                     ],
-                    total: {
-                        totalEnrolled: 20,
-                        totalClassified: 10,
-                        totalGoldMedals: 10,
-                        totalSilverMedals: 10,
-                        totalBronzeMedals: 10,
-                    }
+                    
                 },
             ],
             finalScore: {
@@ -117,6 +120,7 @@ export class PDFReportMath {
         // -- / End --
 
         const colorHeaderRow: any = { fillColor: '#42b16a', color: '#FFF', bold: true };
+        const colorHeaderSecondary: any = { fillColor: '#2e8aaa', color: '#FFF', bold: true };
 
         const documentHeader: any = [
             {
@@ -187,7 +191,7 @@ export class PDFReportMath {
                     ]
                 };
 
-                const tableSchools: any = [
+                let tableSchools: any = [
                     meta,
                     {
                         table: {
@@ -203,17 +207,46 @@ export class PDFReportMath {
                                 ]
                             ]
                         }, 
+                        margin: [0,0,0,20]
+                    }
+                ];
+
+                let tableSchoolsResult: any = [
+                    {
+                        table: {
+                            widths: '*',
+                            body: [
+                                [
+                                    { ...colorHeaderSecondary, text: 'Total:' },
+                                    { ...colorHeaderSecondary, text: school.total.totalEnrolled },
+                                    { ...colorHeaderSecondary, text: school.total.totalClassified }, 
+                                    { ...colorHeaderSecondary, text: school.total.totalGoldMedals }, 
+                                    { ...colorHeaderSecondary, text: school.total.totalSilverMedals }, 
+                                    { ...colorHeaderSecondary, text: school.total.totalBronzeMedals }, 
+
+                                ]
+                            ]
+                        },
                         margin: [0,0,0,30]
                     }
-                    
                 ];
 
                 school.grades.forEach( grade => {
-                    
-
+                    grade.sections.forEach( section => {
+                        tableSchools[1].table.body.push([
+                            { text: grade.name, rowSpan: grade.sections.length },
+                            { text: section.name },
+                            { text: section.inscribed},
+                            { text: section.classified},
+                            { text: section.medalsGold },
+                            { text: section.medalsSilver},
+                            { text: section.medalsBronze},
+                        ])
+                    } );
                 });
 
                 records.push(tableSchools);
+                records.push(tableSchoolsResult);
             });
         });
 

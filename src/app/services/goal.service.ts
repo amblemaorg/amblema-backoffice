@@ -14,7 +14,7 @@ export class GoalService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getGoalsGrades() : Observable<GoalGrade> {
+  getGoalsGrades(): Observable<GoalGrade> {
     return this.httpClient.get<GoalGrade>(`${environment.api}${this.GOAL_SETTING}`)
     .pipe(
       map((data: any) => data)

@@ -14,7 +14,7 @@ import { PDFReport } from '../pdf-report.service';
 })
 export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
-  disabledBtn: boolean = false;
+  disabledBtn = false;
 
   subscriptionService: Subscription;
 
@@ -87,7 +87,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
       this.selectedSchool.id,
       this.diagnostics ).subscribe( response => {
         this.generatorReport.onGenerate( response );
-        
+
         setTimeout(() => {
           this.disabledBtn = false;
           this.cd.detectChanges();

@@ -13,7 +13,7 @@ export class DiagnosticTableComponent extends BaseTable implements OnInit {
   data = new Array<any>();
 
   constructor(
-    private goalGradeService:GoalService
+    private goalGradeService: GoalService
   ) {
     super();
 
@@ -46,15 +46,15 @@ export class DiagnosticTableComponent extends BaseTable implements OnInit {
 
     this.goalGradeService.getGoalsGrades().subscribe( response => {
 
-      console.log( response ); 
+      console.log( response );
 
       this.data.push({
-        
-      })
+
+      });
 
     } );
 
-    console.log()
+    console.log();
   }
 
 

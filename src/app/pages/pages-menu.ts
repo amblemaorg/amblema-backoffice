@@ -194,7 +194,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Reporte de Usuarios',
         link: '/pages/report/user-report'
-      }
+      },
+      {
+        title: 'Reporte de las olimpíadas de matemáticas ',
+        link: '/pages/report/math-olympics-report'
+      },
     ]
   },
 ];

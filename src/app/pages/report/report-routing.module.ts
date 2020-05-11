@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('./user-report/user-report.module').
     then(m => m.UserReportModule)
   },
+  {
+    path: 'math-olympics-report',
+    loadChildren: () => import('./math-olympics-report/math-olympics-report.module').
+    then(m => m.MathOlympicsReportModule)
+  }
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
+import { GoalService } from 'src/app/services/goal.service';
 
 @Component({
   selector: 'app-diagnostic-table',
@@ -9,12 +10,11 @@ import { BaseTable } from 'src/app/helpers/base-table';
 export class DiagnosticTableComponent extends BaseTable implements OnInit {
 
   // Mock data
-  data = [{
-    grades: 'Primer grado',
-    goals: '30'
-  }];
+  data = new Array<any>();
 
-  constructor() {
+  constructor(
+    private goalGradeService:GoalService
+  ) {
     super();
 
     this.settings.actions = {
@@ -43,6 +43,18 @@ export class DiagnosticTableComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit() {
+
+    this.goalGradeService.getGoalsGrades().subscribe( response => {
+
+      console.log( response ); 
+
+      this.data.push({
+        
+      })
+
+    } );
+
+    console.log()
   }
 
 

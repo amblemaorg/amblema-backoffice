@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { SchoolYearService } from 'src/app/services/school-year.service';
 import { Subscription } from 'rxjs';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
@@ -13,6 +13,8 @@ import { PDFReport } from '../pdf-report.service';
   providers: [DatePipe, PDFReport]
 })
 export class DiagnosticReportComponent implements OnInit, OnDestroy {
+
+  disabledBtn: boolean = false;
 
   subscriptionService: Subscription;
 
@@ -32,6 +34,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
   selectedSchoolYears;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
     private datePipe: DatePipe,
     private diagnosticsReportService: DiagnosticReportService,
@@ -77,11 +80,19 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   onGenerateReport() {
 
+    this.disabledBtn = true;
+
     this.subscriptionService = this.diagnosticsReportService.getReport(
       this.selectedSchoolYears.id,
       this.selectedSchool.id,
       this.diagnostics ).subscribe( response => {
         this.generatorReport.onGenerate( response );
+        
+        setTimeout(() => {
+          this.disabledBtn = false;
+          this.cd.detectChanges();
+        }, 3500);
+
       }, err => {
       } );
   }

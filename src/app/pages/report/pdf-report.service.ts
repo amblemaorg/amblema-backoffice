@@ -28,7 +28,6 @@ export class PDFReport implements OnInit {
 
     async generateUserReport( dataUsers: any ) {
 
-        console.log(dataUsers);
         const finalReport: any = {
             info: {
                 title: 'Reporte de usuarios',

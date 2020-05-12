@@ -40,6 +40,6 @@ export class UserReportComponent implements OnInit {
   onGenerateReport(): void {
     this.userReporteService.getUserReport( this.typeUserSelected, this.statusSelected).subscribe( response => {
       this.generatorReport.generateUserReport(response);
-    }, err => console.log(err) );
+    });
   }
 }

@@ -13,7 +13,12 @@ export class UserReportService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getUserReport( typeUser: string, status: string): Observable<any> {
+  getUserReport( typeUser: string, status: string, instructed?:boolean): Observable<any> {
+
+
+    const URL_PREPARE: string = instructed !== undefined || null ? ''
+    : `${environment.api}${this.USER_REPORT}${typeUser}?status=${status}`;
+
 
     return this.httpClient.get<any>(`${environment.api}${this.USER_REPORT}${typeUser}?status=${status}`)
       .pipe(

@@ -26,7 +26,7 @@ export class UserReportComponent implements OnInit {
   ];
 
   statusSelected = '1';
-  selectedAmbLePensum = '0';
+  selectedAmbLePensum = null;
   selectedAnnualConvention = '0';
 
   constructor(
@@ -38,7 +38,9 @@ export class UserReportComponent implements OnInit {
   }
 
   onGenerateReport(): void {
-    this.userReporteService.getUserReport( this.typeUserSelected, this.statusSelected).subscribe( response => {
+
+    this.userReporteService.getUserReport( this.typeUserSelected, this.statusSelected, this.selectedAmbLePensum).subscribe( response => {
+      console.log(response)
       this.generatorReport.generateUserReport(response);
     });
   }

@@ -14,18 +14,18 @@
                 <div *ngIf="typeUserSelected === '1'">
                     <label class="label">Mostrar los coordinadores que terminaron el AmbLemPensum?</label>    
                     <nb-radio-group [(ngModel)]="selectedAmbLePensum" class="d-flex">
-                        <nb-radio value="0">Sin condición</nb-radio>
-                        <nb-radio value="1">Si</nb-radio>
-                        <nb-radio value="2">No</nb-radio>
+                        <nb-radio [value]="null">Sin condición</nb-radio>
+                        <nb-radio [value]="true">Si</nb-radio>
+                        <nb-radio [value]="false">No</nb-radio>
                       </nb-radio-group>
                 </div>
 
                 <div *ngIf="typeUserSelected === '3'">
                     <label class="label">Mostrar los docentes inscriptos en la convención anual?</label>    
                     <nb-radio-group [(ngModel)]="selectedAnnualConvention" class="d-flex">
-                        <nb-radio value="0">Sin condición</nb-radio>
-                        <nb-radio value="1">Si</nb-radio>
-                        <nb-radio value="2">No</nb-radio>
+                        <nb-radio value="null">Sin condición</nb-radio>
+                        <nb-radio value="true">Si</nb-radio>
+                        <nb-radio value="false">No</nb-radio>
                       </nb-radio-group>
                 </div>
 

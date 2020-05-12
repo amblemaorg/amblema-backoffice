@@ -131,6 +131,26 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Estatus' },
             ];
 
+
+            // -- Inser the records
+            dataUsers.users.forEach(coordinator => {
+                coordinatorRecords.push([
+                { text: coordinator.firstName },
+                { text: coordinator.lastName },
+                { text: coordinator.email },
+                { text: coordinator.cardType === '1' ? `V-${coordinator.cardId}` 
+                : coordinator.cardType === '2' ? `J-${coordinator.cardId}` : `E-${coordinator.cardId}` },
+                { text: coordinator.phone },
+                { text: coordinator.homePhone },
+                { text: coordinator.addressState },
+                { text: coordinator.addressMunicipality },
+                { text: coordinator.addressMunicipality },
+                { text: coordinator.{ text: coordinator.addressMunicipality },
+            }
+                { text: coordinator.status === '1' ? 'Activo' : 'Inactivo' },
+                ]);
+            });
+
             coordinatorRecords.unshift( coordinatorHeaderRecord );
 
             finalReport.content.push({

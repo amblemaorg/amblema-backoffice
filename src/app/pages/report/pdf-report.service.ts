@@ -59,7 +59,7 @@ export class PDFReport implements OnInit {
                         width: '*',
                         text: dataUsers.typeUser === '0' ? 'Reporte de Padrinos'
                         : dataUsers.typeUser === '1' ? 'Reporte de Coordinadores' : dataUsers.typeUser === '2' ? 'Reporte de Escuelas' 
-                        : '',
+                        : 'Reporte de Docentes',
                         color: '#2e8aaa',
                         alignment: 'center',
                         fontSize: 20,
@@ -187,23 +187,23 @@ export class PDFReport implements OnInit {
             ];
 
             // -- Inser the records
-            dataUsers.users.forEach(coordinator => {
+            dataUsers.users.forEach(school => {
                 schoolRecords.push([
-                { text: coordinator.name },
-                { text: coordinator.code },
-                { text: coordinator.email },
-                { text: coordinator.phone },
-                { text: coordinator.addressState },
-                { text: coordinator.addressMunicipality },
-                { text: coordinator.addressCity },
-                { text: coordinator.address },
-                { text: `${coordinator.addressZoneType}` },
-                { text: coordinator.addressZone },
-                { text: coordinator.nGrades },
-                { text: coordinator.nSections },
-                { text: coordinator.sponsor },
-                { text: coordinator.coordinator },
-                { text: coordinator.status === '1' ? 'Activo' : 'Inactivo' },
+                { text: school.name },
+                { text: school.code },
+                { text: school.email },
+                { text: school.phone },
+                { text: school.addressState },
+                { text: school.addressMunicipality },
+                { text: school.addressCity },
+                { text: school.address },
+                { text: `${school.addressZoneType}` },
+                { text: school.addressZone },
+                { text: school.nGrades },
+                { text: school.nSections },
+                { text: school.sponsor },
+                { text: school.coordinator },
+                { text: school.status === '1' ? 'Activo' : 'Inactivo' },
                 ]);
             });
 
@@ -232,11 +232,30 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Municipio' },
                 { ...colorHeaderRow, text: 'Ciudad' },
                 { ...colorHeaderRow, text: 'Calles / carreras' },
-                { ...colorHeaderRow, text: 'Estatus' },
                 { ...colorHeaderRow, text: 'Padrino' },
                 { ...colorHeaderRow, text: 'Coordinador' },
                 { ...colorHeaderRow, text: 'Estatus' },
             ];
+
+            // -- Inser the records
+            dataUsers.users.forEach(teacher => {
+                teacherRecords.push([
+                { text: teacher.firstName },
+                { text: teacher.lastName },
+                { text: teacher.cardType === '1' ? `V-${teacher.cardId}`
+                : teacher.cardType === '2' ? `J-${teacher.cardId}` : `E-${teacher.cardId}` },
+                { text: teacher.gender === '1' ? 'Femenino' : 'Masculino' },
+                { text: teacher.email },
+                { text: teacher.phone },
+                { text: teacher.addressState },
+                { text: teacher.addressMunicipality },
+                { text: teacher.addressCity },
+                { text: teacher.address },
+                { text: teacher.sponsor },
+                { text: teacher.coordinator },
+                { text: teacher.status === '1' ? 'Activo' : 'Inactivo' },
+            ]);
+            });
 
             teacherRecords.unshift( teacherHeaderRecord );
 

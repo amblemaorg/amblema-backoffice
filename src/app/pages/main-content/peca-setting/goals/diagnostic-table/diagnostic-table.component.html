@@ -1,7 +1,10 @@
 <div class="row">
     <div class="col-12">
         <div class="table-responsive">
-            <ng2-smart-table [source]='source' [settings]="settings"></ng2-smart-table>
+            <ng2-smart-table 
+                (editConfirm)="onSaveConfirm($event)"
+                [source]='source' 
+                [settings]="settings"></ng2-smart-table>
         </div>        
     </div>
 </div>

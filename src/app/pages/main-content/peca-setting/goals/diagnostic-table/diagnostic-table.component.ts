@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
 import { GoalService } from 'src/app/services/goal.service';
-import { LocalData } from 'ng2-completer';
 import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
@@ -14,7 +12,7 @@ export class DiagnosticTableComponent implements OnInit {
   // Mock data
   data = new Array<any>();
   source: LocalDataSource = new LocalDataSource();
-  settings:any;
+  settings: any;
 
   constructor(
     private goalGradeService: GoalService
@@ -35,6 +33,7 @@ export class DiagnosticTableComponent implements OnInit {
         editButtonContent: '<i class="nb-edit"></i>',
         saveButtonContent: '<i class="nb-checkmark"></i>',
         cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true,
       },
       delete: {
         deleteButtonContent: '<i class="nb-trash"></i>',
@@ -44,76 +43,83 @@ export class DiagnosticTableComponent implements OnInit {
         name: {
           title: 'Grados',
           type: 'string',
+          editable: false
         },
         multiplicationsPerMin: {
           title: 'Meta - Multiplicación',
           type: 'number',
+          editable: true
         },
         operationsPerMin: {
           title: 'Meta - Razonamiento Lógico - Matemático',
           type: 'number',
+          editable: true
         },
         wordsPerMin: {
           title: 'Meta - Lectura',
           type: 'number',
+          editable: true
         }
       },
-    }
+    };
   }
 
   ngOnInit() {
 
-    this.goalGradeService.getGoalsGrades().subscribe( response => {
+    this.goalGradeService.getGoalsGrades().subscribe(response => {
 
       this.data.push({
-        name: "Primer grado",
+        name: 'Primer grado',
         multiplicationsPerMin: response.grade1.multiplicationsPerMin,
         operationsPerMin: response.grade1.operationsPerMin,
         wordsPerMin: response.grade1.wordsPerMin
       });
-      
+
       this.data.push({
-        name: "Segundo grado",
+        name: 'Segundo grado',
         multiplicationsPerMin: response.grade2.multiplicationsPerMin,
         operationsPerMin: response.grade2.operationsPerMin,
         wordsPerMin: response.grade2.wordsPerMin
       });
 
       this.data.push({
-        name: "Tercer grado",
+        name: 'Tercer grado',
         multiplicationsPerMin: response.grade3.multiplicationsPerMin,
         operationsPerMin: response.grade3.operationsPerMin,
         wordsPerMin: response.grade3.wordsPerMin
       });
 
       this.data.push({
-        name: "Cuarto grado",
+        name: 'Cuarto grado',
         multiplicationsPerMin: response.grade4.multiplicationsPerMin,
         operationsPerMin: response.grade4.operationsPerMin,
         wordsPerMin: response.grade4.wordsPerMin
       });
 
       this.data.push({
-        name: "Quinto grado",
+        name: 'Quinto grado',
         multiplicationsPerMin: response.grade5.multiplicationsPerMin,
         operationsPerMin: response.grade5.operationsPerMin,
         wordsPerMin: response.grade5.wordsPerMin
       });
 
       this.data.push({
-        name: "Sexto grado",
+        name: 'Sexto grado',
         multiplicationsPerMin: response.grade6.multiplicationsPerMin,
         operationsPerMin: response.grade6.operationsPerMin,
         wordsPerMin: response.grade6.wordsPerMin
       });
 
-      this.source.load( this.data );
+      this.source.load(this.data);
       this.source.refresh();
     });
   }
 
+  onSaveConfirm(event) {
+    console.log('Edit Event In Console');
+    console.log(event);
 
-  onAction(event: any) {
-
+    event.confirm.resolve(); // <-- Return to previous stock status
   }
+
 }

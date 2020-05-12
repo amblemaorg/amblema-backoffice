@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DiagnosticReportRoutingModule } from './diagnostic-report-routing.module';
 import { DiagnosticReportComponent } from './diagnostic-report.component';
-import { NbCardModule, NbCheckboxModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import { NbCardModule, NbCheckboxModule, NbButtonModule, NbIconModule, NbSpinnerModule } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SchoolYearService } from 'src/app/services/school-year.service';
@@ -18,6 +18,7 @@ import { SchoolYearService } from 'src/app/services/school-year.service';
     ReactiveFormsModule,
     FormsModule,
     NbCheckboxModule,
+    NbSpinnerModule,
     NbButtonModule,
     NbIconModule,
     DiagnosticReportRoutingModule

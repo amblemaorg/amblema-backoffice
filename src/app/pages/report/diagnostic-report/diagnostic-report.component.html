@@ -39,7 +39,6 @@
                 </div>
             </div>
 
-
         </div>
 
     </nb-card-body>
@@ -47,9 +46,15 @@
         <button 
             (click)="onGenerateReport()"
             class="col-12 col-lg-auto"
-            [attr.disabled]="selectedSchool && 
+            
+            [nbSpinner]="disabledBtn"
+
+            [attr.disabled]="!disabledBtn && selectedSchool && 
             selectedSchoolYears && ( diagnostics[0].value || diagnostics[1].value || diagnostics[2].value  ) ? null : true"
             nbButton 
-            status="success">Generar reporte<nb-icon icon="download-outline"></nb-icon></button>
+            status="success">
+            <span *ngIf="!disabledBtn">Generar reporte </span>
+            <span *ngIf="disabledBtn">Restableciendo... </span>
+            <nb-icon icon="download-outline"></nb-icon></button>
     </nb-card-footer>
 </nb-card> 

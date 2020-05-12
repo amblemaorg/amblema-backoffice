@@ -28,7 +28,6 @@ export class PDFReport implements OnInit {
 
     async generateUserReport( dataUsers: any ) {
 
-        console.log(dataUsers);
         const finalReport: any = {
             info: {
                 title: 'Reporte de usuarios',
@@ -58,7 +57,8 @@ export class PDFReport implements OnInit {
                 columns: [
                     {
                         width: '*',
-                        text: dataUsers.typeUser === '0' ? 'Reporte de Padrinos' : '',
+                        text: dataUsers.typeUser === '0' ? 'Reporte de Padrinos'
+                        : dataUsers.typeUser === '1' ? 'Reporte de Coordinadores' : '',
                         color: '#2e8aaa',
                         alignment: 'center',
                         fontSize: 20,
@@ -132,10 +132,33 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Estatus' },
             ];
 
+
+            // -- Inser the records
+            dataUsers.users.forEach(coordinator => {
+                coordinatorRecords.push([
+                { text: coordinator.firstName },
+                { text: coordinator.lastName },
+                { text: coordinator.email },
+                { text: coordinator.cardType === '1' ? `V-${coordinator.cardId}`
+                : coordinator.cardType === '2' ? `J-${coordinator.cardId}` : `E-${coordinator.cardId}` },
+                { text: coordinator.phone },
+                { text: coordinator.homePhone },
+                { text: coordinator.addressState },
+                { text: coordinator.addressMunicipality },
+                { text: coordinator.address },
+                { text: coordinator.addressHome },
+                { text: coordinator.instructed ? 'Completado' : 'Sin completar' },
+                { text: coordinator.profession },
+                { text: coordinator.schools },
+                { text: coordinator.status === '1' ? 'Activo' : 'Inactivo' },
+                ]);
+            });
+
             coordinatorRecords.unshift( coordinatorHeaderRecord );
 
             finalReport.content.push({
                 table: {
+                    widths: '7%',
                     body: coordinatorRecords
                 },
                 margin: [0, 0, 0, 30]

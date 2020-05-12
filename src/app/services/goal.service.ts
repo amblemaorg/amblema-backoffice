@@ -20,4 +20,8 @@ export class GoalService {
       map((data: any) => data)
     );
   }
+
+  updateGoalsGrades(data:any): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}${this.GOAL_SETTING}`, data);
+  }
 }

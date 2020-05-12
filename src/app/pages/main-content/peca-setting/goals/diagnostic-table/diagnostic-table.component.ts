@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GoalService } from 'src/app/services/goal.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { GoalGrade } from 'src/app/models/goal-grade.model';
 
 @Component({
   selector: 'app-diagnostic-table',
@@ -111,13 +112,47 @@ export class DiagnosticTableComponent implements OnInit {
       });
 
       this.source.load(this.data);
-      this.source.refresh();
     });
   }
 
   onSaveConfirm(event) {
     console.log('Edit Event In Console');
     console.log(event);
+
+    let prepareData: any = {
+      grade1: {
+        multiplicationsPerMin: 0,
+        operationsPerMin: 0,
+        wordsPerMin: 0
+      },
+      grade2: {
+        multiplicationsPerMin: 0,
+        operationsPerMin: 0,
+        wordsPerMin: 0
+      },
+      grade3: {
+        multiplicationsPerMin: 0,
+        operationsPerMin: 0,
+        wordsPerMin: 0
+      },
+      grade4: {
+        multiplicationsPerMin: 0,
+        operationsPerMin: 0,
+        wordsPerMin: 0
+      },
+      grade5: {
+        multiplicationsPerMin: 0,
+        operationsPerMin: 0,
+        wordsPerMin: 0
+      },
+      grade6: {
+        multiplicationsPerMin: 0,
+        operationsPerMin: 0,
+        wordsPerMin: 0
+      },
+
+    }
+
 
     event.confirm.resolve(); // <-- Return to previous stock status
   }

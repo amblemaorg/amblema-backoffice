@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PDFReport } from '../pdf-report.service';
 import { DatePipe } from '@angular/common';
+import { UserReportService } from 'src/app/services/report/user-report.service';
 
 @Component({
   selector: 'app-user-report',
@@ -26,20 +27,22 @@ export class UserReportComponent implements OnInit {
 
   statusSelected = '0';
   selectedAmbLePensum = '0';
-  sleectedAnnualConvention = '0';
+  selectedAnnualConvention = '0';
 
   constructor(
     private generatorReport: PDFReport,
+    private userReporteService: UserReportService
   ) { }
 
   ngOnInit() {
   }
 
   onGenerateReport(): void {
+    this.userReporteService.getUserReport("1").subscribe( response => {
 
+      console.log(response)
 
-    this.generatorReport.generateUserReport();
-
-
+    }, err => console.log(err) )
+    //this.generatorReport.generateUserReport();
   }
 }

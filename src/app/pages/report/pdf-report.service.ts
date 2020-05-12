@@ -58,7 +58,8 @@ export class PDFReport implements OnInit {
                     {
                         width: '*',
                         text: dataUsers.typeUser === '0' ? 'Reporte de Padrinos'
-                        : dataUsers.typeUser === '1' ? 'Reporte de Coordinadores' : '',
+                        : dataUsers.typeUser === '1' ? 'Reporte de Coordinadores' : dataUsers.typeUser === '2' ? 'Reporte de Escuelas' 
+                        : '',
                         color: '#2e8aaa',
                         alignment: 'center',
                         fontSize: 20,
@@ -185,10 +186,32 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Estatus' },
             ];
 
+            // -- Inser the records
+            dataUsers.users.forEach(coordinator => {
+                schoolRecords.push([
+                { text: coordinator.name },
+                { text: coordinator.code },
+                { text: coordinator.email },
+                { text: coordinator.phone },
+                { text: coordinator.addressState },
+                { text: coordinator.addressMunicipality },
+                { text: coordinator.addressCity },
+                { text: coordinator.address },
+                { text: `${coordinator.addressZoneType}` },
+                { text: coordinator.addressZone },
+                { text: coordinator.nGrades },
+                { text: coordinator.nSections },
+                { text: coordinator.sponsor },
+                { text: coordinator.coordinator },
+                { text: coordinator.status === '1' ? 'Activo' : 'Inactivo' },
+                ]);
+            });
+
             schoolRecords.unshift( schoolHeaderRecord );
 
             finalReport.content.push({
                 table: {
+                    widths: '6.6%',
                     body: schoolRecords
                 },
                 margin: [0, 0, 0, 30]

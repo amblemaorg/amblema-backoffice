@@ -21,11 +21,11 @@ export class UserReportComponent implements OnInit {
   typeUserSelected = '0';
 
   status = [
-    { label: 'Activo', value: '0' },
-    { label: 'Inactivo', value: '1' },
+    { label: 'Activo', value: '1' },
+    { label: 'Inactivo', value: '0' },
   ];
 
-  statusSelected = '0';
+  statusSelected = '1';
   selectedAmbLePensum = '0';
   selectedAnnualConvention = '0';
 
@@ -38,11 +38,8 @@ export class UserReportComponent implements OnInit {
   }
 
   onGenerateReport(): void {
-    this.userReporteService.getUserReport("1").subscribe( response => {
-
-      console.log(response)
-
-    }, err => console.log(err) )
-    //this.generatorReport.generateUserReport();
+    this.userReporteService.getUserReport( this.typeUserSelected, this.statusSelected).subscribe( response => {
+      this.generatorReport.generateUserReport(response);
+    }, err => console.log(err) );
   }
 }

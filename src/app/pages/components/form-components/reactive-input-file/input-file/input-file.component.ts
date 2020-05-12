@@ -20,7 +20,7 @@ import { FileValidator, EXTENSIONS } from '../../../shared/file-validator';
         (change)="handleUpload($event.target.files)"
         class="input-file">
         <nb-icon icon="file-text-outline" class="mr-2"></nb-icon>
-        <span *ngIf="!control.value" class="js-fileName">Cargar archivo</span>
+        <span *ngIf="!control.value" class="js-fileName">Adjuntar archivo</span>
         <span *ngIf="control.value" class="js-fileName">Archivo seleccionado...</span>
       </button>
 

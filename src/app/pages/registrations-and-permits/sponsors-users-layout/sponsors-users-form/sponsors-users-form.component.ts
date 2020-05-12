@@ -127,13 +127,14 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
     if (this.form.valid) {
 
       const data: any = this.form.value;
-
+      data.userType = USER_TYPE.SPONSOR.CODE.toString();
       delete data.cardType; // <-- Deleting this data prevents errors
 
       this.toastr.info('Guardando', 'Enviando información, espere...');
       this.showProgress = true;
 
       if (this.mode === ACTION.CREATE) {
+
 
         this.sponsorUserService.setSponsorUser(data).subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
@@ -176,6 +177,8 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
   }
 
   errorResponse(err: any) {
+
+
     this.showProgress = false;
 
     if (err.error.status === 0) {

@@ -26,49 +26,9 @@ export class PDFReport implements OnInit {
      * User report
      */
 
-    async generateUserReport() {
+    async generateUserReport( dataUsers: any ) {
 
-        // -- Mock data --
-
-        const dataSponsors: any = {
-            type: '0', // <-- Type user
-            users: [
-                {
-                }
-            ],
-        };
-
-        const dataCoordinators: any = {
-            type: '1', // <-- Type user
-            users: [
-                {
-                }
-            ],
-        };
-
-        const dataSchools: any = {
-
-            type: '2', // <-- Type user
-            users: [
-                {
-
-                }
-            ],
-        };
-
-        const dataTeachers: any = {
-
-            type: '3',
-            users: [
-                {
-
-                }
-            ],
-
-        };
-
-        // -- End --
-
+        console.log(dataUsers);
         const finalReport: any = {
             info: {
                 title: 'Reporte de usuarios',
@@ -98,7 +58,7 @@ export class PDFReport implements OnInit {
                 columns: [
                     {
                         width: '*',
-                        text: 'Reporte de diagnósticos',
+                        text: dataUsers.typeUser === '0' ? 'Reporte de Padrinos' : '',
                         color: '#2e8aaa',
                         alignment: 'center',
                         fontSize: 20,
@@ -111,7 +71,7 @@ export class PDFReport implements OnInit {
 
 
         // -- Type user --
-        if ( dataSponsors === undefined ) {
+        if ( dataUsers.typeUser === '0' ) {
 
             const sponsorHeaderRecord: any = [
                 { ...colorHeaderRow, text: 'Nombre de la empresa' },
@@ -128,30 +88,30 @@ export class PDFReport implements OnInit {
             const sponsorRecords: any = [];
 
             // -- Inser the records
-            dataSponsors.users.forEach(sponsor => {
+            dataUsers.users.forEach(sponsor => {
                 sponsorRecords.push([
-                { text: 'Lorem' },
-                { text: 'Lorem' },
-                { text: 'Lorem' },
-                { text: 'Lorem' },
-                { text: 'Lorem' },
-                { text: 'Lorem' },
-                { text: 'Lorem' },
-                { text: 'Lorem' },
-                { text: 'Lorem' },
+                { text: sponsor.name },
+                { text: sponsor.companyRif },
+                { text: sponsor.email },
+                { text: sponsor.companyPhone },
+                { text: sponsor.addressState },
+                { text: sponsor.addressMunicipality },
+                { text: sponsor.addressCity },
+                { text: sponsor.schools },
+                { text: sponsor.status === '1' ? 'Activo' : 'Inactivo' },
                 ]);
             });
 
             sponsorRecords.unshift( sponsorHeaderRecord );
             finalReport.content.push({
                 table: {
-                    widths: '*',
+                    widths: '11%',
                     body: sponsorRecords
                 },
                 margin: [0, 0, 0, 30]
 
             });
-        } else if (dataCoordinators === undefined) {
+        } else if (dataUsers.typeUser === '1') {
 
             const coordinatorRecords: any = [];
 
@@ -180,7 +140,7 @@ export class PDFReport implements OnInit {
                 },
                 margin: [0, 0, 0, 30]
             });
-        } else if ( dataSchools === undefined ) {
+        } else if ( dataUsers.typeUser === '2' ) {
 
             const schoolRecords: any = [];
 
@@ -210,7 +170,7 @@ export class PDFReport implements OnInit {
                 },
                 margin: [0, 0, 0, 30]
             });
-        } else if (dataTeachers) {
+        } else if (dataUsers.typeUser === '3') {
 
 
             const teacherRecords: any = [];

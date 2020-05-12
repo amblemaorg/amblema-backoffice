@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GoalService } from 'src/app/services/goal.service';
 import { LocalDataSource } from 'ng2-smart-table';
-import { GoalGrade } from 'src/app/models/goal-grade.model';
 
 @Component({
   selector: 'app-diagnostic-table',
@@ -116,45 +115,77 @@ export class DiagnosticTableComponent implements OnInit {
   }
 
   onSaveConfirm(event) {
-    console.log('Edit Event In Console');
-    console.log(event);
 
     let prepareData: any = {
       grade1: {
-        multiplicationsPerMin: 0,
-        operationsPerMin: 0,
-        wordsPerMin: 0
+        multiplicationsPerMin: event.source.data[0].multiplicationsPerMin,
+        operationsPerMin: event.source.data[0].operationsPerMin,
+        wordsPerMin: event.source.data[0].wordsPerMin
       },
       grade2: {
-        multiplicationsPerMin: 0,
-        operationsPerMin: 0,
-        wordsPerMin: 0
+
+        multiplicationsPerMin: event.source.data[1].multiplicationsPerMin,
+        operationsPerMin: event.source.data[1].operationsPerMin,
+        wordsPerMin: event.source.data[1].wordsPerMin
       },
       grade3: {
-        multiplicationsPerMin: 0,
-        operationsPerMin: 0,
-        wordsPerMin: 0
+        multiplicationsPerMin: event.source.data[2].multiplicationsPerMin,
+        operationsPerMin: event.source.data[2].operationsPerMin,
+        wordsPerMin: event.source.data[2].wordsPerMin
       },
       grade4: {
-        multiplicationsPerMin: 0,
-        operationsPerMin: 0,
-        wordsPerMin: 0
+        multiplicationsPerMin: event.source.data[3].multiplicationsPerMin,
+        operationsPerMin: event.source.data[3].operationsPerMin,
+        wordsPerMin: event.source.data[3].wordsPerMin
       },
       grade5: {
-        multiplicationsPerMin: 0,
-        operationsPerMin: 0,
-        wordsPerMin: 0
+        multiplicationsPerMin: event.source.data[4].multiplicationsPerMin,
+        operationsPerMin: event.source.data[4].operationsPerMin,
+        wordsPerMin: event.source.data[4].wordsPerMin
       },
       grade6: {
-        multiplicationsPerMin: 0,
-        operationsPerMin: 0,
-        wordsPerMin: 0
+        multiplicationsPerMin: event.source.data[5].multiplicationsPerMin,
+        operationsPerMin: event.source.data[5].operationsPerMin,
+        wordsPerMin: event.source.data[5].wordsPerMin
       },
+    };
 
+    console.log(event);
+
+    if( event.newData.name === 'Primer grado' ) {
+      prepareData.grade1.multiplicationsPerMin = event.newData.multiplicationsPerMin;
+      prepareData.grade1.operationsPerMin = event.newData.operationsPerMin;
+      prepareData.grade1.wordsPerMin = event.newData.wordsPerMin;
+    } else if (event.newData.name === 'Segundo grado') {
+      prepareData.grade2.multiplicationsPerMin = event.newData.multiplicationsPerMin;
+      prepareData.grade2.operationsPerMin = event.newData.operationsPerMin;
+      prepareData.grade2.wordsPerMin = event.newData.wordsPerMin;
+    }  else if (event.newData.name === 'Tercer grado') {
+      prepareData.grade3.multiplicationsPerMin = event.newData.multiplicationsPerMin;
+      prepareData.grade3.operationsPerMin = event.newData.operationsPerMin;
+      prepareData.grade3.wordsPerMin = event.newData.wordsPerMin;
+    }  else if (event.newData.name === 'Cuarto grado') {
+      prepareData.grade4.multiplicationsPerMin = event.newData.multiplicationsPerMin;
+      prepareData.grade4.operationsPerMin = event.newData.operationsPerMin;
+      prepareData.grade4.wordsPerMin = event.newData.wordsPerMin;
+    } else if (event.newData.name === 'Quinto grado') {
+      prepareData.grade5.multiplicationsPerMin = event.newData.multiplicationsPerMin;
+      prepareData.grade5.operationsPerMin = event.newData.operationsPerMin;
+      prepareData.grade5.wordsPerMin = event.newData.wordsPerMin;
+    } else if (event.newData.name === 'Sexto grado') {
+      prepareData.grade6.multiplicationsPerMin = event.newData.multiplicationsPerMin;
+      prepareData.grade6.operationsPerMin = event.newData.operationsPerMin;
+      prepareData.grade6.wordsPerMin = event.newData.wordsPerMin;
     }
 
+    this.goalGradeService.updateGoalsGrades( prepareData ).subscribe( response => {
+      console.log(response);
 
+    }, (err) => console.log(err) );
+    
     event.confirm.resolve(); // <-- Return to previous stock status
+    
+
   }
 
 }

@@ -110,7 +110,12 @@
                     </button>
                 </div>
                 <div class="col-6 col-lg-auto">
-                    <button nbButton class="next-button" class="btn-block btn btn-primary" nbButton nbStepperNext  (click)="onSaveStepTwo()">
+                    <button 
+                        nbButton
+                        [attr.disabled]="sliders.length === 0 ? true : null" 
+                        class="next-button btn-block btn btn-primary"
+                        nbStepperNext  
+                        (click)="onSaveStepTwo()">
                         <span class="d-none d-sm-inline">Siguiente</span>
                         <nb-icon icon="arrow-forward-outline"></nb-icon>
                     </button>

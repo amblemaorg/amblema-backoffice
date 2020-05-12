@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GoalService } from 'src/app/services/goal.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-diagnostic-table',
   templateUrl: './diagnostic-table.component.html',
   styleUrls: ['./diagnostic-table.component.scss']
 })
-export class DiagnosticTableComponent implements OnInit {
+export class DiagnosticTableComponent implements OnInit, OnDestroy {
 
-  // Mock data
+  subscription: Subscription;
+
   data = new Array<any>();
   source: LocalDataSource = new LocalDataSource();
   settings: any;
 
+
   constructor(
+    private toastr: CustomToastrService,
     private goalGradeService: GoalService
   ) {
 
@@ -64,9 +69,13 @@ export class DiagnosticTableComponent implements OnInit {
     };
   }
 
+  ngOnDestroy(): void {
+    if ( this.subscription ) { this.subscription.unsubscribe(); }
+  }
+
   ngOnInit() {
 
-    this.goalGradeService.getGoalsGrades().subscribe(response => {
+    this.subscription = this.goalGradeService.getGoalsGrades().subscribe(response => {
 
       this.data.push({
         name: 'Primer grado',
@@ -116,7 +125,7 @@ export class DiagnosticTableComponent implements OnInit {
 
   onSaveConfirm(event) {
 
-    let prepareData: any = {
+    const prepareData: any = {
       grade1: {
         multiplicationsPerMin: event.source.data[0].multiplicationsPerMin,
         operationsPerMin: event.source.data[0].operationsPerMin,
@@ -150,9 +159,7 @@ export class DiagnosticTableComponent implements OnInit {
       },
     };
 
-    console.log(event);
-
-    if( event.newData.name === 'Primer grado' ) {
+    if ( event.newData.name === 'Primer grado' ) {
       prepareData.grade1.multiplicationsPerMin = event.newData.multiplicationsPerMin;
       prepareData.grade1.operationsPerMin = event.newData.operationsPerMin;
       prepareData.grade1.wordsPerMin = event.newData.wordsPerMin;
@@ -178,13 +185,12 @@ export class DiagnosticTableComponent implements OnInit {
       prepareData.grade6.wordsPerMin = event.newData.wordsPerMin;
     }
 
-    this.goalGradeService.updateGoalsGrades( prepareData ).subscribe( response => {
-      console.log(response);
+    this.subscription = this.goalGradeService.updateGoalsGrades( prepareData ).subscribe( response => {
+      this.toastr.updateSuccess('Actualización', 'Metas configuradas');
+    } );
 
-    }, (err) => console.log(err) );
-    
     event.confirm.resolve(); // <-- Return to previous stock status
-    
+
 
   }
 

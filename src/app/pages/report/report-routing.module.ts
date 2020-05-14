@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'sponsor-reporte',
     loadChildren: () => import('./sponsor-report/sponsor-report.module')
     .then( m => m.SponsorReportModule )
-  }, 
+  },
   {
     path: 'user-report',
     loadChildren: () => import('./user-report/user-report.module').

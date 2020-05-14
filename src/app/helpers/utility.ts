@@ -11,7 +11,7 @@ export class Utility {
 
     /* Convert the request status */
 
-    public readlyRequestStatus( value: string ): string {
+    public readlyRequestStatus(value: string): string {
         return value = value === REQUEST_STATUS.PENDING.CODE ? REQUEST_STATUS.PENDING.VALUE :
             value === REQUEST_STATUS.ACCEPTED.CODE ? REQUEST_STATUS.ACCEPTED.VALUE : REQUEST_STATUS.REJECTED.VALUE;
     }
@@ -43,16 +43,16 @@ export class Utility {
     /**
      *  Type document
      */
-    public encodeTypeDocument( type: string ): string {
-        type = type === DOCUMENT_TYPE.V.VALUE ?  DOCUMENT_TYPE.V.CODE.toString() :
+    public encodeTypeDocument(type: string): string {
+        type = type === DOCUMENT_TYPE.V.VALUE ? DOCUMENT_TYPE.V.CODE.toString() :
             type === DOCUMENT_TYPE.J.VALUE ? DOCUMENT_TYPE.J.CODE.toString() : DOCUMENT_TYPE.E.CODE.toString();
         return type;
     }
 
-    public readlyTypeDocument( adminUsers: any[] ): any[] {
-        adminUsers.forEach( value => {
-            value.cardType = value.cardType === DOCUMENT_TYPE.V.CODE.toString() ?  DOCUMENT_TYPE.V.VALUE :
-            value.cardType === DOCUMENT_TYPE.J.CODE.toString() ? DOCUMENT_TYPE.J.VALUE : DOCUMENT_TYPE.E.VALUE;
+    public readlyTypeDocument(adminUsers: any[]): any[] {
+        adminUsers.forEach(value => {
+            value.cardType = value.cardType === DOCUMENT_TYPE.V.CODE.toString() ? DOCUMENT_TYPE.V.VALUE :
+                value.cardType === DOCUMENT_TYPE.J.CODE.toString() ? DOCUMENT_TYPE.J.VALUE : DOCUMENT_TYPE.E.VALUE;
         });
 
         return adminUsers;
@@ -91,15 +91,15 @@ export class Utility {
         return post;
     }
 
-    public convertStatusPostToString( data: any ): Post[ ] {
-        data.forEach( (value, key) => {
+    public convertStatusPostToString(data: any): Post[] {
+        data.forEach((value, key) => {
             value.status = value.status === '1' ? 'Publicado' : 'No publicado';
 
         });
         return data;
     }
 
-    public convertStatusPostToNumber( post: Post ): Post {
+    public convertStatusPostToNumber(post: Post): Post {
         post.status = post.status === 'Publicado' ? '1' : '2';
 
         return post;
@@ -110,12 +110,34 @@ export class Utility {
      *  module
      */
 
-    public mediaNumberToString( media: SliderMedia[] ): SliderMedia[] {
+    public mediaNumberToString(media: SliderMedia[]): SliderMedia[] {
 
-        media.forEach( (value, key) => {
+        media.forEach((value, key) => {
             value.type = value.type === '1' ? 'Imagen' : 'Video';
         });
         return media;
     }
 
 }
+
+export const ReadlyStatusConvert = (object?: any[]): any[] => {
+    object.forEach((value, key) => {
+        if (value.status === STATUS.ACTIVE.CODE) {
+            value.status = STATUS.ACTIVE.MSG as string;
+        } else {
+            value.status = STATUS.INACTIVE.MSG as string;
+        }
+    });
+    return object;
+};
+
+export const FilterStatus = (cell?: any, search?: string): boolean => {
+
+    let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+
+    value = value.toUpperCase();
+
+    if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+        return true;
+    } else { return false; }
+};

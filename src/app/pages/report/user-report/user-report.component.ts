@@ -40,7 +40,7 @@ export class UserReportComponent implements OnInit {
   onGenerateReport(): void {
 
     this.userReporteService.getUserReport( this.typeUserSelected, this.statusSelected, this.selectedAmbLePensum).subscribe( response => {
-      console.log(response);
+
       this.generatorReport.generateUserReport(response);
     });
   }

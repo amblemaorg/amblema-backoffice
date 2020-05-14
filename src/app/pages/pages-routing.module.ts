@@ -101,6 +101,11 @@ const routes: Routes = [
                         .then(m => m.DiagnosticReportModule),
                     },
                     {
+                        path: 'sponsor-report',
+                        loadChildren: () => import('./report/sponsor-report/sponsor-report.module')
+                        .then( m => m.SponsorReportModule )
+                    },
+                    {
                         path: 'user-report',
                         loadChildren: () => import('./report/user-report/user-report.module')
                         .then(m => m.UserReportModule),

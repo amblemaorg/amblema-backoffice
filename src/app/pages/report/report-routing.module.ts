@@ -8,6 +8,11 @@ const routes: Routes = [
     then(m => m.DiagnosticReportModule)
   },
   {
+    path: 'sponsor-reporte',
+    loadChildren: () => import('./sponsor-report/sponsor-report.module')
+    .then( m => m.SponsorReportModule )
+  },
+  {
     path: 'user-report',
     loadChildren: () => import('./user-report/user-report.module').
     then(m => m.UserReportModule)

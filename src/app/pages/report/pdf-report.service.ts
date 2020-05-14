@@ -58,7 +58,7 @@ export class PDFReport implements OnInit {
                     {
                         width: '*',
                         text: dataUsers.typeUser === '0' ? 'Reporte de Padrinos'
-                        : dataUsers.typeUser === '1' ? 'Reporte de Coordinadores' : dataUsers.typeUser === '2' ? 'Reporte de Escuelas' 
+                        : dataUsers.typeUser === '1' ? 'Reporte de Coordinadores' : dataUsers.typeUser === '2' ? 'Reporte de Escuelas'
                         : 'Reporte de Docentes',
                         color: '#2e8aaa',
                         alignment: 'center',

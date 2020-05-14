@@ -9,15 +9,16 @@
                 <div class="row">
 
                     <div class="col-12">
-                        <h6>Configuracion del reporte</h6>
+
+                <p class=" font-weight-bold ">Configuración del reporte</p>
                     </div>
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-6 form-group">
                         <label class="label">Estatus: </label>
                         <select [(ngModel)]="statusSelected" class="form-control">
                             <option *ngFor="let item of status" [value]="item.value">{{ item.label }}</option>
                         </select>
                     </div>
-                    <div class="col-12 col-lg-6 d-flex align-items-end justify-content-end">
+                    <div class="col-12 col-lg-6 form-group d-flex align-items-end justify-content-end">
                         <button 
                             
                             [nbSpinner]="disabledBtn"

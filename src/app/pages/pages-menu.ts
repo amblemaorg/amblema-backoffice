@@ -192,6 +192,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/report/diagnostic-report'
       },
       {
+        title: 'Padrinos',
+        link: '/pages/report/sponsor-report'
+      },
+      {
         title: 'Reporte de Usuarios',
         link: '/pages/report/user-report'
       },

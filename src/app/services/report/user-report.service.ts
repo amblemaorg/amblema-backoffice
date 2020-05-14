@@ -15,9 +15,10 @@ export class UserReportService {
 
   getUserReport(typeUser: string, status: string, instructed?: boolean): Observable<any> {
 
-    const URL_PREPARE: string = instructed !== null
+    const URL_PREPARE: string = instructed !== null && instructed !== undefined
       ? `${environment.api}${this.USER_REPORT}${typeUser}?status=${status}&instructed=${instructed}`
       : `${environment.api}${this.USER_REPORT}${typeUser}?status=${status}`;
+
 
     return this.httpClient.get<any>(URL_PREPARE)
       .pipe(

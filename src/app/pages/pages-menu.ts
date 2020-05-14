@@ -200,6 +200,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/report/coordinator-report'
       },
       {
+        title: 'Escuelas',
+        link: '/pages/report/school-report'
+      },
+      {
         title: 'Reporte de Usuarios',
         link: '/pages/report/user-report'
       },

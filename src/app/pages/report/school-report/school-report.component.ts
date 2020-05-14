@@ -2,34 +2,20 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { UserReportService } from 'src/app/services/report/user-report.service';
 import { Subscription } from 'rxjs';
-import { ReadlyStatusConvert, FilterStatus, FilterAmblemPensum } from 'src/app/helpers/utility';
+import { ReadlyStatusConvert, FilterStatus } from 'src/app/helpers/utility';
 import { PDFReport } from '../pdf-report.service';
 import { DatePipe } from '@angular/common';
 
+
 @Component({
-  selector: 'app-coordinator-report',
-  templateUrl: './coordinator-report.component.html',
-  styleUrls: ['./coordinator-report.component.scss'],
+  selector: 'app-school-report',
+  templateUrl: './school-report.component.html',
+  styleUrls: ['./school-report.component.scss'],
   providers: [ PDFReport, DatePipe ]
 })
-export class CoordinatorReportComponent implements OnInit, OnDestroy {
+export class SchoolReportComponent implements OnInit, OnDestroy {
 
   subscriptionService: Subscription;
-
-//   Nombre
-// Apellido
-// Correo
-// Identidad
-// Teléfono Móvil
-// Teléfono de habitación
-// Estado
-// Municipio
-// Calles / carreras
-// Casa / Edificio
-// AmbLePensum
-// Profesión
-// Escuelas
-// Estatus
 
   settings: any = {
     actions: {
@@ -39,25 +25,21 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
     },
 
     columns: {
-      firstName: {
+      name: {
         title: 'Nombre',
         type: 'string'
       },
-      lastName: {
-        title: 'Apellido',
-        type: 'string'
+      code: {
+        title: 'Código',
+        type: 'number'
       },
       email: {
         title: 'Correo',
-        type: 'string'
+        type: 'number'
       },
       phone: {
-        title: 'Teléfono Móvil',
-        type: 'number'
-      },
-      homePhone: {
-        title: 'Teléfono de habitación',
-        type: 'number'
+        title: 'Teléfono',
+        type: 'string'
       },
       addressState: {
         title: 'Estado',
@@ -71,28 +53,35 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         title: 'Casa / Edificio',
         type: 'string'
       },
-
-      instructed: {
-        title: 'AmbLePensum',
+      addressZoneType: {
+        title: 'Zona',
         type: 'string',
-        valuePrepareFunction: (row: any) => {
-          return row ? 'Completado' : 'No completado';
-        },
-        filterFunction: FilterAmblemPensum
       },
-      profession: {
-        title: 'Profesión',
+      addressZone: {
+        title: 'Dirección de la zona',
+        type: 'string',
+      },
+      nGrades: {
+        title: 'N° de grados',
+        type: 'string',
+      },
+      nSections: {
+        title: 'N° de secciones',
+        type: 'string',
+      },
+      sponsor: {
+        title: 'Padrino',
         type: 'string'
       },
-      schools: {
-        title: 'Escuela(s) que apadrina',
+      coordinator: {
+        title: 'Coordinador',
         type: 'string'
       },
       status: {
         title: 'Estatus',
         type: 'string',
         valuePrepareFunction: (row: any) => {
-          return ReadlyStatusConvert([{ status: row }])[0].status;
+          return ReadlyStatusConvert( [{ status: row }] )[0].status;
         },
         filterFunction: FilterStatus
       },
@@ -109,23 +98,23 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
 
   statusSelected = '1';
 
-  selectedAmbLePensum = null;
-
   disabledBtn = false;
+
 
   constructor(
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
-    private userReporteService: UserReportService
-  ) { }
+    private userReporteService: UserReportService) { }
 
   async ngOnInit() {
 
-    this.subscriptionService = this.userReporteService.getUserReport('1', '1').subscribe(usersActive => {
+    this.subscriptionService = this.userReporteService.getUserReport('2', '1').subscribe(usersActive => {
 
       this.data = usersActive.users;
 
-      this.subscriptionService = this.userReporteService.getUserReport('1', '0').subscribe(response => {
+      console.log(this.data);
+
+      this.subscriptionService = this.userReporteService.getUserReport('2', '0').subscribe(response => {
 
         if (response.users.length) {
           this.data = [
@@ -136,20 +125,16 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         this.source.load(this.data);
       });
     });
-
   }
 
   async ngOnDestroy() {
     if (this.subscriptionService) { this.subscriptionService.unsubscribe(); }
   }
 
-  onGenerateReport() {
+  onGenerateReport(): void {
     this.disabledBtn = true;
 
-    this.subscriptionService = this.userReporteService.getUserReport(
-      '1',
-      this.statusSelected,
-      this.selectedAmbLePensum).subscribe(response => {
+    this.userReporteService.getUserReport('2', this.statusSelected).subscribe( response => {
 
       this.generatorReport.generateUserReport(response);
 
@@ -159,4 +144,5 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
       }, 3500);
     });
   }
+
 }

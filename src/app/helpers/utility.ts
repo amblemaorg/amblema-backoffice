@@ -141,3 +141,14 @@ export const FilterStatus = (cell?: any, search?: string): boolean => {
         return true;
     } else { return false; }
 };
+
+export const  FilterAmblemPensum = (cell?: any, search?: string): boolean => {
+
+    let value: string = cell ? 'Completado' : 'No completado';
+
+    value = value.toUpperCase();
+
+    if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+        return true;
+    } else { return false; }
+};

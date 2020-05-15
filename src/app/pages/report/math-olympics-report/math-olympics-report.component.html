@@ -1,34 +1,55 @@
 <nb-card>
+  <nb-card-header>
+    Reporte de las olimpíadas de matemáticas
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <h6>Filtro por rango de período académico</h6>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label class="label">Inicio</label>
+        <select
+          class="form-control form-group"
+          (change)="onChangeDateInit($event.target.value)"
+          [(ngModel)]="dateInitSelected"
+        >
+          <option [value]="null" disabled>- Inicio Período académico -</option>
+          <option [value]="item.id" *ngFor="let item of datesInit">{{
+            item.name
+          }}</option>
+        </select>
+      </div>
 
-    <nb-card-header>
-        Reporte de las olimpíadas de matemáticas
-    </nb-card-header>
-    <nb-card-body>
-
-        <div class="row">
-            <div class="col-12">
-                <h6>Filtro por rango de período académico</h6>
-            </div>
-            <div class="col-12 col-lg-6">
-                <label class="label">Inicio</label>
-                <select class="form-control form-group">
-                    <option value="">Período académico 2001-2002</option>
-                </select>
-            </div>
-
-            <div class="col-12 col-lg-6">
-                <label class="label">Fin</label>
-                <select class="form-control form-group">
-                    <option value="">Período académico 2001-2002</option>
-                </select>
-            </div>
-        </div>
-
-    </nb-card-body>
-    <nb-card-footer class="text-right">
-        <button 
-            class="col-12 col-lg-auto"
-            nbButton 
-            status="success" (click)="onGenerateReport()">Ir al reporte<nb-icon icon="download-outline"></nb-icon></button>
-    </nb-card-footer>
+      <div class="col-12 col-lg-6">
+        <label class="label">Fin</label>
+        <select
+          [attr.disabled]="!dateInitSelected ? true : null"
+          class="form-control form-group"
+          [(ngModel)]="dateEndSelected"
+        >
+          <option [value]="null" disabled>- Fin Período académico -</option>
+          <option [value]="item.id" *ngFor="let item of datesEnd">{{
+            item.name
+          }}</option>
+        </select>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button
+      [nbSpinner]="disabledBtn"
+      [attr.disabled]="
+        disabledBtn || (!dateInitSelected || !dateEndSelected )  ? true : null
+      "
+      class="col-12 col-lg-auto"
+      nbButton
+      status="success"
+      (click)="onGenerateReport()"
+    >
+      <span *ngIf="!disabledBtn">Generar reporte </span>
+      <span *ngIf="disabledBtn">Restableciendo... </span
+      ><nb-icon icon="download-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
 </nb-card>

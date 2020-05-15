@@ -12,19 +12,31 @@ import { Subscription } from 'rxjs';
 })
 export class MathOlympicsReportComponent implements OnInit, OnDestroy {
 
+  dateInitSelected: any = null;
+  dateEndSelected: any = null; 
+
+  datesInit = new Array<any>();  
+  datesEnd = new Array<any>();
+
   subscriptionService: Subscription;
 
   constructor(
     private mathOlympicsReportService: MathOlympicsReportService,
-    private generateReporte: PDFReportMath ) { }
+    private generateReporte: PDFReportMath ) {
+  
+    }
 
-  ngOnInit() {
+  async ngOnInit() {
+    
     this.subscriptionService = this.mathOlympicsReportService.getSchoolYears().subscribe( response => {
-      console.log( response );
-    }, (err) => console.log(err));
+      
+      this.datesInit = response;
+      this.datesEnd = response;
+
+    });  
   }
 
-  ngOnDestroy(): void {
+  async ngOnDestroy() {
     if ( this.subscriptionService ) { this.subscriptionService.unsubscribe(); }
   }
 

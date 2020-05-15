@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MathOlympicsReportRoutingModule } from './math-olympics-report-routing.module';
 import { MathOlympicsReportComponent } from './math-olympics-report.component';
 import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,9 @@ import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
     NbCardModule,
     NbIconModule,
     NbButtonModule,
-    MathOlympicsReportRoutingModule
+    MathOlympicsReportRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class MathOlympicsReportModule { }

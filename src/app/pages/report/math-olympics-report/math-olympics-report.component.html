@@ -9,10 +9,11 @@
       </div>
       <div class="col-12 col-lg-6">
         <label class="label">Inicio</label>
-        <select 
-            class="form-control form-group" 
-            (change)="onChangeDateInit( $event.target.value )"
-            [(ngModel)]="dateInitSelected">
+        <select
+          class="form-control form-group"
+          (change)="onChangeDateInit($event.target.value)"
+          [(ngModel)]="dateInitSelected"
+        >
           <option [value]="null" disabled>- Inicio Período académico -</option>
           <option [value]="item.id" *ngFor="let item of datesInit">{{
             item.name
@@ -37,12 +38,18 @@
   </nb-card-body>
   <nb-card-footer class="text-right">
     <button
+      [nbSpinner]="disabledBtn"
+      [attr.disabled]="
+        disabledBtn || (!dateInitSelected || !dateEndSelected )  ? true : null
+      "
       class="col-12 col-lg-auto"
       nbButton
       status="success"
       (click)="onGenerateReport()"
     >
-      Ir al reporte<nb-icon icon="download-outline"></nb-icon>
+      <span *ngIf="!disabledBtn">Generar reporte </span>
+      <span *ngIf="disabledBtn">Restableciendo... </span
+      ><nb-icon icon="download-outline"></nb-icon>
     </button>
   </nb-card-footer>
 </nb-card>

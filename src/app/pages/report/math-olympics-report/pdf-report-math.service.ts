@@ -1,6 +1,7 @@
 import { Inject } from '@angular/core';
 import { DOCUMENT, DatePipe } from '@angular/common';
 import { IMAGE } from '../img-base-64';
+import { OlympicsReport } from 'src/app/models/report/math-olympics-report.model';
 const pdfMake = require('pdfmake/build/pdfmake.js');
 const pdfFonts = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -9,113 +10,113 @@ export class PDFReportMath {
 
     constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe, ) { }
 
-    async generateMathOlympics() {
-
+    async generateMathOlympics(mockData: OlympicsReport ) {
+        
         // -- Mock data --
 
-        const mockData: any = {
-            allPeriods: [
-                {
-                    academicPeriod: ['2016', '2017'],
-                    schools: [
-                        {
-                            meta: {
-                                name: 'Rafael',
-                                coordinator: 'Jose',
-                                sponsor: 'Coca cola'
-                            },
-                            grades: [
-                                {
-                                    name: '1',
-                                    sections: [
-                                        {
-                                            name: 'A',
-                                            inscribed: 3,
-                                            classified: 9,
-                                            medalsGold: 10,
-                                            medalsSilver: 9,
-                                            medalsBronze: 9
-                                        },
-                                        {
-                                            name: 'B',
-                                            inscribed: 3,
-                                            classified: 9,
-                                            medalsGold: 10,
-                                            medalsSilver: 9,
-                                            medalsBronze: 9
-                                        }
-                                    ]
-                                }
-                            ],
-                            total: {
-                                totalEnrolled: 20,
-                                totalClassified: 10,
-                                totalGoldMedals: 10,
-                                totalSilverMedals: 10,
-                                totalBronzeMedals: 10,
-                            }
-                        },
+        // const mockData: any = {
+        //     allPeriods: [
+        //         {
+        //             academicPeriod: ['2016', '2017'],
+        //             schools: [
+        //                 {
+        //                     meta: {
+        //                         name: 'Rafael',
+        //                         coordinator: 'Jose',
+        //                         sponsor: 'Coca cola'
+        //                     },
+        //                     grades: [
+        //                         {
+        //                             name: '1',
+        //                             sections: [
+        //                                 {
+        //                                     name: 'A',
+        //                                     inscribed: 3,
+        //                                     classified: 9,
+        //                                     medalsGold: 10,
+        //                                     medalsSilver: 9,
+        //                                     medalsBronze: 9
+        //                                 },
+        //                                 {
+        //                                     name: 'B',
+        //                                     inscribed: 3,
+        //                                     classified: 9,
+        //                                     medalsGold: 10,
+        //                                     medalsSilver: 9,
+        //                                     medalsBronze: 9
+        //                                 }
+        //                             ]
+        //                         }
+        //                     ],
+        //                     total: {
+        //                         totalEnrolled: 20,
+        //                         totalClassified: 10,
+        //                         totalGoldMedals: 10,
+        //                         totalSilverMedals: 10,
+        //                         totalBronzeMedals: 10,
+        //                     }
+        //                 },
 
-                    ],
+        //             ],
 
-                },
-                {
-                    academicPeriod: ['2017', '2018'],
-                    schools: [
-                        {
-                            meta: {
-                                name: 'Maestra',
-                                coordinator: 'Jose',
-                                sponsor: 'Pepsi cola'
-                            },
-                            grades: [
-                                {
-                                    name: '1',
-                                    sections: [
-                                        {
-                                            name: 'A',
-                                            inscribed: 3,
-                                            classified: 9,
-                                            medalsGold: 10,
-                                            medalsSilver: 9,
-                                            medalsBronze: 9
-                                        },
-                                    ]
-                                },
-                                {
-                                    name: '2',
-                                    sections: [
-                                        {
-                                            name: 'B',
-                                            inscribed: 3,
-                                            classified: 9,
-                                            medalsGold: 10,
-                                            medalsSilver: 9,
-                                            medalsBronze: 9
-                                        },
-                                    ]
-                                },
-                            ],
-                            total: {
-                                totalEnrolled: 20,
-                                totalClassified: 10,
-                                totalGoldMedals: 10,
-                                totalSilverMedals: 10,
-                                totalBronzeMedals: 10,
-                            }
-                        }
-                    ],
+        //         },
+        //         {
+        //             academicPeriod: ['2017', '2018'],
+        //             schools: [
+        //                 {
+        //                     meta: {
+        //                         name: 'Maestra',
+        //                         coordinator: 'Jose',
+        //                         sponsor: 'Pepsi cola'
+        //                     },
+        //                     grades: [
+        //                         {
+        //                             name: '1',
+        //                             sections: [
+        //                                 {
+        //                                     name: 'A',
+        //                                     inscribed: 3,
+        //                                     classified: 9,
+        //                                     medalsGold: 10,
+        //                                     medalsSilver: 9,
+        //                                     medalsBronze: 9
+        //                                 },
+        //                             ]
+        //                         },
+        //                         {
+        //                             name: '2',
+        //                             sections: [
+        //                                 {
+        //                                     name: 'B',
+        //                                     inscribed: 3,
+        //                                     classified: 9,
+        //                                     medalsGold: 10,
+        //                                     medalsSilver: 9,
+        //                                     medalsBronze: 9
+        //                                 },
+        //                             ]
+        //                         },
+        //                     ],
+        //                     total: {
+        //                         totalEnrolled: 20,
+        //                         totalClassified: 10,
+        //                         totalGoldMedals: 10,
+        //                         totalSilverMedals: 10,
+        //                         totalBronzeMedals: 10,
+        //                     }
+        //                 }
+        //             ],
 
-                },
-            ],
-            finalScore: {
-                enrolledStudents: 100,
-                classifiedStudents: 80,
-                studentsGoldMedal: 10,
-                studentsSilverMedal: 20,
-                studentsBronzeMedal: 20,
-            }
-        };
+        //         },
+        //     ],
+        //     finalScore: {
+        //         enrolledStudents: 100,
+        //         classifiedStudents: 80,
+        //         studentsGoldMedal: 10,
+        //         studentsSilverMedal: 20,
+        //         studentsBronzeMedal: 20,
+        //     }
+        // };
 
         // -- / End --
 

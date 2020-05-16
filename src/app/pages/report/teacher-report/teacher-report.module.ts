@@ -13,9 +13,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     TeacherReportRoutingModule,
-    NbCardModule, 
+    NbCardModule,
     NbSpinnerModule,
-    NbRadioModule, 
+    NbRadioModule,
     NbIconModule,
     NbButtonModule,
     Ng2SmartTableModule,

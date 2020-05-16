@@ -11,7 +11,7 @@ export class PDFReportMath {
     constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe, ) { }
 
     async generateMathOlympics(mockData: OlympicsReport ) {
-        
+
         // -- Mock data --
 
         // const mockData: any = {

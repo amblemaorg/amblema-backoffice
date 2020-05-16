@@ -16,22 +16,9 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
 
   subscriptionService: Subscription;
 
-//   Nombre
-// Apellido
-// Correo
-// Identidad
-// Teléfono Móvil
-// Teléfono de habitación
-// Estado
-// Municipio
-// Calles / carreras
-// Casa / Edificio
-// AmbLePensum
-// Profesión
-// Escuelas
-// Estatus
-
   settings: any = {
+
+    noDataMessage: 'No hay registros',
     actions: {
       add: false,
       delete: false,

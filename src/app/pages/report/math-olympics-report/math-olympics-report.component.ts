@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
-import { PDFReportMath } from "./pdf-report-math.service";
-import { DatePipe } from "@angular/common";
-import { MathOlympicsReportService } from "src/app/services/report/math-olympics-report.service";
-import { Subscription } from "rxjs";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { PDFReportMath } from './pdf-report-math.service';
+import { DatePipe } from '@angular/common';
+import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-math-olympics-report",
-  templateUrl: "./math-olympics-report.component.html",
-  styleUrls: ["./math-olympics-report.component.scss"],
+  selector: 'app-math-olympics-report',
+  templateUrl: './math-olympics-report.component.html',
+  styleUrls: ['./math-olympics-report.component.scss'],
   providers: [PDFReportMath, DatePipe],
 })
 export class MathOlympicsReportComponent implements OnInit, OnDestroy {
@@ -49,7 +49,7 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.mathOlympicsReportService
       .getMathOlympicsReport(this.dateInitSelected, this.dateEndSelected)
       .subscribe((response) => {
-    
+
         this.generateReporte.generateMathOlympics(response);
 
         setTimeout(() => {
@@ -71,6 +71,6 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
 
     this.datesEnd = this.datesInit.filter((value, index) => position < index);
 
-    if (!this.datesEnd.length) this.dateEndSelected = null;
+    if (!this.datesEnd.length) { this.dateEndSelected = null; }
   }
 }

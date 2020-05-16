@@ -18,6 +18,8 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
   subscriptionService: Subscription;
 
   settings: any = {
+
+    noDataMessage: 'No hay registros',
     actions: {
       add: false,
       delete: false,

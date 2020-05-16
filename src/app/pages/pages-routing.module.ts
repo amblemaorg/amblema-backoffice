@@ -121,6 +121,11 @@ const routes: Routes = [
                         .then(m => m.UserReportModule),
                     },
                     {
+                        path: 'teacher-report',
+                        loadChildren: () => import('./report/teacher-report/teacher-report.module')
+                        .then(m => m.TeacherReportModule),
+                    },
+                    {
                         path: 'math-olympics-report',
                         loadChildren: () => import('./report/math-olympics-report/math-olympics-report.module').
                         then(m => m.MathOlympicsReportModule)

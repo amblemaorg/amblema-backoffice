@@ -1,0 +1,64 @@
+<nb-card>
+    <nb-card-header>
+      Reporte de coordinadores
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <p class="font-weight-bold">Configuración del reporte</p>
+            </div>
+            <div class="col-12 form-group">
+              
+                <div >
+                    <label class="label">Mostrar los docentes inscriptos en la convención anual?</label>    
+                    <nb-radio-group [(ngModel)]="selectedAnnualConvention" class="d-flex">
+                        <nb-radio [value]="null">Sin condición</nb-radio>
+                        <nb-radio [value]="true">Si</nb-radio>
+                        <nb-radio [value]="false">No</nb-radio>
+                      </nb-radio-group>
+                </div>
+
+            </div>
+  
+            <div class="col-12 col-lg-6 form-group">
+              <label class="label">Estatus: </label>
+              <select [(ngModel)]="statusSelected" class="form-control">
+                <option *ngFor="let item of status" [value]="item.value">{{
+                  item.label
+                }}</option>
+              </select>
+            </div>
+            <div
+              class="col-12 col-lg-6 form-group d-flex align-items-end justify-content-end"
+            >
+              <button
+                [nbSpinner]="disabledBtn"
+                [attr.disabled]="!disabledBtn ? null : true"
+                class="col-12 col-lg-auto"
+                nbButton
+                (click)="onGenerateReport()"
+                status="success"
+              >
+                Generar reporte<nb-icon icon="download-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <hr />
+        </div>
+  
+        <div class="col-12">
+          <div class="table-responsive">
+            <!-- <ng2-smart-table
+              [settings]="settings"
+              [source]="source"
+            ></ng2-smart-table> -->
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  

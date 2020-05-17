@@ -4,80 +4,120 @@ import { PDFReport } from '../pdf-report.service';
 import { UserReportService } from 'src/app/services/report/user-report.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { DatePipe } from '@angular/common';
-import { ReadlyStatusConvert, FilterStatus, ReadlyGender, FilterGender } from 'src/app/helpers/utility';
+import {
+  ReadlyStatusConvert,
+  FilterStatus,
+  ReadlyGender,
+  FilterGender,
+} from 'src/app/helpers/utility';
+import { TeacherService } from 'src/app/services/user/teacher.service';
 
 @Component({
   selector: 'app-teacher-report',
   templateUrl: './teacher-report.component.html',
   styleUrls: ['./teacher-report.component.scss'],
-  providers: [ PDFReport, DatePipe ]
+  providers: [PDFReport, DatePipe],
 })
 export class TeacherReportComponent implements OnInit, OnDestroy {
-
   subscriptionService: Subscription;
-
-// Convenció  anual
 
   settings: any = {
     noDataMessage: 'No hay registros',
     actions: {
       add: false,
       delete: false,
-      edit: false
+      edit: true,
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
     },
     columns: {
       firstName: {
         title: 'Nombre',
-        type: 'string'
+        type: 'string',
+        editable: false,
       },
       lastName: {
         title: 'Apellido',
-        type: 'string'
+        type: 'string',
+        editable: false,
       },
       cardId: {
         title: 'Identidad',
-        type: 'number'
+        type: 'number',
+        editable: false,
       },
       gender: {
         title: 'Genero',
         type: 'string',
-        valuePrepareFunction: ( row: any ) => {
-          return ReadlyGender( row );
+        valuePrepareFunction: (row: any) => {
+          return ReadlyGender(row);
         },
         filterFunction: FilterGender,
+        editable: false,
       },
       email: {
         title: 'Correo',
-        type: 'string'
+        type: 'string',
+        editable: false,
       },
       phone: {
         title: 'Teléfono Móvil',
-        type: 'number'
+        type: 'number',
+        editable: false,
       },
       addressState: {
         title: 'Estado',
-        type: 'string'
+        type: 'string',
+        editable: false,
       },
       addressMunicipality: {
         title: 'Municipio',
-        type: 'string'
+        type: 'string',
+        editable: false,
       },
       addressCity: {
         title: 'Ciudad',
-        type: 'string'
-
+        type: 'string',
+        editable: false,
       },
       address: {
         title: 'Calles / carreras',
-        type: 'string'
+        type: 'string',
+        editable: false,
       },
       sponsor: {
         title: 'Padrino',
-        type: 'string'
+        type: 'string',
+        editable: false,
       },
       coordinator: {
         title: 'Coordinador',
-        type: 'string'
+        type: 'string',
+        editable: false,
+      },
+      annualPreparationStatus: {
+        title: 'Inscripción de la convención',
+        valuePrepareFunction: (row: any) => {
+          return row === '1'
+            ? 'Preinscripto'
+            : row === '2'
+            ? 'Inscrito'
+            : 'No esta inscrito';
+        },
+        editor: {
+          type: 'list',
+          config: {
+            list: [
+              { value: null, title: 'No esta inscrito' },
+              { value: '1', title: 'Preinscripto' },
+              { value: '2', title: 'Inscrito' },
+            ],
+          },
+        },
       },
       status: {
         title: 'Estatus',
@@ -85,9 +125,19 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         valuePrepareFunction: (row: any) => {
           return ReadlyStatusConvert([{ status: row }])[0].status;
         },
-        filterFunction: FilterStatus
+        filterFunction: FilterStatus,
+        editable: false,
+        editor: {
+          type: 'list',
+          config: {
+            list: [
+              { value: '1', title: 'Activo' },
+              { value: '2', title: 'Inactivo' },
+            ],
+          },
+        },
       },
-    }
+    },
   };
 
   status = [
@@ -98,58 +148,76 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   disabledBtn = false;
 
   statusSelected = '1';
-  selectedAnnualConvention = null;
 
+  // -- 1 = preinscrito, 2 = inscrito --
+  selectedAnnualConvention = null;
 
   source: LocalDataSource = new LocalDataSource();
   data: any = [];
 
-
   constructor(
-
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
-    private userReporteService: UserReportService
-  ) { }
+    private userReporteService: UserReportService,
+    private userTeacherService: TeacherService
+  ) {}
 
   async ngOnInit() {
-
-    this.subscriptionService = this.userReporteService.getUserReport('3', '1').subscribe(usersActive => {
-
-      this.data = usersActive.users;
-
-      console.log( this.data );
-
-      this.subscriptionService = this.userReporteService.getUserReport('3', '0').subscribe(response => {
-
-        if (response.users.length) {
-          this.data = [
-            ...this.data,
-            response.users
-          ];
-        }
-        this.source.load(this.data);
+    this.subscriptionService = this.userReporteService
+      .getUserReport('3', '1')
+      .subscribe((usersActive) => {
+        this.data = usersActive.users;
+        this.subscriptionService = this.userReporteService
+          .getUserReport('3', '0')
+          .subscribe((response) => {
+            if (response.users.length) {
+              this.data = [...this.data, response.users];
+            }
+            this.source.load(this.data);
+          });
       });
-    });
   }
 
   async ngOnDestroy() {
-    if (this.subscriptionService) { this.subscriptionService.unsubscribe(); }
+    if (this.subscriptionService) {
+      this.subscriptionService.unsubscribe();
+    }
   }
 
   onGenerateReport() {
     this.disabledBtn = true;
 
-    this.subscriptionService = this.userReporteService.getUserReport(
-      '3',
-      this.statusSelected).subscribe(response => {
+    this.subscriptionService = this.userReporteService
+      .getUserReport(
+        '3',
+        this.statusSelected,
+        null,
+        this.selectedAnnualConvention
+      )
+      .subscribe(
+        (response) => {
+          this.generatorReport.generateUserReport(response);
 
-      this.generatorReport.generateUserReport(response);
+          setTimeout(() => {
+            this.disabledBtn = false;
+            this.cd.detectChanges();
+          }, 3500);
+        },
+        () => (this.disabledBtn = false)
+      );
+  }
 
-      setTimeout(() => {
-        this.disabledBtn = false;
-        this.cd.detectChanges();
-      }, 3500);
-    });
+  onSaveConfirm(event) {
+    this.subscriptionService = this.userTeacherService
+      .updateTeacherStatus(
+        event.newData.pecaId,
+        event.newData.id,
+        event.newData
+      )
+      .subscribe(
+        (response) => {},
+        (err) => console.log(err)
+      );
+    event.confirm.resolve(); // <-- Return to previous stock status
   }
 }

@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header>
-      Reporte de coordinadores
+      Reporte de docentes
     </nb-card-header>
     <nb-card-body>
       <div class="row">
@@ -15,11 +15,10 @@
                     <label class="label">Mostrar los docentes inscriptos en la convención anual?</label>    
                     <nb-radio-group [(ngModel)]="selectedAnnualConvention" class="d-flex">
                         <nb-radio [value]="null">Sin condición</nb-radio>
-                        <nb-radio [value]="true">Si</nb-radio>
-                        <nb-radio [value]="false">No</nb-radio>
+                        <nb-radio [value]="'2'">Si</nb-radio>
+                        <nb-radio [value]="'1'">No</nb-radio>
                       </nb-radio-group>
                 </div>
-
             </div>
   
             <div class="col-12 col-lg-6 form-group">
@@ -53,6 +52,7 @@
         <div class="col-12">
           <div class="table-responsive">
             <ng2-smart-table
+              (editConfirm)="onSaveConfirm($event)"
               [settings]="settings"
               [source]="source"
             ></ng2-smart-table>

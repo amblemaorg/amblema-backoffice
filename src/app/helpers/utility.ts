@@ -152,3 +152,16 @@ export const  FilterAmblemPensum = (cell?: any, search?: string): boolean => {
         return true;
     } else { return false; }
 };
+
+
+export const ReadlyGender = ( value: string ): string => value === '1' ? 'Femenino' : 'Masculino';
+export const FilterGender = (cell?: any, search?: string): boolean => {
+
+    let value: string = cell ? 'Femenino' : 'Masculino';
+
+    value = value.toUpperCase();
+
+    if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+        return true;
+    } else { return false; }
+};

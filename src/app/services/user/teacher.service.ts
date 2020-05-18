@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class TeacherService {
 
-  private readonly TEACHER: string = `pecaproject/annualpresentation`;
+  private readonly TEACHER: string = `pecaprojects/annualpreparation`;
 
   constructor( private httpClient: HttpClient ) { }
 

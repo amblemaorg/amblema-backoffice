@@ -232,8 +232,6 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Municipio' },
                 { ...colorHeaderRow, text: 'Ciudad' },
                 { ...colorHeaderRow, text: 'Calles / carreras' },
-                { ...colorHeaderRow, text: 'Padrino' },
-                { ...colorHeaderRow, text: 'Coordinador' },
                 { ...colorHeaderRow, text: 'Estatus' },
             ];
 
@@ -251,8 +249,6 @@ export class PDFReport implements OnInit {
                 { text: teacher.addressMunicipality },
                 { text: teacher.addressCity },
                 { text: teacher.address },
-                { text: teacher.sponsor },
-                { text: teacher.coordinator },
                 { text: teacher.status === '1' ? 'Activo' : 'Inactivo' },
             ]);
             });
@@ -261,6 +257,7 @@ export class PDFReport implements OnInit {
 
             finalReport.content.push({
                 table: {
+                    widths: '10%',
                     body: teacherRecords
                 },
                 margin: [0, 0, 0, 30]

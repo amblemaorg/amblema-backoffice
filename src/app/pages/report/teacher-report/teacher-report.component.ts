@@ -11,6 +11,7 @@ import {
   FilterGender,
 } from 'src/app/helpers/utility';
 import { TeacherService } from 'src/app/services/user/teacher.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-teacher-report',
@@ -89,16 +90,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         type: 'string',
         editable: false,
       },
-      sponsor: {
-        title: 'Padrino',
-        type: 'string',
-        editable: false,
-      },
-      coordinator: {
-        title: 'Coordinador',
-        type: 'string',
-        editable: false,
-      },
       annualPreparationStatus: {
         title: 'Inscripción de la convención',
         valuePrepareFunction: (row: any) => {
@@ -159,7 +150,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
     private userReporteService: UserReportService,
-    private userTeacherService: TeacherService
+    private userTeacherService: TeacherService,
+    private toastrService: CustomToastrService
   ) {}
 
   async ngOnInit() {
@@ -173,6 +165,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             if (response.users.length) {
               this.data = [...this.data, response.users];
             }
+
             this.source.load(this.data);
           });
       });
@@ -212,10 +205,10 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       .updateTeacherStatus(
         event.newData.pecaId,
         event.newData.id,
-        event.newData
+        { annualPreparationStatus: event.newData.annualPreparationStatus }
       )
       .subscribe(
-        (response) => {},
+        (response) => { this.toastrService.updateSuccess('Cambio de estatus', 'Se ha cambiado el estatus de inscripción del docente.'); },
         (err) => console.log(err)
       );
     event.confirm.resolve(); // <-- Return to previous stock status

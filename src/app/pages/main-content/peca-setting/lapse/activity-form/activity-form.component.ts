@@ -32,7 +32,8 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     INITIAL_WORKSHOP: 'initialworkshop',
     AMBLE_COINS: 'amblecoins',
     LAPSE_PLANNING: 'lapseplanning',
-    ANNUAL_CONVETION: 'annualconvention'
+    ANNUAL_PREPARATION: 'annualpreparation',
+    ANNUAL_CONVENTION: 'annualconvention'
   };
 
   data: any;
@@ -55,18 +56,24 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
-
       if (this.data.isStandard) {
         this.createForm(this.id);
         if ( this.formStandard  ) {
           this.formStandard.patchValue(this.data);
-
         }
         if (this.id === this.DEVNAME_STANDARD.AMBLE_COINS) {
           const value: any = JSON.stringify(this.formStandard.controls.piggyBankSlider.value);
           this.sliders = JSON.parse(value);
           this.sliders = Object.assign([], this.sliders);
         }
+
+        if ( this.id === this.DEVNAME_STANDARD.ANNUAL_CONVENTION ) {
+
+
+
+          // console.log( this.formStandard.value )
+        }
+
       } else {
         if ( this.form ) {
           this.form.patchValue(response);
@@ -206,12 +213,16 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
         proposalFundationFile: new FormControl(null, [Validators.required]),
         meetingDescription: new FormControl(null, [Validators.required]),
       });
-    } else if (id === this.DEVNAME_STANDARD.ANNUAL_CONVETION) {
+    } else if (id === this.DEVNAME_STANDARD.ANNUAL_PREPARATION) {
       this.formStandard = new FormGroup({
         step4Description: new FormControl(null, [Validators.required]),
         step3Description: new FormControl(null, [Validators.required]),
         step2Description: new FormControl(null, [Validators.required]),
         step1Description: new FormControl(null, [Validators.required]),
+      });
+    } else if ( id === this.DEVNAME_STANDARD.ANNUAL_CONVENTION ) {
+      this.formStandard = new FormGroup({
+        checklist: new FormControl(null, [Validators.required])
       });
     }
 
@@ -233,6 +244,7 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     formData.append('planningMeetingDescription', prepareData.planningMeetingDescription);
     formData.append('teachersMeetingDescription', prepareData.teachersMeetingDescription);
+
     this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Taller inicial actualizado');
@@ -252,14 +264,12 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     formData.append('teachersMeetingDescription', prepareData.teachersMeetingDescription);
     formData.append('piggyBankDescription', prepareData.teachersMeetingDescription);
-
     formData.append('piggyBankSlider', JSON.stringify(this.sliders));
 
     this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'AbLeCoins actualizado');
     }, (err: any) => {
-      console.log(err);
       this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
   }
@@ -280,17 +290,14 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
       this.toastr.updateSuccess('Actualización', 'Planificación inicial actualizado');
     }, (err: any) => {
-      console.log(err);
       this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
   }
 
-  onSubmitAnualConvention() {
+  onSubmitAnualPreparation() {
     const prepareData: any = this.formStandard.value;
 
     const formData = new FormData();
-
-    console.log(this.formStandard.value);
 
     formData.append('step4Description', prepareData.step4Description);
     formData.append('step3Description', prepareData.step3Description);
@@ -299,12 +306,27 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
-      console.log(response);
-      this.toastr.updateSuccess('Actualización', 'Convención anual actualizado');
+      this.toastr.updateSuccess('Actualización', 'Preparación anual actualizado');
     }, (err: any) => {
-      console.log(err);
       this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
+  }
+
+  onSubmitAnualConvention(  ) {
+
+    this.data = Object.assign({}, this.data);
+
+    const formData = new FormData();
+
+    formData.append('checklist', JSON.stringify(this.checklist));
+
+    this.showProgress = true;
+
+    this.lapseActivityService.updateActivity( this.id, this.lapse, formData ).subscribe( response => {
+
+      this.toastr.updateSuccess('Actualización', 'Convención anual actualizado');
+
+    }, (err) => console.log( err ));
   }
 
 }

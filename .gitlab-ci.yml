@@ -50,8 +50,6 @@ linting:
   stage: cleanup
   script:
       - docker exec $CONTAINER_RUN ng lint --fix
-  tags:
-      - amblema
   only:
       - master
 
@@ -72,8 +70,8 @@ run-tests:
   stage: test
   script: 
       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --watch=false
-#   tags: 
-#       - amblema
+   tags: 
+       - amblema
   only:
       - master
 
@@ -85,8 +83,8 @@ coverage:
       paths:
           - coverage/Amblema-BackOffice/
       expire_in: 7days
-#   tags: 
-#       - amblema
+   tags: 
+       - amblema
   only:
       - master
 

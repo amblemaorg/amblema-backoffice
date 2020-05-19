@@ -127,7 +127,7 @@
         <!-- Anual convention -->
         <!-- ######################################### -->
         <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard"
-            *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_CONVETION && data.isStandard && formStandard">
+            *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_PREPARATION && data.isStandard && formStandard">
 
             <div class="col-12 col-md ">
                 <app-text-area-custom [submitted]="false" [control]="formStandard.get('step1Description')"

@@ -32,7 +32,7 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     INITIAL_WORKSHOP: 'initialworkshop',
     AMBLE_COINS: 'amblecoins',
     LAPSE_PLANNING: 'lapseplanning',
-    ANNUAL_CONVETION: 'annualconvention'
+    ANNUAL_PREPARATION: 'annualpreparation'
   };
 
   data: any;
@@ -54,9 +54,11 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     this.form.addControl('status', new FormControl(false));
 
     this.subscription = this.activity$.subscribe((response: any) => {
+    
       this.data = response;
-
       if (this.data.isStandard) {
+
+ 
         this.createForm(this.id);
         if ( this.formStandard  ) {
           this.formStandard.patchValue(this.data);
@@ -206,7 +208,7 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
         proposalFundationFile: new FormControl(null, [Validators.required]),
         meetingDescription: new FormControl(null, [Validators.required]),
       });
-    } else if (id === this.DEVNAME_STANDARD.ANNUAL_CONVETION) {
+    } else if (id === this.DEVNAME_STANDARD.ANNUAL_PREPARATION) {
       this.formStandard = new FormGroup({
         step4Description: new FormControl(null, [Validators.required]),
         step3Description: new FormControl(null, [Validators.required]),
@@ -290,7 +292,6 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     const formData = new FormData();
 
-    console.log(this.formStandard.value);
 
     formData.append('step4Description', prepareData.step4Description);
     formData.append('step3Description', prepareData.step3Description);
@@ -299,10 +300,8 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     this.showProgress = true;
     this.lapseActivityService.updateActivity(this.id, this.lapse, formData).subscribe(response => {
-      console.log(response);
       this.toastr.updateSuccess('Actualización', 'Convención anual actualizado');
     }, (err: any) => {
-      console.log(err);
       this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
     });
   }

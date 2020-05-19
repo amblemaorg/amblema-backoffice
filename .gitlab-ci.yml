@@ -46,12 +46,12 @@ update-environment:
   only:
       - master
 
-linting:
-  stage: cleanup
-  script:
-      - docker exec $CONTAINER_RUN ng lint --fix
-  only:
-      - master
+# linting:
+#   stage: cleanup
+#   script:
+#       - docker exec $CONTAINER_RUN ng lint --fix
+#   only:
+#       - master
 
 # BUILD
 

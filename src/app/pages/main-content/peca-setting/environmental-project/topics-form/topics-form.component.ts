@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Topic } from 'src/app/models/environmental-project.model';
 import {
@@ -15,7 +15,7 @@ import { EnvironmentalProjectService } from 'src/app/services/environmental-proj
   templateUrl: './topics-form.component.html',
   styleUrls: ['./topics-form.component.scss'],
 })
-export class TopicsFormComponent implements OnInit, OnDestroy {
+export class TopicsFormComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Select(EnvironmentalProjectState.topics) topics$: Observable<Topic[]>;
   @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
 
@@ -24,18 +24,16 @@ export class TopicsFormComponent implements OnInit, OnDestroy {
   value: Topic;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private environmentalProjectService: EnvironmentalProjectService,
     private store: Store) {}
 
   ngOnInit() {
+  }
 
+  ngAfterViewChecked(): void {
 
-    this.topics$.subscribe( response  => {
-
-
-      console.log( response );
-
-    });
+    this.cd.detectChanges();
 
   }
 

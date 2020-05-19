@@ -1,11 +1,19 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewChecked,
+  ChangeDetectorRef,
+  AfterViewInit,
+  DoCheck,
+} from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import {
-  SelectLapse
-  , SetNameEnvironmentalProject
-  , EnvironmentalProjectModel
-  , EnvironmentalProjectState,
-  SetGeneralObjective
+  SelectLapse,
+  SetNameEnvironmentalProject,
+  EnvironmentalProjectModel,
+  EnvironmentalProjectState,
+  SetGeneralObjective,
 } from 'src/app/store/environmental-project.action';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
@@ -13,12 +21,13 @@ import { EnvironmentalProjectService } from 'src/app/services/environmental-proj
 @Component({
   selector: 'app-main-form',
   templateUrl: './main-form.component.html',
-  styleUrls: ['./main-form.component.scss']
+  styleUrls: ['./main-form.component.scss'],
 })
-export class MainFormComponent implements OnInit, OnDestroy, AfterViewChecked {
-
-  @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
-  @Select(EnvironmentalProjectState.environmentalProject) environmentalProjectSelected: Observable<EnvironmentalProjectModel>;
+export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
+  @Select(EnvironmentalProjectState.environmentalProjectStorable)
+  storable$: Observable<EnvironmentalProjectModel>;
+  @Select(EnvironmentalProjectState.environmentalProject)
+  environmentalProjectSelected: Observable<EnvironmentalProjectModel>;
   subscription: Subscription;
 
   options = [
@@ -30,35 +39,33 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewChecked {
   option = this.options[0].value;
 
   form: FormGroup = new FormGroup({
-    name: new FormControl(null, [Validators.required])
+    name: new FormControl(null, [Validators.required]),
   });
 
   formGeneralObjective: FormGroup = new FormGroup({
-    generalObjective: new FormControl(null)
+    generalObjective: new FormControl(null),
   });
 
   submitted = false;
   submittedObjective = false;
 
-
   constructor(
+    private cd: ChangeDetectorRef,
     private environmentalProjectService: EnvironmentalProjectService,
-    private store: Store) {
-
-  }
+    private store: Store
+  ) {}
 
   ngOnInit() {
-    this.subscription = this.environmentalProjectSelected.subscribe(response => {
-      this.form.patchValue(response);
-      this.formGeneralObjective.patchValue(response.lapseSelected);
-    });
+    this.subscription = this.environmentalProjectSelected.subscribe(
+      (response) => {
+        this.form.patchValue(response);
+        this.formGeneralObjective.patchValue(response.lapseSelected);
 
+      }
+    );
   }
 
-
-  ngAfterViewChecked(): void {
-      // -- Previos selection --
-      this.onSelectLapse('1');
+  ngAfterViewInit() {
   }
 
   ngOnDestroy(): void {
@@ -72,27 +79,30 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onSubmit(): void {
-
     this.submitted = true;
 
     if (this.form.valid) {
-
-
       // -- Set name --
-      this.subscription = this.store.dispatch(new SetNameEnvironmentalProject(this.form.controls.name.value)).subscribe(() => {
+      this.subscription = this.store
+        .dispatch(
+          new SetNameEnvironmentalProject(this.form.controls.name.value)
+        )
+        .subscribe(() => {
+          // -- Get all data --
+          this.subscription = this.storable$.subscribe((value) => {
+            if (this.submitted) {
+              // <-- Must be submitted
 
-        // -- Get all data --
-        this.subscription = this.storable$.subscribe(value => {
-
-          if (this.submitted) { // <-- Must be submitted
-
-            // -- Send data to the server --
-            this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
-            }, (err) => {
-            });
-          }
+              // -- Send data to the server --
+              this.subscription = this.environmentalProjectService
+                .updateEnvironmentalProject(value)
+                .subscribe(
+                  (response) => {},
+                  (err) => {}
+                );
+            }
+          });
         });
-      });
 
       // -- Reset --
       this.submitted = false;
@@ -100,24 +110,28 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onUpdateGeneralObjective() {
-
-
     // -- Set name --
-    this.subscription = this.store.dispatch(new SetGeneralObjective(this.formGeneralObjective.controls.generalObjective.value))
+    this.subscription = this.store
+      .dispatch(
+        new SetGeneralObjective(
+          this.formGeneralObjective.controls.generalObjective.value
+        )
+      )
       .subscribe(() => {
-
         // -- Get all data --
-        this.subscription = this.storable$.subscribe(value => {
-
-          if (this.submittedObjective) { // <-- Must be.submittedObjective
+        this.subscription = this.storable$.subscribe((value) => {
+          if (this.submittedObjective) {
+            // <-- Must be.submittedObjective
 
             // -- Send data to the server --
-            this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
-            }, (err) => {
-            });
+            this.subscription = this.environmentalProjectService
+              .updateEnvironmentalProject(value)
+              .subscribe(
+                (response) => {},
+                (err) => {}
+              );
           }
         });
       });
-
   }
 }

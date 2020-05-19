@@ -33,7 +33,8 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     AMBLE_COINS: 'amblecoins',
     LAPSE_PLANNING: 'lapseplanning',
     ANNUAL_PREPARATION: 'annualpreparation',
-    ANNUAL_CONVENTION: 'annualconvention'
+    ANNUAL_CONVENTION: 'annualconvention',
+    MATH_OLYMPIC:  'matholympic'
   };
 
   data: any;
@@ -56,8 +57,13 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
 
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
+
+      console.log( this.data );
+
       if (this.data.isStandard) {
         this.createForm(this.id);
+
+
         if ( this.formStandard  ) {
           this.formStandard.patchValue(this.data);
         }
@@ -224,6 +230,14 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
       this.formStandard = new FormGroup({
         checklist: new FormControl(null, [Validators.required])
       });
+    } else if ( id === this.DEVNAME_STANDARD.MATH_OLYMPIC)  {
+
+      this.formStandard = new FormGroup({
+        description: new FormControl(null, [Validators.required]),
+        file: new FormControl(null, [Validators.required]),
+
+      });
+
     }
 
   }
@@ -327,6 +341,10 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
       this.toastr.updateSuccess('Actualización', 'Convención anual actualizado');
 
     }, (err) => console.log( err ));
+  }
+
+  onSubmitMathOlympic() {
+
   }
 
 }

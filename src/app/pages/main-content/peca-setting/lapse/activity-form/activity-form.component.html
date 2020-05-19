@@ -432,6 +432,24 @@
     </form>
 
     <!-- ######################################### -->
+    <!-- Math Olympic -->
+    <!-- ######################################### -->
+    
+    <form
+    (ngSubmit)="onSubmitMathOlympic()"  
+    [formGroup]="formStandard"
+      *ngIf="
+        id === this.DEVNAME_STANDARD.MATH_OLYMPIC &&
+        data.isStandard &&
+        formStandard
+      "
+    >
+
+    <h1>olimpiadas</h1>
+
+    </form>
+
+    <!-- ######################################### -->
     <!-- Generic activity -->
     <!-- ######################################### -->
     <form
@@ -623,5 +641,6 @@
         </button>
       </div>
     </form>
+
   </nb-card-body>
 </nb-card>

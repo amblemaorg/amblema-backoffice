@@ -124,7 +124,7 @@
         </form>
 
         <!-- ######################################### -->
-        <!-- Anual convention -->
+        <!-- Anual preparation -->
         <!-- ######################################### -->
         <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard"
             *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_PREPARATION && data.isStandard && formStandard">
@@ -167,6 +167,7 @@
             </div>
         </form>
 
+        
 
         <!-- ######################################### -->
         <!-- Generic activity -->
@@ -280,5 +281,6 @@
                 </button>
             </div>
         </form>
+
     </nb-card-body>
 </nb-card>

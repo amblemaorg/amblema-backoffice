@@ -32,7 +32,8 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     INITIAL_WORKSHOP: 'initialworkshop',
     AMBLE_COINS: 'amblecoins',
     LAPSE_PLANNING: 'lapseplanning',
-    ANNUAL_PREPARATION: 'annualpreparation'
+    ANNUAL_PREPARATION: 'annualpreparation',
+    ANNUAL_CONVENTION: 'annualconvention'
   };
 
   data: any;
@@ -54,11 +55,9 @@ export class ActivityFormComponent extends StepsFormComponent implements AfterVi
     this.form.addControl('status', new FormControl(false));
 
     this.subscription = this.activity$.subscribe((response: any) => {
-    
+
       this.data = response;
       if (this.data.isStandard) {
-
- 
         this.createForm(this.id);
         if ( this.formStandard  ) {
           this.formStandard.patchValue(this.data);

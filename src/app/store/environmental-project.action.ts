@@ -50,7 +50,7 @@ export class SetGeneralObjective {
     constructor(public generalObjective: string) { }
 }
 
-export class GetEnvironmentalProject {
+export class GetEnvironmentalProject  {
     static readonly type = '[EnvironmentalProject] Get All EnvironmentalProject';
 }
 
@@ -190,6 +190,13 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             .subscribe((response) => {
                 if (JSON.stringify(response) !== '{}') { // <-- Is not empty
                     ctx.setState(patch(response));
+
+                    ctx.setState({
+                        ...ctx.getState(),
+                        lapseSelected: ctx.getState().lapse1,
+
+                    });
+                    this.referencingLapse = '1';
                 }
             });
     }
@@ -473,6 +480,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
      */
     @Action(SetGeneralObjective)
     SetGeneralObjective(ctx: StateContext<EnvironmentalProjectModel>, action: SetGeneralObjective) {
+
         ctx.setState(patch({
             ...ctx.getState(),
             lapseSelected: patch({
@@ -486,6 +494,9 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
 
     // -- Selecting lapse updates one of the three lapses --
     InternalLapseUpdate(ctx?: StateContext<EnvironmentalProjectModel>): void {
+
+        console.log( this.referencingLapse );
+
         switch (this.referencingLapse) {
             case '1':
                 ctx.setState(

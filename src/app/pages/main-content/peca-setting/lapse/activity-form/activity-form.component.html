@@ -1,286 +1,627 @@
 <nb-card>
-    <nb-card-header>{{ data.name }}</nb-card-header>
-    <nb-card-body>
+  <nb-card-header>{{ data.name }}</nb-card-header>
+  <nb-card-body>
+    <!-- ######################################### -->
+    <!-- Initial workshop form -->
+    <!-- ######################################### -->
+    <form
+      (ngSubmit)="onSubmitInitialWorkshop()"
+      [formGroup]="formStandard"
+      *ngIf="
+        id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP &&
+        data.isStandard &&
+        formStandard
+      "
+      class="row"
+    >
+      <div class="col-12">
+        <app-text-area-custom
+          *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP"
+          [submitted]="false"
+          [control]="formStandard.get('teachersMeetingDescription')"
+          [id]="data.id + 'teachersMeetingDescription'"
+          [label]="'Archivo de reunión de maestros(a)'"
+          [placeholder]="'Archivo de reunión de maestros(a)'"
+        >
+        </app-text-area-custom>
+        <app-input-file
+          *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP"
+          [id]="id + 'teachersMeetingFile'"
+          [submitted]="false"
+          [control]="formStandard.get('teachersMeetingFile')"
+        >
+        </app-input-file>
+      </div>
 
-        <!-- ######################################### -->
-        <!-- Initial workshop form -->
-        <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitInitialWorkshop()" [formGroup]="formStandard"
-            *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP && data.isStandard && formStandard" class="row">
+      <div class="col-12">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('agreementDescription')"
+          [id]="data.id + 'agreementDescription'"
+          [label]="'Acuerdo descripción'"
+          [placeholder]="'Acuerdo descripción'"
+        >
+        </app-text-area-custom>
+        <app-input-file
+          [id]="id + 'agreementFile'"
+          [submitted]="false"
+          [control]="formStandard.get('agreementFile')"
+        >
+        </app-input-file>
+      </div>
 
-            <div class="col-12">
-                <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP" [submitted]="false"
-                    [control]="formStandard.get('teachersMeetingDescription')"
-                    [id]="data.id + 'teachersMeetingDescription'" [label]="'Archivo de reunión de maestros(a)'"
-                    [placeholder]="'Archivo de reunión de maestros(a)'">
-                </app-text-area-custom>
-                <app-input-file *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP" [id]="id+'teachersMeetingFile'"
-                    [submitted]="false" [control]="formStandard.get('teachersMeetingFile')">
-                </app-input-file>
-            </div>
+      <div class="col-12">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('planningMeetingDescription')"
+          [id]="data.id + 'planningMeetingDescription'"
+          [label]="'Planificación de la reunión'"
+          [placeholder]="'Planificación de la reunión'"
+        >
+        </app-text-area-custom>
+        <app-input-file
+          [id]="id + 'planningMeetingFile'"
+          [submitted]="false"
+          [control]="formStandard.get('planningMeetingFile')"
+        >
+        </app-input-file>
+      </div>
 
-            <div class="col-12">
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('agreementDescription')"
-                    [id]="data.id + 'agreementDescription'" [label]="'Acuerdo descripción'"
-                    [placeholder]="'Acuerdo descripción'">
-                </app-text-area-custom>
-                <app-input-file [id]="id+'agreementFile'" [submitted]="false"
-                    [control]="formStandard.get('agreementFile')">
-                </app-input-file>
-            </div>
+      <div class="col-12 form-group" *ngIf="showProgress">
+        <app-progress (finish)="showProgress = false"></app-progress>
+      </div>
 
-            <div class="col-12">
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('planningMeetingDescription')"
-                    [id]="data.id + 'planningMeetingDescription'" [label]="'Planificación de la reunión'"
-                    [placeholder]="'Planificación de la reunión'">
-                </app-text-area-custom>
-                <app-input-file [id]="id+'planningMeetingFile'" [submitted]="false"
-                    [control]="formStandard.get('planningMeetingFile')">
-                </app-input-file>
-            </div>
+      <div class="col-12">
+        <hr />
+        <button
+          nbButton
+          [attr.disabled]="showProgress ? true : null"
+          [nbSpinner]="showProgress"
+          nbSpinnerStatus="success"
+          type="submit"
+          class="col-6 col-md-auto"
+        >
+          <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+        </button>
+      </div>
+    </form>
 
-            <div class="col-12 form-group" *ngIf="showProgress">
-                <app-progress (finish)="showProgress=false"></app-progress>
-            </div>
+    <!-- ######################################### -->
+    <!-- Amble coins form -->
+    <!-- ######################################### -->
+    <form
+      (ngSubmit)="onSubmitAblemaCoins()"
+      [formGroup]="formStandard"
+      *ngIf="
+        id === this.DEVNAME_STANDARD.AMBLE_COINS &&
+        data.isStandard &&
+        formStandard
+      "
+    >
+      <app-text-area-custom
+        *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
+        [submitted]="false"
+        [control]="formStandard.get('teachersMeetingDescription')"
+        [id]="data.id + 'teachersMeetingDescription'"
+        [label]="'Descripción de la reunión de maestras'"
+        [placeholder]="'Descripción de la reunión de maestras'"
+      >
+      </app-text-area-custom>
+      <app-input-file
+        *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
+        [id]="id + 'teachersMeetingFile'"
+        [submitted]="false"
+        [control]="formStandard.get('teachersMeetingFile')"
+      >
+      </app-input-file>
 
-            <div class="col-12">
-                <hr>
-                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
-                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
-                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
-                </button>
-            </div>
-        </form>
+      <app-slider-standard [sliders]="sliders"></app-slider-standard>
+      <app-text-area-custom
+        *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
+        [submitted]="false"
+        [control]="formStandard.get('piggyBankDescription')"
+        [id]="data.id + 'piggyBankDescription'"
+        [label]="'Descripción del Bank'"
+        [placeholder]="'Descripción del Bank'"
+      >
+      </app-text-area-custom>
 
-        <!-- ######################################### -->
-        <!-- Amble coins form -->
-        <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitAblemaCoins()" [formGroup]="formStandard"
-            *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS && data.isStandard && formStandard">
-            <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [submitted]="false"
-                [control]="formStandard.get('teachersMeetingDescription')" [id]="data.id + 'teachersMeetingDescription'"
-                [label]="'Descripción de la reunión de maestras'"
-                [placeholder]="'Descripción de la reunión de maestras'">
-            </app-text-area-custom>
-            <app-input-file *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [id]="id+'teachersMeetingFile'"
-                [submitted]="false" [control]="formStandard.get('teachersMeetingFile')">
-            </app-input-file>
+      <div class="col-12 form-group" *ngIf="showProgress">
+        <app-progress (finish)="showProgress = false"></app-progress>
+      </div>
 
-            <app-slider-standard [sliders]="sliders"></app-slider-standard>
-            <app-text-area-custom *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS" [submitted]="false"
-                [control]="formStandard.get('piggyBankDescription')" [id]="data.id + 'piggyBankDescription'"
-                [label]="'Descripción del Bank'" [placeholder]="'Descripción del Bank'">
-            </app-text-area-custom>
+      <div class="col-12">
+        <hr />
 
-            <div class="col-12 form-group" *ngIf="showProgress">
-                <app-progress (finish)="showProgress=false"></app-progress>
-            </div>
+        <button
+          nbButton
+          [attr.disabled]="showProgress ? true : null"
+          [nbSpinner]="showProgress"
+          nbSpinnerStatus="success"
+          type="submit"
+          class="col-6 col-md-auto"
+        >
+          <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+        </button>
+      </div>
+    </form>
 
-            <div class="col-12">
-                <hr>
+    <!-- ######################################### -->
+    <!-- Lapse Planning form -->
+    <!-- ######################################### -->
+    <form
+      (ngSubmit)="onSubmitLapsePlanning()"
+      [formGroup]="formStandard"
+      *ngIf="
+        id === this.DEVNAME_STANDARD.LAPSE_PLANNING &&
+        data.isStandard &&
+        formStandard
+      "
+    >
+      <div class="col-12 col-md">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('proposalFundationDescription')"
+          [id]="data.id + 'proposalFundationDescription'"
+          [label]="'Propuesta de la Fundación'"
+          [placeholder]="'Propuesta de la Fundación'"
+        >
+        </app-text-area-custom>
 
-                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
-                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
-                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
-                </button>
-            </div>
-        </form>
+        <app-input-file
+          [id]="id + 'proposalFundationFile'"
+          [submitted]="false"
+          [control]="formStandard.get('proposalFundationFile')"
+        >
+        </app-input-file>
 
-        <!-- ######################################### -->
-        <!-- Lapse Planning form -->
-        <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitLapsePlanning()" [formGroup]="formStandard"
-            *ngIf="id === this.DEVNAME_STANDARD.LAPSE_PLANNING && data.isStandard && formStandard">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('meetingDescription')"
+          [id]="data.id + 'meetingDescription'"
+          [label]="'Descripción de la reunión'"
+          [placeholder]="'Descripción de la reunión'"
+        >
+        </app-text-area-custom>
+      </div>
 
-            <div class="col-12 col-md ">
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('proposalFundationDescription')"
-                    [id]="data.id + 'proposalFundationDescription'" [label]="'Propuesta de la Fundación'"
-                    [placeholder]="'Propuesta de la Fundación'">
-                </app-text-area-custom>
+      <div class="col-12 form-group" *ngIf="showProgress">
+        <app-progress (finish)="showProgress = false"></app-progress>
+      </div>
 
-                <app-input-file [id]="id+'proposalFundationFile'" [submitted]="false"
-                    [control]="formStandard.get('proposalFundationFile')">
-                </app-input-file>
+      <div class="col-12">
+        <hr />
 
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('meetingDescription')"
-                    [id]="data.id + 'meetingDescription'" [label]="'Descripción de la reunión'"
-                    [placeholder]="'Descripción de la reunión'">
-                </app-text-area-custom>
-            </div>
+        <button
+          nbButton
+          [attr.disabled]="showProgress ? true : null"
+          [nbSpinner]="showProgress"
+          nbSpinnerStatus="success"
+          type="submit"
+          class="col-6 col-md-auto"
+        >
+          <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+        </button>
+      </div>
+    </form>
 
+    <!-- ######################################### -->
+    <!-- Anual preparation -->
+    <!-- ######################################### -->
+    <form
+      (ngSubmit)="onSubmitAnualPreparation()"
+      [formGroup]="formStandard"
+      *ngIf="
+        id === this.DEVNAME_STANDARD.ANNUAL_PREPARATION &&
+        data.isStandard &&
+        formStandard
+      "
+    >
+      <div class="col-12 col-md">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('step1Description')"
+          [id]="data.id + 'step1Description'"
+          [label]="'Paso 1'"
+          [placeholder]="'Paso 1'"
+        >
+        </app-text-area-custom>
+      </div>
 
-            <div class="col-12 form-group" *ngIf="showProgress">
-                <app-progress (finish)="showProgress=false"></app-progress>
-            </div>
+      <div class="col-12 col-md">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('step2Description')"
+          [id]="data.id + 'step2Description'"
+          [label]="'Paso 2'"
+          [placeholder]="'Paso 2'"
+        >
+        </app-text-area-custom>
+      </div>
 
-            <div class="col-12">
-                <hr>
+      <div class="col-12 col-md">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('step3Description')"
+          [id]="data.id + 'step3Description'"
+          [label]="'Paso 3'"
+          [placeholder]="'Paso 3'"
+        >
+        </app-text-area-custom>
+      </div>
 
-                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
-                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
-                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
-                </button>
-            </div>
-        </form>
+      <div class="col-12 col-md">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('step4Description')"
+          [id]="data.id + 'step4Description'"
+          [label]="'Paso 4'"
+          [placeholder]="'Paso 4'"
+        >
+        </app-text-area-custom>
+      </div>
 
-        <!-- ######################################### -->
-        <!-- Anual preparation -->
-        <!-- ######################################### -->
-        <form (ngSubmit)="onSubmitAnualConvention()" [formGroup]="formStandard"
-            *ngIf="id === this.DEVNAME_STANDARD.ANNUAL_PREPARATION && data.isStandard && formStandard">
+      <div class="col-12 form-group" *ngIf="showProgress">
+        <app-progress (finish)="showProgress = false"></app-progress>
+      </div>
 
-            <div class="col-12 col-md ">
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step1Description')"
-                    [id]="data.id + 'step1Description'" [label]="'Paso 1'" [placeholder]="'Paso 1'">
-                </app-text-area-custom>
-            </div>
+      <div class="col-12">
+        <hr />
+        <button
+          nbButton
+          [attr.disabled]="showProgress ? true : null"
+          [nbSpinner]="showProgress"
+          nbSpinnerStatus="success"
+          type="submit"
+          class="col-6 col-md-auto"
+        >
+          <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+        </button>
+      </div>
+    </form>
 
-            <div class="col-12 col-md ">
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step2Description')"
-                    [id]="data.id + 'step2Description'" [label]="'Paso 2'" [placeholder]="'Paso 2'">
-                </app-text-area-custom>
-            </div>
+    <!-- ######################################### -->
+    <!-- Anual convention -->
+    <!-- ######################################### -->
+    <form
+    (ngSubmit)="onSubmitAnualConvention()"  
+    [formGroup]="formStandard"
+      *ngIf="
+        id === this.DEVNAME_STANDARD.ANNUAL_CONVENTION &&
+        data.isStandard &&
+        formStandard
+      "
+    >
+      <div class="col-12" *ngIf="data">
+        <nb-alert
+          status="info"
+          class="form-group py-2"
+          *ngIf="checklist.length === 0"
+        >
+          Recuerda registrar por lo menos un elemento en la lista
+        </nb-alert>
 
-            <div class="col-12 col-md ">
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step3Description')"
-                    [id]="data.id + 'step3Description'" [label]="'Paso 3'" [placeholder]="'Paso 3'">
-                </app-text-area-custom>
-            </div>
-
-            <div class="col-12 col-md ">
-                <app-text-area-custom [submitted]="false" [control]="formStandard.get('step4Description')"
-                    [id]="data.id + 'step4Description'" [label]="'Paso 4'" [placeholder]="'Paso 4'">
-                </app-text-area-custom>
-            </div>
-
-
-            <div class="col-12 form-group" *ngIf="showProgress">
-                <app-progress (finish)="showProgress=false"></app-progress>
-            </div>
-
-            <div class="col-12">
-                <hr>
-                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
-                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
-                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
-                </button>
-            </div>
-        </form>
-
-        
-
-        <!-- ######################################### -->
-        <!-- Generic activity -->
-        <!-- ######################################### -->
-        <form [formGroup]="form" (ngSubmit)="onSubmitGeneric()" class="row" *ngIf="!data.isStandard">
-
-            <div class="col-12 col-md ">
-                <app-text-area-custom *ngIf="data.hasText" [submitted]="false" [control]="form.get('text')"
-                    [id]="data.id + 'text'" [label]="'Descripción'" [placeholder]="data.name">
-                </app-text-area-custom>
-            </div>
-            <div class="col-12">
-                <app-input-custom *ngIf="data.hasVideo" [id]="data.id + 'video'" [submitted]="false"
-                    [control]="form.get('video')" [placeholder]="'URL del video'" [label]="'URL del video'">
+        <!-- Dynamic list -->
+        <div class="row">
+          <div class="col-12 form-group">
+            <div class="row">
+              <div class="col">
+                <app-input-custom
+                  [id]="'checklist'"
+                  [label]="'Opciones'"
+                  [control]="form.get('checklist')"
+                  [placeholder]="'Opciones'"
+                  [submitted]="submitted"
+                >
                 </app-input-custom>
-            </div>
-
-            <div class="col-12">
-                <label for="" class="label">Aprobación</label>
-                <select formControlName="approvalType" class="form-control form-group">
-                    <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
-                    <option value="1">Lo aprueba el administrador</option>
-                    <option value="2">Genera una solicitud de aprobación</option>
-                </select>
-            </div>
-
-            <div class="col-12" *ngIf="data.hasFile">
-                <app-input-file [id]="data.id+'file'" [submitted]="false" [control]="form.get('file')">
-                </app-input-file>
-            </div>
-
-            <div class="col-12" *ngIf="data.hasChecklist">
-
-                <nb-alert status="info" class="form-group py-2" *ngIf="checklist.length === 0">
-                    Recuerda registrar por lo menos un elemento en la lista
-                </nb-alert>
-
-                <!-- Dynamic list -->
-                <div class="row">
-
-                    <div class="col-12 form-group">
-                        <div class="row">
-                            <div class="col">
-                                <app-input-custom [id]="'checklist'" [label]="'Opciones'"
-                                    [control]="form.get('checklist')" [placeholder]="'Opciones'"
-                                    [submitted]="submitted">
-                                </app-input-custom>
-                            </div>
-                            <div class="col-auto">
-                                <button nbButton status="primary" style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                                    *ngIf="MODE_LIST === ACTION.CREATE"
-                                    [attr.disabled]="!form.controls['checklist'].value ? true : null"
-                                    (click)="addObjective()" class="btn btn-outline-info m-inline-form">
-                                    <nb-icon icon="plus"></nb-icon>
-                                </button>
-
-                                <div class="btn-group m-inline-parcial" role="group" *ngIf="MODE_LIST === ACTION.EDIT">
-                                    <button style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline nbButton
-                                        status="info" type="button" class="btn btn-outline-info"
-                                        (click)="confirmAction()">
-                                        Confirmar
-                                    </button>
-                                    <button nbButton
-                                        style="padding-top: 0.6rem; padding-bottom: 0.6rem; border-bottom-left-radius: 0; border-top-left-radius: 0;"
-                                        outline status="danger" type="button" class="btn btn-outline-danger" (click)="MODE_LIST = ACTION.CREATE; 
-                    form.controls['checklist'].enable();
-                    form.controls['checklist'].reset();">
-                                        Cancelar
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 form-group">
-                        <nb-list>
-                            <nb-list-item *ngFor="let item of checklist; let i = index;"
-                                class="d-flex w-100 justify-content-between">
-                                <span *ngIf="item.name">{{ item.name }}</span>
-
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button nbButton status="info" style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                                        outline type="button" class="btn btn-outline-info" (click)="onEditObjective(i)">
-                                        <nb-icon icon="edit-outline"></nb-icon>
-                                    </button>
-                                    <button nbButton status="danger"
-                                        style="border-bottom-left-radius: 0; border-top-left-radius: 0; padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                                        outline type="button" class="btn btn-outline-danger"
-                                        (click)="onDeleteObjective(i)">
-                                        <nb-icon icon="trash-2-outline"></nb-icon>
-                                    </button>
-                                </div>
-                            </nb-list-item>
-                        </nb-list>
-                    </div>
-                </div>
-                <!-- / Dynamic list -->
-
-            </div>
-
-            <div class="col-12 form-group" *ngIf="showProgress">
-                <app-progress (finish)="showProgress=false"></app-progress>
-            </div>
-
-            <div class="col-12 form-group text-right">
-
-                <button nbButton [attr.disabled]="showProgress ? true : null" [nbSpinner]="showProgress"
-                    nbSpinnerStatus="success" type="submit" class="col-6 col-md-auto">
-                    <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+              </div>
+              <div class="col-auto">
+                <button
+                  nbButton
+                  status="primary"
+                  style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                  *ngIf="MODE_LIST === ACTION.CREATE"
+                  [attr.disabled]="
+                    !form.controls['checklist'].value ? true : null
+                  "
+                  (click)="addObjective()"
+                  class="btn btn-outline-info m-inline-form"
+                >
+                  <nb-icon icon="plus"></nb-icon>
                 </button>
-            </div>
-        </form>
 
-    </nb-card-body>
+                <div
+                  class="btn-group m-inline-parcial"
+                  role="group"
+                  *ngIf="MODE_LIST === ACTION.EDIT"
+                >
+                  <button
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    outline
+                    nbButton
+                    status="info"
+                    type="button"
+                    class="btn btn-outline-info"
+                    (click)="confirmAction()"
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    nbButton
+                    style="
+                      padding-top: 0.6rem;
+                      padding-bottom: 0.6rem;
+                      border-bottom-left-radius: 0;
+                      border-top-left-radius: 0;
+                    "
+                    outline
+                    status="danger"
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="
+                      MODE_LIST = ACTION.CREATE;
+                      form.controls['checklist'].enable();
+                      form.controls['checklist'].reset()
+                    "
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 form-group">
+            <nb-list>
+              <nb-list-item
+                *ngFor="let item of checklist; let i = index"
+                class="d-flex w-100 justify-content-between"
+              >
+                <span *ngIf="item.name">{{ item.name }}</span>
+
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button
+                    nbButton
+                    status="info"
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    outline
+                    type="button"
+                    class="btn btn-outline-info"
+                    (click)="onEditObjective(i)"
+                  >
+                    <nb-icon icon="edit-outline"></nb-icon>
+                  </button>
+                  <button
+                    nbButton
+                    status="danger"
+                    style="
+                      border-bottom-left-radius: 0;
+                      border-top-left-radius: 0;
+                      padding-top: 0.6rem;
+                      padding-bottom: 0.6rem;
+                    "
+                    outline
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="onDeleteObjective(i)"
+                  >
+                    <nb-icon icon="trash-2-outline"></nb-icon>
+                  </button>
+                </div>
+              </nb-list-item>
+            </nb-list>
+          </div>
+        </div>
+        <!-- / Dynamic list -->
+
+        <div class="row">
+          <div class="col-12 form-group text-left">
+            <button
+              nbButton
+              [attr.disabled]="showProgress ? true : null"
+              [nbSpinner]="showProgress"
+              nbSpinnerStatus="success"
+              type="submit"
+              class="col-6 col-md-auto"
+            >
+              <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- ######################################### -->
+    <!-- Generic activity -->
+    <!-- ######################################### -->
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmitGeneric()"
+      class="row"
+      *ngIf="!data.isStandard"
+    >
+      <div class="col-12 col-md">
+        <app-text-area-custom
+          *ngIf="data.hasText"
+          [submitted]="false"
+          [control]="form.get('text')"
+          [id]="data.id + 'text'"
+          [label]="'Descripción'"
+          [placeholder]="data.name"
+        >
+        </app-text-area-custom>
+      </div>
+      <div class="col-12">
+        <app-input-custom
+          *ngIf="data.hasVideo"
+          [id]="data.id + 'video'"
+          [submitted]="false"
+          [control]="form.get('video')"
+          [placeholder]="'URL del video'"
+          [label]="'URL del video'"
+        >
+        </app-input-custom>
+      </div>
+
+      <div class="col-12">
+        <label for="" class="label">Aprobación</label>
+        <select formControlName="approvalType" class="form-control form-group">
+          <option value="null" disabled>
+            - Seleccione el tipo de aprobación -
+          </option>
+          <option value="1">Lo aprueba el administrador</option>
+          <option value="2">Genera una solicitud de aprobación</option>
+        </select>
+      </div>
+
+      <div class="col-12" *ngIf="data.hasFile">
+        <app-input-file
+          [id]="data.id + 'file'"
+          [submitted]="false"
+          [control]="form.get('file')"
+        >
+        </app-input-file>
+      </div>
+
+      <div class="col-12" *ngIf="data.hasChecklist">
+        <nb-alert
+          status="info"
+          class="form-group py-2"
+          *ngIf="checklist.length === 0"
+        >
+          Recuerda registrar por lo menos un elemento en la lista
+        </nb-alert>
+
+        <!-- Dynamic list -->
+        <div class="row">
+          <div class="col-12 form-group">
+            <div class="row">
+              <div class="col">
+                <app-input-custom
+                  [id]="'checklist'"
+                  [label]="'Opciones'"
+                  [control]="form.get('checklist')"
+                  [placeholder]="'Opciones'"
+                  [submitted]="submitted"
+                >
+                </app-input-custom>
+              </div>
+              <div class="col-auto">
+                <button
+                  nbButton
+                  status="primary"
+                  style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                  *ngIf="MODE_LIST === ACTION.CREATE"
+                  [attr.disabled]="
+                    !form.controls['checklist'].value ? true : null
+                  "
+                  (click)="addObjective()"
+                  class="btn btn-outline-info m-inline-form"
+                >
+                  <nb-icon icon="plus"></nb-icon>
+                </button>
+
+                <div
+                  class="btn-group m-inline-parcial"
+                  role="group"
+                  *ngIf="MODE_LIST === ACTION.EDIT"
+                >
+                  <button
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    outline
+                    nbButton
+                    status="info"
+                    type="button"
+                    class="btn btn-outline-info"
+                    (click)="confirmAction()"
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    nbButton
+                    style="
+                      padding-top: 0.6rem;
+                      padding-bottom: 0.6rem;
+                      border-bottom-left-radius: 0;
+                      border-top-left-radius: 0;
+                    "
+                    outline
+                    status="danger"
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="
+                      MODE_LIST = ACTION.CREATE;
+                      form.controls['checklist'].enable();
+                      form.controls['checklist'].reset()
+                    "
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 form-group">
+            <nb-list>
+              <nb-list-item
+                *ngFor="let item of checklist; let i = index"
+                class="d-flex w-100 justify-content-between"
+              >
+                <span *ngIf="item.name">{{ item.name }}</span>
+
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button
+                    nbButton
+                    status="info"
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    outline
+                    type="button"
+                    class="btn btn-outline-info"
+                    (click)="onEditObjective(i)"
+                  >
+                    <nb-icon icon="edit-outline"></nb-icon>
+                  </button>
+                  <button
+                    nbButton
+                    status="danger"
+                    style="
+                      border-bottom-left-radius: 0;
+                      border-top-left-radius: 0;
+                      padding-top: 0.6rem;
+                      padding-bottom: 0.6rem;
+                    "
+                    outline
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="onDeleteObjective(i)"
+                  >
+                    <nb-icon icon="trash-2-outline"></nb-icon>
+                  </button>
+                </div>
+              </nb-list-item>
+            </nb-list>
+          </div>
+        </div>
+        <!-- / Dynamic list -->
+      </div>
+
+      <div class="col-12 form-group" *ngIf="showProgress">
+        <app-progress (finish)="showProgress = false"></app-progress>
+      </div>
+
+      <div class="col-12 form-group text-right">
+        <button
+          nbButton
+          [attr.disabled]="showProgress ? true : null"
+          [nbSpinner]="showProgress"
+          nbSpinnerStatus="success"
+          type="submit"
+          class="col-6 col-md-auto"
+        >
+          <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
 </nb-card>

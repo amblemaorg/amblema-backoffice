@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import {
   SelectLapse
@@ -15,7 +15,7 @@ import { EnvironmentalProjectService } from 'src/app/services/environmental-proj
   templateUrl: './main-form.component.html',
   styleUrls: ['./main-form.component.scss']
 })
-export class MainFormComponent implements OnInit, OnDestroy {
+export class MainFormComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
   @Select(EnvironmentalProjectState.environmentalProject) environmentalProjectSelected: Observable<EnvironmentalProjectModel>;
@@ -53,14 +53,13 @@ export class MainFormComponent implements OnInit, OnDestroy {
       this.formGeneralObjective.patchValue(response.lapseSelected);
     });
 
-
-    setTimeout(() => {
-      // -- Previous selection ---
-      this.onSelectLapse('1');
-
-    });
   }
 
+
+  ngAfterViewChecked(): void {
+      // -- Previos selection --
+      this.onSelectLapse('1');
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {

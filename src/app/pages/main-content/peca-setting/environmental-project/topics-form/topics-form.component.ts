@@ -27,7 +27,17 @@ export class TopicsFormComponent implements OnInit, OnDestroy {
     private environmentalProjectService: EnvironmentalProjectService,
     private store: Store) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+
+    this.topics$.subscribe( response  => {
+
+
+      console.log( response );
+
+    });
+
+  }
 
   ngOnDestroy(): void {
     if ( this.subscription ) {
@@ -37,7 +47,9 @@ export class TopicsFormComponent implements OnInit, OnDestroy {
 
   addTopic() {
       this.subscription = this.topics$.pipe(take(1)).subscribe((response) => {
-      this.subscription = this.store.dispatch(
+
+
+        this.subscription = this.store.dispatch(
         new AddTopic({
           name: '',
           objectives: [],

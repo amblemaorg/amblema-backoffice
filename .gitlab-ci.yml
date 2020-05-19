@@ -50,8 +50,6 @@ linting:
   stage: cleanup
   script:
       - docker exec $CONTAINER_RUN ng lint --fix
-  tags:
-      - amblema
   only:
       - master
 

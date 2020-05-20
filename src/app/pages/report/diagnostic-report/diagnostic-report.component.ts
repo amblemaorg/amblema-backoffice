@@ -94,6 +94,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
         }, 3500);
 
       }, err => {
+        this.disabledBtn = false;
       } );
   }
 }

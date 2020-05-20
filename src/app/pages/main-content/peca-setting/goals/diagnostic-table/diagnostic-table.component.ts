@@ -25,6 +25,7 @@ export class DiagnosticTableComponent implements OnInit, OnDestroy {
 
     this.settings = {
       actions: {
+        columnTitle: 'Acciones',
         add: false,
         delete: false,
         edit: true
@@ -51,17 +52,17 @@ export class DiagnosticTableComponent implements OnInit, OnDestroy {
           editable: false
         },
         multiplicationsPerMin: {
-          title: 'Meta - Multiplicación',
+          title: 'Meta de multiplicación',
           type: 'number',
           editable: true
         },
         operationsPerMin: {
-          title: 'Meta - Razonamiento Lógico - Matemático',
+          title: 'Meta de razonamiento lógico matemático',
           type: 'number',
           editable: true
         },
         wordsPerMin: {
-          title: 'Meta - Lectura',
+          title: 'Meta de lectura',
           type: 'number',
           editable: true
         }

@@ -167,6 +167,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             }
 
             this.source.load(this.data);
+
           });
       });
   }

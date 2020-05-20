@@ -113,7 +113,7 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.userReporteService.getUserReport('2', '1').subscribe(usersActive => {
 
       this.data = usersActive.users;
-      
+
       this.subscriptionService = this.userReporteService.getUserReport('2', '0').subscribe(response => {
 
         if (response.users.length) {

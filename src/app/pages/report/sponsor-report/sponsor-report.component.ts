@@ -91,9 +91,9 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.userReporteService.getUserReport('0', '1').subscribe(usersActive => {
 
       this.data = usersActive.users;
-      
+
       this.subscriptionService = this.userReporteService.getUserReport('0', '0').subscribe(response => {
-  
+
         if (response.users.length) {
           this.data = [
             ...this.data,

@@ -214,7 +214,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Escuelas inscritas',
-        link: '/pages/report/graphics-report/enrolled-schools-report'
+        link: '/pages/report/enrolled-schools-report'
       },
     ]
   },

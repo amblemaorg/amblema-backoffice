@@ -1,0 +1,41 @@
+<nb-card>
+    <nb-card-header>
+        Reporte de escuelas inscritas
+    </nb-card-header>
+    <nb-card-body>
+
+        <div class="row">
+            <div class="col-12">
+                <h6>Filtro por rango de período académico</h6>
+            </div>
+            <div class="col-12 col-lg-6">
+                <label class="label">Inicio</label>
+                <select
+                  class="form-control form-group"
+                  (change)="onChangeDateInit($event.target.value)"
+                  [(ngModel)]="dateInitSelected"
+                >
+                  <option [value]="null" disabled>- Inicio Período académico -</option>
+                  <option [value]="item.id" *ngFor="let item of datesInit">{{
+                    item.name
+                  }}</option>
+                </select>
+              </div>
+        
+              <div class="col-12 col-lg-6">
+                <label class="label">Fin</label>
+                <select
+                  [attr.disabled]="!dateInitSelected ? true : null"
+                  class="form-control form-group"
+                  [(ngModel)]="dateEndSelected"
+                >
+                  <option [value]="null" disabled>- Fin Período académico -</option>
+                  <option [value]="item.id" *ngFor="let item of datesEnd">{{
+                    item.name
+                  }}</option>
+                </select>
+              </div>
+        </div>
+
+    </nb-card-body>
+</nb-card>

@@ -42,7 +42,6 @@ const routes: Routes = [
      loadChildren: () => import('./graphics-report/enrolled-schools-report/enrolled-schools-report.module').
      then(m => m.EnrolledSchoolsReportModule)
    }
-
 ];
 
 @NgModule({

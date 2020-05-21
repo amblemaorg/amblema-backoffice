@@ -23,9 +23,9 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private cd: ChangeDetectorRef,
-    private mathOlympicsReportService: MathOlympicsReportService,
-    private generateReporte: PDFReportMath
+    public cd: ChangeDetectorRef,
+    public mathOlympicsReportService: MathOlympicsReportService,
+    private generateReporte?: PDFReportMath
   ) {}
 
   async ngOnInit() {

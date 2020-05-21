@@ -61,9 +61,14 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
   }
 
   ngAfterViewInit(): void {
-    this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
-    this.control.updateValueAndValidity();
-    this.cd.detectChanges();
+
+    if (this.control) {
+      this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
+      this.control.updateValueAndValidity();
+      this.cd.detectChanges();
+
+    }
+
   }
 
   handleUpload(file: File) {

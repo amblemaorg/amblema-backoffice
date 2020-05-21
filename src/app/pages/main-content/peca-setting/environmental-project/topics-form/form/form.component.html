@@ -8,6 +8,11 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
             <form [formGroup]="form" (ngSubmit)="onUpdateTopic()" class="row">
+
+                <div class="col-12">
+                    <app-progress *ngIf="showProgress"></app-progress>
+                </div>
+
                 <div class="col-12 form-group text-right">
                     <button (click)="deleteHimself()" class="col-12 col-lg-auto mr-0 mr-lg-3 mb-3 mb-lg-0" nbButton
                         size="small" outline status="danger" type="button" nbTooltip="Eliminar tema">

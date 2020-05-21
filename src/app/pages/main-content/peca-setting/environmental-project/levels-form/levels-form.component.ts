@@ -24,16 +24,6 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   @Input() options: any[];
 
 
-  // options = [
-  //   { label: '0', value: false }, // <-- Prescolar 0
-  //   { label: '1', value: false }, // <-- Primer grado 1
-  //   { label: '2', value: false }, // <-- Segundo grado 2
-  //   { label: '3', value: false }, // <-- Tercer grado 3
-  //   { label: '4', value: false }, // <-- Cuarto grado 4
-  //   { label: '5', value: false }, // <-- Quinto grado 5
-  //   { label: '6', value: false }, // <-- Sexto grado 6
-  // ];
-
   form: FormGroup;
 
   target = new Array<string>();
@@ -42,6 +32,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   resources = new Array<string>();
   evaluations = new Array<string>();
   supportMaterial = new Array<string>();
+  showProgress = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -114,26 +105,33 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  onUpdateLevel() {
-    this.subscription = this.store.dispatch(new UpdateSchoolLevel({
-      target: this.options,
-      week: this.form.controls.week.value,
-      duration: this.form.controls.duration.value,
-      techniques: this.techniques,
-      activities: this.activities,
-      resources: this.resources,
-      evaluations: this.evaluations,
-      supportMaterial: this.supportMaterial
-    },
-      this.indexTopic,
-      this.index
-    )).subscribe(() => {
+  async onUpdateLevel() {
 
-      this.subscription = this.storable$.subscribe(value => {
-        this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
-          // -- Successfully mock delete topic --
+    this.showProgress = true;
+
+    setTimeout(() => {
+      this.subscription = this.store.dispatch(new UpdateSchoolLevel({
+        target: this.options,
+        week: this.form.controls.week.value,
+        duration: this.form.controls.duration.value,
+        techniques: this.techniques,
+        activities: this.activities,
+        resources: this.resources,
+        evaluations: this.evaluations,
+        supportMaterial: this.supportMaterial
+      },
+        this.indexTopic,
+        this.index
+      )).subscribe(() => {
+  
+        this.subscription = this.storable$.subscribe(value => {
+          this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
+            // -- Successfully mock delete topic --
+          });
         });
-      });
+      }); 
     });
+
+     
   }
 }

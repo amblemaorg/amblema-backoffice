@@ -24,6 +24,7 @@ import { LevelsFormComponent } from './levels-form/levels-form.component';
 import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveDatepickerModule,
     NbInputModule,
     NgSelectModule,
-
+    ProgressModule,
     NbTooltipModule,
     NgxMaskModule.forRoot(),
     NbAccordionModule,

@@ -164,6 +164,13 @@ const routes: Routes = [
                 './report/math-olympics-report/math-olympics-report.module'
               ).then((m) => m.MathOlympicsReportModule),
           },
+          {
+            path: 'enrolled-schools-report',
+            loadChildren: () =>
+              import(
+                './report/graphics-report/enrolled-schools-report/enrolled-schools-report.module'
+              ).then((m) => m.EnrolledSchoolsReportModule),
+          },
         ],
       },
       // Redirect To

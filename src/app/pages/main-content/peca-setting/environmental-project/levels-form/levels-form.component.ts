@@ -123,15 +123,15 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
         this.indexTopic,
         this.index
       )).subscribe(() => {
-  
+
         this.subscription = this.storable$.subscribe(value => {
           this.subscription = this.environmentalProjectService.updateEnvironmentalProject(value).subscribe(response => {
             // -- Successfully mock delete topic --
           });
         });
-      }); 
+      });
     });
 
-     
+
   }
 }

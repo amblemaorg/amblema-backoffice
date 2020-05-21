@@ -460,6 +460,8 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             })
         }));
 
+        console.log('dwad')
+
         this.InternalLapseUpdate(ctx);
     }
 

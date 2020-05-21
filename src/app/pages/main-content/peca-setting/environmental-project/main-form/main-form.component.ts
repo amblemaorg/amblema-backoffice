@@ -30,6 +30,8 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   environmentalProjectSelected: Observable<EnvironmentalProjectModel>;
   subscription: Subscription;
 
+  showProgress = false;
+
   options = [
     { value: '1', label: 'Primer lapso' },
     { value: '2', label: 'Segundo lapso' },
@@ -80,6 +82,7 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit(): void {
     this.submitted = true;
+    this.showProgress = true;
 
     if (this.form.valid) {
       // -- Set name --
@@ -97,7 +100,9 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
               this.subscription = this.environmentalProjectService
                 .updateEnvironmentalProject(value)
                 .subscribe(
-                  (response) => {},
+                  (response) => {
+
+                  },
                   (err) => {}
                 );
             }
@@ -110,6 +115,9 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onUpdateGeneralObjective() {
+
+    this.submittedObjective = true;
+
     // -- Set name --
     this.subscription = this.store
       .dispatch(

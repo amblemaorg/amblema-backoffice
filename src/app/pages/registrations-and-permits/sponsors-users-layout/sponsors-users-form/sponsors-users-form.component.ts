@@ -48,7 +48,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
     status: new FormControl(),
 
     // -- Company data --
-    image: new FormControl(null, Validators.required),
+    image: new FormControl(null),
     webSite: new FormControl(null, [Validators.required, Validators.pattern(VIDEO_PATTERN)]),
     companyRif: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(9)]),
     cardType: new FormControl('J'),

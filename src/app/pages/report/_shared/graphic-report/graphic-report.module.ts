@@ -7,7 +7,7 @@ import { ChartsModule } from 'ng2-charts';
   declarations: [QuarterlyGraphComponent],
   imports: [
     CommonModule,
-    ChartsModule
+    ChartsModule,
   ],
   exports: [QuarterlyGraphComponent]
 })

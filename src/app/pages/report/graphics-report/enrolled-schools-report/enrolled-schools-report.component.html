@@ -36,10 +36,14 @@
       </div>
 
       <div class="col-12 text-right">
-        <button 
-        [attr.disabled]="dateInitSelected && dateEndSelected ? null : true"
-          nbButton 
-          class="col-12 col-lg-auto" (click)="onQueryGraph()" >Consultar</button>
+        <button
+          [attr.disabled]="dateInitSelected && dateEndSelected ? null : true"
+          nbButton
+          class="col-12 col-lg-auto"
+          (click)="onQueryGraph()"
+        >
+          Consultar
+        </button>
       </div>
     </div>
     <div class="row">
@@ -48,12 +52,32 @@
       </div>
     </div>
 
-    <app-graph-display></app-graph-display>
+    <!-- Display graph -->
+    <div class="row justify-content-center" *ngIf="data">
+      <div class="col-12 col-lg-9">
+        <app-quarterly-graph
+          [data]="data"
+          [title]="'Reporte de escuelas inscritas'"
+          [legendy]="'Número de escuelas inscritas'"
+        ></app-quarterly-graph>
+      </div>
+    </div>
+
+    <!-- Show message no graph -->
+    <div class="row" *ngIf="!data">
+      <div class="col-12 text-center">
+        <h4>Seleccione los períodos para generar la gráfica</h4>
+      </div>
+    </div>
   </nb-card-body>
   <nb-card-footer class="text-right">
-    <button 
+    <button
+      [attr.disabled]="data ? null : true"
       status="success"
-      nbButton 
-      class="col-12 col-lg-auto">Exportar <nb-icon icon="download-outline"></nb-icon></button>
+      nbButton
+      class="col-12 col-lg-auto"
+    >
+      Exportar <nb-icon icon="download-outline"></nb-icon>
+    </button>
   </nb-card-footer>
 </nb-card>

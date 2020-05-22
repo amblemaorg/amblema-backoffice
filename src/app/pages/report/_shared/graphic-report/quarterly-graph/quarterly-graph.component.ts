@@ -1,65 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
+import { ChartAverage } from '../../_model/average-graph.model';
 
 @Component({
   selector: 'app-quarterly-graph',
   templateUrl: './quarterly-graph.component.html',
   styleUrls: ['./quarterly-graph.component.scss'],
+
 })
 export class QuarterlyGraphComponent implements OnInit {
   @Input() legendy: string | null = 'Eje Y';
   @Input() title: string | null = 'Gráfico';
+  @Input() data: ChartAverage[];
 
   constructor() {}
   /**
    * Data
    */
-  public lineChartData: ChartDataSets[] = [
-    {
-      data: [
-        {
-          x: 0,
-          y: 3,
-        },
-        {
-          x: 0,
-          y: 6,
-        },
-        {
-          x: 0,
-          y: 10,
-        },
-        {
-          x: 4,
-          y: 5,
-        },
-      ],
-      label: '2017-2018',
-      fill: true,
-      borderWidth: 2,
-    },
-    {
-      data: [
-        {
-          x: 0,
-          y: 0,
-        },
-        {
-          x: 2,
-          y: 2,
-        },
-        {
-          x: 3,
-          y: 3,
-        },
-      ],
-      label: '2017-2018',
-
-      fill: true,
-      borderWidth: 2,
-    },
-  ];
+  public lineChartData: ChartDataSets[] = [];
 
   /**
    * Labels
@@ -79,7 +38,6 @@ export class QuarterlyGraphComponent implements OnInit {
     responsive: true,
     title: {
       display: true,
-      text: 'Reporte de padrinos activos',
       fontSize: 20,
       fontColor: 'rgb(44, 129, 154)',
     },
@@ -134,19 +92,13 @@ export class QuarterlyGraphComponent implements OnInit {
    * Styles charts
    */
   public lineChartColors: Color[] = [
-    {
-      borderColor: 'rgb(142, 189, 62)',
-      backgroundColor: 'transparent',
-    },
-    {
-      borderColor: 'rgb(44, 129, 154)',
-      backgroundColor: 'transparent',
-    },
+
   ];
 
   public lineChartLegend = true;
   public lineChartType = 'line';
 
+  // -- Mock data --
   dataGraph = [
     // -- period
     {
@@ -169,10 +121,26 @@ export class QuarterlyGraphComponent implements OnInit {
 
   async ngOnInit() {
     /**
-     * Set up inputs
+     * Set legends and title
      */
-
     this.lineChartOptions.scales.yAxes[0].scaleLabel.labelString = this.legendy;
     this.lineChartOptions.title.text = this.title;
+
+    // -- Set data --
+
+    this.data.forEach( (value, key) => {
+      this.lineChartData.push({
+        data: value.coordinates,
+        label: `${value.academicPeriod[0]}-${value.academicPeriod[1]}`,
+        fill: true,
+        borderWidth: 2
+      });
+
+      this.lineChartColors.push({
+        backgroundColor: 'transparent',
+        borderColor: '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
+      });
+
+    });
   }
 }

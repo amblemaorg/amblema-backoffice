@@ -37,6 +37,7 @@
 
       <div class="col-12 text-right">
         <button
+        
           [attr.disabled]="dateInitSelected && dateEndSelected ? null : true"
           nbButton
           class="col-12 col-lg-auto"
@@ -52,8 +53,10 @@
       </div>
     </div>
 
+    <h1 id="graphic" #graphic>dawd</h1>
+
     <!-- Display graph -->
-    <div class="row justify-content-center" *ngIf="data">
+    <div  class="row justify-content-center" *ngIf="data">
       <div class="col-12 col-lg-9">
         <app-quarterly-graph
           [data]="data"
@@ -72,6 +75,7 @@
   </nb-card-body>
   <nb-card-footer class="text-right">
     <button
+      (click)="onGenerateDocument()"
       [attr.disabled]="data ? null : true"
       status="success"
       nbButton

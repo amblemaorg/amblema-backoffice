@@ -47,6 +47,7 @@
     "express": "^4.15.2",
     "i": "^0.3.6",
     "jquery": "^3.4.1",
+    "jspdf": "^1.5.3",
     "jw-paginate": "^1.0.4",
     "nebular-icons": "^1.1.0",
     "ng2-charts": "^2.3.2",

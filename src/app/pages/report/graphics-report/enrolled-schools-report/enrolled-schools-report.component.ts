@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
-import { Subscription } from 'rxjs';
 import { MathOlympicsReportComponent } from '../../math-olympics-report/math-olympics-report.component';
 
 @Component({
@@ -14,5 +13,11 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
     public mathOlympicsReportService: MathOlympicsReportService,
   ) { super(cd, mathOlympicsReportService); }
 
+  // -- Event get data --
+  onQueryGraph() {
 
+
+
+
+  }
 }

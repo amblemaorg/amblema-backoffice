@@ -8,9 +8,8 @@ import { Label, Color } from 'ng2-charts';
   styleUrls: ['./quarterly-graph.component.scss'],
 })
 export class QuarterlyGraphComponent implements OnInit {
-
   @Input() legendy: string | null = 'Eje Y';
-
+  @Input() title: string | null = 'Gráfico';
 
   constructor() {}
   /**
@@ -30,10 +29,13 @@ export class QuarterlyGraphComponent implements OnInit {
         {
           x: 0,
           y: 10,
-        }
+        },
+        {
+          x: 4,
+          y: 5,
+        },
       ],
       label: '2017-2018',
-
       fill: true,
       borderWidth: 2,
     },
@@ -50,7 +52,7 @@ export class QuarterlyGraphComponent implements OnInit {
         {
           x: 3,
           y: 3,
-        }
+        },
       ],
       label: '2017-2018',
 
@@ -78,13 +80,15 @@ export class QuarterlyGraphComponent implements OnInit {
     title: {
       display: true,
       text: 'Reporte de padrinos activos',
+      fontSize: 20,
+      fontColor: 'rgb(44, 129, 154)',
     },
     tooltips: {
       mode: 'point',
     },
     elements: {
       line: {
-        tension: 1,
+        tension: 0.001,
       },
     },
     scales: {
@@ -93,7 +97,7 @@ export class QuarterlyGraphComponent implements OnInit {
           stacked: true,
           scaleLabel: {
             display: true,
-            labelString: 'Numero de padrinos inactivos',
+            labelString: this.legendy,
             fontStyle: 'bold',
           },
         },
@@ -143,15 +147,10 @@ export class QuarterlyGraphComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-
   dataGraph = [
-
     // -- period
     {
-      academicPeriod: [
-        '2016',
-        '2017'
-      ],
+      academicPeriod: ['2016', '2017'],
 
       // -- School numbers
       coordinates: [
@@ -164,13 +163,16 @@ export class QuarterlyGraphComponent implements OnInit {
 
     // -- period
     {
-      academicPeriod: [
-        '2016',
-        '2017'
-      ],
+      academicPeriod: ['2016', '2017'],
     },
   ];
 
-  ngOnInit() {}
+  async ngOnInit() {
+    /**
+     * Set up inputs
+     */
 
+    this.lineChartOptions.scales.yAxes[0].scaleLabel.labelString = this.legendy;
+    this.lineChartOptions.title.text = this.title;
+  }
 }

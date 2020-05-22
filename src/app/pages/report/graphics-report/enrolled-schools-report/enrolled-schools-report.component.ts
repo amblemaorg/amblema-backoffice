@@ -16,8 +16,9 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
   // -- Event get data --
   onQueryGraph() {
 
+    console.log('generando grafico');
 
-
+    // -- Request the data grapch --
 
   }
 }

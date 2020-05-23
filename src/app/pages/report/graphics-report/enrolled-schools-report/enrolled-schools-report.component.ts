@@ -1,19 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
 import { MathOlympicsReportComponent } from '../../math-olympics-report/math-olympics-report.component';
 import { ChartAverage } from '../../_shared/_model/average-graph.model';
 import { GraphPdfService } from '../../_shared/_service/graph-pdf.service';
 
-
 @Component({
   selector: 'app-enrolled-schools-report',
   templateUrl: './enrolled-schools-report.component.html',
   styleUrls: ['./enrolled-schools-report.component.scss'],
-  providers: [ GraphPdfService ]
+  providers: [GraphPdfService],
 })
 export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent {
   data: ChartAverage[];
-  @ViewChild('graphic', { static: false }) htmlData:ElementRef;
 
   constructor(
     public cd: ChangeDetectorRef,
@@ -25,7 +23,6 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
 
   // -- Event get data --
   onQueryGraph() {
-
     // -- Request the data grapch --
 
     this.data = [
@@ -41,6 +38,7 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
             y: 10,
           },
         ],
+        total: 20
       },
       {
         academicPeriod: ['2021', '2022'],
@@ -54,13 +52,13 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
             y: 2,
           },
         ],
+        total: 20
       },
     ];
   }
 
   onGenerateDocument() {
-    console.log( this.htmlData )
-    this.pdfService.pdfOpen(this.htmlData);
-
+    const data = document.getElementById('graphic'); // <-- Get html id
+    this.pdfService.pdfOpen(data); // <-- Open in the browser
   }
 }

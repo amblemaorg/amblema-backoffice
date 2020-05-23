@@ -40,9 +40,10 @@ export class QuarterlyGraphComponent implements OnInit {
       display: true,
       fontSize: 20,
       fontColor: 'rgb(44, 129, 154)',
+      padding: 30
     },
     tooltips: {
-      mode: 'point',
+      mode: 'nearest',
     },
     elements: {
       line: {

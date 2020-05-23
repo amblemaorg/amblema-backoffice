@@ -53,10 +53,8 @@
       </div>
     </div>
 
-    <h1 id="graphic" #graphic>dawd</h1>
-
     <!-- Display graph -->
-    <div  class="row justify-content-center" *ngIf="data">
+    <div id="graphic" #graphic  class="row justify-content-center" *ngIf="data">
       <div class="col-12 col-lg-9">
         <app-quarterly-graph
           [data]="data"

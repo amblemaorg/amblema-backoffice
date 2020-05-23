@@ -125,7 +125,7 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Teléfono de habitación' },
                 { ...colorHeaderRow, text: 'Estado' },
                 { ...colorHeaderRow, text: 'Municipio' },
-                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Calles / carrerass' },
                 { ...colorHeaderRow, text: 'Casa / Edificio' },
                 { ...colorHeaderRow, text: 'AmbLePensum' },
                 { ...colorHeaderRow, text: 'Profesión' },
@@ -176,7 +176,7 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Estado' },
                 { ...colorHeaderRow, text: 'Municipio' },
                 { ...colorHeaderRow, text: 'Ciudad' },
-                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Calles / carrerass' },
                 { ...colorHeaderRow, text: 'Zona' },
                 { ...colorHeaderRow, text: 'Dirección de la zona' },
                 { ...colorHeaderRow, text: 'N° de grados' },
@@ -231,7 +231,7 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Estado' },
                 { ...colorHeaderRow, text: 'Municipio' },
                 { ...colorHeaderRow, text: 'Ciudad' },
-                { ...colorHeaderRow, text: 'Calles / carreras' },
+                { ...colorHeaderRow, text: 'Calles / carrerass' },
                 { ...colorHeaderRow, text: 'Estatus' },
             ];
 

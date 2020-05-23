@@ -86,7 +86,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         editable: false,
       },
       address: {
-        title: 'Calles / carreras',
+        title: 'Calles / carrerass',
         type: 'string',
         editable: false,
       },

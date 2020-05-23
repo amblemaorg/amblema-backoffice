@@ -212,6 +212,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Reporte de las olimpíadas de matemáticas ',
         link: '/pages/report/math-olympics-report'
       },
+      {
+        title: 'Escuelas inscritas',
+        link: '/pages/report/enrolled-schools-report'
+      },
     ]
   },
 ];

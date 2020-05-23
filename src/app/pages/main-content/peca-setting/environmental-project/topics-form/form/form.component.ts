@@ -5,26 +5,26 @@ import {
   OnDestroy,
   SimpleChanges,
   OnChanges,
-} from "@angular/core";
-import { Store, Select } from "@ngxs/store";
+} from '@angular/core';
+import { Store, Select } from '@ngxs/store';
 import {
   AddSchoolLevel,
   DeleteTopic,
   EnvironmentalProjectModel,
   EnvironmentalProjectState,
   UpdateTopic,
-} from "src/app/store/environmental-project.action";
-import { Level, Lapse } from "src/app/models/environmental-project.model";
-import { FormGroup, FormControl } from "@angular/forms";
-import { Observable, Subscription } from "rxjs";
-import { EnvironmentalProjectService } from "src/app/services/environmental-project.service";
-import { take } from "rxjs/operators";
-import { HttpEventType, HttpEvent } from "@angular/common/http";
+} from 'src/app/store/environmental-project.action';
+import { Level, Lapse } from 'src/app/models/environmental-project.model';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
+import { take } from 'rxjs/operators';
+import { HttpEventType, HttpEvent } from '@angular/common/http';
 
 @Component({
-  selector: "app-form",
-  templateUrl: "./form.component.html",
-  styleUrls: ["./form.component.scss"],
+  selector: 'app-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit, OnDestroy {
   @Select(EnvironmentalProjectState.environmentalProjectStorable)
@@ -38,13 +38,13 @@ export class FormComponent implements OnInit, OnDestroy {
 
   // -- General grades selected --
   options = [
-    { label: "0", value: false }, // <-- Prescolar 0
-    { label: "1", value: false }, // <-- Primer grado 1
-    { label: "2", value: false }, // <-- Segundo grado 2
-    { label: "3", value: false }, // <-- Tercer grado 3
-    { label: "4", value: false }, // <-- Cuarto grado 4
-    { label: "5", value: false }, // <-- Quinto grado 5
-    { label: "6", value: false }, // <-- Sexto grado 6
+    { label: '0', value: false }, // <-- Prescolar 0
+    { label: '1', value: false }, // <-- Primer grado 1
+    { label: '2', value: false }, // <-- Segundo grado 2
+    { label: '3', value: false }, // <-- Tercer grado 3
+    { label: '4', value: false }, // <-- Cuarto grado 4
+    { label: '5', value: false }, // <-- Quinto grado 5
+    { label: '6', value: false }, // <-- Sexto grado 6
   ];
 
   // -- Options selected --
@@ -116,7 +116,7 @@ export class FormComponent implements OnInit, OnDestroy {
           {
             target: this.optionsSelected,
             week: [],
-            duration: "",
+            duration: '',
             techniques: [],
             activities: [],
             resources: [],
@@ -170,14 +170,14 @@ export class FormComponent implements OnInit, OnDestroy {
           this.index
         )
       ).toPromise().then().finally( () => {
-        
-        
+
+
         this.subscription = this.storable$.subscribe((value) => {
           this.subscription = this.environmentalProjectService
             .updateEnvironmentalProject(value)
             .subscribe((response: HttpEvent<any>) => {
               // -- Successfully mock delete topic --
-    
+
               switch (response.type) {
                 case HttpEventType.UploadProgress:
                   this.showProgress = true;
@@ -192,7 +192,7 @@ export class FormComponent implements OnInit, OnDestroy {
         });
       } );
     });
-    
-    
+
+
   }
 }

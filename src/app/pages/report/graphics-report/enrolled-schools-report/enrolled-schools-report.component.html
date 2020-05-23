@@ -1,0 +1,85 @@
+<nb-card>
+  <nb-card-header>
+    Reporte de escuelas inscritas
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <h6>Filtro por rango de período académico</h6>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label class="label">Inicio</label>
+        <select
+          class="form-control form-group"
+          (change)="onChangeDateInit($event.target.value)"
+          [(ngModel)]="dateInitSelected"
+        >
+          <option [value]="null" disabled>- Inicio Período académico -</option>
+          <option [value]="item.id" *ngFor="let item of datesInit">{{
+            item.name
+          }}</option>
+        </select>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <label class="label">Fin</label>
+        <select
+          [attr.disabled]="!dateInitSelected ? true : null"
+          class="form-control form-group"
+          [(ngModel)]="dateEndSelected"
+        >
+          <option [value]="null" disabled>- Fin Período académico -</option>
+          <option [value]="item.id" *ngFor="let item of datesEnd">{{
+            item.name
+          }}</option>
+        </select>
+      </div>
+
+      <div class="col-12 text-right">
+        <button
+        
+          [attr.disabled]="dateInitSelected && dateEndSelected ? null : true"
+          nbButton
+          class="col-12 col-lg-auto"
+          (click)="onQueryGraph()"
+        >
+          Consultar
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <hr />
+      </div>
+    </div>
+
+    <!-- Display graph -->
+    <div id="graphic" #graphic  class="row justify-content-center" *ngIf="data">
+      <div class="col-12 col-lg-9">
+        <app-quarterly-graph
+          [data]="data"
+          [title]="'Reporte de escuelas inscritas'"
+          [legendy]="'Número de escuelas inscritas'"
+        ></app-quarterly-graph>
+      </div>
+    </div>
+
+    <!-- Show message no graph -->
+    <div class="row" *ngIf="!data">
+      <div class="col-12 text-center">
+        <h4>Seleccione los períodos para generar la gráfica</h4>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button
+      (click)="onGenerateDocument()"
+      [attr.disabled]="data ? null : true"
+      status="success"
+      nbButton
+      class="col-12 col-lg-auto"
+    >
+      Exportar <nb-icon icon="download-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>

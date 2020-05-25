@@ -7,7 +7,6 @@ import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GraphicReportModule } from '../../_shared/graphic-report/graphic-report.module';
 
-
 @NgModule({
   declarations: [SponsorStatusComponent],
   imports: [

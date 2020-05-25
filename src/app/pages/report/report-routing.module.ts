@@ -1,46 +1,46 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "diagnostic-report",
+    path: 'diagnostic-report',
     loadChildren: () =>
-      import("./diagnostic-report/diagnostic-report.module").then(
+      import('./diagnostic-report/diagnostic-report.module').then(
         (m) => m.DiagnosticReportModule
       ),
   },
   {
-    path: "sponsor-report",
+    path: 'sponsor-report',
     loadChildren: () =>
-      import("./sponsor-report/sponsor-report.module").then(
+      import('./sponsor-report/sponsor-report.module').then(
         (m) => m.SponsorReportModule
       ),
   },
   {
-    path: "coordinator-report",
+    path: 'coordinator-report',
     loadChildren: () =>
-      import("./coordinator-report/coordinator-report.module").then(
+      import('./coordinator-report/coordinator-report.module').then(
         (m) => m.CoordinatorReportModule
       ),
   },
   {
-    path: "school-report",
+    path: 'school-report',
     loadChildren: () =>
-      import("./school-report/school-report.module").then(
+      import('./school-report/school-report.module').then(
         (m) => m.SchoolReportModule
       ),
   },
   {
-    path: "teacher-report",
+    path: 'teacher-report',
     loadChildren: () =>
-      import("./teacher-report/teacher-report.module").then(
+      import('./teacher-report/teacher-report.module').then(
         (m) => m.TeacherReportModule
       ),
   },
   {
-    path: "math-olympics-report",
+    path: 'math-olympics-report',
     loadChildren: () =>
-      import("./math-olympics-report/math-olympics-report.module").then(
+      import('./math-olympics-report/math-olympics-report.module').then(
         (m) => m.MathOlympicsReportModule
       ),
   },
@@ -50,16 +50,16 @@ const routes: Routes = [
    */
 
   {
-    path: "enrolled-schools-report",
+    path: 'enrolled-schools-report',
     loadChildren: () =>
       import(
-        "./graphics-report/enrolled-schools-report/enrolled-schools-report.module"
+        './graphics-report/enrolled-schools-report/enrolled-schools-report.module'
       ).then((m) => m.EnrolledSchoolsReportModule),
   },
   {
-    path: "sponsor-status",
+    path: 'sponsor-status',
     loadChildren: () =>
-      import("./graphics-report/sponsor-status/sponsor-status.module").then(
+      import('./graphics-report/sponsor-status/sponsor-status.module').then(
         (m) => m.SponsorStatusModule
       ),
   },

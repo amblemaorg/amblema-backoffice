@@ -216,6 +216,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Escuelas inscritas',
         link: '/pages/report/enrolled-schools-report'
       },
+      {
+        title: 'Padrinos activos - inactivos',
+        link: '/pages/report/sponsor-status'
+      },
     ]
   },
 ];

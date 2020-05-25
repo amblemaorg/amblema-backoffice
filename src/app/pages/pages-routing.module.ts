@@ -171,6 +171,13 @@ const routes: Routes = [
                 './report/graphics-report/enrolled-schools-report/enrolled-schools-report.module'
               ).then((m) => m.EnrolledSchoolsReportModule),
           },
+          {
+            path: 'sponsor-status',
+            loadChildren: () =>
+              import(
+                './report/graphics-report/sponsor-status/sponsor-status.module'
+              ).then((m) => m.SponsorStatusModule),
+          },
         ],
       },
       // Redirect To

@@ -1,11 +1,23 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InformationRequestService {
 
-  private readonly INFORMATION_REQUEST = '';
+  private readonly REQUEST_STEP_APPROVAL = 'requestsstepapproval';
 
-  constructor() { }
+  constructor( private httpClient: HttpClient ) { }
+
+  getRequestStepApproval(): Observable<RequestStepApproval[]> {
+    return this.httpClient.get<RequestStepApproval[]>(`${environment.api}${this.REQUEST_STEP_APPROVAL}`)
+      .pipe(
+        map((data: any) => data.records)
+      );
+  }
 }

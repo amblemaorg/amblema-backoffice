@@ -12,6 +12,8 @@ import {
   REQUEST_STATUS,
 } from "src/app/helpers/convention/request-status";
 import { Utility } from "src/app/helpers/utility";
+import { NbDialogService } from '@nebular/theme';
+import { InformationDetailsComponent } from './information-details/information-details.component';
 
 @Component({
   selector: "app-requests-validate-information",
@@ -24,8 +26,11 @@ export class RequestsValidateInformationComponent extends BaseTable
     RequestStepApproval[]
   >;
 
-  constructor(private helper: Utility) {
-    super();
+  constructor(
+    private dialogService: NbDialogService,
+    private helper: Utility) {
+    
+      super();
 
     this.settings.actions = {
       columnTitle: "Acciones",
@@ -133,4 +138,17 @@ export class RequestsValidateInformationComponent extends BaseTable
   }
 
   ngOnInit() {}
+
+  onAction(event) {
+    switch (event.action) {
+      case this.ACTION.VIEW: 
+          this.dialogService.open( InformationDetailsComponent )
+          
+        break;
+      case this.ACTION.DELETE:   
+        break;
+    }
+
+
+  }
 }

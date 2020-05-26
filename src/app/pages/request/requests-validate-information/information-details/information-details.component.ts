@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'app-information-details',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InformationDetailsComponent implements OnInit {
 
-  constructor() { }
+  @Input() data: any;
+
+  constructor( protected dialogRef: NbDialogRef<InformationDetailsComponent> ) { }
 
   ngOnInit() {
   }
 
+  onClose() {
+    this.dialogRef.close();
+  }
 }

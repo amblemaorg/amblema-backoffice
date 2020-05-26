@@ -14,6 +14,8 @@ export class InformationRequestService {
 
   constructor( private httpClient: HttpClient ) { }
 
+
+
   getRequestStepApproval(): Observable<RequestStepApproval[]> {
     return this.httpClient.get<RequestStepApproval[]>(`${environment.api}${this.REQUEST_STEP_APPROVAL}`)
       .pipe(

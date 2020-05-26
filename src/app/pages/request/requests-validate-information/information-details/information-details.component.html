@@ -2,7 +2,8 @@
   <nb-card-header>Validación de información</nb-card-header>
   <nb-card-body>
     <div class="row">
-      <div class="col-12 col-lg-6 form-group w-100">
+
+      <div class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5"
             >Fecha de la solicitud:</span
@@ -10,21 +11,67 @@
           {{ data.createdAt | date: "dd/MM/yyyy" }}
         </p>
         <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5"
-            >Fecha de la solicitud:</span
-          >
+          <span class="pl-0 font-weight-bold col-5">Nombre del paso:</span>
+          {{ data.stepName }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Código del proyecto:</span>
+          {{ data.project.code }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Tag:</span>
+          {{
+            data.stepTag === "1"
+              ? "General"
+              : data.stepTag === "2"
+              ? "Coordinador"
+              : data.stepTag === "3"
+              ? "Padrino"
+              : "Escuela"
+          }}
+        </p>
+      </div>
+
+      <div class="col-12"><hr></div>
+        
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100" *ngIf="data.stepHasText">
+          <span class="pl-0 font-weight-bold col-5">Texto:</span>
+          {{ data.stepText }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100" *ngIf="data.stepHasFile">
+          <span class="pl-0 font-weight-bold col-5">Archivo adjunto:</span>
+          <a [attr.href]="data.stepUploadedFile.url">{{ data.stepUploadedFile.name }}</a>
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100" *ngIf="data.stepHasDate">
+          <span class="pl-0 font-weight-bold col-5">Fecha:</span>
           {{ data.createdAt | date: "dd/MM/yyyy" }}
         </p>
       </div>
-      
-      <div class="col-12 col-lg-6">
-        <p class="d-flex w-100">
-            <span class="pl-0 font-weight-bold col-5"
-              >Código del proyecto:</span
-            >
-            {{ data.project.code }}
-          </p>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100" *ngIf="data.stepHasChecklist">
+          <span class="pl-0 font-weight-bold col-5">List de opciones:</span>
+          <ul>
+              <li *ngFor="let item of data.stepChecklist">{{ item.name }} - {{ checked ? 'Seleccionado' : 'No Seleccionado' }}</li>
+          </ul>
+        </p>
       </div>
+
+
+
     </div>
   </nb-card-body>
   <nb-card-footer>

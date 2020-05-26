@@ -1,6 +1,6 @@
-import { RequestStepApproval } from "src/app/models/request/request-step-approval.model";
-import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
-import { InformationRequestService } from "src/app/services/request/information-request.service";
+import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
+import { State, Selector, NgxsOnInit, StateContext, Action } from '@ngxs/store';
+import { InformationRequestService } from 'src/app/services/request/information-request.service';
 
 export interface RequestsStepApprovalModel {
   requestsStepsApproval: RequestStepApproval[];
@@ -8,16 +8,16 @@ export interface RequestsStepApprovalModel {
 }
 
 export class GetRequestsStepApproval {
-  static readonly type = "[RequestStepApproval] Get Request Step Approval";
+  static readonly type = '[RequestStepApproval] Get Request Step Approval';
 }
 
 export class SelectedRequest {
-  static readonly type = "[selectedRequest] Selected Request";
+  static readonly type = '[selectedRequest] Selected Request';
   constructor(public payload: any) {}
 }
 
 @State<RequestsStepApprovalModel>({
-  name: "requeststepapproval",
+  name: 'requeststepapproval',
   defaults: {
     requestsStepsApproval: [],
   },

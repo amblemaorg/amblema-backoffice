@@ -13,8 +13,8 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
 
   data: ChartAverage[];
 
-  status = [{ label: 'Activo', value: '1' }, { label:'Inactivo', value: '2' }]
-  statusSelected = '1'; 
+  status = [{ label: 'Activo', value: '1' }, { label: 'Inactivo', value: '2' }];
+  statusSelected = '1';
 
   constructor(
     public cd: ChangeDetectorRef,

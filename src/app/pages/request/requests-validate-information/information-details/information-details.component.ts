@@ -1,18 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
+import { RequestStepApprovalState } from 'src/app/store/request/request-step-approval.action';
+import { Observable, Subscription } from 'rxjs';
+import { Select } from '@ngxs/store';
 
 @Component({
   selector: 'app-information-details',
   templateUrl: './information-details.component.html',
   styleUrls: ['./information-details.component.scss']
 })
-export class InformationDetailsComponent implements OnInit {
+export class InformationDetailsComponent implements OnInit, OnDestroy {
 
-  @Input() data: any;
+  @Select( RequestStepApprovalState.selectedRequest ) data$: Observable<{any}>; 
+  subscription: Subscription;
 
+  data:any;
   constructor( protected dialogRef: NbDialogRef<InformationDetailsComponent> ) { }
 
   ngOnInit() {
+
+
+    this.subscription = this.data$.subscribe( response => this.data = response )
+
+  }
+
+  ngOnDestroy(): void {
+    if( this.subscription )
+      this.subscription.unsubscribe();
   }
 
   onClose() {

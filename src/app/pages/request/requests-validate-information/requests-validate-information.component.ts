@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
-import { Select } from '@ngxs/store';
-import { RequestStepApprovalState } from 'src/app/store/request/request-step-approval.action';
+import { Select, Store } from '@ngxs/store';
+import { RequestStepApprovalState, SelectedRequest } from 'src/app/store/request/request-step-approval.action';
 import { Observable } from 'rxjs';
 import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
@@ -27,6 +27,7 @@ export class RequestsValidateInformationComponent extends BaseTable
   >;
 
   constructor(
+    private store:Store,
     private dialogService: NbDialogService,
     private helper: Utility) {
 
@@ -144,6 +145,7 @@ export class RequestsValidateInformationComponent extends BaseTable
       case this.ACTION.VIEW:
           this.dialogService.open( InformationDetailsComponent );
 
+          this.store.dispatch( new SelectedRequest( event.data ) )
           break;
       case this.ACTION.DELETE:
         break;

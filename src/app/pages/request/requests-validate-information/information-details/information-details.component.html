@@ -3,7 +3,20 @@
     <nb-card-body>
         <div class="row">
             <div class="col-12">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, voluptate delectus! Commodi molestias minus suscipit quidem veritatis quibusdam quasi fuga, maiores optio amet sed eveniet, adipisci perferendis. Magni, ad similique.
+
+                <div class="row" *ngIf="data$ | async">
+                    <div class="col-12 col-lg-6 form-group">
+                        
+                        <p class="d-flex w-100"> <span
+                                class="pl-0 font-weight-bold col-5">Fecha de la solicitud:</span>
+                            {{ (data$.createdAt | async) | json }} </p>
+                        
+                    </div>
+                </div>
+
+                <div>
+                    {{ (data$.createAt | async) | json }}
+                </div>
             </div> 
         </div>
     </nb-card-body>

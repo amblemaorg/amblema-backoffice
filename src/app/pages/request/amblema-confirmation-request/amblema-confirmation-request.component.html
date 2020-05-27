@@ -1,12 +1,17 @@
 <nb-card>
-    <nb-card-header>
-        Confirmación AmbLema
-    </nb-card-header>
-    <nb-card-body>
-
-        <ng2-smart-table 
-                [settings]="settings" ></ng2-smart-table>
-
-    </nb-card-body>
-    <nb-card-footer></nb-card-footer>
+  <nb-card-header>
+    Confirmación AmbLema
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <ng2-smart-table 
+            (custom)="onAction($event)"
+            [settings]="settings"></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer></nb-card-footer>
 </nb-card>

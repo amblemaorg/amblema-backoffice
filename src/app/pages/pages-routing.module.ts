@@ -73,6 +73,13 @@ const routes: Routes = [
                 './request/requests-validate-information/requests-validate-information.module'
               ).then((m) => m.RequestsValidateInformationModule),
           },
+          {
+            path: 'amblema-confirmation-request',
+            loadChildren: () =>
+              import(
+                './request/amblema-confirmation-request/amblema-confirmation-request.module'
+              ).then((m) => m.AmblemaConfirmationRequestModule),
+          },
         ],
       },
       {

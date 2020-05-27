@@ -1,7 +1,7 @@
 import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
 import { State, Selector, NgxsOnInit, StateContext, Action } from '@ngxs/store';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
-import { patch, updateItem } from '@ngxs/store/operators';
+import { patch, updateItem, removeItem } from '@ngxs/store/operators';
 
 export interface RequestsStepApprovalModel {
   requestsStepsApproval: RequestStepApproval[];
@@ -20,6 +20,11 @@ export class UpdateRequestStepApproval {
 export class SelectedRequest {
   static readonly type = '[selectedRequest] Selected Request';
   constructor(public payload: any) {}
+}
+
+export class DeleteRequestStepApproval {
+  static readonly type = '[RequestStepApproval] Delete Request Step Approval';
+  constructor( public id: string ) {}  
 }
 
 @State<RequestsStepApprovalModel>({
@@ -80,4 +85,14 @@ export class RequestStepApprovalState implements NgxsOnInit {
       selectedRequest: action.payload,
     });
   }
+
+  @Action(DeleteRequestStepApproval)
+  deleteRequestStepApproval(ctx: StateContext<RequestsStepApprovalModel>, action: DeleteRequestStepApproval) {
+
+    ctx.setState(patch({
+      ...ctx.getState(),
+      requestsStepsApproval: removeItem<RequestStepApproval>( item => item.id === action.id )
+    }))
+
+  } 
 }

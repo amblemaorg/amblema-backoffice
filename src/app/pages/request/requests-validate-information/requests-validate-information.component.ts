@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
-import { Select, Store } from '@ngxs/store';
+import { Component, OnInit } from "@angular/core";
+import { BaseTable } from "src/app/helpers/base-table";
+import { ACTION } from "src/app/helpers/text-content/text-crud";
+import { Select, Store } from "@ngxs/store";
 import {
   RequestStepApprovalState,
   SelectedRequest,
-} from 'src/app/store/request/request-step-approval.action';
-import { Observable } from 'rxjs';
-import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
-import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
-import { DatePipe } from '@angular/common';
+  DeleteRequestStepApproval,
+} from "src/app/store/request/request-step-approval.action";
+import { Observable } from "rxjs";
+import { RequestStepApproval } from "src/app/models/request/request-step-approval.model";
+import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
+import { DatePipe } from "@angular/common";
 import {
   TYPE_REQUEST,
   REQUEST_STATUS,
-} from 'src/app/helpers/convention/request-status';
-import { Utility } from 'src/app/helpers/utility';
-import { NbDialogService } from '@nebular/theme';
-import { InformationDetailsComponent } from './information-details/information-details.component';
+} from "src/app/helpers/convention/request-status";
+import { Utility } from "src/app/helpers/utility";
+import { NbDialogService } from "@nebular/theme";
+import { InformationDetailsComponent } from "./information-details/information-details.component";
+import { InformationRequestService } from 'src/app/services/request/information-request.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
-  selector: 'app-requests-validate-information',
-  templateUrl: './requests-validate-information.component.html',
-  styleUrls: ['./requests-validate-information.component.scss'],
+  selector: "app-requests-validate-information",
+  templateUrl: "./requests-validate-information.component.html",
+  styleUrls: ["./requests-validate-information.component.scss"],
 })
 export class RequestsValidateInformationComponent extends BaseTable
   implements OnInit {
@@ -32,12 +35,14 @@ export class RequestsValidateInformationComponent extends BaseTable
   constructor(
     private store: Store,
     private dialogService: NbDialogService,
+    private toast: CustomToastrService,
+    private serviceInformation: InformationRequestService,
     private helper: Utility
   ) {
     super();
 
     this.settings.actions = {
-      columnTitle: 'Acciones',
+      columnTitle: "Acciones",
       add: false,
       edit: false,
       //  Fake action
@@ -50,23 +55,23 @@ export class RequestsValidateInformationComponent extends BaseTable
 
     this.settings.columns = {
       requestCode: {
-        title: 'N° de la solicitud',
-        type: 'string',
+        title: "N° de la solicitud",
+        type: "string",
       },
       project: {
-        title: 'ID del proyecto',
-        type: 'string',
+        title: "ID del proyecto",
+        type: "string",
         valuePrepareFunction: (row: any) => row.code,
         filterFunction: (cell?: any, search?: string) => {
           const value: string = cell.code;
-          return value.indexOf(search.toUpperCase()) === 0 || search === ''
+          return value.indexOf(search.toUpperCase()) === 0 || search === ""
             ? true
             : false;
         },
       },
       type: {
-        title: 'Tipo de solicitante',
-        type: 'text',
+        title: "Tipo de solicitante",
+        type: "text",
         valuePrepareFunction: (row: any) => {
           const value: string =
             row === TYPE_REQUEST.COORDINATOR.ORIGINAL
@@ -85,7 +90,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : TYPE_REQUEST.SPONSOR.CONVERTION;
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
             return true;
           } else {
             return false;
@@ -93,14 +98,14 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       user: {
-        title: 'Solicitante',
-        type: 'string',
+        title: "Solicitante",
+        type: "string",
         valuePrepareFunction: (row: any) => row.name,
         filterFunction: (cell?: any, search?: string) => {
           if (cell.name) {
             const value: string = cell.name as string;
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
               return true;
             } else {
               return false;
@@ -109,16 +114,16 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       createdAt: {
-        title: 'Fecha',
-        type: 'string',
+        title: "Fecha",
+        type: "string",
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
+          return new DatePipe("es-VE").transform(lastLoginTime, "dd/MM/yyyy");
         },
       },
       status: {
-        title: 'Estatus',
-        type: 'text ',
+        title: "Estatus",
+        type: "text ",
         valuePrepareFunction: (row: any) => {
           return this.helper.readlyRequestStatus(row);
         },
@@ -133,7 +138,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : REQUEST_STATUS.CANCELLED.VALUE;
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
             return true;
           } else {
             return false;
@@ -149,10 +154,14 @@ export class RequestsValidateInformationComponent extends BaseTable
     switch (event.action) {
       case this.ACTION.VIEW:
         this.dialogService.open(InformationDetailsComponent);
-
         this.store.dispatch(new SelectedRequest(event.data));
         break;
       case this.ACTION.DELETE:
+      this.serviceInformation.deleteRequestStepApproval( event.data.id ).subscribe( () => {
+        this.store.dispatch(new DeleteRequestStepApproval(event.data.id));
+        this.toast.deleteRegister('Solicitud eliminada', 'Se ha eliminado una solicitud');
+      } );
+        
         break;
     }
   }

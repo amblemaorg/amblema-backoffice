@@ -1,8 +1,7 @@
-<nb-card class="mx-4">
+<nb-card class="mx-5">
   <nb-card-header>Validación de información</nb-card-header>
   <nb-card-body>
     <div class="row">
-
       <div class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5"
@@ -38,45 +37,128 @@
         </p>
       </div>
 
-      <div class="col-12"><hr></div>
-        
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100" *ngIf="data.stepHasText">
+      <div class="col-12"><hr /></div>
+
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasText">
+        <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Texto:</span>
           {{ data.stepText }}
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100" *ngIf="data.stepHasFile">
-          <span class="pl-0 font-weight-bold col-5">Archivo adjunto:</span>
-          <a [attr.href]="data.stepUploadedFile.url">{{ data.stepUploadedFile.name }}</a>
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasUpload">
+        <p class="d-flex w-100" *ngIf="data.stepUploadedFile">
+          <span class="pl-0 font-weight-bold col-5"
+            >Archivo cargado por el usuario:</span
+          >
+          <a target="_blank" [attr.href]="data.stepUploadedFile.url">{{
+            data.stepUploadedFile.name
+          }}</a>
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100" *ngIf="data.stepHasDate">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasFile">
+        <p class="d-flex w-100" *ngIf="data.stepFile">
+          <span class="pl-0 font-weight-bold col-5"
+            >Archivo cargar desde administrador:</span
+          >
+          <a target="_blank" [attr.href]="data.stepFile.url">{{
+            data.stepFile.name
+          }}</a>
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasDate">
+        <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Fecha:</span>
           {{ data.createdAt | date: "dd/MM/yyyy" }}
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100" *ngIf="data.stepHasChecklist">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasChecklist">
+        <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">List de opciones:</span>
-          <ul>
-              <li *ngFor="let item of data.stepChecklist">{{ item.name }} - {{ checked ? 'Seleccionado' : 'No Seleccionado' }}</li>
-          </ul>
+        </p>
+        <ul>
+          <li *ngFor="let item of data.stepChecklist">
+            {{ item.name }} - {{ checked ? "Seleccionado" : "No Seleccionado" }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasVideo">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Video:</span>
+          {{ data.stepVideo }}
         </p>
       </div>
 
+      <div class="col-12">
+        <div *ngIf="data.status === '1'">
+          <hr />
+          <div *ngIf="confirmAction">
+            <label class="label"> Acciones para la solicitud</label>
+            <select
+              [(ngModel)]="statusSelected"
+              (change)="statusSelected = $event.target.value"
+              class="form-control form-group"
+            >
+              <option value="2">Aceptar</option>
+              <option value="3">Rechazar</option>
+            </select>
+          </div>
 
+          <div class="w-100 text-right justify-content-end">
+            <button
+              class="col-12 col-md-auto"
+              nbButton
+              *ngIf="confirmAction"
+              status="primary"
+              (click)="confirmAction = false"
+            >
+              Proceder
+            </button>
 
+          <div *ngIf="!confirmAction">
+            <nb-alert status="info"
+              >Confirmar acción, al aprobar o rechazar esta solicitud no se
+              podrá cambiar de estatus.</nb-alert
+            >
+
+              <div class="row justify-content-end">
+                <div class="col-6 col-md-auto">
+                  <button
+                    (click)="onApprovedRequest()"
+                    nbButton
+                    fullWidth
+                    *ngIf="!confirmAction"
+                    status="danger"
+                  >
+                    Confirmar
+                  </button>
+                </div>
+                <div class="col-6 col-md-auto">
+                  <button
+                    nbButton
+                    outline
+                    fullWidth
+                    *ngIf="!confirmAction"
+                    status="basic"
+                    (click)="confirmAction = true"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </nb-card-body>
-  <nb-card-footer>
-    <button nbButton (click)="onClose()" outline status="basic">
-      Cancelar
+  <nb-card-footer class="text-right">
+    <button nbButton (click)="onClose()" outline status="basic" class="col-12 col-lg-auto">
+      Cerrar
     </button>
   </nb-card-footer>
 </nb-card>

@@ -15,6 +15,9 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   data:any;
+  statusSelected = '2';
+  confirmAction = true;
+
   constructor( protected dialogRef: NbDialogRef<InformationDetailsComponent> ) { }
 
   ngOnInit() {

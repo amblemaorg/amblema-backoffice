@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { BaseTable } from "src/app/helpers/base-table";
-import { Store } from "@ngxs/store";
-import { EventManager } from "@angular/platform-browser";
+import { Component, OnInit } from '@angular/core';
+import { BaseTable } from 'src/app/helpers/base-table';
+import { Store } from '@ngxs/store';
+import { EventManager } from '@angular/platform-browser';
 
 @Component({
-  selector: "app-amblema-confirmation-request",
-  templateUrl: "./amblema-confirmation-request.component.html",
-  styleUrls: ["./amblema-confirmation-request.component.scss"],
+  selector: 'app-amblema-confirmation-request',
+  templateUrl: './amblema-confirmation-request.component.html',
+  styleUrls: ['./amblema-confirmation-request.component.scss'],
 })
 export class AmblemaConfirmationRequestComponent extends BaseTable
   implements OnInit {
@@ -14,7 +14,7 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
     super();
 
     this.settings.actions = {
-      columnTitle: "Acciones",
+      columnTitle: 'Acciones',
       add: false,
       edit: false,
       //  Fake action
@@ -29,28 +29,28 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
 
     this.settings.columns = {
       code: {
-        title: "N° de la solicitud",
-        type: "string",
+        title: 'N° de la solicitud',
+        type: 'string',
       },
       id: {
-        title: "Id del proyecto",
-        type: "string",
+        title: 'Id del proyecto',
+        type: 'string',
       },
       coordinator: {
-        title: "Coordinador",
-        type: "string",
+        title: 'Coordinador',
+        type: 'string',
       },
       sponsor: {
-        title: "Padrino",
-        type: "string",
+        title: 'Padrino',
+        type: 'string',
       },
       school: {
-        title: "Escuela",
-        type: "string",
+        title: 'Escuela',
+        type: 'string',
       },
       status: {
-        title: "Estatus",
-        type: "string",
+        title: 'Estatus',
+        type: 'string',
       },
     };
   }

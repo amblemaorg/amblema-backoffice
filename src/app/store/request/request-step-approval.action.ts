@@ -24,7 +24,7 @@ export class SelectedRequest {
 
 export class DeleteRequestStepApproval {
   static readonly type = '[RequestStepApproval] Delete Request Step Approval';
-  constructor( public id: string ) {}  
+  constructor( public id: string ) {}
 }
 
 @State<RequestsStepApprovalModel>({
@@ -92,7 +92,7 @@ export class RequestStepApprovalState implements NgxsOnInit {
     ctx.setState(patch({
       ...ctx.getState(),
       requestsStepsApproval: removeItem<RequestStepApproval>( item => item.id === action.id )
-    }))
+    }));
 
-  } 
+  }
 }

@@ -94,7 +94,8 @@
       </div>
 
       <div class="col-12">
-        <div *ngIf="data.status === '1'">
+
+        <div *ngIf="(data$ | async)?.status === '1'">
           <hr />
           <div *ngIf="confirmAction">
             <label class="label"> Acciones para la solicitud</label>
@@ -120,12 +121,19 @@
             </button>
 
           <div *ngIf="!confirmAction">
-            <nb-alert status="info"
+            <nb-alert status="info" class="text-left"
               >Confirmar acción, al aprobar o rechazar esta solicitud no se
               podrá cambiar de estatus.</nb-alert
             >
 
-              <div class="row justify-content-end">
+
+            <div *ngIf="statusSelected === '3'" class="text-left">
+              <label class="label">Comentario</label>
+              <textarea fullWidth class="form-group" placeholder="Comentario" rows="5" [(ngModel)]="comment" nbInput></textarea>
+              
+            </div>
+            
+            <div class="row justify-content-end">
                 <div class="col-6 col-md-auto">
                   <button
                     (click)="onApprovedRequest()"

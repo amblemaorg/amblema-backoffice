@@ -1,6 +1,7 @@
 import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
 import { State, Selector, NgxsOnInit, StateContext, Action } from '@ngxs/store';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
+import { patch, updateItem } from '@ngxs/store/operators';
 
 export interface RequestsStepApprovalModel {
   requestsStepsApproval: RequestStepApproval[];
@@ -9,6 +10,11 @@ export interface RequestsStepApprovalModel {
 
 export class GetRequestsStepApproval {
   static readonly type = '[RequestStepApproval] Get Request Step Approval';
+}
+
+export class UpdateRequestStepApproval {
+  static readonly type = '[RequestStepApproval] Update Request Step Approval';
+  constructor( public newData: RequestStepApproval ) {}
 }
 
 export class SelectedRequest {
@@ -51,6 +57,17 @@ export class RequestStepApprovalState implements NgxsOnInit {
           requestsStepsApproval: response,
         });
       });
+  }
+
+  @Action(UpdateRequestStepApproval)
+  UpdateRequestStepApproval(ctx: StateContext<RequestsStepApprovalModel>, action: UpdateRequestStepApproval) {
+
+    ctx.setState( patch( {
+      ...ctx.getState(),
+      requestsStepsApproval: updateItem<RequestStepApproval>( request => request.id === action.newData.id, action.newData ),
+      selectedRequest: action.newData
+    }));
+
   }
 
   @Action(SelectedRequest)

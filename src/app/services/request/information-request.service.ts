@@ -14,12 +14,17 @@ export class InformationRequestService {
 
   constructor( private httpClient: HttpClient ) { }
 
-
-
   getRequestStepApproval(): Observable<RequestStepApproval[]> {
     return this.httpClient.get<RequestStepApproval[]>(`${environment.api}${this.REQUEST_STEP_APPROVAL}`)
       .pipe(
         map((data: any) => data.records)
       );
+  }
+
+  updateRequestStepApproval( data: RequestStepApproval ): Observable<RequestStepApproval> {
+
+    console.log( data );
+
+    return this.httpClient.put<RequestStepApproval>(`${environment.api}${this.REQUEST_STEP_APPROVAL}/${data.id}`, data);
   }
 }

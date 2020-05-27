@@ -10,6 +10,10 @@ export const REQUEST_STATUS = {
     REJECTED: {
         CODE: '3',
         VALUE: 'Rechazada'
+    },
+    CANCELLED: {
+        CODE: '4',
+        VALUE: 'Cancelado'
     }
 };
 

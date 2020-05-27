@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
-import { RequestStepApprovalState, SelectedRequest } from 'src/app/store/request/request-step-approval.action';
+import {
+  RequestStepApprovalState,
+  SelectedRequest,
+} from 'src/app/store/request/request-step-approval.action';
 import { Observable } from 'rxjs';
 import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
@@ -27,13 +30,13 @@ export class RequestsValidateInformationComponent extends BaseTable
   >;
 
   constructor(
-    private store:Store,
+    private store: Store,
     private dialogService: NbDialogService,
-    private helper: Utility) {
+    private helper: Utility
+  ) {
+    super();
 
-      super();
-
-      this.settings.actions = {
+    this.settings.actions = {
       columnTitle: 'Acciones',
       add: false,
       edit: false,
@@ -45,7 +48,7 @@ export class RequestsValidateInformationComponent extends BaseTable
       ],
     };
 
-      this.settings.columns = {
+    this.settings.columns = {
       requestCode: {
         title: 'N° de la solicitud',
         type: 'string',
@@ -53,11 +56,13 @@ export class RequestsValidateInformationComponent extends BaseTable
       project: {
         title: 'ID del proyecto',
         type: 'string',
-        valuePrepareFunction: ( row: any ) => row.code,
+        valuePrepareFunction: (row: any) => row.code,
         filterFunction: (cell?: any, search?: string) => {
           const value: string = cell.code;
-          return value.indexOf(search.toUpperCase()) === 0 || search === '' ? true : false;
-        }
+          return value.indexOf(search.toUpperCase()) === 0 || search === ''
+            ? true
+            : false;
+        },
       },
       type: {
         title: 'Tipo de solicitante',
@@ -92,18 +97,16 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         valuePrepareFunction: (row: any) => row.name,
         filterFunction: (cell?: any, search?: string) => {
-
-          if ( cell.name ) {
+          if (cell.name) {
             const value: string = cell.name as string;
 
             if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
-            return true;
-          } else {
-            return false;
+              return true;
+            } else {
+              return false;
+            }
           }
-          }
-
-        }
+        },
       },
       createdAt: {
         title: 'Fecha',
@@ -125,7 +128,9 @@ export class RequestsValidateInformationComponent extends BaseTable
               ? REQUEST_STATUS.PENDING.VALUE
               : cell === REQUEST_STATUS.ACCEPTED.CODE
               ? REQUEST_STATUS.ACCEPTED.VALUE
-              : REQUEST_STATUS.REJECTED.VALUE;
+              : cell === REQUEST_STATUS.REJECTED.CODE
+              ? REQUEST_STATUS.REJECTED.VALUE
+              : REQUEST_STATUS.CANCELLED.VALUE;
 
           value = value.toUpperCase();
           if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
@@ -143,14 +148,12 @@ export class RequestsValidateInformationComponent extends BaseTable
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-          this.dialogService.open( InformationDetailsComponent );
+        this.dialogService.open(InformationDetailsComponent);
 
-          this.store.dispatch( new SelectedRequest( event.data ) )
-          break;
+        this.store.dispatch(new SelectedRequest(event.data));
+        break;
       case this.ACTION.DELETE:
         break;
     }
-
-
   }
 }

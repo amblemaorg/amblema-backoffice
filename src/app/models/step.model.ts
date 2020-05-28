@@ -62,5 +62,9 @@ export const APPROVAL_TYPE = [
     {
         CODE: '3',
         VALUE: 'Generar solicitud de aprobación'
+    },
+    {
+        CODE: '4',
+        VALUE: 'Aprobación por estatus interno'
     }
 ];

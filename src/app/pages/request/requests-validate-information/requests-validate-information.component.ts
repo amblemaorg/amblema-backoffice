@@ -152,10 +152,8 @@ export class RequestsValidateInformationComponent extends BaseTable
 
   onAction(event) {
 
-    console.log( event.data );
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log( event.data );
         this.dialogService.open(InformationDetailsComponent);
         this.store.dispatch(new SelectedRequest(event.data));
         break;

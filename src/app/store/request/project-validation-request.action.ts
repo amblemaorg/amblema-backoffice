@@ -104,9 +104,7 @@ export class ProjectValidationRequestState implements NgxsOnInit {
    deleteProjectValidationRequest(ctx: StateContext<ProjectValidationRequestModel>, action: DeleteProjectValidationRequest) {
      ctx.setState(patch({
        ...ctx.getState(),
-       projectValidationRequests: removeItem<ProjectValidationRequest>( item => { 
-        console.log( item.id === action.id ) ;
-        return item.id === action.id} )
+       projectValidationRequests: removeItem<ProjectValidationRequest>( item => item.id === action.id )
      }));
    }
 }

@@ -31,4 +31,5 @@ export class InformationRequestService {
   deleteRequestStepApproval( id: string): Observable<string> {
     return this.httpClient.delete<string>(`${environment.api}${this.REQUEST_STEP_APPROVAL}/${id}`);
   }
+
 }

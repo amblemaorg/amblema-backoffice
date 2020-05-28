@@ -1,90 +1,99 @@
-import { RequestValidateInformation } from 'src/app/models/request/requests-validate-information.model';
 import { State, NgxsOnInit, StateContext, Action } from '@ngxs/store';
-import { InformationValidationRequestService } from 'src/app/services/request/information-validation-request.service';
+import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
+import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
+import { patch, updateItem, removeItem } from '@ngxs/store/operators';
 
-export interface RequestsValidateInformationModel {
-  requestsValidateInformation: RequestValidateInformation[];
-  selectedRequestValidateInformation?: any;
+export interface ProjectValidationRequestModel {
+  projectValidationRequests: ProjectValidationRequest[];
+  selectedProjectValidateRequest?: any;
 }
 
-export class GetRequestValidateInformation {
-  static readonly type = '[RequestValidateInformation] Get Request Validate Information';
-}
-
-export class UpdateRequestValidateInformation {
+export class GetProjectValidationRequest {
   static readonly type =
-    '[RequestValidateInformation] Update Request Validate Information';
-  constructor(public newData: RequestValidateInformation) {}
+    '[ProjectValidationRequest] Get Project Validation Request';
 }
 
-export class SelectedRequestValidateInformation {
+export class UpdateProjectValidationRequest {
   static readonly type =
-    '[selectedRequestValidateInformation] Selected Request Validate Information';
+    '[ProjectValidationRequest] Update Project Validation Request';
+  constructor(public newData: ProjectValidationRequest) {}
+}
+
+export class SelectedProjectValidationRequestn {
+  static readonly type =
+    '[ProjectValidationRequest] Selected Project Validation Request';
   constructor(public payload: any) {}
 }
 
-export class DeleteRequestValidateInformation {
+export class DeleteProjectValidationRequest {
   static readonly type =
-    '[RequestValidateInformation] Delete Request Validate Information';
+    '[RequestValidateInformation] Delete Project Validation Request';
   constructor(public id: string) {}
 }
 
-@State<RequestsValidateInformationModel>({
-  name: 'requestvalidateinformation', 
+@State<ProjectValidationRequestModel>({
+  name: 'projectvalidaterequest',
   defaults: {
-    requestsValidateInformation: [],
-  }
+    projectValidationRequests: [],
+  },
 })
-export class RequestsValidateInformation implements NgxsOnInit {
-  
+export class RequestsValidateInformationState implements NgxsOnInit {
   constructor(
-    private requestInformationValidateService: InformationValidationRequestService
+    private requestInformationValidateService: ProjectValidationRequestService
   ) {}
 
-  ngxsOnInit(ctx: StateContext<RequestsValidateInformationModel>): void {
-    ctx.dispatch(new GetRequestValidateInformation());
+  ngxsOnInit(ctx: StateContext<ProjectValidationRequestModel>): void {
+    ctx.dispatch(new GetProjectValidationRequest());
   }
 
-  @Action(GetRequestValidateInformation)
-  getRequestValidateInformation(ctx: StateContext<RequestsValidateInformationModel>) {
-    this.requestStepApprovalService
-      .getRequestStepApproval()
+  @Action(GetProjectValidationRequest)
+  getRequestValidateInformation(
+    ctx: StateContext<ProjectValidationRequestModel>
+  ) {
+    this.requestInformationValidateService
+      .getRequestsProjectApproval()
       .subscribe((response) => {
         ctx.setState({
           ...ctx.getState(),
-          requestsValidateInformation: response,
+          projectValidationRequests: response,
         });
       });
   }
 
-  // @Action(UpdateRequestStepApproval)
-  // UpdateRequestStepApproval(ctx: StateContext<RequestsStepApprovalModel>, action: UpdateRequestStepApproval) {
+  @Action(UpdateProjectValidationRequest)
+  updateProjectValidationRequest(
+    ctx: StateContext<ProjectValidationRequestModel>,
+    action: UpdateProjectValidationRequest
+  ) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        requestsStepsApproval: updateItem<ProjectValidationRequest>(
+          (request) => request.id === action.newData.id,
+          action.newData
+        ),
+        selectedProjectValidateRequest: action.newData,
+      })
+    );
+  }
 
-  //   ctx.setState( patch( {
-  //     ...ctx.getState(),
-  //     requestsStepsApproval: updateItem<RequestStepApproval>( request => request.id === action.newData.id, action.newData ),
-  //     selectedRequest: action.newData
-  //   }));
+  @Action(SelectedProjectValidationRequestn)
+  selectedProjectValidationRequestn(
+    ctx: StateContext<ProjectValidationRequestModel>,
+    action: SelectedProjectValidationRequestn
+  ) {
+    ctx.setState({
+      ...ctx.getState(),
+      selectedProjectValidateRequest: action.payload,
+    });
+  }
 
-  // }
+   @Action(DeleteProjectValidationRequest)
+   deleteProjectValidationRequest(ctx: StateContext<ProjectValidationRequestModel>, action: DeleteProjectValidationRequest) {
 
-  // @Action(SelectedRequest)
-  // selectedRequest(
-  //   ctx: StateContext<RequestsStepApprovalModel>,
-  //   action: SelectedRequest
-  // ) {
-  //   ctx.setState({
-  //     ...ctx.getState(),
-  //     selectedRequest: action.payload,
-  //   });
-  // }
-
-  // @Action(DeleteRequestStepApproval)
-  // deleteRequestStepApproval(ctx: StateContext<RequestsStepApprovalModel>, action: DeleteRequestStepApproval) {
-
-  //   ctx.setState(patch({
-  //     ...ctx.getState(),
-  //     requestsStepsApproval: removeItem<RequestStepApproval>( item => item.id === action.id )
-  //   }));
-  // }
+     ctx.setState(patch({
+       ...ctx.getState(),
+       requestsStepsApproval: removeItem<ProjectValidationRequest>( item => item.id === action.id )
+     }));
+   }
 }

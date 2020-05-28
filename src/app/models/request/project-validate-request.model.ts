@@ -1,4 +1,4 @@
-export interface RequestValidateInformation {
+export interface ProjectValidationRequest {
   status: string;
   createdAt: string;
   project: Project;

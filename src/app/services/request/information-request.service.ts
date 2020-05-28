@@ -11,7 +11,6 @@ import { map } from 'rxjs/operators';
 export class InformationRequestService {
 
   private readonly REQUEST_STEP_APPROVAL = 'requestsstepapproval';
-  private readonly REQUEST_PROJECT_APPROVAL = 'requestsprojectapproval';
 
   constructor( private httpClient: HttpClient ) { }
 
@@ -31,15 +30,5 @@ export class InformationRequestService {
 
   deleteRequestStepApproval( id: string): Observable<string> {
     return this.httpClient.delete<string>(`${environment.api}${this.REQUEST_STEP_APPROVAL}/${id}`);
-  }
-
-  /**
-   * Requests for confirmation of amblema
-   */
-  getRequestsProjectApproval(): Observable<any> {
-    return this.httpClient.get<any>(`${environment.api}${this.REQUEST_PROJECT_APPROVAL}`)
-      .pipe(
-        map((data: any) => data.records)
-      );
   }
 }

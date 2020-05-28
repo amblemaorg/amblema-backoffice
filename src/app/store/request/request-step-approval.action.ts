@@ -93,6 +93,5 @@ export class RequestStepApprovalState implements NgxsOnInit {
       ...ctx.getState(),
       requestsStepsApproval: removeItem<RequestStepApproval>( item => item.id === action.id )
     }));
-
   }
 }

@@ -151,6 +151,7 @@ export class RequestsValidateInformationComponent extends BaseTable
   ngOnInit() {}
 
   onAction(event) {
+
     switch (event.action) {
       case this.ACTION.VIEW:
         this.dialogService.open(InformationDetailsComponent);

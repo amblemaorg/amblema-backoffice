@@ -14,6 +14,9 @@ export class InformationRequestService {
 
   constructor( private httpClient: HttpClient ) { }
 
+  /**
+   * Request for information type in steps
+   */
   getRequestStepApproval(): Observable<RequestStepApproval[]> {
     return this.httpClient.get<RequestStepApproval[]>(`${environment.api}${this.REQUEST_STEP_APPROVAL}`)
       .pipe(
@@ -28,4 +31,5 @@ export class InformationRequestService {
   deleteRequestStepApproval( id: string): Observable<string> {
     return this.httpClient.delete<string>(`${environment.api}${this.REQUEST_STEP_APPROVAL}/${id}`);
   }
+
 }

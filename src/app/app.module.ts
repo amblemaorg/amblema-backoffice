@@ -37,6 +37,8 @@ import { LoadingInterceptorService } from './intercepts/loading-intercept';
 import { UserCreationRequestState } from './store/request/user-creation-request.action';
 import { EnvironmentalProjectState } from './store/environmental-project.action';
 import { RequestStepApprovalState } from './store/request/request-step-approval.action';
+import { ProjectValidationRequestState } from './store/request/project-validation-request.action';
+
 registerLocaleData(localeVe, 'es-VE');
 
 
@@ -83,7 +85,8 @@ registerLocaleData(localeVe, 'es-VE');
       // -- Requests --
       UserCreationRequestState,
       ProjectRequestState,
-      RequestStepApprovalState
+      RequestStepApprovalState,
+      ProjectValidationRequestState
     ],
     {
       compatibility: {

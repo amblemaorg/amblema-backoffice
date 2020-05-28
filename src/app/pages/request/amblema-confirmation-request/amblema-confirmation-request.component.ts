@@ -13,6 +13,8 @@ import { Utility } from 'src/app/helpers/utility';
 import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
 import { NbDialogService } from '@nebular/theme';
 import { InformationDetailsComponent } from './_shared/information-details/information-details.component';
+import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-amblema-confirmation-request',
@@ -29,9 +31,12 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
   prepareData = new Array<AmblemaConfirmation>();
 
   constructor(
+    private projectValidationRequestService: ProjectValidationRequestService,
     private dialogService: NbDialogService,
     private helper: Utility,
-    private store: Store) {
+    private store: Store,
+    private toastr: CustomToastrService
+  ) {
     super();
 
     this.settings.actions = {
@@ -96,7 +101,6 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
 
   ngOnInit() {
     this.subscriptionService = this.data$.subscribe((response) => {
-
       this.prepareData = [];
 
       response.forEach((value) => {
@@ -125,15 +129,22 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        this.subscriptionService = this.data$.subscribe( response => {
-          this.store.dispatch( new SelectedProjectValidationRequestn( response.find( item => item.id === event.data.id ) ) )
-          
-          this.dialogService.open(InformationDetailsComponent);
-        } );
+        this.subscriptionService = this.data$.subscribe((response) => {
+          this.store.dispatch(
+            new SelectedProjectValidationRequestn(
+              response.find((item) => item.id === event.data.id)
+            )
+          );
+        });
+
+        this.dialogService.open(InformationDetailsComponent);
         break;
       case this.ACTION.DELETE:
 
-        this.store.dispatch(new DeleteProjectValidationRequest(event.data.id));
+        this.projectValidationRequestService.deleteRequestProjectApproval(event.data.id).subscribe( response => {
+          this.store.dispatch(new DeleteProjectValidationRequest(event.data.id));
+          this.toastr.deleteRegister('Solicitud eliminada', 'Se ha eliminado una solicitud');
+        } );
         break;
     }
   }

@@ -80,7 +80,7 @@ export class ProjectValidationRequestState implements NgxsOnInit {
     ctx.setState(
       patch({
         ...ctx.getState(),
-        requestsStepsApproval: updateItem<ProjectValidationRequest>(
+        projectValidationRequests: updateItem<ProjectValidationRequest>(
           (request) => request.id === action.newData.id,
           action.newData
         ),

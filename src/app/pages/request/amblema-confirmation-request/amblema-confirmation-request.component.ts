@@ -1,30 +1,35 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
-import { Store, Select } from '@ngxs/store';
-import { ProjectValidationRequestState } from 'src/app/store/request/project-validation-request.action';
-import { Observable, Subscription } from 'rxjs';
-import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
-import { AmblemaConfirmation } from './_shared/amblema-confirmation.model';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { BaseTable } from "src/app/helpers/base-table";
+import { Store, Select } from "@ngxs/store";
+import {
+  ProjectValidationRequestState,
+  DeleteProjectValidationRequest,
+} from "src/app/store/request/project-validation-request.action";
+import { Observable, Subscription } from "rxjs";
+import { ProjectValidationRequest } from "src/app/models/request/project-validate-request.model";
+import { AmblemaConfirmation } from "./_shared/amblema-confirmation.model";
+import { Utility } from "src/app/helpers/utility";
+import { REQUEST_STATUS } from "src/app/helpers/convention/request-status";
 
 @Component({
-  selector: 'app-amblema-confirmation-request',
-  templateUrl: './amblema-confirmation-request.component.html',
-  styleUrls: ['./amblema-confirmation-request.component.scss'],
+  selector: "app-amblema-confirmation-request",
+  templateUrl: "./amblema-confirmation-request.component.html",
+  styleUrls: ["./amblema-confirmation-request.component.scss"],
 })
 export class AmblemaConfirmationRequestComponent extends BaseTable
   implements OnInit, OnDestroy {
   @Select(ProjectValidationRequestState.projectValidationRequest)
   data$: Observable<ProjectValidationRequest[]>;
 
-    subscriptionService: Subscription;
+  subscriptionService: Subscription;
 
-    prepareData: AmblemaConfirmation[];
+  prepareData = new Array<AmblemaConfirmation>();
 
-  constructor(private store: Store) {
+  constructor(private helper: Utility, private store: Store) {
     super();
 
     this.settings.actions = {
-      columnTitle: 'Acciones',
+      columnTitle: "Acciones",
       add: false,
       edit: false,
       //  Fake action
@@ -39,47 +44,76 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
 
     this.settings.columns = {
       code: {
-        title: 'N° de la solicitud',
-        type: 'string',
+        title: "N° de la solicitud",
+        type: "string",
       },
-      id: {
-        title: 'Id del proyecto',
-        type: 'string',
+      codeProject: {
+        title: "Id del proyecto",
+        type: "string",
       },
       coordinator: {
-        title: 'Coordinador',
-        type: 'string',
+        title: "Coordinador",
+        type: "string",
       },
       sponsor: {
-        title: 'Padrino',
-        type: 'string',
+        title: "Padrino",
+        type: "string",
       },
       school: {
-        title: 'Escuela',
-        type: 'string',
+        title: "Escuela",
+        type: "string",
       },
       status: {
-        title: 'Estatus',
-        type: 'string',
+        title: "Estatus",
+        type: "string",
+        valuePrepareFunction: (row: any) => {
+          return this.helper.readlyRequestStatus(row);
+        },
+        filterFunction(cell?: any, search?: string): boolean {
+          let value: string =
+            cell === REQUEST_STATUS.PENDING.CODE
+              ? REQUEST_STATUS.PENDING.VALUE
+              : cell === REQUEST_STATUS.ACCEPTED.CODE
+              ? REQUEST_STATUS.ACCEPTED.VALUE
+              : REQUEST_STATUS.REJECTED.VALUE;
+
+          value = value.toUpperCase();
+          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
     };
   }
 
   ngOnInit() {
-    this.subscriptionService = this.data$.subscribe( response => {
-      console.log( response );
-      response.forEach( value => {
+    this.subscriptionService = this.data$.subscribe((response) => {
+      
+      this.prepareData = []; 
 
-        // this.prepareData.push({
-
-        // })
-
-      } );
-    } );
+      response.forEach((value) => {
+        this.prepareData.push({
+          id: value.id,
+          code: value.code,
+          codeProject: value.project.code,
+          coordinator: value.project.coordinator.name,
+          sponsor: value.project.sponsor.name,
+          school: value.project.school.name,
+          status: value.status,
+        });
+      });
+      this.source.reset();
+      this.source.refresh();
+      this.source.load(this.prepareData);
+    });
   }
 
   ngOnDestroy(): void {
-    if ( this.subscriptionService ) { this.subscriptionService.unsubscribe(); }
+    if (this.subscriptionService) {
+      this.subscriptionService.unsubscribe();
+    }
   }
 
   onAction(event) {
@@ -87,6 +121,8 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
       case this.ACTION.EDIT:
         break;
       case this.ACTION.DELETE:
+
+        this.store.dispatch(new DeleteProjectValidationRequest(event.data.id));
         break;
     }
   }

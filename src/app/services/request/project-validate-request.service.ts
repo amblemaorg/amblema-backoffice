@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment.prod";
-import { map } from "rxjs/operators";
-import { ProjectValidationRequest } from "src/app/models/request/project-validate-request.model";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
+import { map } from 'rxjs/operators';
+import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ProjectValidationRequestService {
-  private readonly REQUEST_PROJECT_APPROVAL = "requestsprojectapproval";
+  private readonly REQUEST_PROJECT_APPROVAL = 'requestsprojectapproval';
 
   constructor(private httpClient: HttpClient) {}
 

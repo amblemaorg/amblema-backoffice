@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
-import { Store } from '@ngxs/store';
-import { EventManager } from '@angular/platform-browser';
+import { Store, Select } from '@ngxs/store';
+import { ProjectValidationRequestState } from 'src/app/store/request/project-validation-request.action';
+import { Observable, Subscription } from 'rxjs';
+import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
+import { AmblemaConfirmation } from './_shared/amblema-confirmation.model';
 
 @Component({
   selector: 'app-amblema-confirmation-request',
@@ -9,7 +12,14 @@ import { EventManager } from '@angular/platform-browser';
   styleUrls: ['./amblema-confirmation-request.component.scss'],
 })
 export class AmblemaConfirmationRequestComponent extends BaseTable
-  implements OnInit {
+  implements OnInit, OnDestroy {
+  @Select(ProjectValidationRequestState.projectValidationRequest)
+  data$: Observable<ProjectValidationRequest[]>;
+
+    subscriptionService: Subscription;
+
+    prepareData: AmblemaConfirmation[];
+
   constructor(private store: Store) {
     super();
 
@@ -55,7 +65,22 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
     };
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscriptionService = this.data$.subscribe( response => {
+      console.log( response );
+      response.forEach( value => {
+
+        // this.prepareData.push({
+
+        // })
+
+      } );
+    } );
+  }
+
+  ngOnDestroy(): void {
+    if ( this.subscriptionService ) { this.subscriptionService.unsubscribe(); }
+  }
 
   onAction(event) {
     switch (event.action) {

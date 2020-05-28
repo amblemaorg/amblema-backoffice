@@ -1,16 +1,127 @@
 <nb-card class="mx-5">
-  <nb-card-header>Confirmación de AmbLeMa</nb-card-header>
+  <nb-card-header>Confirmación de fundación AmbLeMa</nb-card-header>
   <nb-card-body>
     <div class="row">
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5"
+            >Fecha de la solicitud:</span
+          >
+          <span>
+            {{ (data$ | async).createdAt | date: "dd/MM/yyyy" }}
+          </span>
+        </p>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Código del proyecto:</span>
+          <span>
+            {{ (data$ | async).project.code }}
+          </span>
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5"
+            >Nombre del coordinador:</span
+          >
+          <span>
+            {{ (data$ | async).project.coordinator.name }}
+          </span>
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Nombre del padrino:</span>
+          <span>
+            {{ (data$ | async).project.sponsor.name }}
+          </span>
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Nombre del escuela:</span>
+          <span>
+            {{ (data$ | async).project.school.name }}
+          </span>
+        </p>
+      </div>
+
       <div class="col-12">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed at dolorem
-        aut veniam facilis nulla minima quibusdam corrupti magni laboriosam,
-        sint, cumque quos ipsum illo ducimus deserunt architecto, nostrum
-        consectetur?
+        <div *ngIf="(data$ | async)?.status === '1'">
+          <hr />
+          <div *ngIf="confirmAction">
+            <label class="label"> Acciones para la solicitud</label>
+            <select
+              [(ngModel)]="statusSelected"
+              (change)="statusSelected = $event.target.value"
+              class="form-control form-group"
+            >
+              <option value="2">Aceptar</option>
+              <option value="3">Rechazar</option>
+            </select>
+          </div>
+
+          <div class="w-100 text-right justify-content-end">
+            <button
+              class="col-12 col-md-auto"
+              nbButton
+              *ngIf="confirmAction"
+              status="primary"
+              (click)="confirmAction = false"
+            >
+              Proceder
+            </button>
+
+          <div *ngIf="!confirmAction">
+            <nb-alert status="info" class="text-left"
+              >Confirmar acción, al aprobar o rechazar esta solicitud no se
+              podrá cambiar de estatus.</nb-alert
+            >
+            
+            <div class="row justify-content-end">
+                <div class="col-6 col-md-auto">
+                  <button
+                    (click)="onApprovedRequest()"
+                    nbButton
+                    fullWidth
+                    *ngIf="!confirmAction"
+                    status="danger"
+                  >
+                    Confirmar
+                  </button>
+                </div>
+                <div class="col-6 col-md-auto">
+                  <button
+                    nbButton
+                    outline
+                    fullWidth
+                    *ngIf="!confirmAction"
+                    status="basic"
+                    (click)="confirmAction = true"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </nb-card-body>
-  <nb-card-footer>
-      <button nbButton (click)="onClose()" outline status="basic" class="col-12 col-lg-auto">Cancelar</button>
+  <nb-card-footer  class="text-right">
+    <button
+      nbButton
+      (click)="onClose()"
+      outline
+      status="basic"
+      class="col-12 col-lg-auto"
+    >
+      Cerrar
+    </button>
   </nb-card-footer>
 </nb-card>

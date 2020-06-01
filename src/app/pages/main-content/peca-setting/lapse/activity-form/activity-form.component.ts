@@ -17,6 +17,9 @@ import { LapseActivitiesService } from 'src/app/services/lapse-activities.servic
 import { Slider } from 'src/app/models/web/slider.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
+
+import { APPROVAL_TYPE } from '../../../../../models/step.model';
+
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
@@ -46,6 +49,9 @@ export class ActivityFormComponent extends StepsFormComponent
   sliders: Slider[] = [];
   showSlider = false;
   showProgress = false;
+
+  public APPROVAL_TYPE = APPROVAL_TYPE;
+
 
   oldData: any;
 
@@ -486,7 +492,14 @@ export class ActivityFormComponent extends StepsFormComponent
         }, 2500);
 
       }, () => this.showProgress = false );
+  }
 
+  onCheckList(  ) {
+    if ( this.form.controls.hasChecklist.value ) {
+      this.APPROVAL_TYPE.push({ CODE: '2', VALUE: 'Se apueba al completar los campos' });
+    } else {
+      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(item => item.CODE !== '2');
+    }
 
   }
 }

@@ -21,8 +21,8 @@
                 [id]="'type-aprobate'+lapse" 
                 class="form-control">
                     <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
-                    <option value="1">Lo aprueba el administrador</option>
-                    <option value="2">Genera una solicitud de aprobación</option>
+                    <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{ item.VALUE }}</option>
+                    <option [value]="'5'">No requiere aprobación</option>
             </select>
         </div>
 
@@ -69,7 +69,7 @@
                 <!-- <app-datepicker *ngIf="form.get('checkedDate').value" [label]="'Fecha'" [today]="false"></app-datepicker> -->
 
             <!-- Check loader -->
-            <nb-checkbox formControlName="hasChecklist" class="d-block form-group">Checklist
+            <nb-checkbox formControlName="hasChecklist" (change)="onCheckList()" class="d-block form-group">Checklist
             </nb-checkbox>
 
             <nb-alert status="info" class="form-group py-2"

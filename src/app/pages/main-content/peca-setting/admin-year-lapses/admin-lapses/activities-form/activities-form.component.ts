@@ -1,4 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewInit,
+  AfterViewChecked,
+  AfterContentChecked,
+  DoCheck,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/steps-form.component';
@@ -10,10 +18,10 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
 @Component({
   selector: 'app-activities-form',
   templateUrl: './activities-form.component.html',
-  styleUrls: ['./activities-form.component.scss']
+  styleUrls: ['./activities-form.component.scss'],
 })
-export class ActivitiesFormComponent extends StepsFormComponent implements OnInit {
-
+export class ActivitiesFormComponent extends StepsFormComponent
+  implements OnInit {
   @Input() lapse: string;
 
   showProgress = false;
@@ -27,20 +35,22 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
   }
 
   ngOnInit(): void {
+
     this.form.addControl('hasDate', new FormControl(false));
   }
 
-
   onSubmit(): void {
-
     // This is to valid the check list if has a check
-    const checkListValid = this.form.controls.hasChecklist.value && this.checklist.length > 0 ?
-      true : this.form.controls.hasChecklist.value && this.checklist.length === 0 ? false : true;
+    const checkListValid =
+      this.form.controls.hasChecklist.value && this.checklist.length > 0
+        ? true
+        : this.form.controls.hasChecklist.value && this.checklist.length === 0
+        ? false
+        : true;
 
     this.submitted = true;
 
     if (this.form.valid && checkListValid) {
-
       this.showProgress = true;
       const formData = new FormData();
 
@@ -59,7 +69,13 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
 
       // To send video, to be true
       if (this.form.controls.hasVideo.value) {
-        formData.append('video', JSON.stringify({ name: Math.random().toString(), url: this.form.controls.video.value }));
+        formData.append(
+          'video',
+          JSON.stringify({
+            name: Math.random().toString(),
+            url: this.form.controls.video.value,
+          })
+        );
       }
 
       // To send list, to be true
@@ -73,27 +89,29 @@ export class ActivitiesFormComponent extends StepsFormComponent implements OnIni
       formData.append('hasUpload', this.form.controls.hasUpload.value);
       formData.append('hasDate', this.form.controls.hasDate.value);
       this.showProgress = true;
-      this.lapseActivityService.createActivity(this.lapse, formData).subscribe((response: HttpEvent<any>) => {
-
-        if (HttpEventType.Response === response.type) {
-
-
-          this.store.dispatch(new AddLapseActivity(response.body, this.lapse));
-          this.resetForm();
-          this.form.controls.hasFile.setValue(false);
-          this.form.controls.hasUpload.setValue(false);
-          this.form.controls.hasDate.setValue(false);
-          this.form.controls.hasVideo.setValue(false);
-          this.form.controls.hasChecklist.setValue(false);
-          this.toastr.registerSuccess('Registro', 'Actividad registrada');
+      this.lapseActivityService.createActivity(this.lapse, formData).subscribe(
+        (response: HttpEvent<any>) => {
+          if (HttpEventType.Response === response.type) {
+            this.store.dispatch(
+              new AddLapseActivity(response.body, this.lapse)
+            );
+            this.resetForm();
+            this.form.controls.hasFile.setValue(false);
+            this.form.controls.hasUpload.setValue(false);
+            this.form.controls.hasDate.setValue(false);
+            this.form.controls.hasVideo.setValue(false);
+            this.form.controls.hasChecklist.setValue(false);
+            this.toastr.registerSuccess('Registro', 'Actividad registrada');
+          }
+        },
+        (err: any) => {
+          this.toastr.error(
+            'Problemas al registrar',
+            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
+          );
+          this.showProgress = false;
         }
-      }, (err: any) => {
-
-        this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
-        this.showProgress = false;
-      });
+      );
     }
   }
-
-
 }

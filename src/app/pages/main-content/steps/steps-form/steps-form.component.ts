@@ -190,5 +190,14 @@ export class StepsFormComponent implements OnInit {
     this.MODE_LIST = ACTION.CREATE;
     this.form.controls.checklist.reset();
   }
+
+  onCheckList(  ) {
+    if ( this.form.controls.hasChecklist.value ) {
+      this.APPROVAL_TYPE.push({ CODE: '2', VALUE: 'Se apueba al completar los campos' });
+    } else {
+      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(item => item.CODE !== '2');
+    }
+
+  }
 }
 

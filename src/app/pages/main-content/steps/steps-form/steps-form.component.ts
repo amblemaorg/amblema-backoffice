@@ -192,7 +192,7 @@ export class StepsFormComponent implements OnInit {
   }
 
   onCheckList(  ) {
-    if( this.form.controls['hasChecklist'].value ) {
+    if ( this.form.controls.hasChecklist.value ) {
       this.APPROVAL_TYPE.push({ CODE: '2', VALUE: 'Se apueba al completar los campos' });
     } else {
       this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(item => item.CODE !== '2');

@@ -57,7 +57,7 @@
                                 [label]="'URL del video'"></app-input-custom>
 
                             <!-- Check loader -->
-                            <nb-checkbox formControlName="hasChecklist" class="d-block form-group">Checklist
+                            <nb-checkbox formControlName="hasChecklist" (change)="onCheckList()" class="d-block form-group">Checklist
                             </nb-checkbox>
 
                             <nb-alert status="info" class="form-group py-2" *ngIf="form.get('hasChecklist').value && checklist.length === 0">

@@ -56,10 +56,6 @@ export const APPROVAL_TYPE = [
         VALUE: 'Lo aprueba el administrador',
     },
     {
-        CODE: '2',
-        VALUE: 'Se apueba al completar los campos'
-    },
-    {
         CODE: '3',
         VALUE: 'Generar solicitud de aprobación'
     },

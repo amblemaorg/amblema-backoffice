@@ -15,6 +15,16 @@ export class PDFReport implements OnInit {
     pdf = new PdfMakeWrapper();
 
 
+    borderCustom = {
+        hLineColor(i, node) {
+            return '#024e21';
+        },
+        vLineColor(i, node) {
+            return '#024e21';
+        },
+    };
+
+
     ngOnInit(): void {
         //  Margin
         this.pdf.pageSize('A4');
@@ -107,7 +117,8 @@ export class PDFReport implements OnInit {
             finalReport.content.push({
                 table: {
                     widths: '11%',
-                    body: sponsorRecords
+                    body: sponsorRecords,
+                    layout: this.borderCustom
                 },
                 margin: [0, 0, 0, 30]
 
@@ -160,7 +171,8 @@ export class PDFReport implements OnInit {
             finalReport.content.push({
                 table: {
                     widths: '7%',
-                    body: coordinatorRecords
+                    body: coordinatorRecords,
+                    layout: this.borderCustom
                 },
                 margin: [0, 0, 0, 30]
             });
@@ -212,7 +224,8 @@ export class PDFReport implements OnInit {
             finalReport.content.push({
                 table: {
                     widths: '6.6%',
-                    body: schoolRecords
+                    body: schoolRecords,
+                    layout: this.borderCustom
                 },
                 margin: [0, 0, 0, 30]
             });
@@ -258,7 +271,8 @@ export class PDFReport implements OnInit {
             finalReport.content.push({
                 table: {
                     widths: '10%',
-                    body: teacherRecords
+                    body: teacherRecords,
+                    layout: this.borderCustom
                 },
                 margin: [0, 0, 0, 30]
             });
@@ -328,6 +342,7 @@ export class PDFReport implements OnInit {
                     ]
                 ]
             },
+            layout: this.borderCustom,
             margin: [0, 0, 0, 30]
         };
 
@@ -571,6 +586,7 @@ export class PDFReport implements OnInit {
                     table: {
                         body: allStudent
                     },
+                    layout: this.borderCustom,
                     margin: [0, 0, 0, 30]
                 });
 
@@ -580,6 +596,7 @@ export class PDFReport implements OnInit {
                         widths: 'auto',
                         body: diagnosticResult
                     },
+                    layout: this.borderCustom,
                     margin: [0, 0, 0, 30]
                 });
             }
@@ -805,6 +822,7 @@ export class PDFReport implements OnInit {
                     table: {
                         body: allStudent
                     },
+                    layout: this.borderCustom,
                     margin: [0, 0, 0, 30]
                 });
 
@@ -814,6 +832,7 @@ export class PDFReport implements OnInit {
                         widths: 'auto',
                         body: diagnosticResult
                     },
+                    layout: this.borderCustom,
                     margin: [0, 0, 0, 30]
                 });
             }
@@ -1040,6 +1059,7 @@ export class PDFReport implements OnInit {
                     table: {
                         body: allStudent
                     },
+                    layout: this.borderCustom,
                     margin: [0, 0, 0, 30]
                 });
 
@@ -1049,6 +1069,7 @@ export class PDFReport implements OnInit {
                         widths: 'auto',
                         body: diagnosticResult
                     },
+                    layout: this.borderCustom,
                     margin: [0, 0, 0, 30]
                 });
             }

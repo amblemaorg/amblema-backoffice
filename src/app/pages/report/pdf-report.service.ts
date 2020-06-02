@@ -40,7 +40,7 @@ export class PDFReport implements OnInit {
             content: [
             ],
             defaultStyle: {
-                fontSize: 10,
+                fontSize: 8,
             }
         };
 
@@ -127,7 +127,7 @@ export class PDFReport implements OnInit {
                 { ...colorHeaderRow, text: 'Municipio' },
                 { ...colorHeaderRow, text: 'Calles / carrerass' },
                 { ...colorHeaderRow, text: 'Casa / Edificio' },
-                { ...colorHeaderRow, text: 'AmbLePensum' },
+                { ...colorHeaderRow, text: 'AmbLe - Pensum' },
                 { ...colorHeaderRow, text: 'Profesión' },
                 { ...colorHeaderRow, text: 'Escuelas' },
                 { ...colorHeaderRow, text: 'Estatus' },

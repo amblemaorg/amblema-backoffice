@@ -142,6 +142,6 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         this.disabledBtn = false;
         this.cd.detectChanges();
       }, 3500);
-    });
+    }, () => this.disabledBtn = false);
   }
 }

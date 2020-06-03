@@ -270,7 +270,7 @@ export class PDFReport implements OnInit {
 
             finalReport.content.push({
                 table: {
-                    widths: '10%',
+                    widths: '9%',
                     body: teacherRecords,
                     layout: this.borderCustom
                 },

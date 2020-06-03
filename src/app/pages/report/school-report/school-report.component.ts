@@ -5,55 +5,53 @@ import { Subscription } from 'rxjs';
 import { ReadlyStatusConvert, FilterStatus } from 'src/app/helpers/utility';
 import { PDFReport } from '../pdf-report.service';
 import { DatePipe } from '@angular/common';
-
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-school-report',
   templateUrl: './school-report.component.html',
   styleUrls: ['./school-report.component.scss'],
-  providers: [ PDFReport, DatePipe ]
+  providers: [PDFReport, DatePipe],
 })
 export class SchoolReportComponent implements OnInit, OnDestroy {
-
   subscriptionService: Subscription;
 
   settings: any = {
-
     noDataMessage: 'No hay registros',
     actions: {
       add: false,
       delete: false,
-      edit: false
+      edit: false,
     },
 
     columns: {
       name: {
         title: 'Nombre',
-        type: 'string'
+        type: 'string',
       },
       code: {
         title: 'Código',
-        type: 'number'
+        type: 'number',
       },
       email: {
         title: 'Correo',
-        type: 'number'
+        type: 'number',
       },
       phone: {
         title: 'Teléfono',
-        type: 'string'
+        type: 'string',
       },
       addressState: {
         title: 'Estado',
-        type: 'string'
+        type: 'string',
       },
       addressMunicipality: {
         title: 'Municipio',
-        type: 'string'
+        type: 'string',
       },
       addressHome: {
         title: 'Casa / Edificio',
-        type: 'string'
+        type: 'string',
       },
       addressZoneType: {
         title: 'Zona',
@@ -73,21 +71,21 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       },
       sponsor: {
         title: 'Padrino',
-        type: 'string'
+        type: 'string',
       },
       coordinator: {
         title: 'Coordinador',
-        type: 'string'
+        type: 'string',
       },
       status: {
         title: 'Estatus',
         type: 'string',
         valuePrepareFunction: (row: any) => {
-          return ReadlyStatusConvert( [{ status: row }] )[0].status;
+          return ReadlyStatusConvert([{ status: row }])[0].status;
         },
-        filterFunction: FilterStatus
+        filterFunction: FilterStatus,
       },
-    }
+    },
   };
 
   source: LocalDataSource = new LocalDataSource();
@@ -102,47 +100,54 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
 
   disabledBtn = false;
 
-
   constructor(
     private cd: ChangeDetectorRef,
+    private toast: CustomToastrService,
     private generatorReport: PDFReport,
-    private userReporteService: UserReportService) { }
+    private userReporteService: UserReportService
+  ) {}
 
   async ngOnInit() {
+    this.subscriptionService = this.userReporteService
+      .getUserReport('2', '1')
+      .subscribe((usersActive) => {
+        this.data = usersActive.users;
 
-    this.subscriptionService = this.userReporteService.getUserReport('2', '1').subscribe(usersActive => {
-
-      this.data = usersActive.users;
-
-      this.subscriptionService = this.userReporteService.getUserReport('2', '0').subscribe(response => {
-
-        if (response.users.length) {
-          this.data = [
-            ...this.data,
-            response.users
-          ];
-        }
-        this.source.load(this.data);
+        this.subscriptionService = this.userReporteService
+          .getUserReport('2', '0')
+          .subscribe((response) => {
+            if (response.users.length) {
+              this.data = [...this.data, response.users];
+            }
+            this.source.load(this.data);
+          });
       });
-    });
   }
 
   async ngOnDestroy() {
-    if (this.subscriptionService) { this.subscriptionService.unsubscribe(); }
+    if (this.subscriptionService) {
+      this.subscriptionService.unsubscribe();
+    }
   }
 
   onGenerateReport(): void {
     this.disabledBtn = true;
 
-    this.userReporteService.getUserReport('2', this.statusSelected).subscribe( response => {
-
-      this.generatorReport.generateUserReport(response);
-
-      setTimeout(() => {
-        this.disabledBtn = false;
-        this.cd.detectChanges();
-      }, 3500);
-    });
+    this.userReporteService
+      .getUserReport('2', this.statusSelected)
+      .subscribe((response) => {
+        if (response.users.length) {
+          this.generatorReport.generateUserReport(response);
+        } else {
+          this.toast.info(
+            'Información',
+            'No hay registro en el estatus seleccionado'
+          );
+        }
+        setTimeout(() => {
+          this.disabledBtn = false;
+          this.cd.detectChanges();
+        }, 3500);
+      });
   }
-
 }

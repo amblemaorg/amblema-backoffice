@@ -149,6 +149,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   constructor(
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
+    private toast: CustomToastrService,
     private userReporteService: UserReportService,
     private userTeacherService: TeacherService,
     private toastrService: CustomToastrService
@@ -167,7 +168,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             }
 
             this.source.load(this.data);
-
           });
       });
   }
@@ -190,7 +190,14 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response) => {
-          this.generatorReport.generateUserReport(response);
+          if (response.users.length) {
+            this.generatorReport.generateUserReport(response);
+          } else {
+            this.toast.info(
+              'Información',
+              'No hay registro en el estatus o configuración seleccionada'
+            );
+          }
 
           setTimeout(() => {
             this.disabledBtn = false;
@@ -203,13 +210,16 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
 
   onSaveConfirm(event) {
     this.subscriptionService = this.userTeacherService
-      .updateTeacherStatus(
-        event.newData.pecaId,
-        event.newData.id,
-        { annualPreparationStatus: event.newData.annualPreparationStatus }
-      )
+      .updateTeacherStatus(event.newData.pecaId, event.newData.id, {
+        annualPreparationStatus: event.newData.annualPreparationStatus,
+      })
       .subscribe(
-        (response) => { this.toastrService.updateSuccess('Cambio de estatus', 'Se ha cambiado el estatus de inscripción del docente.'); },
+        (response) => {
+          this.toastrService.updateSuccess(
+            'Cambio de estatus',
+            'Se ha cambiado el estatus de inscripción del docente.'
+          );
+        },
         (err) => console.log(err)
       );
     event.confirm.resolve(); // <-- Return to previous stock status

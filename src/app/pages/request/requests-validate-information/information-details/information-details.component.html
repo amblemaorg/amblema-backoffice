@@ -11,7 +11,7 @@
         </p>
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Nombre del paso:</span>
-          {{ data.stepName }}
+          {{ data.detail.stepName }}
         </p>
       </div>
 
@@ -39,57 +39,57 @@
 
       <div class="col-12"><hr /></div>
 
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasText">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasText">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Texto:</span>
-          {{ data.stepText }}
+          {{ data.detail.stepText }}
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasUpload">
-        <p class="d-flex w-100" *ngIf="data.stepUploadedFile">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasUpload">
+        <p class="d-flex w-100" *ngIf="data.detail.stepUploadedFile">
           <span class="pl-0 font-weight-bold col-5"
             >Archivo cargado por el usuario:</span
           >
-          <a target="_blank" [attr.href]="data.stepUploadedFile.url">{{
-            data.stepUploadedFile.name
+          <a target="_blank" [attr.href]="data.detail.stepUploadedFile.url">{{
+            data.detail.stepUploadedFile.name
           }}</a>
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasFile">
-        <p class="d-flex w-100" *ngIf="data.stepFile">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasFile">
+        <p class="d-flex w-100" *ngIf="data.detail.stepFile">
           <span class="pl-0 font-weight-bold col-5"
             >Archivo cargar desde administrador:</span
           >
-          <a target="_blank" [attr.href]="data.stepFile.url">{{
-            data.stepFile.name
+          <a target="_blank" [attr.href]="data.detail.stepFile.url">{{
+            data.detail.stepFile.name
           }}</a>
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasDate">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasDate">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Fecha:</span>
-          {{ data.createdAt | date: "dd/MM/yyyy" }}
+          {{ data.detail.createdAt | date: "dd/MM/yyyy" }}
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasChecklist">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasChecklist">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">List de opciones:</span>
         </p>
         <ul>
-          <li *ngFor="let item of data.stepChecklist">
+          <li *ngFor="let item of data.detail.stepChecklist">
             {{ item.name }} - {{ checked ? "Seleccionado" : "No Seleccionado" }}
           </li>
         </ul>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.stepHasVideo">
+      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasVideo">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Video:</span>
-          {{ data.stepVideo }}
+          {{ data.detail.stepVideo }}
         </p>
       </div>
 

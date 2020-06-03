@@ -36,7 +36,7 @@ import { RolesState } from './store/role.action';
 import { LoadingInterceptorService } from './intercepts/loading-intercept';
 import { UserCreationRequestState } from './store/request/user-creation-request.action';
 import { EnvironmentalProjectState } from './store/environmental-project.action';
-import { RequestStepApprovalState } from './store/request/request-step-approval.action';
+import { RequestContentState } from './store/request/request-content-approval.action';
 import { ProjectValidationRequestState } from './store/request/project-validation-request.action';
 
 registerLocaleData(localeVe, 'es-VE');
@@ -85,7 +85,7 @@ registerLocaleData(localeVe, 'es-VE');
       // -- Requests --
       UserCreationRequestState,
       ProjectRequestState,
-      RequestStepApprovalState,
+      RequestContentState,
       ProjectValidationRequestState
     ],
     {

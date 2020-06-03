@@ -15,8 +15,13 @@ import { NbDialogService } from '@nebular/theme';
 import { InformationDetailsComponent } from './information-details/information-details.component';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { RequestContentState, SelectedRequestContent, DeleteRequestContent } from 'src/app/store/request/request-content-approval.action';
+import {
+  RequestContentState,
+  SelectedRequestContent,
+  DeleteRequestContent,
+} from 'src/app/store/request/request-content-approval.action';
 import { RequestContent } from 'src/app/models/request/request-content-approval.model';
+import { TYPE_INFORMATION } from './_shared/type-information';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -51,7 +56,7 @@ export class RequestsValidateInformationComponent extends BaseTable
     };
 
     this.settings.columns = {
-      requestCode: {
+      code: {
         title: 'N° de la solicitud',
         type: 'string',
       },
@@ -60,7 +65,7 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         valuePrepareFunction: (row: any) => row.code,
         filterFunction: (cell?: any, search?: string) => {
-          const value: string = cell.code;
+          const value: string = cell.detail.project.code;
           return value.indexOf(search.toUpperCase()) === 0 || search === ''
             ? true
             : false;
@@ -148,20 +153,29 @@ export class RequestsValidateInformationComponent extends BaseTable
   ngOnInit() {}
 
   onAction(event) {
-
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log( event.data )
-        this.dialogService.open(InformationDetailsComponent);
+        switch (event.data.type) {
+          case TYPE_INFORMATION.STEP:
+            this.dialogService.open(InformationDetailsComponent);
+            console.log(  event.data );
+            break;
+        }
+
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:
-      this.serviceInformation.deleteRequestContentApproval( event.data.id ).subscribe( () => {
-        this.store.dispatch(new DeleteRequestContent(event.data.id));
-        this.toast.deleteRegister('Solicitud eliminada', 'Se ha eliminado una solicitud');
-      } );
+        this.serviceInformation
+          .deleteRequestContentApproval(event.data.id)
+          .subscribe(() => {
+            this.store.dispatch(new DeleteRequestContent(event.data.id));
+            this.toast.deleteRegister(
+              'Solicitud eliminada',
+              'Se ha eliminado una solicitud'
+            );
+          });
 
-      break;
+        break;
     }
   }
 }

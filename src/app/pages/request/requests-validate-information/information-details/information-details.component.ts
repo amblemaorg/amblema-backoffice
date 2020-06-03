@@ -28,7 +28,9 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
     protected dialogRef: NbDialogRef<InformationDetailsComponent> ) { }
 
   ngOnInit() {
-    this.subscription = this.data$.subscribe( response => { console.log(response);  this.data = response; } );
+    this.subscription = this.data$.subscribe( response => {
+      this.data = response;
+    } );
   }
 
   ngOnDestroy(): void {

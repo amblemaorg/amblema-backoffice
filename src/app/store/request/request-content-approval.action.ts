@@ -69,7 +69,7 @@ export class RequestContentState implements NgxsOnInit {
 
     ctx.setState( patch( {
       ...ctx.getState(),
-      requestsStepsApproval: updateItem<RequestContent>( request => request.id === action.newData.id, action.newData ),
+      requestsContent: updateItem<RequestContent>( request => request.id === action.newData.id, action.newData ),
       selectedRequestContent: action.newData
     }));
 
@@ -91,7 +91,7 @@ export class RequestContentState implements NgxsOnInit {
 
     ctx.setState(patch({
       ...ctx.getState(),
-      requestsStepsApproval: removeItem<RequestContent>( item => item.id === action.id )
+      requestsContent: removeItem<RequestContent>( item => item.id === action.id )
     }));
   }
 }

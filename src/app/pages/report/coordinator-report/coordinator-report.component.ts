@@ -2,61 +2,64 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { UserReportService } from 'src/app/services/report/user-report.service';
 import { Subscription } from 'rxjs';
-import { ReadlyStatusConvert, FilterStatus, FilterAmblemPensum } from 'src/app/helpers/utility';
+import {
+  ReadlyStatusConvert,
+  FilterStatus,
+  FilterAmblemPensum,
+} from 'src/app/helpers/utility';
 import { PDFReport } from '../pdf-report.service';
 import { DatePipe } from '@angular/common';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-coordinator-report',
   templateUrl: './coordinator-report.component.html',
   styleUrls: ['./coordinator-report.component.scss'],
-  providers: [ PDFReport, DatePipe ]
+  providers: [PDFReport, DatePipe],
 })
 export class CoordinatorReportComponent implements OnInit, OnDestroy {
-
   subscriptionService: Subscription;
 
   settings: any = {
-
     noDataMessage: 'No hay registros',
     actions: {
       add: false,
       delete: false,
-      edit: false
+      edit: false,
     },
 
     columns: {
       firstName: {
         title: 'Nombre',
-        type: 'string'
+        type: 'string',
       },
       lastName: {
         title: 'Apellido',
-        type: 'string'
+        type: 'string',
       },
       email: {
         title: 'Correo',
-        type: 'string'
+        type: 'string',
       },
       phone: {
         title: 'Teléfono Móvil',
-        type: 'number'
+        type: 'number',
       },
       homePhone: {
         title: 'Teléfono de habitación',
-        type: 'number'
+        type: 'number',
       },
       addressState: {
         title: 'Estado',
-        type: 'string'
+        type: 'string',
       },
       addressMunicipality: {
         title: 'Municipio',
-        type: 'string'
+        type: 'string',
       },
       addressHome: {
         title: 'Casa / Edificio',
-        type: 'string'
+        type: 'string',
       },
 
       instructed: {
@@ -65,15 +68,15 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         valuePrepareFunction: (row: any) => {
           return row ? 'Completado' : 'No completado';
         },
-        filterFunction: FilterAmblemPensum
+        filterFunction: FilterAmblemPensum,
       },
       profession: {
         title: 'Profesión',
-        type: 'string'
+        type: 'string',
       },
       schools: {
         title: 'Escuela(s) que apadrina',
-        type: 'string'
+        type: 'string',
       },
       status: {
         title: 'Estatus',
@@ -81,9 +84,9 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         valuePrepareFunction: (row: any) => {
           return ReadlyStatusConvert([{ status: row }])[0].status;
         },
-        filterFunction: FilterStatus
+        filterFunction: FilterStatus,
       },
-    }
+    },
   };
 
   source: LocalDataSource = new LocalDataSource();
@@ -102,46 +105,55 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
 
   constructor(
     private cd: ChangeDetectorRef,
+    private toast: CustomToastrService,
     private generatorReport: PDFReport,
     private userReporteService: UserReportService
-  ) { }
+  ) {}
 
   async ngOnInit() {
-
-    this.subscriptionService = this.userReporteService.getUserReport('1', '1').subscribe(usersActive => {
-
-      this.data = usersActive.users;
-      this.subscriptionService = this.userReporteService.getUserReport('1', '0').subscribe(response => {
-        if (response.users.length) {
-          this.data = [
-            ...this.data,
-            response.users
-          ];
-        }
-        this.source.load(this.data);
+    this.subscriptionService = this.userReporteService
+      .getUserReport('1', '1')
+      .subscribe((usersActive) => {
+        this.data = usersActive.users;
+        this.subscriptionService = this.userReporteService
+          .getUserReport('1', '0')
+          .subscribe((response) => {
+            if (response.users.length) {
+              this.data = [...this.data, response.users];
+            }
+            this.source.load(this.data);
+          });
       });
-    });
-
   }
 
   async ngOnDestroy() {
-    if (this.subscriptionService) { this.subscriptionService.unsubscribe(); }
+    if (this.subscriptionService) {
+      this.subscriptionService.unsubscribe();
+    }
   }
 
   onGenerateReport() {
     this.disabledBtn = true;
 
-    this.subscriptionService = this.userReporteService.getUserReport(
-      '1',
-      this.statusSelected,
-      this.selectedAmbLePensum).subscribe(response => {
+    this.subscriptionService = this.userReporteService
+      .getUserReport('1', this.statusSelected, this.selectedAmbLePensum)
+      .subscribe(
+        (response) => {
+          if (response.users.length) {
+            this.generatorReport.generateUserReport(response);
+          } else {
+            this.toast.info(
+              'Información',
+              'No hay registro en el estatus o configuración seleccionada'
+            );
+          }
 
-      this.generatorReport.generateUserReport(response);
-
-      setTimeout(() => {
-        this.disabledBtn = false;
-        this.cd.detectChanges();
-      }, 3500);
-    }, () => this.disabledBtn = false);
+          setTimeout(() => {
+            this.disabledBtn = false;
+            this.cd.detectChanges();
+          }, 3500);
+        },
+        () => (this.disabledBtn = false)
+      );
   }
 }

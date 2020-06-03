@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ReadlyStatusConvert, FilterStatus } from 'src/app/helpers/utility';
 import { PDFReport } from '../pdf-report.service';
 import { DatePipe } from '@angular/common';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-sponsor-report',
@@ -82,6 +83,7 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
   disabledBtn = false;
 
   constructor(
+    private toast: CustomToastrService,
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
     private userReporteService: UserReportService) { }
@@ -91,9 +93,7 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.userReporteService.getUserReport('0', '1').subscribe(usersActive => {
 
       this.data = usersActive.users;
-
       this.subscriptionService = this.userReporteService.getUserReport('0', '0').subscribe(response => {
-
         if (response.users.length) {
           this.data = [
             ...this.data,
@@ -114,12 +114,16 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
 
     this.userReporteService.getUserReport('0', this.statusSelected).subscribe( response => {
 
-      this.generatorReport.generateUserReport(response);
+      if ( response.users.length ) {
+        this.generatorReport.generateUserReport(response);
+      } else {
+        this.toast.info('Información', 'No hay registro en el estatus seleccionado');
+      }
 
       setTimeout(() => {
         this.disabledBtn = false;
         this.cd.detectChanges();
       }, 3500);
-    });
+    }, () => this.disabledBtn = false);
   }
 }

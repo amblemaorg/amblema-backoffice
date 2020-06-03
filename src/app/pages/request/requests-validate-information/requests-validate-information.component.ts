@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/helpers/base-table';
 import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
-import {
-  RequestStepApprovalState,
-  SelectedRequest,
-  DeleteRequestStepApproval,
-} from 'src/app/store/request/request-step-approval.action';
+
 import { Observable } from 'rxjs';
-import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
 import { DatePipe } from '@angular/common';
 import {
@@ -20,6 +15,8 @@ import { NbDialogService } from '@nebular/theme';
 import { InformationDetailsComponent } from './information-details/information-details.component';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { RequestContentState, SelectedRequestContent, DeleteRequestContent } from 'src/app/store/request/request-content-approval.action';
+import { RequestContent } from 'src/app/models/request/request-content-approval.model';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -28,8 +25,8 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 })
 export class RequestsValidateInformationComponent extends BaseTable
   implements OnInit {
-  @Select(RequestStepApprovalState.requestsStepApproval) data$: Observable<
-    RequestStepApproval[]
+  @Select(RequestContentState.requestsContent) data$: Observable<
+    RequestContent[]
   >;
 
   constructor(
@@ -154,12 +151,13 @@ export class RequestsValidateInformationComponent extends BaseTable
 
     switch (event.action) {
       case this.ACTION.VIEW:
+        console.log( event.data )
         this.dialogService.open(InformationDetailsComponent);
-        this.store.dispatch(new SelectedRequest(event.data));
+        this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:
-      this.serviceInformation.deleteRequestStepApproval( event.data.id ).subscribe( () => {
-        this.store.dispatch(new DeleteRequestStepApproval(event.data.id));
+      this.serviceInformation.deleteRequestContentApproval( event.data.id ).subscribe( () => {
+        this.store.dispatch(new DeleteRequestContent(event.data.id));
         this.toast.deleteRegister('Solicitud eliminada', 'Se ha eliminado una solicitud');
       } );
 

@@ -38,7 +38,7 @@ export class PDFReport implements OnInit {
 
     async generateUserReport( dataUsers: any ) {
 
-        const finalReport: any = {
+        let finalReport: any = {
             info: {
                 title: 'Reporte de usuarios',
                 author: 'Binaural C.A',
@@ -177,6 +177,8 @@ export class PDFReport implements OnInit {
                 margin: [0, 0, 0, 30]
             });
         } else if ( dataUsers.typeUser === '2' ) {
+
+            finalReport.defaultStyle.fontSize = 7.4; 
 
             const schoolRecords: any = [];
 

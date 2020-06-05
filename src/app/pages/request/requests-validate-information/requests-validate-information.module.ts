@@ -10,7 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
 
 @NgModule({
-  entryComponents: [ 
+  entryComponents: [
     InitialWorkshopDetailsComponent,
     InformationDetailsComponent ],
   declarations: [RequestsValidateInformationComponent, InformationDetailsComponent, InitialWorkshopDetailsComponent],

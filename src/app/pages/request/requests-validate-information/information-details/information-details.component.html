@@ -2,6 +2,29 @@
   <nb-card-header>Validación de información</nb-card-header>
   <nb-card-body>
     <div class="row">
+      
+      
+      <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Padrino:</span>
+          {{ data.project.sponsor.name }}
+        </p>
+      </div>
+
+      <div *ngIf="data.project.coordinator" class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
+          {{ data.project.coordinator.name }}
+        </p>
+      </div>
+
+      <div *ngIf="data.project.school" class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Escuela:</span>
+          {{ data.project.school.name }}
+        </p>
+      </div>
+      
       <div class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5"
@@ -14,6 +37,8 @@
           {{ data.detail.stepName }}
         </p>
       </div>
+
+
 
       <div class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
@@ -36,6 +61,7 @@
           }}
         </p>
       </div>
+      
 
       <div class="col-12"><hr /></div>
 

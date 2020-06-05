@@ -1,8 +1,72 @@
-<nb-card>
+<nb-card class="mx-5">
     <nb-card-header>
-
+        Validación de información
     </nb-card-header>
     <nb-card-body>
+
+        <div class="row">
+
+            <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
+                <p class="d-flex w-100">
+                  <span class="pl-0 font-weight-bold col-5">Padrino:</span>
+                  {{ data.project.sponsor.name }}
+                </p>
+              </div>
+        
+              <div *ngIf="data.project.coordinator" class="col-12 col-md-6 col-lg-4">
+                <p class="d-flex w-100">
+                  <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
+                  {{ data.project.coordinator.name }}
+                </p>
+              </div>
+        
+              <div *ngIf="data.project.school" class="col-12 col-md-6 col-lg-4">
+                <p class="d-flex w-100">
+                  <span class="pl-0 font-weight-bold col-5">Escuela:</span>
+                  {{ data.project.school.name }}
+                </p>
+              </div>
+              
+              <div class="col-12 col-md-6 col-lg-4">
+                <p class="d-flex w-100">
+                  <span class="pl-0 font-weight-bold col-5"
+                    >Fecha de la solicitud:</span
+                  >
+                  {{ data.createdAt | date: "dd/MM/yyyy" }}
+                </p>
+               
+              </div>
+        
+        
+        
+              <div class="col-12 col-md-6 col-lg-4">
+                <p class="d-flex w-100">
+                  <span class="pl-0 font-weight-bold col-5">Código del proyecto:</span>
+                  {{ data.project.code }}
+                </p>
+              </div>
+        
+              <div class="col-12 col-md-6 col-lg-4">
+                <p class="d-flex w-100">
+                  <span class="pl-0 font-weight-bold col-5">Tag:</span>
+                  {{
+                    data.stepTag === "1"
+                      ? "General"
+                      : data.stepTag === "2"
+                      ? "Coordinador"
+                      : data.stepTag === "3"
+                      ? "Padrino"
+                      : "Escuela"
+                  }}
+                </p>
+              </div>
+              
+        
+              <div class="col-12"><hr /></div>
+        
+
+        </div>
+
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas qui dolor eaque, numquam sit beatae mollitia consequatur perspiciatis. Ducimus repellat ipsa ipsam tempore magni explicabo maxime quisquam in quos tempora!
     </nb-card-body>
 </nb-card>

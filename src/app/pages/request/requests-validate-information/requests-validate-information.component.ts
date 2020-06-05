@@ -154,7 +154,7 @@ export class RequestsValidateInformationComponent extends BaseTable
   ngOnInit() {}
 
   onShowModal() {
-    this.dialogService.open( InitialWorkshopDetailsComponent )
+    this.dialogService.open( InitialWorkshopDetailsComponent );
   }
 
   onAction(event) {
@@ -163,7 +163,7 @@ export class RequestsValidateInformationComponent extends BaseTable
         switch (event.data.type) {
           case TYPE_INFORMATION.STEP:
             this.dialogService.open(InformationDetailsComponent);
-           
+
 
             console.log(  event.data );
             break;

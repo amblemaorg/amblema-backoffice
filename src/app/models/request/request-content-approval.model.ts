@@ -30,9 +30,9 @@ interface User {
  * Details info
  */
 
-interface Detail extends StepDetails, ActivityDetails, SliderDetails {}
+interface Detail extends StepDetails, ActivityDetails, SliderDetails, InitialWorkshopDetails {}
 
-// -- Step information #1 -- 
+// -- Step information #1 --
 
 interface StepDetails {
   stepId?: string;
@@ -105,5 +105,13 @@ interface SliderDetails {
 
 // -- Initial Workshop details #5 --
 interface InitialWorkshopDetails {
-  
+  descripton?: string;
+  images?: Image[];
+}
+
+interface Image {
+  url?: string;
+  description?: string;
+  state?: string;
+  status?: string;
 }

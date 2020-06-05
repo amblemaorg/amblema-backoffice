@@ -22,6 +22,7 @@ import {
 } from 'src/app/store/request/request-content-approval.action';
 import { RequestContent } from 'src/app/models/request/request-content-approval.model';
 import { TYPE_INFORMATION } from './_shared/type-information';
+import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -152,12 +153,18 @@ export class RequestsValidateInformationComponent extends BaseTable
 
   ngOnInit() {}
 
+  onShowModal() {
+    this.dialogService.open( InitialWorkshopDetailsComponent )
+  }
+
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
         switch (event.data.type) {
           case TYPE_INFORMATION.STEP:
             this.dialogService.open(InformationDetailsComponent);
+           
+
             console.log(  event.data );
             break;
         }

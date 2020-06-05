@@ -7,11 +7,13 @@ import { NbCardModule, NbDialogModule, NbButtonModule, NbAlertModule, NbInputMod
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { InformationDetailsComponent } from './information-details/information-details.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
 
 @NgModule({
-  entryComponents: [ InformationDetailsComponent ],
-  declarations: [RequestsValidateInformationComponent, InformationDetailsComponent],
+  entryComponents: [ 
+    InitialWorkshopDetailsComponent,
+    InformationDetailsComponent ],
+  declarations: [RequestsValidateInformationComponent, InformationDetailsComponent, InitialWorkshopDetailsComponent],
   imports: [
     NbCardModule,
     ReactiveFormsModule,

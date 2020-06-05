@@ -32,7 +32,7 @@ interface User {
 
 interface Detail extends StepDetails, ActivityDetails, SliderDetails {}
 
-// -- Step information --
+// -- Step information #1 -- 
 
 interface StepDetails {
   stepId?: string;
@@ -63,7 +63,7 @@ interface StepChecklist {
   checked: string;
 }
 
-// -- Activity --
+// -- Activity #3 --
 
 interface ActivityDetails {
   pecaId?: string;
@@ -75,12 +75,12 @@ interface ActivityDetails {
   hasDate?: string;
   hasFile?: string;
   hasVideo?: string;
+  checklist?: Checklist[];
   hasChecklist?: string;
   hasUpload?: string;
   text?: string;
   file?: File;
   video?: File;
-  checklist?: Checklist[];
   date?: string;
   uploadedFile?: File;
 }
@@ -96,9 +96,14 @@ interface Checklist {
   checked: string;
 }
 
-// -- Slider Details --
+// -- Slider Details #4 --
 interface SliderDetails {
   pecaId?: string;
   image?: string;
   description?: string;
+}
+
+// -- Initial Workshop details #5 --
+interface InitialWorkshopDetails {
+  
 }

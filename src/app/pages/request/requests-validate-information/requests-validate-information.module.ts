@@ -1,26 +1,41 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { RequestsValidateInformationRoutingModule } from './requests-validate-information-routing.module';
-import { RequestsValidateInformationComponent } from './requests-validate-information.component';
-import { NbCardModule, NbDialogModule, NbButtonModule, NbAlertModule, NbInputModule } from '@nebular/theme';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { InformationDetailsComponent } from './information-details/information-details.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
+import { RequestsValidateInformationRoutingModule } from "./requests-validate-information-routing.module";
+import { RequestsValidateInformationComponent } from "./requests-validate-information.component";
+import {
+  NbCardModule,
+  NbDialogModule,
+  NbButtonModule,
+  NbAlertModule,
+  NbInputModule,
+} from "@nebular/theme";
+import { Ng2SmartTableModule } from "ng2-smart-table";
+import { InformationDetailsComponent } from "./information-details/information-details.component";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { InitialWorkshopDetailsComponent } from "./initial-workshop-details/initial-workshop-details.component";
 
 // Import the library
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CarouselModule } from "ngx-owl-carousel-o";
 // Needs to import the BrowserAnimationsModule
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ActivityDetailsComponent } from "./activity-details/activity-details.component";
+import { SliderDetailsComponent } from "./slider-details/slider-details.component";
 
 @NgModule({
   entryComponents: [
-    InformationDetailsComponent ],
-  declarations: [RequestsValidateInformationComponent, InformationDetailsComponent, InitialWorkshopDetailsComponent],
+    SliderDetailsComponent,
+    ActivityDetailsComponent,
+    InformationDetailsComponent,
+  ],
+  declarations: [
+    RequestsValidateInformationComponent,
+    InformationDetailsComponent,
+    InitialWorkshopDetailsComponent,
+    ActivityDetailsComponent,
+    SliderDetailsComponent,
+  ],
   imports: [
-
     CarouselModule,
     NbCardModule,
     ReactiveFormsModule,
@@ -31,7 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NbAlertModule,
     NbInputModule,
     RequestsValidateInformationRoutingModule,
-    NbDialogModule.forChild()
-  ]
+    NbDialogModule.forChild(),
+  ],
 })
-export class RequestsValidateInformationModule { }
+export class RequestsValidateInformationModule {}

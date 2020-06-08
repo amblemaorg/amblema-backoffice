@@ -9,12 +9,19 @@ import { InformationDetailsComponent } from './information-details/information-d
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
 
+// Import the library
+import { CarouselModule } from 'ngx-owl-carousel-o';
+// Needs to import the BrowserAnimationsModule
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 @NgModule({
   entryComponents: [
-    InitialWorkshopDetailsComponent,
     InformationDetailsComponent ],
   declarations: [RequestsValidateInformationComponent, InformationDetailsComponent, InitialWorkshopDetailsComponent],
   imports: [
+
+    CarouselModule,
     NbCardModule,
     ReactiveFormsModule,
     FormsModule,

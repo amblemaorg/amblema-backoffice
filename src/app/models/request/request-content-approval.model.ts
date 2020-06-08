@@ -110,8 +110,7 @@ interface InitialWorkshopDetails {
 }
 
 interface Image {
-  url?: string;
+  image?: string;
   description?: string;
-  state?: string;
   status?: string;
 }

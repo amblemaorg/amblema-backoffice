@@ -23,6 +23,7 @@ import {
 import { RequestContent } from 'src/app/models/request/request-content-approval.model';
 import { TYPE_INFORMATION } from './_shared/type-information';
 import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
+import { ModalService } from 'src/app/services/helper/modal.service';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -39,6 +40,7 @@ export class RequestsValidateInformationComponent extends BaseTable
     private store: Store,
     private dialogService: NbDialogService,
     private toast: CustomToastrService,
+    private modal: ModalService,
     private serviceInformation: InformationRequestService,
     private helper: Utility
   ) {
@@ -117,6 +119,7 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       createdAt: {
+        sortDirection: 'desc',
         title: 'Fecha',
         type: 'string',
         compareFunction: sortDate,
@@ -151,10 +154,14 @@ export class RequestsValidateInformationComponent extends BaseTable
     };
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+      this.data$.subscribe( response => console.log( response ) )
+
+  }
 
   onShowModal() {
-    this.dialogService.open( InitialWorkshopDetailsComponent );
+    this.modal.open('initial-workshop-modal');
   }
 
   onAction(event) {
@@ -163,11 +170,8 @@ export class RequestsValidateInformationComponent extends BaseTable
         switch (event.data.type) {
           case TYPE_INFORMATION.STEP:
             this.dialogService.open(InformationDetailsComponent);
-
-
-            console.log(  event.data );
             break;
-        }
+        };
 
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;

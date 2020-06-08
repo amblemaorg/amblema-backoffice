@@ -1,72 +1,183 @@
-<nb-card class="mx-5">
-    <nb-card-header>
-        Validación de información
-    </nb-card-header>
-    <nb-card-body>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="initial-workshop-modal"
+  tabindex="-1"
+  #modal
+  role="dialog"
+  aria-labelledby="modelTitleId"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <nb-card class="mb-0">
+        <nb-card-header>
+          Validación de información
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div *ngIf="dataMock.project.sponsor" class="col-12 col-md-6 col-lg-4">
+              <p class="d-flex w-100">
+                <span class="pl-0 font-weight-bold col-5">Padrino:</span>
+                {{ dataMock.project.sponsor.name }}
+              </p>
+            </div>
 
-        <div class="row">
+            <div
+              *ngIf="dataMock.project.coordinator"
+              class="col-12 col-md-6 col-lg-4"
+            >
+              <p class="d-flex w-100">
+                <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
+                {{ dataMock.project.coordinator.name }}
+              </p>
+            </div>
 
-            <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
-                <p class="d-flex w-100">
-                  <span class="pl-0 font-weight-bold col-5">Padrino:</span>
-                  {{ data.project.sponsor.name }}
-                </p>
-              </div>
-        
-              <div *ngIf="data.project.coordinator" class="col-12 col-md-6 col-lg-4">
-                <p class="d-flex w-100">
-                  <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
-                  {{ data.project.coordinator.name }}
-                </p>
-              </div>
-        
-              <div *ngIf="data.project.school" class="col-12 col-md-6 col-lg-4">
-                <p class="d-flex w-100">
-                  <span class="pl-0 font-weight-bold col-5">Escuela:</span>
-                  {{ data.project.school.name }}
-                </p>
-              </div>
-              
-              <div class="col-12 col-md-6 col-lg-4">
-                <p class="d-flex w-100">
-                  <span class="pl-0 font-weight-bold col-5"
-                    >Fecha de la solicitud:</span
+            <div *ngIf="dataMock.project.school" class="col-12 col-md-6 col-lg-4">
+              <p class="d-flex w-100">
+                <span class="pl-0 font-weight-bold col-5">Escuela:</span>
+                {{ dataMock.project.school.name }}
+              </p>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <p class="d-flex w-100">
+                <span class="pl-0 font-weight-bold col-5"
+                  >Fecha de la solicitud:</span
+                >
+                {{ dataMock.createdAt | date: "dd/MM/yyyy" }}
+              </p>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <p class="d-flex w-100">
+                <span class="pl-0 font-weight-bold col-5"
+                  >Código del proyecto:</span
+                >
+                {{ dataMock.project.code }}
+              </p>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <p class="d-flex w-100">
+                <span class="pl-0 font-weight-bold col-5">Tag:</span>
+                {{
+                  dataMock.stepTag === "1"
+                    ? "General"
+                    : dataMock.stepTag === "2"
+                    ? "Coordinador"
+                    : dataMock.stepTag === "3"
+                    ? "Padrino"
+                    : "Escuela"
+                }}
+              </p>
+            </div>
+
+            <div class="col-12"><hr /></div>
+
+            <div class="col-12">
+              <p class="d-flex w-100">
+                <span class="pl-0 font-weight-bold mr-1">Resumen: </span
+                >{{ dataMock.description }}
+              </p>
+            </div>
+
+            <div class="col-12 position-relative" *ngIf="hasClass(modal)">
+              <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide *ngFor="let item of dataMock.images">
+                  <div class="card">
+                    <img class="card-img-top p-1" [src]="item.image" alt="">
+                    <div class="card-body">
+                      <p class="card-text">{{ item.description }}</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </owl-carousel-o>
+            </div>
+
+            <div class="col-12">
+              <div *ngIf="(data$ | async)?.status === '1'">
+                <hr />
+                <div *ngIf="confirmAction">
+                  <label class="label"> Acciones para la solicitud</label>
+                  <select
+                    [(ngModel)]="statusSelected"
+                    (change)="statusSelected = $event.target.value"
+                    class="form-control form-group"
                   >
-                  {{ data.createdAt | date: "dd/MM/yyyy" }}
-                </p>
-               
+                    <option value="2">Aceptar</option>
+                    <option value="3">Rechazar</option>
+                  </select>
+                </div>
+      
+                <div class="w-100 text-right justify-content-end">
+                  <button
+                    class="col-12 col-md-auto"
+                    nbButton
+                    *ngIf="confirmAction"
+                    status="primary"
+                    (click)="confirmAction = false"
+                  >
+                    Proceder
+                  </button>
+      
+                <div *ngIf="!confirmAction">
+                  <nb-alert status="info" class="text-left"
+                    >Confirmar acción, al aprobar o rechazar esta solicitud no se
+                    podrá cambiar de estatus.</nb-alert
+                  >
+      
+      
+                  <div *ngIf="statusSelected === '3'" class="text-left">
+                    <label class="label">Comentario</label>
+                    <textarea fullWidth class="form-group" placeholder="Comentario" rows="5" [(ngModel)]="comment" nbInput></textarea>
+                    
+                  </div>
+                  
+                  <div class="row justify-content-end">
+                      <div class="col-6 col-md-auto">
+                        <button
+                          (click)="onApprovedRequest()"
+                          nbButton
+                          fullWidth
+                          *ngIf="!confirmAction"
+                          status="danger"
+                        >
+                          Confirmar
+                        </button>
+                      </div>
+                      <div class="col-6 col-md-auto">
+                        <button
+                          nbButton
+                          outline
+                          fullWidth
+                          *ngIf="!confirmAction"
+                          status="basic"
+                          (click)="confirmAction = true"
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-        
-        
-        
-              <div class="col-12 col-md-6 col-lg-4">
-                <p class="d-flex w-100">
-                  <span class="pl-0 font-weight-bold col-5">Código del proyecto:</span>
-                  {{ data.project.code }}
-                </p>
-              </div>
-        
-              <div class="col-12 col-md-6 col-lg-4">
-                <p class="d-flex w-100">
-                  <span class="pl-0 font-weight-bold col-5">Tag:</span>
-                  {{
-                    data.stepTag === "1"
-                      ? "General"
-                      : data.stepTag === "2"
-                      ? "Coordinador"
-                      : data.stepTag === "3"
-                      ? "Padrino"
-                      : "Escuela"
-                  }}
-                </p>
-              </div>
-              
-        
-              <div class="col-12"><hr /></div>
-        
+            </div>
 
-        </div>
-
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas qui dolor eaque, numquam sit beatae mollitia consequatur perspiciatis. Ducimus repellat ipsa ipsam tempore magni explicabo maxime quisquam in quos tempora!
-    </nb-card-body>
-</nb-card>
+          </div>
+        </nb-card-body>
+        <nb-card-footer class="text-right">
+          <button
+            nbButton
+            data-dismiss="modal"
+            outline
+            status="basic"
+            class="col-12 col-lg-auto"
+          >
+            Cerrar
+          </button>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+  </div>
+</div>

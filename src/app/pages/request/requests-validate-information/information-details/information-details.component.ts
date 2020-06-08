@@ -22,10 +22,10 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   comment;
 
   constructor(
-    private serviceRequestStepApproval: InformationRequestService,
-    private store: Store,
-    private toastr: CustomToastrService,
-    protected dialogRef: NbDialogRef<InformationDetailsComponent> ) { }
+      protected serviceRequestStepApproval?: InformationRequestService,
+      protected store?: Store,
+      protected toastr?: CustomToastrService,
+      protected dialogRef?: NbDialogRef<InformationDetailsComponent> ) { }
 
   ngOnInit() {
     this.subscription = this.data$.subscribe( response => {

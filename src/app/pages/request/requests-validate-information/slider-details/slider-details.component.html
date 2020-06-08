@@ -2,8 +2,6 @@
   <nb-card-header>Validación de información</nb-card-header>
   <nb-card-body>
     <div class="row">
-      
-      
       <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Padrino:</span>
@@ -24,7 +22,7 @@
           {{ data.project.school.name }}
         </p>
       </div>
-      
+
       <div class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5"
@@ -37,8 +35,6 @@
           {{ data.detail.stepName }}
         </p>
       </div>
-
-
 
       <div class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
@@ -61,62 +57,17 @@
           }}
         </p>
       </div>
-      
 
       <div class="col-12"><hr /></div>
 
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasText">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Texto:</span>
-          {{ data.detail.stepText }}
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasUpload">
-        <p class="d-flex w-100" *ngIf="data.detail.stepUploadedFile">
-          <span class="pl-0 font-weight-bold col-5"
-            >Archivo cargado por el usuario:</span
-          >
-          <a target="_blank" [attr.href]="data.detail.stepUploadedFile.url">{{
-            data.detail.stepUploadedFile.name
-          }}</a>
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasFile">
-        <p class="d-flex w-100" *ngIf="data.detail.stepFile">
-          <span class="pl-0 font-weight-bold col-5"
-            >Archivo cargar desde administrador:</span
-          >
-          <a target="_blank" [attr.href]="data.detail.stepFile.url">{{
-            data.detail.stepFile.name
-          }}</a>
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasDate">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Fecha:</span>
-          {{ data.detail.createdAt | date: "dd/MM/yyyy" }}
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasChecklist">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">List de opciones:</span>
-        </p>
-        <ul>
-          <li *ngFor="let item of data.detail.stepChecklist">
-            {{ item.name }} - {{ checked ? "Seleccionado" : "No Seleccionado" }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasVideo">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Video:</span>
-          {{ data.detail.stepVideo }}
-        </p>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card">
+          <img class="card-img-top p-1" [src]="data.detail.image" alt="" />
+          <div class="card-body">
+            <p class="font-weight-bold">Descripción</p>
+            <p class="card-text">{{ data.detail.description }}</p>
+          </div>
+        </div>
       </div>
 
       <div class="col-12">
@@ -145,20 +96,25 @@
               Proceder
             </button>
 
-          <div *ngIf="!confirmAction">
-            <nb-alert status="info" class="text-left"
-              >Confirmar acción, al aprobar o rechazar esta solicitud no se
-              podrá cambiar de estatus.</nb-alert
-            >
+            <div *ngIf="!confirmAction">
+              <nb-alert status="info" class="text-left"
+                >Confirmar acción, al aprobar o rechazar esta solicitud no se
+                podrá cambiar de estatus.</nb-alert
+              >
 
+              <div *ngIf="statusSelected === '3'" class="text-left">
+                <label class="label">Comentario</label>
+                <textarea
+                  fullWidth
+                  class="form-group"
+                  placeholder="Comentario"
+                  rows="5"
+                  [(ngModel)]="comment"
+                  nbInput
+                ></textarea>
+              </div>
 
-            <div *ngIf="statusSelected === '3'" class="text-left">
-              <label class="label">Comentario</label>
-              <textarea fullWidth class="form-group" placeholder="Comentario" rows="5" [(ngModel)]="comment" nbInput></textarea>
-              
-            </div>
-            
-            <div class="row justify-content-end">
+              <div class="row justify-content-end">
                 <div class="col-6 col-md-auto">
                   <button
                     (click)="onApprovedRequest()"
@@ -190,7 +146,13 @@
     </div>
   </nb-card-body>
   <nb-card-footer class="text-right">
-    <button nbButton (click)="onClose()" outline status="basic" class="col-12 col-lg-auto">
+    <button
+      nbButton
+      (click)="onClose()"
+      outline
+      status="basic"
+      class="col-12 col-lg-auto"
+    >
       Cerrar
     </button>
   </nb-card-footer>

@@ -38,7 +38,7 @@ export class PDFReport implements OnInit {
 
     async generateUserReport( dataUsers: any ) {
 
-        let finalReport: any = {
+        const finalReport: any = {
             info: {
                 title: 'Reporte de usuarios',
                 author: 'Binaural C.A',
@@ -178,7 +178,7 @@ export class PDFReport implements OnInit {
             });
         } else if ( dataUsers.typeUser === '2' ) {
 
-            finalReport.defaultStyle.fontSize = 7.4; 
+            finalReport.defaultStyle.fontSize = 7.4;
 
             const schoolRecords: any = [];
 

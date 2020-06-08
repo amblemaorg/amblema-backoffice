@@ -1,42 +1,42 @@
-import { Component, OnInit, DoCheck } from "@angular/core";
+import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 
-import { OwlOptions } from "ngx-owl-carousel-o";
-import { Subscription, Observable } from "rxjs";
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Subscription, Observable } from 'rxjs';
 import {
   RequestContentState,
   UpdateRequestContent,
-} from "src/app/store/request/request-content-approval.action";
-import { Select, Store } from "@ngxs/store";
-import { InformationRequestService } from "src/app/services/request/information-request.service";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+} from 'src/app/store/request/request-content-approval.action';
+import { Select, Store } from '@ngxs/store';
+import { InformationRequestService } from 'src/app/services/request/information-request.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
-  selector: "app-initial-workshop-details",
-  templateUrl: "./initial-workshop-details.component.html",
-  styleUrls: ["./initial-workshop-details.component.scss"],
+  selector: 'app-initial-workshop-details',
+  templateUrl: './initial-workshop-details.component.html',
+  styleUrls: ['./initial-workshop-details.component.scss'],
 })
-export class InitialWorkshopDetailsComponent implements OnInit {
+export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
   @Select(RequestContentState.selectedContentRequest) data$: Observable<{
     any;
   }>;
   subscription: Subscription;
 
   data: any;
-  statusSelected = "2";
+  statusSelected = '2';
   confirmAction = true;
   comment;
 
   dataMock = {
     // -- General data --
     project: {
-      code: "222",
-      sponsor: { name: "Coca cola" },
-      coordinator: { name: "Juaquin" },
-      school: { name: "Sevallos" },
+      code: '222',
+      sponsor: { name: 'Coca cola' },
+      coordinator: { name: 'Juaquin' },
+      school: { name: 'Sevallos' },
     },
-    stepTag: "1",
-    createdAt: "2020-06-02 20:38:23.499000",
-    code: "000",
+    stepTag: '1',
+    createdAt: '2020-06-02 20:38:23.499000',
+    code: '000',
     // -- Details data --
     description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, aliquam
     asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
@@ -49,7 +49,7 @@ export class InitialWorkshopDetailsComponent implements OnInit {
         asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
         fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
         suscipit eos?`,
-        status: "1",
+        status: '1',
       },
       {
         image: `https://i1.wp.com/blog.webtraining.zone/wp-content/uploads/2018/01/curso-profesional-vue.jpg?resize=825%2C510&ssl=1`,
@@ -57,7 +57,7 @@ export class InitialWorkshopDetailsComponent implements OnInit {
         asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
         fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
         suscipit eos?`,
-        status: "1",
+        status: '1',
       },
       {
         image: `https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTxbWDRp0uDnhvGkesRkA8DsHUomz2vNr07nD7AEE1_I29izRR6&usqp=CAU`,
@@ -65,7 +65,7 @@ export class InitialWorkshopDetailsComponent implements OnInit {
         asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
         fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
         suscipit eos?`,
-        status: "1",
+        status: '1',
       },
       {
         image: `https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTxbWDRp0uDnhvGkesRkA8DsHUomz2vNr07nD7AEE1_I29izRR6&usqp=CAU`,
@@ -73,7 +73,7 @@ export class InitialWorkshopDetailsComponent implements OnInit {
         asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
         fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
         suscipit eos?`,
-        status: "1",
+        status: '1',
       },
     ],
   };
@@ -101,8 +101,8 @@ export class InitialWorkshopDetailsComponent implements OnInit {
   show = false;
   hasClass(el: any) {
     return (
-      el.getAttribute("class") &&
-      el.getAttribute("class").indexOf("show") !== -1
+      el.getAttribute('class') &&
+      el.getAttribute('class').indexOf('show') !== -1
     );
   }
 
@@ -140,8 +140,8 @@ export class InitialWorkshopDetailsComponent implements OnInit {
           })
         );
         this.toastr.updateSuccess(
-          "Estatus actualizado",
-          "Se ha cambiado el estatus de la solicitud"
+          'Estatus actualizado',
+          'Se ha cambiado el estatus de la solicitud'
         );
       });
   }

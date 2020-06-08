@@ -169,15 +169,15 @@ export class RequestsValidateInformationComponent extends BaseTable
           case TYPE_INFORMATION.STEP:
             this.dialogService.open(InformationDetailsComponent);
             break;
-          case TYPE_INFORMATION.ACTIVITY: 
+          case TYPE_INFORMATION.ACTIVITY:
             this.dialogService.open(ActivityDetailsComponent);
             break;
           case TYPE_INFORMATION.SLIDER:
             this.dialogService.open(SliderDetailsComponent);
             break;
-            
-        };
-        console.log( event.data ); 
+
+        }
+        console.log( event.data );
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:

@@ -8,6 +8,6 @@ import { InformationDetailsComponent } from '../information-details/information-
 })
 export class ActivityDetailsComponent extends InformationDetailsComponent {
 
-  
+
 
 }

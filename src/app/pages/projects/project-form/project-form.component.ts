@@ -1,20 +1,28 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
-import { Subscription, Observable } from 'rxjs';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { Store, Select } from '@ngxs/store';
-import { AddProject, ProjectState, UpdateProject } from 'src/app/store/project.action';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import { ACTION } from "src/app/helpers/text-content/text-crud";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from "@angular/forms";
+import { ProjectService } from "src/app/services/project.service";
+import { Project } from "src/app/models/project.model";
+import { Subscription, Observable } from "rxjs";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { Store, Select } from "@ngxs/store";
+import {
+  AddProject,
+  ProjectState,
+  UpdateProject,
+} from "src/app/store/project.action";
 
 @Component({
-  selector: 'app-project-form',
-  templateUrl: './project-form.component.html',
-  styles: []
+  selector: "app-project-form",
+  templateUrl: "./project-form.component.html",
+  styles: [],
 })
 export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
-
   @Input() mode: string;
   @Input() MODAL: string;
 
@@ -34,35 +42,33 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
     private store: Store,
     private toastr: CustomToastrService,
     private projectService: ProjectService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder
+  ) {
     this.form = this.fb.group({
       sponsor: new FormControl(null),
       school: new FormControl(null),
-      coordinator: new FormControl(null)
+      coordinator: new FormControl(null),
     });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
-    this.title = this.mode === ACTION.CREATE ? 'Registrar proyecto' : 'Editar proyecto';
+    this.title =
+      this.mode === ACTION.CREATE ? "Registrar proyecto" : "Editar proyecto";
 
-
-
-    if ( this.mode === ACTION.EDIT ) {
-       this.project$.subscribe( (response: any) => {
-         this.oldProject = response;
-         this.form.controls.sponsor.setValue( response.sponsor.id );
-         this.form.controls.school.setValue( response.school.id );
-         this.form.controls.coordinator.setValue( response.coordinator.id );
-       });
-     } else  {
-       this.form.reset();
-       this.progress = 0;
-       this.submitted = false;
-     }
+    if (this.mode === ACTION.EDIT) {
+      this.project$.subscribe((response: any) => {
+        this.oldProject = response;
+        this.form.controls.sponsor.setValue(response.sponsor.id);
+        this.form.controls.school.setValue(response.school.id);
+        this.form.controls.coordinator.setValue(response.coordinator.id);
+      });
+    } else {
+      this.form.reset();
+      this.progress = 0;
+      this.submitted = false;
+    }
   }
 
   ngOnDestroy(): void {
@@ -77,23 +83,51 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
     if (this.form.valid) {
       this.progress = 1;
       if (this.mode === ACTION.CREATE) {
+        this.projectService.setProject(this.form.value).subscribe(
+          (response) => {
+            this.reset();
+            this.toastr.registerSuccess(
+              "Registro proyecto",
+              "Proyecto registrado correctamente"
+            );
+            this.store.dispatch(new AddProject(response));
+          },
+          (err: any) => {
+            this.progress = 0;
 
-        this.projectService.setProject(this.form.value).subscribe(response => {
-          this.reset();
-          this.toastr.registerSuccess('Registro proyecto', 'Proyecto registrado correctamente');
-          this.store.dispatch(new AddProject(response));
-
-        }, (err: any) => {
-          this.progress = 0;
-        });
+            if (err.error.school[0].status === "5") {
+              this.toastr.error(
+                "Escuela dublicada",
+                "No se puede registrar el proyecto. Ya existe un proyecto con ésta escuela"
+              );
+            }
+          }
+        );
       } else if (this.mode === ACTION.EDIT) {
-        this.projectService.updateProject(this.oldProject.id, this.form.value).subscribe(response => {
-          this.toastr.updateSuccess('Actualización', 'Actualización de proyecto exitoso');
-          this.store.dispatch(new UpdateProject(response, this.oldProject));
-          this.progress = 0;
-          this.submitted = false;
+        this.projectService
+          .updateProject(this.oldProject.id, this.form.value)
+          .subscribe(
+            (response) => {
+              this.toastr.updateSuccess(
+                "Actualización",
+                "Actualización de proyecto exitoso"
+              );
+              this.store.dispatch(new UpdateProject(response, this.oldProject));
+              this.progress = 0;
+              this.submitted = false;
+            },
+            (err: any) => {
 
-        });
+            this.progress = 0;
+
+              if (err.error.school[0].status === "5") {
+                this.toastr.error(
+                  "Escuela dublicada",
+                  "No se puede actualizars el proyecto. Ya existe un proyecto con ésta escuela"
+                );
+              }
+            }
+          );
       }
     }
   }

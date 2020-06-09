@@ -35,6 +35,7 @@ export class GeneralEnrolledState implements NgxsOnInit {
   @Action(GetGeneralEnrolled)
   getGeneralEnrolled(ctx: StateContext<GeneralEnrolled>) {
     this.enrolledServices.getEnrollment().subscribe((response) => {
+
       ctx.setState(
         patch({
           ...ctx.getState(),

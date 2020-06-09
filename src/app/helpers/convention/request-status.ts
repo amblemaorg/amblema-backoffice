@@ -20,14 +20,18 @@ export const REQUEST_STATUS = {
 export const TYPE_REQUEST = {
     SPONSOR: {
         ORIGINAL: 'sponsor',
-        CONVERTION: 'Padrino'
+        CONVERTION: 'Padrino',
+        CODE: '2'
+
     },
     COORDINATOR: {
         ORIGINAL: 'coordinator',
-        CONVERTION: 'Coordinador'
+        CONVERTION: 'Coordinador',
+        CODE: '1'
     },
     SCHOOL: {
         ORIGINAL: 'school',
-        CONVERTION: 'Escuela'
+        CONVERTION: 'Escuela',
+        CODE: '3'
     },
 };

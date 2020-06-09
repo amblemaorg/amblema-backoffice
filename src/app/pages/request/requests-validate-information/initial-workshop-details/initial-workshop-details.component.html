@@ -16,27 +16,27 @@
         </nb-card-header>
         <nb-card-body>
           <div class="row">
-            <div *ngIf="dataMock.project.sponsor" class="col-12 col-md-6 col-lg-4">
+            <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
               <p class="d-flex w-100">
                 <span class="pl-0 font-weight-bold col-5">Padrino:</span>
-                {{ dataMock.project.sponsor.name }}
+                {{ data.project.sponsor.name }}
               </p>
             </div>
 
             <div
-              *ngIf="dataMock.project.coordinator"
+              *ngIf="data.project.coordinator"
               class="col-12 col-md-6 col-lg-4"
             >
               <p class="d-flex w-100">
                 <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
-                {{ dataMock.project.coordinator.name }}
+                {{ data.project.coordinator.name }}
               </p>
             </div>
 
-            <div *ngIf="dataMock.project.school" class="col-12 col-md-6 col-lg-4">
+            <div *ngIf="data.project.school" class="col-12 col-md-6 col-lg-4">
               <p class="d-flex w-100">
                 <span class="pl-0 font-weight-bold col-5">Escuela:</span>
-                {{ dataMock.project.school.name }}
+                {{ data.project.school.name }}
               </p>
             </div>
 
@@ -45,7 +45,7 @@
                 <span class="pl-0 font-weight-bold col-5"
                   >Fecha de la solicitud:</span
                 >
-                {{ dataMock.createdAt | date: "dd/MM/yyyy" }}
+                {{ data.createdAt | date: "dd/MM/yyyy" }}
               </p>
             </div>
 
@@ -54,7 +54,7 @@
                 <span class="pl-0 font-weight-bold col-5"
                   >Código del proyecto:</span
                 >
-                {{ dataMock.project.code }}
+                {{ data.project.code }}
               </p>
             </div>
 
@@ -62,11 +62,11 @@
               <p class="d-flex w-100">
                 <span class="pl-0 font-weight-bold col-5">Tag:</span>
                 {{
-                  dataMock.stepTag === "1"
+                  data.stepTag === "1"
                     ? "General"
-                    : dataMock.stepTag === "2"
+                    : data.stepTag === "2"
                     ? "Coordinador"
-                    : dataMock.stepTag === "3"
+                    : data.stepTag === "3"
                     ? "Padrino"
                     : "Escuela"
                 }}
@@ -78,13 +78,13 @@
             <div class="col-12">
               <p class="d-flex w-100">
                 <span class="pl-0 font-weight-bold mr-1">Resumen: </span
-                >{{ dataMock.description }}
+                >{{ data.detail.description }}
               </p>
             </div>
 
             <div class="col-12 position-relative" *ngIf="hasClass(modal)">
               <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide *ngFor="let item of dataMock.images">
+                <ng-template carouselSlide *ngFor="let item of data.detail.images">
                   <div class="card">
                     <img class="card-img-top p-1" [src]="item.image" alt="">
                     <div class="card-body">

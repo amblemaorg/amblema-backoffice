@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    private breakpointService: NbMediaBreakpointsService,
     private menuService: NbMenuService,
     protected sidebarService?: NbSidebarService
   ) {}

@@ -5,6 +5,7 @@ export interface RequestContent {
   code: string;
   project: Project;
   type: string;
+  typeUser: string;
   user: User;
   comments: string;
   status: string;

@@ -1,25 +1,25 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
-import { ACTION } from "src/app/helpers/text-content/text-crud";
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ACTION } from 'src/app/helpers/text-content/text-crud';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   FormControl,
-} from "@angular/forms";
-import { ProjectService } from "src/app/services/project.service";
-import { Project } from "src/app/models/project.model";
-import { Subscription, Observable } from "rxjs";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
-import { Store, Select } from "@ngxs/store";
+} from '@angular/forms';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
+import { Subscription, Observable } from 'rxjs';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { Store, Select } from '@ngxs/store';
 import {
   AddProject,
   ProjectState,
   UpdateProject,
-} from "src/app/store/project.action";
+} from 'src/app/store/project.action';
 
 @Component({
-  selector: "app-project-form",
-  templateUrl: "./project-form.component.html",
+  selector: 'app-project-form',
+  templateUrl: './project-form.component.html',
   styles: [],
 })
 export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
@@ -55,7 +55,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(): void {
     this.title =
-      this.mode === ACTION.CREATE ? "Registrar proyecto" : "Editar proyecto";
+      this.mode === ACTION.CREATE ? 'Registrar proyecto' : 'Editar proyecto';
 
     if (this.mode === ACTION.EDIT) {
       this.project$.subscribe((response: any) => {
@@ -87,18 +87,18 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
           (response) => {
             this.reset();
             this.toastr.registerSuccess(
-              "Registro proyecto",
-              "Proyecto registrado correctamente"
+              'Registro proyecto',
+              'Proyecto registrado correctamente'
             );
             this.store.dispatch(new AddProject(response));
           },
           (err: any) => {
             this.progress = 0;
 
-            if (err.error.school[0].status === "5") {
+            if (err.error.school[0].status === '5') {
               this.toastr.error(
-                "Escuela dublicada",
-                "No se puede registrar el proyecto. Ya existe un proyecto con ésta escuela"
+                'Escuela dublicada',
+                'No se puede registrar el proyecto. Ya existe un proyecto con ésta escuela'
               );
             }
           }
@@ -109,8 +109,8 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
           .subscribe(
             (response) => {
               this.toastr.updateSuccess(
-                "Actualización",
-                "Actualización de proyecto exitoso"
+                'Actualización',
+                'Actualización de proyecto exitoso'
               );
               this.store.dispatch(new UpdateProject(response, this.oldProject));
               this.progress = 0;
@@ -120,10 +120,10 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
             this.progress = 0;
 
-              if (err.error.school[0].status === "5") {
+            if (err.error.school[0].status === '5') {
                 this.toastr.error(
-                  "Escuela dublicada",
-                  "No se puede actualizars el proyecto. Ya existe un proyecto con ésta escuela"
+                  'Escuela dublicada',
+                  'No se puede actualizars el proyecto. Ya existe un proyecto con ésta escuela'
                 );
               }
             }

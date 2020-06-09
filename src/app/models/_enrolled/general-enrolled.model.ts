@@ -1,4 +1,4 @@
-import { EnrolledSchool } from "./enrolled-school.model";
+import { EnrolledSchool } from './enrolled-school.model';
 
 export interface GeneralEnrolled {
   enrolledSchools: EnrolledSchool[];

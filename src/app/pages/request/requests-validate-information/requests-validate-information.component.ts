@@ -86,7 +86,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : row === USER_TYPE.SCHOOL.CODE.toString()
               ? USER_TYPE.SCHOOL.MSG
               : USER_TYPE.SPONSOR.MSG;
-          return `${value}+${row}`;
+          return `${value}`;
         },
         filterFunction(cell?: any, search?: string): boolean {
           let value: string =

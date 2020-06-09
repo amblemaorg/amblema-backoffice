@@ -25,6 +25,7 @@ import { TYPE_INFORMATION } from './_shared/type-information';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
+import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -75,17 +76,17 @@ export class RequestsValidateInformationComponent extends BaseTable
             : false;
         },
       },
-      type: {
+      typeUser: {
         title: 'Tipo de solicitante',
         type: 'text',
         valuePrepareFunction: (row: any) => {
           const value: string =
-            row === TYPE_REQUEST.COORDINATOR.ORIGINAL
-              ? TYPE_REQUEST.COORDINATOR.CONVERTION
-              : row === TYPE_REQUEST.SCHOOL.ORIGINAL
-              ? TYPE_REQUEST.SCHOOL.CONVERTION
-              : TYPE_REQUEST.SPONSOR.CONVERTION;
-          return `${value}+${row}`;
+            row === USER_TYPE.COORDINATOR.CODE.toString()
+              ? USER_TYPE.COORDINATOR.MSG
+              : row === USER_TYPE.SCHOOL.CODE.toString()
+              ? USER_TYPE.SCHOOL.MSG
+              : USER_TYPE.SPONSOR.MSG;
+          return `${value}`;
         },
         filterFunction(cell?: any, search?: string): boolean {
           let value: string =
@@ -158,10 +159,6 @@ export class RequestsValidateInformationComponent extends BaseTable
 
   ngOnInit() {}
 
-  onShowModal() {
-    this.modal.open('initial-workshop-modal');
-  }
-
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
@@ -175,9 +172,10 @@ export class RequestsValidateInformationComponent extends BaseTable
           case TYPE_INFORMATION.SLIDER:
             this.dialogService.open(SliderDetailsComponent);
             break;
-
+          case TYPE_INFORMATION.WORKSHOP:
+            this.modal.open('initial-workshop-modal');
+            break;
         }
-        console.log( event.data );
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:

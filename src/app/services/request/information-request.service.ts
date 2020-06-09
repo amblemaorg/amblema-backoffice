@@ -26,7 +26,7 @@ export class InformationRequestService {
   }
 
   updateRequestContentApproval( data: RequestContent ): Observable<RequestContent> {
-    return this.httpClient.put<RequestContent>(`${environment.api}${this.REQUEST_CONTENT_APPROVAL}/${data.id}`, data);
+    return this.httpClient.put<RequestContent>(`${environment.api}${this.REQUEST_CONTENT_APPROVAL}/${data.id}`, {status: data.status});
   }
 
   deleteRequestContentApproval( id: string): Observable<string> {

@@ -26,58 +26,6 @@ export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
   confirmAction = true;
   comment;
 
-  dataMock = {
-    // -- General data --
-    project: {
-      code: '222',
-      sponsor: { name: 'Coca cola' },
-      coordinator: { name: 'Juaquin' },
-      school: { name: 'Sevallos' },
-    },
-    stepTag: '1',
-    createdAt: '2020-06-02 20:38:23.499000',
-    code: '000',
-    // -- Details data --
-    description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, aliquam
-    asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
-    fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
-    suscipit eos?`,
-    images: [
-      {
-        image: `https://www.digital55.com/wp-content/uploads/2019/10/Renderizado_en_servidor_con_angular_universal.png`,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, aliquam
-        asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
-        fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
-        suscipit eos?`,
-        status: '1',
-      },
-      {
-        image: `https://i1.wp.com/blog.webtraining.zone/wp-content/uploads/2018/01/curso-profesional-vue.jpg?resize=825%2C510&ssl=1`,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, aliquam
-        asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
-        fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
-        suscipit eos?`,
-        status: '1',
-      },
-      {
-        image: `https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTxbWDRp0uDnhvGkesRkA8DsHUomz2vNr07nD7AEE1_I29izRR6&usqp=CAU`,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, aliquam
-        asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
-        fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
-        suscipit eos?`,
-        status: '1',
-      },
-      {
-        image: `https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTxbWDRp0uDnhvGkesRkA8DsHUomz2vNr07nD7AEE1_I29izRR6&usqp=CAU`,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, aliquam
-        asperiores? Doloremque, accusantium? Distinctio expedita, itaque quas,
-        fugiat numquam eum soluta atque m'agni iure, nobis culpa veritatis voluptatum
-        suscipit eos?`,
-        status: '1',
-      },
-    ],
-  };
-
   customOptions: OwlOptions = {
     stagePadding: 50,
 

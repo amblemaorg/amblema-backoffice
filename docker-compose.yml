@@ -1,63 +1,66 @@
-version: '3'
+version: "3.4"
 
 services:
+  # RUN
+  run_amblema_backoffice:
+    container_name: running_amblema_backoffice
+    image: devbinaural/angular:8.0.0
+    command: bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+    deploy:
+      resources:
+        limits:
+          memory: 2GB
+    ports:
+      - 4200:4200
+    volumes:
+      - .:/app
+    networks:
+      - amblema_net
 
-    # RUN
-    run_amblema_backoffice:
-        container_name: running_amblema_backoffice
-        image: devbinaural/angular:8.0.0
-        command: bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
-        ports:
-            - 4200:4200
-        volumes:
-            - .:/app
-        networks: 
-            - amblema_net
+  # BUILD
+  build_amblema_backoffice:
+    container_name: build_amblema_backoffice
+    image: devbinaural/angular:8.0.0
+    command:
+      bash -c "npm install && ng build --prod --build-optimizer && usermod -u 1018 node &&
+      chown -R node:node node_modules/ && chown -R node:node dist/"
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/app
+    networks:
+      - amblema_net
 
-    # BUILD
-    build_amblema_backoffice: 
-        container_name: build_amblema_backoffice
-        image: devbinaural/angular:8.0.0
-        command: bash -c "npm install && ng build --prod --build-optimizer && usermod -u 1018 node &&
-                chown -R node:node node_modules/ && chown -R node:node dist/"
-        ports: 
-            - 4000:4000 
-        volumes: 
-            - .:/app
-        networks: 
-            - amblema_net
+  # UNIT TEST
+  test_amblema_backoffice:
+    container_name: test_amblema_backoffice
+    image: devbinaural/angular:8.0.0
+    command: bash -c "npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false"
+    ports:
+      - 4200:4200
+    volumes:
+      - .:/app
+    networks:
+      - amblema_net
 
-    # UNIT TEST
-    test_amblema_backoffice:
-        container_name: test_amblema_backoffice
-        image: devbinaural/angular:8.0.0
-        command: bash -c "npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false"
-        ports: 
-            - 4200:4200 
-        volumes: 
-            - .:/app
-        networks: 
-            - amblema_net
+  # LINKING NGINX
+  linking_amblema_nginx:
+    container_name: nginx-amblema
+    image: devbinaural/nginx
+    ports:
+      - 10502:10502
+    volumes:
+      # SHARE THE BUILT PROJECTS
+      - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
 
-    # LINKING NGINX
-    linking_amblema_nginx:
-        container_name: nginx-amblema
-        image: devbinaural/nginx
-        ports:
-            - 10502:10502
-        volumes: 
-
-            # SHARE THE BUILT PROJECTS
-            - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
-
-            # SERVER FILES CONFIGURATION
-            - ./server/:/etc/nginx/
-        networks: 
-            - amblema_net
+      # SERVER FILES CONFIGURATION
+      - ./server/:/etc/nginx/
+    networks:
+      - amblema_net
 
 networks:
-    amblema_net:
-        driver: bridge
+  amblema_net:
+    driver: bridge
 
 volumes:
-    amblema:
+  amblema:

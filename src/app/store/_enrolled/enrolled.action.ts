@@ -8,6 +8,11 @@ export class GetGeneralEnrolled {
   static readonly type = '[GeneralEnrolled] Get General Enrolled';
 }
 
+export class RemoveEnrolledShool {
+  static readonly type = '[GeneralEnrolled] Remove Enrolled Schol';
+  constructor( public payload: string ) {}  
+}
+
 @State<GeneralEnrolled>({
   name: 'generalenrolled',
   defaults: {
@@ -44,5 +49,9 @@ export class GeneralEnrolledState implements NgxsOnInit {
         })
       );
     });
+  }
+
+  @Action( RemoveEnrolledShool )
+  removeEnrolledSchool(ctx: StateContext<GeneralEnrolled>, action: RemoveEnrolledShool) {
   }
 }

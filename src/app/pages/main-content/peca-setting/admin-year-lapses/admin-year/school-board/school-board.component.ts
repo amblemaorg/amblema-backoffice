@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable } from 'src/app/helpers/base-table';
 import { EnrolledSchool } from 'src/app/models/_enrolled/enrolled-school.model';
 import { Observable } from 'rxjs';
 import { GeneralEnrolledState } from 'src/app/store/_enrolled/enrolled.action';

@@ -1,0 +1,199 @@
+<nb-card class="mx-5">
+  <nb-card-header>Validación de información</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Padrino:</span>
+          {{ data.project.sponsor.name }}
+        </p>
+      </div>
+
+      <div *ngIf="data.project.coordinator" class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
+          {{ data.project.coordinator.name }}
+        </p>
+      </div>
+
+      <div *ngIf="data.project.school" class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Escuela:</span>
+          {{ data.project.school.name }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5"
+            >Fecha de la solicitud:</span
+          >
+          {{ data.createdAt | date: "dd/MM/yyyy" }}
+        </p>
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Nombre del paso:</span>
+          {{ data.detail.stepName }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Código del proyecto:</span>
+          {{ data.project.code }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Tag:</span>
+          {{
+            data.stepTag === "1"
+              ? "General"
+              : data.stepTag === "2"
+              ? "Coordinador"
+              : data.stepTag === "3"
+              ? "Padrino"
+              : "Escuela"
+          }}
+        </p>
+      </div>
+
+      <div class="col-12"><hr /></div>
+
+      <div class="col-12">
+        <p class="d-flex w-100">
+          <img
+            class="img-thumbnail"
+            [src]="data.detail.image"
+            [alt]="data.detail.description"
+          />
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Nombre:</span>
+          {{ data.detail.firstName }}
+        </p>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Apellido:</span>
+          {{ data.detail.lastName }}
+        </p>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Fecha del registro:</span>
+          {{ data.detail.createdAt | date: "dd/MM/yyyy" }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Descripción:</span>
+          {{ data.detail.description }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Visible:</span>
+          {{ data.detail.visibilityStatus ? 'Si' : 'No' }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Cargo:</span>
+          {{ data.detail.function }}
+        </p>
+      </div>
+
+      <div class="col-12">
+        <div *ngIf="(data$ | async)?.status === '1'">
+          <hr />
+          <div *ngIf="confirmAction">
+            <label class="label"> Acciones para la solicitud</label>
+            <select
+              [(ngModel)]="statusSelected"
+              (change)="statusSelected = $event.target.value"
+              class="form-control form-group"
+            >
+              <option value="2">Aceptar</option>
+              <option value="3">Rechazar</option>
+            </select>
+          </div>
+
+          <div class="w-100 text-right justify-content-end">
+            <button
+              class="col-12 col-md-auto"
+              nbButton
+              *ngIf="confirmAction"
+              status="primary"
+              (click)="confirmAction = false"
+            >
+              Proceder
+            </button>
+
+            <div *ngIf="!confirmAction">
+              <nb-alert status="info" class="text-left"
+                >Confirmar acción, al aprobar o rechazar esta solicitud no se
+                podrá cambiar de estatus.</nb-alert
+              >
+
+              <div *ngIf="statusSelected === '3'" class="text-left">
+                <label class="label">Comentario</label>
+                <textarea
+                  fullWidth
+                  class="form-group"
+                  placeholder="Comentario"
+                  rows="5"
+                  [(ngModel)]="comment"
+                  nbInput
+                ></textarea>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-6 col-md-auto">
+                  <button
+                    (click)="onApprovedRequest()"
+                    nbButton
+                    fullWidth
+                    *ngIf="!confirmAction"
+                    status="danger"
+                  >
+                    Confirmar
+                  </button>
+                </div>
+                <div class="col-6 col-md-auto">
+                  <button
+                    nbButton
+                    outline
+                    fullWidth
+                    *ngIf="!confirmAction"
+                    status="basic"
+                    (click)="confirmAction = true"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button
+      nbButton
+      (click)="onClose()"
+      outline
+      status="basic"
+      class="col-12 col-lg-auto"
+    >
+      Cerrar
+    </button>
+  </nb-card-footer>
+</nb-card>

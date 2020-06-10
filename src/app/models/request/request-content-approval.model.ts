@@ -31,7 +31,7 @@ interface User {
  * Details info
  */
 
-interface Detail extends StepDetails, ActivityDetails, SliderDetails, InitialWorkshopDetails {}
+interface Detail extends TestimonyDetails, StepDetails, ActivityDetails, SliderDetails, InitialWorkshopDetails {}
 
 // -- Step information #1 --
 
@@ -62,6 +62,21 @@ interface StepChecklist {
   id: string;
   name: string;
   checked: string;
+}
+
+// -- Activity #2 --
+
+interface TestimonyDetails {
+  createdAt?: string;
+  description?: string;
+  firstName?: string;
+  function?: string;
+  id?: string;
+  image?: string;
+  lastName?: string;
+  teacherId?: string;
+  updatedAt?: string;
+  visibilityStatus?: string;
 }
 
 // -- Activity #3 --

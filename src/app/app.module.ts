@@ -38,6 +38,7 @@ import { UserCreationRequestState } from './store/request/user-creation-request.
 import { EnvironmentalProjectState } from './store/environmental-project.action';
 import { RequestContentState } from './store/request/request-content-approval.action';
 import { ProjectValidationRequestState } from './store/request/project-validation-request.action';
+import { GeneralEnrolledState } from './store/_enrolled/enrolled.action';
 
 registerLocaleData(localeVe, 'es-VE');
 
@@ -86,7 +87,8 @@ registerLocaleData(localeVe, 'es-VE');
       UserCreationRequestState,
       ProjectRequestState,
       RequestContentState,
-      ProjectValidationRequestState
+      ProjectValidationRequestState,
+      GeneralEnrolledState
     ],
     {
       compatibility: {

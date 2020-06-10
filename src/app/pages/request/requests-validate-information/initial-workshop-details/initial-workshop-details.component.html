@@ -15,7 +15,7 @@
           Validación de información
         </nb-card-header>
         <nb-card-body>
-          <div class="row">
+          <div class="row" *ngIf="data.project">
             <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
               <p class="d-flex w-100">
                 <span class="pl-0 font-weight-bold col-5">Padrino:</span>

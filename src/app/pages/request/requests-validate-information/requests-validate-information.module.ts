@@ -21,9 +21,11 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
+import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 
 @NgModule({
   entryComponents: [
+    TestimonyDetailsComponent,
     SliderDetailsComponent,
     ActivityDetailsComponent,
     InformationDetailsComponent,
@@ -34,6 +36,7 @@ import { SliderDetailsComponent } from './slider-details/slider-details.componen
     InitialWorkshopDetailsComponent,
     ActivityDetailsComponent,
     SliderDetailsComponent,
+    TestimonyDetailsComponent,
   ],
   imports: [
     CarouselModule,

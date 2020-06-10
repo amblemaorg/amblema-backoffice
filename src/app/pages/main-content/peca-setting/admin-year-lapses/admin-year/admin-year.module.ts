@@ -7,6 +7,8 @@ import { NbCardModule, NbListModule, NbButtonModule } from '@nebular/theme';
 import { SchoolBoardComponent } from './school-board/school-board.component';
 import { SchoolAdminComponent } from './school-admin/school-admin.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AdminYearComponent, SchoolBoardComponent, SchoolAdminComponent],
@@ -14,6 +16,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     CommonModule,
     AdminYearRoutingModule,
     NbCardModule,
+    NgSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
     NbListModule,
     NbButtonModule,
     Ng2SmartTableModule

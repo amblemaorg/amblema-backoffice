@@ -1,39 +1,49 @@
-<form>
-    <div class="row form-group">
+<div>
+  <div class="row form-group">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-md-auto m-inline-parcial form-group">
+          <button
+            nbButton
+            status="success"
 
-        <div class="col-12">
-            <div class="row">
-                <div class="col-12 col-md form-group">
-                    <label class="label">Año escolar</label>
-                    <select class="form-control">
-                        <option value="">2020 - 2021</option>
-                        <option value="">2021 - 2022</option>
-                        <option value="">2022 - 2023</option>
-                        <option value="">2023 - 2024</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-auto m-inline-parcial form-group">
-                    <button nbButton status="success" style="padding-top: 0.6rem; padding-bottom: 0.6rem;" class="btn btn-success col-12 col-lg-auto">Iniciar</button>
-                </div>
-            </div>
+            style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+            class="btn btn-success col-12 col-lg-auto"
+          >
+            Iniciar
+          </button>
         </div>
-
-
-        <div class="col-12">
-            <div class="row">
-                <div class="col-12 col-md form-group">
-                    <label class="label">Escuela</label>
-                    <select class="form-control">
-                        <option value="">Rafael Bravo</option>
-                        <option value="">Altagracia Garcia</option>
-                        <option value="">AFA</option>
-                        <option value="">-</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-auto m-inline-parcial form-group">
-                    <button nbButton status="success" style="padding-top: 0.6rem; padding-bottom: 0.6rem;" class="btn btn-success col-12 col-lg-auto">Inscripción</button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</form>
+
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-md form-group">
+          <label class="label">Escuela</label>
+
+          <ng-select [items]="data$ | async"
+            bindLabel="name"
+            placeholder="Seleccionar escuela..." 
+            bindValue="projectId"
+            
+            [(ngModel)]="selectedSchool">
+          </ng-select>
+
+
+        </div>
+        <div class="col-12 col-md-auto m-inline-parcial form-group">
+          <button
+            (click)="onEnrolledSchool()"
+            [attr.disabled]="selectedSchool ? null : true"
+            nbButton
+            status="success"
+            style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+            class="btn btn-success col-12 col-lg-auto"
+          >
+            Inscribir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

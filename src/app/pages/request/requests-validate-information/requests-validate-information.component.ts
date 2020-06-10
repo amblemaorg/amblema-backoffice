@@ -26,6 +26,7 @@ import { ModalService } from 'src/app/services/helper/modal.service';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
 import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -153,7 +154,6 @@ export class RequestsValidateInformationComponent extends BaseTable
           }
         },
       },
-
     };
   }
 
@@ -166,6 +166,9 @@ export class RequestsValidateInformationComponent extends BaseTable
           case TYPE_INFORMATION.STEP:
             this.dialogService.open(InformationDetailsComponent);
             break;
+          case TYPE_INFORMATION.TESTIMONIES:
+            this.dialogService.open(TestimonyDetailsComponent);
+            break;
           case TYPE_INFORMATION.ACTIVITY:
             this.dialogService.open(ActivityDetailsComponent);
             break;
@@ -176,6 +179,8 @@ export class RequestsValidateInformationComponent extends BaseTable
             this.modal.open('initial-workshop-modal');
             break;
         }
+
+        console.log(event.data);
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:

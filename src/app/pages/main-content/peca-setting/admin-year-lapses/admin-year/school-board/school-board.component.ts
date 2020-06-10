@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { BaseTable } from "src/app/helpers/base-table";
 import { EnrolledSchool } from "src/app/models/_enrolled/enrolled-school.model";
 import { Observable } from "rxjs";
-import { GeneralEnrolledState } from "src/app/store/_enrolled/enrolled.action";
-import { Select } from "@ngxs/store";
+import { GeneralEnrolledState, RemoveEnrolledShool } from "src/app/store/_enrolled/enrolled.action";
+import { Select, Store } from "@ngxs/store";
 import { EnrolledService } from "src/app/services/enrolled.service";
 
 @Component({
@@ -16,7 +16,9 @@ export class SchoolBoardComponent extends BaseTable {
     EnrolledSchool[]
   >;
 
-  constructor(private enrolledServices: EnrolledService) {
+  constructor(
+    private store: Store,
+    private enrolledServices: EnrolledService) {
     super("form-admin-school");
 
     this.settings.actions.custom = [
@@ -36,9 +38,9 @@ export class SchoolBoardComponent extends BaseTable {
   }
 
   onAction(event: any) {
+
     this.enrolledServices.removeEnrolledSchool(event.data.projectId).subscribe(
-      (response) => console.log(response),
-      (err) => console.log(err)
+      (response) => this.store.dispatch( new RemoveEnrolledShool( event.data.projectId ) ) 
     );
   }
 }

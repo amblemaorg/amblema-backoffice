@@ -9,14 +9,16 @@ import { EnrolledSchool } from 'src/app/models/_enrolled/enrolled-school.model';
   templateUrl: './school-admin.component.html',
   styles: []
 })
-export class SchoolAdminComponent implements OnInit {
+export class SchoolAdminComponent {
 
   @Select( GeneralEnrolledState.availableSchools ) data$: Observable<EnrolledSchool[]>;
 
+  selectedSchool: string;
+
   constructor() { }
 
-  ngOnInit() {
+  onEnrolledSchool() {
+    
   }
-
 
 }

@@ -1,20 +1,20 @@
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
-import { GeneralEnrolled } from 'src/app/models/_enrolled/general-enrolled.model';
-import { EnrolledService } from 'src/app/services/enrolled.service';
-import { patch } from '@ngxs/store/operators';
-import { EnrolledSchool } from 'src/app/models/_enrolled/enrolled-school.model';
+import { State, NgxsOnInit, Action, StateContext, Selector } from "@ngxs/store";
+import { GeneralEnrolled } from "src/app/models/_enrolled/general-enrolled.model";
+import { EnrolledService } from "src/app/services/enrolled.service";
+import { patch, removeItem } from "@ngxs/store/operators";
+import { EnrolledSchool } from "src/app/models/_enrolled/enrolled-school.model";
 
 export class GetGeneralEnrolled {
-  static readonly type = '[GeneralEnrolled] Get General Enrolled';
+  static readonly type = "[GeneralEnrolled] Get General Enrolled";
 }
 
 export class RemoveEnrolledShool {
-  static readonly type = '[GeneralEnrolled] Remove Enrolled Schol';
-  constructor( public payload: string ) {}  
+  static readonly type = "[GeneralEnrolled] Remove Enrolled Schol";
+  constructor(public payload: string) {}
 }
 
 @State<GeneralEnrolled>({
-  name: 'generalenrolled',
+  name: "generalenrolled",
   defaults: {
     enrolledSchools: [],
     availableSchools: [],
@@ -40,7 +40,6 @@ export class GeneralEnrolledState implements NgxsOnInit {
   @Action(GetGeneralEnrolled)
   getGeneralEnrolled(ctx: StateContext<GeneralEnrolled>) {
     this.enrolledServices.getEnrollment().subscribe((response) => {
-
       ctx.setState(
         patch({
           ...ctx.getState(),
@@ -51,7 +50,18 @@ export class GeneralEnrolledState implements NgxsOnInit {
     });
   }
 
-  @Action( RemoveEnrolledShool )
-  removeEnrolledSchool(ctx: StateContext<GeneralEnrolled>, action: RemoveEnrolledShool) {
+  @Action(RemoveEnrolledShool)
+  removeEnrolledSchool(
+    ctx: StateContext<GeneralEnrolled>,
+    action: RemoveEnrolledShool
+  ) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        enrolledSchools: removeItem<EnrolledSchool>(
+          (item) => action.payload === item.id
+        ),
+      })
+    );
   }
 }

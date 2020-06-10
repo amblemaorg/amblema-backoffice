@@ -1,11 +1,11 @@
-import { MENU_ITEMS } from "./pages-menu";
-import { Select } from "@ngxs/store";
-import { LapseActivityState } from "../store/lapse-activities.action";
-import { Observable, Subscription } from "rxjs";
-import { LapseActivity } from "../models/lapse-activities.model";
-import { Injectable } from "@angular/core";
-import { STATUS } from "../helpers/text-content/status";
-import { take, takeWhile, first } from "rxjs/operators";
+import { MENU_ITEMS } from './pages-menu';
+import { Select } from '@ngxs/store';
+import { LapseActivityState } from '../store/lapse-activities.action';
+import { Observable, Subscription } from 'rxjs';
+import { LapseActivity } from '../models/lapse-activities.model';
+import { Injectable } from '@angular/core';
+import { STATUS } from '../helpers/text-content/status';
+import { take, takeWhile, first } from 'rxjs/operators';
 
 @Injectable()
 export class MenuSetUp {
@@ -36,11 +36,11 @@ export class MenuSetUp {
       .subscribe((response) => {
         this.menu.find((value) => {
           /* Get in 'Contenido' option */
-          if (value.title === "Contenido") {
+          if (value.title === 'Contenido') {
             /* Sub level options */
             value.children.find((children) => {
               /* Find the correct option */
-              if (children.title === "Ajustes del PECA") {
+              if (children.title === 'Ajustes del PECA') {
                 /* Find laspes */
                 children.children.find((lapses) => {
                   /**
@@ -49,7 +49,7 @@ export class MenuSetUp {
                    */
 
                   // Lapse 1
-                  if (lapses.title === "Lapso 1") {
+                  if (lapses.title === 'Lapso 1') {
                     if (isUpdate) {
                       lapses.children = [];
                     }
@@ -58,7 +58,7 @@ export class MenuSetUp {
 
                       if (
                         option.status === STATUS.ACTIVE.CODE &&
-                        option.devName !== "initialWorkshop"
+                        option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
                           title: option.name,
@@ -71,7 +71,7 @@ export class MenuSetUp {
                   }
 
                   // Lapse 2
-                  if (lapses.title === "Lapso 2") {
+                  if (lapses.title === 'Lapso 2') {
                     if (isUpdate) {
                       lapses.children = [];
                     }
@@ -80,7 +80,7 @@ export class MenuSetUp {
                       // Add activity
                       if (
                         option.status === STATUS.ACTIVE.CODE &&
-                        option.devName !== "initialWorkshop"
+                        option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
                           title: option.name,
@@ -93,7 +93,7 @@ export class MenuSetUp {
                   }
 
                   // Lapse 3
-                  if (lapses.title === "Lapso 3") {
+                  if (lapses.title === 'Lapso 3') {
                     if (isUpdate) {
                       lapses.children = [];
                     }
@@ -102,7 +102,7 @@ export class MenuSetUp {
                       // Add activity
                       if (
                         option.status === STATUS.ACTIVE.CODE &&
-                        option.devName !== "initialWorkshop"
+                        option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
                           title: option.name,

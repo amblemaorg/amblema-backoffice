@@ -6,6 +6,7 @@
           <button
             nbButton
             status="success"
+
             style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
             class="btn btn-success col-12 col-lg-auto"
           >
@@ -23,8 +24,8 @@
           <ng-select [items]="data$ | async"
             bindLabel="name"
             placeholder="Seleccionar escuela..." 
-            bindValue="id"
-            [(ngModel)]="name"
+            bindValue="projectId"
+            
             [(ngModel)]="selectedSchool">
           </ng-select>
 
@@ -32,6 +33,7 @@
         </div>
         <div class="col-12 col-md-auto m-inline-parcial form-group">
           <button
+            (click)="onEnrolledSchool()"
             [attr.disabled]="selectedSchool ? null : true"
             nbButton
             status="success"

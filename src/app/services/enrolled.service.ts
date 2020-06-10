@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { GeneralEnrolled } from "../models/_enrolled/general-enrolled.model";
-import { environment } from "src/environments/environment.prod";
-import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { GeneralEnrolled } from '../models/_enrolled/general-enrolled.model';
+import { environment } from 'src/environments/environment.prod';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class EnrolledService {
   readonly ENROLLED = `enrollment`;
@@ -27,7 +27,12 @@ export class EnrolledService {
       .pipe(map((data: any) => data));
   }
 
-  enrollSchools() {}
+  enrollSchools(id: string): Observable<string> {
+    return this.httpClient.put<string>(
+      `${environment.api}${this.ENROLLED}/${id}`,
+      {}
+    );
+  }
 
   removeEnrolledSchool(id: string): Observable<string> {
     return this.httpClient.put<string>(

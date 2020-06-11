@@ -9,7 +9,15 @@
 
 <div class="header-container">
     <nb-actions size="small">
-        <nb-action class="control-item" icon="bell-outline"></nb-action>
+        <nb-action class="control-item" icon="bell-outline" [nbPopover]="listNotifications"></nb-action>
         <nb-action class="control-item" icon="person-outline" [nbContextMenu]="items"></nb-action>
     </nb-actions>
 </div>
+
+<ng-template #listNotifications>
+    <nb-card class="mb-0">
+      <nb-list>
+        <nb-list-item *ngFor="let item of notifications">{{ item | json }}</nb-list-item>
+      </nb-list>
+    </nb-card>
+  </ng-template>

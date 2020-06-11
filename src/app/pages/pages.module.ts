@@ -14,7 +14,9 @@ import {
   NbCardModule,
   NbInputModule,
   NbSelectModule,
-  NbToastrModule, } from '@nebular/theme';
+  NbToastrModule,
+  NbListModule,
+  NbPopoverModule, } from '@nebular/theme';
 import { HeaderComponent } from './components/layouts/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
@@ -33,6 +35,8 @@ import { MenuSetUp } from './pages-menu-service';
     RouterModule,
     DashboardRoutingModule,
     CommonModule,
+    NbListModule,
+    NbPopoverModule,
     HttpClientModule,
     NbLayoutModule,
     NbSidebarModule.forRoot(),

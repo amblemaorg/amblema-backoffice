@@ -1,21 +1,10 @@
 <nb-card>
   <nb-card-header>Años escolares</nb-card-header>
+
   <nb-list class="w-100">
-    <nb-list-item class="d-flex justify-content-between">
-      <span>2020 - 2021</span>
-      <span class="font-weight-bold text-info">Finalizado</span>
-    </nb-list-item>
-    <nb-list-item class="d-flex justify-content-between">
-      <span>2021 - 2022</span>
-      <span class="font-weight-bold text-info">Finalizado</span>
-    </nb-list-item>
-    <nb-list-item class="d-flex justify-content-between">
-      <span>2022 - 2023</span>
-      <span class="font-weight-bold text-info">Finalizado</span>
-    </nb-list-item>
-    <nb-list-item class="d-flex justify-content-between">
-      <span>2023 - 2024</span>
-      <span class="font-weight-bold text-info">Finalizado</span>
+    <nb-list-item class="d-flex justify-content-between" *ngFor="let item of (data$ | async) let i = index">
+      <span>{{ item.name }}</span>
+      <span class="font-weight-bold text-info">{{ item.status === '1' ? 'Activo' : 'Finalizado' }}</span>
     </nb-list-item>
   </nb-list>
 </nb-card>

@@ -2,16 +2,27 @@
   <div class="row form-group">
     <div class="col-12">
       <div class="row">
-        <div class="col-12 col-md-auto m-inline-parcial form-group">
+        <div class="col-12">
+          <nb-alert outline="success">
+            <h6 class="text-info">
+              Estatus: {{ (schoolActive$ | async) ? "Activo" : "Inactivo" }}
+            </h6>
+            <span>{{ (schoolActive$ | async)?.name }}</span>
+          </nb-alert>
+        </div>
+        <div class="col-12 col-md-auto form-group">
           <button
             nbButton
+            [attr.disabled]="(schoolActive$ | async) ? true : null"
             status="success"
-
-            style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+            (click)="onStartNewYearSchool()"
             class="btn btn-success col-12 col-lg-auto"
           >
-            Iniciar
+            Iniciar un nuevo año escolar
           </button>
+        </div>
+        <div class="col-12">
+          <hr />
         </div>
       </div>
     </div>
@@ -21,20 +32,21 @@
         <div class="col-12 col-md form-group">
           <label class="label">Escuela</label>
 
-          <ng-select [items]="data$ | async"
+          <ng-select
+            [items]="data$ | async"
             bindLabel="name"
-            placeholder="Seleccionar escuela..." 
+            placeholder="Seleccionar escuela..."
             bindValue="projectId"
-            
-            [(ngModel)]="selectedSchool">
+            [(ngModel)]="selectedSchool"
+          >
           </ng-select>
-
-
         </div>
         <div class="col-12 col-md-auto m-inline-parcial form-group">
           <button
             (click)="onEnrolledSchool()"
-            [attr.disabled]="selectedSchool ? null : true"
+            [attr.disabled]="
+              selectedSchool && (schoolActive$ | async) ? null : true
+            "
             nbButton
             status="success"
             style="padding-top: 0.6rem; padding-bottom: 0.6rem;"

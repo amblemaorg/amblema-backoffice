@@ -18,7 +18,14 @@ export class EnrolledService {
   getSchoolYears(): Observable<SchoolYearEnrolled[]> {
     return this.httpClient
       .get<SchoolYearEnrolled[]>(`${environment.api}${this.SCHOOL_YEAR}`)
-      .pipe(map((data: any) => data));
+      .pipe(map((data: any) => data.dates));
+  }
+
+  setNewSchoolYear( value: string ) :Observable<any> {
+     return this.httpClient.post<string>(
+      `${environment.api}${this.SCHOOL_YEAR}`,
+      { name: value } // <-- Symbolic value
+    );
   }
 
   getEnrollment(): Observable<GeneralEnrolled> {

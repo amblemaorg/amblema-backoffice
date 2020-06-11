@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { Observable } from 'rxjs';
@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 })
 export class AdminYearComponent {
 
-  @Select( SchoolYearEnrolledState.schoolYearsEnrolled ) data$: Observable<SchoolYearEnrolled[]> 
-  
-  constructor( 
+  @Select( SchoolYearEnrolledState.schoolYearsEnrolled ) data$: Observable<SchoolYearEnrolled[]>;
+
+  constructor(
     private store: Store ) { }
 }

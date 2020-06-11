@@ -1,11 +1,10 @@
 <nb-card>
   <nb-card-header>Años escolares</nb-card-header>
 
-  
   <nb-list class="w-100">
-    <nb-list-item class="d-flex justify-content-between" *ngFor="let item of (data$ | async)">
+    <nb-list-item class="d-flex justify-content-between" *ngFor="let item of (data$ | async) let i = index">
       <span>{{ item.name }}</span>
-      <span class="font-weight-bold text-info">{{ item.status ? 'Activo' : 'Finalizado' }}</span>
+      <span class="font-weight-bold text-info">{{ item.status === '1' ? 'Activo' : 'Finalizado' }}</span>
     </nb-list-item>
   </nb-list>
 </nb-card>

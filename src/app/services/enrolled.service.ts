@@ -21,7 +21,7 @@ export class EnrolledService {
       .pipe(map((data: any) => data.dates));
   }
 
-  setNewSchoolYear( value: string ) :Observable<any> {
+  setNewSchoolYear( value: string ): Observable<any> {
      return this.httpClient.post<string>(
       `${environment.api}${this.SCHOOL_YEAR}`,
       { name: value } // <-- Symbolic value

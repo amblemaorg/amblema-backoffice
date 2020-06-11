@@ -26,17 +26,17 @@ export class SchoolYearEnrolledState implements NgxsOnInit {
     }
 
     @Selector()
-    static schoolYearActive(state: SchoolYearEnrolledModel) : SchoolYearEnrolled | null {
-        
+    static schoolYearActive(state: SchoolYearEnrolledModel): SchoolYearEnrolled | null {
+
         let schoolYearActive: SchoolYearEnrolled;
 
-        state.schoolYears.forEach( response =>{
+        state.schoolYears.forEach( response => {
 
-            if( response.status === STATUS.ACTIVE.CODE ) {
+            if ( response.status === STATUS.ACTIVE.CODE ) {
                 schoolYearActive = response;
             }
 
-        } )
+        } );
 
         return schoolYearActive;
     }
@@ -53,7 +53,7 @@ export class SchoolYearEnrolledState implements NgxsOnInit {
     @Action(GetSchoolYearsEnrolled)
     getSchoolYearsEnrolled(ctx: StateContext<SchoolYearEnrolledModel>) {
         this.enrolledService.getSchoolYears().subscribe( response => {
-            
+
             ctx.setState( patch( {
                 schoolYears: response
             }));

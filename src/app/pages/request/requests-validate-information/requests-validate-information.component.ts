@@ -127,6 +127,7 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
+
           return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
         },
       },
@@ -180,7 +181,6 @@ export class RequestsValidateInformationComponent extends BaseTable
             break;
         }
 
-        console.log(event.data);
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:

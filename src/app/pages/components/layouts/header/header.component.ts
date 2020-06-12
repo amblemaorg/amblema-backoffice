@@ -6,8 +6,8 @@ import { ProjectRequestState } from "src/app/store/request/project-requests.acti
 import { UserCreationRequestState } from "src/app/store/request/user-creation-request.action";
 import { ProjectValidationRequestState } from "src/app/store/request/project-validation-request.action";
 import { RequestContentState } from "src/app/store/request/request-content-approval.action";
-import { ConsoleReporter } from 'jasmine';
-import { take } from 'rxjs/operators';
+
+import { REQUEST_STATUS } from "src/app/helpers/convention/request-status";
 
 @Component({
   selector: "app-header",
@@ -18,19 +18,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   /**
    * Get all notifications
    */
-  @Select(ProjectRequestState.projectRquests) projectRequest$: Observable<any[]>;
+  @Select(ProjectRequestState.projectRquests) projectRequest$: Observable<
+    any[]
+  >;
   @Select(UserCreationRequestState.creationRequests) createRequest$: Observable<
-    any
+    any[]
   >;
   @Select(ProjectValidationRequestState) projectValidationRequest$: Observable<
-    any
+    any[]
   >;
   @Select(RequestContentState.requestsContent) requestContent$: Observable<any>;
 
   subscription: Subscription;
 
   items = [{ title: "Profile" }, { title: "Log out" }];
-  notifications: any[] = [];
+  notifications = new Array<any>();
 
   constructor(
     private menuService: NbMenuService,
@@ -39,14 +41,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     /**
-     * Push notifactions
+     * Push notifications
      */
-    this.subscription = this.projectRequest$.pipe(take(1)).subscribe( response => {
-      console.log( response.length )
-      if( response.length ) 
-        this.notifications.push( response )
 
-    } )
+    this.subscription = this.projectRequest$.subscribe((response) => {
+      if (response.length) {
+        response.forEach((value) => {
+          if (value.status === REQUEST_STATUS.PENDING.CODE) {
+            this.notifications = this.notifications.concat(value);
+          }
+        });
+      }
+
+      
+    });
 
     this.subscription = this.menuService
       .onItemSelect()

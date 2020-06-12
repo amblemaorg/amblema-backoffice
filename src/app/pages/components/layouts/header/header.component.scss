@@ -53,4 +53,15 @@
 
 ::ng-deep .arrow { display: none }
 
-.max-h{ max-height: 20rem; }
+.max-h{ max-height: 25rem; }
+
+.notification { 
+  
+  cursor: pointer;
+  &:hover {
+    p {
+      transition: color ease .1s;
+      color: $color-primary-hover!important;  
+    }
+  }
+}

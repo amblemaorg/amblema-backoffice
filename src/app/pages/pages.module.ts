@@ -16,7 +16,8 @@ import {
   NbSelectModule,
   NbToastrModule,
   NbListModule,
-  NbPopoverModule, } from '@nebular/theme';
+  NbPopoverModule,
+  NbBadgeModule, } from '@nebular/theme';
 import { HeaderComponent } from './components/layouts/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
@@ -49,6 +50,7 @@ import { MenuSetUp } from './pages-menu-service';
     NbUserModule,
     NbMenuModule.forRoot(),
     NbContextMenuModule,
+    NbBadgeModule,
     NbToastrModule.forRoot()
   ],
   exports: [ NbIconModule ],

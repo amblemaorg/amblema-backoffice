@@ -44,17 +44,75 @@ export class HeaderComponent implements OnInit, OnDestroy {
      * Push notifications
      */
 
-    this.subscription = this.projectRequest$.subscribe((response) => {
-      if (response.length) {
-        response.forEach((value) => {
-          if (value.status === REQUEST_STATUS.PENDING.CODE) {
-            this.notifications = this.notifications.concat(value);
-          }
-        });
-      }
 
+     setTimeout(() => {
       
-    });
+      // -- Type request one --
+      this.subscription = this.projectRequest$.subscribe((response) => {
+        if (response.length) {
+          response.forEach((value) => {
+            if (value.status === REQUEST_STATUS.PENDING.CODE) {
+              value = {
+                ...value,
+                define: '1'
+              }
+              this.notifications = this.notifications.concat(value);
+            }
+          });
+        }
+
+        // -- Type request two --
+        this.subscription = this.createRequest$.subscribe((response) => {
+          if (response.length) {
+            response.forEach((value) => {
+              if (value.status === REQUEST_STATUS.PENDING.CODE) {
+                value = {
+                  ...value,
+                  define: '2'
+                }
+                this.notifications = this.notifications.concat(value);
+              }
+            });
+          }
+        
+          // -- Type request three
+          this.subscription = this.projectValidationRequest$.subscribe((response) => {
+            if (response.length) {
+              response.forEach((value) => {
+                if (value.status === REQUEST_STATUS.PENDING.CODE) {
+                  value = {
+                    ...value,
+                    define: '3'
+                  }
+                  this.notifications = this.notifications.concat(value);
+                }
+              });
+            }
+            
+            // -- Type request four --
+            this.subscription = this.requestContent$.subscribe((response) => {
+              if (response.length) {
+                response.forEach((value) => {
+                  if (value.status === REQUEST_STATUS.PENDING.CODE) {
+                    value = {
+                      ...value,
+                      define: '4'
+                    }
+                    this.notifications = this.notifications.concat(value);
+                  }
+                });
+              }
+              
+            });
+
+          });   
+
+        });   
+      
+      });   
+     });
+
+    
 
     this.subscription = this.menuService
       .onItemSelect()

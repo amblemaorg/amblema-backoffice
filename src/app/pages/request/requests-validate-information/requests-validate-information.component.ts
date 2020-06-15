@@ -27,6 +27,7 @@ import { ActivityDetailsComponent } from './activity-details/activity-details.co
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
 import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -44,6 +45,7 @@ export class RequestsValidateInformationComponent extends BaseTable
     private dialogService: NbDialogService,
     private toast: CustomToastrService,
     private modal: ModalService,
+    private router: ActivatedRoute,
     private serviceInformation: InformationRequestService,
     private helper: Utility
   ) {
@@ -127,7 +129,6 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-
           return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
         },
       },
@@ -158,7 +159,21 @@ export class RequestsValidateInformationComponent extends BaseTable
     };
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.router.params.subscribe((query: any) => {
+      if (Object.keys(query).length) {
+        this.data$.subscribe((response) => {
+          this.store.dispatch(
+            new SelectedRequestContent(
+              response.find((item) => item.id === query.id)
+            )
+          );
+        });
+
+        this.dialogService.open(InformationDetailsComponent);
+      }
+    });
+  }
 
   onAction(event) {
     switch (event.action) {

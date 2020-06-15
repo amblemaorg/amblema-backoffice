@@ -188,7 +188,8 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.subscriptionEnvironmentalProject = this.environmentalProjectServivce
             .getEnvironmentalProject()
             .subscribe((response) => {
-                if (JSON.stringify(response) !== '{}') { // <-- Is not empty
+
+                if (JSON.stringify(response) !== '{}' && response.lapse1 && response.lapse2 && response.lapse3) { // <-- Is not empty
                     ctx.setState(patch(response));
 
                     ctx.setState({

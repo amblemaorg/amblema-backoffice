@@ -13,7 +13,12 @@
       class="control-item"
       icon="bell-outline"
       badgeStatus="danger"
-      [badgeText]="notifications.length"
+      [badgeText]="
+        (projectRequest$ | async).length +
+        (createRequest$ | async).length +
+        (projectValidationRequest$ | async).length +
+        (requestContent$ | async).length
+      "
       [nbPopover]="listNotifications"
     ></nb-action>
     <nb-action
@@ -26,22 +31,57 @@
 
 <ng-template #listNotifications>
   <nb-card class="mb-0 max-h">
-    <nb-list *ngIf="notifications">
+    <nb-list
+      *ngIf="
+        (projectRequest$ | async).length ||
+        (createRequest$ | async).length ||
+        (projectValidationRequest$ | async).length ||
+        (requestContent$ | async).length
+      "
+    >
       <nb-list-item
         class="d-block p-3 notification"
-        *ngFor="let item of notifications"
-        (click)="onSelectNotification(item)"
-        >
+        *ngFor="let item of projectRequest$ | async"
+        (click)="onSelectNotification(item, '1')"
+      >
         <p class="mb-1 font-weight-bold">
-          {{
-            item.define === "1"
-              ? "Creación de proyecto"
-              : item.define === "2"
-              ? "Creación de usuario"
-              : item.define === "3"
-              ? "Validación de proyecto "
-              : "Validación de contenido"
-          }}
+          Creación de proyecto
+        </p>
+        <p class="mb-1" *ngIf="item.user">{{ item.user.name }}</p>
+        <p class="mb-0">{{ item.createdAt | date: "dd/MM/yyyy" }}</p>
+      </nb-list-item>
+
+      <nb-list-item
+        class="d-block p-3 notification"
+        *ngFor="let item of createRequest$ | async"
+        (click)="onSelectNotification(item, '2')"
+      >
+        <p class="mb-1 font-weight-bold">
+          Creación de usuario
+        </p>
+        <p class="mb-1" *ngIf="item.user">{{ item.user.name }}</p>
+        <p class="mb-0">{{ item.createdAt | date: "dd/MM/yyyy" }}</p>
+      </nb-list-item>
+
+      <nb-list-item
+        class="d-block p-3 notification"
+        *ngFor="let item of projectValidationRequest$ | async"
+        (click)="onSelectNotification(item, '3')"
+      >
+        <p class="mb-1 font-weight-bold">
+          Validación de proyecto
+        </p>
+        <p class="mb-1" *ngIf="item.user">{{ item.user.name }}</p>
+        <p class="mb-0">{{ item.createdAt | date: "dd/MM/yyyy" }}</p>
+      </nb-list-item>
+
+      <nb-list-item
+        class="d-block p-3 notification"
+        *ngFor="let item of requestContent$ | async"
+        (click)="onSelectNotification(item, '4')"
+      >
+        <p class="mb-1 font-weight-bold">
+          Validación de contenido
         </p>
         <p class="mb-1" *ngIf="item.user">{{ item.user.name }}</p>
         <p class="mb-0">{{ item.createdAt | date: "dd/MM/yyyy" }}</p>

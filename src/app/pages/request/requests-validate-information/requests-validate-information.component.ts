@@ -164,13 +164,30 @@ export class RequestsValidateInformationComponent extends BaseTable
       if (Object.keys(query).length) {
         this.data$.subscribe((response) => {
           this.store.dispatch(
-            new SelectedRequestContent(
-              response.find((item) => item.id === query.id)
-            )
+            new SelectedRequestContent(query)
           );
         });
 
-        this.dialogService.open(InformationDetailsComponent);
+        console.log( query );
+
+        switch (query.type) {
+          case TYPE_INFORMATION.STEP:
+            this.dialogService.open(InformationDetailsComponent);
+            break;
+          case TYPE_INFORMATION.TESTIMONIES:
+            this.dialogService.open(TestimonyDetailsComponent);
+            break;
+          case TYPE_INFORMATION.ACTIVITY:
+            this.dialogService.open(ActivityDetailsComponent);
+            break;
+          case TYPE_INFORMATION.SLIDER:
+            this.dialogService.open(SliderDetailsComponent);
+            break;
+          case TYPE_INFORMATION.WORKSHOP:
+            this.modal.open('initial-workshop-modal');
+            break;
+        }
+
       }
     });
   }

@@ -9,6 +9,8 @@ import { NgxsModule } from '@ngxs/store';
 import { ProjectRequestState } from 'src/app/store/request/project-requests.action';
 import { HttpClientModule } from '@angular/common/http';
 import { Utility } from 'src/app/helpers/utility';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ProjectRequestsComponent', () => {
   let component: ProjectRequestsComponent;
@@ -29,7 +31,14 @@ describe('ProjectRequestsComponent', () => {
         ReactiveFormsModule,
         Ng2SmartTableModule
       ],
-      providers: [Utility]
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({id: 123})
+          }
+        },
+        Utility]
     })
     .compileComponents();
   }));

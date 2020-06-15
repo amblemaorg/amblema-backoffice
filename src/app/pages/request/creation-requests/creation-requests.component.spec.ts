@@ -9,6 +9,8 @@ import { NgxsModule } from '@ngxs/store';
 import { UserCreationRequestState } from 'src/app/store/request/user-creation-request.action';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Utility } from 'src/app/helpers/utility';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('CreationRequestsComponent', () => {
   let component: CreationRequestsComponent;
@@ -30,7 +32,14 @@ describe('CreationRequestsComponent', () => {
         NbToastrModule.forRoot()
       ],
 
-      providers: [Utility]
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({id: 123})
+          }
+        },
+        Utility]
     })
     .compileComponents();
   }));

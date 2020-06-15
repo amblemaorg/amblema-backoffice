@@ -6,6 +6,6 @@ export interface UserCreationRequest {
     user: string;
     createdAt: string;
     record: string;
-
+    status: string;
     /* Get more data from the user request */
 }

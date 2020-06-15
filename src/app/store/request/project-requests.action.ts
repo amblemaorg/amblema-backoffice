@@ -2,6 +2,7 @@ import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { ProjectRequest } from 'src/app/models/request/project-request.model';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
 
 export interface ProjectRequestModel {
     projectRequests: ProjectRequest[];
@@ -28,6 +29,20 @@ export class DeleteProjectRequests {
     }
 })
 export class ProjectRequestState implements NgxsOnInit {
+
+    @Selector()
+    static projectRquestsPending(state: ProjectRequestModel): ProjectRequest[] | null {
+
+        const value: any[] = [] ;
+
+        state.projectRequests.forEach( response => {
+            if ( response.status === REQUEST_STATUS.PENDING.CODE ) {
+                value.push( response );
+            }
+        } );
+
+        return value;
+    }
 
     @Selector()
     static projectRquests(state: ProjectRequestModel): ProjectRequest[] | null {

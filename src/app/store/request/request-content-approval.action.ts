@@ -2,6 +2,7 @@ import { RequestContent } from '../../models/request/request-content-approval.mo
 import { State, Selector, NgxsOnInit, StateContext, Action } from '@ngxs/store';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
 
 export interface RequestContentModel {
   requestsContent: RequestContent[];
@@ -39,6 +40,22 @@ export class RequestContentState implements NgxsOnInit {
     state: RequestContentModel
   ): RequestContent[] | null {
     return state.requestsContent;
+  }
+
+  @Selector()
+  static requestsContentPending(
+    state: RequestContentModel
+  ): RequestContent[] | null {
+
+    const value: any[] = [];
+
+    state.requestsContent.forEach((response) => {
+      if (response.status === REQUEST_STATUS.PENDING.CODE) {
+        value.push(response);
+      }
+    });
+
+    return value;
   }
 
   @Selector()

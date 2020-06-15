@@ -23,13 +23,14 @@ import { ModalService } from 'src/app/services/helper/modal.service';
 import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
 import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
 import { SetSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-creation-requests',
   templateUrl: './creation-requests.component.html',
   styleUrls: ['./creation-requests.component.scss'],
 })
-export class CreationRequestsComponent extends BaseTable {
+export class CreationRequestsComponent extends BaseTable implements OnInit {
   @Select(UserCreationRequestState.creationRequests) data$: Observable<
     UserCreationRequest[]
   >;
@@ -46,6 +47,7 @@ export class CreationRequestsComponent extends BaseTable {
   type = TYPE_REQUEST;
 
   constructor(
+    private router: ActivatedRoute,
     private toast: CustomToastrService,
     private store: Store,
     private userCreationRequestService: UserCreationRequestService,
@@ -137,6 +139,18 @@ export class CreationRequestsComponent extends BaseTable {
           },
         },
       });
+  }
+
+  ngOnInit() {
+    this.router.params.subscribe((response) => {
+      if (Object.keys(response).length) {
+        this.requestSelected = response;
+        this.oldRequest = response;
+        setTimeout(() => {
+          this.modalService.open(this.modal);
+        }, 1000);
+      }
+    });
   }
 
   onAction(event: any): void {

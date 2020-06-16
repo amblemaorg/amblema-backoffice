@@ -24,6 +24,8 @@ import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.ac
 import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
 import { SetSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 import { ActivatedRoute } from '@angular/router';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { response } from 'express';
 
 @Component({
   selector: 'app-creation-requests',
@@ -45,6 +47,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
 
   confirmAction = true;
   type = TYPE_REQUEST;
+  showProgress = false;
 
   constructor(
     private router: ActivatedRoute,
@@ -142,10 +145,10 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit() {
-    this.router.params.subscribe((response) => {
-      if (Object.keys(response).length) {
-        this.requestSelected = response;
-        this.oldRequest = response;
+    this.router.params.subscribe((value) => {
+      if (Object.keys(value).length) {
+        this.requestSelected = value;
+        this.oldRequest = value;
         setTimeout(() => {
           this.modalService.open(this.modal);
         }, 1000);
@@ -165,7 +168,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
         if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
           this.userCreationRequestService
             .deleteUserCreationRequestSponsor(event.data.id)
-            .subscribe((response) => {
+            .subscribe((value) => {
               this.toast.deleteRegister(
                 'Eliminación',
                 'Se ha eliminado una solicitud de crear usuario'
@@ -175,7 +178,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
         } else if (event.data.type === TYPE_REQUEST.SCHOOL.ORIGINAL) {
           this.userCreationRequestService
             .deleteUserCreationRequestSchool(event.data.id)
-            .subscribe((response) => {
+            .subscribe((value) => {
               this.store.dispatch(new DeleteUserCreationRequest(event.data));
               this.toast.deleteRegister(
                 'Eliminación',
@@ -185,7 +188,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
         } else {
           this.userCreationRequestService
             .deleteUserCreationRequestCoordinator(event.data.id)
-            .subscribe((response) => {
+            .subscribe((value) => {
               this.store.dispatch(new DeleteUserCreationRequest(event.data));
               this.toast.deleteRegister(
                 'Eliminación',
@@ -200,6 +203,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
 
   onApprovedRequest(): void {
     this.requestSelected = Object.assign({}, this.requestSelected);
+    this.showProgress = true;
+
     switch (this.requestSelected.type) {
       case TYPE_REQUEST.COORDINATOR.ORIGINAL:
         this.userCreationRequestService
@@ -207,23 +212,27 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.id,
             this.statusSelected.toString()
           )
-          .subscribe((response) => {
-            if (this.statusSelected === '2') {
-              this.store.dispatch(new SetCoordinatorUser(response));
+          .subscribe((resq: HttpEvent<any>) => {
+            switch (resq.type) {
+              case HttpEventType.Response:
+                if (this.statusSelected === '2') {
+                  this.store.dispatch(new SetCoordinatorUser(resq.body));
 
-              this.requestSelected.status = this.statusSelected;
+                  this.requestSelected.status = this.statusSelected;
 
-              this.store.dispatch(
-                new UpdateUserCreationRequest(
-                  this.requestSelected,
-                  this.oldRequest
-                )
-              );
+                  this.store.dispatch(
+                    new UpdateUserCreationRequest(
+                      this.requestSelected,
+                      this.oldRequest
+                    )
+                  );
 
-              this.toast.info(
-                'Solicitud',
-                'Se ha cambiado de estatus la solicitud'
-              );
+                  this.toast.info(
+                    'Solicitud',
+                    'Se ha cambiado de estatus la solicitud'
+                  );
+                }
+                break;
             }
           });
         break;
@@ -234,23 +243,28 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             this.statusSelected.toString()
           )
           .subscribe(
-            (response) => {
-              if (this.statusSelected === '2') {
-                this.store.dispatch(new SetSchoolUser(response));
+            (resq: HttpEvent<any>) => {
+              switch (resq.type) {
+                case HttpEventType.Response:
+                  if (this.statusSelected === '2') {
+                    this.store.dispatch(new SetSchoolUser(resq.body));
 
-                this.requestSelected.status = this.statusSelected;
+                    this.requestSelected.status = this.statusSelected;
 
-                this.store.dispatch(
-                  new UpdateUserCreationRequest(
-                    this.requestSelected,
-                    this.oldRequest
-                  )
-                );
+                    this.store.dispatch(
+                      new UpdateUserCreationRequest(
+                        this.requestSelected,
+                        this.oldRequest
+                      )
+                    );
 
-                this.toast.info(
-                  'Solicitud',
-                  'Se ha cambiado de estatus la solicitud'
-                );
+                    this.toast.info(
+                      'Solicitud',
+                      'Se ha cambiado de estatus la solicitud'
+                    );
+                  }
+
+                  break;
               }
             },
             (err: any) => {
@@ -264,23 +278,27 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.id,
             this.statusSelected.toString()
           )
-          .subscribe((response) => {
-            if (this.statusSelected === '2') {
-              this.store.dispatch(new SetSponsorUser(response));
+          .subscribe((resq: HttpEvent<any>) => {
+            switch (resq.type) {
+              case HttpEventType.Response:
+                if (this.statusSelected === '2') {
+                  this.store.dispatch(new SetSponsorUser(resq.body));
 
-              this.requestSelected.status = this.statusSelected;
+                  this.requestSelected.status = this.statusSelected;
 
-              this.store.dispatch(
-                new UpdateUserCreationRequest(
-                  this.requestSelected,
-                  this.oldRequest
-                )
-              );
+                  this.store.dispatch(
+                    new UpdateUserCreationRequest(
+                      this.requestSelected,
+                      this.oldRequest
+                    )
+                  );
 
-              this.toast.info(
-                'Solicitud',
-                'Se ha cambiado de estatus la solicitud'
-              );
+                  this.toast.info(
+                    'Solicitud',
+                    'Se ha cambiado de estatus la solicitud'
+                  );
+                }
+                break;
             }
           });
         break;

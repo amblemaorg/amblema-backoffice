@@ -72,6 +72,8 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
             status: this.statusSelected,
           })
         );
+
+
       });
   }
 }

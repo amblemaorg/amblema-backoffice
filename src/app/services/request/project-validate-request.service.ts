@@ -26,7 +26,7 @@ export class ProjectValidationRequestService {
 
   updateRequestProjectApproval(
     data: ProjectValidationRequest
-  ): Observable<ProjectValidationRequest> {
+  ): Observable<any> {
 
     return this.httpClient.put<ProjectValidationRequest>(
       `${environment.api}${this.REQUEST_PROJECT_APPROVAL}/${data.id}`,

@@ -6,20 +6,21 @@ import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class ProtectLoginGuard implements CanActivate {
 
   constructor( private authService: NbAuthService,
                private router: Router ) {}
 
-  canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ) {
 
+  canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ) {
     return this.authService.isAuthenticated()
     .pipe(
       tap(authenticated => {
-        if (!authenticated) { // <-- Is not authenticated, then redirect to login
-          this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
-        } else { return true; }
+        if (authenticated) { // <-- Is not authenticated, then redirect to login
+          // this.router.navigate(['pages/dashboard'], { queryParams: { returnUrl: state.url } });
+        }
       }),
     );
   }
+
 }

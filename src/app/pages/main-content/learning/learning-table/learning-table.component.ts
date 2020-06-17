@@ -118,7 +118,6 @@ export const sortDate = (direction: any, a: string, b: string): number => {
   const first = Number(new DatePipe('es-VE').transform(a, 'ddMMyyyyhhmmss'));
   const second = Number(new DatePipe('es-VE').transform(b, 'ddMMyyyyhhmmss'));
 
-  console.log(first);
 
   if (first < second) {
       return -1 * direction;

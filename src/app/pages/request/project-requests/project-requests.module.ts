@@ -7,6 +7,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbCardModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
 import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ModalModule,
     ReactiveFormsModule,
     FormsModule,
+    ProgressModule,
     ProjectRequestsRoutingModule,
     NbAlertModule
   ]

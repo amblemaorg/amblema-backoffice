@@ -17,6 +17,8 @@ import { UserCreationRequestState } from 'src/app/store/request/user-creation-re
 import { ProjectValidationRequestState } from 'src/app/store/request/project-validation-request.action';
 import { RequestContentState } from 'src/app/store/request/request-content-approval.action';
 import { Router } from '@angular/router';
+import { NbAuthService, NbTokenService } from '@nebular/auth';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -38,17 +40,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  items = [{ title: 'Profile' }, { title: 'Log out' }];
+  items = [{ title: 'Profile' }, { title: 'Cerrar sesión' }];
   notifications = new Array<any>();
   @ViewChild(NbPopoverDirective, { static: false }) popover: NbPopoverDirective;
 
   constructor(
     private router: Router,
     private menuService: NbMenuService,
+    private authService: NbAuthService,
+    private tokenService: NbTokenService,
     protected sidebarService?: NbSidebarService
   ) {}
 
   ngOnInit() {
+    /* To the user menu */
+    this.subscription = this.menuService.onItemClick().pipe(
+      filter(({ tag }) => tag === 'user-menu'),
+      map(({ item: { title } }) => {
+
+        if ( title === 'Cerrar sesión' ) {
+          // this.authService.logout(this.authService.getToken().subscribe( response => response. ));
+          this.tokenService.clear();
+          this.router.navigate(['auth/login']);
+        }
+
+      })
+    ).subscribe();
+
+    /* For the sidebar menu */
     this.subscription = this.menuService
       .onItemSelect()
       .subscribe((event: { tag: string; item: any }) => {

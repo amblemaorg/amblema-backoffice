@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 @NgModule({
   entryComponents: [
@@ -47,6 +48,7 @@ import { TestimonyDetailsComponent } from './testimony-details/testimony-details
     NbButtonModule,
     CommonModule,
     NbAlertModule,
+    ProgressModule,
     NbInputModule,
     RequestsValidateInformationRoutingModule,
     NbDialogModule.forChild(),

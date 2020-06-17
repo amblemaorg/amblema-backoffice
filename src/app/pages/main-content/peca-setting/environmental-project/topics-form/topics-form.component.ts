@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  AfterViewChecked,
+} from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Topic } from 'src/app/models/environmental-project.model';
 import {
@@ -15,9 +21,11 @@ import { EnvironmentalProjectService } from 'src/app/services/environmental-proj
   templateUrl: './topics-form.component.html',
   styleUrls: ['./topics-form.component.scss'],
 })
-export class TopicsFormComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class TopicsFormComponent
+  implements OnInit, OnDestroy, AfterViewChecked {
   @Select(EnvironmentalProjectState.topics) topics$: Observable<Topic[]>;
-  @Select(EnvironmentalProjectState.environmentalProjectStorable) storable$: Observable<EnvironmentalProjectModel>;
+  @Select(EnvironmentalProjectState.environmentalProjectStorable)
+  storable$: Observable<EnvironmentalProjectModel>;
 
   subscription: Subscription;
 
@@ -26,48 +34,47 @@ export class TopicsFormComponent implements OnInit, OnDestroy, AfterViewChecked 
   constructor(
     private cd: ChangeDetectorRef,
     private environmentalProjectService: EnvironmentalProjectService,
-    private store: Store) {}
+    private store: Store
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterViewChecked(): void {
-
     this.cd.detectChanges();
-
   }
 
   ngOnDestroy(): void {
-    if ( this.subscription ) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
   addTopic() {
-      this.subscription = this.topics$.pipe(take(1)).subscribe((response) => {
-
-
-        this.subscription = this.store.dispatch(
-        new AddTopic({
-          name: '',
-          objectives: [],
-          strategies: [],
-          contents: [],
-          levels: [],
-        })
-      ).subscribe( () => {
-
-        this.subscription = this.storable$.subscribe( value => {
-
-          this.subscription = this.environmentalProjectService.updateEnvironmentalProject( value ).subscribe( resp => {
-            // Success
-          },  ( err ) => {
-            // Error
-          } );
-
-        } );
-
-      });
+    this.subscription = this.topics$.pipe(take(1)).subscribe((response) => {
+      this.subscription = this.store
+        .dispatch(
+          new AddTopic({
+            name: '',
+            objectives: [],
+            strategies: [],
+            contents: [],
+            levels: [],
+          })
+        )
+        .subscribe(() => {
+          this.subscription = this.storable$.subscribe((value) => {
+            this.subscription = this.environmentalProjectService
+              .updateEnvironmentalProject(value)
+              .subscribe(
+                (resp) => {
+                  // Success
+                },
+                (err) => {
+                  // Error
+                }
+              );
+          });
+        });
     });
   }
 }

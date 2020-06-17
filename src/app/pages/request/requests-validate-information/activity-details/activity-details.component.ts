@@ -7,7 +7,4 @@ import { InformationDetailsComponent } from '../information-details/information-
   styleUrls: ['./activity-details.component.scss']
 })
 export class ActivityDetailsComponent extends InformationDetailsComponent {
-
-
-
 }

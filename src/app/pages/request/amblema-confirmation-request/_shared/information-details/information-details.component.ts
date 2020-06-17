@@ -9,6 +9,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-information-details',
@@ -23,6 +24,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   statusSelected = '2';
   confirmAction = true;
   prepareData: ProjectValidationRequest;
+  showProgress = false;
 
   constructor(
     private store: Store,
@@ -48,30 +50,37 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   }
 
   onApprovedRequest() {
+    this.showProgress = true;
+
     this.projectValidateRequestService
       .updateRequestProjectApproval({
         ...this.prepareData,
         status: this.statusSelected,
       })
-      .subscribe((response) => {
-        if (this.statusSelected === '3') {
-          this.toastr.updateSuccess(
-            'Solicitud de confirmación',
-            'Se ha rechazado la solicitud'
-          );
-        } else  {
-          this.toastr.updateSuccess(
-            'Solicitud de confirmación',
-            'Confirmar acción, al aprobar esta solicitud el proyecto estará disponible para ser inscrito en el año escolar'
-          );
-        }
+      .subscribe((response: HttpEvent<any>) => {
+        switch (response.type) {
+          case HttpEventType.Response:
+            if (this.statusSelected === '3') {
+              this.toastr.updateSuccess(
+                'Solicitud de confirmación',
+                'Se ha rechazado la solicitud'
+              );
+            } else {
+              this.toastr.updateSuccess(
+                'Solicitud de confirmación',
+                'Confirmar acción, al aprobar esta solicitud el proyecto estará disponible para ser inscrito en el año escolar'
+              );
+            }
 
-        this.store.dispatch(
-          new UpdateProjectValidationRequest({
-            ...this.prepareData,
-            status: this.statusSelected,
-          })
-        );
+            this.store.dispatch(
+              new UpdateProjectValidationRequest({
+                ...this.prepareData,
+                status: this.statusSelected,
+              })
+            );
+
+            break;
+        }
       });
   }
 }

@@ -5,7 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
   },
   {
     path: 'pages',
@@ -15,8 +15,8 @@ const routes: Routes = [
      * and the user can be logged. Remove the commentary
      * in the guard
      */
-    // canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '',

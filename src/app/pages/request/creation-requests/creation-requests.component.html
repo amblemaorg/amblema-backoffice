@@ -663,6 +663,11 @@
                     </select>
                 </div>
 
+                <app-progress
+            *ngIf="showProgress"
+            (finish)="showProgress=false"
+          ></app-progress>
+
                 <div *ngIf="!confirmAction">
                     <nb-alert status="info">Confirmar acción, al aprobar o rechazar esta solicitud no se podrá cambiar
                         de

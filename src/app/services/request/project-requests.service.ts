@@ -6,10 +6,9 @@ import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProjectRequestsService {
-
   private readonly PROJECT_REQUESTS = 'contactrequests';
 
   /* To approve requests for type of applicant agreement */
@@ -17,37 +16,74 @@ export class ProjectRequestsService {
   private readonly COORDINATOR_REQUESTS = 'coordinatorscontacts';
   private readonly SPONSOR_REQUESTS = 'sponsorscontacts';
 
-  constructor( private httpClient: HttpClient ) { }
+  constructor(private httpClient: HttpClient) {}
 
   getProjectRequests(): Observable<ProjectRequest[]> {
-    return this.httpClient.get<ProjectRequest[]>(`${environment.api}${this.PROJECT_REQUESTS}`)
-      .pipe(
-        map((data: any) => data.records)
-      );
+    return this.httpClient
+      .get<ProjectRequest[]>(`${environment.api}${this.PROJECT_REQUESTS}`)
+      .pipe(map((data: any) => data.records));
   }
 
-  putProjectRequestSchool( id: string, status: string ): Observable<any> {
-    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`, { status });
+  putProjectRequestSchool(id: string, status: string): Observable<any> {
+    return this.httpClient.put<ProjectRequest>(
+      `${environment.api}${this.SCHOOL_REQUESTS}/${id}`,
+      { status },
+      {
+        reportProgress: true,
+        observe: 'body',
+      }
+    );
   }
 
-  putProjectRequestCoordinator( id: string, status: string ): Observable<any> {
-    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`, { status });
+  putProjectRequestCoordinator(id: string, status: string): Observable<any> {
+    return this.httpClient.put<ProjectRequest>(
+      `${environment.api}${this.COORDINATOR_REQUESTS}/${id}`,
+      { status },
+      {
+        reportProgress: true,
+        observe: 'body',
+      }
+    );
   }
 
-  putProjectRequestSponsor( id: string, status: string ): Observable<any> {
-    return this.httpClient.put<ProjectRequest>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, { status });
+  putProjectRequestSponsor(id: string, status: string): Observable<any> {
+    return this.httpClient.put<ProjectRequest>(
+      `${environment.api}${this.SPONSOR_REQUESTS}/${id}`,
+      { status },
+      {
+        reportProgress: true,
+        observe: 'body',
+      }
+    );
   }
 
-
-  deleteProjectRequestSchool( id: string ): Observable<any> {
-    return this.httpClient.delete<string>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`);
+  deleteProjectRequestSchool(id: string): Observable<any> {
+    return this.httpClient.delete<string>(
+      `${environment.api}${this.SCHOOL_REQUESTS}/${id}`,
+      {
+        reportProgress: true,
+        observe: 'events',
+      }
+    );
   }
 
-  deleteProjectRequestCoordinator( id: string ): Observable<any> {
-    return this.httpClient.delete<string>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`);
+  deleteProjectRequestCoordinator(id: string): Observable<any> {
+    return this.httpClient.delete<string>(
+      `${environment.api}${this.COORDINATOR_REQUESTS}/${id}`,
+      {
+        reportProgress: true,
+        observe: 'events',
+      }
+    );
   }
 
-  deleteProjectRequestSponsor( id: string ): Observable<any> {
-    return this.httpClient.delete<string>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`);
+  deleteProjectRequestSponsor(id: string): Observable<any> {
+    return this.httpClient.delete<string>(
+      `${environment.api}${this.SPONSOR_REQUESTS}/${id}`,
+      {
+        reportProgress: true,
+        observe: 'events',
+      }
+    );
   }
 }

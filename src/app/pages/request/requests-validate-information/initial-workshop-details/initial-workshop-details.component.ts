@@ -9,6 +9,7 @@ import {
 import { Select, Store } from '@ngxs/store';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-initial-workshop-details',
@@ -47,6 +48,8 @@ export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
   };
 
   show = false;
+  showProgress = false;
+
   hasClass(el: any) {
     return (
       el.getAttribute('class') &&
@@ -73,24 +76,29 @@ export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
   }
 
   onApprovedRequest() {
+    this.showProgress = true;
     this.subscription = this.serviceRequestStepApproval
       .updateRequestContentApproval({
         ...this.data,
         status: this.statusSelected,
         comments: this.comment,
       })
-      .subscribe((res) => {
-        this.store.dispatch(
-          new UpdateRequestContent({
-            ...this.data,
-            status: this.statusSelected,
-            comments: this.comment,
-          })
-        );
-        this.toastr.updateSuccess(
-          'Estatus actualizado',
-          'Se ha cambiado el estatus de la solicitud'
-        );
+      .subscribe((res: HttpEvent<any>) => {
+        switch (res.type) {
+          case HttpEventType.Response:
+            this.store.dispatch(
+              new UpdateRequestContent({
+                ...this.data,
+                status: this.statusSelected,
+                comments: this.comment,
+              })
+            );
+            this.toastr.updateSuccess(
+              'Estatus actualizado',
+              'Se ha cambiado el estatus de la solicitud'
+            );
+            break;
+        }
       });
   }
 }

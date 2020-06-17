@@ -28,27 +28,45 @@ export class UserCreationRequestService {
   }
 
   putUserCreationRequestSchool( id: string, status: string ): Observable<any> {
-    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`,  {status});
+    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`,  {status}, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   putUserCreationRequestCoordinator( id: string, status: string ): Observable<any> {
-    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`, { status });
+    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`, { status }, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   putUserCreationRequestSponsor( id: string, status: string ): Observable<any> {
-    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, { status });
+    return this.httpClient.put<UserCreationRequest>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, { status }, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
 
   deleteUserCreationRequestSchool( id: string ): Observable<any> {
-    return this.httpClient.delete<string>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`);
+    return this.httpClient.delete<string>(`${environment.api}${this.SCHOOL_REQUESTS}/${id}`, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   deleteUserCreationRequestCoordinator( id: string ): Observable<any> {
-    return this.httpClient.delete<string>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`);
+    return this.httpClient.delete<string>(`${environment.api}${this.COORDINATOR_REQUESTS}/${id}`, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   deleteUserCreationRequestSponsor( id: string ): Observable<any> {
-    return this.httpClient.delete<string>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`);
+    return this.httpClient.delete<string>(`${environment.api}${this.SPONSOR_REQUESTS}/${id}`, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 }

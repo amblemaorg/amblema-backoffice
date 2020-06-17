@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { RouterModule } from '@angular/router';
-import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken } from '@nebular/auth';
+import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbTokenStorage, NbTokenLocalStorage } from '@nebular/auth';
 import { NbAlertModule, NbCheckboxModule, NbButtonModule, NbInputModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -35,13 +35,16 @@ import { environment } from 'src/environments/environment.prod';
      */
     NbAuthModule.forRoot({
       strategies: [
+
         NbPasswordAuthStrategy.setup({
+
           name: 'email',
           baseEndpoint: `${environment.api}`,
           token: {
             class: NbAuthJWTToken,
             key: 'access_token'
           },
+          refreshToken: true,
           login: {
             endpoint: 'auth/login',
             method: 'post',
@@ -67,8 +70,8 @@ import { environment } from 'src/environments/environment.prod';
         validation: {
           password: {
             required: true,
-            minLength: 4,
-            maxLength: 50,
+            minLength: 8,
+            maxLength: 8,
           },
           email: {
             required: true,
@@ -76,6 +79,12 @@ import { environment } from 'src/environments/environment.prod';
         },
       }
     }),
+  ],
+  providers: [
+    {
+      provide: NbTokenStorage,
+      useClass: NbTokenLocalStorage
+    }
   ]
 })
 export class AuthModule { }

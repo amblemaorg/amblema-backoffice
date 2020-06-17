@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbMenuModule, NbToastrModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './guards/auth.guard';
-import { NbAuthModule } from '@nebular/auth';
+import { NbAuthModule, NbTokenStorage, NbTokenLocalStorage } from '@nebular/auth';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -108,14 +108,13 @@ registerLocaleData(localeVe, 'es-VE');
   providers: [
     CustomToastrService,
     AuthGuard,
-
     // -- Custom Helper --
     Utility,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptorService,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

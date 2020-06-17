@@ -1,20 +1,20 @@
-import { Component, OnInit, DoCheck, OnDestroy } from "@angular/core";
+import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 
-import { OwlOptions } from "ngx-owl-carousel-o";
-import { Subscription, Observable } from "rxjs";
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Subscription, Observable } from 'rxjs';
 import {
   RequestContentState,
   UpdateRequestContent,
-} from "src/app/store/request/request-content-approval.action";
-import { Select, Store } from "@ngxs/store";
-import { InformationRequestService } from "src/app/services/request/information-request.service";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
-import { HttpEvent, HttpEventType } from "@angular/common/http";
+} from 'src/app/store/request/request-content-approval.action';
+import { Select, Store } from '@ngxs/store';
+import { InformationRequestService } from 'src/app/services/request/information-request.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
-  selector: "app-initial-workshop-details",
-  templateUrl: "./initial-workshop-details.component.html",
-  styleUrls: ["./initial-workshop-details.component.scss"],
+  selector: 'app-initial-workshop-details',
+  templateUrl: './initial-workshop-details.component.html',
+  styleUrls: ['./initial-workshop-details.component.scss'],
 })
 export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
   @Select(RequestContentState.selectedContentRequest) data$: Observable<{
@@ -23,7 +23,7 @@ export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   data: any;
-  statusSelected = "2";
+  statusSelected = '2';
   confirmAction = true;
   comment;
 
@@ -52,8 +52,8 @@ export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
 
   hasClass(el: any) {
     return (
-      el.getAttribute("class") &&
-      el.getAttribute("class").indexOf("show") !== -1
+      el.getAttribute('class') &&
+      el.getAttribute('class').indexOf('show') !== -1
     );
   }
 
@@ -94,8 +94,8 @@ export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
               })
             );
             this.toastr.updateSuccess(
-              "Estatus actualizado",
-              "Se ha cambiado el estatus de la solicitud"
+              'Estatus actualizado',
+              'Se ha cambiado el estatus de la solicitud'
             );
             break;
         }

@@ -136,7 +136,7 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
               .updateEnvironmentalProject(value)
               .subscribe(
                 (response) => {},
-                (err) => {}
+                (err) => this.showProgress = false
               );
           }
         });

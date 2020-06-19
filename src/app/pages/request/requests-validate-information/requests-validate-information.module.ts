@@ -23,6 +23,7 @@ import { ActivityDetailsComponent } from './activity-details/activity-details.co
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
 
 @NgModule({
   entryComponents: [
@@ -30,6 +31,7 @@ import { ProgressModule } from '../../components/shared/progress/progress.module
     SliderDetailsComponent,
     ActivityDetailsComponent,
     InformationDetailsComponent,
+    SpecialActivityDetailsComponent
   ],
   declarations: [
     RequestsValidateInformationComponent,
@@ -38,6 +40,7 @@ import { ProgressModule } from '../../components/shared/progress/progress.module
     ActivityDetailsComponent,
     SliderDetailsComponent,
     TestimonyDetailsComponent,
+    SpecialActivityDetailsComponent,
   ],
   imports: [
     CarouselModule,

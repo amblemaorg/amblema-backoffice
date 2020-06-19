@@ -1,5 +1,7 @@
 <nb-card class="mx-5">
-  <nb-card-header>Validación de información</nb-card-header>
+  <nb-card-header>
+    Validación de información
+  </nb-card-header>
   <nb-card-body>
     <div class="row">
       <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
@@ -30,10 +32,6 @@
           >
           {{ data.createdAt | date: "dd/MM/yyyy" }}
         </p>
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Nombre del paso:</span>
-          {{ data.detail.stepName }}
-        </p>
       </div>
 
       <div class="col-12 col-md-6 col-lg-4">
@@ -58,56 +56,59 @@
         </p>
       </div>
 
-      <div class="col-12"><hr/></div>
+      <div class="col-12"><hr /></div>
+
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Fecha de la actividad:</span>
+          {{ data.detail.activityDate | date: "dd/MM/yyyy" }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5">Lapso:</span>
+          {{ data.detail.lapse }}
+        </p>
+      </div>
+
+      <div class="col-12">
+    
+        <div class="table-response">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Nombre de la actividad</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Sub total</th>
+                <th scope="col">Precio unitario</th>
+                <th scope="col">Impuesto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data.detail.itemsActivities">
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.subtotal }}</td>
+                <td>{{ item.unitPrice }}</td>
+                <td>{{ item.tax }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="col-12">
         <p class="d-flex w-100">
-          <img
-            class="img-thumbnail"
-            [src]="data.detail.image"
-            [alt]="data.detail.description"
-          />
+          <span class="pl-0 font-weight-bold mr-3">Total:</span>
+          {{ data.detail.total }}
         </p>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Nombre:</span>
-          {{ data.detail.firstName }}
-        </p>
-      </div>
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Apellido:</span>
-          {{ data.detail.lastName }}
-        </p>
-      </div>
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Fecha del registro:</span>
-          {{ data.detail.createdAt | date: "dd/MM/yyyy" }}
-        </p>
-      </div>
 
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Descripción:</span>
-          {{ data.detail.description }}
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Visible:</span>
-          {{ data.detail.visibilityStatus ? 'Si' : 'No' }}
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4">
-        <p class="d-flex w-100">
-          <span class="pl-0 font-weight-bold col-5">Cargo:</span>
-          {{ data.detail.function }}
-        </p>
-      </div>
 
       <div class="col-12">
         <div *ngIf="(data$ | async)?.status === '1'">

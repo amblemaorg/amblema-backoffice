@@ -3,5 +3,6 @@ export const TYPE_INFORMATION = {
     TESTIMONIES: '2',
     ACTIVITY: '3',
     SLIDER: '4',
-    WORKSHOP: '5'
+    WORKSHOP: '5',
+    SPECIAL_SPAN_ACTIVITY: '6'
 };

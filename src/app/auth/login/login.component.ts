@@ -1,14 +1,14 @@
-import { Component, OnInit, ChangeDetectorRef, Inject } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
 import {
   NbLoginComponent,
   NbAuthService,
   NB_AUTH_OPTIONS,
-} from "@nebular/auth";
-import { Router } from "@angular/router";
+} from '@nebular/auth';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
+  selector: 'app-login',
+  templateUrl: './login.component.html',
 })
 export class LoginComponent extends NbLoginComponent {
   // To hide somes links
@@ -27,7 +27,7 @@ export class LoginComponent extends NbLoginComponent {
     // Redict to home if are login data
     this.service.isAuthenticated().subscribe((authenticated) => {
       if (authenticated) {
-        this.router.navigate(["pages/dashboard"]);
+        this.router.navigate(['pages/dashboard']);
       }
     });
   }

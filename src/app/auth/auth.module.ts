@@ -8,10 +8,12 @@ import { NbAlertModule, NbCheckboxModule, NbButtonModule, NbInputModule } from '
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+import { RequestPasswordComponent } from './request-password/request-password.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
+    RequestPasswordComponent,
   ],
   imports: [
     CommonModule,

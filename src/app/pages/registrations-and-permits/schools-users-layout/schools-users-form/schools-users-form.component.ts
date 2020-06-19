@@ -160,6 +160,8 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
         this.schoolUserService.setSchoolUser(data).subscribe((event: HttpEvent<any>) => {
 
+
+
           switch (event.type) {
             case HttpEventType.Response:
 
@@ -173,6 +175,10 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
           if (err.error.status === 0) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');
+          }
+
+          if ( err.error.code) {
+            this.toastr.error('Error de datos', 'El código del plantel esta en uso');
           }
 
           if (err.error.cardId) {
@@ -212,6 +218,10 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
 
         }, (err: any) => {
           this.showProgress = false;
+
+          if ( err.error.code) {
+            this.toastr.error('Error de datos', 'El código del plantel esta en uso');
+          }
 
           if ( err.error.status === 0 ) {
             this.toastr.error('Error de datos', 'Verifica los datos del formulario');

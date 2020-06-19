@@ -11,6 +11,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Utility } from 'src/app/helpers/utility';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 describe('CreationRequestsComponent', () => {
   let component: CreationRequestsComponent;
@@ -29,6 +30,7 @@ describe('CreationRequestsComponent', () => {
         NgxsModule.forRoot([ UserCreationRequestState ]),
         ReactiveFormsModule,
         NbThemeModule.forRoot(),
+        ProgressModule,
         NbToastrModule.forRoot()
       ],
 

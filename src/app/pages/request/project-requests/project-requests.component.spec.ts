@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Utility } from 'src/app/helpers/utility';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { ProgressModule } from '../../components/shared/progress/progress.module';
 
 describe('ProjectRequestsComponent', () => {
   let component: ProjectRequestsComponent;
@@ -27,6 +28,7 @@ describe('ProjectRequestsComponent', () => {
         HttpClientModule,
         ModalModule,
         NbAlertModule,
+        ProgressModule,
         FormsModule,
         ReactiveFormsModule,
         Ng2SmartTableModule

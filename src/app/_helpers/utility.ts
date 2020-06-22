@@ -23,9 +23,9 @@ export class Utility {
   public readlyStatus(object?: any[]): any[] {
     object.forEach((value, key) => {
       if (value.status === STATUS.ACTIVE.VALUE) {
-        value.status = STATUS.ACTIVE.VALUE as string;
+        value.status = STATUS.ACTIVE.LABEL as string;
       } else {
-        value.status = STATUS.INACTIVE.VALUE as string;
+        value.status = STATUS.INACTIVE.LABEL as string;
       }
     });
     return object;
@@ -34,9 +34,9 @@ export class Utility {
   public incodeStatus(object: any[]): any[] {
     object.forEach((value, key) => {
       if (String(value.status) === STATUS.ACTIVE.LABEL) {
-        value.status = STATUS.ACTIVE.VALUE;
+        value.status = STATUS.ACTIVE.LABEL;
       } else {
-        value.status = STATUS.INACTIVE.VALUE;
+        value.status = STATUS.INACTIVE.LABEL;
       }
     });
     return object;

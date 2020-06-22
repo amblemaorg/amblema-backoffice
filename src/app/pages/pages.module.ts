@@ -21,7 +21,6 @@ import {
 import { HeaderComponent } from './_components/layouts/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { DashboardLayoutComponent } from './dashboard/dashboard-layout.component';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';
 import { MenuSetUp } from './pages-menu-service';
 
@@ -29,8 +28,6 @@ import { MenuSetUp } from './pages-menu-service';
   declarations: [
     PagesComponent,
     HeaderComponent,
-    DashboardLayoutComponent,
-    DashboardLayoutComponent,
   ],
   imports: [
     RouterModule,

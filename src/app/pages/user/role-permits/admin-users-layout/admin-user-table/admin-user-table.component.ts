@@ -56,6 +56,8 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         title: 'Estatus',
         type: 'string',
         valuePrepareFunction: (row: any) => {
+
+          
           return this.helper.readlyStatus( [{ status: row }] )[0].status;
         },
         filterFunction(cell?: any, search?: string): boolean {

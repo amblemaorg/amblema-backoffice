@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges } from '@a
 import { ACTION } from '../../../../_helpers/text-content/text-crud';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
-import { STATUS } from 'src/app/_helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Subscription } from 'rxjs';
@@ -32,7 +32,7 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
 
   formRole: FormGroup = new FormGroup({
     role: new FormControl('', [Validators.required]),
-    status: new FormControl(STATUS.ACTIVE.MSG, [Validators.required])
+    status: new FormControl(STATUS.ACTIVE.VALUE, [Validators.required])
   });
 
   constructor(
@@ -52,8 +52,8 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
     if (this.MODE === this.ACTION.EDIT) {
 
       this.formRole.controls.role.setValue(this.DATA.name);
-      this.formRole.controls.status.setValue(this.DATA.status === STATUS.ACTIVE.MSG ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE);
-    } else { this.formRole.controls.status.setValue(STATUS.ACTIVE.CODE); }
+      this.formRole.controls.status.setValue(this.DATA.status === STATUS.ACTIVE.VALUE ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE);
+    } else { this.formRole.controls.status.setValue(STATUS.ACTIVE.VALUE); }
   }
 
   onSubmit() {

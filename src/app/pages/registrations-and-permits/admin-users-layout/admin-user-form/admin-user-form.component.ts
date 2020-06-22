@@ -9,7 +9,7 @@ import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { DOCUMENT_TYPE } from 'src/app/_helpers/convention/document-type';
-import { STATUS } from 'src/app/_helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { SetAdminUser, AdminUserState, UpdateAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
@@ -188,7 +188,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
   // To restar nicely form
   private restar(): void {
     this.form.reset();
-    this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
+    this.form.controls.status.setValue(STATUS.ACTIVE.VALUE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
     this.form.controls.userType.setValue(USER_TYPE.ADMIN.VALUE);
     this.form.controls.addressMunicipality.setValue(null);

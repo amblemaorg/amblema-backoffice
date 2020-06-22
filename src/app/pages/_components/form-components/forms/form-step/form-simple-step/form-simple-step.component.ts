@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ɵConsole } from '@angular/core';
 import { Step } from 'src/app/_models/step.model';
 import { FormControl, Validators } from '@angular/forms';
-import { STATUS } from 'src/app/_helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/steps-form.component';
 import { StepService } from 'src/app/services/step.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -69,7 +69,7 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       }
 
       this.form.controls.approvalType.setValue(this.data.approvalType);
-      this.form.controls.status.setValue(this.data.status === STATUS.ACTIVE.CODE ? true : false);
+      this.form.controls.status.setValue(this.data.status === STATUS.ACTIVE.VALUE ? true : false);
     }
   }
 
@@ -80,7 +80,7 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       this.data = Object.assign({}, this.data);
 
       this.data.text = this.form.controls.text.value;
-      this.data.status = this.form.controls.status.value ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE;
+      this.data.status = this.form.controls.status.value ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE;
       this.data.approvalType = this.form.controls.approvalType.value;
       this.data.file = this.form.controls.file.value;
 

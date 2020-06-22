@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, OnDestroy } from "@angular/core";
-import { MenuSetUp } from "./pages-menu-service";
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { MenuSetUp } from './pages-menu-service';
 
 @Component({
-  selector: "app-pages",
-  templateUrl: "pages.component.html",
+  selector: 'app-pages',
+  templateUrl: 'pages.component.html',
 })
 export class PagesComponent implements AfterViewInit, OnDestroy {
   constructor(public menuSetUp: MenuSetUp) {}

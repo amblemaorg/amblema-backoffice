@@ -6,6 +6,7 @@ export interface User extends Address {
   userType: string;
   phone: string;
   role: string;
+  status: string;
 }
 
 export interface Address extends Coordinate {

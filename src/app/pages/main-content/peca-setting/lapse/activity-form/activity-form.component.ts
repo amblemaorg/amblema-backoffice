@@ -11,7 +11,7 @@ import { LapseActivityState } from 'src/app/store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
 import { Activity } from 'src/app/_models/lapse-activities.model';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { STATUS } from 'src/app/_helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { VIDEO_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
 import { Slider } from 'src/app/_models/web/slider.model';
@@ -106,8 +106,8 @@ export class ActivityFormComponent extends StepsFormComponent
 
       this.data.text = this.form.controls.text.value;
       this.data.status = this.form.controls.status.value
-        ? STATUS.ACTIVE.CODE
-        : STATUS.INACTIVE.CODE;
+        ? STATUS.ACTIVE.VALUE
+        : STATUS.INACTIVE.VALUE;
       this.data.approvalType = this.form.controls.approvalType.value;
       this.data.file = this.form.controls.file.value;
 
@@ -217,7 +217,7 @@ export class ActivityFormComponent extends StepsFormComponent
 
       this.form.controls.approvalType.setValue(this.data.approvalType);
       this.form.controls.status.setValue(
-        this.data.status === STATUS.ACTIVE.CODE ? true : false
+        this.data.status === STATUS.ACTIVE.VALUE ? true : false
       );
     }
   }

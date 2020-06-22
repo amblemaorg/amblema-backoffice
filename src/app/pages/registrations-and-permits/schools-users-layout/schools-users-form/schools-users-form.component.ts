@@ -10,7 +10,7 @@ import {
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { STATUS } from 'src/app/_helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
 import { SetSchoolUser, SchoolUserState, UpdateSchoolUser } from 'src/app/store/user-store/school-user.action';
@@ -249,7 +249,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
   // To restar nicely form
   private restar(): void {
     this.form.reset();
-    this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
+    this.form.controls.status.setValue(STATUS.ACTIVE.VALUE);
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
 

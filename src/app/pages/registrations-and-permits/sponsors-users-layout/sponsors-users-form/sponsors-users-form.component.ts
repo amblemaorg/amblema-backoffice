@@ -8,7 +8,7 @@ import { VIDEO_PATTERN
   , EMAIL_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { Store, Select } from '@ngxs/store';
 import { Subscription, Observable } from 'rxjs';
-import { STATUS } from 'src/app/_helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { SetSponsorUser, SponsorUserState, UpdateSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
@@ -171,7 +171,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
     this.form.controls.cardType.setValue('J');
     this.form.controls.companyOtherType.setValue('');
     this.form.controls.companyType.setValue(null);
-    this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
+    this.form.controls.status.setValue(STATUS.ACTIVE.VALUE);
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
   }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 import { DetailsForm } from '../../shared/details-form';
 import { FormControl, Validators } from '@angular/forms';
-import { STATUS } from 'src/app/_helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { DOCUMENT_TYPE } from 'src/app/_helpers/convention/document-type';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
@@ -226,7 +226,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
   // To restar nicely form
   private restar(): void {
     this.form.reset();
-    this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
+    this.form.controls.status.setValue(STATUS.ACTIVE.VALUE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
     this.form.controls.addressMunicipality.setValue(null);
     this.form.controls.isReferred.setValue(false);

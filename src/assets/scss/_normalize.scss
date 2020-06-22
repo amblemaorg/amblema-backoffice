@@ -23,27 +23,18 @@ ng2-smart-table {
     td {
         &:first-child { min-width: 150px; }
     }
-    // This is for adapt the custom actions columns
     .ng2-smart-actions {    
 
         ng2-st-tbody-custom {
             position: absolute;
             top: 0;
             display: flex;
-            @extend %max-hw; 
+            height: 100%;
+            width: 100%;
             a {
-                &:hover { color: $color-primary-hover!important; }
+                &:hover { color: #598bff; }
             }
         }
-        // > ng2-st-tbody-custom { 
-        //     position: absolute;
-        //     top: 0;
-        //     display: flex;
-        //     @extend %max-hw; 
-        //     a {
-        //         &:hover { color: $color-primary-hover!important; }
-        //     }
-        // }
     }
 }
 

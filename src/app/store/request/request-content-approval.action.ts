@@ -97,9 +97,18 @@ export class RequestContentState implements NgxsOnInit {
     ctx: StateContext<RequestContentModel>,
     action: SelectedRequestContent
   ) {
+
+    let value: any;
+
+    ctx.getState().requestsContent.forEach( response => {
+      if ( response.id === action.payload.id ) {
+        value = response;
+      }
+    } );
+
     ctx.setState({
       ...ctx.getState(),
-      selectedRequestContent: action.payload,
+      selectedRequestContent: value ,
     });
   }
 

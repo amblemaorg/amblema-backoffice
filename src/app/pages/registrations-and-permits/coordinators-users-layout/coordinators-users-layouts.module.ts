@@ -38,6 +38,7 @@ import { ProgressModule } from '../../components/shared/progress/progress.module
     CoordinatorsUsersLayoutsRoutingModule,
     NbCardModule,
     Ng2SmartTableModule,
+
     NbSpinnerModule,
     ProgressModule,
     NbIconModule,

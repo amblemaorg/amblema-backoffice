@@ -28,6 +28,7 @@ import { SliderDetailsComponent } from './slider-details/slider-details.componen
 import { USER_TYPE } from 'src/app/helpers/convention/user-type';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 import { ActivatedRoute } from '@angular/router';
+import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -123,6 +124,59 @@ export class RequestsValidateInformationComponent extends BaseTable
           }
         },
       },
+      type: {
+        title: 'Tipo de información',
+        type: 'string',
+        valuePrepareFunction: (row: any) => {
+          switch (row) {
+            case TYPE_INFORMATION.STEP:
+              return 'Pasos';
+            case TYPE_INFORMATION.TESTIMONIES:
+              return 'Testimonio';
+            case TYPE_INFORMATION.ACTIVITY:
+              return 'Actividades';
+            case TYPE_INFORMATION.SLIDER:
+              return 'Diapositiva';
+            case TYPE_INFORMATION.WORKSHOP:
+              return 'Taller inicial';
+            case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
+              return 'Actividad especial de lapso';
+          }
+        },
+        filterFunction: (cell?: any, search?: string) => {
+
+          let value: string;
+
+          if (cell) {
+            switch (cell) {
+              case TYPE_INFORMATION.STEP:
+                value = 'Pasos';
+                break;
+              case TYPE_INFORMATION.TESTIMONIES:
+                value = 'Testimonio';
+                break;
+              case TYPE_INFORMATION.ACTIVITY:
+                value = 'Actividades';
+                break;
+              case TYPE_INFORMATION.SLIDER:
+                value = 'Diapositiva';
+                break;
+              case TYPE_INFORMATION.WORKSHOP:
+                value = 'Taller inicial';
+                break;
+              case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
+                value = 'Actividad especial de lapso';
+                break;
+            }
+
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+              return true;
+            } else {
+              return false;
+            }
+          }
+        },
+      },
       createdAt: {
         sortDirection: 'desc',
         title: 'Fecha',
@@ -162,13 +216,10 @@ export class RequestsValidateInformationComponent extends BaseTable
   ngOnInit() {
     this.router.params.subscribe((query: any) => {
       if (Object.keys(query).length) {
-        this.data$.subscribe((response) => {
-          this.store.dispatch(
-            new SelectedRequestContent(query)
-          );
-        });
 
-        console.log( query );
+        this.data$.subscribe((response) => {
+          this.store.dispatch(new SelectedRequestContent(query));
+        });
 
         switch (query.type) {
           case TYPE_INFORMATION.STEP:
@@ -186,8 +237,10 @@ export class RequestsValidateInformationComponent extends BaseTable
           case TYPE_INFORMATION.WORKSHOP:
             this.modal.open('initial-workshop-modal');
             break;
+          case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
+            this.dialogService.open(SpecialActivityDetailsComponent);
+            break;
         }
-
       }
     });
   }
@@ -210,6 +263,9 @@ export class RequestsValidateInformationComponent extends BaseTable
             break;
           case TYPE_INFORMATION.WORKSHOP:
             this.modal.open('initial-workshop-modal');
+            break;
+          case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
+            this.dialogService.open(SpecialActivityDetailsComponent);
             break;
         }
 

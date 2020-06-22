@@ -40,7 +40,7 @@ import { RequestContentState } from './store/request/request-content-approval.ac
 import { ProjectValidationRequestState } from './store/request/project-validation-request.action';
 import { GeneralEnrolledState } from './store/_enrolled/enrolled.action';
 import { SchoolYearEnrolledState } from './store/_enrolled/school-year-enrolled.action';
-import { AgmCoreModule } from '@agm/core';
+
 registerLocaleData(localeVe, 'es-VE');
 
 

@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
             <nb-card-header>Coordinadores</nb-card-header>
             <nb-card-body>
               <app-coordinators-users-table></app-coordinators-users-table>
+
             </nb-card-body>
           </nb-card>
       </div>

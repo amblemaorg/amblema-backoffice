@@ -4,10 +4,17 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbMenuModule, NbToastrModule} from '@nebular/theme';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbToastrModule,
+} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './_guards/auth.guard';
-import { NbAuthModule, NbTokenStorage, NbTokenLocalStorage } from '@nebular/auth';
+import {
+  NbAuthModule,
+} from '@nebular/auth';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -43,11 +50,8 @@ import { SchoolYearEnrolledState } from './store/_enrolled/school-year-enrolled.
 
 registerLocaleData(localeVe, 'es-VE');
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
@@ -60,46 +64,48 @@ registerLocaleData(localeVe, 'es-VE');
     NbMenuModule.forRoot(),
 
     // -- NGXS --
-    NgxsModule.forRoot( [
-      /* Auth */
-      RolesState,
+    NgxsModule.forRoot(
+      [
+        /* Auth */
+        RolesState,
 
-      /* Content web */
-      LearningState,
-      WebHomeState,
-      WebAboutState,
-      WebSponsorState,
-      WebCoordinatorState,
-      PostsState,
+        /* Content web */
+        LearningState,
+        WebHomeState,
+        WebAboutState,
+        WebSponsorState,
+        WebCoordinatorState,
+        PostsState,
 
-      /* Users */
-      AdminUserState,
-      CoordinatorUserState,
-      SponsorUserState,
-      SchoolUserState,
+        /* Users */
+        AdminUserState,
+        CoordinatorUserState,
+        SponsorUserState,
+        SchoolUserState,
 
-      /* PECA */
-      LapseActivityState,
-      ProjectState,
-      StepState,
-      EnvironmentalProjectState,
+        /* PECA */
+        LapseActivityState,
+        ProjectState,
+        StepState,
+        EnvironmentalProjectState,
 
-      // -- Requests --
-      UserCreationRequestState,
-      ProjectRequestState,
-      RequestContentState,
-      ProjectValidationRequestState,
+        // -- Requests --
+        UserCreationRequestState,
+        ProjectRequestState,
+        RequestContentState,
+        ProjectValidationRequestState,
 
-      // --Enrolled --
-      SchoolYearEnrolledState,
-      GeneralEnrolledState
-    ],
-    {
-      compatibility: {
-        strictContentSecurityPolicy: true
-      },
-      developmentMode: !environment.production
-    }),
+        // --Enrolled --
+        SchoolYearEnrolledState,
+        GeneralEnrolledState,
+      ],
+      {
+        compatibility: {
+          strictContentSecurityPolicy: true,
+        },
+        developmentMode: !environment.production,
+      }
+    ),
     NgxsStoragePluginModule.forRoot({}),
     // -- NGXS --
 
@@ -113,9 +119,9 @@ registerLocaleData(localeVe, 'es-VE');
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptorService,
-      multi: true
+      multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

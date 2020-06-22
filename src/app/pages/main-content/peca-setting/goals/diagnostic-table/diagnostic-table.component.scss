@@ -1,14 +1,17 @@
-::ng-deep ng2-smart-table {
-    td {
-       &:first-child { min-width: auto!important; }
-   }
-   .ng2-smart-actions {    
 
-       ng2-st-tbody-custom {
-           position: relative!important;
-           top: initial!important;
-           display: inherit!important;
-           
+::ng-deep #special-table {
+    ng2-smart-table {
+        td {
+           &:first-child { min-width: auto!important; }
        }
-   }
+       .ng2-smart-actions {    
+    
+           ng2-st-tbody-custom {
+               position: relative!important;
+               top: initial!important;
+               display: inherit!important;
+               
+           }
+       }
+    }
 }

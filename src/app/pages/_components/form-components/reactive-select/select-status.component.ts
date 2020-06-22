@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
-import { Validators } from '@angular/forms';
 import { STATUS } from 'src/app/_helpers/convention/status';
 import { Utility } from 'src/app/_helpers/utility';
 
@@ -25,10 +24,10 @@ export class SelectStatusComponent extends AbstractReactiveSelect implements OnI
 
     readonly status: any = [
         {
-            name: STATUS.ACTIVE.VALUE,
+            name: STATUS.ACTIVE.LABEL,
             value: STATUS.ACTIVE.VALUE
         }, {
-            name: STATUS.INACTIVE.VALUE,
+            name: STATUS.INACTIVE.LABEL,
             value: STATUS.INACTIVE.VALUE
         }];
 

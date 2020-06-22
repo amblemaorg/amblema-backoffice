@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
+import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { DetailsForm } from '../../shared/details-form';
 import { Store, Select } from '@ngxs/store';

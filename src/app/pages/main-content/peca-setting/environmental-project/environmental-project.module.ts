@@ -16,15 +16,15 @@ import { NbCardModule
     , NbCheckboxModule
     , NbInputModule,
     NbTooltipModule} from '@nebular/theme';
-import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
+import { ReactiveInputModule } from 'src/app/pages/_components/form-components/reactive-input/reactive-input.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListItemsComponent } from './list-items/list-items.component';
 import { FormComponent } from './topics-form/form/form.component';
 import { LevelsFormComponent } from './levels-form/levels-form.component';
-import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
+import { ReactiveDatepickerModule } from 'src/app/pages/_components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
+import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
 
 
 @NgModule({

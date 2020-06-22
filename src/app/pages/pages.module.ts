@@ -18,7 +18,7 @@ import {
   NbListModule,
   NbPopoverModule,
   NbBadgeModule, } from '@nebular/theme';
-import { HeaderComponent } from './components/layouts/header/header.component';
+import { HeaderComponent } from './_components/layouts/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { DashboardLayoutComponent } from './registrations-and-permits/dashboard-layout/dashboard-layout.component';

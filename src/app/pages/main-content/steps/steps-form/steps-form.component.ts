@@ -5,8 +5,8 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { ItemCheck } from 'src/app/_models/step.model';
 import { APPROVAL_TYPE } from '../../../../_models/step.model';
 import { StepService } from 'src/app/services/step.service';
-import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
-import { FileValidator, EXTENSIONS } from 'src/app/pages/components/shared/file-validator';
+import { VIDEO_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
+import { FileValidator, EXTENSIONS } from 'src/app/pages/_components/shared/file-validator';
 import { Store } from '@ngxs/store';
 import { AddStep } from 'src/app/store/step.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';

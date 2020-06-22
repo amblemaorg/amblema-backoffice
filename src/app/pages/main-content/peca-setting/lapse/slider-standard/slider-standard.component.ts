@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { FormSliderComponent } from 'src/app/pages/components/form-components/forms/form-slider/form-slider.component';
+import { FormSliderComponent } from 'src/app/pages/_components/form-components/forms/form-slider/form-slider.component';
 import { DomSanitizer, EventManager } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
 

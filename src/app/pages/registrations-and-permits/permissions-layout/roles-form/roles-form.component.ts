@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges } from '@angular/core';
 import { ACTION } from '../../../../_helpers/text-content/text-crud';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
+import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 import { STATUS } from 'src/app/_helpers/text-content/status';
 import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';

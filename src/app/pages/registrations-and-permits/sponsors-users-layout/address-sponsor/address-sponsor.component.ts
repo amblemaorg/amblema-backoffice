@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {
   FormRegionaladdressComponent
-} from 'src/app/pages/components/form-components/forms/form-regional-address/form-regional-address.component';
+} from 'src/app/pages/_components/form-components/forms/form-regional-address/form-regional-address.component';
 import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({

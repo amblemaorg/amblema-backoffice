@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
+import { ReactiveInputModule } from 'src/app/pages/_components/form-components/reactive-input/reactive-input.module';
 import { StepsFormComponent } from './steps-form.component';
-import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
+import { ModalModule } from 'src/app/pages/_components/shared/modal/modal-forms/modal.module';
 import {
   NbCheckboxModule
   , NbRadioModule
@@ -12,10 +12,10 @@ import {
   , NbAlertModule
   , NbSpinnerModule } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
-import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
-import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
-import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
+import { ReactiveTextAreaModule } from 'src/app/pages/_components/form-components/reactive-text-area/reactive-text-area.module';
+import { ReactiveDatepickerModule } from 'src/app/pages/_components/form-components/reactive-datepicker/reactive-datepicker.module';
+import { ReactiveInputFileModule } from 'src/app/pages/_components/form-components/reactive-input-file/reactive-input-file.module';
+import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [

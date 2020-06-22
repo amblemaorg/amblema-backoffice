@@ -48,19 +48,20 @@ import { ProjectValidationRequestState } from './store/request/project-validatio
 import { GeneralEnrolledState } from './store/_enrolled/enrolled.action';
 import { SchoolYearEnrolledState } from './store/_enrolled/school-year-enrolled.action';
 
-registerLocaleData(localeVe, 'es-VE');
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
+
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,
     NbAuthModule.forRoot(),
-    HttpClientModule,
+    NbToastrModule.forRoot(),
     NbMenuModule.forRoot(),
 
     // -- NGXS --
@@ -107,13 +108,11 @@ registerLocaleData(localeVe, 'es-VE');
       }
     ),
     NgxsStoragePluginModule.forRoot({}),
-    // -- NGXS --
-
-    NbToastrModule.forRoot(),
   ],
   providers: [
     CustomToastrService,
     AuthGuard,
+
     // -- Custom Helper --
     Utility,
     {

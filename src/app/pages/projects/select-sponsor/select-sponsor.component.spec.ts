@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectSponsorComponent } from './select-sponsor.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
-import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
+import { ReactiveInputModule } from '../../_components/form-components/reactive-input/reactive-input.module';
 import { NgxsModule } from '@ngxs/store';
 import { SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
 import { Utility } from 'src/app/_helpers/utility';

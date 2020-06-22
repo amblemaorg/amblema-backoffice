@@ -14,17 +14,17 @@ import {
 import { CoordinatorsUsersTableComponent } from './coordinators-users-table/coordinators-users-table.component';
 import { CoordinatorsUsersFormComponent } from './coordinators-users-form/coordinators-users-form.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
-import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
-import { FormDocumentModule } from '../../components/form-components/forms/form-document/form-document.module';
-import { FormRegionaladdressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ReactiveInputModule } from '../../_components/form-components/reactive-input/reactive-input.module';
+import { ReactiveSelectModule } from '../../_components/form-components/reactive-select/reactive-select.module';
+import { FormDocumentModule } from '../../_components/form-components/forms/form-document/form-document.module';
+import { FormRegionaladdressModule } from '../../_components/form-components/forms/form-regional-address/form-regional-address.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ReactiveDatepickerModule } from '../../components/form-components/reactive-datepicker/reactive-datepicker.module';
-import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
+import { ReactiveDatepickerModule } from '../../_components/form-components/reactive-datepicker/reactive-datepicker.module';
+import { ReactiveInputFileModule } from '../../_components/form-components/reactive-input-file/reactive-input-file.module';
 import { AddressCoordinatorComponent } from './address-coordinator/address-coordinator.component';
 import { CoordinatorsUsersViewComponent } from './coordinators-users-view/coordinators-users-view.component';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [

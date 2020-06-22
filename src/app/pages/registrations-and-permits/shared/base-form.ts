@@ -1,5 +1,5 @@
 import { Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { MESSAGES } from '../../components/form-components/shared/constant/validation-messages-list';
+import { MESSAGES } from '../../_components/form-components/shared/constant/validation-messages-list';
 import { ACTION } from '../../../_helpers/text-content/text-crud';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 

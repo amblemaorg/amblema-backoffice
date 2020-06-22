@@ -1,12 +1,12 @@
 import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
+import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 import { BaseForm } from '../../shared/base-form';
 import {
   NORMAL_TEXT_PATTERN,
   NUMBER_PATTERN,
   EMAIL_PATTERN
-} from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+} from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';

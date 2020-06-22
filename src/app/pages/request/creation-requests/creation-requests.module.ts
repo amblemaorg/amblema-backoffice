@@ -5,10 +5,10 @@ import { CreationRequestsRoutingModule } from './creation-requests-routing.modul
 import { CreationRequestsComponent } from './creation-requests.component';
 import { NbCardModule, NbAlertModule, NbButtonModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppModule } from 'src/app/app.module';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 
 @NgModule({

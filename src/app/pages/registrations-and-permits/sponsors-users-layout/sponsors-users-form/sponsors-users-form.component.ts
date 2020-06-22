@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
+import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { VIDEO_PATTERN
   , NORMAL_TEXT_PATTERN
   , NUMBER_PATTERN
-  , EMAIL_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+  , EMAIL_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { Store, Select } from '@ngxs/store';
 import { Subscription, Observable } from 'rxjs';
 import { STATUS } from 'src/app/_helpers/text-content/status';

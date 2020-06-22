@@ -5,9 +5,9 @@ import { ProjectRequestsRoutingModule } from './project-requests-routing.module'
 import { ProjectRequestsComponent } from './project-requests.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbCardModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 
 @NgModule({

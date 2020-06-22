@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
 
 @NgModule({

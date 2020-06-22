@@ -8,14 +8,14 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AdminUserTableComponent } from './admin-user-table/admin-user-table.component';
 import { AdminUserFormComponent } from './admin-user-form/admin-user-form.component';
 
-import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
-import { ReactiveSelectModule } from '../../components/form-components/reactive-select/reactive-select.module';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
-import { FormDocumentModule } from '../../components/form-components/forms/form-document/form-document.module';
-import { FormRegionaladdressModule } from '../../components/form-components/forms/form-regional-address/form-regional-address.module';
+import { ReactiveInputModule } from '../../_components/form-components/reactive-input/reactive-input.module';
+import { ReactiveSelectModule } from '../../_components/form-components/reactive-select/reactive-select.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
+import { FormDocumentModule } from '../../_components/form-components/forms/form-document/form-document.module';
+import { FormRegionaladdressModule } from '../../_components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUserViewComponent } from './admin-user-view/admin-user-view.component';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [

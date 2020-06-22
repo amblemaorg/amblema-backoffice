@@ -12,7 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Activity } from 'src/app/_models/lapse-activities.model';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { STATUS } from 'src/app/_helpers/text-content/status';
-import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
+import { VIDEO_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
 import { Slider } from 'src/app/_models/web/slider.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';

@@ -9,16 +9,16 @@ import { Store, Select } from '@ngxs/store';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { LapseActivityState } from 'src/app/store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
-import { Activity } from 'src/app/models/lapse-activities.model';
+import { Activity } from 'src/app/_models/lapse-activities.model';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/text-content/status';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
-import { Slider } from 'src/app/models/web/slider.model';
+import { Slider } from 'src/app/_models/web/slider.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 
-import { APPROVAL_TYPE } from '../../../../../models/step.model';
+import { APPROVAL_TYPE } from '../../../../../_models/step.model';
 
 @Component({
   selector: 'app-activity-form',

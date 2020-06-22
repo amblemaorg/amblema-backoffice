@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges } from '@angular/core';
-import { ACTION } from '../../../../helpers/text-content/text-crud';
+import { ACTION } from '../../../../_helpers/text-content/text-crud';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/text-content/status';
 import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { SetRole, GetRoles, UpdateRole } from 'src/app/store/role.action';
-import { Role } from 'src/app/models/permission.model';
+import { Role } from 'src/app/_models/permission.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({

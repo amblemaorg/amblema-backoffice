@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
-import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
+import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 
 @Injectable({
   providedIn: 'root',

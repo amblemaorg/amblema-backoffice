@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GeneralEnrolled } from '../models/_enrolled/general-enrolled.model';
+import { GeneralEnrolled } from '../_models/_enrolled/general-enrolled.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';

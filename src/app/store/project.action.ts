@@ -1,4 +1,4 @@
-import { Project } from '../models/project.model';
+import { Project } from '../_models/project.model';
 import { State, NgxsOnInit, Selector, StateContext, Action } from '@ngxs/store';
 import { ProjectService } from '../services/project.service';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';

@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
-import { Learning } from 'src/app/models/learning.model';
+import { Learning } from 'src/app/_models/learning.model';
 import { Store } from '@ngxs/store';
 import { AddLearning, UpdateLearning } from 'src/app/store/learning.action';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { LearningService } from 'src/app/services/learning.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';

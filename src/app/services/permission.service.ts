@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Observable } from 'rxjs';
-import { Role } from '../models/permission.model';
+import { Role } from '../_models/permission.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({

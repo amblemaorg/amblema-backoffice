@@ -10,7 +10,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { NbButtonModule, NbSpinnerModule, NbToastrModule, NbThemeModule, NbAlertModule, NbIconModule } from '@nebular/theme';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { ProjectDetailsComponent } from '../project-details/project-details.component';
 import { HttpClientModule } from '@angular/common/http';
 

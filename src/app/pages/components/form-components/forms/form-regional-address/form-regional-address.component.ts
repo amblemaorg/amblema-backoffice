@@ -1,11 +1,11 @@
 import { Component, Input, OnDestroy, OnChanges } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { State, Municipality } from '../../../../../models/address.model';
-import { ACTION } from '../../../../../helpers/text-content/text-crud';
+import { State, Municipality } from '../../../../../_models/address.model';
+import { ACTION } from '../../../../../_helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Subscription } from 'rxjs';
-import { errorMessages } from 'src/app/helpers/text-content/error-manager';
+import { errorMessages } from 'src/app/_helpers/text-content/error-manager';
 import { AddressService, DataMunicipality } from 'src/app/services/address.service';
 
 @Component({

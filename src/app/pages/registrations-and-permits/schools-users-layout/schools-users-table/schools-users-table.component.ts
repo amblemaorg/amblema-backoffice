@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { BaseTable, TableActions } from '../../../../_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
 import { SchoolUserState, SelectedSchoolUser, DeleteSchoolUser } from 'src/app/store/user-store/school-user.action';
 import { Observable } from 'rxjs';
-import { SchoolUser } from 'src/app/models/user/school.model';
-import { Utility } from 'src/app/helpers/utility';
+import { SchoolUser } from 'src/app/_models/user/school.model';
+import { Utility } from 'src/app/_helpers/utility';
 
 // JQuery call
 declare var $: any;

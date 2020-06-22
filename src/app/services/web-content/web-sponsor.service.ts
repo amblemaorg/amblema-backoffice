@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { WebSponsor } from 'src/app/models/web/web-sponsor.model';
+import { WebSponsor } from 'src/app/_models/web/web-sponsor.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 

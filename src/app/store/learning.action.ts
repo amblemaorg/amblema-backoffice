@@ -1,9 +1,9 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { Learning, SliderMedia, Quizze } from '../models/learning.model';
-import { Utility } from '../helpers/utility';
+import { Learning, SliderMedia, Quizze } from '../_models/learning.model';
+import { Utility } from '../_helpers/utility';
 import { LearningService } from '../services/learning.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
-import { Slider } from '../models/web/slider.model';
+import { Slider } from '../_models/web/slider.model';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';
 
 // -- State Model --

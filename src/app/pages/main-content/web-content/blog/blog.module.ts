@@ -12,7 +12,7 @@ import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/m
 import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
 import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SearchPostPipe } from 'src/app/pipes/search-post.pipe';
+import { SearchPostPipe } from 'src/app/_pipes/search-post.pipe';
 import { PaginatorModule } from 'src/app/pages/components/shared/paginator/paginator.module';
 import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
 

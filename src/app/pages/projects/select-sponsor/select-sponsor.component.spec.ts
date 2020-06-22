@@ -6,7 +6,7 @@ import { ModalModule } from '../../components/shared/modal/modal-forms/modal.mod
 import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
 import { NgxsModule } from '@ngxs/store';
 import { SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { HttpClientModule } from '@angular/common/http';
 import { NbToastrModule, NbThemeModule } from '@nebular/theme';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';

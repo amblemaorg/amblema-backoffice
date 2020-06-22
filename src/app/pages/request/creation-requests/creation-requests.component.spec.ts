@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { UserCreationRequestState } from 'src/app/store/request/user-creation-request.action';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ProgressModule } from '../../components/shared/progress/progress.module';

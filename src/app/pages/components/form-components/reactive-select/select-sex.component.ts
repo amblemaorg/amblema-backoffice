@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
-import { SEX } from '../../../../helpers/convention/sex-type';
+import { SEX } from '../../../../_helpers/convention/sex-type';
 
 @Component({
   selector: 'app-select-sex',

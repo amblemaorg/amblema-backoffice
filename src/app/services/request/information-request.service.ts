@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RequestStepApproval } from 'src/app/models/request/request-step-approval.model';
+import { RequestStepApproval } from 'src/app/_models/request/request-step-approval.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
-import { RequestContent } from 'src/app/models/request/request-content-approval.model';
+import { RequestContent } from 'src/app/_models/request/request-content-approval.model';
 
 @Injectable({
   providedIn: 'root',

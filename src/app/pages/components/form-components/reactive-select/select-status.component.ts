@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
 import { Validators } from '@angular/forms';
-import { STATUS } from 'src/app/helpers/text-content/status';
-import { Utility } from 'src/app/helpers/utility';
+import { STATUS } from 'src/app/_helpers/text-content/status';
+import { Utility } from 'src/app/_helpers/utility';
 
 @Component({
     selector: 'app-select-status',

@@ -1,5 +1,5 @@
 import { State, NgxsOnInit, Action, StateContext, Store, Selector } from '@ngxs/store';
-import { Step } from '../models/step.model';
+import { Step } from '../_models/step.model';
 import { StepService } from '../services/step.service';
 import { patch, removeItem, append, updateItem } from '@ngxs/store/operators';
 import { KIND_STEP } from '../pages/main-content/steps/_shared/shared';

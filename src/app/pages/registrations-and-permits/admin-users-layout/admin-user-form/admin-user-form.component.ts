@@ -1,21 +1,21 @@
 import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { DetailsForm } from '../../shared/details-form';
 import { Store, Select } from '@ngxs/store';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { DOCUMENT_TYPE } from 'src/app/helpers/convention/document-type';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { DOCUMENT_TYPE } from 'src/app/_helpers/convention/document-type';
+import { STATUS } from 'src/app/_helpers/text-content/status';
 import { SetAdminUser, AdminUserState, UpdateAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
-import { AdminUser } from 'src/app/models/user/admin-user.model';
+import { AdminUser } from 'src/app/_models/user/admin-user.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { RolesState } from 'src/app/store/role.action';
-import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
+import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 
 @Component({
   selector: 'app-admin-user-form',
@@ -47,7 +47,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
     this.form.addControl('function', new FormControl());
     this.form.addControl('role', new FormControl());
     this.form.removeControl('name');
-    this.form.addControl('userType', new FormControl(USER_TYPE.ADMIN.CODE.toString(), [Validators.required]));
+    this.form.addControl('userType', new FormControl(USER_TYPE.ADMIN.VALUE, [Validators.required]));
   }
 
   ngOnChanges(): void {
@@ -190,7 +190,7 @@ export class AdminUserFormComponent extends DetailsForm implements OnInit, OnCha
     this.form.reset();
     this.form.controls.status.setValue(STATUS.ACTIVE.CODE);
     this.form.controls.cardType.setValue(DOCUMENT_TYPE.V.VALUE);
-    this.form.controls.userType.setValue(USER_TYPE.ADMIN.CODE.toString());
+    this.form.controls.userType.setValue(USER_TYPE.ADMIN.VALUE);
     this.form.controls.addressMunicipality.setValue(null);
     this.submitted = false;
     setTimeout(() => {

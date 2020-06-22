@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { WebCoordinator } from 'src/app/models/web/web-coordinator.model';
+import { WebCoordinator } from 'src/app/_models/web/web-coordinator.model';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 

@@ -1,8 +1,8 @@
-import { RequestContent } from '../../models/request/request-content-approval.model';
+import { RequestContent } from '../../_models/request/request-content-approval.model';
 import { State, Selector, NgxsOnInit, StateContext, Action } from '@ngxs/store';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
-import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
+import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 
 export interface RequestContentModel {
   requestsContent: RequestContent[];

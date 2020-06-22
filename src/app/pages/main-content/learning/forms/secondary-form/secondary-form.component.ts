@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
 import { LearningState, SetLearningTwo } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
-import { Learning } from 'src/app/models/learning.model';
+import { Learning } from 'src/app/_models/learning.model';
 
 @Component({
   selector: 'app-secondary-form',

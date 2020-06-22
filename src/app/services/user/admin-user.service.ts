@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { map, catchError } from 'rxjs/operators';
-import { AdminUser } from 'src/app/models/user/admin-user.model';
+import { AdminUser } from 'src/app/_models/user/admin-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ import { AdminUser } from 'src/app/models/user/admin-user.model';
 export class AdminUserService {
 
   private readonly USER: string = `users`;
-  private readonly ADMIN_USER: string = `users?userType=${USER_TYPE.ADMIN.CODE}`;
-  private readonly USER_TYPE: string = `?userType=${USER_TYPE.ADMIN.CODE}`;
+  private readonly ADMIN_USER: string = `users?userType=${USER_TYPE.ADMIN.VALUE}`;
+  private readonly USER_TYPE: string = `?userType=${USER_TYPE.ADMIN.VALUE}`;
 
   constructor(private httpClient: HttpClient) { }
 

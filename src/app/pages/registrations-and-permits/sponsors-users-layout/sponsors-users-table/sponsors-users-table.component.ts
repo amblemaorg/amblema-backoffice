@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { BaseTable, TableActions } from '../../../../_helpers/base-table';
 import { Store, Select } from '@ngxs/store';
 import { SponsorUserState, DeleteSponsorUser, SelectedSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 import { Observable } from 'rxjs';
-import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
-import { Utility } from 'src/app/helpers/utility';
+import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
+import { Utility } from 'src/app/_helpers/utility';
 import { ModalService } from 'src/app/services/helper/modal.service';
 
 // JQuery call

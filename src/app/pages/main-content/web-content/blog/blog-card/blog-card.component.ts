@@ -1,5 +1,5 @@
 import { Output, Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { Post } from 'src/app/models/web/blog.model';
+import { Post } from 'src/app/_models/web/blog.model';
 
 @Component({
   selector: 'app-blog-card',

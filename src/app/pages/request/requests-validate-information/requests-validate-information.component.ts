@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { BaseTable } from 'src/app/_helpers/base-table';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
 
 import { Observable } from 'rxjs';
@@ -9,8 +9,8 @@ import { DatePipe } from '@angular/common';
 import {
   TYPE_REQUEST,
   REQUEST_STATUS,
-} from 'src/app/helpers/convention/request-status';
-import { Utility } from 'src/app/helpers/utility';
+} from 'src/app/_helpers/convention/request-status';
+import { Utility } from 'src/app/_helpers/utility';
 import { NbDialogService } from '@nebular/theme';
 import { InformationDetailsComponent } from './information-details/information-details.component';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
@@ -20,12 +20,12 @@ import {
   SelectedRequestContent,
   DeleteRequestContent,
 } from 'src/app/store/request/request-content-approval.action';
-import { RequestContent } from 'src/app/models/request/request-content-approval.model';
+import { RequestContent } from 'src/app/_models/request/request-content-approval.model';
 import { TYPE_INFORMATION } from './_shared/type-information';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 import { ActivatedRoute } from '@angular/router';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
@@ -85,11 +85,11 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'text',
         valuePrepareFunction: (row: any) => {
           const value: string =
-            row === USER_TYPE.COORDINATOR.CODE.toString()
-              ? USER_TYPE.COORDINATOR.MSG
-              : row === USER_TYPE.SCHOOL.CODE.toString()
-              ? USER_TYPE.SCHOOL.MSG
-              : USER_TYPE.SPONSOR.MSG;
+            row === USER_TYPE.COORDINATOR.VALUE
+              ? USER_TYPE.COORDINATOR.LABEL
+              : row === USER_TYPE.SCHOOL.VALUE
+              ? USER_TYPE.SCHOOL.LABEL
+              : USER_TYPE.SPONSOR.LABEL;
           return `${value}`;
         },
         filterFunction(cell?: any, search?: string): boolean {

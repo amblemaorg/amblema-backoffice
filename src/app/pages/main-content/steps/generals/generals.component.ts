@@ -4,7 +4,7 @@ import { KIND_STEP } from '../_shared/shared';
 import { Select } from '@ngxs/store';
 import { StepState } from 'src/app/store/step.action';
 import { Observable, Subscription } from 'rxjs';
-import { Step } from 'src/app/models/step.model';
+import { Step } from 'src/app/_models/step.model';
 
 @Component({
   selector: 'app-generals',

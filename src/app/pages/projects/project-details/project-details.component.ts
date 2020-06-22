@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { PROJECT_PHASE } from 'src/app/helpers/convention/phase';
+import { PROJECT_PHASE } from 'src/app/_helpers/convention/phase';
 
 @Component({
   selector: 'app-project-details',

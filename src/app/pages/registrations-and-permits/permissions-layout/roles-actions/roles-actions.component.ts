@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ACTION } from '../../../../helpers/text-content/text-crud';
+import { ACTION } from '../../../../_helpers/text-content/text-crud';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BaseTable } from 'src/app/helpers/base-table';
+import { BaseTable } from 'src/app/_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
-import { Role } from 'src/app/models/permission.model';
+import { Role } from 'src/app/_models/permission.model';
 import { FormControl } from '@angular/forms';
 import { RolesState, SelectedRole } from 'src/app/store/role.action';
 

@@ -1,8 +1,8 @@
 import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
-import { GeneralEnrolled } from 'src/app/models/_enrolled/general-enrolled.model';
+import { GeneralEnrolled } from 'src/app/_models/_enrolled/general-enrolled.model';
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch, removeItem, append } from '@ngxs/store/operators';
-import { EnrolledSchool } from 'src/app/models/_enrolled/enrolled-school.model';
+import { EnrolledSchool } from 'src/app/_models/_enrolled/enrolled-school.model';
 
 export class GetGeneralEnrolled {
   static readonly type = '[GeneralEnrolled] Get General Enrolled';

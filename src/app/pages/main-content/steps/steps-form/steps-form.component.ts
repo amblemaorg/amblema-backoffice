@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { ItemCheck } from 'src/app/models/step.model';
-import { APPROVAL_TYPE } from '../../../../models/step.model';
+import { ItemCheck } from 'src/app/_models/step.model';
+import { APPROVAL_TYPE } from '../../../../_models/step.model';
 import { StepService } from 'src/app/services/step.service';
 import { VIDEO_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { FileValidator, EXTENSIONS } from 'src/app/pages/components/shared/file-validator';

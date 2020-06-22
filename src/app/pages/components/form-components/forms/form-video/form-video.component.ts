@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Video } from 'src/app/models/media.model';
+import { Video } from 'src/app/_models/media.model';
 
 @Component({
   selector: 'app-form-video',

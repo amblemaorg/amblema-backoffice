@@ -1,8 +1,8 @@
 import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
-import { Role } from '../models/permission.model';
+import { Role } from '../_models/permission.model';
 import { NgZone } from '@angular/core';
 import { PermissionService } from '../services/permission.service';
-import { Utility } from '../helpers/utility';
+import { Utility } from '../_helpers/utility';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
 export interface RoleStateModel {

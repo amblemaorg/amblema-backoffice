@@ -7,16 +7,16 @@ import {
   NUMBER_PATTERN,
   EMAIL_PATTERN
 } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/text-content/status';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
 import { SetSchoolUser, SchoolUserState, UpdateSchoolUser } from 'src/app/store/user-store/school-user.action';
 import { Subscription, Observable } from 'rxjs';
-import { SchoolUser } from 'src/app/models/user/school.model';
-import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
+import { SchoolUser } from 'src/app/_models/user/school.model';
+import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
 
 @Component({
@@ -150,7 +150,7 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
       if (this.MODE === this.ACTION.CREATE) {
 
         const data: any = this.form.value;
-        data.userType = USER_TYPE.SCHOOL.CODE.toString();
+        data.userType = USER_TYPE.SCHOOL.VALUE;
         data.addressZoneType = data.addressZoneType.toString();
 
         this.toastr.info('Guardando', 'Enviando información, espere...');

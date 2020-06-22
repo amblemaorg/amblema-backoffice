@@ -1,6 +1,6 @@
-import { SchoolUser } from 'src/app/models/user/school.model';
+import { SchoolUser } from 'src/app/_models/user/school.model';
 import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';

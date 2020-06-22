@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import { Post } from '../models/web/blog.model';
+import { Post } from '../_models/web/blog.model';
 import { stringify } from 'querystring';
 
 @Pipe({

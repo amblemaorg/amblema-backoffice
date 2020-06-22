@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import {
   FormGroup,
   FormBuilder,
@@ -7,7 +7,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/_models/project.model';
 import { Subscription, Observable } from 'rxjs';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Store, Select } from '@ngxs/store';

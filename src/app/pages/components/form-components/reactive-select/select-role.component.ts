@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
 import { Select } from '@ngxs/store';
-import { Role } from 'src/app/models/permission.model';
+import { Role } from 'src/app/_models/permission.model';
 import { Observable } from 'rxjs';
 import { RolesState } from 'src/app/store/role.action';
 import { Validators } from '@angular/forms';

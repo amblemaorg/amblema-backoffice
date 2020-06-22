@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { BaseTable } from 'src/app/_helpers/base-table';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
 import {
   UserCreationRequestState,
@@ -9,14 +9,14 @@ import {
   GetUserCreationRequests,
 } from 'src/app/store/request/user-creation-request.action';
 import { Observable } from 'rxjs';
-import { UserCreationRequest } from 'src/app/models/request/user-creation-request.model';
+import { UserCreationRequest } from 'src/app/_models/request/user-creation-request.model';
 import {
   TYPE_REQUEST,
   REQUEST_STATUS,
-} from 'src/app/helpers/convention/request-status';
+} from 'src/app/_helpers/convention/request-status';
 import { DatePipe } from '@angular/common';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { ModalService } from 'src/app/services/helper/modal.service';

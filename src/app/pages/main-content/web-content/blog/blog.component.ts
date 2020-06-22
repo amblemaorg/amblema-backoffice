@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ɵConsole } from '@angular/core';
-import { ACTION } from '../../../../helpers/text-content/text-crud';
-import { Post } from 'src/app/models/web/blog.model';
+import { ACTION } from '../../../../_helpers/text-content/text-crud';
+import { Post } from 'src/app/_models/web/blog.model';
 import { Select, Store } from '@ngxs/store';
 import { PostsState, SetPost, UpdatePost, DeletePost } from 'src/app/store/web-content/blog.action';
 import { Observable, Subscription } from 'rxjs';

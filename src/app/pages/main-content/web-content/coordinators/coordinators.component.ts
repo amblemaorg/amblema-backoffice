@@ -7,8 +7,8 @@ import {
   DeleteTestimonialWebCoordinator,
   SetWebCoordinator } from 'src/app/store/web-content/web-coordinator.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebCoordinator } from 'src/app/models/web/web-coordinator.model';
-import { Testimonial } from 'src/app/models/web/testimonial.model';
+import { WebCoordinator } from 'src/app/_models/web/web-coordinator.model';
+import { Testimonial } from 'src/app/_models/web/testimonial.model';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { WebCoordinatorService } from 'src/app/services/web-content/web-coordinator.service';

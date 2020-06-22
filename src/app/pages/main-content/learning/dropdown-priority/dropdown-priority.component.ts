@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { LearningState } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
-import { Learning } from 'src/app/models/learning.model';
+import { Learning } from 'src/app/_models/learning.model';
 import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({

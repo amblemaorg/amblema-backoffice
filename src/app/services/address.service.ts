@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { State, Municipality } from '../models/address.model';
+import { State, Municipality } from '../_models/address.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({

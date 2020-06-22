@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ACTION } from '../../../../helpers/text-content/text-crud';
+import { ACTION } from '../../../../_helpers/text-content/text-crud';
 import { Router } from '@angular/router';
-import { TableActions, BaseTable } from '../../../../helpers/base-table';
-import { Role } from 'src/app/models/permission.model';
+import { TableActions, BaseTable } from '../../../../_helpers/base-table';
+import { Role } from 'src/app/_models/permission.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { RolesState, DeleteRole, SelectedRole } from 'src/app/store/role.action';

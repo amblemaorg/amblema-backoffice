@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Slider } from 'src/app/models/web/slider.model';
+import { Slider } from 'src/app/_models/web/slider.model';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({

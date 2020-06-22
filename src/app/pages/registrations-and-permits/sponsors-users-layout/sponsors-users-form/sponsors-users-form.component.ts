@@ -8,14 +8,14 @@ import { VIDEO_PATTERN
   , EMAIL_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { Store, Select } from '@ngxs/store';
 import { Subscription, Observable } from 'rxjs';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/text-content/status';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { SetSponsorUser, SponsorUserState, UpdateSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
+import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -43,7 +43,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
     name: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
     password: new FormControl(null, [Validators.required]),
-    userType: new FormControl(USER_TYPE.SPONSOR.CODE.toString()),
+    userType: new FormControl(USER_TYPE.SPONSOR.VALUE),
     role: new FormControl(null, [Validators.required]),
     status: new FormControl(),
 
@@ -127,7 +127,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
     if (this.form.valid) {
 
       const data: any = this.form.value;
-      data.userType = USER_TYPE.SPONSOR.CODE.toString();
+      data.userType = USER_TYPE.SPONSOR.VALUE;
       delete data.cardType; // <-- Deleting this data prevents errors
 
       this.toastr.info('Guardando', 'Enviando información, espere...');

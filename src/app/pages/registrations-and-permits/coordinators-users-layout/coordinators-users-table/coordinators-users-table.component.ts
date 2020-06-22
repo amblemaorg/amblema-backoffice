@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { BaseTable, TableActions } from '../../../../_helpers/base-table';
 import { CoordinatorUserState, DeleteCoordinatorUser, SelectedCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
 import { Select, Store } from '@ngxs/store';
-import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
+import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
 import { Observable } from 'rxjs';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 
 // JQuery call
 declare var $: any;

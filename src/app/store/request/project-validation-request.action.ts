@@ -1,8 +1,8 @@
 import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
-import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
+import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
-import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
+import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 
 export interface ProjectValidationRequestModel {
   projectValidationRequests: ProjectValidationRequest[];

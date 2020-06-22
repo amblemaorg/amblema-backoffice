@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Slider } from 'src/app/models/web/slider.model';
+import { Slider } from 'src/app/_models/web/slider.model';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, SetImage, DeleteImage, UpdateImage } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
-import { Learning } from 'src/app/models/learning.model';
+import { Learning } from 'src/app/_models/learning.model';
 
 @Component({
   selector: 'app-secondary-media-form',

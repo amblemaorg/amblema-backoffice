@@ -1,5 +1,5 @@
-import { WebCoordinator } from '../../models/web/web-coordinator.model';
-import { Testimonial } from '../../models/web/testimonial.model';
+import { WebCoordinator } from '../../_models/web/web-coordinator.model';
+import { Testimonial } from '../../_models/web/testimonial.model';
 import { State, NgxsOnInit, StateContext, Selector, Action } from '@ngxs/store';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebCoordinatorService } from '../../services/web-content/web-coordinator.service';

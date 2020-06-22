@@ -2,9 +2,9 @@ import { MENU_ITEMS } from './pages-menu';
 import { Select } from '@ngxs/store';
 import { LapseActivityState } from '../store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
-import { LapseActivity } from '../models/lapse-activities.model';
+import { LapseActivity } from '../_models/lapse-activities.model';
 import { Injectable } from '@angular/core';
-import { STATUS } from '../helpers/text-content/status';
+import { STATUS } from '../_helpers/text-content/status';
 import { take, takeWhile, first } from 'rxjs/operators';
 
 @Injectable()

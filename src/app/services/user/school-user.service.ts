@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { Observable } from 'rxjs';
-import { SchoolUser } from 'src/app/models/user/school.model';
+import { SchoolUser } from 'src/app/_models/user/school.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 
@@ -12,8 +12,8 @@ import { map } from 'rxjs/operators';
 export class SchoolUserService {
 
   private readonly USER: string = `users`;
-  private readonly SCHOOL_USER: string = `users?userType=${USER_TYPE.SCHOOL.CODE}`;
-  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SCHOOL.CODE}`;
+  private readonly SCHOOL_USER: string = `users?userType=${USER_TYPE.SCHOOL.VALUE}`;
+  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SCHOOL.VALUE}`;
 
   constructor(private httpClient: HttpClient) { }
 

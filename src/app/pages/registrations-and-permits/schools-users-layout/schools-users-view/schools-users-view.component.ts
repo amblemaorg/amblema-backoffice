@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { SchoolUserState } from 'src/app/store/user-store/school-user.action';
 import { Observable, Subscription } from 'rxjs';
-import { SchoolUser } from 'src/app/models/user/school.model';
+import { SchoolUser } from 'src/app/_models/user/school.model';
 
 @Component({
   selector: 'app-schools-users-view',

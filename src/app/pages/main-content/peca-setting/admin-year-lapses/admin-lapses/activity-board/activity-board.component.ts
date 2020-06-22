@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
 import { SpecialToggleComponent } from '../special-toggle/special-toggle.component';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { Select, Store } from '@ngxs/store';
 import { LapseActivityState, GetLapActivities } from 'src/app/store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
-import { LapseActivity } from 'src/app/models/lapse-activities.model';
+import { LapseActivity } from 'src/app/_models/lapse-activities.model';
 import { ButtonDeleteComponent } from '../button-delete/button-delete.component';
 
 @Component({

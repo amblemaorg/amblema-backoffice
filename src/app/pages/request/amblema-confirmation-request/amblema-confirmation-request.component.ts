@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
+import { BaseTable } from 'src/app/_helpers/base-table';
 import { Store, Select } from '@ngxs/store';
 import {
   ProjectValidationRequestState,
@@ -7,10 +7,10 @@ import {
   SelectedProjectValidationRequestn,
 } from 'src/app/store/request/project-validation-request.action';
 import { Observable, Subscription } from 'rxjs';
-import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
+import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 import { AmblemaConfirmation } from './_shared/amblema-confirmation.model';
-import { Utility } from 'src/app/helpers/utility';
-import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
+import { Utility } from 'src/app/_helpers/utility';
+import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 import { NbDialogService } from '@nebular/theme';
 import { InformationDetailsComponent } from './_shared/information-details/information-details.component';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';

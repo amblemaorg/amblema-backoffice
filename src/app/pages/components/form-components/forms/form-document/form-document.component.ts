@@ -1,7 +1,7 @@
 import { Component, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 
 @Component({
     selector: 'app-form-document',

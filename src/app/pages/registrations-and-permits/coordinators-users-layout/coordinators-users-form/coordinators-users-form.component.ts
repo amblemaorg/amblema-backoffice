@@ -2,19 +2,19 @@ import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { ValidationService } from 'src/app/pages/components/form-components/shared/services/validation.service';
 import { DetailsForm } from '../../shared/details-form';
 import { FormControl, Validators } from '@angular/forms';
-import { STATUS } from 'src/app/helpers/text-content/status';
-import { DOCUMENT_TYPE } from 'src/app/helpers/convention/document-type';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { STATUS } from 'src/app/_helpers/text-content/status';
+import { DOCUMENT_TYPE } from 'src/app/_helpers/convention/document-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
-import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
-import { Utility } from 'src/app/helpers/utility';
+import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
+import { Utility } from 'src/app/_helpers/utility';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
 import { SetCoordinatorUser, CoordinatorUserState, UpdateCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { NORMAL_TEXT_PATTERN } from 'src/app/pages/components/form-components/shared/constant/validation-patterns-list';
 import { Observable, Subscription } from 'rxjs';
-import { Role, DEVNAME_ROLE } from 'src/app/models/permission.model';
+import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
 
 @Component({
@@ -130,7 +130,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
           data.cardType = this.helper.encodeTypeDocument(data.cardType);
         }
 
-        data.userType = USER_TYPE.COORDINATOR.CODE.toString();
+        data.userType = USER_TYPE.COORDINATOR.VALUE;
 
         this.toastr.info('Guardando', 'Enviando información, espere...');
         this.showProgress = true;

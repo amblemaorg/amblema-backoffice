@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { BaseTable, TableActions } from '../../../../helpers/base-table';
+import { BaseTable, TableActions } from '../../../../_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
 import { AdminUserState, DeleteAdminUser, SelectedAdminUser } from 'src/app/store/user-store/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
-import { AdminUser } from 'src/app/models/user/admin-user.model';
-import { Utility } from 'src/app/helpers/utility';
+import { AdminUser } from 'src/app/_models/user/admin-user.model';
+import { Utility } from 'src/app/_helpers/utility';
 
 // To control the bootstrap modal
 declare var $: any;

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ɵConsole } from '@angular/core';
-import { Step } from 'src/app/models/step.model';
+import { Step } from 'src/app/_models/step.model';
 import { FormControl, Validators } from '@angular/forms';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/text-content/status';
 import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/steps-form.component';
 import { StepService } from 'src/app/services/step.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';

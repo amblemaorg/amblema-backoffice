@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GoalGrade } from '../models/goal-grade.model';
+import { GoalGrade } from '../_models/goal-grade.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';

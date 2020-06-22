@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
-import { SliderMedia } from 'src/app/models/learning.model';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
+import { SliderMedia } from 'src/app/_models/learning.model';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, SetMedia, DeleteMedia, UpdateMedia } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';

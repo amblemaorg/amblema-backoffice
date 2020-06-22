@@ -8,7 +8,7 @@ import {
 } from 'src/app/store/request/project-validation-request.action';
 import { Observable, Subscription } from 'rxjs';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
-import { ProjectValidationRequest } from 'src/app/models/request/project-validate-request.model';
+import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({

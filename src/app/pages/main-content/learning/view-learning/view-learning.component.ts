@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { Learning, SliderMedia } from 'src/app/models/learning.model';
+import { Learning, SliderMedia } from 'src/app/_models/learning.model';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({

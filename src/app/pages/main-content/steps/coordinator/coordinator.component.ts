@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { KIND_STEP } from '../_shared/shared';
 import { Subscription, Observable } from 'rxjs';
-import { Step } from 'src/app/models/step.model';
+import { Step } from 'src/app/_models/step.model';
 import { StepState } from 'src/app/store/step.action';
 import { Select } from '@ngxs/store';
 

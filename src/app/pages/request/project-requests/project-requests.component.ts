@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { BaseTable } from 'src/app/_helpers/base-table';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
 import {
   ProjectRequestState,
@@ -8,14 +8,14 @@ import {
   DeleteProjectRequests,
 } from 'src/app/store/request/project-requests.action';
 import { Observable } from 'rxjs';
-import { ProjectRequest } from 'src/app/models/request/project-request.model';
-import { Utility } from 'src/app/helpers/utility';
+import { ProjectRequest } from 'src/app/_models/request/project-request.model';
+import { Utility } from 'src/app/_helpers/utility';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
 import { DatePipe } from '@angular/common';
 import {
   REQUEST_STATUS,
   TYPE_REQUEST,
-} from 'src/app/helpers/convention/request-status';
+} from 'src/app/_helpers/convention/request-status';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';

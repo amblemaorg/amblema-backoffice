@@ -1,6 +1,6 @@
-import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
+import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { NgxsOnInit, State, Selector, Action, StateContext } from '@ngxs/store';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';

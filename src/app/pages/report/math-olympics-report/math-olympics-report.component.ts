@@ -28,10 +28,11 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
     private generateReporte?: PDFReportMath
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.subscriptionService = this.mathOlympicsReportService
       .getSchoolYears()
       .subscribe((response) => {
+        console.log( response );
         this.datesInit = response;
         this.datesEnd = response;
       });

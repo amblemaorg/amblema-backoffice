@@ -14,16 +14,20 @@ const routes: Routes = [
       },
       {
         path: 'admin-users',
+        // loadChildren: () =>
+        //   import(
+        //     './user/roles-and-permits/admin-user/admin-user.module'
+        //   ).then((m) => m.AdminUserModule),
         loadChildren: () =>
           import(
-            './user/role-permits/admin-users-layout/admin-users-layout.module'
+            './user/roles-and-permits/admin-users-layout/admin-users-layout.module'
           ).then((m) => m.AdminUsersLayoutModule),
       },
       {
         path: 'permissions',
         loadChildren: () =>
           import(
-            './user/role-permits/permissions-layout/permissions-layout.module'
+            './user/roles-and-permits/permissions-layout/permissions-layout.module'
           ).then((m) => m.PermissionsLayoutModule),
       },
       {

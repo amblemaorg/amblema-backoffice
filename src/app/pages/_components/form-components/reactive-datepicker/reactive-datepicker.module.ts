@@ -8,9 +8,7 @@ import { ReactiveValidationModule } from '../reactive-validation/reactive-valida
 import { DatepickerRangeComponent } from './datepicker-range/datepicker-range.component';
 
 @NgModule({
-  declarations: [
-    DatepickerComponent,
-    DatepickerRangeComponent],
+  declarations: [DatepickerComponent, DatepickerRangeComponent],
   imports: [
     CommonModule,
     BsDatepickerModule.forRoot(),
@@ -19,9 +17,6 @@ import { DatepickerRangeComponent } from './datepicker-range/datepicker-range.co
     NbInputModule,
     ReactiveValidationModule,
   ],
-  exports: [
-    DatepickerComponent,
-    DatepickerRangeComponent,
-  ],
+  exports: [DatepickerComponent, DatepickerRangeComponent],
 })
-export class ReactiveDatepickerModule { }
+export class ReactiveDatepickerModule {}

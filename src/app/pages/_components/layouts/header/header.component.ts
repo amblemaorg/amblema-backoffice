@@ -3,7 +3,6 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
-  AfterViewInit,
 } from '@angular/core';
 import {
   NbSidebarService,
@@ -41,7 +40,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   items = [{ title: 'Profile' }, { title: 'Cerrar sesión' }];
+
   notifications = new Array<any>();
+
   @ViewChild(NbPopoverDirective, { static: false }) popover: NbPopoverDirective;
 
   constructor(
@@ -59,7 +60,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       map(({ item: { title } }) => {
 
         if ( title === 'Cerrar sesión' ) {
-          // this.authService.logout(this.authService.getToken().subscribe( response => response. ));
           this.tokenService.clear();
           this.router.navigate(['auth/login']);
         }
@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       })
     ).subscribe();
 
-    /* For the sidebar menu */
+    /* For the sidebar menu, to void Shaked */
     this.subscription = this.menuService
       .onItemSelect()
       .subscribe((event: { tag: string; item: any }) => {

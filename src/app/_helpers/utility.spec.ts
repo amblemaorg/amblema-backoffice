@@ -10,9 +10,9 @@ describe('Utility class', () => {
             { status: '1' }
         ];
         let value = helper.readlyStatus( dummyData )[0].status;
-        expect( value ).toBe( STATUS.ACTIVE.VALUE );
+        expect( value ).toBe( STATUS.ACTIVE.LABEL );
         value = helper.readlyStatus([{ status : '2' }])[0].status;
-        expect( value ).toBe( STATUS.INACTIVE.VALUE );
+        expect( value ).toBe( STATUS.INACTIVE.LABEL );
     });
 
     it('General - Should be incode status', () => {
@@ -20,9 +20,9 @@ describe('Utility class', () => {
             { status : 'Activo' }
         ];
         let value = helper.incodeStatus( dummyData )[0].status;
-        expect( value ).toBe( STATUS.ACTIVE.VALUE );
+        expect( value ).toBe( STATUS.ACTIVE.LABEL );
         value = helper.incodeStatus([{ status: 'Inactivo' }])[0].status;
-        expect( value ).toBe(STATUS.INACTIVE.VALUE);
+        expect( value ).toBe(STATUS.INACTIVE.LABEL);
     });
 
     it('General - Should be encode type document', () => {

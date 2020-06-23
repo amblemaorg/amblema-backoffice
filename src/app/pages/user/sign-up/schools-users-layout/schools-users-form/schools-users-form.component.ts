@@ -71,7 +71,6 @@ export class SchoolsUsersFormComponent extends BaseForm implements OnInit, OnCha
     this.form.addControl('addressZoneType', new FormControl(null, [Validators.required]));
     this.form.addControl('addressZone', new FormControl(null, [Validators.required]));
 
-
     // Data principal
     this.form.addControl('principalFirstName', new FormControl(''));
     this.form.addControl('principalLastName', new FormControl(''));

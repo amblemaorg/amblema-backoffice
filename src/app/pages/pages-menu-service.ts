@@ -4,8 +4,8 @@ import { LapseActivityState } from '../store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
 import { LapseActivity } from '../_models/lapse-activities.model';
 import { Injectable } from '@angular/core';
-import { STATUS } from '../_helpers/text-content/status';
-import { take, takeWhile, first } from 'rxjs/operators';
+import { STATUS } from '../_helpers/convention/status';
+import { first } from 'rxjs/operators';
 
 @Injectable()
 export class MenuSetUp {
@@ -55,9 +55,8 @@ export class MenuSetUp {
                     }
 
                     response.lapse1.find((option) => {
-
                       if (
-                        option.status === STATUS.ACTIVE.CODE &&
+                        option.status === STATUS.ACTIVE.VALUE &&
                         option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
@@ -79,7 +78,7 @@ export class MenuSetUp {
                     response.lapse2.find((option) => {
                       // Add activity
                       if (
-                        option.status === STATUS.ACTIVE.CODE &&
+                        option.status === STATUS.ACTIVE.VALUE &&
                         option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
@@ -101,7 +100,7 @@ export class MenuSetUp {
                     response.lapse3.find((option) => {
                       // Add activity
                       if (
-                        option.status === STATUS.ACTIVE.CODE &&
+                        option.status === STATUS.ACTIVE.VALUE &&
                         option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({

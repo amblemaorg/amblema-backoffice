@@ -1,5 +1,5 @@
 import { Inject } from '@angular/core';
-import { STATUS } from './text-content/status';
+import { STATUS } from './convention/status';
 import { Post } from '../_models/web/blog.model';
 import { SliderMedia } from '../_models/learning.model';
 import { DOCUMENT_TYPE } from './convention/document-type';
@@ -22,10 +22,10 @@ export class Utility {
 
   public readlyStatus(object?: any[]): any[] {
     object.forEach((value, key) => {
-      if (value.status === STATUS.ACTIVE.CODE) {
-        value.status = STATUS.ACTIVE.MSG as string;
+      if (value.status === STATUS.ACTIVE.VALUE) {
+        value.status = STATUS.ACTIVE.LABEL as string;
       } else {
-        value.status = STATUS.INACTIVE.MSG as string;
+        value.status = STATUS.INACTIVE.LABEL as string;
       }
     });
     return object;
@@ -33,10 +33,10 @@ export class Utility {
 
   public incodeStatus(object: any[]): any[] {
     object.forEach((value, key) => {
-      if (String(value.status) === STATUS.ACTIVE.MSG) {
-        value.status = STATUS.ACTIVE.CODE;
+      if (String(value.status) === STATUS.ACTIVE.LABEL) {
+        value.status = STATUS.ACTIVE.LABEL;
       } else {
-        value.status = STATUS.INACTIVE.CODE;
+        value.status = STATUS.INACTIVE.LABEL;
       }
     });
     return object;
@@ -138,10 +138,10 @@ export class Utility {
 
 export const ReadlyStatusConvert = (object?: any[]): any[] => {
   object.forEach((value, key) => {
-    if (value.status === STATUS.ACTIVE.CODE) {
-      value.status = STATUS.ACTIVE.MSG as string;
+    if (value.status === STATUS.ACTIVE.VALUE) {
+      value.status = STATUS.ACTIVE.LABEL as string;
     } else {
-      value.status = STATUS.INACTIVE.MSG as string;
+      value.status = STATUS.INACTIVE.LABEL as string;
     }
   });
   return object;

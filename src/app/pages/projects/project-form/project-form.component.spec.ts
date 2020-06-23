@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectFormComponent } from './project-form.component';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
-import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
+import { ReactiveInputModule } from '../../_components/form-components/reactive-input/reactive-input.module';
 import { SelectCoordinatorComponent } from '../select-coordinator/select-coordinator.component';
 import { SelectSponsorComponent } from '../select-sponsor/select-sponsor.component';
 import { SelectSchoolComponent } from '../select-school/select-school.component';

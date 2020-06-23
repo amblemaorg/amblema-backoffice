@@ -20,12 +20,11 @@ import { Utility } from 'src/app/_helpers/utility';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { ModalService } from 'src/app/services/helper/modal.service';
-import { SetCoordinatorUser } from 'src/app/store/user-store/coordinator-user.action';
-import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
-import { SetSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
+import { SetCoordinatorUser } from 'src/app/store/user/coordinator-user.action';
+import { SetSchoolUser } from 'src/app/store/user/school-user.action';
+import { SetSponsorUser } from 'src/app/store/user/sponsor-user.action';
 import { ActivatedRoute } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { response } from 'express';
 
 @Component({
   selector: 'app-creation-requests',

@@ -7,7 +7,7 @@ import { NbButtonModule, NbCardModule, NbDialogModule, NbAlertModule } from '@ne
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { InformationDetailsComponent } from './_shared/information-details/information-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 
 @NgModule({

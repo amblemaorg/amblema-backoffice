@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreationRequestsComponent } from './creation-requests.component';
 import { NbCardModule, NbAlertModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { UserCreationRequestState } from 'src/app/store/request/user-creation-request.action';
@@ -11,7 +11,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Utility } from 'src/app/_helpers/utility';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 describe('CreationRequestsComponent', () => {
   let component: CreationRequestsComponent;

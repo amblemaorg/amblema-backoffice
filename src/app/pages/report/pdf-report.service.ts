@@ -1,4 +1,4 @@
-import { PdfMakeWrapper, Img, Txt, Table } from 'pdfmake-wrapper';
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
 const pdfMake = require('pdfmake/build/pdfmake.js');
 const pdfFonts = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;

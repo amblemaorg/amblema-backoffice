@@ -48,6 +48,7 @@ import { ProjectValidationRequestState } from './store/request/project-validatio
 import { GeneralEnrolledState } from './store/_enrolled/enrolled.action';
 import { SchoolYearEnrolledState } from './store/_enrolled/school-year-enrolled.action';
 
+registerLocaleData(localeVe, 'es-VE');
 
 @NgModule({
   declarations: [AppComponent],

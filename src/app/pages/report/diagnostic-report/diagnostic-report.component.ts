@@ -1,76 +1,48 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { SchoolYearService } from 'src/app/services/school-year.service';
-import { Subscription } from 'rxjs';
-import { SchoolUserService } from 'src/app/services/user/school-user.service';
+import { Subscription, Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { DiagnosticReportService } from 'src/app/services/report/diagnostic-report.service';
 import { PDFReport } from '../pdf-report.service';
+import { Select } from '@ngxs/store';
+import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
+import { SchoolUserState } from 'src/app/store/user-store/school-user.action';
+import { SchoolUser } from 'src/app/_models/user/school.model';
 
 @Component({
   selector: 'app-diagnostic-report',
   templateUrl: './diagnostic-report.component.html',
   styleUrls: ['./diagnostic-report.component.scss'],
-  providers: [DatePipe, PDFReport]
+  providers: [DatePipe, PDFReport],
 })
 export class DiagnosticReportComponent implements OnInit, OnDestroy {
+  @Select(SchoolYearEnrolledState.schoolYearsEnrolled)
+  data$: Observable<SchoolYearEnrolled[]>;
+  @Select(SchoolUserState.schoolUsers)
+  schools$: Observable<SchoolUser[]>;
 
   disabledBtn = false;
-
   subscriptionService: Subscription;
 
   // -- School --
-  schools = Array<any>();
   selectedSchool;
 
   // -- Setting checks --
   diagnostics = [
     { label: 'Matemática', value: false },
     { label: 'Lectura', value: false },
-    { label: 'Lógica', value: false }
+    { label: 'Lógica', value: false },
   ];
 
   // -- School Year --
-  schoolYears = Array<any>();
   selectedSchoolYears;
 
   constructor(
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
-    private datePipe: DatePipe,
-    private diagnosticsReportService: DiagnosticReportService,
-    private schoolUsersService: SchoolUserService,
-    private schoolYearService: SchoolYearService) {
+    private diagnosticsReportService: DiagnosticReportService
+  ) {}
 
-  }
-
-  async ngOnInit() {
-
-    // -- Init school list --
-
-    setTimeout(() => {
-      this.subscriptionService = this.schoolUsersService.getSchoolUsers().subscribe(schoolUsers => {
-        schoolUsers.forEach(schoolUser => {
-          this.schools.push({ id: schoolUser.id, name: schoolUser.name });
-        });
-      });
-
-    });
-
-    // -- School year list --
-
-    setTimeout(() => {
-      this.subscriptionService = this.schoolYearService.getSchoolYears().subscribe(schoolYears => {
-
-        schoolYears.forEach(schoolYear => {
-          this.schoolYears.push({
-            id: schoolYear.id,
-            name: `${this.datePipe.transform(schoolYear.startDate, 'dd/MM/yyyy')}
-            - ${this.datePipe.transform(schoolYear.endDate, 'dd/MM/yyyy')}`
-          });
-        });
-      });
-    });
-  }
+  async ngOnInit() {}
 
   ngOnDestroy(): void {
     if (this.subscriptionService) {
@@ -79,22 +51,27 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
   }
 
   onGenerateReport() {
-
     this.disabledBtn = true;
 
-    this.subscriptionService = this.diagnosticsReportService.getReport(
-      this.selectedSchoolYears.id,
-      this.selectedSchool.id,
-      this.diagnostics ).subscribe( response => {
-        this.generatorReport.onGenerate( response );
+    this.subscriptionService = this.diagnosticsReportService
+      .getReport(
+        this.selectedSchoolYears.id,
+        this.selectedSchool.id,
+        this.diagnostics
+      )
+      .subscribe(
+        (response) => {
+          this.generatorReport.onGenerate(response);
 
-        setTimeout(() => {
+          setTimeout(() => {
+            this.disabledBtn = false;
+            this.cd.detectChanges();
+          }, 3500);
+        },
+        (err) => {
           this.disabledBtn = false;
           this.cd.detectChanges();
-        }, 3500);
-
-      }, err => {
-        this.disabledBtn = false;
-      } );
+        }
+      );
   }
 }

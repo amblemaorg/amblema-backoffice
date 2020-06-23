@@ -13,12 +13,12 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { STATUS } from 'src/app/_helpers/convention/status';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
-import { SetSchoolUser, SchoolUserState, UpdateSchoolUser } from 'src/app/store/user-store/school-user.action';
+import { SetSchoolUser, SchoolUserState, UpdateSchoolUser } from 'src/app/store/user/school-user.action';
 import { Subscription, Observable } from 'rxjs';
 import { SchoolUser } from 'src/app/_models/user/school.model';
 import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
-import { BaseForm } from '../../../shared/base-form';
+import { BaseForm } from '../../../_shared/base-form';
 
 @Component({
   selector: 'app-schools-users-form',

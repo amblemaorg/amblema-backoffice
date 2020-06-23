@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../../_helpers/base-table';
 import { Store, Select } from '@ngxs/store';
-import { SponsorUserState, DeleteSponsorUser, SelectedSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
+import { SponsorUserState, DeleteSponsorUser, SelectedSponsorUser } from 'src/app/store/user/sponsor-user.action';
 import { Observable } from 'rxjs';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { Utility } from 'src/app/_helpers/utility';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { AdminUserState } from 'src/app/store/user-store/admin-user.action';
+import { AdminUserState } from 'src/app/store/user/admin-user.action';
 import { Observable } from 'rxjs';
 
 @Component({

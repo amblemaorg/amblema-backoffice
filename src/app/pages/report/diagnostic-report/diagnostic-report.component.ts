@@ -5,7 +5,7 @@ import { DiagnosticReportService } from 'src/app/services/report/diagnostic-repo
 import { PDFReport } from '../pdf-report.service';
 import { Select } from '@ngxs/store';
 import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
-import { SchoolUserState } from 'src/app/store/user-store/school-user.action';
+import { SchoolUserState } from 'src/app/store/user/school-user.action';
 import { SchoolUser } from 'src/app/_models/user/school.model';
 
 @Component({

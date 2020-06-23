@@ -20,10 +20,9 @@ import { ModalService } from 'src/app/services/helper/modal.service';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { GetProjects, AddProject } from 'src/app/store/project.action';
-import { SetSchoolUser } from 'src/app/store/user-store/school-user.action';
-import { SetSponsorUser } from 'src/app/store/user-store/sponsor-user.action';
+import { SetSchoolUser } from 'src/app/store/user/school-user.action';
+import { SetSponsorUser } from 'src/app/store/user/sponsor-user.action';
 import { ActivatedRoute } from '@angular/router';
-import { isEmpty } from 'rxjs/operators';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({

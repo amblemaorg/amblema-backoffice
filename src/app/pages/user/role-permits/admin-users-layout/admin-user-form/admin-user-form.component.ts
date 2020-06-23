@@ -1,30 +1,30 @@
-import { Component, OnInit, OnChanges, OnDestroy } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
-import { ValidationService } from "src/app/pages/_components/form-components/shared/services/validation.service";
-import { ACTION } from "src/app/_helpers/text-content/text-crud";
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 
-import { Store, Select } from "@ngxs/store";
-import { USER_TYPE } from "src/app/_helpers/convention/user-type";
-import { AdminUserService } from "src/app/services/user/admin-user.service";
-import { Utility } from "src/app/_helpers/utility";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
-import { DOCUMENT_TYPE } from "src/app/_helpers/convention/document-type";
-import { STATUS } from "src/app/_helpers/convention/status";
+import { Store, Select } from '@ngxs/store';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
+import { AdminUserService } from 'src/app/services/user/admin-user.service';
+import { Utility } from 'src/app/_helpers/utility';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { DOCUMENT_TYPE } from 'src/app/_helpers/convention/document-type';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import {
   SetAdminUser,
   AdminUserState,
   UpdateAdminUser,
-} from "src/app/store/user-store/admin-user.action";
-import { Observable, Subscription } from "rxjs";
-import { AdminUser } from "src/app/_models/user/admin-user.model";
-import { HttpEvent, HttpEventType } from "@angular/common/http";
-import { RolesState } from "src/app/store/role.action";
-import { Role, DEVNAME_ROLE } from "src/app/_models/permission.model";
+} from 'src/app/store/user/admin-user.action';
+import { Observable, Subscription } from 'rxjs';
+import { AdminUser } from 'src/app/_models/user/admin-user.model';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { RolesState } from 'src/app/store/role.action';
+import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { DetailsForm } from '../../../_shared/details-form';
 
 @Component({
-  selector: "app-admin-user-form",
-  templateUrl: "./admin-user-form.component.html",
+  selector: 'app-admin-user-form',
+  templateUrl: './admin-user-form.component.html',
 })
 export class AdminUserFormComponent extends DetailsForm
   implements OnInit, OnChanges, OnDestroy {
@@ -32,10 +32,10 @@ export class AdminUserFormComponent extends DetailsForm
   @Select(AdminUserState.adminUser) user$: Observable<any>;
   subscription: Subscription;
 
-  idState = " ";
-  idMunicipality = "";
+  idState = ' ';
+  idMunicipality = '';
   backupOldData: AdminUser;
-  mode = "";
+  mode = '';
 
   showProgress = false;
 
@@ -52,11 +52,11 @@ export class AdminUserFormComponent extends DetailsForm
 
   ngOnInit(): void {
     // Add news form control
-    this.form.addControl("function", new FormControl());
-    this.form.addControl("role", new FormControl());
-    this.form.removeControl("name");
+    this.form.addControl('function', new FormControl());
+    this.form.addControl('role', new FormControl());
+    this.form.removeControl('name');
     this.form.addControl(
-      "userType",
+      'userType',
       new FormControl(USER_TYPE.ADMIN.VALUE, [Validators.required])
     );
   }
@@ -65,7 +65,7 @@ export class AdminUserFormComponent extends DetailsForm
     if (this.MODE === this.ACTION.EDIT) {
       this.subscription = this.user$.subscribe((response) => {
         // Title modal
-        this.title = "Actualizar usuario administrador";
+        this.title = 'Actualizar usuario administrador';
 
         // -- Prepare data in the form to update
         this.form.patchValue(response);
@@ -77,27 +77,27 @@ export class AdminUserFormComponent extends DetailsForm
 
         this.backupOldData = response;
 
-        this.form.get("password").setValue("");
-        this.form.get("password").setValidators([]);
-        this.form.get("password").updateValueAndValidity();
+        this.form.get('password').setValue('');
+        this.form.get('password').setValidators([]);
+        this.form.get('password').updateValueAndValidity();
 
-        this.mode = "something"; // <-- Indicate to the form document to update
+        this.mode = 'something'; // <-- Indicate to the form document to update
       });
     } else if (this.MODE === this.ACTION.CREATE) {
-      this.mode = "";
+      this.mode = '';
       this.form
-        .get("password")
+        .get('password')
         .setValidators([
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(8),
         ]);
-      this.form.get("password").updateValueAndValidity();
+      this.form.get('password').updateValueAndValidity();
 
       this.idState = null;
       this.restar(); // To restar form
       // Title modal
-      this.title = "Registrar usuario administrador";
+      this.title = 'Registrar usuario administrador';
 
       this.subscription = this.role$.subscribe((response) => {
         response.find((value) => {
@@ -131,7 +131,7 @@ export class AdminUserFormComponent extends DetailsForm
       }
 
       if (this.MODE === ACTION.CREATE) {
-        this.toastr.info("Guardando", "Enviando información, espere...");
+        this.toastr.info('Guardando', 'Enviando información, espere...');
         this.showProgress = true;
 
         this.adminUserService.setAdminUser(data).subscribe(
@@ -140,8 +140,8 @@ export class AdminUserFormComponent extends DetailsForm
               case HttpEventType.Response:
                 this.store.dispatch(new SetAdminUser(response.body));
                 this.toastr.registerSuccess(
-                  "Registro",
-                  "Usuario registrado satisfactoriamente"
+                  'Registro',
+                  'Usuario registrado satisfactoriamente'
                 );
                 this.restar();
                 break;
@@ -150,19 +150,19 @@ export class AdminUserFormComponent extends DetailsForm
           (err: any) => {
             this.showProgress = false;
             if (err.error.cardId) {
-              if (String(err.error.cardId[0].status) === "5") {
+              if (String(err.error.cardId[0].status) === '5') {
                 this.toastr.error(
-                  "Error de indentidad",
-                  "El documento de identidad ya esta registrado"
+                  'Error de indentidad',
+                  'El documento de identidad ya esta registrado'
                 );
               }
             }
 
             if (err.error.email) {
-              if (String(err.error.email[0].status) === "5") {
+              if (String(err.error.email[0].status) === '5') {
                 this.toastr.error(
-                  "Datos duplicados",
-                  "El correo que se intenta registra ya existe."
+                  'Datos duplicados',
+                  'El correo que se intenta registra ya existe.'
                 );
               }
             }
@@ -174,16 +174,16 @@ export class AdminUserFormComponent extends DetailsForm
         const updateData: any = this.form.value;
 
         if (
-          updateData.cardType === "V" ||
-          updateData.cardType === "E" ||
-          updateData.cardType === "J"
+          updateData.cardType === 'V' ||
+          updateData.cardType === 'E' ||
+          updateData.cardType === 'J'
         ) {
           updateData.cardType = this.helper.encodeTypeDocument(
             updateData.cardType
           );
         }
 
-        if (updateData.password === "" || updateData.password === null) {
+        if (updateData.password === '' || updateData.password === null) {
           delete updateData.password;
         }
 
@@ -196,14 +196,14 @@ export class AdminUserFormComponent extends DetailsForm
 
             this.store.dispatch(new UpdateAdminUser(this.backupOldData, event));
             this.toastr.updateSuccess(
-              "Actualización",
-              "Usuario actualizado satisfactoriamente"
+              'Actualización',
+              'Usuario actualizado satisfactoriamente'
             );
             this.submitted = false;
 
-            this.form.get("password").setValue("");
-            this.form.get("password").setValidators([]);
-            this.form.get("password").updateValueAndValidity();
+            this.form.get('password').setValue('');
+            this.form.get('password').setValidators([]);
+            this.form.get('password').updateValueAndValidity();
 
             setTimeout(() => {
               this.showProgress = false;
@@ -239,21 +239,21 @@ export class AdminUserFormComponent extends DetailsForm
       this.form.controls.password.value !== null
     ) {
       this.form
-        .get("password")
+        .get('password')
         .setValidators([
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(8),
         ]);
-      this.form.get("password").updateValueAndValidity();
+      this.form.get('password').updateValueAndValidity();
     }
 
     if (
       this.MODE === this.ACTION.EDIT &&
-      this.form.controls.password.value === ""
+      this.form.controls.password.value === ''
     ) {
-      this.form.get("password").setValidators([]);
-      this.form.get("password").updateValueAndValidity();
+      this.form.get('password').setValidators([]);
+      this.form.get('password').updateValueAndValidity();
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
+import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

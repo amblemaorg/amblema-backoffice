@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { CoordinatorUserState } from 'src/app/store/user-store/coordinator-user.action';
+import { CoordinatorUserState } from 'src/app/store/user/coordinator-user.action';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

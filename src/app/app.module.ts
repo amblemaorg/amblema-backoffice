@@ -12,9 +12,7 @@ import {
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './_guards/auth.guard';
-import {
-  NbAuthModule,
-} from '@nebular/auth';
+import { NbAuthModule } from '@nebular/auth';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -30,11 +28,11 @@ import { PostsState } from './store/web-content/blog.action';
 
 import localeVe from '@angular/common/locales/es-VE';
 import { registerLocaleData } from '@angular/common';
-import { AdminUserState } from './store/user-store/admin-user.action';
+import { AdminUserState } from './store/user/admin-user.action';
 import { environment } from 'src/environments/environment.prod';
-import { CoordinatorUserState } from './store/user-store/coordinator-user.action';
-import { SponsorUserState } from './store/user-store/sponsor-user.action';
-import { SchoolUserState } from './store/user-store/school-user.action';
+import { CoordinatorUserState } from './store/user/coordinator-user.action';
+import { SponsorUserState } from './store/user/sponsor-user.action';
+import { SchoolUserState } from './store/user/school-user.action';
 import { ProjectState } from './store/project.action';
 import { StepState } from './store/step.action';
 import { LapseActivityState } from './store/lapse-activities.action';

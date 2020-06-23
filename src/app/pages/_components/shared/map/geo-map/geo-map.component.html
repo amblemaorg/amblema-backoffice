@@ -1,3 +1,5 @@
+<hr>
+<label class="label">Marca la ubicación exacta de la escuela</label>
 <agm-map 
   (mapClick)="mapClicked($event)"
   [latitude]="latitude" 
@@ -9,7 +11,3 @@
     (dragEnd)="markerDragEnd($event)"
   ></agm-marker>
 </agm-map>
-
-<h5>Address: {{ address }}</h5>
-<div>Latitude: {{ latitude }}</div>
-<div>Longitude: {{ longitude }}</div>

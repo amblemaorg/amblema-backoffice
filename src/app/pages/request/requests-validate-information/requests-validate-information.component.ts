@@ -29,6 +29,7 @@ import { USER_TYPE } from "src/app/helpers/convention/user-type";
 import { TestimonyDetailsComponent } from "./testimony-details/testimony-details.component";
 import { ActivatedRoute } from "@angular/router";
 import { SpecialActivityDetailsComponent } from "./special-activity-details/special-activity-details.component";
+import { YearbookDetailsComponent } from "./yearbook-details/yearbook-details.component";
 
 @Component({
   selector: "app-requests-validate-information",
@@ -243,6 +244,9 @@ export class RequestsValidateInformationComponent extends BaseTable
           case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
             this.dialogService.open(SpecialActivityDetailsComponent);
             break;
+          case TYPE_INFORMATION.YEARBOOK:
+            this.dialogService.open(YearbookDetailsComponent);
+            break;
         }
       }
     });
@@ -269,6 +273,9 @@ export class RequestsValidateInformationComponent extends BaseTable
             break;
           case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
             this.dialogService.open(SpecialActivityDetailsComponent);
+            break;
+          case TYPE_INFORMATION.YEARBOOK:
+            this.dialogService.open(YearbookDetailsComponent);
             break;
         }
 

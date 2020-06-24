@@ -24,10 +24,12 @@ import { SliderDetailsComponent } from './slider-details/slider-details.componen
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 import { ProgressModule } from '../../components/shared/progress/progress.module';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
+import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
 
 @NgModule({
   entryComponents: [
     TestimonyDetailsComponent,
+    YearbookDetailsComponent,
     SliderDetailsComponent,
     ActivityDetailsComponent,
     InformationDetailsComponent,
@@ -41,6 +43,7 @@ import { SpecialActivityDetailsComponent } from './special-activity-details/spec
     SliderDetailsComponent,
     TestimonyDetailsComponent,
     SpecialActivityDetailsComponent,
+    YearbookDetailsComponent,
   ],
   imports: [
     CarouselModule,

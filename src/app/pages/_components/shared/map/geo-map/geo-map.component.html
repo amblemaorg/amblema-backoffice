@@ -1,13 +1,17 @@
-<hr>
+<hr />
 <label class="label">Marca la ubicación exacta de la escuela</label>
-<agm-map 
-  (mapClick)="mapClicked($event)"
-  [latitude]="latitude" 
-  [longitude]="longitude" [zoom]="zoom">
-  <agm-marker
+
+<div class="wrapper-agm-map">
+  <agm-map
+    (mapClick)="mapClicked($event)"
     [latitude]="latitude"
     [longitude]="longitude"
-    [markerDraggable]="true"
-    (dragEnd)="markerDragEnd($event)"
-  ></agm-marker>
-</agm-map>
+    [zoom]="zoom">
+    <agm-marker
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [markerDraggable]="true"
+      (dragEnd)="markerDragEnd($event)"
+    ></agm-marker>
+  </agm-map>
+</div>

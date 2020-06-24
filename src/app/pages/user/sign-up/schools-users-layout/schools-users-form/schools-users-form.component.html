@@ -86,8 +86,10 @@
       </div>
       <div class="col-12">
         <app-geo-map
-          [longitude]="form.get('coordinate').get('longitude')"
-          [latitude]="form.get('coordinate').get('latitude')"
+          (laT)="coordinate.latitude=$event"
+          (longT)="coordinate.longitude=$event"
+          [(longitude)]="coordinate.longitude"
+          [(latitude)]="coordinate.latitude"
         ></app-geo-map>
       </div>
     </div>

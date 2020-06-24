@@ -5,6 +5,8 @@ import {
   ElementRef,
   ViewChild,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 
@@ -14,9 +16,12 @@ import { MapsAPILoader } from '@agm/core';
   styleUrls: ['./geo-map.component.scss'],
 })
 export class GeoMapComponent implements OnInit {
-  
   @Input() latitude: number;
   @Input() longitude: number;
+
+  @Output() laT = new EventEmitter<number>();
+  @Output() longT = new EventEmitter<number>();
+
   zoom: number;
   address: string;
   private geoCoder;
@@ -29,19 +34,21 @@ export class GeoMapComponent implements OnInit {
   ngOnInit() {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
-      //this.setCurrentLocation();
+      this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder();
     });
+
   }
 
   // Get Current Location Coordinates
   private setCurrentLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
+        if (this.latitude === 0 && this.longitude === 0) {
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+        }
         this.zoom = 8;
-        this.getAddress(this.latitude, this.longitude);
       });
     }
   }
@@ -49,14 +56,17 @@ export class GeoMapComponent implements OnInit {
   mapClicked($event: any) {
     this.latitude = $event.coords.lat;
     this.longitude = $event.coords.lng;
+
+    this.laT.emit( this.latitude );
+    this.longT.emit( this.longitude );
   }
 
   markerDragEnd($event: any) {
-  
-
     this.latitude = $event.coords.lat;
     this.longitude = $event.coords.lng;
-    this.getAddress(this.latitude, this.longitude);
+
+    this.laT.emit( this.latitude );
+    this.longT.emit( this.longitude );
   }
 
   getAddress(latitude, longitude) {

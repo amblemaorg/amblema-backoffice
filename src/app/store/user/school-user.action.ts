@@ -55,7 +55,7 @@ export class SelectedSchoolUser {
             address: '',
             addressCity: '',
             code: '',
-           
+
             // Principal
             principalFirstName: '',
             principalLastName: '',

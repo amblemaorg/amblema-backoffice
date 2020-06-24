@@ -4,5 +4,6 @@ export const TYPE_INFORMATION = {
     ACTIVITY: '3',
     SLIDER: '4',
     WORKSHOP: '5',
-    SPECIAL_SPAN_ACTIVITY: '6'
+    SPECIAL_SPAN_ACTIVITY: '6', 
+    YEARBOOK: '7'
 };

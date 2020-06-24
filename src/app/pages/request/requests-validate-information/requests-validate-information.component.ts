@@ -3,9 +3,9 @@ import { BaseTable } from 'src/app/_helpers/base-table';
 import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
 
-import { Observable } from "rxjs";
-import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
-import { DatePipe } from "@angular/common";
+import { Observable } from 'rxjs';
+import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
+import { DatePipe } from '@angular/common';
 import {
   TYPE_REQUEST,
   REQUEST_STATUS,
@@ -32,9 +32,9 @@ import { SpecialActivityDetailsComponent } from './special-activity-details/spec
 import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
 
 @Component({
-  selector: "app-requests-validate-information",
-  templateUrl: "./requests-validate-information.component.html",
-  styleUrls: ["./requests-validate-information.component.scss"],
+  selector: 'app-requests-validate-information',
+  templateUrl: './requests-validate-information.component.html',
+  styleUrls: ['./requests-validate-information.component.scss'],
 })
 export class RequestsValidateInformationComponent extends BaseTable
   implements OnInit {
@@ -54,7 +54,7 @@ export class RequestsValidateInformationComponent extends BaseTable
     super();
 
     this.settings.actions = {
-      columnTitle: "Acciones",
+      columnTitle: 'Acciones',
       add: false,
       edit: false,
       //  Fake action
@@ -67,23 +67,23 @@ export class RequestsValidateInformationComponent extends BaseTable
 
     this.settings.columns = {
       code: {
-        title: "N° de la solicitud",
-        type: "string",
+        title: 'N° de la solicitud',
+        type: 'string',
       },
       project: {
-        title: "ID del proyecto",
-        type: "string",
+        title: 'ID del proyecto',
+        type: 'string',
         valuePrepareFunction: (row: any) => row.code,
         filterFunction: (cell?: any, search?: string) => {
           const value: string = cell.detail.project.code;
-          return value.indexOf(search.toUpperCase()) === 0 || search === ""
+          return value.indexOf(search.toUpperCase()) === 0 || search === ''
             ? true
             : false;
         },
       },
       typeUser: {
-        title: "Tipo de solicitante",
-        type: "text",
+        title: 'Tipo de solicitante',
+        type: 'text',
         valuePrepareFunction: (row: any) => {
           const value: string =
             row === USER_TYPE.COORDINATOR.VALUE
@@ -102,7 +102,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : TYPE_REQUEST.SPONSOR.CONVERTION;
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
             return true;
           } else {
             return false;
@@ -110,14 +110,14 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       user: {
-        title: "Solicitante",
-        type: "string",
+        title: 'Solicitante',
+        type: 'string',
         valuePrepareFunction: (row: any) => row.name,
         filterFunction: (cell?: any, search?: string) => {
           if (cell.name) {
             const value: string = cell.name as string;
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
               return true;
             } else {
               return false;
@@ -126,24 +126,24 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       type: {
-        title: "Tipo de información",
-        type: "string",
+        title: 'Tipo de información',
+        type: 'string',
         valuePrepareFunction: (row: any) => {
           switch (row) {
             case TYPE_INFORMATION.STEP:
-              return "Pasos";
+              return 'Pasos';
             case TYPE_INFORMATION.TESTIMONIES:
-              return "Testimonio";
+              return 'Testimonio';
             case TYPE_INFORMATION.ACTIVITY:
-              return "Actividades";
+              return 'Actividades';
             case TYPE_INFORMATION.SLIDER:
-              return "Diapositiva";
+              return 'Diapositiva';
             case TYPE_INFORMATION.WORKSHOP:
-              return "Taller inicial";
+              return 'Taller inicial';
             case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
-              return "Actividad especial de lapso";
+              return 'Actividad especial de lapso';
             case TYPE_INFORMATION.YEARBOOK:
-              return "Anuario";
+              return 'Anuario';
           }
         },
         filterFunction: (cell?: any, search?: string) => {
@@ -152,29 +152,29 @@ export class RequestsValidateInformationComponent extends BaseTable
           if (cell) {
             switch (cell) {
               case TYPE_INFORMATION.STEP:
-                value = "Pasos";
+                value = 'Pasos';
                 break;
               case TYPE_INFORMATION.TESTIMONIES:
-                value = "Testimonio";
+                value = 'Testimonio';
                 break;
               case TYPE_INFORMATION.ACTIVITY:
-                value = "Actividades";
+                value = 'Actividades';
                 break;
               case TYPE_INFORMATION.SLIDER:
-                value = "Diapositiva";
+                value = 'Diapositiva';
                 break;
               case TYPE_INFORMATION.WORKSHOP:
-                value = "Taller inicial";
+                value = 'Taller inicial';
                 break;
               case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
-                value = "Actividad especial de lapso";
+                value = 'Actividad especial de lapso';
                 break;
               case TYPE_INFORMATION.YEARBOOK:
-                value = "Anuario";
+                value = 'Anuario';
                 break;
             }
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
               return true;
             } else {
               return false;
@@ -183,17 +183,17 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       createdAt: {
-        sortDirection: "desc",
-        title: "Fecha",
-        type: "string",
+        sortDirection: 'desc',
+        title: 'Fecha',
+        type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe("es-VE").transform(lastLoginTime, "dd/MM/yyyy");
+          return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
         },
       },
       status: {
-        title: "Estatus",
-        type: "text ",
+        title: 'Estatus',
+        type: 'text ',
         valuePrepareFunction: (row: any) => {
           return this.helper.readlyRequestStatus(row);
         },
@@ -208,7 +208,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : REQUEST_STATUS.CANCELLED.VALUE;
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
             return true;
           } else {
             return false;
@@ -239,7 +239,7 @@ export class RequestsValidateInformationComponent extends BaseTable
             this.dialogService.open(SliderDetailsComponent);
             break;
           case TYPE_INFORMATION.WORKSHOP:
-            this.modal.open("initial-workshop-modal");
+            this.modal.open('initial-workshop-modal');
             break;
           case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
             this.dialogService.open(SpecialActivityDetailsComponent);
@@ -269,7 +269,7 @@ export class RequestsValidateInformationComponent extends BaseTable
             this.dialogService.open(SliderDetailsComponent);
             break;
           case TYPE_INFORMATION.WORKSHOP:
-            this.modal.open("initial-workshop-modal");
+            this.modal.open('initial-workshop-modal');
             break;
           case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
             this.dialogService.open(SpecialActivityDetailsComponent);
@@ -287,8 +287,8 @@ export class RequestsValidateInformationComponent extends BaseTable
           .subscribe(() => {
             this.store.dispatch(new DeleteRequestContent(event.data.id));
             this.toast.deleteRegister(
-              "Solicitud eliminada",
-              "Se ha eliminado una solicitud"
+              'Solicitud eliminada',
+              'Se ha eliminado una solicitud'
             );
           });
 

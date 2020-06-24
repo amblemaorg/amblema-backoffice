@@ -4,7 +4,11 @@ import { InformationDetailsComponent } from '../information-details/information-
 @Component({
   selector: 'app-yearbook-details',
   templateUrl: './yearbook-details.component.html',
-  styles: []
+  styleUrls: [`./yearbook-details.component.scss`],
 })
-export class YearbookDetailsComponent extends InformationDetailsComponent {
+export class YearbookDetailsComponent extends InformationDetailsComponent
+  implements OnInit {
+  ngOnInit(): void {
+    this.data$.subscribe((response) => console.log(response));
+  }
 }

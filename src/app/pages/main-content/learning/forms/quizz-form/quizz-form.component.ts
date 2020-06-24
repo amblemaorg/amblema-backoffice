@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { TableActions, BaseTable } from 'src/app/helpers/base-table';
+import { TableActions, BaseTable } from 'src/app/_helpers/base-table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, SetQuizze, UpdateQuizze, DeleteQuizze } from 'src/app/store/learning.action';
 import { Observable, Subscription } from 'rxjs';
-import { Quizze, Learning } from 'src/app/models/learning.model';
+import { Quizze, Learning } from 'src/app/_models/learning.model';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({

@@ -14,7 +14,7 @@ import {
   EnvironmentalProjectState,
   UpdateTopic,
 } from 'src/app/store/environmental-project.action';
-import { Level, Lapse } from 'src/app/models/environmental-project.model';
+import { Level, Lapse } from 'src/app/_models/environmental-project.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';

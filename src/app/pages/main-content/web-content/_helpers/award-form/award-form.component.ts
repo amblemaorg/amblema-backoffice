@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Award } from 'src/app/models/web/web-about.model';
+import { Award } from 'src/app/_models/web/web-about.model';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({

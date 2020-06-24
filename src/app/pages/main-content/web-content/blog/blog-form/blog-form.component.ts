@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ACTION } from '../../../../../helpers/text-content/text-crud';
+import { ACTION } from '../../../../../_helpers/text-content/text-crud';
 import { Store } from '@ngxs/store';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { Post } from 'src/app/models/web/blog.model';
-import { Utility } from 'src/app/helpers/utility';
+import { Post } from 'src/app/_models/web/blog.model';
+import { Utility } from 'src/app/_helpers/utility';
 import { BlogService } from 'src/app/services/web-content/blog.service';
 import { SetPost, UpdatePost } from 'src/app/store/web-content/blog.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,12 +9,6 @@ const routes: Routes = [
   },
   {
     path: 'pages',
-
-    /**
-     * -- NOTE: When you have all the role
-     * and the user can be logged. Remove the commentary
-     * in the guard
-     */
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
     canActivate: [AuthGuard]
   },
@@ -25,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'auth'
+    redirectTo: 'auth',
   }
 ];
 

@@ -5,7 +5,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Store } from '@ngxs/store';
 import { UpdateStatusLapseActivity } from 'src/app/store/lapse-activities.action';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 import { MenuSetUp } from 'src/app/pages/pages-menu-service';
 
 @Component({
@@ -40,7 +40,7 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
       id: this.rowData.isStandard ? this.rowData.devName : this.rowData.id,
       lapse: this.rowData.lapse,
       isStandard: this.rowData.isStandard,
-      status: this.control.value ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE
+      status: this.control.value ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE
     };
 
     // Update the status
@@ -48,7 +48,7 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
       this.toatr.updateSuccess('Actualización', 'Se ha cambiado el estatus de una actividad');
 
       const newData: any = this.rowData;
-      newData.status = this.control.value ? STATUS.ACTIVE.CODE : STATUS.INACTIVE.CODE;
+      newData.status = this.control.value ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE;
       this.store.dispatch( new UpdateStatusLapseActivity( newData, newData.lapse ) );
 
       this.menuSetUp.renderMenu( true );

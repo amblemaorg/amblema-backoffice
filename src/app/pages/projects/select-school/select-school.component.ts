@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { SchoolUserState } from 'src/app/store/user-store/school-user.action';
+import { SchoolUserState } from 'src/app/store/user/school-user.action';
 import { Observable } from 'rxjs';
-import { SchoolUser } from 'src/app/models/user/school.model';
+import { SchoolUser } from 'src/app/_models/user/school.model';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { ProjectState } from 'src/app/store/project.action';
-import { Project } from 'src/app/models/project.model';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { Project } from 'src/app/_models/project.model';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 
 @Component({
   selector: 'app-select-school',

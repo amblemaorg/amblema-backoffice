@@ -11,10 +11,10 @@ import {
   SetWebHome
 } from 'src/app/store/web-content/web-home.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebHome } from 'src/app/models/web/web-home.model';
+import { WebHome } from 'src/app/_models/web/web-home.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Slider } from 'src/app/models/web/slider.model';
-import { Testimonial } from 'src/app/models/web/testimonial.model';
+import { Slider } from 'src/app/_models/web/slider.model';
+import { Testimonial } from 'src/app/_models/web/testimonial.model';
 import { WebHomeService } from 'src/app/services/web-content/web-home.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';

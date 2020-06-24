@@ -12,7 +12,7 @@ import {
     Lapse,
     Topic,
     Level,
-} from '../models/environmental-project.model';
+} from '../_models/environmental-project.model';
 import { OnDestroy } from '@angular/core';
 import { EnvironmentalProjectService } from '../services/environmental-project.service';
 import { Subscription, Observable } from 'rxjs';

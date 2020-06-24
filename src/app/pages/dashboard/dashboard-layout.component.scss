@@ -1,0 +1,16 @@
+@import '../../../assets/scss/mixins';
+
+img {
+    @include screen($breakpoint-xs) {
+        width: 100%;
+    }
+    @include screen($breakpoint-md) {
+        width: 20rem;
+    }   
+    @include screen($breakpoint-lg) {
+        width: 25rem;
+    }   
+    @include screen($breakpoint-xl) {
+        width: 30rem;
+    }   
+}

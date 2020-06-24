@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
+import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { Observable } from 'rxjs';
-import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
+import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { FormControl, AbstractControl } from '@angular/forms';
 import { ProjectState } from 'src/app/store/project.action';
-import { Project } from 'src/app/models/project.model';
-import { ACTION } from 'src/app/helpers/text-content/text-crud';
+import { Project } from 'src/app/_models/project.model';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 
 @Component({
   selector: 'app-select-sponsor',

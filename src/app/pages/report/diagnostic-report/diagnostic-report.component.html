@@ -1,60 +1,75 @@
-<nb-card >
-    <nb-card-header>
-        Reporte de diagnósticos
-    </nb-card-header>
-    <nb-card-body>
-
+<nb-card>
+  <nb-card-header>
+    Reporte de diagnósticos
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
         <div class="row">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-12">
-                        <h6>Configuración del reporte</h6>
-                        <hr>
-                    </div> 
-                    <div class="col-12 col-lg-6 form-group">
-                        <label class="label">Escuela</label>
-                        <ng-select *ngIf="schools.length" [items]="schools" bindLabel="name" placeholder="Buscar escuela"
-                            [(ngModel)]="selectedSchool">
-                        </ng-select>
-                    </div>
+          <div class="col-12">
+            <h6>Configuración del reporte</h6>
+            <hr />
+          </div>
+          <div class="col-12 col-lg-6 form-group">
+            <label class="label">Escuela</label>
+            <ng-select
+              *ngIf="schools$ | async"
+              [items]="schools$ | async"
+              bindLabel="name"
+              placeholder="Buscar escuela"
+              [(ngModel)]="selectedSchool"
+            >
+            </ng-select>
+          </div>
 
-                    <div class="col-12 col-lg-6 form-group">
-                        <label class="label d-block">Diagnóstico</label>
-                        <div class="d-inline">
-                            <nb-checkbox 
-                                (change)="item.value=!item.value"
-                                class="mr-4 mb-2" 
-                                status="primary" 
-                                [checked]="item.value"
-                                *ngFor="let item of diagnostics">
-                                {{ item.label }}</nb-checkbox>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6 form-group">
-                        <label class="label">Período academico</label>
-                        <ng-select *ngIf="schoolYears.length" [items]="schoolYears" bindLabel="name" placeholder="Seleccionar el periodo escolar"
-                            [(ngModel)]="selectedSchoolYears">
-                        </ng-select>
-                    </div>
-                </div>
+          <div class="col-12 col-lg-6 form-group">
+            <label class="label d-block">Diagnóstico</label>
+            <div class="d-inline">
+              <nb-checkbox
+                (change)="item.value = !item.value"
+                class="mr-4 mb-2"
+                status="primary"
+                [checked]="item.value"
+                *ngFor="let item of diagnostics"
+              >
+                {{ item.label }}</nb-checkbox
+              >
             </div>
-
+          </div>
+          <div class="col-12 col-lg-6 form-group">
+            <label class="label">Período academico</label>
+            <ng-select
+              *ngIf="data$ | async"
+              [items]="data$ | async"
+              bindLabel="name"
+              placeholder="Seleccionar el periodo escolar"
+              [(ngModel)]="selectedSchoolYears"
+            >
+            </ng-select>
+          </div>
         </div>
-
-    </nb-card-body>
-    <nb-card-footer class="w-100 text-right">
-        <button 
-            (click)="onGenerateReport()"
-            class="col-12 col-lg-auto"
-            
-            [nbSpinner]="disabledBtn"
-
-            [attr.disabled]="!disabledBtn && selectedSchool && 
-            selectedSchoolYears && ( diagnostics[0].value || diagnostics[1].value || diagnostics[2].value  ) ? null : true"
-            nbButton 
-            status="success">
-            <span *ngIf="!disabledBtn">Generar reporte </span>
-            <span *ngIf="disabledBtn">Restableciendo... </span>
-            <nb-icon icon="download-outline"></nb-icon></button>
-    </nb-card-footer>
-</nb-card> 
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="w-100 text-right">
+    <button
+      (click)="onGenerateReport()"
+      class="col-12 col-lg-auto"
+      [nbSpinner]="disabledBtn"
+      [attr.disabled]="
+        !disabledBtn &&
+        selectedSchool &&
+        selectedSchoolYears &&
+        (diagnostics[0].value || diagnostics[1].value || diagnostics[2].value)
+          ? null
+          : true
+      "
+      nbButton
+      status="success"
+    >
+      <span *ngIf="!disabledBtn">Generar reporte </span>
+      <span *ngIf="disabledBtn">Restableciendo... </span>
+      <nb-icon icon="download-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>

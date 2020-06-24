@@ -3,15 +3,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProjectRequestsComponent } from './project-requests.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbCardModule, NbAlertModule, NbToastrModule, NbThemeModule } from '@nebular/theme';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { ProjectRequestState } from 'src/app/store/request/project-requests.action';
 import { HttpClientModule } from '@angular/common/http';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 describe('ProjectRequestsComponent', () => {
   let component: ProjectRequestsComponent;

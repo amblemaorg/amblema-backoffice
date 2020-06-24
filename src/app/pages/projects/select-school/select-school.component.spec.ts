@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectSchoolComponent } from './select-school.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { SponsorUserState } from 'src/app/store/user-store/sponsor-user.action';
+import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { NgxsModule } from '@ngxs/store';
-import { Utility } from 'src/app/helpers/utility';
+import { Utility } from 'src/app/_helpers/utility';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { NbToastrModule, NbThemeModule } from '@nebular/theme';

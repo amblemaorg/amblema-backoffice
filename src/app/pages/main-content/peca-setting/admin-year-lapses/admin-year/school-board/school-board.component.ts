@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
-import { EnrolledSchool } from 'src/app/models/_enrolled/enrolled-school.model';
+import { BaseTable } from 'src/app/_helpers/base-table';
+import { EnrolledSchool } from 'src/app/_models/_enrolled/enrolled-school.model';
 import { Observable } from 'rxjs';
 import {
   GeneralEnrolledState,

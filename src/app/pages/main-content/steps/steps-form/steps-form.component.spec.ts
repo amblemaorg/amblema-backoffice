@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StepsFormComponent } from './steps-form.component';
-import { ModalModule } from 'src/app/pages/components/shared/modal/modal-forms/modal.module';
-import { ReactiveInputModule } from 'src/app/pages/components/form-components/reactive-input/reactive-input.module';
+import { ModalModule } from 'src/app/pages/_components/shared/modal/modal-forms/modal.module';
+import { ReactiveInputModule } from 'src/app/pages/_components/form-components/reactive-input/reactive-input.module';
 import { NbRadioModule
   , NbCheckboxModule
   , NbThemeModule
@@ -11,14 +11,14 @@ import { NbRadioModule
   , NbToastrModule
   , NbAlertModule
   , NbSpinnerModule } from '@nebular/theme';
-import { ReactiveTextAreaModule } from 'src/app/pages/components/form-components/reactive-text-area/reactive-text-area.module';
-import { ReactiveDatepickerModule } from 'src/app/pages/components/form-components/reactive-datepicker/reactive-datepicker.module';
-import { ReactiveInputFileModule } from 'src/app/pages/components/form-components/reactive-input-file/reactive-input-file.module';
+import { ReactiveTextAreaModule } from 'src/app/pages/_components/form-components/reactive-text-area/reactive-text-area.module';
+import { ReactiveDatepickerModule } from 'src/app/pages/_components/form-components/reactive-datepicker/reactive-datepicker.module';
+import { ReactiveInputFileModule } from 'src/app/pages/_components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { StepState } from 'src/app/store/step.action';
 import { HttpClientModule } from '@angular/common/http';
-import { ProgressModule } from 'src/app/pages/components/shared/progress/progress.module';
+import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
 
 describe('StepsFormComponent', () => {
   let component: StepsFormComponent;

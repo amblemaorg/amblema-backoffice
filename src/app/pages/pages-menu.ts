@@ -17,9 +17,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Roles',
-        link: '/pages/permissions'
-      }
-    ]
+        link: '/pages/permissions',
+      },
+    ],
   },
   {
     title: 'Usuarios',
@@ -27,17 +27,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Coordinadores',
-        link: '/pages/coordinators-users'
+        link: '/pages/coordinators-users',
       },
       {
         title: 'Padrinos',
-        link: '/pages/sponsors-users'
+        link: '/pages/sponsors-users',
       },
       {
         title: 'Escuelas',
-        link: '/pages/schools-users'
+        link: '/pages/schools-users',
       },
-    ]
+    ],
   },
   {
     title: 'Solicitudes',
@@ -56,14 +56,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Validar información',
         icon: 'checkmark-circle-outline',
-        link: '/pages/requests/requests-validate-information'
+        link: '/pages/requests/requests-validate-information',
       },
       {
         title: 'Confirmación de pasos ',
         icon: 'done-all-outline',
-        link: '/pages/requests/amblema-confirmation-request'
-      }
-    ]
+        link: '/pages/requests/amblema-confirmation-request',
+      },
+    ],
   },
   {
     title: 'Contenido',
@@ -75,29 +75,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
         children: [
           {
             title: 'Inicio',
-            link: '/pages/content/web/home'
+            link: '/pages/content/web/home',
           },
           {
             title: 'Nosotros',
-            link: '/pages/content/web/about-us'
+            link: '/pages/content/web/about-us',
           },
           {
             title: 'Padrinos',
-            link: '/pages/content/web/sponsors'
+            link: '/pages/content/web/sponsors',
           },
           {
             title: 'Coordinadores',
-            link: '/pages/content/web/coordinators'
+            link: '/pages/content/web/coordinators',
           },
           {
             title: 'Escuelas',
-            link: '/pages/content/web/schools'
+            link: '/pages/content/web/schools',
           },
           {
             title: 'Blog',
-            link: '/pages/content/web/blog'
+            link: '/pages/content/web/blog',
           },
-        ]
+        ],
       },
       {
         title: 'Pasos',
@@ -105,21 +105,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
         children: [
           {
             title: 'Generales',
-            link: '/pages/content/steps/generals'
+            link: '/pages/content/steps/generals',
           },
           {
             title: 'Padrino',
-            link: '/pages/content/steps/sponsor'
+            link: '/pages/content/steps/sponsor',
           },
           {
             title: 'Coordinador',
-            link: '/pages/content/steps/coordinator'
+            link: '/pages/content/steps/coordinator',
           },
           {
             title: 'Escuela',
-            link: '/pages/content/steps/school'
+            link: '/pages/content/steps/school',
           },
-        ]
+        ],
       },
       {
         title: 'Ajustes del PECA',
@@ -127,23 +127,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
         children: [
           {
             title: 'Lapso 1',
-            children: [
-
-            ]
+            children: [],
           },
 
           {
             title: 'Lapso 2',
-            children: [
-
-            ]
+            children: [],
           },
 
           {
             title: 'Lapso 3',
-            children: [
-
-            ]
+            children: [],
           },
 
           /* Take this special snippet into account */
@@ -165,27 +159,27 @@ export const MENU_ITEMS: NbMenuItem[] = [
             children: [
               {
                 title: 'Lapsos',
-                link: '/pages/content/peca-setting/admin-lapses'
+                link: '/pages/content/peca-setting/admin-lapses',
               },
               {
                 title: 'Años escolares',
                 link: '/pages/content/peca-setting/admin-year',
-              }
-            ]
-          }
+              },
+            ],
+          },
         ],
       },
       {
         title: 'Temas del Pensum',
         icon: 'book-open-outline',
-        link: '/pages/content/learning'
+        link: '/pages/content/learning',
       },
-    ]
+    ],
   },
   {
     icon: 'edit-outline',
     title: 'Ver proyectos',
-    link: '/pages/projects'
+    link: '/pages/projects',
   },
 
   {
@@ -194,37 +188,37 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Reporte de diagnósticos',
-        link: '/pages/report/diagnostic-report'
+        link: '/pages/report/diagnostic-report',
       },
       {
         title: 'Padrinos',
-        link: '/pages/report/sponsor-report'
+        link: '/pages/report/sponsor-report',
       },
       {
         title: 'Coordinadores',
-        link: '/pages/report/coordinator-report'
+        link: '/pages/report/coordinator-report',
       },
       {
         title: 'Escuelas',
-        link: '/pages/report/school-report'
+        link: '/pages/report/school-report',
       },
       {
         title: 'Docentes',
-        link: '/pages/report/teacher-report'
+        link: '/pages/report/teacher-report',
       },
 
       {
         title: 'Reporte de las olimpíadas de matemáticas ',
-        link: '/pages/report/math-olympics-report'
+        link: '/pages/report/math-olympics-report',
       },
       {
         title: 'Escuelas inscritas',
-        link: '/pages/report/enrolled-schools-report'
+        link: '/pages/report/enrolled-schools-report',
       },
       {
         title: 'Padrinos activos - inactivos',
-        link: '/pages/report/sponsor-status'
+        link: '/pages/report/sponsor-status',
       },
-    ]
+    ],
   },
 ];

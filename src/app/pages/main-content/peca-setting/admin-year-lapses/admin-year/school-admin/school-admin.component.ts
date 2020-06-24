@@ -6,7 +6,7 @@ import {
   GetGeneralEnrolled,
 } from 'src/app/store/_enrolled/enrolled.action';
 import { Observable } from 'rxjs';
-import { EnrolledSchool } from 'src/app/models/_enrolled/enrolled-school.model';
+import { EnrolledSchool } from 'src/app/_models/_enrolled/enrolled-school.model';
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import {

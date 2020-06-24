@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
 import { Subscription, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { LearningState, DeleteLearning, SelectedLearning, ClearLearning } from 'src/app/store/learning.action';
-import { Learning } from 'src/app/models/learning.model';
+import { Learning } from 'src/app/_models/learning.model';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';

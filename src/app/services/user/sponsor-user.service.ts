@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { Observable } from 'rxjs';
-import { SponsorUser } from 'src/app/models/user/sponsor-user.model';
+import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 
@@ -12,8 +12,8 @@ import { map } from 'rxjs/operators';
 export class SponsorUserService {
 
   private readonly USER: string = `users`;
-  private readonly SPONSOR_USER: string = `users?userType=${USER_TYPE.SPONSOR.CODE}`;
-  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SPONSOR.CODE}`;
+  private readonly SPONSOR_USER: string = `users?userType=${USER_TYPE.SPONSOR.VALUE}`;
+  private readonly USER_TYPE: string = `?userType=${USER_TYPE.SPONSOR.VALUE}`;
 
   constructor( private httpClient: HttpClient ) { }
 

@@ -1,8 +1,8 @@
 import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
-import { ProjectRequest } from 'src/app/models/request/project-request.model';
+import { ProjectRequest } from 'src/app/_models/request/project-request.model';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
-import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
+import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 
 export interface ProjectRequestModel {
     projectRequests: ProjectRequest[];

@@ -1,5 +1,5 @@
 import { State, NgxsOnInit, StateContext, Action, Selector, getActionTypeFromInstance } from '@ngxs/store';
-import { LapseActivity, Activity, Lapse } from '../models/lapse-activities.model';
+import { LapseActivity, Activity, Lapse } from '../_models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
 import { patch, updateItem, append, removeItem } from '@ngxs/store/operators';
 

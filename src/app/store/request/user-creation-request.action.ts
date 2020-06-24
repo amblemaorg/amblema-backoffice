@@ -1,8 +1,8 @@
-import { UserCreationRequest } from 'src/app/models/request/user-creation-request.model';
+import { UserCreationRequest } from 'src/app/_models/request/user-creation-request.model';
 import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
-import { REQUEST_STATUS } from 'src/app/helpers/convention/request-status';
+import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 
 export interface UserCreationRequestModel {
   userCreationRequests: UserCreationRequest[];

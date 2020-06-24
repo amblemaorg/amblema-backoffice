@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/helpers/base-table';
-import { Utility } from 'src/app/helpers/utility';
+import { BaseTable } from 'src/app/_helpers/base-table';
+import { Utility } from 'src/app/_helpers/utility';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { Select, Store } from '@ngxs/store';
 import { ProjectState, DeleteProject, SelectedProject } from 'src/app/store/project.action';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/_models/project.model';
 import { Observable } from 'rxjs';
-import { PROJECT_PHASE } from 'src/app/helpers/convention/phase';
+import { PROJECT_PHASE } from 'src/app/_helpers/convention/phase';
 
 declare var $: any;
 

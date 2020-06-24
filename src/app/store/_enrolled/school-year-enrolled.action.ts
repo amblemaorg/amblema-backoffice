@@ -2,7 +2,7 @@
 import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch } from '@ngxs/store/operators';
-import { STATUS } from 'src/app/helpers/text-content/status';
+import { STATUS } from 'src/app/_helpers/convention/status';
 
 class SchoolYearEnrolledModel {
     schoolYears: SchoolYearEnrolled[];
@@ -32,7 +32,7 @@ export class SchoolYearEnrolledState implements NgxsOnInit {
 
         state.schoolYears.forEach( response => {
 
-            if ( response.status === STATUS.ACTIVE.CODE ) {
+            if ( response.status === STATUS.ACTIVE.VALUE ) {
                 schoolYearActive = response;
             }
 

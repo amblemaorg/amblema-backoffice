@@ -1,0 +1,357 @@
+<app-modal [ID]="ID" [size]="'lg'" [title]="title" extra="true">
+  <!-- Main content -->
+  <form [formGroup]="form" (keydown.enter)="onSubmit()" content>
+    <!-- Personal data -->
+    <div class="row">
+      <div class="col-12">
+        <p class="font-weight-bold text-info mb-0">Datos de la escuela</p>
+        <hr />
+      </div>
+
+      <div class="col-12 form-group">
+        <label class="label w-100 text-center text-lg-left"
+          >Imágen de perfil de la escuela</label
+        >
+        <app-input-img
+          [control]="form.get('image')"
+          [align]="'left'"
+        ></app-input-img>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <app-input-name
+          [control]="form.get('name')"
+          [submitted]="submitted"
+        ></app-input-name>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <app-input-custom
+          [control]="form.get('code')"
+          [label]="'Código del plantel'"
+          [placeholder]="'Código del plantel'"
+          [submitted]="submitted"
+          [patternMsg]="MESSAGES.NAME_MESSAGE"
+        >
+        </app-input-custom>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <app-input-email
+          [id]="'school-email'"
+          [control]="form.get('email')"
+          [submitted]="submitted"
+        ></app-input-email>
+      </div>
+      <div class="col-12 col-lg-6">
+        <app-input-password
+          [control]="form.get('password')"
+          [submitted]="submitted"
+        >
+        </app-input-password>
+      </div>
+      <div class="col-12 col-lg-6">
+        <app-input-phone
+          [control]="form.get('phone')"
+          [submitted]="submitted"
+        ></app-input-phone>
+      </div>
+      <div class="col-12 col-lg-6">
+        <app-select-role
+          (onselected)="onselected($event)"
+          [control]="form.get('role')"
+          [submitted]="submitted"
+        ></app-select-role>
+      </div>
+    </div>
+    <!-- / End personal data -->
+
+    <!-- Data address -->
+    <div class="row mt-3">
+      <div class="col-12">
+        <p class="text-info font-weight-bold mb-0">Dirección</p>
+        <hr />
+      </div>
+      <div class="col-12">
+        <app-school-address
+          [addressZoneType]="form.get('addressZoneType')"
+          [addressZone]="form.get('addressZone')"
+          [idState]="idState"
+          [state]="form.get('addressState')"
+          [control]="form.get('address')"
+          [municipality]="form.get('addressMunicipality')"
+          [addressCity]="form.get('addressCity')"
+          [submitted]="submitted"
+        ></app-school-address>
+      </div>
+      <div class="col-12">
+        <app-geo-map
+          (laT)="coordinate.latitude=$event"
+          (longT)="coordinate.longitude=$event"
+          [(longitude)]="coordinate.longitude"
+          [(latitude)]="coordinate.latitude"
+        ></app-geo-map>
+      </div>
+    </div>
+    <!-- / End data address -->
+
+    <!-- Data principal -->
+    <div class="row mt-3">
+      <div class="col-12">
+        <p class="text-info font-weight-bold mb-0">Datos del Director</p>
+        <hr />
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <app-input-name
+              [control]="form.get('principalFirstName')"
+              [label]="'Nombre del Director'"
+              [placeholder]="'Nombre del Director'"
+              [submitted]="submitted"
+              [id]="'principal-fistname'"
+            >
+            </app-input-name>
+          </div>
+          <div class="col-12 col-lg-6">
+            <app-input-last-name
+              [control]="form.get('principalLastName')"
+              [id]="'principal-lastname'"
+              [label]="'Apellido del Director'"
+              [placeholder]="'Apellido del Director'"
+              [submitted]="submitted"
+            >
+            </app-input-last-name>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <app-input-email
+              [control]="form.get('principalEmail')"
+              [label]="'Correo del Director'"
+              [placeholder]="'Correo del Director'"
+              [submitted]="submitted"
+              [id]="'principal-email'"
+            >
+            </app-input-email>
+          </div>
+          <div class="col-12 col-lg-6">
+            <app-input-phone
+              [control]="form.get('principalPhone')"
+              [placeholder]="'Teléfono del Director'"
+              [label]="'Teléfono del Director'"
+              [submitted]="submitted"
+              [id]="'principal-phone'"
+            >
+            </app-input-phone>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / End data principal -->
+
+    <div class="row">
+      <div class="col-12">
+        <hr />
+      </div>
+      <div class="col-12 col-lg-6">
+        <app-select-status
+          [control]="form.get('status')"
+          [submitted]="submitted"
+        >
+        </app-select-status>
+      </div>
+    </div>
+
+    <!-- More data -->
+    <div class="row form-group">
+      <div class="col-12">
+        <hr />
+      </div>
+      <div class="col-12">
+        <nb-accordion class="shadow-none border">
+          <nb-accordion-item>
+            <nb-accordion-item-header
+              >Información adicional</nb-accordion-item-header
+            >
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [patternMsg]="
+                      'Nombre inválido. Debes agregar solo letras en este campo'
+                    "
+                    [control]="form.get('subPrincipalFirstName')"
+                    [id]="'sub-principal-firstname'"
+                    [placeholder]="'Nombre del subdirector'"
+                    [label]="'Nombre del subdirector'"
+                    [submitted]="submitted"
+                  ></app-input-custom>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [patternMsg]="
+                      'Apellido inválido. Debes agregar solo letras en este campo'
+                    "
+                    [id]="'sub-principal-lastname'"
+                    [control]="form.get('subPrincipalLastName')"
+                    [placeholder]="'Apellido del subdirector'"
+                    [label]="'Apellido del subdirector'"
+                    [submitted]="submitted"
+                  ></app-input-custom>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [control]="form.get('subPrincipalPhone')"
+                    [patternMsg]="
+                      'Número telefónico inválido, ingrese sólo números'
+                    "
+                    [placeholder]="'Número de teléfono del subdirector'"
+                    [label]="'Número de teléfono del subdirector'"
+                    [submitted]="submitted"
+                    [id]="'sub-principal-phone'"
+                  ></app-input-custom>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [control]="form.get('subPrincipalEmail')"
+                    [patternMsg]="
+                      'El correo electrónico no corresponde a un formato correcto'
+                    "
+                    [id]="'sub-principal-email'"
+                    [label]="'Correo del subdirector'"
+                    [placeholder]="'Correo del subdirector'"
+                    [submitted]="submitted"
+                  ></app-input-custom>
+                </div>
+
+                <div class="col-12">
+                  <hr />
+                </div>
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [submitted]="submitted"
+                    [control]="form.get('nTeachers')"
+                    [patternMsg]="'Ingrese sólo números'"
+                    [id]="'n-teachers'"
+                    [placeholder]="'Cantidad de docentes'"
+                    [label]="'Cantidad de docentes'"
+                  ></app-input-custom>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [submitted]="submitted"
+                    [control]="form.get('nAdministrativeStaff')"
+                    [patternMsg]="'Ingrese sólo números'"
+                    [id]="'n-administractive-staff'"
+                    [placeholder]="'Cantidad de personal administrativo'"
+                    [label]="'Cantidad de personal administrativo'"
+                  ></app-input-custom>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [submitted]="submitted"
+                    [control]="form.get('nLaborStaff')"
+                    [patternMsg]="'Ingrese sólo números'"
+                    [id]="'n-labor-staff'"
+                    [placeholder]="'Cantidad del personal obrero'"
+                    [label]="'Cantidad del personal obrero'"
+                  ></app-input-custom>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [submitted]="submitted"
+                    [control]="form.get('nStudents')"
+                    [patternMsg]="'Ingrese sólo números'"
+                    [id]="'n-students-staff'"
+                    [placeholder]="'Cantidad de estudiantes'"
+                    [label]="'Cantidad de estudiantes'"
+                  ></app-input-custom>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [submitted]="submitted"
+                    [control]="form.get('nGrades')"
+                    [patternMsg]="'Ingrese sólo números'"
+                    [id]="'n-grades'"
+                    [placeholder]="'Cantidad de grados'"
+                    [label]="'Cantidad de grados'"
+                  ></app-input-custom>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <app-input-custom
+                    [control]="form.get('nSections')"
+                    [submitted]="submitted"
+                    [patternMsg]="'Ingrese sólo números'"
+                    [id]="'n-sections'"
+                    [placeholder]="'Cantidad de secciones'"
+                    [label]="'Cantidad de secciones'"
+                  ></app-input-custom>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <label for="sex" class="label">Turno de clases </label>
+                  <select
+                    formControlName="schoolShift"
+                    name="classTime"
+                    id="classTiem"
+                    class="form-control form-group"
+                  >
+                    <option value="null">- Seleccione un turno -</option>
+                    <option
+                      *ngFor="let item of classTime"
+                      [value]="item.value"
+                      >{{ item.label }}</option
+                    >
+                  </select>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <label for="sex" class="label">Tipo de escuela </label>
+                  <select
+                    formControlName="schoolType"
+                    name="typeSchool"
+                    id="typeSchool"
+                    class="form-control form-group"
+                  >
+                    <option value="null">- Seleccione un tipo -</option>
+                    <option
+                      *ngFor="let item of typeSchool"
+                      [value]="item.value"
+                      >{{ item.label }}</option
+                    >
+                  </select>
+                </div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+      </div>
+    </div>
+
+    <app-progress *ngIf="showProgress"></app-progress>
+  </form>
+  <!-- / End main content -->
+
+  <!-- Footer content -->
+  <button
+    nbButton
+    nbButton
+    [status]="MODE == ACTION.EDIT ? 'primary' : 'success'"
+    [attr.disabled]="showProgress ? true : null"
+    [nbSpinner]="showProgress ? true : null"
+    nbSpinnerStatus="success"
+    button
+    type="submit"
+    (click)="onSubmit()"
+    class="col-6 col-md-auto"
+  >
+    <span *ngIf="MODE == ACTION.CREATE && !showProgress">Guardar</span>
+    <span *ngIf="showProgress">Guardando...</span>
+    <span *ngIf="MODE == ACTION.EDIT && !showProgress">Editar</span>
+  </button>
+</app-modal>

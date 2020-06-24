@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Learning } from '../models/learning.model';
+import { Learning } from '../_models/learning.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 

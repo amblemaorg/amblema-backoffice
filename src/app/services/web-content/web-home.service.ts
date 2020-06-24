@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HomePages } from '../../models/web/web-home.model';
+import { HomePages } from '../../_models/web/web-home.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 

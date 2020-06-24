@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { Testimonial } from 'src/app/models/web/testimonial.model';
+import { Testimonial } from 'src/app/_models/web/testimonial.model';
 
 @Component({
   selector: 'app-testimonial-form',

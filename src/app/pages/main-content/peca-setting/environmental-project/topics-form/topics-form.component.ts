@@ -6,7 +6,7 @@ import {
   AfterViewChecked,
 } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { Topic } from 'src/app/models/environmental-project.model';
+import { Topic } from 'src/app/_models/environmental-project.model';
 import {
   AddTopic,
   EnvironmentalProjectState,

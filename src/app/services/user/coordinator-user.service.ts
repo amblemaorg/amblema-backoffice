@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { USER_TYPE } from 'src/app/helpers/convention/user-type';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { Observable } from 'rxjs';
-import { CoordinatorUser } from 'src/app/models/user/coordinator-user.model';
+import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 
@@ -12,8 +12,8 @@ import { map } from 'rxjs/operators';
 export class CoordinatorUserService {
 
   private readonly USER: string = `users`;
-  private readonly COORDINATOR_USER: string = `users?userType=${USER_TYPE.COORDINATOR.CODE}`;
-  private readonly USER_TYPE: string = `?userType=${USER_TYPE.COORDINATOR.CODE}`;
+  private readonly COORDINATOR_USER: string = `users?userType=${USER_TYPE.COORDINATOR.VALUE}`;
+  private readonly USER_TYPE: string = `?userType=${USER_TYPE.COORDINATOR.VALUE}`;
 
   constructor(private httpClient: HttpClient) { }
 

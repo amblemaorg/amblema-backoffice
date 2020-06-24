@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { Testimonial } from 'src/app/models/web/testimonial.model';
+import { Testimonial } from 'src/app/_models/web/testimonial.model';
 import {
   WebSponsorState,
   SetTestimonialWebSponsor,
@@ -9,7 +9,7 @@ import {
   SetWebSponsor
 } from 'src/app/store/web-content/web-sponsor.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebSponsor } from 'src/app/models/web/web-sponsor.model';
+import { WebSponsor } from 'src/app/_models/web/web-sponsor.model';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { WebSponsorService } from 'src/app/services/web-content/web-sponsor.service';

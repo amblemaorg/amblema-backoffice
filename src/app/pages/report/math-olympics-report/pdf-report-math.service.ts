@@ -1,7 +1,7 @@
 import { Inject } from '@angular/core';
 import { DOCUMENT, DatePipe } from '@angular/common';
 import { IMAGE } from '../img-base-64';
-import { OlympicsReport } from 'src/app/models/report/math-olympics-report.model';
+import { OlympicsReport } from 'src/app/_models/report/math-olympics-report.model';
 const pdfMake = require('pdfmake/build/pdfmake.js');
 const pdfFonts = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;

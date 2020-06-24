@@ -1,10 +1,10 @@
 import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
-import { WebHome } from '../../models/web/web-home.model';
+import { WebHome } from '../../_models/web/web-home.model';
 import { WebHomeService } from '../../services/web-content/web-home.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
-import { Slider } from '../../models/web/slider.model';
-import { Testimonial } from '../../models/web/testimonial.model';
+import { Slider } from '../../_models/web/slider.model';
+import { Testimonial } from '../../_models/web/testimonial.model';
 
 // -- Web Home class action --
 

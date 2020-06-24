@@ -12,8 +12,8 @@ import {
   SetWebAbout
 } from 'src/app/store/web-content/web-about.action';
 import { Observable, Subscription } from 'rxjs';
-import { WebAbout, Award } from 'src/app/models/web/web-about.model';
-import { Slider } from 'src/app/models/web/slider.model';
+import { WebAbout, Award } from 'src/app/_models/web/web-about.model';
+import { Slider } from 'src/app/_models/web/slider.model';
 import { WebAboutService } from 'src/app/services/web-content/web-about.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';

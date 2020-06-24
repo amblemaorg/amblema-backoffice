@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SchoolSettingsComponent } from './school-settings/school-settings.component';
-import { BaseTable, TableActions } from 'src/app/helpers/base-table';
+import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
 
 @Component({
   selector: 'app-schools',

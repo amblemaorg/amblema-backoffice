@@ -1,9 +1,9 @@
-import { Post } from '../../models/web/blog.model';
+import { Post } from '../../_models/web/blog.model';
 import { NgxsOnInit, StateContext, State, Action, Selector } from '@ngxs/store';
 import { BlogService } from '../../services/web-content/blog.service';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { append, updateItem, removeItem, patch } from '@ngxs/store/operators';
-import { Utility } from '../../helpers/utility';
+import { Utility } from '../../_helpers/utility';
 
 // -- Post Actions --
 

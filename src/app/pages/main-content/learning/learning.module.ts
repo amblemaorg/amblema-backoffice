@@ -13,19 +13,19 @@ import { SecondaryFormComponent } from './forms/secondary-form/secondary-form.co
 import { NgxMaskModule } from 'ngx-mask';
 import { SecondaryMediaFormComponent } from './forms/secondary-media-form/secondary-media-form.component';
 import { QuizzFormComponent } from './forms/quizz-form/quizz-form.component';
-import { ReactiveTextAreaModule } from '../../components/form-components/reactive-text-area/reactive-text-area.module';
-import { ModalStepperModule } from '../../components/shared/modal/modal-stepper/modal-stepper.module';
-import { ReactiveInputModule } from '../../components/form-components/reactive-input/reactive-input.module';
-import { FormSliderModule } from '../../components/form-components/forms/form-slider/form-slider.module';
-import { ReactiveInputFileModule } from '../../components/form-components/reactive-input-file/reactive-input-file.module';
+import { ReactiveTextAreaModule } from '../../_components/form-components/reactive-text-area/reactive-text-area.module';
+import { ModalStepperModule } from '../../_components/shared/modal/modal-stepper/modal-stepper.module';
+import { ReactiveInputModule } from '../../_components/form-components/reactive-input/reactive-input.module';
+import { FormSliderModule } from '../../_components/form-components/forms/form-slider/form-slider.module';
+import { ReactiveInputFileModule } from '../../_components/form-components/reactive-input-file/reactive-input-file.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FormVideoModule } from '../../components/form-components/forms/form-video/form-video.module';
+import { FormVideoModule } from '../../_components/form-components/forms/form-video/form-video.module';
 import { ViewLearningComponent } from './view-learning/view-learning.component';
-import { ModalModule } from '../../components/shared/modal/modal-forms/modal.module';
+import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { DropdownPriorityComponent } from './dropdown-priority/dropdown-priority.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ProgressModule } from '../../components/shared/progress/progress.module';
+import { ProgressModule } from '../../_components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [

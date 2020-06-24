@@ -55,7 +55,7 @@ export class SelectedSchoolUser {
             address: '',
             addressCity: '',
             code: '',
-
+           
             // Principal
             principalFirstName: '',
             principalLastName: '',
@@ -78,7 +78,6 @@ export class SelectedSchoolUser {
             nGrades: 0,
             nSections: 0,
             schoolShift: '',
-
             status: '',
             addressZone: '',
             addressZoneType: ''

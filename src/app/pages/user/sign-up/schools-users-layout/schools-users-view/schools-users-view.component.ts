@@ -32,8 +32,6 @@ export class SchoolsUsersViewComponent implements OnInit {
       this.data.phase = this.data.phase === '1' ? 'Inicio' :
       this.data.phase === '2' ? 'Interesado' : 'PECA';
 
-
-      console.log( response );
     });
   }
 

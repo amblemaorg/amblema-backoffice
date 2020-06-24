@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-import { Component, OnInit } from "@angular/core";
-import { BaseTable } from "src/app/helpers/base-table";
-import { ACTION } from "src/app/helpers/text-content/text-crud";
-import { Select, Store } from "@ngxs/store";
-=======
 import { Component, OnInit } from '@angular/core';
 import { BaseTable } from 'src/app/_helpers/base-table';
 import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
->>>>>>> cad9bff4f06b129f916596bbef7c0b292423c5bf
 
 import { Observable } from "rxjs";
 import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
@@ -16,38 +9,16 @@ import { DatePipe } from "@angular/common";
 import {
   TYPE_REQUEST,
   REQUEST_STATUS,
-<<<<<<< HEAD
-} from "src/app/helpers/convention/request-status";
-import { Utility } from "src/app/helpers/utility";
-import { NbDialogService } from "@nebular/theme";
-import { InformationDetailsComponent } from "./information-details/information-details.component";
-import { InformationRequestService } from "src/app/services/request/information-request.service";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
-=======
 } from 'src/app/_helpers/convention/request-status';
 import { Utility } from 'src/app/_helpers/utility';
 import { NbDialogService } from '@nebular/theme';
 import { InformationDetailsComponent } from './information-details/information-details.component';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
->>>>>>> cad9bff4f06b129f916596bbef7c0b292423c5bf
 import {
   RequestContentState,
   SelectedRequestContent,
   DeleteRequestContent,
-<<<<<<< HEAD
-} from "src/app/store/request/request-content-approval.action";
-import { RequestContent } from "src/app/models/request/request-content-approval.model";
-import { TYPE_INFORMATION } from "./_shared/type-information";
-import { ModalService } from "src/app/services/helper/modal.service";
-import { ActivityDetailsComponent } from "./activity-details/activity-details.component";
-import { SliderDetailsComponent } from "./slider-details/slider-details.component";
-import { USER_TYPE } from "src/app/helpers/convention/user-type";
-import { TestimonyDetailsComponent } from "./testimony-details/testimony-details.component";
-import { ActivatedRoute } from "@angular/router";
-import { SpecialActivityDetailsComponent } from "./special-activity-details/special-activity-details.component";
-import { YearbookDetailsComponent } from "./yearbook-details/yearbook-details.component";
-=======
 } from 'src/app/store/request/request-content-approval.action';
 import { RequestContent } from 'src/app/_models/request/request-content-approval.model';
 import { TYPE_INFORMATION } from './_shared/type-information';
@@ -58,7 +29,7 @@ import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 import { ActivatedRoute } from '@angular/router';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
->>>>>>> cad9bff4f06b129f916596bbef7c0b292423c5bf
+import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
 
 @Component({
   selector: "app-requests-validate-information",

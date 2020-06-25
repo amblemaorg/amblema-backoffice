@@ -6,9 +6,8 @@ import { InformationDetailsComponent } from '../information-details/information-
   templateUrl: './yearbook-details.component.html',
   styleUrls: [`./yearbook-details.component.scss`],
 })
-export class YearbookDetailsComponent extends InformationDetailsComponent
-  implements OnInit {
-  ngOnInit(): void {
-    this.data$.subscribe((response) => console.log(response));
-  }
+export class YearbookDetailsComponent extends InformationDetailsComponent {
+  // ngOnInit(): void {
+  //   this.data$.subscribe((response) => console.log(response));
+  // }
 }

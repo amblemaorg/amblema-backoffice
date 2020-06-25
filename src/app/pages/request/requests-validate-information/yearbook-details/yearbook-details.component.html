@@ -1,205 +1,209 @@
-<nb-card class="mx-5">
-  <nb-card-header>
-    Validación de información
-  </nb-card-header>
-  <nb-card-body>
-    <!-- General info Request -->
-    <div id="container-general-info">
-      <p class="text-info font-weight-bold">Informacion general</p>
-      <div id="list-container" class="d-sm-flex">
-        <ul class="list-unstyled d-inline-block">
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold"> Código de la solicitud: </span>
-            <span> {{ (data$ | async)?.code }}</span>
-          </li>
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold"> Solicitante: </span>
-            <span> {{ (data$ | async)?.user.name }}</span>
-          </li>
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold">Fecha de la solicitud: </span>
-            <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
-          </li>
-        </ul>
+<div class="modal-header">
+  <h6 class="modal-title pull-left">Validación de información</h6>
+</div>
+<div class="modal-body">
+  <!-- General info Request -->
+  <div id="container-general-info">
+    <p class="text-info font-weight-bold">Informacion general</p>
+    <div id="list-container" class="d-sm-flex">
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold"> Código de la solicitud: </span>
+          <span> {{ (data$ | async)?.code }}</span>
+        </li>
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold"> Solicitante: </span>
+          <span> {{ (data$ | async)?.user.name }}</span>
+        </li>
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold">Fecha de la solicitud: </span>
+          <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
+        </li>
+      </ul>
 
-        <ul class="list-unstyled d-inline-block">
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold">Codigo del proyecto: </span>
-            <span> {{ (data$ | async)?.project.code }}</span>
-          </li>
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold">Coordinador: </span>
-            <span>
-              {{
-                (data$ | async)?.project.coordinator.name
-                  ? (data$ | async)?.project.coordinator.name
-                  : "Sin coordinador"
-              }}</span
-            >
-          </li>
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold">Escuela: </span>
-            <span>
-              {{
-                (data$ | async)?.project.school.name
-                  ? (data$ | async)?.project.school.name
-                  : "Sin escuela"
-              }}</span
-            >
-          </li>
-        </ul>
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold">Codigo del proyecto: </span>
+          <span> {{ (data$ | async)?.project.code }}</span>
+        </li>
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold">Coordinador: </span>
+          <span>
+            {{
+              (data$ | async)?.project.coordinator.name
+                ? (data$ | async)?.project.coordinator.name
+                : "Sin coordinador"
+            }}</span
+          >
+        </li>
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold">Escuela: </span>
+          <span>
+            {{
+              (data$ | async)?.project.school.name
+                ? (data$ | async)?.project.school.name
+                : "Sin escuela"
+            }}</span
+          >
+        </li>
+      </ul>
 
-        <ul class="list-unstyled d-inline-block">
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold">Padrino: </span>
-            <span>
-              {{
-                (data$ | async)?.project.sponsor.name
-                  ? (data$ | async)?.project.sponsor.name
-                  : "Sin padrino"
-              }}</span
-            >
-          </li>
-        </ul>
-      </div>
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold">Padrino: </span>
+          <span>
+            {{
+              (data$ | async)?.project.sponsor.name
+                ? (data$ | async)?.project.sponsor.name
+                : "Sin padrino"
+            }}</span
+          >
+        </li>
+      </ul>
     </div>
+  </div>
 
-    <!-- User historical preview -->
-    <div id="container-user-historical-preview">
-      <p class="text-info font-weight-bold">Información de usuario</p>
+  <hr>
 
-      <!-- Users -->
-      <div class="row">
-        <div class="col-lg-6 col-xl-4 mb-4">
-          <label class="label">Coordinador</label>
-          <div class="media">
-            <img
-              class="mr-3 img-fluid"
-              [src]="(data$ | async)?.detail.coordinator.image"
-              [alt]="(data$ | async)?.detail.coordinator.name"
-            />
-            <div class="media-body">
-              <p class="mt-0 font-weight-bold">
-                {{
-                  (data$ | async)?.detail.coordinator.name
-                    ? (data$ | async)?.detail.coordinator.name
-                    : "Sin coordinador"
-                }}
-              </p>
+  <!-- User historical preview -->
+  <div id="container-user-historical-preview">
+    <p class="text-info font-weight-bold">Información de usuario</p>
+
+    <!-- Users -->
+    <div class="row">
+      <div class="col-lg-6 col-xl-4 mb-4">
+        <label class="label">Coordinador</label>
+        <div class="media">
+          <img
+            class="mr-3 img-fluid"
+            [src]="(data$ | async)?.detail.coordinator.image"
+            [alt]="(data$ | async)?.detail.coordinator.name"
+          />
+          <div class="media-body">
+            <p class="mt-0 font-weight-bold">
               {{
-                (data$ | async)?.detail.coordinator.content
-                  ? (data$ | async)?.detail.coordinator.content
-                  : "Sin contenido"
+                (data$ | async)?.detail.coordinator.name
+                  ? (data$ | async)?.detail.coordinator.name
+                  : "Sin coordinador"
               }}
-            </div>
+            </p>
+            {{
+              (data$ | async)?.detail.coordinator.content
+                ? (data$ | async)?.detail.coordinator.content
+                : "Sin contenido"
+            }}
           </div>
         </div>
+      </div>
 
-        <div class="col-lg-6 col-xl-4 mb-4">
-          <label class="label">Escuela</label>
-          <div class="media">
-            <img
-              class="mr-3 img-fluid"
-              [src]="(data$ | async)?.detail.school.image"
-              [alt]="(data$ | async)?.detail.school.name"
-            />
-            <div class="media-body">
-              <p class="mt-0 font-weight-bold">
-                {{
-                  (data$ | async)?.detail.school.name
-                    ? (data$ | async)?.detail.school.name
-                    : "Sin escuela"
-                }}
-              </p>
+      <div class="col-lg-6 col-xl-4 mb-4">
+        <label class="label">Escuela</label>
+        <div class="media">
+          <img
+            class="mr-3 img-fluid"
+            [src]="(data$ | async)?.detail.school.image"
+            [alt]="(data$ | async)?.detail.school.name"
+          />
+          <div class="media-body">
+            <p class="mt-0 font-weight-bold">
               {{
-                (data$ | async)?.detail.school.content
-                  ? (data$ | async)?.detail.school.content
-                  : "Sin contenido"
+                (data$ | async)?.detail.school.name
+                  ? (data$ | async)?.detail.school.name
+                  : "Sin escuela"
               }}
-            </div>
+            </p>
+            {{
+              (data$ | async)?.detail.school.content
+                ? (data$ | async)?.detail.school.content
+                : "Sin contenido"
+            }}
           </div>
         </div>
+      </div>
 
-        <div class="col-lg-6 col-xl-4 mb-4">
-          <label class="label">Padrino</label>
-          <div class="media">
-            <img
-              class="mr-3 img-fluid"
-              [src]="(data$ | async)?.detail.sponsor.image"
-              [alt]="(data$ | async)?.detail.sponsor.name"
-            />
-            <div class="media-body">
-              <p class="mt-0 font-weight-bold">
-                {{
-                  (data$ | async)?.detail.sponsor.name
-                    ? (data$ | async)?.detail.sponsor.name
-                    : "Sin padrino"
-                }}
-              </p>
+      <div class="col-lg-6 col-xl-4 mb-4">
+        <label class="label">Padrino</label>
+        <div class="media">
+          <img
+            class="mr-3 img-fluid"
+            [src]="(data$ | async)?.detail.sponsor.image"
+            [alt]="(data$ | async)?.detail.sponsor.name"
+          />
+          <div class="media-body">
+            <p class="mt-0 font-weight-bold">
               {{
-                (data$ | async)?.detail.sponsor.content
-                  ? (data$ | async)?.detail.sponsor.content
-                  : "Sin contenido"
+                (data$ | async)?.detail.sponsor.name
+                  ? (data$ | async)?.detail.sponsor.name
+                  : "Sin padrino"
               }}
-            </div>
+            </p>
+            {{
+              (data$ | async)?.detail.sponsor.content
+                ? (data$ | async)?.detail.sponsor.content
+                : "Sin contenido"
+            }}
           </div>
         </div>
+      </div>
 
-        <div class="col-lg-6 col-xl-4 mb-4">
-          <label class="label">Reseña histórica</label>
-          <div class="media">
-            <img
-              class="mr-3 img-fluid"
-              *ngIf="(data$ | async)?.detail.historicalReview.image"
-              [src]="(data$ | async)?.detail.historicalReview.image"
-              [alt]="
+      <div class="col-lg-6 col-xl-4 mb-4">
+        <label class="label">Reseña histórica</label>
+        <div class="media">
+          <img
+            class="mr-3 img-fluid"
+            *ngIf="(data$ | async)?.detail.historicalReview.image"
+            [src]="(data$ | async)?.detail.historicalReview.image"
+            [alt]="
+              (data$ | async)?.detail.historicalReview.name
+                ? (data$ | async)?.detail.historicalReview.name
+                : 'Sin text alternativo'
+            "
+          />
+          <span
+            *ngIf="!(data$ | async)?.detail.historicalReview.image"
+            class="text-warning"
+            >Sin imagen</span
+          >
+          <div class="media-body">
+            <p class="mt-0 font-weight-bold">
+              {{
                 (data$ | async)?.detail.historicalReview.name
                   ? (data$ | async)?.detail.historicalReview.name
-                  : 'Sin text alternativo'
-              "
-            />
-            <span
-              *ngIf="!(data$ | async)?.detail.historicalReview.image"
-              class="text-warning"
-              >Sin imagen</span
-            >
-            <div class="media-body">
-              <p class="mt-0 font-weight-bold">
-                {{
-                  (data$ | async)?.detail.historicalReview.name
-                    ? (data$ | async)?.detail.historicalReview.name
-                    : "Sin titulo en la reseña"
-                }}
-              </p>
-              {{
-                (data$ | async)?.detail.historicalReview.content
-                  ? (data$ | async)?.detail.historicalReview.content
-                  : "Sin reseña"
+                  : "Sin titulo en la reseña"
               }}
-            </div>
+            </p>
+            {{
+              (data$ | async)?.detail.historicalReview.content
+                ? (data$ | async)?.detail.historicalReview.content
+                : "Sin reseña"
+            }}
           </div>
         </div>
       </div>
-
-      <!-- Supplementary data -->
-      <div class="d-sm-flex">
-        <ul class="list-unstyled d-inline-block">
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold"> ¿Está en aprobación?: </span>
-            <span>
-              {{ (data$ | async)?.detail.isInApproval ? "Si" : "No" }}</span
-            >
-          </li>
-        </ul>
-        <ul class="list-unstyled d-inline-block">
-          <li class="d-md-flex justify-content-between">
-            <span class="font-weight-bold"> Última actualización: </span>
-            <span>
-              {{ (data$ | async)?.detail.updatedAt | date: "dd/MM/yyyy" }}</span
-            >
-          </li>
-        </ul>
-      </div>
     </div>
-  </nb-card-body>
-</nb-card>
+
+    <!-- Supplementary data -->
+    <div class="d-sm-flex">
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold"> ¿Está en aprobación?: </span>
+          <span>
+            {{ (data$ | async)?.detail.isInApproval ? "Si" : "No" }}</span
+          >
+        </li>
+      </ul>
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-md-flex justify-content-between">
+          <span class="font-weight-bold"> Última actualización: </span>
+          <span>
+            {{ (data$ | async)?.detail.updatedAt | date: "dd/MM/yyyy" }}</span
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  ...
+</div>
+ 

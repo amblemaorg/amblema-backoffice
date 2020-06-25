@@ -25,6 +25,7 @@ import { TestimonyDetailsComponent } from './testimony-details/testimony-details
 import { ProgressModule } from '../../_components/shared/progress/progress.module';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
 import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   entryComponents: [
@@ -54,6 +55,7 @@ import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.co
     NbButtonModule,
     CommonModule,
     NbAlertModule,
+    ModalModule.forRoot(),
     ProgressModule,
     NbInputModule,
     RequestsValidateInformationRoutingModule,

@@ -30,6 +30,7 @@ import { TestimonyDetailsComponent } from './testimony-details/testimony-details
 import { ActivatedRoute } from '@angular/router';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
 import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -49,7 +50,8 @@ export class RequestsValidateInformationComponent extends BaseTable
     private modal: ModalService,
     private router: ActivatedRoute,
     private serviceInformation: InformationRequestService,
-    private helper: Utility
+    private helper: Utility,
+    private modalService: BsModalService
   ) {
     super();
 
@@ -225,60 +227,48 @@ export class RequestsValidateInformationComponent extends BaseTable
           this.store.dispatch(new SelectedRequestContent(query));
         });
 
-        switch (query.type) {
-          case TYPE_INFORMATION.STEP:
-            this.dialogService.open(InformationDetailsComponent);
-            break;
-          case TYPE_INFORMATION.TESTIMONIES:
-            this.dialogService.open(TestimonyDetailsComponent);
-            break;
-          case TYPE_INFORMATION.ACTIVITY:
-            this.dialogService.open(ActivityDetailsComponent);
-            break;
-          case TYPE_INFORMATION.SLIDER:
-            this.dialogService.open(SliderDetailsComponent);
-            break;
-          case TYPE_INFORMATION.WORKSHOP:
-            this.modal.open('initial-workshop-modal');
-            break;
-          case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
-            this.dialogService.open(SpecialActivityDetailsComponent);
-            break;
-          case TYPE_INFORMATION.YEARBOOK:
-            this.dialogService.open(YearbookDetailsComponent);
-            break;
-        }
+        this.showModalDetails(query.type);
       }
     });
+  }
+
+  private showModalDetails(type: string): void {
+    switch (type) {
+      case TYPE_INFORMATION.STEP:
+        this.modalService.show(
+          InformationDetailsComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
+        break;
+      case TYPE_INFORMATION.TESTIMONIES:
+        this.dialogService.open(TestimonyDetailsComponent);
+        break;
+      case TYPE_INFORMATION.ACTIVITY:
+        this.dialogService.open(ActivityDetailsComponent);
+        break;
+      case TYPE_INFORMATION.SLIDER:
+        this.dialogService.open(SliderDetailsComponent);
+        break;
+      case TYPE_INFORMATION.WORKSHOP:
+        this.modal.open('initial-workshop-modal');
+        break;
+      case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
+        this.dialogService.open(SpecialActivityDetailsComponent);
+        break;
+      case TYPE_INFORMATION.YEARBOOK:
+        this.modalService.show(
+          YearbookDetailsComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
+        break;
+    }
   }
 
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        switch (event.data.type) {
-          case TYPE_INFORMATION.STEP:
-            this.dialogService.open(InformationDetailsComponent);
-            break;
-          case TYPE_INFORMATION.TESTIMONIES:
-            this.dialogService.open(TestimonyDetailsComponent);
-            break;
-          case TYPE_INFORMATION.ACTIVITY:
-            this.dialogService.open(ActivityDetailsComponent);
-            break;
-          case TYPE_INFORMATION.SLIDER:
-            this.dialogService.open(SliderDetailsComponent);
-            break;
-          case TYPE_INFORMATION.WORKSHOP:
-            this.modal.open('initial-workshop-modal');
-            break;
-          case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY:
-            this.dialogService.open(SpecialActivityDetailsComponent);
-            break;
-          case TYPE_INFORMATION.YEARBOOK:
-            this.dialogService.open(YearbookDetailsComponent);
-            break;
-        }
-
+        console.log( event.data );
+        this.showModalDetails(event.data.type);
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:

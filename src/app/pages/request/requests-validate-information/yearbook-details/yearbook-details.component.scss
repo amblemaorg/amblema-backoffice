@@ -1,12 +1,12 @@
 #list-container {
   ul {
     margin-right: 2rem;
-
-    @media (min-width: 768px) {
-      width: auto !important;
-    }
     @media (min-width: 0px) {
       width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      width: -webkit-fill-available;
     }
 
     &:last-child {
@@ -37,7 +37,13 @@
 
 #container-user-historical-preview {
   img {
-    width: 10rem;
+    width: 8rem;
+    height: 8rem;
     object-fit: contain;
+  }
+
+  ul {
+    margin-right: 2rem;
+    span { margin-right: 1rem; }
   }
 }

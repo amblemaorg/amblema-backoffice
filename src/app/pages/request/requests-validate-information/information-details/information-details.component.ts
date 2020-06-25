@@ -9,6 +9,7 @@ import {
   UpdateRequestContent,
 } from 'src/app/store/request/request-content-approval.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-information-details',
@@ -29,10 +30,11 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   public showProgress = false;
 
   constructor(
+    public bsModalRef: BsModalRef,
+    private modalService: BsModalService,
     protected serviceRequestStepApproval?: InformationRequestService,
     protected store?: Store,
-    protected toastr?: CustomToastrService,
-    protected dialogRef?: NbDialogRef<InformationDetailsComponent>
+    protected toastr?: CustomToastrService
   ) {}
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   }
 
   onClose() {
-    this.dialogRef.close();
+    this.bsModalRef.hide();
   }
 
   onApprovedRequest() {

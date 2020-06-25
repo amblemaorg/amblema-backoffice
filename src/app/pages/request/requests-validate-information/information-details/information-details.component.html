@@ -69,10 +69,48 @@
   <div>
     <p class="text-info font-weight-bold">Información del paso</p>
     <div class="d-lg-flex">
+      <ul class="list-unstyled d-inline-block">
+        <!-- Date -->
+        <li
+          *ngIf="(data$ | async)?.detail.stepHasDate"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Campo fecha: </span>
+          <span>
+            {{ (data$ | async)?.detail.stepDate | date: "dd/MM/yyyy" }}</span
+          >
+        </li>
+        <li
+          *ngIf="!(data$ | async)?.detail.stepHasDate"
+          class="d-sm-flex justify-content-between font-weight-bold"
+        >
+          Sin campo fecha
+        </li>
+
+        <!-- File - field -->
+        <li
+          *ngIf="(data$ | async)?.detail.stepHasFile"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Campo archivo: </span>
+          <span>
+            <a
+              target="_blank"
+              [attr.href]="(data$ | async)?.detail.stepFile.url"
+              >{{ (data$ | async)?.detail.stepFile.name }}</a
+            ></span
+          >
+        </li>
+        <li
+          *ngIf="!(data$ | async)?.detail.stepHasFile"
+          class="d-sm-flex justify-content-between font-weight-bold"
+        >
+          Sin campo carga de archivo
+        </li>
+      </ul>
+
       <!-- Check list -->
-      <ul
-        class="list-unstyled d-inline-block"
-      >
+      <ul class="list-unstyled d-inline-block">
         <li
           *ngFor="let item of (data$ | async)?.detail.stepChecklist"
           class="d-sm-flex justify-content-between"
@@ -87,13 +125,53 @@
           Sin campo de lista
         </li>
       </ul>
-
-      <!-- Date -->
     </div>
   </div>
 
   <!-- <div class="row">
-    <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
+    
+
+    <div class="col-12"><hr /></div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasText">
+      <p class="d-flex w-100">
+        <span class="pl-0 font-weight-bold col-5">Texto:</span>
+        {{ data.detail.stepText }}
+      </p>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasUpload">
+      <p class="d-flex w-100" *ngIf="data.detail.stepUploadedFile">
+        <span class="pl-0 font-weight-bold col-5"
+          >Archivo cargado por el usuario:</span
+        >
+        <a target="_blank" [attr.href]="data.detail.stepUploadedFile.url">{{
+          data.detail.stepUploadedFile.name
+        }}</a>
+      </p>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasFile">
+      <p class="d-flex w-100" *ngIf="data.detail.stepFile">
+        <span class="pl-0 font-weight-bold col-5"
+          >Archivo cargar desde administrador:</span
+        >
+        <a target="_blank" [attr.href]="data.detail.stepFile.url">{{
+          data.detail.stepFile.name
+        }}</a>
+      </p>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasDate">
+      <p class="d-flex w-100">
+        <span class="pl-0 font-weight-bold col-5">Fecha:</span>
+        {{ data.detail.createdAt | date: "dd/MM/yyyy" }}
+      </p>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasChecklist">
+      <p class="d-flex w-100">
+        <span class="pl-0 font-weight-bold col-<div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
       <p class="d-flex w-100">
         <span class="pl-0 font-weight-bold col-5">Padrino:</span>
         {{ data.project.sponsor.name }}
@@ -145,49 +223,7 @@
             : "Escuela"
         }}
       </p>
-    </div>
-
-    <div class="col-12"><hr /></div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasText">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Texto:</span>
-        {{ data.detail.stepText }}
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasUpload">
-      <p class="d-flex w-100" *ngIf="data.detail.stepUploadedFile">
-        <span class="pl-0 font-weight-bold col-5"
-          >Archivo cargado por el usuario:</span
-        >
-        <a target="_blank" [attr.href]="data.detail.stepUploadedFile.url">{{
-          data.detail.stepUploadedFile.name
-        }}</a>
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasFile">
-      <p class="d-flex w-100" *ngIf="data.detail.stepFile">
-        <span class="pl-0 font-weight-bold col-5"
-          >Archivo cargar desde administrador:</span
-        >
-        <a target="_blank" [attr.href]="data.detail.stepFile.url">{{
-          data.detail.stepFile.name
-        }}</a>
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasDate">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Fecha:</span>
-        {{ data.detail.createdAt | date: "dd/MM/yyyy" }}
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasChecklist">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">List de opciones:</span>
+    </div>5">List de opciones:</span>
       </p>
       <ul>
         <li *ngFor="let item of data.detail.stepChecklist">

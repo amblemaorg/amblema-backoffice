@@ -31,11 +31,13 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     public bsModalRef: BsModalRef,
-    private modalService: BsModalService,
-    protected serviceRequestStepApproval?: InformationRequestService,
-    protected store?: Store,
-    protected toastr?: CustomToastrService
-  ) {}
+    public modalService: BsModalService,
+    public serviceRequestStepApproval?: InformationRequestService,
+    public store?: Store,
+    public toastr?: CustomToastrService,
+    
+    
+    ) {}
 
   ngOnInit() {
     this.subscription = this.data$.subscribe((response) => {

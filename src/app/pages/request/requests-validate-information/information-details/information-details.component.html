@@ -59,6 +59,20 @@
             }}</span
           >
         </li>
+
+        <!-- Tag -->
+        <li class="d-sm-flex justify-content-between">
+          <span class="font-weight-bold">Etiqueta</span>
+          <span>{{
+            (data$ | async)?.detail.stepTag === "1"
+              ? "General"
+              : (data$ | async)?.detail.stepTag === "2"
+              ? "Coordinador"
+              : (data$ | async)?.detail.stepTag === "3"
+              ? "Padrino"
+              : "Escuela"
+          }}</span>
+        </li>
       </ul>
     </div>
   </div>
@@ -70,6 +84,12 @@
     <p class="text-info font-weight-bold">Información del paso</p>
     <div class="d-lg-flex">
       <ul class="list-unstyled d-inline-block">
+        <!-- Name -->
+        <li class="d-sm-flex justify-content-between">
+          <span class="font-weight-bold"> Nombre: </span>
+          <span> {{ (data$ | async)?.detail.stepName }}</span>
+        </li>
+
         <!-- Date -->
         <li
           *ngIf="(data$ | async)?.detail.stepHasDate"
@@ -109,6 +129,59 @@
         </li>
       </ul>
 
+      <ul class="list-unstyled d-inline-block">
+        <!-- Text -->
+        <li
+          *ngIf="(data$ | async)?.detail.stepHasText"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Texto: </span>
+          <span> {{ (data$ | async)?.detail.stepText }}</span>
+        </li>
+        <li
+          *ngIf="!(data$ | async)?.detail.stepHasText"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Sin campo texto </span>
+        </li>
+
+        <!-- Uploaded file -->
+        <li
+          *ngIf="(data$ | async)?.detail.stepHasUpload"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Campo - Archivo adjunto: </span>
+          <span>
+            <a
+              target="_blank"
+              [attr.href]="(data$ | async)?.detail.stepUploadedFile.url"
+              >{{ (data$ | async)?.detail.stepUploadedFile.name }}</a
+            ></span
+          >
+        </li>
+        <li
+          *ngIf="!(data$ | async)?.detail.stepHasUpload"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Sin campo </span>
+        </li>
+
+        <!-- Video -->
+        <li
+          *ngIf="(data$ | async)?.detail.stepHasVideo"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Video: </span>
+          <span> {{ (data$ | async)?.detail.stepVideo }}</span>
+        </li>
+        <li
+          *ngIf="!(data$ | async)?.detail.stepHasVideo"
+          class="d-sm-flex justify-content-between"
+        >
+          <span class="font-weight-bold"> Sin campo video </span>
+        </li>
+      </ul>
+
       <!-- Check list -->
       <ul class="list-unstyled d-inline-block">
         <li
@@ -128,196 +201,84 @@
     </div>
   </div>
 
-  <!-- <div class="row">
-    
-
-    <div class="col-12"><hr /></div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasText">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Texto:</span>
-        {{ data.detail.stepText }}
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasUpload">
-      <p class="d-flex w-100" *ngIf="data.detail.stepUploadedFile">
-        <span class="pl-0 font-weight-bold col-5"
-          >Archivo cargado por el usuario:</span
+  <div>
+    <div *ngIf="(data$ | async)?.status === '1'">
+      <hr />
+      <div *ngIf="confirmAction">
+        <label class="label"> Acciones para la solicitud</label>
+        <select
+          [(ngModel)]="statusSelected"
+          (change)="statusSelected = $event.target.value"
+          class="form-control form-group"
         >
-        <a target="_blank" [attr.href]="data.detail.stepUploadedFile.url">{{
-          data.detail.stepUploadedFile.name
-        }}</a>
-      </p>
-    </div>
+          <option value="2">Aceptar</option>
+          <option value="3">Rechazar</option>
+        </select>
+      </div>
 
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasFile">
-      <p class="d-flex w-100" *ngIf="data.detail.stepFile">
-        <span class="pl-0 font-weight-bold col-5"
-          >Archivo cargar desde administrador:</span
+      <app-progress
+        *ngIf="showProgress"
+        (finish)="showProgress = false"
+      ></app-progress>
+
+      <div class="w-100 text-right justify-content-end">
+        <button
+          class="col-12 col-lg-auto"
+          nbButton
+          *ngIf="confirmAction"
+          status="primary"
+          (click)="confirmAction = false"
         >
-        <a target="_blank" [attr.href]="data.detail.stepFile.url">{{
-          data.detail.stepFile.name
-        }}</a>
-      </p>
-    </div>
+          Proceder
+        </button>
 
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasDate">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Fecha:</span>
-        {{ data.detail.createdAt | date: "dd/MM/yyyy" }}
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasChecklist">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-<div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Padrino:</span>
-        {{ data.project.sponsor.name }}
-      </p>
-    </div>
-
-    <div *ngIf="data.project.coordinator" class="col-12 col-md-6 col-lg-4">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
-        {{ data.project.coordinator.name }}
-      </p>
-    </div>
-
-    <div *ngIf="data.project.school" class="col-12 col-md-6 col-lg-4">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Escuela:</span>
-        {{ data.project.school.name }}
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Fecha de la solicitud:</span>
-        {{ data.createdAt | date: "dd/MM/yyyy" }}
-      </p>
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Nombre del paso:</span>
-        {{ data.detail.stepName }}
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Código del proyecto:</span>
-        {{ data.project.code }}
-      </p>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Tag:</span>
-        {{
-          data.stepTag === "1"
-            ? "General"
-            : data.stepTag === "2"
-            ? "Coordinador"
-            : data.stepTag === "3"
-            ? "Padrino"
-            : "Escuela"
-        }}
-      </p>
-    </div>5">List de opciones:</span>
-      </p>
-      <ul>
-        <li *ngFor="let item of data.detail.stepChecklist">
-          {{ item.name }} - {{ checked ? "Seleccionado" : "No Seleccionado" }}
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4" *ngIf="data.detail.stepHasVideo">
-      <p class="d-flex w-100">
-        <span class="pl-0 font-weight-bold col-5">Video:</span>
-        {{ data.detail.stepVideo }}
-      </p>
-    </div>
-
-    <div class="col-12">
-      <div *ngIf="(data$ | async)?.status === '1'">
-        <hr />
-        <div *ngIf="confirmAction">
-          <label class="label"> Acciones para la solicitud</label>
-          <select
-            [(ngModel)]="statusSelected"
-            (change)="statusSelected = $event.target.value"
-            class="form-control form-group"
+        <div *ngIf="!confirmAction">
+          <nb-alert status="info" class="text-left"
+            >Confirmar acción, al aprobar o rechazar esta solicitud no se podrá
+            cambiar de estatus.</nb-alert
           >
-            <option value="2">Aceptar</option>
-            <option value="3">Rechazar</option>
-          </select>
-        </div>
 
-        <app-progress
-          *ngIf="showProgress"
-          (finish)="showProgress = false"
-        ></app-progress>
+          <div *ngIf="statusSelected === '3'" class="text-left">
+            <label class="label">Comentario</label>
+            <textarea
+              fullWidth
+              class="form-group"
+              placeholder="Comentario"
+              rows="5"
+              [(ngModel)]="comment"
+              nbInput
+            ></textarea>
+          </div>
 
-        <div class="w-100 text-right justify-content-end">
-          <button
-            class="col-12 col-md-auto"
-            nbButton
-            *ngIf="confirmAction"
-            status="primary"
-            (click)="confirmAction = false"
-          >
-            Proceder
-          </button>
-
-          <div *ngIf="!confirmAction">
-            <nb-alert status="info" class="text-left"
-              >Confirmar acción, al aprobar o rechazar esta solicitud no se
-              podrá cambiar de estatus.</nb-alert
-            >
-
-            <div *ngIf="statusSelected === '3'" class="text-left">
-              <label class="label">Comentario</label>
-              <textarea
+          <div class="row justify-content-end">
+            <div class="col-6 col-lg-auto">
+              <button
+                (click)="onApprovedRequest()"
+                nbButton
                 fullWidth
-                class="form-group"
-                placeholder="Comentario"
-                rows="5"
-                [(ngModel)]="comment"
-                nbInput
-              ></textarea>
+                *ngIf="!confirmAction"
+                status="danger"
+              >
+                Confirmar
+              </button>
             </div>
-
-            <div class="row justify-content-end">
-              <div class="col-6 col-md-auto">
-                <button
-                  (click)="onApprovedRequest()"
-                  nbButton
-                  fullWidth
-                  *ngIf="!confirmAction"
-                  status="danger"
-                >
-                  Confirmar
-                </button>
-              </div>
-              <div class="col-6 col-md-auto">
-                <button
-                  nbButton
-                  outline
-                  fullWidth
-                  *ngIf="!confirmAction"
-                  status="basic"
-                  (click)="confirmAction = true"
-                >
-                  Cancelar
-                </button>
-              </div>
+            <div class="col-6 col-lg-auto">
+              <button
+                nbButton
+                outline
+                fullWidth
+                *ngIf="!confirmAction"
+                status="basic"
+                (click)="confirmAction = true"
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </div>
 <div class="modal-footer">
   <button

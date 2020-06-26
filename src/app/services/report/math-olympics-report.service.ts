@@ -28,6 +28,6 @@ export class MathOlympicsReportService {
   getSchoolYears(): Observable<any> {
     return this.httpClient
       .get<any>(`${environment.api}${this.SCHOOL_YEARS}`)
-      .pipe(map((data: any) => data.records));
+      .pipe(map((data: any) => data.dates));
   }
 }

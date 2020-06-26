@@ -1,4 +1,45 @@
-a {
-    word-break: break-all;
-    white-space: normal;
+ul {
+  @media (min-width: 0px) {
+    width: 100%;
+    margin-right: 0rem;
+  }
+
+  @media (min-width: 992px) {
+    width: -webkit-fill-available;
+    margin-right: 2rem;
+  }
+
+  &:last-child {
+    margin-right: 0rem;
+  }
+
+  li {
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0rem;
+    }
+    span {
+      margin-right: 1rem;
+      text-align: left;
+    }
+
+    a {
+      word-break: break-all;
+      white-space: normal;
+    }
+
+    span + * {
+      @media (min-width: 0px) {
+        //display: block;
+          //text-align: left;
+          text-align: right;
+      }
+
+      @media (min-width: 768px) {
+        display: inline-flex;
+        text-align: right;
+      }
+      margin-right: 0;
+    }
+  }
 }

@@ -1,188 +1,205 @@
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="initial-workshop-modal"
-  tabindex="-1"
-  #modal
-  role="dialog"
-  aria-labelledby="modelTitleId"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <nb-card class="mb-0">
-        <nb-card-header>
-          Validación de información
-        </nb-card-header>
-        <nb-card-body>
-          <div class="row" *ngIf="data">
-            <div *ngIf="data.project.sponsor" class="col-12 col-md-6 col-lg-4">
-              <p class="d-flex w-100">
-                <span class="pl-0 font-weight-bold col-5">Padrino:</span>
-                {{ data.project.sponsor.name }}
-              </p>
-            </div>
+<div class="modal-header" #modal>
+  <h6 class="modal-title pull-left">Validación de información</h6>
+</div>
+<div class="modal-body">
+  <!-- General info Request -->
+  <div id="container-general-info">
+    <p class="text-info font-weight-bold">Información general</p>
+    <div id="list-container" class="d-lg-flex">
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold"> Código de la solicitud: </span>
+          <span> {{ (data$ | async)?.code }}</span>
+        </li>
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold"> Solicitante: </span>
+          <span> {{ (data$ | async)?.user.name }}</span>
+        </li>
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Fecha de la solicitud: </span>
+          <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
+        </li>
+      </ul>
 
-            <div
-              *ngIf="data.project.coordinator"
-              class="col-12 col-md-6 col-lg-4"
-            >
-              <p class="d-flex w-100">
-                <span class="pl-0 font-weight-bold col-5">Coordinador:</span>
-                {{ data.project.coordinator.name }}
-              </p>
-            </div>
-
-            <div *ngIf="data.project.school" class="col-12 col-md-6 col-lg-4">
-              <p class="d-flex w-100">
-                <span class="pl-0 font-weight-bold col-5">Escuela:</span>
-                {{ data.project.school.name }}
-              </p>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-              <p class="d-flex w-100">
-                <span class="pl-0 font-weight-bold col-5"
-                  >Fecha de la solicitud:</span
-                >
-                {{ data.createdAt | date: "dd/MM/yyyy" }}
-              </p>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-              <p class="d-flex w-100">
-                <span class="pl-0 font-weight-bold col-5"
-                  >Código del proyecto:</span
-                >
-                {{ data.project.code }}
-              </p>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-              <p class="d-flex w-100">
-                <span class="pl-0 font-weight-bold col-5">Tag:</span>
-                {{
-                  data.stepTag === "1"
-                    ? "General"
-                    : data.stepTag === "2"
-                    ? "Coordinador"
-                    : data.stepTag === "3"
-                    ? "Padrino"
-                    : "Escuela"
-                }}
-              </p>
-            </div>
-
-            <div class="col-12"><hr /></div>
-
-            <div class="col-12">
-              <p class="d-flex w-100">
-                <span class="pl-0 font-weight-bold mr-1">Resumen: </span
-                >{{ data.detail.description }}
-              </p>
-            </div>
-
-            <div class="col-12 position-relative" *ngIf="hasClass(modal)">
-              <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide *ngFor="let item of data.detail.images">
-                  <div class="card">
-                    <img class="card-img-top p-1" [src]="item.image" alt="">
-                    <div class="card-body">
-                      <p class="card-text">{{ item.description }}</p>
-                    </div>
-                  </div>
-                </ng-template>
-              </owl-carousel-o>
-            </div>
-
-            <div class="col-12">
-              <div *ngIf="(data$ | async)?.status === '1'">
-                <hr />
-                <div *ngIf="confirmAction">
-                  <label class="label"> Acciones para la solicitud</label>
-                  <select
-                    [(ngModel)]="statusSelected"
-                    (change)="statusSelected = $event.target.value"
-                    class="form-control form-group"
-                  >
-                    <option value="2">Aceptar</option>
-                    <option value="3">Rechazar</option>
-                  </select>
-                </div>
-
-                <app-progress
-            *ngIf="showProgress"
-            (finish)="showProgress = false"
-          ></app-progress>
-      
-                <div class="w-100 text-right justify-content-end">
-                  <button
-                    class="col-12 col-md-auto"
-                    nbButton
-                    *ngIf="confirmAction"
-                    status="primary"
-                    (click)="confirmAction = false"
-                  >
-                    Proceder
-                  </button>
-      
-                <div *ngIf="!confirmAction">
-                  <nb-alert status="info" class="text-left"
-                    >Confirmar acción, al aprobar o rechazar esta solicitud no se
-                    podrá cambiar de estatus.</nb-alert
-                  >
-      
-      
-                  <div *ngIf="statusSelected === '3'" class="text-left">
-                    <label class="label">Comentario</label>
-                    <textarea fullWidth class="form-group" placeholder="Comentario" rows="5" [(ngModel)]="comment" nbInput></textarea>
-                    
-                  </div>
-                  
-                  <div class="row justify-content-end">
-                      <div class="col-6 col-md-auto">
-                        <button
-                          (click)="onApprovedRequest()"
-                          nbButton
-                          fullWidth
-                          *ngIf="!confirmAction"
-                          status="danger"
-                        >
-                          Confirmar
-                        </button>
-                      </div>
-                      <div class="col-6 col-md-auto">
-                        <button
-                          nbButton
-                          outline
-                          fullWidth
-                          *ngIf="!confirmAction"
-                          status="basic"
-                          (click)="confirmAction = true"
-                        >
-                          Cancelar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </nb-card-body>
-        <nb-card-footer class="text-right">
-          <button
-            nbButton
-            data-dismiss="modal"
-            outline
-            status="basic"
-            class="col-12 col-lg-auto"
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Codigo del proyecto: </span>
+          <span> {{ (data$ | async)?.project.code }}</span>
+        </li>
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Coordinador: </span>
+          <span>
+            {{
+              (data$ | async)?.project.coordinator.name
+                ? (data$ | async)?.project.coordinator.name
+                : "Sin coordinador"
+            }}</span
           >
-            Cerrar
-          </button>
-        </nb-card-footer>
-      </nb-card>
+        </li>
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Escuela: </span>
+          <span>
+            {{
+              (data$ | async)?.project.school.name
+                ? (data$ | async)?.project.school.name
+                : "Sin escuela"
+            }}</span
+          >
+        </li>
+      </ul>
+
+      <ul class="list-unstyled d-inline-block">
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Padrino: </span>
+          <span>
+            {{
+              (data$ | async)?.project.sponsor.name
+                ? (data$ | async)?.project.sponsor.name
+                : "Sin padrino"
+            }}</span
+          >
+        </li>
+
+        <!-- Tag -->
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Etiqueta</span>
+          <span>{{
+            (data$ | async)?.detail.stepTag === "1"
+              ? "General"
+              : (data$ | async)?.detail.stepTag === "2"
+              ? "Coordinador"
+              : (data$ | async)?.detail.stepTag === "3"
+              ? "Padrino"
+              : "Escuela"
+          }}</span>
+        </li>
+      </ul>
     </div>
   </div>
+
+  <hr />
+
+  <!-- Initial workshop -->
+  <div>
+    <p>
+      <span class="font-weight-bold">Lapso: </span>
+      {{ (data$ | async)?.detail.lapse }}
+    </p>
+    <p>
+      <span class="font-weight-bold">Descripción: </span>
+      {{ (data$ | async)?.detail.description }}
+    </p>
+
+    <div class="position-relative">
+      <owl-carousel-o [options]="customOptions">
+        <ng-template
+          carouselSlide
+          *ngFor="let item of (data$ | async)?.detail.images"
+        >
+          <div class="card">
+            <img
+              class="card-img-top p-1"
+              [src]="item.image"
+              [alt]="item.description"
+            />
+            <div class="card-body">
+              <p class="card-text">{{ item.description }}</p>
+            </div>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+  </div>
+
+  <div>
+    <div *ngIf="(data$ | async)?.status === '1'">
+      <hr />
+      <div *ngIf="confirmAction">
+        <label class="label"> Acciones para la solicitud</label>
+        <select
+          [(ngModel)]="statusSelected"
+          (change)="statusSelected = $event.target.value"
+          class="form-control form-group"
+        >
+          <option value="2">Aceptar</option>
+          <option value="3">Rechazar</option>
+        </select>
+      </div>
+
+      <app-progress
+        *ngIf="showProgress"
+        (finish)="showProgress = false"
+      ></app-progress>
+
+      <div class="w-100 text-right justify-content-end">
+        <button
+          class="col-12 col-lg-auto"
+          nbButton
+          *ngIf="confirmAction"
+          status="primary"
+          (click)="confirmAction = false"
+        >
+          Proceder
+        </button>
+
+        <div *ngIf="!confirmAction">
+          <nb-alert status="info" class="text-left"
+            >Confirmar acción, al aprobar o rechazar esta solicitud no se podrá
+            cambiar de estatus.</nb-alert
+          >
+
+          <div *ngIf="statusSelected === '3'" class="text-left">
+            <label class="label">Comentario</label>
+            <textarea
+              fullWidth
+              class="form-group"
+              placeholder="Comentario"
+              rows="5"
+              [(ngModel)]="comment"
+              nbInput
+            ></textarea>
+          </div>
+
+          <div class="row justify-content-end">
+            <div class="col-6 col-lg-auto">
+              <button
+                (click)="onApprovedRequest()"
+                nbButton
+                fullWidth
+                *ngIf="!confirmAction"
+                status="danger"
+              >
+                Confirmar
+              </button>
+            </div>
+            <div class="col-6 col-lg-auto">
+              <button
+                nbButton
+                outline
+                fullWidth
+                *ngIf="!confirmAction"
+                status="basic"
+                (click)="confirmAction = true"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    aria-label="Close"
+    nbButton
+    outline
+    type="button"
+    status="basic"
+    (click)="bsModalRef.hide()"
+    class="col-12 col-lg-auto"
+  >
+    Cerrar
+  </button>
 </div>

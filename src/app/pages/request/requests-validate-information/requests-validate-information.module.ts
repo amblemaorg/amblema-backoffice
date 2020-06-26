@@ -24,13 +24,17 @@ import { SliderDetailsComponent } from './slider-details/slider-details.componen
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
 import { ProgressModule } from '../../_components/shared/progress/progress.module';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
+import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   entryComponents: [
     TestimonyDetailsComponent,
+    YearbookDetailsComponent,
     SliderDetailsComponent,
     ActivityDetailsComponent,
     InformationDetailsComponent,
+    InitialWorkshopDetailsComponent,
     SpecialActivityDetailsComponent
   ],
   declarations: [
@@ -41,6 +45,7 @@ import { SpecialActivityDetailsComponent } from './special-activity-details/spec
     SliderDetailsComponent,
     TestimonyDetailsComponent,
     SpecialActivityDetailsComponent,
+    YearbookDetailsComponent,
   ],
   imports: [
     CarouselModule,
@@ -51,6 +56,7 @@ import { SpecialActivityDetailsComponent } from './special-activity-details/spec
     NbButtonModule,
     CommonModule,
     NbAlertModule,
+    ModalModule.forRoot(),
     ProgressModule,
     NbInputModule,
     RequestsValidateInformationRoutingModule,

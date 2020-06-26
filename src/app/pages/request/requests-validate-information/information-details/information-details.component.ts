@@ -9,6 +9,7 @@ import {
   UpdateRequestContent,
 } from 'src/app/store/request/request-content-approval.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-information-details',
@@ -29,10 +30,11 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   public showProgress = false;
 
   constructor(
-    protected serviceRequestStepApproval?: InformationRequestService,
-    protected store?: Store,
-    protected toastr?: CustomToastrService,
-    protected dialogRef?: NbDialogRef<InformationDetailsComponent>
+    public bsModalRef: BsModalRef,
+    public modalService: BsModalService,
+    public serviceRequestStepApproval?: InformationRequestService,
+    public store?: Store,
+    public toastr?: CustomToastrService
   ) {}
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   }
 
   onClose() {
-    this.dialogRef.close();
+    this.bsModalRef.hide();
   }
 
   onApprovedRequest() {
@@ -60,22 +62,21 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
         comments: this.comment,
       })
       .subscribe((resp: HttpEvent<any>) => {
-        switch (resp.type) {
-          case HttpEventType.Response:
-            this.store.dispatch(
-              new UpdateRequestContent({
-                ...this.data,
-                status: this.statusSelected,
-                comments: this.comment,
-              })
-            );
-            this.toastr.updateSuccess(
-              'Estatus actualizado',
-              'Se ha cambiado el estatus de la solicitud'
-            );
 
-            break;
-        }
+        setTimeout(() => {
+          this.store.dispatch(
+            new UpdateRequestContent({
+              ...this.data,
+              status: this.statusSelected,
+              comments: this.comment,
+            })
+          );
+          this.toastr.updateSuccess(
+            'Estatus actualizado',
+            'Se ha cambiado el estatus de la solicitud'
+          );
+        }, 2500);
+
       });
   }
 }

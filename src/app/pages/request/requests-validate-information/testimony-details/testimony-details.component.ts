@@ -4,11 +4,10 @@ import { InformationDetailsComponent } from '../information-details/information-
 @Component({
   selector: 'app-testimony-details',
   templateUrl: './testimony-details.component.html',
-  styleUrls: ['./testimony-details.component.scss']
+  styleUrls: ['./testimony-details.component.scss'],
+
 })
 export class TestimonyDetailsComponent extends InformationDetailsComponent {
-
-
 
 
 }

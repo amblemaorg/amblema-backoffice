@@ -1,14 +1,12 @@
 <nb-card>
-    <nb-card-header>Validación de información</nb-card-header>
-    <nb-card-body>
-        <div class="table-responsive">
-            <ng2-smart-table 
-                (custom)="onAction($event)"
-                [settings]="settings" 
-                [source]="(data$ | async)"></ng2-smart-table>
-        </div>
-
-    </nb-card-body>
-</nb-card>  
-
-<app-initial-workshop-details></app-initial-workshop-details>
+  <nb-card-header>Validación de información</nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <ng2-smart-table
+        (custom)="onAction($event)"
+        [settings]="settings"
+        [source]="data$ | async"
+      ></ng2-smart-table>
+    </div>
+  </nb-card-body>
+</nb-card>

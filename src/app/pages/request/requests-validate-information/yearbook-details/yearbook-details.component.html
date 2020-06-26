@@ -2,7 +2,7 @@
   <h6 class="modal-title pull-left">Validación de información</h6>
 </div>
 <div class="modal-body">
-  <!-- General info Request -->
+  <!-- General info -->
   <div id="container-general-info">
     <p class="text-info font-weight-bold">Informacion general</p>
     <div id="list-container" class="d-sm-flex">
@@ -63,13 +63,12 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <!-- User historical preview -->
+  <!-- Info user -->
   <div id="container-user-historical-preview">
     <p class="text-info font-weight-bold">Información de usuario</p>
 
-    <!-- Users -->
     <div class="row">
       <div class="col-lg-6 col-xl-4 mb-4">
         <label class="label">Coordinador</label>
@@ -182,14 +181,11 @@
       </div>
     </div>
 
-    <!-- Supplementary data -->
     <div class="d-sm-flex">
       <ul class="list-unstyled d-inline-block">
         <li class="d-md-flex justify-content-between">
           <span class="font-weight-bold"> ¿Está en aprobación?: </span>
-          <span>
-            {{ (data$ | async)?.detail.isInApproval ? "Si" : "No" }}</span
-          >
+          <span> {{ (data$ | async)?.detail.isInApproval ? "Si" : "No" }}</span>
         </li>
       </ul>
       <ul class="list-unstyled d-inline-block">
@@ -202,8 +198,13 @@
       </ul>
     </div>
   </div>
+
+  <!-- Info lapse -->
+  <div id="container-lapse">
+    <p class="text-info font-weight-bold">Lapso 1</p>
+    
+  </div>
 </div>
 <div class="modal-footer">
   ...
 </div>
- 

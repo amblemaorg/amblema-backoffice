@@ -257,7 +257,10 @@ export class RequestsValidateInformationComponent extends BaseTable
         );
         break;
       case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE:
-        this.dialogService.open(SpecialActivityDetailsComponent);
+        this.modalService.show(
+          SpecialActivityDetailsComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
         break;
       case TYPE_INFORMATION.YEARBOOK.VALUE:
         this.modalService.show(

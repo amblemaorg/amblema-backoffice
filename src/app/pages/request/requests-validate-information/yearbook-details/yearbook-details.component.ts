@@ -7,7 +7,5 @@ import { InformationDetailsComponent } from '../information-details/information-
   styleUrls: [`./yearbook-details.component.scss`],
 })
 export class YearbookDetailsComponent extends InformationDetailsComponent {
-  // ngOnInit(): void {
-  //   this.data$.subscribe((response) => console.log(response));
-  // }
+
 }

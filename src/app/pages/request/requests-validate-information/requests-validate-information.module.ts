@@ -34,6 +34,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     SliderDetailsComponent,
     ActivityDetailsComponent,
     InformationDetailsComponent,
+    InitialWorkshopDetailsComponent,
     SpecialActivityDetailsComponent
   ],
   declarations: [

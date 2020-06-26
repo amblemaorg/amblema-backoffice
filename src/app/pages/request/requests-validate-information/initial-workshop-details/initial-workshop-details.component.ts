@@ -10,23 +10,14 @@ import { Select, Store } from '@ngxs/store';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { InformationDetailsComponent } from '../information-details/information-details.component';
 
 @Component({
   selector: 'app-initial-workshop-details',
   templateUrl: './initial-workshop-details.component.html',
   styleUrls: ['./initial-workshop-details.component.scss'],
 })
-export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
-  @Select(RequestContentState.selectedContentRequest) data$: Observable<{
-    any;
-  }>;
-  subscription: Subscription;
-
-  data: any;
-  statusSelected = '2';
-  confirmAction = true;
-  comment;
-
+export class InitialWorkshopDetailsComponent extends InformationDetailsComponent {
   customOptions: OwlOptions = {
     stagePadding: 50,
 
@@ -48,57 +39,11 @@ export class InitialWorkshopDetailsComponent implements OnInit, OnDestroy {
   };
 
   show = false;
-  showProgress = false;
 
-  hasClass(el: any) {
+  public hasClass(el: any) {
     return (
       el.getAttribute('class') &&
       el.getAttribute('class').indexOf('show') !== -1
     );
-  }
-
-  constructor(
-    protected serviceRequestStepApproval?: InformationRequestService,
-    protected store?: Store,
-    protected toastr?: CustomToastrService
-  ) {}
-
-  ngOnInit() {
-    this.subscription = this.data$.subscribe((response) => {
-      this.data = response;
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  onApprovedRequest() {
-    this.showProgress = true;
-    this.subscription = this.serviceRequestStepApproval
-      .updateRequestContentApproval({
-        ...this.data,
-        status: this.statusSelected,
-        comments: this.comment,
-      })
-      .subscribe((res: HttpEvent<any>) => {
-        switch (res.type) {
-          case HttpEventType.Response:
-            this.store.dispatch(
-              new UpdateRequestContent({
-                ...this.data,
-                status: this.statusSelected,
-                comments: this.comment,
-              })
-            );
-            this.toastr.updateSuccess(
-              'Estatus actualizado',
-              'Se ha cambiado el estatus de la solicitud'
-            );
-            break;
-        }
-      });
   }
 }

@@ -1,41 +1,42 @@
-import { Component, OnInit } from "@angular/core";
-import { BaseTable } from "src/app/_helpers/base-table";
-import { ACTION } from "src/app/_helpers/text-content/text-crud";
-import { Select, Store } from "@ngxs/store";
+import { Component, OnInit } from '@angular/core';
+import { BaseTable } from 'src/app/_helpers/base-table';
+import { ACTION } from 'src/app/_helpers/text-content/text-crud';
+import { Select, Store } from '@ngxs/store';
 
-import { Observable } from "rxjs";
-import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
-import { DatePipe } from "@angular/common";
+import { Observable } from 'rxjs';
+import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
+import { DatePipe } from '@angular/common';
 import {
   TYPE_REQUEST,
   REQUEST_STATUS,
-} from "src/app/_helpers/convention/request-status";
-import { Utility } from "src/app/_helpers/utility";
-import { NbDialogService } from "@nebular/theme";
-import { InformationDetailsComponent } from "./information-details/information-details.component";
-import { InformationRequestService } from "src/app/services/request/information-request.service";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+} from 'src/app/_helpers/convention/request-status';
+import { Utility } from 'src/app/_helpers/utility';
+import { NbDialogService } from '@nebular/theme';
+import { InformationDetailsComponent } from './information-details/information-details.component';
+import { InformationRequestService } from 'src/app/services/request/information-request.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import {
   RequestContentState,
   SelectedRequestContent,
   DeleteRequestContent,
-} from "src/app/store/request/request-content-approval.action";
-import { RequestContent } from "src/app/_models/request/request-content-approval.model";
-import { TYPE_INFORMATION } from "./_shared/type-information";
-import { ModalService } from "src/app/services/helper/modal.service";
-import { ActivityDetailsComponent } from "./activity-details/activity-details.component";
-import { SliderDetailsComponent } from "./slider-details/slider-details.component";
-import { USER_TYPE } from "src/app/_helpers/convention/user-type";
-import { TestimonyDetailsComponent } from "./testimony-details/testimony-details.component";
-import { ActivatedRoute } from "@angular/router";
-import { SpecialActivityDetailsComponent } from "./special-activity-details/special-activity-details.component";
-import { YearbookDetailsComponent } from "./yearbook-details/yearbook-details.component";
-import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+} from 'src/app/store/request/request-content-approval.action';
+import { RequestContent } from 'src/app/_models/request/request-content-approval.model';
+import { TYPE_INFORMATION } from './_shared/type-information';
+import { ModalService } from 'src/app/services/helper/modal.service';
+import { ActivityDetailsComponent } from './activity-details/activity-details.component';
+import { SliderDetailsComponent } from './slider-details/slider-details.component';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
+import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
+import { ActivatedRoute } from '@angular/router';
+import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
+import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
 
 @Component({
-  selector: "app-requests-validate-information",
-  templateUrl: "./requests-validate-information.component.html",
-  styleUrls: ["./requests-validate-information.component.scss"],
+  selector: 'app-requests-validate-information',
+  templateUrl: './requests-validate-information.component.html',
+  styleUrls: ['./requests-validate-information.component.scss'],
 })
 export class RequestsValidateInformationComponent extends BaseTable
   implements OnInit {
@@ -56,7 +57,7 @@ export class RequestsValidateInformationComponent extends BaseTable
     super();
 
     this.settings.actions = {
-      columnTitle: "Acciones",
+      columnTitle: 'Acciones',
       add: false,
       edit: false,
       //  Fake action
@@ -69,23 +70,23 @@ export class RequestsValidateInformationComponent extends BaseTable
 
     this.settings.columns = {
       code: {
-        title: "N° de la solicitud",
-        type: "string",
+        title: 'N° de la solicitud',
+        type: 'string',
       },
       project: {
-        title: "ID del proyecto",
-        type: "string",
+        title: 'ID del proyecto',
+        type: 'string',
         valuePrepareFunction: (row: any) => row.code,
         filterFunction: (cell?: any, search?: string) => {
           const value: string = cell.detail.project.code;
-          return value.indexOf(search.toUpperCase()) === 0 || search === ""
+          return value.indexOf(search.toUpperCase()) === 0 || search === ''
             ? true
             : false;
         },
       },
       typeUser: {
-        title: "Tipo de solicitante",
-        type: "text",
+        title: 'Tipo de solicitante',
+        type: 'text',
         valuePrepareFunction: (row: any) => {
           const value: string =
             row === USER_TYPE.COORDINATOR.VALUE
@@ -104,7 +105,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : TYPE_REQUEST.SPONSOR.CONVERTION;
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
             return true;
           } else {
             return false;
@@ -112,14 +113,14 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       user: {
-        title: "Solicitante",
-        type: "string",
+        title: 'Solicitante',
+        type: 'string',
         valuePrepareFunction: (row: any) => row.name,
         filterFunction: (cell?: any, search?: string) => {
           if (cell.name) {
             const value: string = cell.name as string;
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
               return true;
             } else {
               return false;
@@ -128,8 +129,8 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       type: {
-        title: "Tipo de información",
-        type: "text",
+        title: 'Tipo de información',
+        type: 'text',
         valuePrepareFunction: (row: any) => {
           return row === TYPE_INFORMATION.STEP.VALUE
             ? TYPE_INFORMATION.STEP.LABEL
@@ -167,7 +168,7 @@ export class RequestsValidateInformationComponent extends BaseTable
 
           value = value.toUpperCase();
 
-          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
             return true;
           } else {
             return false;
@@ -175,17 +176,17 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
       createdAt: {
-        sortDirection: "desc",
-        title: "Fecha",
-        type: "string",
+        sortDirection: 'desc',
+        title: 'Fecha',
+        type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe("es-VE").transform(lastLoginTime, "dd/MM/yyyy");
+          return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
         },
       },
       status: {
-        title: "Estatus",
-        type: "text ",
+        title: 'Estatus',
+        type: 'text ',
         valuePrepareFunction: (row: any) => {
           return this.helper.readlyRequestStatus(row);
         },
@@ -200,7 +201,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : REQUEST_STATUS.CANCELLED.VALUE;
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
             return true;
           } else {
             return false;
@@ -227,25 +228,33 @@ export class RequestsValidateInformationComponent extends BaseTable
       case TYPE_INFORMATION.STEP.VALUE:
         this.modalService.show(
           InformationDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
         );
         break;
       case TYPE_INFORMATION.TESTIMONIES.VALUE:
-        
         this.modalService.show(
           TestimonyDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
         );
 
         break;
       case TYPE_INFORMATION.ACTIVITY.VALUE:
-        this.dialogService.open(ActivityDetailsComponent);
+        this.modalService.show(
+          ActivityDetailsComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
         break;
       case TYPE_INFORMATION.SLIDER.VALUE:
-        this.dialogService.open(SliderDetailsComponent);
+        this.modalService.show(
+          SliderDetailsComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
         break;
       case TYPE_INFORMATION.WORKSHOP.VALUE:
-        this.modal.open("initial-workshop-modal");
+        this.modalService.show(
+          InitialWorkshopDetailsComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
         break;
       case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE:
         this.dialogService.open(SpecialActivityDetailsComponent);
@@ -253,7 +262,7 @@ export class RequestsValidateInformationComponent extends BaseTable
       case TYPE_INFORMATION.YEARBOOK.VALUE:
         this.modalService.show(
           YearbookDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
         );
         break;
     }
@@ -262,7 +271,7 @@ export class RequestsValidateInformationComponent extends BaseTable
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log( event.data )
+        console.log(event.data);
         this.showModalDetails(event.data.type);
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
@@ -272,8 +281,8 @@ export class RequestsValidateInformationComponent extends BaseTable
           .subscribe(() => {
             this.store.dispatch(new DeleteRequestContent(event.data.id));
             this.toast.deleteRegister(
-              "Solicitud eliminada",
-              "Se ha eliminado una solicitud"
+              'Solicitud eliminada',
+              'Se ha eliminado una solicitud'
             );
           });
 

@@ -7,26 +7,26 @@
     <p class="text-info font-weight-bold">Información general</p>
     <div id="list-container" class="d-lg-flex">
       <ul class="list-unstyled d-inline-block">
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold"> Código de la solicitud: </span>
           <span> {{ (data$ | async)?.code }}</span>
         </li>
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold"> Solicitante: </span>
           <span> {{ (data$ | async)?.user.name }}</span>
         </li>
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold">Fecha de la solicitud: </span>
           <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
         </li>
       </ul>
 
       <ul class="list-unstyled d-inline-block">
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold">Codigo del proyecto: </span>
           <span> {{ (data$ | async)?.project.code }}</span>
         </li>
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold">Coordinador: </span>
           <span>
             {{
@@ -36,7 +36,7 @@
             }}</span
           >
         </li>
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold">Escuela: </span>
           <span>
             {{
@@ -49,7 +49,7 @@
       </ul>
 
       <ul class="list-unstyled d-inline-block">
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold">Padrino: </span>
           <span>
             {{
@@ -61,7 +61,7 @@
         </li>
 
         <!-- Tag -->
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold">Etiqueta</span>
           <span>{{
             (data$ | async)?.detail.stepTag === "1"
@@ -85,7 +85,7 @@
     <div class="d-lg-flex">
       <ul class="list-unstyled d-inline-block">
         <!-- Name -->
-        <li class="d-sm-flex justify-content-between">
+        <li class="d-flex justify-content-between">
           <span class="font-weight-bold"> Nombre: </span>
           <span> {{ (data$ | async)?.detail.stepName }}</span>
         </li>
@@ -93,7 +93,7 @@
         <!-- Date -->
         <li
           *ngIf="(data$ | async)?.detail.stepHasDate"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Campo fecha: </span>
           <span>
@@ -102,7 +102,7 @@
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasDate"
-          class="d-sm-flex justify-content-between font-weight-bold"
+          class="d-flex justify-content-between font-weight-bold"
         >
           Sin campo fecha
         </li>
@@ -110,7 +110,7 @@
         <!-- File - field -->
         <li
           *ngIf="(data$ | async)?.detail.stepHasFile"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Campo archivo: </span>
           <span>
@@ -123,7 +123,7 @@
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasFile"
-          class="d-sm-flex justify-content-between font-weight-bold"
+          class="d-flex justify-content-between font-weight-bold"
         >
           Sin campo carga de archivo
         </li>
@@ -133,14 +133,14 @@
         <!-- Text -->
         <li
           *ngIf="(data$ | async)?.detail.stepHasText"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Texto: </span>
           <span> {{ (data$ | async)?.detail.stepText }}</span>
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasText"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Sin campo texto </span>
         </li>
@@ -148,7 +148,7 @@
         <!-- Uploaded file -->
         <li
           *ngIf="(data$ | async)?.detail.stepHasUpload"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Campo - Archivo adjunto: </span>
           <span>
@@ -161,7 +161,7 @@
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasUpload"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Sin campo </span>
         </li>
@@ -169,14 +169,14 @@
         <!-- Video -->
         <li
           *ngIf="(data$ | async)?.detail.stepHasVideo"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Video: </span>
           <span> {{ (data$ | async)?.detail.stepVideo }}</span>
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasVideo"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Sin campo video </span>
         </li>
@@ -186,14 +186,14 @@
       <ul class="list-unstyled d-inline-block">
         <li
           *ngFor="let item of (data$ | async)?.detail.stepChecklist"
-          class="d-sm-flex justify-content-between"
+          class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> {{ item.name }} : </span>
           <span> {{ item.checked ? "Seleccionado" : "Sin marcar" }}</span>
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasChecklist"
-          class="d-sm-flex justify-content-between font-weight-bold"
+          class="d-flex justify-content-between font-weight-bold"
         >
           Sin campo de lista
         </li>

@@ -36,15 +36,22 @@
 }
 
 #container-user-historical-preview {
-  img {
+
+  ul {
+    margin-right: 2rem;
+    span { margin-right: 1rem; }
+  }
+}
+
+img {
     width: 8rem;
     height: 8rem;
     object-fit: contain;
     border: 2px solid #17a2b8;
   }
 
-  ul {
-    margin-right: 2rem;
-    span { margin-right: 1rem; }
-  }
+
+.table-bordered thead td,
+.table-bordered thead th {
+  border-bottom-width: 1px;
 }

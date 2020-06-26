@@ -1,7 +1,7 @@
-<div class="modal-header">
+<div class="modal-header" *ngIf="data$ | async">
   <h6 class="modal-title pull-left">Validación de información</h6>
 </div>
-<div class="modal-body">
+<div class="modal-body" *ngIf="data$ | async">
   <!-- General info -->
   <div id="container-general-info">
     <p class="text-info font-weight-bold">Informacion general</p>
@@ -75,20 +75,20 @@
         <div class="media">
           <img
             class="mr-3 img-fluid"
-            [src]="(data$ | async)?.detail.coordinator.image"
-            [alt]="(data$ | async)?.detail.coordinator.name"
+            [src]="(data$ | async)?.detail?.coordinator?.image"
+            [alt]="(data$ | async)?.detail?.coordinator?.name"
           />
           <div class="media-body">
             <p class="mt-0 font-weight-bold">
               {{
-                (data$ | async)?.detail.coordinator.name
-                  ? (data$ | async)?.detail.coordinator.name
+                (data$ | async)?.detail?.coordinator?.name
+                  ? (data$ | async)?.detail?.coordinator?.name
                   : "Sin coordinador"
               }}
             </p>
             {{
-              (data$ | async)?.detail.coordinator.content
-                ? (data$ | async)?.detail.coordinator.content
+              (data$ | async)?.detail?.coordinator?.content
+                ? (data$ | async)?.detail?.coordinator?.content
                 : "Sin contenido"
             }}
           </div>
@@ -100,20 +100,20 @@
         <div class="media">
           <img
             class="mr-3 img-fluid"
-            [src]="(data$ | async)?.detail.school.image"
-            [alt]="(data$ | async)?.detail.school.name"
+            [src]="(data$ | async)?.detail?.school?.image"
+            [alt]="(data$ | async)?.detail?.school?.name"
           />
           <div class="media-body">
             <p class="mt-0 font-weight-bold">
               {{
-                (data$ | async)?.detail.school.name
-                  ? (data$ | async)?.detail.school.name
+                (data$ | async)?.detail?.school?.name
+                  ? (data$ | async)?.detail?.school?.name
                   : "Sin escuela"
               }}
             </p>
             {{
-              (data$ | async)?.detail.school.content
-                ? (data$ | async)?.detail.school.content
+              (data$ | async)?.detail?.school?.content
+                ? (data$ | async)?.detail?.school?.content
                 : "Sin contenido"
             }}
           </div>
@@ -125,20 +125,20 @@
         <div class="media">
           <img
             class="mr-3 img-fluid"
-            [src]="(data$ | async)?.detail.sponsor.image"
-            [alt]="(data$ | async)?.detail.sponsor.name"
+            [src]="(data$ | async)?.detail?.sponsor?.image"
+            [alt]="(data$ | async)?.detail?.sponsor?.name"
           />
           <div class="media-body">
             <p class="mt-0 font-weight-bold">
               {{
-                (data$ | async)?.detail.sponsor.name
-                  ? (data$ | async)?.detail.sponsor.name
+                (data$ | async)?.detail?.sponsor?.name
+                  ? (data$ | async)?.detail?.sponsor?.name
                   : "Sin padrino"
               }}
             </p>
             {{
-              (data$ | async)?.detail.sponsor.content
-                ? (data$ | async)?.detail.sponsor.content
+              (data$ | async)?.detail?.sponsor?.content
+                ? (data$ | async)?.detail?.sponsor?.content
                 : "Sin contenido"
             }}
           </div>
@@ -150,30 +150,30 @@
         <div class="media">
           <img
             class="mr-3 img-fluid"
-            *ngIf="(data$ | async)?.detail.historicalReview.image"
-            [src]="(data$ | async)?.detail.historicalReview.image"
+            *ngIf="(data$ | async)?.detail?.historicalReview?.image"
+            [src]="(data$ | async)?.detail?.historicalReview?.image"
             [alt]="
-              (data$ | async)?.detail.historicalReview.name
-                ? (data$ | async)?.detail.historicalReview.name
+              (data$ | async)?.detail?.historicalReview?.name
+                ? (data$ | async)?.detail?.historicalReview?.name
                 : 'Sin text alternativo'
             "
           />
           <span
-            *ngIf="!(data$ | async)?.detail.historicalReview.image"
+            *ngIf="!(data$ | async)?.detail?.historicalReview?.image"
             class="text-warning"
             >Sin imagen</span
           >
           <div class="media-body">
             <p class="mt-0 font-weight-bold">
               {{
-                (data$ | async)?.detail.historicalReview.name
-                  ? (data$ | async)?.detail.historicalReview.name
+                (data$ | async)?.detail?.historicalReview?.name
+                  ? (data$ | async)?.detail?.historicalReview?.name
                   : "Sin titulo en la reseña"
               }}
             </p>
             {{
-              (data$ | async)?.detail.historicalReview.content
-                ? (data$ | async)?.detail.historicalReview.content
+              (data$ | async)?.detail?.historicalReview?.content
+                ? (data$ | async)?.detail?.historicalReview?.content
                 : "Sin reseña"
             }}
           </div>
@@ -199,12 +199,83 @@
     </div>
   </div>
 
+  <hr />
+
   <!-- Info lapse -->
   <div id="container-lapse">
-    <p class="text-info font-weight-bold">Lapso 1</p>
-    
+    <div class="row">
+      <div class="col-xl-4">
+        <p class="text-info font-weight-bold">Actividades del lapso 1</p>
+
+        <div
+          class="media mb-3"
+          *ngFor="let item of (data$ | async)?.detail?.lapse1?.activities"
+        >
+          <div class="media-body">
+            <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
+            {{ item.description }}
+            <div class="media mt-2">
+              <div class="media-body">
+                <img
+                  *ngFor="let item of item?.images"
+                  class="mr-3 mb-3"
+                  [src]="item"
+                  alt="Imagenes de las actividades"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <p class="text-info font-weight-bold">Actividades del lapso 2</p>
+
+        <div
+          class="media mb-3"
+          *ngFor="let item of (data$ | async)?.detail?.lapse2?.activities"
+        >
+          <div class="media-body">
+            <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
+            {{ item.description }}
+            <div class="media mt-2">
+              <div class="media-body">
+                <img
+                  *ngFor="let item of item?.images"
+                  class="mr-3 mb-3"
+                  [src]="item"
+                  alt="Imagenes de las actividades"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <p class="text-info font-weight-bold">Actividades del lapso 3</p>
+
+        <div
+          class="media mb-3"
+          *ngFor="let item of (data$ | async)?.detail?.lapse3?.activities"
+        >
+          <div class="media-body">
+            <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
+            {{ item.description }}
+            <div class="media mt-2">
+              <div class="media-body">
+                <img
+                  *ngFor="let item of item?.images"
+                  class="mr-3 mb-3"
+                  [src]="item"
+                  alt="Imagenes de las actividades"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="modal-footer">
+<div class="modal-footer" *ngIf="data$ | async">
   ...
 </div>

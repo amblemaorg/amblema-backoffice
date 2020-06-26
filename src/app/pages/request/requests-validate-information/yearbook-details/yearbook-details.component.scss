@@ -24,8 +24,10 @@
     }
     span + * {
       @media (min-width: 0px) {
-        display: block;
-        text-align: left;
+          //display: block;
+        //text-align: left;
+        text-align: right;
+      
       }
       @media (min-width: 768px) {
         text-align: right;

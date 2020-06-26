@@ -78,7 +78,7 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         valuePrepareFunction: (row: any) => row.code,
         filterFunction: (cell?: any, search?: string) => {
-          const value: string = cell.detail.project.code;
+          const value: string = cell.code;
           return value.indexOf(search.toUpperCase()) === 0 || search === ''
             ? true
             : false;
@@ -88,22 +88,19 @@ export class RequestsValidateInformationComponent extends BaseTable
         title: 'Tipo de solicitante',
         type: 'text',
         valuePrepareFunction: (row: any) => {
-          const value: string =
-            row === USER_TYPE.COORDINATOR.VALUE
-              ? USER_TYPE.COORDINATOR.LABEL
-              : row === USER_TYPE.SCHOOL.VALUE
-              ? USER_TYPE.SCHOOL.LABEL
-              : USER_TYPE.SPONSOR.LABEL;
-          return `${value}`;
+          return row === USER_TYPE.COORDINATOR.VALUE
+            ? USER_TYPE.COORDINATOR.LABEL
+            : row === USER_TYPE.SCHOOL.VALUE
+            ? USER_TYPE.SCHOOL.LABEL
+            : USER_TYPE.SPONSOR.LABEL;
         },
         filterFunction(cell?: any, search?: string): boolean {
           let value: string =
-            cell === TYPE_REQUEST.COORDINATOR.ORIGINAL
-              ? TYPE_REQUEST.COORDINATOR.CONVERTION
-              : cell === TYPE_REQUEST.SCHOOL.ORIGINAL
-              ? TYPE_REQUEST.SCHOOL.CONVERTION
-              : TYPE_REQUEST.SPONSOR.CONVERTION;
-
+            cell === USER_TYPE.COORDINATOR.VALUE
+              ? USER_TYPE.COORDINATOR.LABEL
+              : cell === USER_TYPE.SCHOOL.VALUE
+              ? USER_TYPE.SCHOOL.LABEL
+              : USER_TYPE.SPONSOR.LABEL;
           value = value.toUpperCase();
           if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
             return true;
@@ -117,14 +114,14 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         valuePrepareFunction: (row: any) => row.name,
         filterFunction: (cell?: any, search?: string) => {
-          if (cell.name) {
-            const value: string = cell.name as string;
+          let value: string = cell.name as string;
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
-              return true;
-            } else {
-              return false;
-            }
+          value = value.toUpperCase();
+
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else {
+            return false;
           }
         },
       },

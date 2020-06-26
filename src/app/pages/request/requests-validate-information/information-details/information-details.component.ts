@@ -34,10 +34,8 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
     public modalService: BsModalService,
     public serviceRequestStepApproval?: InformationRequestService,
     public store?: Store,
-    public toastr?: CustomToastrService,
-
-
-    ) {}
+    public toastr?: CustomToastrService
+  ) {}
 
   ngOnInit() {
     this.subscription = this.data$.subscribe((response) => {
@@ -64,22 +62,21 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
         comments: this.comment,
       })
       .subscribe((resp: HttpEvent<any>) => {
-        switch (resp.type) {
-          case HttpEventType.Response:
-            this.store.dispatch(
-              new UpdateRequestContent({
-                ...this.data,
-                status: this.statusSelected,
-                comments: this.comment,
-              })
-            );
-            this.toastr.updateSuccess(
-              'Estatus actualizado',
-              'Se ha cambiado el estatus de la solicitud'
-            );
 
-            break;
-        }
+        setTimeout(() => {
+          this.store.dispatch(
+            new UpdateRequestContent({
+              ...this.data,
+              status: this.statusSelected,
+              comments: this.comment,
+            })
+          );
+          this.toastr.updateSuccess(
+            'Estatus actualizado',
+            'Se ha cambiado el estatus de la solicitud'
+          );
+        }, 2500);
+
       });
   }
 }

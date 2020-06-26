@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RequestStepApproval } from 'src/app/_models/request/request-step-approval.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
@@ -28,9 +27,9 @@ export class InformationRequestService {
   updateRequestContentApproval(
     data: RequestContent
   ): Observable<any> {
-    return this.httpClient.put<RequestContent>(
+    return this.httpClient.put<any>(
       `${environment.api}${this.REQUEST_CONTENT_APPROVAL}/${data.id}`,
-      { status: data.status },
+      { status: data.status, comment: data.comments },
       { reportProgress: true, observe: 'body' }
     );
   }

@@ -26,6 +26,7 @@ import { ProgressModule } from '../../_components/shared/progress/progress.modul
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
 import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SpanPlanningComponent } from './span-planning/span-planning.component';
 
 @NgModule({
   entryComponents: [
@@ -34,6 +35,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     SliderDetailsComponent,
     ActivityDetailsComponent,
     InformationDetailsComponent,
+    SpanPlanningComponent,
     InitialWorkshopDetailsComponent,
     SpecialActivityDetailsComponent
   ],
@@ -46,6 +48,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TestimonyDetailsComponent,
     SpecialActivityDetailsComponent,
     YearbookDetailsComponent,
+    SpanPlanningComponent,
   ],
   imports: [
     CarouselModule,

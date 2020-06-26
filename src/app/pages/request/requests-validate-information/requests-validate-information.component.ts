@@ -32,6 +32,7 @@ import { SpecialActivityDetailsComponent } from './special-activity-details/spec
 import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
+import { SpanPlanningComponent } from './span-planning/span-planning.component';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -262,6 +263,12 @@ export class RequestsValidateInformationComponent extends BaseTable
       case TYPE_INFORMATION.YEARBOOK.VALUE:
         this.modalService.show(
           YearbookDetailsComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
+        break;
+      case TYPE_INFORMATION.SPAN_PLANNING.VALUE:
+        this.modalService.show(
+          SpanPlanningComponent,
           Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
         );
         break;

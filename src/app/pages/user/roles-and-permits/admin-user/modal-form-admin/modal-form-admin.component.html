@@ -1,7 +1,29 @@
 <div class="modal-header">
   <h6 class="modal-title pull-left">Registro de usuario administrador</h6>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
-<div class="modal-body"></div>
-<div class="modal-footer">
+<div class="modal-body">
   ...
+</div>
+<div class="modal-footer">
+  <button nbButton type="button" status="success" class="col-12 col-lg-auto">
+    Registrar
+  </button>
+  <button
+    nbButton
+    outline
+    type="button"
+    status="basic"
+    (click)="bsModalRef.hide()"
+    class="col-12 col-lg-auto"
+  >
+    Cerrar
+  </button>
 </div>

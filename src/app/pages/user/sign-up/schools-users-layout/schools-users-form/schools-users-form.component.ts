@@ -24,11 +24,10 @@ import {
   UpdateSchoolUser,
 } from 'src/app/store/user/school-user.action';
 import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
-import { SchoolUser } from 'src/app/_models/user/school.model';
+import { SchoolUser, Coordinate } from 'src/app/_models/user/school.model';
 import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
 import { BaseForm } from '../../../_shared/base-form';
-import { Coordinate } from 'src/app/_models/user/user.model';
 
 @Component({
   selector: 'app-schools-users-form',

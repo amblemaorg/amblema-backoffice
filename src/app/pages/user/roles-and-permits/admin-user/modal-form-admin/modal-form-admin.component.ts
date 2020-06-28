@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-modal-form-admin',
   templateUrl: './modal-form-admin.component.html',
   styles: []
 })
-export class ModalFormAdminComponent implements OnInit {
+export class ModalFormAdminComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  constructor( public bsModalRef: BsModalRef ) { }
 }

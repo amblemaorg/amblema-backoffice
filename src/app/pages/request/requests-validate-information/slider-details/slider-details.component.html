@@ -81,8 +81,84 @@
 
   <!-- General info slider -->
   <div>
-    <p class="text-info font-weight-bold">Imagen para la diapositiva</p>
-    <div class="d-block d-md-flex align-items-start">
+    <p class="text-info font-weight-bold">Datos de la escuela</p>
+    <div id="list-container" class="d-lg-flex">
+      <div class="w-100 mr-4">
+        <p class="text-info">Datos del director</p>
+        <ul class="list-unstyled d-inline-block">
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Nombre:</span>
+            <span>{{ (data$ | async)?.detail.principalFirstName }}</span>
+          </li>
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Apellido:</span>
+            <span>{{ (data$ | async)?.detail.principalLastName }}</span>
+          </li>
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Correo:</span>
+            <span>{{ (data$ | async)?.detail.principalEmail }}</span>
+          </li>
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Teléfono:</span>
+            <span>{{ (data$ | async)?.detail.principalPhone }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="w-100 mr-4">
+        <p class="text-info">Datos del sub director</p>
+        <ul class="list-unstyled d-inline-block">
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Nombre:</span>
+            <span>{{ (data$ | async)?.detail.subPrincipalFirstName }}</span>
+          </li>
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Apellido:</span>
+            <span>{{ (data$ | async)?.detail.subPrincipalLastName }}</span>
+          </li>
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Correo:</span>
+            <span>{{ (data$ | async)?.detail.subPrincipalEmail }}</span>
+          </li>
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Teléfono:</span>
+            <span>{{ (data$ | async)?.detail.subPrincipalPhone }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="w-100">
+        <p class="text-info">Redes sociales</p>
+        <ul class="list-unstyled d-inline-block">
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Facebook:</span>
+            <span>
+              <a [href]="(data$ | async)?.detail.facebook">
+                {{ (data$ | async)?.detail.facebook }}
+              </a></span
+            >
+          </li>
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Instagram:</span>
+            <span>
+              <a [href]="(data$ | async)?.detail.instagram">
+                {{ (data$ | async)?.detail.instagram }}
+              </a></span
+            >
+          </li>
+
+          <li class="d-flex justify-content-between">
+            <span class="font-weight-bold">Twitter:</span>
+            <span>
+              <a [href]="(data$ | async)?.detail.twitter">
+                {{ (data$ | async)?.detail.twitter }}
+              </a></span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="d-block d-md-flex align-items-start">
       <img
         class="mb-3 mr-3 img-fluid"
         [src]="(data$ | async)?.detail.image"
@@ -128,7 +204,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div>

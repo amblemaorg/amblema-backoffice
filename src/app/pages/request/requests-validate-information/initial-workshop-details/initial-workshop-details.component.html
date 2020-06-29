@@ -90,7 +90,7 @@
       {{ (data$ | async)?.detail.description }}
     </p>
 
-    <div class="position-relative">
+    <div class="position-relative" *ngIf="show">
       <owl-carousel-o [options]="customOptions">
         <ng-template
           carouselSlide
@@ -98,7 +98,7 @@
         >
           <div class="card">
             <img
-              class="card-img-top p-1"
+              class="p-1"
               [src]="item.image"
               [alt]="item.description"
             />

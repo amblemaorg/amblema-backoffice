@@ -1,6 +1,6 @@
 import { User } from './user.model';
 
-export interface SchoolUser extends User {
+export interface SchoolUser extends User, Coordinate {
     code: string;
 
     principalFirstName: string;
@@ -29,3 +29,10 @@ export interface SchoolUser extends User {
     addressZone: string;
     status: string;
 }
+
+
+export interface Coordinate {
+    latitude?: number;
+    longitude?: number;
+}
+

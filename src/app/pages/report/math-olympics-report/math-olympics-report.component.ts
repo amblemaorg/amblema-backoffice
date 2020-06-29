@@ -50,7 +50,6 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.mathOlympicsReportService
       .getMathOlympicsReport(this.dateInitSelected, this.dateEndSelected)
       .subscribe((response) => {
-
         this.generateReporte.generateMathOlympics(response);
 
         setTimeout(() => {

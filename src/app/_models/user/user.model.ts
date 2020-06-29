@@ -9,14 +9,9 @@ export interface User extends Address {
   status?: string;
 }
 
-export interface Address extends Coordinate {
+export interface Address {
   addressState: string;
   addressMunicipality: string;
   addressCity?: string;
   address: string;
-}
-
-export interface Coordinate {
-  latitude?: number;
-  longitude?: number;
 }

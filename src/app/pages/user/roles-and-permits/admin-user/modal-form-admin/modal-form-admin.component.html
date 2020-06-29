@@ -10,7 +10,51 @@
   </button>
 </div>
 <div class="modal-body">
-  ...
+  <form [formGroup]="form">
+    <div>
+      <p class="text-info font-weight-bold">Datos generales</p>
+      <hr />
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <app-reactive-input
+          [label]="'Nombre'"
+          [placeholder]="'Nombre'"
+          [id]="'name'"
+          [type]="'text'"
+          [patternMessage]="nameMessage"
+          [control]="form.get('firstName')"
+        ></app-reactive-input>
+      </div>
+      <div class="col-lg-6">
+        <app-reactive-input
+          [label]="'Apellido'"
+          [placeholder]="'Apellido'"
+          [id]="'last-name'"
+          [type]="'text'"
+          [patternMessage]="lastNameMessage"
+          [control]="form.get('lastName')"
+        ></app-reactive-input>
+      </div>
+      <div class="col-lg-6">
+        <app-reactive-input
+          [label]="'Cargo'"
+          [placeholder]="'Cargo'"
+          [id]="'function'"
+          [type]="'text'"
+          [patternMessage]="functionMessage"
+          [control]="form.get('function')"
+        ></app-reactive-input>
+      </div>
+      <div class="col-lg-6">
+        <app-identity-card
+          [cardType]="form.get('cardType')"
+          [cardId]="form.get('cardId')"
+        ></app-identity-card>
+      </div>
+    </div>
+  </form>
 </div>
 <div class="modal-footer">
   <button nbButton type="button" status="success" class="col-12 col-lg-auto">

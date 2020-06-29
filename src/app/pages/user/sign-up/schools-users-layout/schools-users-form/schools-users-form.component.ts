@@ -99,6 +99,7 @@ export class SchoolsUsersFormComponent extends BaseForm
     this.form.addControl('principalEmail', new FormControl(''));
     this.form.addControl('principalPhone', new FormControl(''));
 
+
     // Data sub principal
     this.form.addControl(
       'subPrincipalFirstName',
@@ -144,6 +145,10 @@ export class SchoolsUsersFormComponent extends BaseForm
     );
     this.form.addControl('schoolShift', new FormControl());
     this.form.addControl('schoolType', new FormControl());
+
+    this.form.controls.name.clearValidators();
+    this.form.controls.name.setValidators([Validators.required]);
+    this.form.updateValueAndValidity();
   }
 
   ngOnChanges(): void {
@@ -160,6 +165,9 @@ export class SchoolsUsersFormComponent extends BaseForm
         this.form.controls.addressState.setValue(response.addressState.id);
         this.form.controls.role.setValue(response.role.id);
 
+        this.form.controls.name.clearValidators();
+        this.form.controls.name.setValidators([Validators.required]);
+
         this.coordinate.latitude = response.coordinate.latitude;
         this.coordinate.longitude = response.coordinate.longitude;
 
@@ -168,6 +176,10 @@ export class SchoolsUsersFormComponent extends BaseForm
         this.form.get('password').updateValueAndValidity();
       });
     } else if (this.MODE === this.ACTION.CREATE) {
+
+      this.form.controls.name.clearValidators();
+      this.form.controls.name.setValidators([Validators.required]);
+
 
       if ( 'geolocation' in navigator ) {
         navigator.geolocation.getCurrentPosition((position) => {

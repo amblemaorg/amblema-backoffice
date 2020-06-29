@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { UserAdminForm } from '../../../_shared/user-form-abstract';
 
 @Component({
   selector: 'app-modal-form-admin',
   templateUrl: './modal-form-admin.component.html',
-  styles: []
+  styles: [],
 })
-export class ModalFormAdminComponent {
+export class ModalFormAdminComponent extends UserAdminForm {
+  constructor(public bsModalRef: BsModalRef) {
+    super();
+  }
 
-  constructor( public bsModalRef: BsModalRef ) { }
+  // -- On submit --
+
 }

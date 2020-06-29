@@ -1,0 +1,28 @@
+<div class="form-group">
+  <label [for]="label" class="label"> {{ label }} </label>
+  <input
+    [formControl]="control"
+    [id]="id"
+    [type]="type"
+    [placeholder]="placeholder"
+    autocomplete="off"
+    nbInput
+    fullWidth
+    [status]="
+      this.control.touched && this.control.valid
+        ? 'success'
+        : validationErrors
+        ? 'danger'
+        : 'basic'
+    "
+    [ngClass]="{
+      'is-invalid': validationErrors,
+      'is-valid': this.control.touched && this.control.valid
+    }"
+    class="form-control form-group"
+  />
+  <app-reactive-validation
+    [alternMessage]="patternMessage"
+    [validationErrors]="validationErrors"
+  ></app-reactive-validation>
+</div>

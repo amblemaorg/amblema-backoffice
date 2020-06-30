@@ -1,0 +1,12 @@
+<label class="label">Rol</label>
+<ng-select
+  [items]="role$ | async"
+  notFoundText="Rol no encontrado"
+  placeholder="Rol"
+  bindLabel="name"
+  bindValue="id"
+  class="custom"
+  (change)="control.setValue(roleSelected)"
+  [(ngModel)]="roleSelected"
+>
+</ng-select>

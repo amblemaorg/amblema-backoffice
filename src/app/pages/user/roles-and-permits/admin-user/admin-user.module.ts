@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputModule } from '../../_shared/reactive-input/reactive-input.module';
 import { FormModule } from '../../_shared/form/form.module';
+import { ReactiveSelectModule } from '../../_shared/reactive-select/reactive-select.module';
 
 @NgModule({
   entryComponents: [ModalFormAdminComponent],
@@ -18,8 +19,9 @@ import { FormModule } from '../../_shared/form/form.module';
     NbButtonModule,
     ModalModule.forRoot(),
     CommonModule,
-    FormModule,
     ReactiveInputModule,
+    ReactiveSelectModule,
+    FormModule, // <-- Custom form
     ReactiveFormsModule,
     FormsModule,
     AdminUserRoutingModule,

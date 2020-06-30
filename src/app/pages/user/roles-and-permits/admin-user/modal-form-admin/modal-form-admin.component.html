@@ -53,6 +53,19 @@
           [cardId]="form.get('cardId')"
         ></app-identity-card>
       </div>
+      <div class="col-lg-6">
+        <app-select-role [control]="form.get('role')"></app-select-role>
+      </div>
+      <div class="col-lg-6">
+        <app-reactive-input
+          [label]="'Correo electrónico'"
+          [placeholder]="'Correo electrónico'"
+          [id]="'email'"
+          [type]="'email'"
+          [patternMessage]="emailMessage"
+          [control]="form.get('email')"
+        ></app-reactive-input>
+      </div>
     </div>
   </form>
 </div>

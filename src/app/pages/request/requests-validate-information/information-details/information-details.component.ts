@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { Observable, Subscription } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
@@ -32,6 +32,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   constructor(
     public bsModalRef: BsModalRef,
     public modalService: BsModalService,
+    public elem: ElementRef,
     public serviceRequestStepApproval?: InformationRequestService,
     public store?: Store,
     public toastr?: CustomToastrService
@@ -62,7 +63,6 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
         comments: this.comment,
       })
       .subscribe((resp: HttpEvent<any>) => {
-
         setTimeout(() => {
           this.store.dispatch(
             new UpdateRequestContent({
@@ -76,7 +76,6 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
             'Se ha cambiado el estatus de la solicitud'
           );
         }, 2500);
-
       });
   }
 }

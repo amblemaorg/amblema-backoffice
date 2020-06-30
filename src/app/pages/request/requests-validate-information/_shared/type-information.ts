@@ -12,7 +12,7 @@ export const TYPE_INFORMATION = {
     VALUE: '3',
   },
   SLIDER: {
-    LABEL: 'Carrusel de imagenes',
+    LABEL: 'Datos de la escuela',
     VALUE: '4',
   },
   WORKSHOP: {

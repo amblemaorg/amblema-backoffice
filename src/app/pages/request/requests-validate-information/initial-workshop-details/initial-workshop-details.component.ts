@@ -1,15 +1,6 @@
-import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { Subscription, Observable } from 'rxjs';
-import {
-  RequestContentState,
-  UpdateRequestContent,
-} from 'src/app/store/request/request-content-approval.action';
-import { Select, Store } from '@ngxs/store';
-import { InformationRequestService } from 'src/app/services/request/information-request.service';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { InformationDetailsComponent } from '../information-details/information-details.component';
 
 @Component({
@@ -17,7 +8,8 @@ import { InformationDetailsComponent } from '../information-details/information-
   templateUrl: './initial-workshop-details.component.html',
   styleUrls: ['./initial-workshop-details.component.scss'],
 })
-export class InitialWorkshopDetailsComponent extends InformationDetailsComponent {
+export class InitialWorkshopDetailsComponent extends InformationDetailsComponent
+  implements OnInit {
   customOptions: OwlOptions = {
     stagePadding: 50,
 
@@ -40,10 +32,7 @@ export class InitialWorkshopDetailsComponent extends InformationDetailsComponent
 
   show = false;
 
-  public hasClass(el: any) {
-    return (
-      el.getAttribute('class') &&
-      el.getAttribute('class').indexOf('show') !== -1
-    );
+  ngOnInit() {
+    setTimeout(() => (this.show = true));
   }
 }

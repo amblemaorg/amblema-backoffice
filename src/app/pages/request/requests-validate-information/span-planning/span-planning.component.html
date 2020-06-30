@@ -86,7 +86,7 @@
     <ul class="p-0">
       <li class="list-unstyled">
         <span class="font-weight-bold">Lapso: </span>
-        <span>{{ (data$ | async)?.detail.lapse }}</span>
+        <span>{{ (data$ | async)?.detail?.lapse }}</span>
       </li>
 
       <li class="list-unstyled d-inline-block">
@@ -94,8 +94,8 @@
         <span>
           <a
             target="_blank"
-            [attr.href]="(data$ | async)?.detail.attachedFile.url"
-            >{{ (data$ | async)?.detail.attachedFile.name }}</a
+            [attr.href]="(data$ | async)?.detail?.attachedFile?.url"
+            >{{ (data$ | async)?.detail?.attachedFile?.name }}</a
           >
         </span>
       </li>

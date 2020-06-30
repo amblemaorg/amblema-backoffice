@@ -1,6 +1,6 @@
 export const FILLING_NEEDED_MESSAGE = 'Campo requerido';
-export const MIN_MESSAGE = 'Carácteres mínimos';
-export const MAX_MESSAGE = 'Carácteres máximos';
+export const MIN_MESSAGE = 'carácteres mínimos';
+export const MAX_MESSAGE = 'carácteres máximos';
 
 export const EMAIL_PATTERN_MESSAGE = 'Email incorrecto';
 export const CYRILLIC_PATTERN_MESSAGE = 'Solo texto';

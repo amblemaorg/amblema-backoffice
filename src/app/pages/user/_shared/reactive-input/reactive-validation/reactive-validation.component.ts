@@ -26,10 +26,11 @@ export class ReactiveValidationComponent implements OnChanges {
 
   getErrorMessage(): string | null {
     const errors: any = this.validationErrors;
+
     if (errors) {
       return errors.required ? FILLING_NEEDED_MESSAGE  // <-- Data should be filled
-        : errors.minlength ? MIN_MESSAGE // <-- Data should be min
-        : errors.maxlength ? MAX_MESSAGE // <-- Data should be max
+        : errors.minlength ? `${errors.minlength.requiredLength} ${MIN_MESSAGE}` // <-- Data should be min
+        : errors.maxlength ? `${errors.maxlength.requiredLength} ${MAX_MESSAGE}` // <-- Data should be max
         : errors.pattern ? this.alternMessage // <-- Data should match pattern
         : null; // <-- Data is filled correctly
     }

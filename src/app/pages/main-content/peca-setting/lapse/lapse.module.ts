@@ -24,6 +24,7 @@ import { FormSliderModule } from 'src/app/pages/_components/form-components/form
 import { SliderStandardComponent } from './slider-standard/slider-standard.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
+import { ReactiveDatepickerModule } from 'src/app/pages/_components/form-components/reactive-datepicker/reactive-datepicker.module';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ProgressModule } from 'src/app/pages/_components/shared/progress/progre
     ToggleModule,
     NbListModule,
     ReactiveInputModule,
+    ReactiveDatepickerModule,
     ReactiveTextAreaModule,
     NbAlertModule,
     ReactiveInputFileModule,

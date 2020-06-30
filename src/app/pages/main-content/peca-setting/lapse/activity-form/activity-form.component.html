@@ -458,6 +458,16 @@
     </div>
 
     <div class="col-12">
+      <app-datepicker
+        [control]="formStandard.get('date')"
+        [id]="'olympics-date'"
+        [placeholder]="'Fecha de las olimpíadas'" 
+        [label]="'Fecha de las olimpíadas'"
+        [today]="false"></app-datepicker>      
+    </div> 
+
+
+    <div class="col-12">
       <app-input-file
         [id]="data.id + 'file'"
         [submitted]="false"

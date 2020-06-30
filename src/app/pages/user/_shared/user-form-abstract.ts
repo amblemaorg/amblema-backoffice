@@ -1,6 +1,6 @@
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { CYRILLIC_PATTERN } from "./reactive-input/_shared/validation-patterns";
-import { EMAIL_PATTERN } from "../../_components/form-components/shared/constant/validation-patterns-list";
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CYRILLIC_PATTERN } from './reactive-input/_shared/validation-patterns';
+import { EMAIL_PATTERN } from '../../_components/form-components/shared/constant/validation-patterns-list';
 
 export abstract class UserForm {
   public nameMessage = `Nombre inválido. Debes agregar solo letras en este campo`;
@@ -38,7 +38,7 @@ export abstract class UserAdminForm extends UserForm {
         Validators.required,
         Validators.pattern(CYRILLIC_PATTERN),
       ]),
-      cardType: new FormControl("1", [Validators.required]),
+      cardType: new FormControl('1', [Validators.required]),
       cardId: new FormControl(null),
       phone: new FormControl(),
       function: new FormControl(null, [

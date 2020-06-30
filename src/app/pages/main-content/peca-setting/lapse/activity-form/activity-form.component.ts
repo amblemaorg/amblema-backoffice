@@ -266,6 +266,7 @@ export class ActivityFormComponent extends StepsFormComponent
       });
     } else if (id === this.DEVNAME_STANDARD.MATH_OLYMPIC) {
       this.formStandard = new FormGroup({
+        date: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
         file: new FormControl(null, [Validators.required]),
       });
@@ -479,6 +480,7 @@ export class ActivityFormComponent extends StepsFormComponent
     this.showProgress = true;
 
     formData.append('description', prepareData.description);
+    formData.append('date', prepareData.date);
 
     this.lapseActivityService.updateActivity( this.id, this.lapse, formData ).subscribe( response => {
 

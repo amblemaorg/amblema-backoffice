@@ -17,7 +17,6 @@ import { LapseActivitiesService } from 'src/app/services/lapse-activities.servic
 import { Slider } from 'src/app/_models/web/slider.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
-
 import { APPROVAL_TYPE } from '../../../../../_models/step.model';
 
 @Component({
@@ -52,7 +51,6 @@ export class ActivityFormComponent extends StepsFormComponent
 
   public APPROVAL_TYPE = APPROVAL_TYPE;
 
-
   oldData: any;
 
   constructor(
@@ -70,8 +68,18 @@ export class ActivityFormComponent extends StepsFormComponent
       this.data = response;
       if (this.data.isStandard) {
         this.createForm(this.id);
+
         if (this.formStandard) {
+
           this.formStandard.patchValue(this.data);
+
+
+          if (this.id === this.DEVNAME_STANDARD.MATH_OLYMPIC ) {
+            console.log( this.data );
+            this.formStandard.controls.date.setValue(new Date(this.data.date as string ));
+          }
+
+
         }
         if (this.id === this.DEVNAME_STANDARD.AMBLE_COINS) {
           const value: any = JSON.stringify(
@@ -462,19 +470,14 @@ export class ActivityFormComponent extends StepsFormComponent
   }
 
   onSubmitMathOlympic() {
-
-
-
     const prepareData: any = this.formStandard.value;
+    prepareData.date = prepareData.date.toISOString();
 
     const formData = new FormData();
 
-
     formData.append(
       'file',
-      prepareData.file.url
-        ? JSON.stringify(prepareData.file)
-        : prepareData.file
+      prepareData.file.url ? JSON.stringify(prepareData.file) : prepareData.file
     );
 
     this.showProgress = true;
@@ -482,26 +485,33 @@ export class ActivityFormComponent extends StepsFormComponent
     formData.append('description', prepareData.description);
     formData.append('date', prepareData.date);
 
-    this.lapseActivityService.updateActivity( this.id, this.lapse, formData ).subscribe( response => {
+    this.lapseActivityService
+      .updateActivity(this.id, this.lapse, formData)
+      .subscribe(
+        (response) => {
+          this.toastr.updateSuccess(
+            'Actualización',
+            'Olimpíadas matemáticas actualizado'
+          );
 
-        this.toastr.updateSuccess(
-          'Actualización',
-          'Olimpíadas matemáticas actualizado'
-        );
-
-        setTimeout(() => {
-          this.showProgress = false;
-        }, 2500);
-
-      }, () => this.showProgress = false );
+          setTimeout(() => {
+            this.showProgress = false;
+          }, 2500);
+        },
+        () => (this.showProgress = false)
+      );
   }
 
-  onCheckList(  ) {
-    if ( this.form.controls.hasChecklist.value ) {
-      this.APPROVAL_TYPE.push({ CODE: '2', VALUE: 'Se apueba al completar los campos' });
+  onCheckList() {
+    if (this.form.controls.hasChecklist.value) {
+      this.APPROVAL_TYPE.push({
+        CODE: '2',
+        VALUE: 'Se apueba al completar los campos',
+      });
     } else {
-      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(item => item.CODE !== '2');
+      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
+        (item) => item.CODE !== '2'
+      );
     }
-
   }
 }

@@ -1,1 +1,11 @@
-<p>select-role works!</p>
+<label class="label">Rol</label>
+<ng-select
+  [items]="role$ | async"
+  notFoundText="Rol no encontrado"
+  placeholder="Rol"
+  bindLabel="name"
+  bindValue="id"
+  (change)="control.setValue(roleSelected)"
+  [(ngModel)]="roleSelected"
+>
+</ng-select>

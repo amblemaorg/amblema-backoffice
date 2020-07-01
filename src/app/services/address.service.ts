@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { State, Municipality } from '../_models/address.model';
+import { Statal, Municipality } from '../_models/address.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class AddressService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getStates(): Observable<State[]> {
-    return this.httpClient.get<State[]>(`${environment.api}${this.STATE}`)
+  getStates(): Observable<Statal[]> {
+    return this.httpClient.get<Statal[]>(`${environment.api}${this.STATE}`)
       .pipe(
         map((data: any) => data.records)
       );

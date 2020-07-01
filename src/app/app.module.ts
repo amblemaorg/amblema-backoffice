@@ -45,6 +45,7 @@ import { RequestContentState } from './store/request/request-content-approval.ac
 import { ProjectValidationRequestState } from './store/request/project-validation-request.action';
 import { GeneralEnrolledState } from './store/_enrolled/enrolled.action';
 import { SchoolYearEnrolledState } from './store/_enrolled/school-year-enrolled.action';
+import { AddressState } from './store/_address/address.action';
 
 registerLocaleData(localeVe, 'es-VE');
 
@@ -66,6 +67,8 @@ registerLocaleData(localeVe, 'es-VE');
     // -- NGXS --
     NgxsModule.forRoot(
       [
+        AddressState,
+
         /* Auth */
         RolesState,
 

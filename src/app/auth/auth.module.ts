@@ -52,7 +52,7 @@ import { RequestPasswordComponent } from './request-password/request-password.co
             class: NbAuthJWTToken,
             key: 'access_token',
           },
-          refreshToken: true,
+          refreshToken: false,
           login: {
             endpoint: 'auth/login',
             method: 'post',

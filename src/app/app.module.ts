@@ -12,7 +12,7 @@ import {
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AuthGuard } from './_guards/auth.guard';
-import { NbAuthModule } from '@nebular/auth';
+import { NbAuthModule, NbAuthSimpleInterceptor, NbAuthJWTInterceptor } from '@nebular/auth';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -119,6 +119,11 @@ registerLocaleData(localeVe, 'es-VE');
       useClass: LoadingInterceptorService,
       multi: true,
     },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: NbAuthJWTInterceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent],
 })

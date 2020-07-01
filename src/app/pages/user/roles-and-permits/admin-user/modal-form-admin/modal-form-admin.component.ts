@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { UserAdminForm } from '../../../_shared/user-form-abstract';
+import { UserAdminForm } from '../../../_shared/abstract-user-form';
 
 @Component({
   selector: 'app-modal-form-admin',

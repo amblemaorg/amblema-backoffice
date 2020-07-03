@@ -38,13 +38,17 @@ import { StepState } from './store/step.action';
 import { LapseActivityState } from './store/lapse-activities.action';
 import { ProjectRequestState } from './store/request/project-requests.action';
 import { RolesState } from './store/role.action';
-import { LoadingInterceptorService } from './_intercepts/loading-intercept';
+import { LoadingInterceptorService } from './_intercepts/loading-interceptor';
 import { UserCreationRequestState } from './store/request/user-creation-request.action';
 import { EnvironmentalProjectState } from './store/environmental-project.action';
 import { RequestContentState } from './store/request/request-content-approval.action';
 import { ProjectValidationRequestState } from './store/request/project-validation-request.action';
 import { GeneralEnrolledState } from './store/_enrolled/enrolled.action';
 import { SchoolYearEnrolledState } from './store/_enrolled/school-year-enrolled.action';
+import { AddressState } from './store/_address/address.action';
+import { AuthJWTInterceptor } from './_intercepts/auth-jwt-interceptor';
+import { AuthModule } from './auth/auth.module';
+import { AuthStoreInterceptor } from './_intercepts/auth-store-interceptor';
 
 registerLocaleData(localeVe, 'es-VE');
 
@@ -54,6 +58,7 @@ registerLocaleData(localeVe, 'es-VE');
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
+    AuthModule,
     BrowserAnimationsModule,
 
     NbThemeModule.forRoot({ name: 'default' }),
@@ -98,6 +103,8 @@ registerLocaleData(localeVe, 'es-VE');
         // --Enrolled --
         SchoolYearEnrolledState,
         GeneralEnrolledState,
+
+        AddressState,
       ],
       {
         compatibility: {
@@ -117,6 +124,11 @@ registerLocaleData(localeVe, 'es-VE');
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthJWTInterceptor,
       multi: true,
     },
   ],

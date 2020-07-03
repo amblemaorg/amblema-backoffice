@@ -18,6 +18,7 @@ import { RequestContentState } from 'src/app/store/request/request-content-appro
 import { Router } from '@angular/router';
 import { NbAuthService, NbTokenService } from '@nebular/auth';
 import { filter, map } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/user/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -49,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private menuService: NbMenuService,
     private authService: NbAuthService,
+    private authServiceCustom: AuthService,
     private tokenService: NbTokenService,
     protected sidebarService?: NbSidebarService
   ) {}
@@ -61,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
         if ( title === 'Cerrar sesión' ) {
           this.tokenService.clear();
+          this.authServiceCustom.removeTokens();
           this.router.navigate(['auth/login']);
         }
 

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnChanges } from '@angular/core';
 import { AbstractReactive } from '../../abstract-reactive';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { State, Municipality } from '../../../../../_models/address.model';
+import { Statal, Municipality } from '../../../../../_models/address.model';
 import { ACTION } from '../../../../../_helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Subscription } from 'rxjs';
@@ -33,7 +33,7 @@ export class FormRegionaladdressComponent extends AbstractReactive implements On
     subscribe: Subscription;
 
     // Models
-    states: State[];
+    states: Statal[];
     municipalities: Municipality[];
     nameMuni: string;
 

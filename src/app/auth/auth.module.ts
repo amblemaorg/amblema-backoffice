@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_INITIALIZER, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
@@ -9,6 +9,7 @@ import {
   NbAuthJWTToken,
   NbTokenStorage,
   NbTokenLocalStorage,
+  NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
 } from '@nebular/auth';
 import {
   NbAlertModule,
@@ -17,9 +18,11 @@ import {
   NbInputModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { RequestPasswordComponent } from './request-password/request-password.component';
+
+import { AuthStoreInterceptor } from '../_intercepts/auth-store-interceptor';
 
 @NgModule({
   declarations: [LoginComponent, RequestPasswordComponent],
@@ -52,7 +55,10 @@ import { RequestPasswordComponent } from './request-password/request-password.co
             class: NbAuthJWTToken,
             key: 'access_token',
           },
-          refreshToken: true,
+          refreshToken: {
+            endpoint: 'auth/refresh',
+            method: 'post'
+          },
           login: {
             endpoint: 'auth/login',
             method: 'post',
@@ -115,6 +121,11 @@ import { RequestPasswordComponent } from './request-password/request-password.co
     {
       provide: NbTokenStorage,
       useClass: NbTokenLocalStorage,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthStoreInterceptor,
+      multi: true,
     },
   ],
 })

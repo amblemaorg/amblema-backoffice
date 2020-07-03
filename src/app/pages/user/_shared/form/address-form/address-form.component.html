@@ -1,11 +1,33 @@
-<p class="text-info font-weight-bold">Dirección</p>
+<p class="text-info label font-weight-bold">Dirección</p>
 <hr />
 <div class="row">
   <div class="col-lg-6">
-    ...
+    <label class="label">Estados</label>
+    <ng-select
+      [items]="states$ | async"
+      notFoundText="Estado no encontrado"
+      placeholder="- Seleccione un estado -"
+      bindLabel="name"
+      bindValue="id"
+      class="custom form-group"
+      (change)="onAddressSelected()"
+      [(ngModel)]="addressStateSelected"
+    >
+    </ng-select>
   </div>
   <div class="col-lg-6">
-    ...
+    <label class="label">Municipios</label>
+    <ng-select
+      [items]="municipalities$ | async"
+      notFoundText="Estado no encontrado"
+      placeholder="- Seleccione un municipio -"
+      bindLabel="name"
+      bindValue="id"
+      class="custom form-group"
+      (change)="addressMunicipality.setValue(addressMunicipalitySelected)"
+      [(ngModel)]="addressMunicipalitySelected"
+    >
+    </ng-select>
   </div>
   <div class="col-lg-6">
     ...

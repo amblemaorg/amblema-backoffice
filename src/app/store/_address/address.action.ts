@@ -15,20 +15,20 @@ export class AddressModel {
 }
 
 export class GetStates {
-  static readonly type = '[States] Get States';
+  static readonly type = '[GeneralAddress] Get States';
 }
 
 export class GetMunicipalities {
-  static readonly type = '[States] Get Municipalities';
+  static readonly type = '[GeneralAddress] Get Municipalities';
 }
 
 export class SetStateSelected {
-  static readonly type = '[States] Set State Selected';
+  static readonly type = '[GeneralAddress] Set State Selected';
   constructor(public idState: string) {}
 }
 
 @State<AddressModel>({
-  name: 'address',
+  name: 'generaladdress',
   defaults: {
     states: [],
     stateSelected: {
@@ -45,38 +45,38 @@ export class AddressState implements NgxsOnInit {
   subscriptionService: Subscription;
 
   @Selector()
-  static states(ctx: StateContext<AddressModel>): Statal[] | null {
-    return ctx.getState().states;
+  static states(state: AddressModel): Statal[] | null {
+    return state.states;
   }
 
   @Selector()
-  static stateSelected(ctx: StateContext<AddressModel>): Statal | null {
-    return ctx.getState().stateSelected;
+  static stateSelected(state: AddressModel): Statal | null {
+    return state.stateSelected;
   }
 
   @Selector()
   static municipalities(
-    ctx: StateContext<AddressModel>
+    state: AddressModel
   ): Municipality[] | null {
-    return ctx.getState().availableMunicipalities;
+    return state.availableMunicipalities;
   }
 
   constructor(private addressService: AddressService) {}
 
-  ngxsOnInit(): void {}
+  ngxsOnInit(ctx: StateContext<AddressModel>): void {
+    ctx.dispatch(new GetStates());
+  }
 
   @Action(GetStates)
   getStates(ctx: StateContext<AddressModel>, action: GetStates) {
-    this.subscriptionService = this.addressService
-      .getStates()
-      .subscribe((response) => {
-        ctx.setState(
-          patch({
-            ...ctx.getState(),
-            states: response,
-          })
-        );
-      });
+    this.addressService.getStates().subscribe((response) => {
+      ctx.setState(
+        patch({
+          ...ctx.getState(),
+          states: response,
+        })
+      );
+    });
   }
 
   @Action(SetStateSelected)
@@ -90,7 +90,7 @@ export class AddressState implements NgxsOnInit {
       })
     );
 
-    this.subscriptionService = this.addressService
+    this.addressService
       .getMunicipalityByState(action.idState)
       .subscribe((response) => {
         ctx.setState(

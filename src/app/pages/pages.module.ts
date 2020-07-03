@@ -32,6 +32,7 @@ import { MenuSetUp } from './pages-menu-service';
   imports: [
     RouterModule,
     DashboardRoutingModule,
+
     CommonModule,
     NbListModule,
     NbPopoverModule,

@@ -1,17 +1,17 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
-} from "@angular/common/http";
-import { Observable, throwError, BehaviorSubject } from "rxjs";
-import { catchError, filter, take, switchMap } from "rxjs/operators";
+} from '@angular/common/http';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, filter, take, switchMap } from 'rxjs/operators';
 
-import { Router } from "@angular/router";
-import { AuthService } from "../services/user/auth.service";
-import { environment } from "src/environments/environment.prod";
+import { Router } from '@angular/router';
+import { AuthService } from '../services/user/auth.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class AuthJWTInterceptor implements HttpInterceptor {
@@ -26,10 +26,10 @@ export class AuthJWTInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const url = request.url.replace(`${environment.api}`, "");
+    const url = request.url.replace(`${environment.api}`, '');
 
     if (this.authService.getJwtToken()) {
-      if (url === "auth/refresh") {
+      if (url === 'auth/refresh') {
         request = this.addToken(request, this.authService.getRefreshToken());
       } else {
         request = this.addToken(request, this.authService.getJwtToken());
@@ -62,9 +62,11 @@ export class AuthJWTInterceptor implements HttpInterceptor {
 
       return this.authService.refreshToken().pipe(
         switchMap((token: any) => {
-          console.log(token);
+
           this.isRefreshing = false;
-          this.authService.storeJwtToken(token.access_token);
+
+          this.authService.storeJwtToken(token.access_token); // <-- Save new token
+
           this.refreshTokenSubject.next(token.access_token);
           return next.handle(this.addToken(request, token.access_token));
         })

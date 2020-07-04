@@ -31,7 +31,13 @@ export class SliderDetailsComponent extends InformationDetailsComponent implemen
 
   show = false;
 
+
   ngOnInit() {
-    setTimeout(() => this.show = true);
+    setTimeout(() => (this.show = true));
+
+    this.subscription = this.data$.subscribe((response) => {
+      this.data = response;
+      console.log( this.data );
+    });
   }
 }

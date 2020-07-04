@@ -28,6 +28,8 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
   @Select(ProjectState.project) project$: Observable<Project>;
 
+  phases: any = [ { label: 'En pasos', value: '1' }, { label: 'En PECA', value: '2' } ];
+
   title: string;
   form: FormGroup;
   submitted = false;
@@ -48,6 +50,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
       sponsor: new FormControl(null),
       school: new FormControl(null),
       coordinator: new FormControl(null),
+      phase: new FormControl('1'),
     });
   }
 
@@ -59,13 +62,16 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
     if (this.mode === ACTION.EDIT) {
       this.project$.subscribe((response: any) => {
+
         this.oldProject = response;
         this.form.controls.sponsor.setValue(response.sponsor.id);
         this.form.controls.school.setValue(response.school.id);
         this.form.controls.coordinator.setValue(response.coordinator.id);
+        this.form.controls.phase.setValue( response.phase );
       });
     } else {
       this.form.reset();
+      this.form.controls.phase.setValue( '1' );
       this.progress = 0;
       this.submitted = false;
     }
@@ -104,10 +110,14 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
           }
         );
       } else if (this.mode === ACTION.EDIT) {
+
+        console.log( this.form.value );
         this.projectService
           .updateProject(this.oldProject.id, this.form.value)
           .subscribe(
             (response) => {
+
+              console.log( response );
               this.toastr.updateSuccess(
                 'Actualización',
                 'Actualización de proyecto exitoso'
@@ -117,10 +127,10 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
               this.submitted = false;
             },
             (err: any) => {
+              console.log( err );
+              this.progress = 0;
 
-            this.progress = 0;
-
-            if (err.error.school[0].status === '5') {
+              if (err.error.school[0].status === '5') {
                 this.toastr.error(
                   'Escuela dublicada',
                   'No se puede actualizars el proyecto. Ya existe un proyecto con ésta escuela'

@@ -8,6 +8,7 @@ import { NbCardModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
 import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProgressModule } from '../../_components/shared/progress/progress.module';
+import { MapModule } from '../../_components/shared/map/map.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ProgressModule } from '../../_components/shared/progress/progress.modul
     NbCardModule,
     NbButtonModule,
     ModalModule,
+    MapModule,
     ReactiveFormsModule,
     FormsModule,
     ProgressModule,

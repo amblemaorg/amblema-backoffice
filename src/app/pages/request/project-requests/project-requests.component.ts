@@ -148,11 +148,13 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   onAction(event: any): void {
+
+
     switch (event.action) {
       case this.ACTION.VIEW:
+        console.log( event.data );
         this.requestSelected = event.data;
         this.modalService.open(this.modal);
-
         break;
       case this.ACTION.DELETE:
         if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {

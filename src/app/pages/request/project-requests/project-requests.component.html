@@ -877,6 +877,16 @@
               <hr />
             </div>
 
+            <!-- Maps -->
+            <div class="col-12 form-group" *ngIf="requestSelected.coordinate">
+              <app-geo-map
+                (laT)="coordinate.latitude = $event"
+                (longT)="coordinate.longitude = $event"
+                [(longitude)]="coordinate.longitude"
+                [(latitude)]="coordinate.latitude"
+              ></app-geo-map>
+            </div>
+
             <div *ngIf="requestSelected.hasSponsor" class="col-12 form-group">
               <div class="row">
                 <div class="col-12 col-lg-6 form-group">

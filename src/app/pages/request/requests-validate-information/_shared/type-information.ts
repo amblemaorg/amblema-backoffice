@@ -31,4 +31,8 @@ export const TYPE_INFORMATION = {
     LABEL: 'Planificación de lapso',
     VALUE: '8',
   },
+  PICTURES_SCHOOL_ACTIVTIES: {
+    LABEL: 'Fotos de las actividades de escuela',
+    VALUE: '9'
+  },
 };

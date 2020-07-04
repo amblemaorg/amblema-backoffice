@@ -27,6 +27,7 @@ import { SpecialActivityDetailsComponent } from './special-activity-details/spec
 import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SpanPlanningComponent } from './span-planning/span-planning.component';
+import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-school-details.component';
 
 @NgModule({
   entryComponents: [
@@ -37,6 +38,7 @@ import { SpanPlanningComponent } from './span-planning/span-planning.component';
     InformationDetailsComponent,
     SpanPlanningComponent,
     InitialWorkshopDetailsComponent,
+    PhotosSchoolDetailsComponent,
     SpecialActivityDetailsComponent
   ],
   declarations: [
@@ -49,6 +51,7 @@ import { SpanPlanningComponent } from './span-planning/span-planning.component';
     SpecialActivityDetailsComponent,
     YearbookDetailsComponent,
     SpanPlanningComponent,
+    PhotosSchoolDetailsComponent,
   ],
   imports: [
     CarouselModule,

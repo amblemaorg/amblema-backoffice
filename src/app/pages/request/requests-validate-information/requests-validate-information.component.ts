@@ -33,6 +33,7 @@ import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.co
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
 import { SpanPlanningComponent } from './span-planning/span-planning.component';
+import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-school-details.component';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -144,7 +145,9 @@ export class RequestsValidateInformationComponent extends BaseTable
             ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
             : row === TYPE_INFORMATION.YEARBOOK.VALUE
             ? TYPE_INFORMATION.YEARBOOK.LABEL
-            : TYPE_INFORMATION.SPAN_PLANNING.LABEL;
+            : row === TYPE_INFORMATION.SPAN_PLANNING.VALUE
+            ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
+            : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
         },
         filterFunction: (cell?: any, search?: string) => {
           let value: string =
@@ -162,7 +165,9 @@ export class RequestsValidateInformationComponent extends BaseTable
               ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
               : cell === TYPE_INFORMATION.YEARBOOK.VALUE
               ? TYPE_INFORMATION.YEARBOOK.LABEL
-              : TYPE_INFORMATION.SPAN_PLANNING.LABEL;
+              : cell === TYPE_INFORMATION.SPAN_PLANNING.VALUE
+              ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
+              : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
 
           value = value.toUpperCase();
 
@@ -269,6 +274,12 @@ export class RequestsValidateInformationComponent extends BaseTable
       case TYPE_INFORMATION.SPAN_PLANNING.VALUE:
         this.modalService.show(
           SpanPlanningComponent,
+          Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
+        );
+        break;
+      case TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.VALUE:
+        this.modalService.show(
+          PhotosSchoolDetailsComponent,
           Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
         );
         break;

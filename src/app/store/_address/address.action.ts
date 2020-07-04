@@ -22,6 +22,12 @@ export class GetMunicipalities {
   static readonly type = '[GeneralAddress] Get Municipalities';
 }
 
+export class SetMunicipality {
+  static readonly type = '[GeneralAddress] Set Municipality';
+  constructor( public idAddress: string, public nameMunicipality: string ) {}
+}
+
+
 export class SetStateSelected {
   static readonly type = '[GeneralAddress] Set State Selected';
   constructor(public idState: string) {}

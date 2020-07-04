@@ -57,7 +57,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   onApprovedRequest( ) {
     this.showProgress = true;
 
-    console.log( this.data ); 
+    console.log( this.data );
     this.subscription = this.serviceRequestStepApproval
       .updateRequestContentApproval({
         ...this.data,

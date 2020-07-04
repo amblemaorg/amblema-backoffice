@@ -1,5 +1,5 @@
 <div class="form-group">
-  <label [for]="label" class="label"> {{ label }} </label>
+  <label [for]="label" *ngIf="label" class="label"> {{ label }} </label>
   <input
     [formControl]="control"
     [id]="id"

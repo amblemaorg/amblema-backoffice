@@ -22,13 +22,13 @@
 
     <div class="d-flex">
       <ng-select
-        [items]="municipalities$ | async"
+        [items]="addressStateSelected ? (municipalities$ | async) : null"
         notFoundText="Municipio no encontrado"
         placeholder="- Seleccione un municipio -"
         bindLabel="name"
         bindValue="id"
         class="custom form-group col pl-0"
-        (change)="addressMunicipality.setValue(addressMunicipalitySelected)"
+        (change)="addressMunicipality.setValue(addressMunicipalitySelected); onSelectMunicipality();"
         [(ngModel)]="addressMunicipalitySelected"
       >
       </ng-select>
@@ -90,6 +90,7 @@
         class="col pl-0"
         [placeholder]="'Municipio'"
         [id]="'municipality'"
+        [disabled]="isFormOn === formMode.DELETE.VALUE ? true : false"
         [control]="control"
       ></app-reactive-input>
 
@@ -109,7 +110,7 @@
           nbTooltip="Cancelar"
           class="border-left-0"
           outline
-          (click)="onCancelAction()"
+          (click)="resetCrudMunicipality()"
           status="basic"
         >
           <nb-icon icon="close-outline"></nb-icon>

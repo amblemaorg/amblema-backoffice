@@ -54,8 +54,10 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
     this.bsModalRef.hide();
   }
 
-  onApprovedRequest() {
+  onApprovedRequest( ) {
     this.showProgress = true;
+
+    console.log( this.data );
     this.subscription = this.serviceRequestStepApproval
       .updateRequestContentApproval({
         ...this.data,

@@ -6,6 +6,8 @@ import {
   NbInputModule,
   NbTooltipModule,
   NbSpinnerModule,
+  NbButtonModule,
+  NbIconModule,
 } from '@nebular/theme';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddressFormComponent } from './address-form/address-form.component';
@@ -18,6 +20,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     FormsModule,
     NbTooltipModule,
+    NbButtonModule,
+
+    NbIconModule,
     CommonModule,
     NbSpinnerModule,
     NgSelectModule,

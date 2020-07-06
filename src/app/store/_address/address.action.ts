@@ -2,7 +2,7 @@ import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { Statal, Municipality } from 'src/app/_models/address.model';
 import { AddressService } from 'src/app/services/address.service';
 import { Subscription } from 'rxjs';
-import { patch } from '@ngxs/store/operators';
+import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
 /**
  * New name added to states, this is to avoid confusion with the NGXS library
@@ -20,6 +20,21 @@ export class GetStates {
 
 export class GetMunicipalities {
   static readonly type = '[GeneralAddress] Get Municipalities';
+}
+
+export class SetMunicipality {
+  static readonly type = '[GeneralAddress] Set Municipality';
+  constructor(public municipality: Municipality) {}
+}
+
+export class UpdateMunicipality {
+  static readonly type = '[GeneralAddress] Update Municipality';
+  constructor(public municipality: Municipality) {}
+}
+
+export class DeleteMunicipality {
+  static readonly type = '[GeneralAddress] Delete Municipality';
+  constructor(public id: string) {}
 }
 
 export class SetStateSelected {
@@ -55,9 +70,7 @@ export class AddressState implements NgxsOnInit {
   }
 
   @Selector()
-  static municipalities(
-    state: AddressModel
-  ): Municipality[] | null {
+  static municipalities(state: AddressModel): Municipality[] | null {
     return state.availableMunicipalities;
   }
 
@@ -100,5 +113,47 @@ export class AddressState implements NgxsOnInit {
           })
         );
       });
+  }
+
+  @Action(SetMunicipality)
+  setMunicipality(ctx: StateContext<AddressModel>, action: SetMunicipality) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        availableMunicipalities: append([action.municipality]),
+      })
+    );
+  }
+
+  @Action(UpdateMunicipality)
+  updateMunicipality(
+    ctx: StateContext<AddressModel>,
+    action: UpdateMunicipality
+  ) {
+
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        availableMunicipalities: updateItem<Municipality>(
+          (item) => item.id === action.municipality.id,
+          action.municipality
+        ),
+      })
+    );
+  }
+
+  @Action(DeleteMunicipality)
+  deleteMunicipality(
+    ctx: StateContext<AddressModel>,
+    action: DeleteMunicipality
+  ) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        availableMunicipalities: removeItem<Municipality>(
+          (item) => item.id === action.id
+        ),
+      })
+    );
   }
 }

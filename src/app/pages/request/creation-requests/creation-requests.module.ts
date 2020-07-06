@@ -9,6 +9,7 @@ import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.mo
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppModule } from 'src/app/app.module';
 import { ProgressModule } from '../../_components/shared/progress/progress.module';
+import { MapModule } from '../../_components/shared/map/map.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ProgressModule } from '../../_components/shared/progress/progress.modul
     CommonModule,
     ModalModule,
     ReactiveFormsModule,
+    MapModule,
     FormsModule,
     ProgressModule,
     NbButtonModule,

@@ -45,11 +45,17 @@ export class AddressService {
   }
 
   setMunicipality(data: DataMunicipality): Observable<DataMunicipality> {
-    return this.httpClient.post<DataMunicipality>(`${environment.api}${this.MUNICIPALITY}`, data);
+    return this.httpClient.post<DataMunicipality>(`${environment.api}${this.MUNICIPALITY}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 
   updateMunicipality(id: string, data: DataMunicipality): Observable<Municipality> {
-    return this.httpClient.put<Municipality>(`${environment.api}${this.MUNICIPALITY}/${id}`, data);
+    return this.httpClient.put<Municipality>(`${environment.api}${this.MUNICIPALITY}/${id}`, data, {
+      reportProgress: true,
+      observe: 'body'
+    });
   }
 }
 

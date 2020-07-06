@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h6 class="modal-title pull-left">Registro de usuario administrador</h6>
+  <h6 class="modal-title pull-left">{{(formModeService.getMode() | async)?.label}} usuario administrador</h6>
   <button
     type="button"
     class="close pull-right"
@@ -69,11 +69,23 @@
     </div>
 
     <!-- Member the address form -->
-    <app-address-form></app-address-form>
+    <app-address-form
+      [address]="form.get('address')"
+      [addressState]="form.get('addressState')"
+      [addressMunicipality]="form.get('addressMunicipality')"
+    ></app-address-form>
+
+    <!-- Estatus -->
+    <hr>
+    <div class="row">
+      <div class="col-lg-6">
+        <app-select-status [control]="form.get('status')"></app-select-status>
+      </div>
+    </div>
   </form>
 </div>
 <div class="modal-footer">
-  <button nbButton type="button" status="success" class="col-12 col-lg-auto">
+  <button nbButton type="button" (click)="onSubmit()" status="success" class="col-12 col-lg-auto">
     Registrar
   </button>
   <button

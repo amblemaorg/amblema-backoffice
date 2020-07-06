@@ -11,6 +11,7 @@ export class ValidationService {
    */
   markAllFormFieldsAsTouched(form: AbstractControl): void {
     form.markAsDirty({ onlySelf: true });
+    form.markAsTouched({ onlySelf: true });
 
     if (form instanceof FormArray || form instanceof FormGroup) {
       Object.values(form.controls).forEach(this.markAllFormFieldsAsTouched);

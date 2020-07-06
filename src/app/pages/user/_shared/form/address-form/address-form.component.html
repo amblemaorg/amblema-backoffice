@@ -1,4 +1,5 @@
-<p class="text-info label font-weight-bold">Dirección</p>
+<p class="text-info font-weight-bold">Dirección</p>
+
 <hr />
 <div class="row">
   <div class="col-lg-6">
@@ -14,22 +15,139 @@
       [(ngModel)]="addressStateSelected"
     >
     </ng-select>
+
+    <div *ngIf="addressState.invalid && addressState.touched">
+      <div class="alert alert-primary">
+        <span class="validation-message font-weight-bold">
+          Campo requerido
+        </span>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-6">
+
+  <!-- Selector -->
+  <div class="col-lg-6" *ngIf="!isEditionMode">
     <label class="label">Municipios</label>
-    <ng-select
-      [items]="municipalities$ | async"
-      notFoundText="Estado no encontrado"
-      placeholder="- Seleccione un municipio -"
-      bindLabel="name"
-      bindValue="id"
-      class="custom form-group"
-      (change)="addressMunicipality.setValue(addressMunicipalitySelected)"
-      [(ngModel)]="addressMunicipalitySelected"
-    >
-    </ng-select>
+
+    <div class="d-flex">
+      <div class="col pl-0">
+        <ng-select
+          [items]="addressStateSelected ? (municipalities$ | async) : []"
+          notFoundText="Municipio no encontrado"
+          placeholder="- Seleccione un municipio -"
+          bindLabel="name"
+          bindValue="id"
+          class="custom form-group"
+          (change)="
+            addressMunicipality.setValue(addressMunicipalitySelected);
+            onSelectMunicipality()
+          "
+          [(ngModel)]="addressMunicipalitySelected"
+        >
+        </ng-select>
+
+        <div *ngIf="addressMunicipality.invalid && addressMunicipality.touched">
+          <div class="alert alert-primary">
+            <span class="validation-message font-weight-bold">
+              Campo requerido
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create or edit button -->
+      <div
+        (click)="onChangeMode()"
+        class="btn-group col-auto pr-0"
+        role="group"
+        aria-label="Basic example"
+      >
+        <button
+          (click)="isFormOn = formMode.CREATE.VALUE; control.reset()"
+          [attr.disabled]="addressStateSelected ? null : true"
+          type="button"
+          nbTooltip="Crear municipio"
+          nbButton
+          class="border-right-0"
+          fullWidth
+          status="primary"
+        >
+          <nb-icon icon="plus"></nb-icon>
+        </button>
+        <button
+          (click)="isFormOn = formMode.EDIT.VALUE"
+          [attr.disabled]="addressMunicipalitySelected ? null : true"
+          class="rounded-0"
+          type="button"
+          nbButton
+          nbTooltip="Editar municipio"
+          fullWidth
+          status="primary"
+        >
+          <nb-icon icon="edit"></nb-icon>
+        </button>
+        <button
+          (click)="isFormOn = formMode.DELETE.VALUE"
+          [attr.disabled]="addressMunicipalitySelected ? null : true"
+          type="button"
+          class="border-left-0"
+          nbButton
+          fullWidth
+          nbTooltip="Eliminar municipio"
+          outline
+          status="danger"
+        >
+          <nb-icon icon="trash"></nb-icon>
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-6">
-    ...
+
+  <!-- Edition -->
+
+  <div class="col-lg-6" *ngIf="isEditionMode">
+    <label class="label">Municipios</label>
+    <div class="d-flex">
+      <app-reactive-input
+        class="col pl-0"
+        [placeholder]="'Municipio'"
+        [id]="'municipality'"
+        [disabled]="isFormOn === formMode.DELETE.VALUE ? true : false"
+        [control]="control"
+      ></app-reactive-input>
+
+      <div id="wrapper-confirm" class="btn-group col-auto pr-0" role="group">
+        <button
+          type="button"
+          (click)="onConfirmAction(isFormOn)"
+          nbTooltip="Confirmar"
+          nbButton
+          class="border-right-0"
+        >
+          <nb-icon icon="checkmark-outline"></nb-icon>
+        </button>
+        <button
+          type="button"
+          nbButton
+          nbTooltip="Cancelar"
+          class="border-left-0"
+          outline
+          (click)="resetCrudMunicipality()"
+          status="basic"
+        >
+          <nb-icon icon="close-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Address -->
+  <div id="edition-mode" class="col-lg-6">
+    <app-reactive-input
+      [label]="'Calles / carreras'"
+      [placeholder]="'Calles / carreras'"
+      [id]="'address'"
+      [control]="address"
+    ></app-reactive-input>
   </div>
 </div>

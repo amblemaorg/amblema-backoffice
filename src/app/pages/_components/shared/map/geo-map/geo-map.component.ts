@@ -18,6 +18,7 @@ import { MapsAPILoader } from '@agm/core';
 export class GeoMapComponent implements OnInit {
   @Input() latitude: number;
   @Input() longitude: number;
+  @Input() label: string | null = 'Marca la ubicación exacta de la escuela';
 
   @Output() laT = new EventEmitter<number>();
   @Output() longT = new EventEmitter<number>();

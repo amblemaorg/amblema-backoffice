@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+
 import { InformationDetailsComponent } from '../information-details/information-details.component';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
-  selector: 'app-slider-details',
-  templateUrl: './slider-details.component.html',
-  styleUrls: ['./slider-details.component.scss']
+  selector: 'app-photos-school-details',
+  templateUrl: './photos-school-details.component.html',
+  styleUrls: ['./photos-school-details.component.scss'],
 })
-export class SliderDetailsComponent extends InformationDetailsComponent implements OnInit {
-
+export class PhotosSchoolDetailsComponent extends InformationDetailsComponent
+  implements OnInit {
   customOptions: OwlOptions = {
     stagePadding: 50,
 
@@ -30,7 +31,6 @@ export class SliderDetailsComponent extends InformationDetailsComponent implemen
   };
 
   show = false;
-
 
   ngOnInit() {
     setTimeout(() => (this.show = true));

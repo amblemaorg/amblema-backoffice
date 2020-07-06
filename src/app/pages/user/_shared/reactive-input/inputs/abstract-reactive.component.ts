@@ -10,6 +10,7 @@ export abstract class AbstractReactiveComponent implements OnInit, DoCheck {
   @Input() placeholder: string | null = '';
   @Input() type: string | null = 'text';
   @Input() patternMessage?: string;
+  @Input() disabled: boolean | null = false;
 
   validationErrors: object = null;
 

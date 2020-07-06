@@ -10,3 +10,8 @@
   [(ngModel)]="roleSelected"
 >
 </ng-select>
+<div *ngIf="control.invalid && control.touched">
+  <div class="alert alert-primary">
+      <span class="validation-message font-weight-bold"> Campo requerido </span>
+  </div>
+</div>

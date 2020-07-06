@@ -63,7 +63,7 @@
         aria-label="Basic example"
       >
         <button
-          (click)="isFormOn = formMode.CREATE.VALUE; control.reset()"
+          (click)="isFormOn = formMode.CREATE.value; control.reset()"
           [attr.disabled]="addressStateSelected ? null : true"
           type="button"
           nbTooltip="Crear municipio"
@@ -75,7 +75,7 @@
           <nb-icon icon="plus"></nb-icon>
         </button>
         <button
-          (click)="isFormOn = formMode.EDIT.VALUE"
+          (click)="isFormOn = formMode.EDIT.value"
           [attr.disabled]="addressMunicipalitySelected ? null : true"
           class="rounded-0"
           type="button"
@@ -87,7 +87,7 @@
           <nb-icon icon="edit"></nb-icon>
         </button>
         <button
-          (click)="isFormOn = formMode.DELETE.VALUE"
+          (click)="isFormOn = formMode.DELETE.value"
           [attr.disabled]="addressMunicipalitySelected ? null : true"
           type="button"
           class="border-left-0"
@@ -112,7 +112,7 @@
         class="col pl-0"
         [placeholder]="'Municipio'"
         [id]="'municipality'"
-        [disabled]="isFormOn === formMode.DELETE.VALUE ? true : false"
+        [disabled]="isFormOn === formMode.DELETE.value ? true : false"
         [control]="control"
       ></app-reactive-input>
 

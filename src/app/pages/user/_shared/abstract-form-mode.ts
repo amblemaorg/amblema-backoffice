@@ -4,25 +4,15 @@
  * agents is necessary to create a service for their purpose.
  */
 
-export interface Create {
-  VALUE: '1';
-  LABEL: 'Crear';
+export interface Action {
+  value: '1' | '2' | '3';
+  label: 'Crear' | 'Editar' | 'Eliminar';
 }
 
-export interface Edit {
-  VALUE: '2';
-  LABEL: 'Editar';
-}
-
-export interface Delete {
-  VALUE: '3';
-  LABEL: 'Eliminar';
-}
-
-export const FORM_MODALITY: { CREATE: Create; EDIT: Edit; DELETE: Delete } = {
-  CREATE: { LABEL: 'Crear', VALUE: '1' },
-  EDIT: { LABEL: 'Editar', VALUE: '2' },
-  DELETE: { LABEL: 'Eliminar', VALUE: '3' },
+export const FORM_MODALITY: { CREATE: Action; EDIT: Action; DELETE: Action } = {
+  CREATE: { label: 'Crear', value: '1' },
+  EDIT: { label: 'Editar', value: '2' },
+  DELETE: { label: 'Eliminar', value: '3' },
 };
 
 

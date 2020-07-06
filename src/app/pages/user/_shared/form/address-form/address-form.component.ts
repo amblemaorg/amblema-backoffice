@@ -40,9 +40,9 @@ export class AddressFormComponent implements OnDestroy {
   control: AbstractControl = new FormControl(null, [Validators.required]); // <-- To create or edit
   isEditionMode = false; // <-- Edition = 'true' or selector = 'false'
   isFormOn =
-    FORM_MODALITY.CREATE.VALUE ||
-    FORM_MODALITY.EDIT.VALUE ||
-    FORM_MODALITY.DELETE.VALUE ||
+    FORM_MODALITY.CREATE.value ||
+    FORM_MODALITY.EDIT.value ||
+    FORM_MODALITY.DELETE.value ||
     null; // <--- Is form on?
 
   // -- Define actions --
@@ -52,7 +52,7 @@ export class AddressFormComponent implements OnDestroy {
     public toastService: CustomToastrService,
     public addressServices: AddressService,
     public store: Store
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     if (this.subscriptionServices) {
@@ -87,7 +87,7 @@ export class AddressFormComponent implements OnDestroy {
     if (this.isEditionMode) {
       switch (mode) {
         // -- Create --
-        case FORM_MODALITY.CREATE.VALUE:
+        case FORM_MODALITY.CREATE.value:
           this.subscriptionServices = this.addressServices
             .setMunicipality({
               name: this.control.value,
@@ -111,7 +111,7 @@ export class AddressFormComponent implements OnDestroy {
             );
           break;
         // -- Edit --
-        case FORM_MODALITY.EDIT.VALUE:
+        case FORM_MODALITY.EDIT.value:
           this.subscriptionServices = this.addressServices
             .updateMunicipality(this.addressMunicipalitySelected, {
               id: this.addressMunicipalitySelected,
@@ -138,7 +138,7 @@ export class AddressFormComponent implements OnDestroy {
 
           break;
         // -- Delete --
-        case FORM_MODALITY.DELETE.VALUE:
+        case FORM_MODALITY.DELETE.value:
           this.subscriptionServices = this.addressServices
             .deleteMunicipality(this.addressMunicipalitySelected)
             .subscribe((response) => {

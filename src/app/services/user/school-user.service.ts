@@ -26,8 +26,8 @@ export class SchoolUserService {
 
   setSchoolUser(data: SchoolUser): Observable<any> {
     return this.httpClient.post<SchoolUser>(`${environment.api}${this.SCHOOL_USER}`, data, {
-      reportProgress: true,
-      observe: 'events'
+      reportProgress: false,
+
     });
   }
 

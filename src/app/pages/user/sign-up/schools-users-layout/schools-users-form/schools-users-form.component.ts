@@ -250,6 +250,7 @@ export class SchoolsUsersFormComponent extends BaseForm
             }
           },
           (err: any) => {
+
             this.showProgress = false;
 
             if (err.error.status === 0) {

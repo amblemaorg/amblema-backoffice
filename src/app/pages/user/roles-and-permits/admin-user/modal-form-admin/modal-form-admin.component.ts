@@ -30,7 +30,7 @@ export class ModalFormAdminComponent extends UserAdminForm implements BaseFormUs
       .subscribe((response) => {
 
         // -- Path values --
-        if ( response.value === FORM_MODALITY.EDIT.VALUE ) {
+        if ( response.value === FORM_MODALITY.EDIT.value ) {
 
         }
       });

@@ -1,0 +1,6 @@
+<label class="label">Estatus</label>
+<select id="status" [formControl]="control" class="form-control">
+  <option [value]="item.value" *ngFor="let item of options">{{
+    item.label
+  }}</option>
+</select>

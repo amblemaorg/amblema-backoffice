@@ -1,4 +1,5 @@
-<p class="text-info label font-weight-bold">Dirección</p>
+<p class="text-info font-weight-bold">Dirección</p>
+
 <hr />
 <div class="row">
   <div class="col-lg-6">
@@ -22,13 +23,16 @@
 
     <div class="d-flex">
       <ng-select
-        [items]="addressStateSelected ? (municipalities$ | async) : null"
+        [items]="addressStateSelected ? (municipalities$ | async) : []"
         notFoundText="Municipio no encontrado"
         placeholder="- Seleccione un municipio -"
         bindLabel="name"
         bindValue="id"
         class="custom form-group col pl-0"
-        (change)="addressMunicipality.setValue(addressMunicipalitySelected); onSelectMunicipality();"
+        (change)="
+          addressMunicipality.setValue(addressMunicipalitySelected);
+          onSelectMunicipality()
+        "
         [(ngModel)]="addressMunicipalitySelected"
       >
       </ng-select>
@@ -41,7 +45,7 @@
         aria-label="Basic example"
       >
         <button
-          (click)="isFormOn = formMode.CREATE.VALUE"
+          (click)="isFormOn = formMode.CREATE.VALUE; control.reset()"
           [attr.disabled]="addressStateSelected ? null : true"
           type="button"
           nbTooltip="Crear municipio"
@@ -117,5 +121,16 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- Address -->
+  <div id="edition-mode" class="col-lg-6">
+    <app-reactive-input
+      
+      [label]="'Calles / carreras'"
+      [placeholder]="'Calles / carreras'"
+      [id]="'address'"
+      [control]="address"
+    ></app-reactive-input>
   </div>
 </div>

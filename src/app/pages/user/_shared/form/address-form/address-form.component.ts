@@ -1,23 +1,23 @@
-import { Component, Input, OnDestroy } from "@angular/core";
-import { AbstractControl, FormControl, Validators } from "@angular/forms";
-import { Select, Store } from "@ngxs/store";
+import { Component, Input, OnDestroy } from '@angular/core';
+import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { Select, Store } from '@ngxs/store';
 import {
   AddressState,
   SetStateSelected,
   SetMunicipality,
   DeleteMunicipality,
   UpdateMunicipality,
-} from "src/app/store/_address/address.action";
-import { Observable, Subscription } from "rxjs";
-import { Statal, Municipality } from "src/app/_models/address.model";
-import { FORM_MODALITY } from "../../abstract-form-mode";
-import { AddressService } from "src/app/services/address.service";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+} from 'src/app/store/_address/address.action';
+import { Observable, Subscription } from 'rxjs';
+import { Statal, Municipality } from 'src/app/_models/address.model';
+import { FORM_MODALITY } from '../../abstract-form-mode';
+import { AddressService } from 'src/app/services/address.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
-  selector: "app-address-form",
-  templateUrl: "./address-form.component.html",
-  styleUrls: ["./address-form.component.scss"],
+  selector: 'app-address-form',
+  templateUrl: './address-form.component.html',
+  styleUrls: ['./address-form.component.scss'],
 })
 export class AddressFormComponent implements OnDestroy {
   @Input() address: AbstractControl | null = new FormControl();
@@ -43,7 +43,7 @@ export class AddressFormComponent implements OnDestroy {
     FORM_MODALITY.CREATE.VALUE ||
     FORM_MODALITY.EDIT.VALUE ||
     FORM_MODALITY.DELETE.VALUE ||
-    null; // <--- Create = 'true' or edit = 'false'
+    null; // <--- Is form on?
 
   // -- Define actions --
   readonly formMode = FORM_MODALITY;
@@ -52,7 +52,7 @@ export class AddressFormComponent implements OnDestroy {
     public toastService: CustomToastrService,
     public addressServices: AddressService,
     public store: Store
-  ) {  }
+  ) {}
 
   ngOnDestroy(): void {
     if (this.subscriptionServices) {
@@ -69,6 +69,7 @@ export class AddressFormComponent implements OnDestroy {
     // -- Verify that the municipalities exist or state --
     if (this.addressStateSelected || this.addressMunicipalitySelected) {
       this.isEditionMode = true;
+
     }
   }
 
@@ -96,13 +97,17 @@ export class AddressFormComponent implements OnDestroy {
               (response) => {
                 this.store.dispatch(new SetMunicipality(response));
                 this.toastService.registerSuccess(
-                  "Registro",
-                  "Municipio creado"
+                  'Registro',
+                  'Municipio creado'
                 );
                 this.resetCrudMunicipality();
               },
-              (err: any) => {
+              (err) => {
                 console.log(err);
+                this.toastService.error(
+                  'Error',
+                  'Al paracer el nombre esta duplicado o hay inconvenientes.'
+                );
               }
             );
           break;
@@ -114,15 +119,23 @@ export class AddressFormComponent implements OnDestroy {
               state: this.addressStateSelected,
               name: this.control.value,
             })
-            .subscribe((response) => {
-              this.toastService.updateSuccess(
-                "Actualización",
-                "Municipio actualizado"
-              );
-              this.store.dispatch(new UpdateMunicipality(response));
-              this.resetCrudMunicipality();
-              this.addressMunicipalitySelected = response.id;
-            });
+            .subscribe(
+              (response) => {
+                this.toastService.updateSuccess(
+                  'Actualización',
+                  'Municipio actualizado'
+                );
+                this.store.dispatch(new UpdateMunicipality(response));
+                this.resetCrudMunicipality();
+                this.addressMunicipalitySelected = response.id;
+              },
+              (err) => {
+                this.toastService.error(
+                  'Error',
+                  'Al paracer el nombre esta duplicado o hay inconvenientes.'
+                );
+              }
+            );
 
           break;
         // -- Delete --
@@ -134,8 +147,8 @@ export class AddressFormComponent implements OnDestroy {
                 new DeleteMunicipality(this.addressMunicipalitySelected)
               );
               this.toastService.deleteRegister(
-                "Eliminación",
-                "Se ha eliminado el municipio seleccionado"
+                'Eliminación',
+                'Se ha eliminado el municipio seleccionado'
               );
               this.resetCrudMunicipality();
             });

@@ -69,7 +69,19 @@
     </div>
 
     <!-- Member the address form -->
-    <app-address-form></app-address-form>
+    <app-address-form
+      [address]="form.get('address')"
+      [addressState]="form.get('addressState')"
+      [addressMunicipality]="form.get('addressMunicipality')"
+    ></app-address-form>
+
+    <!-- Estatus -->
+    <hr>
+    <div class="row">
+      <div class="col-lg-6">
+        <app-select-status [control]="form.get('status')"></app-select-status>
+      </div>
+    </div>
   </form>
 </div>
 <div class="modal-footer">

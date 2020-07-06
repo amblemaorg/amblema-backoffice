@@ -15,6 +15,14 @@
       [(ngModel)]="addressStateSelected"
     >
     </ng-select>
+
+    <div *ngIf="addressState.invalid && addressState.touched">
+      <div class="alert alert-primary">
+        <span class="validation-message font-weight-bold">
+          Campo requerido
+        </span>
+      </div>
+    </div>
   </div>
 
   <!-- Selector -->
@@ -22,20 +30,30 @@
     <label class="label">Municipios</label>
 
     <div class="d-flex">
-      <ng-select
-        [items]="addressStateSelected ? (municipalities$ | async) : []"
-        notFoundText="Municipio no encontrado"
-        placeholder="- Seleccione un municipio -"
-        bindLabel="name"
-        bindValue="id"
-        class="custom form-group col pl-0"
-        (change)="
-          addressMunicipality.setValue(addressMunicipalitySelected);
-          onSelectMunicipality()
-        "
-        [(ngModel)]="addressMunicipalitySelected"
-      >
-      </ng-select>
+      <div class="col pl-0">
+        <ng-select
+          [items]="addressStateSelected ? (municipalities$ | async) : []"
+          notFoundText="Municipio no encontrado"
+          placeholder="- Seleccione un municipio -"
+          bindLabel="name"
+          bindValue="id"
+          class="custom form-group"
+          (change)="
+            addressMunicipality.setValue(addressMunicipalitySelected);
+            onSelectMunicipality()
+          "
+          [(ngModel)]="addressMunicipalitySelected"
+        >
+        </ng-select>
+
+        <div *ngIf="addressMunicipality.invalid && addressMunicipality.touched">
+          <div class="alert alert-primary">
+            <span class="validation-message font-weight-bold">
+              Campo requerido
+            </span>
+          </div>
+        </div>
+      </div>
 
       <!-- Create or edit button -->
       <div
@@ -126,7 +144,6 @@
   <!-- Address -->
   <div id="edition-mode" class="col-lg-6">
     <app-reactive-input
-      
       [label]="'Calles / carreras'"
       [placeholder]="'Calles / carreras'"
       [id]="'address'"

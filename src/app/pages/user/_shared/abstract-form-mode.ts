@@ -24,3 +24,9 @@ export const FORM_MODALITY: { CREATE: Create; EDIT: Edit; DELETE: Delete } = {
   EDIT: { LABEL: 'Editar', VALUE: '2' },
   DELETE: { LABEL: 'Eliminar', VALUE: '3' },
 };
+
+
+export interface BaseFormUser {
+  onSubmit: () => void;
+  onResetForm: () => void;
+}

@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h6 class="modal-title pull-left">Registro de usuario administrador</h6>
+  <h6 class="modal-title pull-left">{{(formModeService.getMode() | async)?.label}} usuario administrador</h6>
   <button
     type="button"
     class="close pull-right"
@@ -85,7 +85,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button nbButton type="button" status="success" class="col-12 col-lg-auto">
+  <button nbButton type="button" (click)="onSubmit()" status="success" class="col-12 col-lg-auto">
     Registrar
   </button>
   <button

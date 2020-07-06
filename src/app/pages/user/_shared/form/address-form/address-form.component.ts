@@ -103,7 +103,6 @@ export class AddressFormComponent implements OnDestroy {
                 this.resetCrudMunicipality();
               },
               (err) => {
-                console.log(err);
                 this.toastService.error(
                   'Error',
                   'Al paracer el nombre esta duplicado o hay inconvenientes.'

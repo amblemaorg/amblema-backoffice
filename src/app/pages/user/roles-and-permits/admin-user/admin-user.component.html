@@ -3,13 +3,10 @@
     <nb-card>
       <nb-card-header>Usuarios administradores</nb-card-header>
       <nb-card-body>
-        <button nbButton status="success" class="col-12 col-md-auto" (click)="openRegister()">
+        <button nbButton status="success" class="col-12 col-md-auto form-group" (click)="openRegister()">
           Registrar
         </button>
-
-        <button nbButton status="primary" class="col-12 col-md-auto" (click)="onEdit()">
-          Registrar
-        </button>
+        <app-table-form-admin></app-table-form-admin>
       </nb-card-body>
     </nb-card>
   </div>

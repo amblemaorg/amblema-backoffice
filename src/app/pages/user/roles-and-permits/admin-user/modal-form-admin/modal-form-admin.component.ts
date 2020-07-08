@@ -4,7 +4,10 @@ import { UserAdminForm } from '../../../_shared/abstract-user-form';
 import { FormModeService } from '../../../_services/form-mode.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { BaseFormUser, FORM_MODALITY } from '../.././../_shared/abstract-form-mode';
+import {
+  BaseFormUser,
+  FORM_MODALITY,
+} from '../.././../_shared/abstract-form-mode';
 import { ValidationService } from '../../../_shared/reactive-input/_shared/services/validation.service';
 
 @Component({
@@ -12,7 +15,8 @@ import { ValidationService } from '../../../_shared/reactive-input/_shared/servi
   templateUrl: './modal-form-admin.component.html',
   styles: [],
 })
-export class ModalFormAdminComponent extends UserAdminForm implements BaseFormUser, OnInit, OnDestroy {
+export class ModalFormAdminComponent extends UserAdminForm
+  implements BaseFormUser, OnInit, OnDestroy {
   subscriptionService: Subscription;
 
   constructor(
@@ -28,32 +32,27 @@ export class ModalFormAdminComponent extends UserAdminForm implements BaseFormUs
     this.subscriptionService = this.formModeService
       .getMode()
       .subscribe((response) => {
-
         // -- Path values --
-        if ( response.value === FORM_MODALITY.EDIT.value ) {
-
+        if (response.value === FORM_MODALITY.EDIT.value) {
         }
       });
   }
 
   ngOnDestroy(): void {
-    if ( this.subscriptionService ) {
+    if (this.subscriptionService) {
       this.subscriptionService.unsubscribe();
     }
   }
 
   // -- On submit --
   onSubmit(): void {
-
-    if ( this.form.valid ) {
-
+    if (this.form.valid) {
     } else {
-      console.log('formulario no validado');
       this.validationService.markAllFormFieldsAsTouched(this.form);
     }
   }
 
-  onResetForm(): void {
+  onResetForm(): void {}
 
-  }
+  onPatchValues(data: any): void {}
 }

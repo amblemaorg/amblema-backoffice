@@ -20,6 +20,10 @@ export class GeoMapComponent implements OnInit {
   @Input() longitude: number;
   @Input() label: string | null = 'Marca la ubicación exacta de la escuela';
 
+  @Input() municipality: string | null = null;
+  @Input() state: string | null = null;
+
+
   @Output() laT = new EventEmitter<number>();
   @Output() longT = new EventEmitter<number>();
 
@@ -31,6 +35,8 @@ export class GeoMapComponent implements OnInit {
   public searchElementRef: ElementRef;
 
   constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {}
+
+
 
   ngOnInit() {
     // -- Load Places Autocomplete --

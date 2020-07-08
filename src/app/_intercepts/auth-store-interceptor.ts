@@ -39,9 +39,6 @@ export class AuthStoreInterceptor implements HttpInterceptor {
               break;
           }
         }
-      }),
-      catchError((error) => {
-        return of(error);
       })
     );
   }

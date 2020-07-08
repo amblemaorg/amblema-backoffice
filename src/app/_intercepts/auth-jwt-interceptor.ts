@@ -5,9 +5,10 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
+  HttpEventType,
 } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, take, switchMap } from 'rxjs/operators';
+import { catchError, filter, take, switchMap, tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../services/user/auth.service';
@@ -27,6 +28,7 @@ export class AuthJWTInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const url = request.url.replace(`${environment.api}`, '');
+
 
     if (this.authService.getJwtToken()) {
       if (url === 'auth/refresh') {
@@ -62,7 +64,6 @@ export class AuthJWTInterceptor implements HttpInterceptor {
 
       return this.authService.refreshToken().pipe(
         switchMap((token: any) => {
-
           this.isRefreshing = false;
 
           this.authService.storeJwtToken(token.access_token); // <-- Save new token

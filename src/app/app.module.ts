@@ -46,9 +46,8 @@ import { ProjectValidationRequestState } from './store/request/project-validatio
 import { GeneralEnrolledState } from './store/_enrolled/enrolled.action';
 import { SchoolYearEnrolledState } from './store/_enrolled/school-year-enrolled.action';
 import { AddressState } from './store/_address/address.action';
-import { AuthJWTInterceptor } from './_intercepts/auth-jwt-interceptor';
 import { AuthModule } from './auth/auth.module';
-import { AuthStoreInterceptor } from './_intercepts/auth-store-interceptor';
+import { AuthJWTInterceptor } from './_intercepts/auth-jwt-interceptor';
 
 registerLocaleData(localeVe, 'es-VE');
 

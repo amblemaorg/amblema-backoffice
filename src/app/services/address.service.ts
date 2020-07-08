@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Statal, Municipality } from '../_models/address.model';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -44,11 +44,8 @@ export class AddressService {
     return this.httpClient.delete<string>(`${environment.api}${this.MUNICIPALITY}/${id}`);
   }
 
-  setMunicipality(data: DataMunicipality): Observable<DataMunicipality> {
-    return this.httpClient.post<DataMunicipality>(`${environment.api}${this.MUNICIPALITY}`, data, {
-      reportProgress: true,
-      observe: 'body'
-    });
+  setMunicipality(data: any): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}${this.MUNICIPALITY}`, data) ;
   }
 
   updateMunicipality(id: string, data: DataMunicipality): Observable<Municipality> {

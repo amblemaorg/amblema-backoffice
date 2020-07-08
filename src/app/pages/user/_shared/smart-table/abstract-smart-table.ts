@@ -1,17 +1,17 @@
-import { SmartTable, SettingSmartTable } from "./smart-table-model";
-import { LocalDataSource } from "ng2-smart-table";
-import { FORM_MODALITY } from "../abstract-form-mode";
+import { SmartTable, SettingSmartTable } from './smart-table-model';
+import { LocalDataSource } from 'ng2-smart-table';
+import { FORM_MODALITY } from '../abstract-form-mode';
 
 export abstract class AbstractSmartTable implements SmartTable {
   settings: SettingSmartTable = {
-    noDataMessage: "No hay registros",
-    mode: "external",
+    noDataMessage: 'No hay registros',
+    mode: 'external',
     actions: {
-      columnTitle: "Acciones",
+      columnTitle: 'Acciones',
       add: false,
       edit: false,
       delete: true, // <-- Fake
-      position: "left",
+      position: 'left',
       custom: [
         {
           name: FORM_MODALITY.CREATE.value,
@@ -40,10 +40,10 @@ export abstract class AbstractSmartTable implements SmartTable {
   public abstract onCustomAction(event: any): void;
 
   private readlyStatus(row?: any): string {
-    return "";
+    return '';
   }
 
   private encodeStatus(): string {
-    return "";
+    return '';
   }
 }

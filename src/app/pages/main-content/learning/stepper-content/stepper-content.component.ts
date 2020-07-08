@@ -67,6 +67,7 @@ export class StepperContentComponent implements OnInit, OnChanges {
   }
 
   onSaveLearning(learning: Learning) {
+
     if (this.MODE === ACTION.CREATE) {
       this.showProgress = true;
 
@@ -77,7 +78,7 @@ export class StepperContentComponent implements OnInit, OnChanges {
             this.store.dispatch(new AddLearning(response.body));
             break;
         }
-      });
+      }, err => { console.log(err);  });
     } else {
       this.showProgress = true;
       this.learningService.updateLearning( learning.id, learning ).subscribe( response => {

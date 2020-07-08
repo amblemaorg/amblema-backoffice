@@ -13,6 +13,7 @@ import { Statal, Municipality } from 'src/app/_models/address.model';
 import { FORM_MODALITY } from '../../abstract-form-mode';
 import { AddressService } from 'src/app/services/address.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-address-form',
@@ -52,7 +53,7 @@ export class AddressFormComponent implements OnDestroy {
     public toastService: CustomToastrService,
     public addressServices: AddressService,
     public store: Store
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     if (this.subscriptionServices) {
@@ -69,7 +70,6 @@ export class AddressFormComponent implements OnDestroy {
     // -- Verify that the municipalities exist or state --
     if (this.addressStateSelected || this.addressMunicipalitySelected) {
       this.isEditionMode = true;
-
     }
   }
 

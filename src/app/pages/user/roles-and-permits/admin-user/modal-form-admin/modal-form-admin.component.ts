@@ -48,7 +48,6 @@ export class ModalFormAdminComponent extends UserAdminForm
   onSubmit(): void {
     if (this.form.valid) {
     } else {
-      console.log('formulario no validado');
       this.validationService.markAllFormFieldsAsTouched(this.form);
     }
   }

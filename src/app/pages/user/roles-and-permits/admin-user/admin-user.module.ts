@@ -10,10 +10,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputModule } from '../../_shared/reactive-input/reactive-input.module';
 import { FormModule } from '../../_shared/form/form.module';
 import { ReactiveSelectModule } from '../../_shared/reactive-select/reactive-select.module';
+import { TableFormAdminComponent } from './table-form-admin/table-form-admin.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   entryComponents: [ModalFormAdminComponent],
-  declarations: [ModalFormAdminComponent, AdminUserComponent],
+  declarations: [
+    ModalFormAdminComponent,
+    AdminUserComponent,
+    TableFormAdminComponent,
+  ],
   imports: [
     NbCardModule,
     NbButtonModule,
@@ -24,6 +30,7 @@ import { ReactiveSelectModule } from '../../_shared/reactive-select/reactive-sel
     FormModule, // <-- Custom form
     ReactiveFormsModule,
     FormsModule,
+    Ng2SmartTableModule,
     AdminUserRoutingModule,
   ],
 })

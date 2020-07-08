@@ -14,7 +14,6 @@ export const FORM_MODALITY: { CREATE: Action; EDIT: Action; DELETE: Action, VIEW
   EDIT: { label: 'Editar', value: '2' },
   DELETE: { label: 'Eliminar', value: '3' },
   VIEW: { label: 'Ver', value: '4' },
-
 };
 
 export interface BaseFormUser {

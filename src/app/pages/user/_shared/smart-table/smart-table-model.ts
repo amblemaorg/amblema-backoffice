@@ -32,7 +32,7 @@ export interface SettingSmartTable {
     confirmDelete?: boolean;
   };
   attr?: {
-    // class: 'table table-striped table-bordered table-hover'
+    class: 'table table-striped table-bordered table-hover'
   };
   defaultStyle?: boolean;
 }

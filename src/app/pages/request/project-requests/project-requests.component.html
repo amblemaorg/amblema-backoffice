@@ -880,10 +880,10 @@
             <!-- Maps -->
             <div class="col-12 form-group" *ngIf="requestSelected.coordinate">
               <app-geo-map
-                (laT)="coordinate.latitude = $event"
-                (longT)="coordinate.longitude = $event"
-                [(longitude)]="coordinate.longitude"
-                [(latitude)]="coordinate.latitude"
+                (laT)="requestSelected.coordinate.latitude = $event"
+                (longT)="requestSelected.coordinate.longitude = $event"
+                [(longitude)]="requestSelected.coordinate.longitude"
+                [(latitude)]="requestSelected.coordinate.latitude"
               ></app-geo-map>
             </div>
 

@@ -28,6 +28,8 @@ import { SchoolUser, Coordinate } from 'src/app/_models/user/school.model';
 import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
 import { BaseForm } from '../../../_shared/base-form';
+import { AddressState } from 'src/app/store/_address/address.action';
+import { Statal } from 'src/app/_models/address.model';
 
 @Component({
   selector: 'app-schools-users-form',
@@ -35,6 +37,9 @@ import { BaseForm } from '../../../_shared/base-form';
 })
 export class SchoolsUsersFormComponent extends BaseForm
   implements OnInit, OnChanges, OnDestroy {
+
+    @Select( AddressState.states ) states$: Observable<any[]>;
+
   @Select(RolesState.roles) role$: Observable<Role[]>;
   @Select(SchoolUserState.schoolUser) user$: Observable<any>;
   subscription: Subscription;
@@ -59,8 +64,7 @@ export class SchoolsUsersFormComponent extends BaseForm
 
   form: FormGroup;
 
-  coordinate: Coordinate = { latitude: 0, longitude: 0 };
-
+  coordinate: Coordinate = { latitude: null, longitude: null };
 
   constructor(
     private toastr: CustomToastrService,
@@ -149,9 +153,13 @@ export class SchoolsUsersFormComponent extends BaseForm
     this.form.controls.name.clearValidators();
     this.form.controls.name.setValidators([Validators.required]);
     this.form.updateValueAndValidity();
+
+
   }
 
   ngOnChanges(): void {
+
+
 
     if (this.MODE === this.ACTION.EDIT) {
       this.subscription = this.user$.subscribe((response) => {
@@ -170,6 +178,7 @@ export class SchoolsUsersFormComponent extends BaseForm
 
         this.coordinate.latitude = response.coordinate.latitude;
         this.coordinate.longitude = response.coordinate.longitude;
+
 
         this.form.get('password').setValue('');
         this.form.get('password').clearValidators();
@@ -220,6 +229,8 @@ export class SchoolsUsersFormComponent extends BaseForm
 
   onSubmit() {
     this.submitted = true;
+
+
 
     // Working on your validated form data
     if (this.form.valid) {

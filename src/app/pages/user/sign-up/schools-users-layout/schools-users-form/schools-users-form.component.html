@@ -85,9 +85,11 @@
         ></app-school-address>
       </div>
       <div class="col-12">
-        <app-geo-map
+        <app-geo-map 
           (laT)="coordinate.latitude = $event"
           (longT)="coordinate.longitude = $event"
+          [state]="form.get('addressState').value"
+          [municipality]="form.get('addressMunicipality').value"
           [(longitude)]="coordinate.longitude"
           [(latitude)]="coordinate.latitude"
         ></app-geo-map>

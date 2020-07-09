@@ -81,7 +81,8 @@
   <!-- Testimony -->
   <div>
     <p class="text-info font-weight-bold">Testimonio</p>
-    <div class="d-block d-md-flex align-items-start">
+
+    <!-- <div class="d-block d-md-flex align-items-start">
       <img
         class="mb-3 mr-3 img-fluid"
         [src]="(data$ | async)?.detail.image"
@@ -136,13 +137,40 @@
           </ul>
         </div>
       </div>
+    </div> -->
+
+    <div class="position-relative" *ngIf="show">
+      <owl-carousel-o [options]="customOptions">
+        <ng-template
+          carouselSlide
+          *ngFor="let item of (data$ | async)?.detail.testimonials"
+        >
+          <div class="card">
+            <img
+              class="card-img-top"
+              [src]="item.image"
+              [alt]="item.firstName"
+            />
+            <div class="card-body">
+              <h6 class="card-title">{{ item.firstName }} {{ item.lastName }}</h6>
+              <p class="card-text">
+                {{ item.description }}
+              </p>
+
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{ item.position }}</li>
+            </ul>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
     </div>
   </div>
 
   <!-- Actions -->
-  
+
   <div>
-    <div >
+    <div>
       <hr />
       <div *ngIf="confirmAction">
         <label class="label"> Acciones para la solicitud</label>

@@ -231,7 +231,7 @@ export class SchoolsUsersFormComponent extends BaseForm
     this.submitted = true;
 
 
-    console.log( this.form.valid )
+    console.log( this.form.valid );
     // Working on your validated form data
     if (this.form.valid) {
       // Mode
@@ -247,7 +247,7 @@ export class SchoolsUsersFormComponent extends BaseForm
 
         this.sanitizeNoRequiredData(data);
 
-        console.log( data ); 
+        console.log( data );
 
         this.schoolUserService.setSchoolUser(data).subscribe(
           (event: HttpEvent<any>) => {
@@ -264,7 +264,7 @@ export class SchoolsUsersFormComponent extends BaseForm
           },
           (err: any) => {
 
-            console.log(err)
+            console.log(err);
             this.showProgress = false;
 
             if (err.error.status === 0) {

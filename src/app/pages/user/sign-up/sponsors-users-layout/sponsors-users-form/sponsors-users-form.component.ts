@@ -63,7 +63,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
     // -- Company data --
     image: new FormControl(null),
     webSite: new FormControl(null, [
-      Validators.required,
+
       Validators.pattern(VIDEO_PATTERN),
     ]),
     companyRif: new FormControl(null, [
@@ -232,6 +232,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
 
   errorResponse(err: any) {
     this.showProgress = false;
+
 
     if (err.error.status === 0) {
       this.toastr.error('Error de datos', 'Verifica los datos del formulario');

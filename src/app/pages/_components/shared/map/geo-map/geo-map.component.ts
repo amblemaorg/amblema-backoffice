@@ -26,7 +26,7 @@ import { take, ignoreElements } from 'rxjs/operators';
   styleUrls: ['./geo-map.component.scss'],
   providers: [GeocodeService],
 })
-export class GeoMapComponent implements OnInit, OnChanges, OnDestroy {
+export class GeoMapComponent implements OnInit, OnChanges {
   @Select(AddressState.states) states$: Observable<any[]>;
 
   @Input() latitude: number | null = null;
@@ -56,13 +56,6 @@ export class GeoMapComponent implements OnInit, OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {}
 
-  ngOnDestroy(): void {
-    this.latitude = null;
-    this.longitude = null;
-
-    this.municipality = null;
-    this.state = null;
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     /**
@@ -125,11 +118,6 @@ export class GeoMapComponent implements OnInit, OnChanges, OnDestroy {
         }
       }
 
-      if (!changes.state.firstChange) {
-         if (this.longitude !== null || this.latitude !== null) {
-
-         }
-       }
     }
   }
 
@@ -146,8 +134,8 @@ export class GeoMapComponent implements OnInit, OnChanges, OnDestroy {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         if (this.latitude === 0 && this.longitude === 0) {
-          this.latitude = position.coords.latitude;
-          this.longitude = position.coords.longitude;
+          this.latitude = 6.42375;
+          this.longitude = -66.58973;
         }
         this.zoom = 8;
       });

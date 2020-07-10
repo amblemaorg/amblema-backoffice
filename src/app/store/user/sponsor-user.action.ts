@@ -140,5 +140,9 @@ export class SponsorUserState implements NgxsOnInit {
             }));
             this.toastr.deleteRegister('Eliminación', 'Usuario padrino eliminado');
         });
+
+
     }
+
+    
 }

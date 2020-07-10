@@ -329,7 +329,7 @@ export class SchoolsUsersFormComponent extends BaseForm
             },
             (err: any) => {
               this.showProgress = false;
-              console.log(err)
+              console.log(err);
               if (err.error.code) {
                 this.toastr.error(
                   'Error de datos',

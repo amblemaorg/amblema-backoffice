@@ -62,12 +62,12 @@ export class GeoMapComponent implements OnInit, OnChanges {
      */
 
     if (changes.state) {
-    
+
       if (this.state === null) {
         // <-- Set up update
 
       } else if (this.state !== null) {
-        
+
         if (changes.state.previousValue !== null || this.state) {
           this.subscription = this.states$.pipe(take(1)).subscribe(
             (response) => {

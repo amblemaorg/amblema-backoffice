@@ -1,31 +1,31 @@
-import { Testimonial } from "../../_models/web/testimonial.model";
-import { State, NgxsOnInit, Action, StateContext, Selector } from "@ngxs/store";
-import { WebSponsor, SponsorList } from "../../_models/web/web-sponsor.model";
-import { append, patch, updateItem, removeItem } from "@ngxs/store/operators";
-import { CustomToastrService } from "../../services/helper/custom-toastr.service";
-import { WebSponsorService } from "../../services/web-content/web-sponsor.service";
-import { SponsorUser } from "src/app/_models/user/sponsor-user.model";
+import { Testimonial } from '../../_models/web/testimonial.model';
+import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { WebSponsor, SponsorList } from '../../_models/web/web-sponsor.model';
+import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { CustomToastrService } from '../../services/helper/custom-toastr.service';
+import { WebSponsorService } from '../../services/web-content/web-sponsor.service';
+import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 
 // -- Web Sponsor class action --
 
 export class GetWebSponsor {
-  static readonly type = "[WebSponsor] Get Web Sponsor";
+  static readonly type = '[WebSponsor] Get Web Sponsor';
 }
 
 export class SetWebSponsor {
-  static readonly type = "[WebSponsor] Set Web Sponsor";
+  static readonly type = '[WebSponsor] Set Web Sponsor';
   constructor(public payload: WebSponsor) {}
 }
 
 // -- Testimonial class action --
 
 export class SetTestimonialWebSponsor {
-  static readonly type = "[Testimonial] Set Testimonial";
+  static readonly type = '[Testimonial] Set Testimonial';
   constructor(public payload: Testimonial) {}
 }
 
 export class UpdateTestimonialWebSponsor {
-  static readonly type = "[Testimonial] Update Testimonial";
+  static readonly type = '[Testimonial] Update Testimonial';
   constructor(
     public oldTestimonial: Testimonial,
     public newTestimonial: Testimonial
@@ -33,27 +33,27 @@ export class UpdateTestimonialWebSponsor {
 }
 
 export class DeleteTestimonialWebSponsor {
-  static readonly type = "[Testimonial] Delete Testimonial";
+  static readonly type = '[Testimonial] Delete Testimonial';
   constructor(public payload: Testimonial) {}
 }
 
 // -- Sponsor list --
 
 export class AddSponsor {
-  static readonly type = "[SponsorList] Add Sponsor";
+  static readonly type = '[SponsorList] Add Sponsor';
   constructor(public payload: SponsorList) {}
 }
 
 export class DeleteSponsor {
-  static readonly type = "[SponsorList] Delete Sponsor";
+  static readonly type = '[SponsorList] Delete Sponsor';
   constructor(public id: string) {}
 }
 
 @State<WebSponsor>({
-  name: "websponsor",
+  name: 'websponsor',
   defaults: {
     sponsorPage: {
-      backgroundImage: "",
+      backgroundImage: '',
       testimonials: [],
       steps: [],
       sponsors: [],

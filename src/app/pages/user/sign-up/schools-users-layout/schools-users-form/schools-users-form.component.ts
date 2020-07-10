@@ -304,6 +304,9 @@ export class SchoolsUsersFormComponent extends BaseForm
 
         updateData = { ...updateData, coordinate: this.coordinate };
 
+        console.log( updateData );
+
+
         this.schoolUserService
           .updateSchoolUser(this.backupOldData.id, updateData)
           .subscribe(
@@ -326,7 +329,7 @@ export class SchoolsUsersFormComponent extends BaseForm
             },
             (err: any) => {
               this.showProgress = false;
-
+              console.log(err)
               if (err.error.code) {
                 this.toastr.error(
                   'Error de datos',

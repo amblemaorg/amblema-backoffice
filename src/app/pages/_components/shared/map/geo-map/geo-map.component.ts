@@ -124,7 +124,12 @@ export class GeoMapComponent implements OnInit, OnChanges {
   ngOnInit() {
     // -- Load Places Autocomplete --
     this.mapsAPILoader.load().then(() => {
-      this.setCurrentLocation();
+
+      if (this.latitude === 0 && this.longitude === 0) {
+        this.longitude = 6.42375;
+        this.latitude = -66.58973;
+      }
+      this.zoom = 8;
       this.geoCoder = new google.maps.Geocoder();
     });
   }
@@ -133,11 +138,11 @@ export class GeoMapComponent implements OnInit, OnChanges {
   private setCurrentLocation() {
     // if ('geolocation' in navigator) {
       // navigator.geolocation.getCurrentPosition((position) => {
-        if (this.latitude === 0 && this.longitude === 0) {
-          this.latitude = 6.42375;
-          this.longitude = -66.58973;
-        }
-        this.zoom = 8;
+        // if (this.latitude === 0 && this.longitude === 0) {
+        //   this.latitude = 6.42375;
+        //   this.longitude = -66.58973;
+        // }
+        // this.zoom = 8;
       // });
     // }
   }

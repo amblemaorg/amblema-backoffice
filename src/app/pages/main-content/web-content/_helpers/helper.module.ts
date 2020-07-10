@@ -11,6 +11,7 @@ import { ReactiveInputFileModule } from 'src/app/pages/_components/form-componen
 import { AwardFormComponent } from './award-form/award-form.component';
 import { NbButtonModule } from '@nebular/theme';
 import { SponsorListComponent } from './sponsor-list/sponsor-list.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { SponsorListComponent } from './sponsor-list/sponsor-list.component';
         FormsModule,
         ReactiveFormsModule,
         NbButtonModule,
+        NgSelectModule,
 
         // Add custom module
         ReactiveInputModule,
@@ -36,6 +38,7 @@ import { SponsorListComponent } from './sponsor-list/sponsor-list.component';
         ContentTextComponent,
         AwardFormComponent,
         TestimonialFormComponent,
+        SponsorListComponent
     ]
 })
 export class HelperModule { }

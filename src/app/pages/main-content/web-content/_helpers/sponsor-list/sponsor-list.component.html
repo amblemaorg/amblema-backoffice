@@ -1,1 +1,37 @@
-<p>sponsor-list works!</p>
+<hr />
+<p class="font-weight-bold">Nuestro padrinos</p>
+
+<div class="row">
+  <div class="col-6">
+    <label class="label">Padrinos</label>
+    <!-- <ng-select
+      [items]="states$ | async"
+      notFoundText="Estado no encontrado"
+      placeholder="- Seleccione un estado -"
+      bindLabel="name"
+      bindValue="id"
+      class="custom form-group"
+      (change)="onAddressSelected()"
+      [(ngModel)]="addressStateSelected"
+    >
+    </ng-select> -->
+
+    <ng-select
+      [items]="users$ | async"
+      notFoundText="Padrino no encontrado"
+      placeholder="- Seleccione un padrino -"
+      bindLabel="name"
+      (change)="onSelectSponsor($event)"
+      class="custom form-group"
+    >
+    </ng-select>
+  </div>
+
+  <div class="col-6">
+      
+  </div>
+</div>
+
+<!-- <div>
+    <div *ngFor="let item of users$ | async">{{ item.name }}</div>
+  </div> -->

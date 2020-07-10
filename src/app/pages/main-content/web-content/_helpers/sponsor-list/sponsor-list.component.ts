@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
+import { Observable } from 'rxjs';
+import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 
 @Component({
   selector: 'app-sponsor-list',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SponsorListComponent implements OnInit {
 
+  @Select( SponsorUserState.sponsorUsers ) users$: Observable< SponsorUser[]>;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSelectSponsor( value: any ) {
+
   }
 
 }

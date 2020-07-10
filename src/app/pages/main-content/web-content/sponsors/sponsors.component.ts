@@ -6,7 +6,7 @@ import {
   SetTestimonialWebSponsor,
   UpdateTestimonialWebSponsor,
   DeleteTestimonialWebSponsor,
-  SetWebSponsor
+  SetWebSponsor,
 } from 'src/app/store/web-content/web-sponsor.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebSponsor } from 'src/app/_models/web/web-sponsor.model';
@@ -18,10 +18,9 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 @Component({
   selector: 'app-sponsors',
   templateUrl: './sponsors.component.html',
-  styleUrls: ['./sponsors.component.scss']
+  styleUrls: ['./sponsors.component.scss'],
 })
 export class SponsorsComponent implements OnInit, OnDestroy {
-
   @Select(WebSponsorState.webSponsor) data$: Observable<WebSponsor>;
   subscription: Subscription;
 
@@ -38,24 +37,25 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   constructor(
     private webSponsorService: WebSponsorService,
     private toastr: CustomToastrService,
-    private store: Store) { }
+    private store: Store
+  ) {}
 
   ngOnInit() {
-
     for (let index = 0; index < 7; index++) {
       this.steps.push(new FormControl(''));
     }
 
     this.formSponsor.addControl('steps', this.steps);
 
-    this.subscription = this.data$.subscribe(response => {
+    this.subscription = this.data$.subscribe((response) => {
       this.testimonials = response.sponsorPage.testimonials; // Get testimonials array
 
       /**
        * This code is to void reset the input fields background
        */
-      const imageBackUp = this.formSponsor.controls.backgroundImage.value ?
-        this.formSponsor.controls.backgroundImage.value : null;
+      const imageBackUp = this.formSponsor.controls.backgroundImage.value
+        ? this.formSponsor.controls.backgroundImage.value
+        : null;
 
       this.formSponsor.patchValue(response.sponsorPage);
 
@@ -78,7 +78,9 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   }
 
   onEditTestimonial(testimonial: any[]) {
-    this.store.dispatch(new UpdateTestimonialWebSponsor(testimonial[0], testimonial[1]));
+    this.store.dispatch(
+      new UpdateTestimonialWebSponsor(testimonial[0], testimonial[1])
+    );
   }
 
   onDeleteTestimonial(testimonial: Testimonial) {
@@ -88,22 +90,31 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   // Save
 
   onSave() {
-    this.subscription = this.store.dispatch(new SetWebSponsor({ sponsorPage: this.formSponsor.value })).subscribe((response: any) => {
-      this.showProgress = true;
-      this.subscription = this.webSponsorService.setContentWebSponsor(response.websponsor).subscribe((event: HttpEvent<any>) => {
-
-        switch (event.type) {
-          case HttpEventType.Response:
-            setTimeout(() => {
+    this.subscription = this.store
+      .dispatch(new SetWebSponsor({ sponsorPage: this.formSponsor.value }))
+      .subscribe((response: any) => {
+        this.showProgress = true;
+        this.subscription = this.webSponsorService
+          .setContentWebSponsor(response.websponsor)
+          .subscribe(
+            (event: HttpEvent<any>) => {
+              switch (event.type) {
+                case HttpEventType.Response:
+                  setTimeout(() => {
+                    this.showProgress = false;
+                  }, 2500);
+                  this.toastr.updateSuccess(
+                    'Actualizacion',
+                    'Contenido de la página padrinos guardado.'
+                  );
+                  break;
+              }
+            },
+            (err: any) => {
               this.showProgress = false;
-            }, 2500);
-            this.toastr.updateSuccess('Actualizacion', 'Contenido de la página padrinos guardado.');
-            break;
-        }
-      }, (err: any) => {
-        this.showProgress = false;
-        this.toastr.error('Error', 'No se ha completado el registro.');
+              this.toastr.error('Error', 'No se ha completado el registro.');
+            }
+          );
       });
-    });
   }
 }

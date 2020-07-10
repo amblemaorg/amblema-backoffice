@@ -10,12 +10,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from 'src/app/pages/_components/form-components/reactive-input-file/reactive-input-file.module';
 import { AwardFormComponent } from './award-form/award-form.component';
 import { NbButtonModule } from '@nebular/theme';
+import { SponsorListComponent } from './sponsor-list/sponsor-list.component';
 
 @NgModule({
     declarations: [
         ContentTextComponent,
         TestimonialFormComponent,
         AwardFormComponent,
+        SponsorListComponent,
     ],
     imports: [
         CommonModule,

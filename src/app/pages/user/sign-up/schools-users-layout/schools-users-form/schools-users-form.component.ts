@@ -37,8 +37,7 @@ import { Statal } from 'src/app/_models/address.model';
 })
 export class SchoolsUsersFormComponent extends BaseForm
   implements OnInit, OnChanges, OnDestroy {
-
-    @Select( AddressState.states ) states$: Observable<any[]>;
+  @Select(AddressState.states) states$: Observable<any[]>;
 
   @Select(RolesState.roles) role$: Observable<Role[]>;
   @Select(SchoolUserState.schoolUser) user$: Observable<any>;
@@ -74,7 +73,6 @@ export class SchoolsUsersFormComponent extends BaseForm
     private validationService: ValidationService
   ) {
     super('una escuela');
-
   }
 
   ngOnInit(): void {
@@ -102,7 +100,6 @@ export class SchoolsUsersFormComponent extends BaseForm
     this.form.addControl('principalLastName', new FormControl(''));
     this.form.addControl('principalEmail', new FormControl(''));
     this.form.addControl('principalPhone', new FormControl(''));
-
 
     // Data sub principal
     this.form.addControl(
@@ -153,14 +150,9 @@ export class SchoolsUsersFormComponent extends BaseForm
     this.form.controls.name.clearValidators();
     this.form.controls.name.setValidators([Validators.required]);
     this.form.updateValueAndValidity();
-
-
   }
 
   ngOnChanges(): void {
-
-
-
     if (this.MODE === this.ACTION.EDIT) {
       this.subscription = this.user$.subscribe((response) => {
         this.title = 'Actualizar usuario escuela';
@@ -179,22 +171,18 @@ export class SchoolsUsersFormComponent extends BaseForm
         this.coordinate.latitude = response.coordinate.latitude;
         this.coordinate.longitude = response.coordinate.longitude;
 
-
         this.form.get('password').setValue('');
         this.form.get('password').clearValidators();
         this.form.get('password').updateValueAndValidity();
       });
     } else if (this.MODE === this.ACTION.CREATE) {
-
       this.form.controls.name.clearValidators();
       this.form.controls.name.setValidators([Validators.required]);
 
-
-      if ( 'geolocation' in navigator ) {
+      if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
-            this.coordinate.latitude = position.coords.latitude;
-            this.coordinate.longitude = position.coords.longitude;
-
+          this.coordinate.latitude = position.coords.latitude;
+          this.coordinate.longitude = position.coords.longitude;
         });
       }
 
@@ -230,8 +218,7 @@ export class SchoolsUsersFormComponent extends BaseForm
   onSubmit() {
     this.submitted = true;
 
-
-    console.log( this.form.valid );
+    console.log(this.form.valid);
     // Working on your validated form data
     if (this.form.valid) {
       // Mode
@@ -247,8 +234,7 @@ export class SchoolsUsersFormComponent extends BaseForm
 
         this.sanitizeNoRequiredData(data);
 
-        console.log( data );
-
+        console.log(data);
         this.schoolUserService.setSchoolUser(data).subscribe(
           (event: HttpEvent<any>) => {
             switch (event.type) {
@@ -263,14 +249,19 @@ export class SchoolsUsersFormComponent extends BaseForm
             }
           },
           (err: any) => {
-
             console.log(err);
+
             this.showProgress = false;
 
             if (err.error.status === 0) {
               this.toastr.error(
                 'Error de datos',
                 'Verifica los datos del formulario'
+              );
+
+              this.toastr.info(
+                'Nota',
+                'Recuerda dar permiso al servicio de Google Maps, Las coordenadas son requeridas.'
               );
             }
 
@@ -347,6 +338,11 @@ export class SchoolsUsersFormComponent extends BaseForm
                 this.toastr.error(
                   'Error de datos',
                   'Verifica los datos del formulario'
+                );
+
+                this.toastr.info(
+                  'Nota',
+                  'Recuerda dar permiso al servicio de Google Maps, Las coordenadas son requeridas.'
                 );
               }
 

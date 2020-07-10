@@ -40,7 +40,8 @@ export class DeleteTestimonialWebSponsor {
         sponsorPage: {
             backgroundImage: '',
             testimonials: [],
-            steps: []
+            steps: [],
+            sponsors: []
         }
     }
 })

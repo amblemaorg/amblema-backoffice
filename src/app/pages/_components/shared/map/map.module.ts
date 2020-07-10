@@ -11,6 +11,8 @@ import { AgmCoreModule } from '@agm/core';
       // apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_xxx',
        apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_yrs',
       libraries: ['places'],
+      region: 'Venezuela',
+      language: 'es'
     }),
   ],
   exports: [GeoMapComponent],

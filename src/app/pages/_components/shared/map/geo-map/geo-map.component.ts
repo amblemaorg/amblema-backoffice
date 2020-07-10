@@ -131,15 +131,15 @@ export class GeoMapComponent implements OnInit, OnChanges {
 
   // -- Get Current Location Coordinates --
   private setCurrentLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
+    // if ('geolocation' in navigator) {
+      // navigator.geolocation.getCurrentPosition((position) => {
         if (this.latitude === 0 && this.longitude === 0) {
           this.latitude = 6.42375;
           this.longitude = -66.58973;
         }
         this.zoom = 8;
-      });
-    }
+      // });
+    // }
   }
 
   mapClicked($event: any) {

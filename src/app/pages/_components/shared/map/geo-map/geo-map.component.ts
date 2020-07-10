@@ -54,8 +54,8 @@ export class GeoMapComponent implements OnInit, OnChanges {
     private addressService: AddressService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
-  ) {}
-
+  ) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     /**
@@ -63,12 +63,11 @@ export class GeoMapComponent implements OnInit, OnChanges {
      */
 
     if (changes.state) {
-
-      if ( this.state === null ) { // <-- Set up update
+      if (this.state === null) {
+        // <-- Set up update
         console.log('crear');
       } else if (this.state !== null) {
-
-        if ( changes.state.previousValue !== null ) {
+        if (changes.state.previousValue !== null) {
           this.subscription = this.states$.pipe(take(1)).subscribe(
             (response) => {
               response.find((value) => {
@@ -92,6 +91,9 @@ export class GeoMapComponent implements OnInit, OnChanges {
                   },
                   (err) => {},
                   () => {
+
+                    this.geoCoder = new google.maps.Geocoder();
+
                     this.geoCoder.geocode(
                       {
                         address: `Venezuela, ${
@@ -117,7 +119,6 @@ export class GeoMapComponent implements OnInit, OnChanges {
           );
         }
       }
-
     }
   }
 
@@ -125,25 +126,25 @@ export class GeoMapComponent implements OnInit, OnChanges {
     // -- Load Places Autocomplete --
     this.mapsAPILoader.load().then(() => {
 
-      if (this.latitude === 0 && this.longitude === 0) {
-        this.longitude = 6.42375;
-        this.latitude = -66.58973;
-      }
-      this.zoom = 8;
-      this.geoCoder = new google.maps.Geocoder();
+
+    if (this.latitude === 0 && this.longitude === 0) {
+      this.longitude = 6.42375;
+      this.latitude = -66.58973;
+    }
+    this.zoom = 8;
     });
   }
 
   // -- Get Current Location Coordinates --
   private setCurrentLocation() {
     // if ('geolocation' in navigator) {
-      // navigator.geolocation.getCurrentPosition((position) => {
-        // if (this.latitude === 0 && this.longitude === 0) {
-        //   this.latitude = 6.42375;
-        //   this.longitude = -66.58973;
-        // }
-        // this.zoom = 8;
-      // });
+    // navigator.geolocation.getCurrentPosition((position) => {
+    // if (this.latitude === 0 && this.longitude === 0) {
+    //   this.latitude = 6.42375;
+    //   this.longitude = -66.58973;
+    // }
+    // this.zoom = 8;
+    // });
     // }
   }
 

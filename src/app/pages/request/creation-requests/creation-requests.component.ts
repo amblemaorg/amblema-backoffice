@@ -1,46 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/_helpers/base-table';
-import { ACTION } from 'src/app/_helpers/text-content/text-crud';
-import { Select, Store } from '@ngxs/store';
+import { Component, OnInit } from "@angular/core";
+import { BaseTable } from "src/app/_helpers/base-table";
+import { ACTION } from "src/app/_helpers/text-content/text-crud";
+import { Select, Store } from "@ngxs/store";
 import {
   UserCreationRequestState,
   DeleteUserCreationRequest,
   UpdateUserCreationRequest,
   GetUserCreationRequests,
-} from 'src/app/store/request/user-creation-request.action';
-import { Observable } from 'rxjs';
-import { UserCreationRequest } from 'src/app/_models/request/user-creation-request.model';
+} from "src/app/store/request/user-creation-request.action";
+import { Observable } from "rxjs";
+import { UserCreationRequest } from "src/app/_models/request/user-creation-request.model";
 import {
   TYPE_REQUEST,
   REQUEST_STATUS,
-} from 'src/app/_helpers/convention/request-status';
-import { DatePipe } from '@angular/common';
-import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
-import { Utility } from 'src/app/_helpers/utility';
-import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { ModalService } from 'src/app/services/helper/modal.service';
-import { SetCoordinatorUser } from 'src/app/store/user/coordinator-user.action';
-import { SetSchoolUser } from 'src/app/store/user/school-user.action';
-import { SetSponsorUser } from 'src/app/store/user/sponsor-user.action';
-import { ActivatedRoute } from '@angular/router';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
+} from "src/app/_helpers/convention/request-status";
+import { DatePipe } from "@angular/common";
+import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
+import { Utility } from "src/app/_helpers/utility";
+import { UserCreationRequestService } from "src/app/services/request/user-creation-request.service";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { ModalService } from "src/app/services/helper/modal.service";
+import { SetCoordinatorUser } from "src/app/store/user/coordinator-user.action";
+import { SetSchoolUser } from "src/app/store/user/school-user.action";
+import { SetSponsorUser } from "src/app/store/user/sponsor-user.action";
+import { ActivatedRoute } from "@angular/router";
+import { HttpEvent, HttpEventType } from "@angular/common/http";
 
 @Component({
-  selector: 'app-creation-requests',
-  templateUrl: './creation-requests.component.html',
-  styleUrls: ['./creation-requests.component.scss'],
+  selector: "app-creation-requests",
+  templateUrl: "./creation-requests.component.html",
+  styleUrls: ["./creation-requests.component.scss"],
 })
 export class CreationRequestsComponent extends BaseTable implements OnInit {
   @Select(UserCreationRequestState.creationRequests) data$: Observable<
     UserCreationRequest[]
   >;
 
-  modal = 'project-request-modal';
+  modal = "project-request-modal";
   requestSelected: any = {};
   oldRequest: any = {};
 
-  statusSelected = '2';
+  statusSelected = "2";
 
   data: any;
 
@@ -59,7 +59,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
     super();
 
     (this.settings.actions = {
-      columnTitle: 'Acciones',
+      columnTitle: "Acciones",
       add: false,
       edit: false,
       //  Fake action
@@ -71,16 +71,16 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
     }),
       (this.settings.columns = {
         requestCode: {
-          title: 'N° de la solicitud',
-          type: 'string',
+          title: "N° de la solicitud",
+          type: "string",
         },
         projectCode: {
-          title: 'ID del proyecto',
-          type: 'string',
+          title: "ID del proyecto",
+          type: "string",
         },
         type: {
-          title: 'Tipo de solicitante',
-          type: 'text',
+          title: "Tipo de solicitante",
+          type: "text",
           valuePrepareFunction: (row: any) => {
             const value: string =
               row === TYPE_REQUEST.COORDINATOR.ORIGINAL
@@ -99,7 +99,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
                 : TYPE_REQUEST.SPONSOR.CONVERTION;
 
             value = value.toUpperCase();
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
               return true;
             } else {
               return false;
@@ -107,20 +107,20 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           },
         },
         user: {
-          title: 'Solicitante',
-          type: 'string',
+          title: "Solicitante",
+          type: "string",
         },
         createdAt: {
-          title: 'Fecha',
-          type: 'string',
+          title: "Fecha",
+          type: "string",
           compareFunction: sortDate,
           valuePrepareFunction: (lastLoginTime: any) => {
-            return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
+            return new DatePipe("es-VE").transform(lastLoginTime, "dd/MM/yyyy");
           },
         },
         status: {
-          title: 'Estatus',
-          type: 'text ',
+          title: "Estatus",
+          type: "text ",
           valuePrepareFunction: (row: any) => {
             return this.helper.readlyRequestStatus(row);
           },
@@ -133,7 +133,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
                 : REQUEST_STATUS.REJECTED.VALUE;
 
             value = value.toUpperCase();
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.indexOf(search.toUpperCase()) === 0 || search === "") {
               return true;
             } else {
               return false;
@@ -148,9 +148,17 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
       if (Object.keys(value).length) {
         this.requestSelected = value;
         this.oldRequest = value;
-        setTimeout(() => {
-          this.modalService.open(this.modal);
-        }, 1000);
+
+        this.data$.subscribe((res) => {
+          res.forEach((request) => {
+            if (request.id === this.requestSelected.id) {
+              this.requestSelected = request;
+              setTimeout(() => {
+                this.modalService.open(this.modal);
+              }, 1000);
+            }
+          });
+        });
       }
     });
   }
@@ -158,7 +166,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log( event.data );
+        console.log(event.data);
         this.requestSelected = event.data;
         this.oldRequest = event.data;
         this.modalService.open(this.modal);
@@ -169,8 +177,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             .deleteUserCreationRequestSponsor(event.data.id)
             .subscribe((value) => {
               this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicitud de crear usuario'
+                "Eliminación",
+                "Se ha eliminado una solicitud de crear usuario"
               );
               this.store.dispatch(new DeleteUserCreationRequest(event.data));
             });
@@ -180,8 +188,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             .subscribe((value) => {
               this.store.dispatch(new DeleteUserCreationRequest(event.data));
               this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicitud de crear usuario'
+                "Eliminación",
+                "Se ha eliminado una solicitud de crear usuario"
               );
             });
         } else {
@@ -190,8 +198,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             .subscribe((value) => {
               this.store.dispatch(new DeleteUserCreationRequest(event.data));
               this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicitud de crear usuario'
+                "Eliminación",
+                "Se ha eliminado una solicitud de crear usuario"
               );
             });
         }
@@ -214,7 +222,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           .subscribe((resq: HttpEvent<any>) => {
             switch (resq.type) {
               case HttpEventType.Response:
-                if (this.statusSelected === '2') {
+                if (this.statusSelected === "2") {
                   this.store.dispatch(new SetCoordinatorUser(resq.body));
 
                   this.requestSelected.status = this.statusSelected;
@@ -227,8 +235,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
                   );
 
                   this.toast.info(
-                    'Solicitud',
-                    'Se ha cambiado de estatus la solicitud'
+                    "Solicitud",
+                    "Se ha cambiado de estatus la solicitud"
                   );
                 }
                 break;
@@ -245,7 +253,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             (resq: HttpEvent<any>) => {
               switch (resq.type) {
                 case HttpEventType.Response:
-                  if (this.statusSelected === '2') {
+                  if (this.statusSelected === "2") {
                     this.store.dispatch(new SetSchoolUser(resq.body));
 
                     this.requestSelected.status = this.statusSelected;
@@ -258,8 +266,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
                     );
 
                     this.toast.info(
-                      'Solicitud',
-                      'Se ha cambiado de estatus la solicitud'
+                      "Solicitud",
+                      "Se ha cambiado de estatus la solicitud"
                     );
                   }
 
@@ -280,7 +288,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           .subscribe((resq: HttpEvent<any>) => {
             switch (resq.type) {
               case HttpEventType.Response:
-                if (this.statusSelected === '2') {
+                if (this.statusSelected === "2") {
                   this.store.dispatch(new SetSponsorUser(resq.body));
 
                   this.requestSelected.status = this.statusSelected;
@@ -293,8 +301,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
                   );
 
                   this.toast.info(
-                    'Solicitud',
-                    'Se ha cambiado de estatus la solicitud'
+                    "Solicitud",
+                    "Se ha cambiado de estatus la solicitud"
                   );
                 }
                 break;

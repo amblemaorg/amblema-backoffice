@@ -2,7 +2,7 @@
 <p class="font-weight-bold">Nuestro padrinos</p>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-12 col-lg-5">
     <label class="label">Padrinos</label>
     <!-- <ng-select
       [items]="states$ | async"
@@ -27,11 +27,21 @@
     </ng-select>
   </div>
 
-  <div class="col-6">
-      
+  <div class="col-12 col-lg-5">
+    <label class="label">Orden</label>
+    <ng-select
+      [items]="dataPosition"
+      notFoundText="Posición no encontrada"
+      placeholder="- Posición -"
+      bindLabel="name"
+      class="custom form-group"
+    >
+    </ng-select>
+  </div>
+
+  <div class="col-12 col-lg d-flex align-items-end">
+    <div class="form-group w-100">
+      <button nbButton status="primary" fullWidth> <nb-icon icon="plus"></nb-icon> Agregar</button>
+    </div>
   </div>
 </div>
-
-<!-- <div>
-    <div *ngFor="let item of users$ | async">{{ item.name }}</div>
-  </div> -->

@@ -4,6 +4,7 @@ import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { WebSponsorState } from 'src/app/store/web-content/web-sponsor.action';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'app-sponsor-list',
@@ -39,6 +40,8 @@ export class SponsorListComponent implements OnInit, OnDestroy {
       },
     },
   };
+
+  source = new LocalDataSource();
 
   constructor() {}
 

@@ -676,7 +676,7 @@
                       ><span>{{ requestSelected.record.code }}</span>
                     </p>
                     <p
-                      *ngIf="requestSelected.record.schoolType"
+                      *ngIf="requestSelected?.record?.schoolType"
                       class="d-flex w-100"
                     >
                       <span class="pl-0 font-weight-bold col-5"
@@ -708,66 +708,66 @@
                 <div class="row">
                   <div class="col-12">
                     <p
-                      *ngIf="requestSelected.record.addressState.name"
+                      *ngIf="requestSelected?.record?.addressState?.name"
                       class="d-flex w-100"
                     >
                       <span class="pl-0 col-5 font-weight-bold">Estado:</span>
                       <span>{{
-                        requestSelected.record.addressState.name
+                        requestSelected?.record?.addressState?.name
                       }}</span>
                     </p>
                     <p
-                      *ngIf="requestSelected.record.addressMunicipality.name"
+                      *ngIf="requestSelected?.record?.addressMunicipality?.name"
                       class="d-flex w-100"
                     >
                       <span class="pl-0 col-5 font-weight-bold"
                         >Municipio:</span
                       >
                       <span>{{
-                        requestSelected.record.addressMunicipality.name
+                        requestSelected?.record?.addressMunicipality?.name
                       }}</span>
                     </p>
                     <p
-                      *ngIf="requestSelected.record.address"
+                      *ngIf="requestSelected?.record?.address"
                       class="d-flex w-100"
                     >
                       <span class="pl-0 col-5 font-weight-bold"
                         >Dirección:</span
                       >
-                      <span>{{ requestSelected.record.address }}</span>
+                      <span>{{ requestSelected?.record?.address }}</span>
                     </p>
                     <p
-                      *ngIf="requestSelected.record.addressCity"
+                      *ngIf="requestSelected?.record?.addressCity"
                       class="d-flex w-100"
                     >
                       <span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
-                      <span>{{ requestSelected.record.addressCity }}</span>
+                      <span>{{ requestSelected?.record?.addressCity }}</span>
                     </p>
 
                     <p
-                      *ngIf="requestSelected.record.addressZoneType"
+                      *ngIf="requestSelected?.record?.addressZoneType"
                       class="d-flex w-100"
                     >
                       <span class="pl-0 col-5 font-weight-bold"
                         >Tipo de zona:</span
                       >
                       <span>{{
-                        requestSelected.record.addressZoneType === "1"
+                        requestSelected?.record?.addressZoneType === "1"
                           ? "Sector"
-                          : requestSelected.record.addressZoneType === "2"
+                          : requestSelected?.record?.addressZoneType === "2"
                           ? "Barrio"
                           : "Caserio"
                       }}</span>
                     </p>
 
                     <p
-                      *ngIf="requestSelected.record.addressZone"
+                      *ngIf="requestSelected?.record?.addressZone"
                       class="d-flex w-100"
                     >
                       <span class="pl-0 col-5 font-weight-bold"
                         >Dirección de la zona:</span
                       >
-                      <span>{{ requestSelected.record.addressZone }}</span>
+                      <span>{{ requestSelected?.record?.addressZone }}</span>
                     </p>
                   </div>
                 </div>

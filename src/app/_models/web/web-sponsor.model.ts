@@ -15,5 +15,7 @@ export interface WebSponsor {
 export interface SponsorList {
     id: string;
     name: string;
+    image: string;
+    website: string;
     position: number;
 }

@@ -34,6 +34,7 @@
       notFoundText="Posición no encontrada"
       placeholder="- Posición -"
       bindLabel="name"
+      (change)="onSelectPosition($event)"
       class="custom form-group"
     >
     </ng-select>
@@ -41,13 +42,20 @@
 
   <div class="col-12 col-lg d-flex align-items-end">
     <div class="form-group w-100">
-      <button nbButton status="primary" fullWidth> <nb-icon icon="plus"></nb-icon> Agregar</button>
+      <button
+        nbButton
+        size="sm"
+        (click)="addSponsor()"
+        status="primary"
+        [attr.disabled]="dataSponsor && position ? null : true"
+        fullWidth
+      >
+        <nb-icon icon="plus"></nb-icon> Agregar
+      </button>
     </div>
   </div>
 
   <div class="col-12 mt-3">
-
-    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
-
+    <ng2-smart-table [settings]="settings" [source]="(web$ | async)?.sponsorPage.sponsors"></ng2-smart-table>
   </div>
 </div>

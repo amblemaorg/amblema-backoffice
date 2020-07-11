@@ -152,7 +152,16 @@ export class WebSponsorState implements NgxsOnInit {
   // -- Sponsor list --
 
   @Action(AddSponsor)
-  addSponsor(ctx: StateContext<WebSponsor>, action: AddSponsor) {}
+  addSponsor(ctx: StateContext<WebSponsor>, action: AddSponsor) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        sponsorPage: patch({
+          sponsors: append([ action.payload ]),
+        }),
+      })
+    );
+  }
 
   @Action(DeleteSponsor)
   deleteSponsor(ctx: StateContext<WebSponsor>, action: DeleteSponsor) {

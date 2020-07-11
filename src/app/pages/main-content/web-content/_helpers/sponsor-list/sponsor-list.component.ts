@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
-import { WebSponsorState } from 'src/app/store/web-content/web-sponsor.action';
 import { LocalDataSource } from 'ng2-smart-table';
+import {
+  WebSponsorState,
+  AddSponsor,
+} from 'src/app/store/web-content/web-sponsor.action';
+import { WebSponsor } from 'src/app/_models/web/web-sponsor.model';
 
 @Component({
   selector: 'app-sponsor-list',
@@ -13,9 +17,13 @@ import { LocalDataSource } from 'ng2-smart-table';
 })
 export class SponsorListComponent implements OnInit, OnDestroy {
   @Select(SponsorUserState.sponsorUsers) users$: Observable<SponsorUser[]>;
-  // @Select( WebSponsorState )
+  @Select(WebSponsorState.webSponsor) web$: Observable<WebSponsor>;
   subscription: Subscription;
   dataPosition: any[] = [];
+
+  // -- Data to set
+  dataSponsor: any;
+  position: any;
 
   settings = {
     noDataMessage: 'No hay registros',
@@ -43,14 +51,17 @@ export class SponsorListComponent implements OnInit, OnDestroy {
 
   source = new LocalDataSource();
 
-  constructor() {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
     this.subscription = this.users$.subscribe((response) => {
       response.forEach((value, key) => {
         this.dataPosition.push({ id: key + 1, name: (key + 1).toString() });
       });
-      this.dataPosition.push({ id: null, name: 'Ultima posición' });
+      this.dataPosition.push({
+        id: response.length + 1,
+        name: 'Ultima posición',
+      });
     });
   }
 
@@ -60,5 +71,23 @@ export class SponsorListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSelectSponsor(value: any) {}
+  onSelectSponsor(value: any): void {
+    this.dataSponsor = value;
+  }
+
+  onSelectPosition(value: any): void {
+    this.position = value;
+  }
+
+  addSponsor(): void {
+    this.store.dispatch(
+      new AddSponsor({
+        id: this.dataSponsor.id,
+        name: this.dataSponsor.name,
+        image: this.dataSponsor.image,
+        website: this.dataSponsor.webSite,
+        position: this.position.id,
+      })
+    );
+  }
 }

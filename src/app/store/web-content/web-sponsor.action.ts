@@ -4,7 +4,6 @@ import { WebSponsor, SponsorList } from '../../_models/web/web-sponsor.model';
 import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebSponsorService } from '../../services/web-content/web-sponsor.service';
-import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 
 // -- Web Sponsor class action --
 

@@ -7,6 +7,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import {
   WebSponsorState,
   AddSponsor,
+  DeleteSponsor,
 } from 'src/app/store/web-content/web-sponsor.action';
 import { WebSponsor } from 'src/app/_models/web/web-sponsor.model';
 
@@ -29,9 +30,9 @@ export class SponsorListComponent implements OnInit, OnDestroy {
     noDataMessage: 'No hay registros',
     actions: {
       columnTitle: 'Acciones',
+
       add: false,
       edit: false,
-      delete: true,
     },
     columns: {
       name: {
@@ -46,6 +47,10 @@ export class SponsorListComponent implements OnInit, OnDestroy {
       position: {
         title: 'Posición',
       },
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
     },
   };
 
@@ -89,5 +94,11 @@ export class SponsorListComponent implements OnInit, OnDestroy {
         position: this.position.id,
       })
     );
+  }
+
+  onDeleteConfirm(event: any): void {
+    this.store.dispatch(new DeleteSponsor(event.data.id)).subscribe(() => {
+      event.confirm.resolve();
+    });
   }
 }

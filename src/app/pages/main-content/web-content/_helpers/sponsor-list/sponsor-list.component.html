@@ -50,16 +50,18 @@
         [attr.disabled]="dataSponsor && position ? null : true"
         fullWidth
       >
-        <nb-icon icon="plus"></nb-icon> Agregar
+        <nb-icon icon="plus"></nb-icon>
       </button>
     </div>
   </div>
 
   <div id="special-table" class="col-12 mt-3">
-    <ng2-smart-table
-      (deleteConfirm)="onDeleteConfirm($event)"
-      [settings]="settings"
-      [source]="(web$ | async)?.sponsorPage.sponsors"
-    ></ng2-smart-table>
+    <div class="table-responsive">
+      <ng2-smart-table
+        (deleteConfirm)="onDeleteConfirm($event)"
+        [settings]="settings"
+        [source]="(web$ | async)?.sponsorPage.sponsors"
+      ></ng2-smart-table>
+    </div>
   </div>
 </div>

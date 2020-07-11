@@ -152,11 +152,31 @@ export class WebSponsorState implements NgxsOnInit {
 
   @Action(AddSponsor)
   addSponsor(ctx: StateContext<WebSponsor>, action: AddSponsor) {
+    // -- No repeat the same position --
+
+    ctx.getState().sponsorPage.sponsors.forEach((value) => {
+      if (value.position === action.payload.position) {
+        ctx.setState(
+          patch({
+            ...ctx.getState(),
+            sponsorPage: patch({
+              sponsors: updateItem<SponsorList>(
+                (item) => item.position === action.payload.position,
+                { ...value, position: (value.position + 1) }
+              ),
+            }),
+          })
+        );
+      }
+    });
+
+    // -- Add element --
+
     ctx.setState(
       patch({
         ...ctx.getState(),
         sponsorPage: patch({
-          sponsors: append([ action.payload ]),
+          sponsors: append([action.payload]),
         }),
       })
     );

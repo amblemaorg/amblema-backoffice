@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Sanitizer } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { Observable, Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import {
   DeleteSponsor,
 } from 'src/app/store/web-content/web-sponsor.action';
 import { WebSponsor } from 'src/app/_models/web/web-sponsor.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sponsor-list',
@@ -38,11 +39,20 @@ export class SponsorListComponent implements OnInit, OnDestroy {
       name: {
         title: 'Nombre',
       },
-      username: {
+      image: {
         title: 'Imagen',
+        type: 'html',
+        filter: false,
+        valuePrepareFunction: ( cell: any ) => {
+          return this.sanitizer.bypassSecurityTrustHtml(`<img src="${cell}" style="width:100px;">`);
+        }
       },
-      email: {
+      webSite: {
         title: 'Web',
+        type: 'html',
+        valuePrepareFunction: ( cell: any ) => {
+          return this.sanitizer.bypassSecurityTrustHtml(`<a href=${cell} target="_blank" >${cell}</a>`);
+        }
       },
       position: {
         title: 'Posición',
@@ -56,7 +66,7 @@ export class SponsorListComponent implements OnInit, OnDestroy {
 
   source = new LocalDataSource();
 
-  constructor(private store: Store) {}
+  constructor( private sanitizer: DomSanitizer, private store: Store) {}
 
   ngOnInit() {
     this.subscription = this.users$.subscribe((response) => {
@@ -90,10 +100,12 @@ export class SponsorListComponent implements OnInit, OnDestroy {
         id: this.dataSponsor.id,
         name: this.dataSponsor.name,
         image: this.dataSponsor.image,
-        website: this.dataSponsor.webSite,
+        webSite: this.dataSponsor.webSite,
         position: this.position.id,
       })
     );
+
+
   }
 
   onDeleteConfirm(event: any): void {

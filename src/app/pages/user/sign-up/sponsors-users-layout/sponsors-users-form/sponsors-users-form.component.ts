@@ -15,7 +15,7 @@ import {
   EMAIL_PATTERN,
 } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { Store, Select } from '@ngxs/store';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 import { STATUS } from 'src/app/_helpers/convention/status';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
@@ -62,7 +62,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
 
     // -- Company data --
     image: new FormControl(null),
-    webSite: new FormControl(null, [
+    webSite: new FormControl('', [
 
       Validators.pattern(VIDEO_PATTERN),
     ]),
@@ -145,6 +145,8 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
           this.backUpData = response;
 
           this.form.patchValue(response);
+          console.log( response );
+
           this.form.controls.role.setValue(response.role.id);
           this.form.controls.addressState.setValue(response.addressState.id);
           this.idState = response.addressState;
@@ -174,6 +176,10 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
 
       this.toastr.info('Guardando', 'Enviando información, espere...');
       this.showProgress = true;
+
+      if ( data.webSite === null  ) {
+        data.webSite = '';
+      }
 
       if (this.mode === ACTION.CREATE) {
         this.sponsorUserService.setSponsorUser(data).subscribe(
@@ -232,6 +238,8 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
 
   errorResponse(err: any) {
     this.showProgress = false;
+
+    console.log(err);
 
     if (err.error.status === 0) {
       this.toastr.error('Error de datos', 'Verifica los datos del formulario');

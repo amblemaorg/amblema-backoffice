@@ -122,7 +122,7 @@ export class WebSponsorState implements NgxsOnInit {
       }
     });
 
-    if (state.sponsorPage.sponsors.length === 0) {
+    if (state.sponsorPage.sponsors.length <= 0) {
       position.push({
         id: state.sponsorPage.sponsors.length + 1,
         name: state.sponsorPage.sponsors.length + 1,
@@ -219,14 +219,18 @@ export class WebSponsorState implements NgxsOnInit {
 
   @Action(AddSponsor)
   addSponsor(ctx: StateContext<WebSponsor>, action: AddSponsor) {
+
+
+
     ctx.setState(
       patch({
         ...ctx.getState(),
         sponsorPage: patch({
-          sponsors: append([action.payload]),
+          sponsors: insertItem<SponsorList>(action.payload, action.payload.position - 1)
         }),
       })
     );
+
   }
 
   @Action(DeleteSponsor)

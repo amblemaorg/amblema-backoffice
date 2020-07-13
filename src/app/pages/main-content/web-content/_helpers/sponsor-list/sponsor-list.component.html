@@ -4,20 +4,9 @@
 <div class="row">
   <div class="col-12 col-lg-5">
     <label class="label">Padrinos</label>
-    <!-- <ng-select
-      [items]="states$ | async"
-      notFoundText="Estado no encontrado"
-      placeholder="- Seleccione un estado -"
-      bindLabel="name"
-      bindValue="id"
-      class="custom form-group"
-      (change)="onAddressSelected()"
-      [(ngModel)]="addressStateSelected"
-    >
-    </ng-select> -->
 
     <ng-select
-      [items]="users$ | async"
+      [items]="sponsorAvailable$ | async"
       notFoundText="Padrino no encontrado"
       placeholder="- Seleccione un padrino -"
       bindLabel="name"
@@ -29,8 +18,8 @@
 
   <div class="col-12 col-lg-5">
     <label class="label">Orden</label>
-    <ng-select
-      [items]="dataPosition"
+     <ng-select
+      [items]="sponsorPositions$ | async"
       notFoundText="Posición no encontrada"
       placeholder="- Posición -"
       bindLabel="name"
@@ -60,7 +49,7 @@
       <ng2-smart-table
         (deleteConfirm)="onDeleteConfirm($event)"
         [settings]="settings"
-        [source]="(web$ | async)?.sponsorPage.sponsors"
+        [source]="sponsorHave$ | async"
       ></ng2-smart-table>
     </div>
   </div>

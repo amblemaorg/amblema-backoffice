@@ -233,7 +233,6 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
   errorResponse(err: any) {
     this.showProgress = false;
 
-
     if (err.error.status === 0) {
       this.toastr.error('Error de datos', 'Verifica los datos del formulario');
     }

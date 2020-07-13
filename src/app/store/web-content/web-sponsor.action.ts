@@ -1,43 +1,43 @@
-import { Testimonial } from "../../_models/web/testimonial.model";
-import { State, NgxsOnInit, Action, StateContext, Selector } from "@ngxs/store";
-import { WebSponsor, SponsorList } from "../../_models/web/web-sponsor.model";
+import { Testimonial } from '../../_models/web/testimonial.model';
+import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { WebSponsor, SponsorList } from '../../_models/web/web-sponsor.model';
 import {
   append,
   patch,
   updateItem,
   removeItem,
   insertItem,
-} from "@ngxs/store/operators";
-import { CustomToastrService } from "../../services/helper/custom-toastr.service";
-import { WebSponsorService } from "../../services/web-content/web-sponsor.service";
+} from '@ngxs/store/operators';
+import { CustomToastrService } from '../../services/helper/custom-toastr.service';
+import { WebSponsorService } from '../../services/web-content/web-sponsor.service';
 import {
   SponsorUserState,
   SponsorUserModel,
-} from "../user/sponsor-user.action";
-import { SponsorUser } from "src/app/_models/user/sponsor-user.model";
-import { ValueConverter } from "@angular/compiler/src/render3/view/template";
-import { Item } from "pdfmake-wrapper";
+} from '../user/sponsor-user.action';
+import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { Item } from 'pdfmake-wrapper';
 
 // -- Web Sponsor class action --
 
 export class GetWebSponsor {
-  static readonly type = "[WebSponsor] Get Web Sponsor";
+  static readonly type = '[WebSponsor] Get Web Sponsor';
 }
 
 export class SetWebSponsor {
-  static readonly type = "[WebSponsor] Set Web Sponsor";
+  static readonly type = '[WebSponsor] Set Web Sponsor';
   constructor(public payload: WebSponsor) {}
 }
 
 // -- Testimonial class action --
 
 export class SetTestimonialWebSponsor {
-  static readonly type = "[Testimonial] Set Testimonial";
+  static readonly type = '[Testimonial] Set Testimonial';
   constructor(public payload: Testimonial) {}
 }
 
 export class UpdateTestimonialWebSponsor {
-  static readonly type = "[Testimonial] Update Testimonial";
+  static readonly type = '[Testimonial] Update Testimonial';
   constructor(
     public oldTestimonial: Testimonial,
     public newTestimonial: Testimonial
@@ -45,27 +45,27 @@ export class UpdateTestimonialWebSponsor {
 }
 
 export class DeleteTestimonialWebSponsor {
-  static readonly type = "[Testimonial] Delete Testimonial";
+  static readonly type = '[Testimonial] Delete Testimonial';
   constructor(public payload: Testimonial) {}
 }
 
 // -- Sponsor list --
 
 export class AddSponsor {
-  static readonly type = "[SponsorList] Add Sponsor";
+  static readonly type = '[SponsorList] Add Sponsor';
   constructor(public payload: SponsorList) {}
 }
 
 export class DeleteSponsor {
-  static readonly type = "[SponsorList] Delete Sponsor";
+  static readonly type = '[SponsorList] Delete Sponsor';
   constructor(public id: string) {}
 }
 
 @State<WebSponsor>({
-  name: "websponsor",
+  name: 'websponsor',
   defaults: {
     sponsorPage: {
-      backgroundImage: "",
+      backgroundImage: '',
       testimonials: [],
       steps: [],
       sponsors: [],
@@ -95,16 +95,15 @@ export class WebSponsorState implements NgxsOnInit {
       const object1Names = state.sponsorPage.sponsors.map((obj) => obj.id); // for caching the result
 
       // Compare ids include the other list
-      // sponsorUser = userState.sponsorUsers.filter(
-      //   (name) => !object1Names.includes(name.id) && name.image && name.webSite
-      // );
+      sponsorUser = userState.sponsorUsers.filter(
+         (name) => !object1Names.includes(name.id) && name.image && name.webSite
+       );
 
-      sponsorUser = userState.sponsorUsers;
     } else {
       userState.sponsorUsers.forEach((parent) => {
-        //if (parent.image && parent.webSite) {
+         if (parent.image && parent.webSite) {
         sponsorUser.push(parent);
-        //}
+         }
       });
     }
 
@@ -117,16 +116,16 @@ export class WebSponsorState implements NgxsOnInit {
     let i = 0;
 
     state.sponsorPage.sponsors.forEach((parent) => {
-      //if (parent.image && parent.webSite) {
+       if (parent.image && parent.webSite) {
       i++;
       position.push({ id: i, name: i });
-      //}
+       }
     });
 
     if (state.sponsorPage.sponsors.length === 0) {
       position.push({
-        id: state.sponsorPage.sponsors.length + 1,
-        name: `Ultima posicion ${state.sponsorPage.sponsors.length + 1}`,
+        id: 1,
+        name: `Ultima posicion ${1}`,
       });
     }
 
@@ -220,14 +219,18 @@ export class WebSponsorState implements NgxsOnInit {
 
   @Action(AddSponsor)
   addSponsor(ctx: StateContext<WebSponsor>, action: AddSponsor) {
+
+
+
     ctx.getState().sponsorPage.sponsors.forEach((element, key) => {
-      if (element.position === action.payload.position) {
+
         ctx.setState(
+
           patch({
             ...ctx.getState(),
             sponsorPage: patch({
               sponsors: updateItem<SponsorList>(
-                (item) => element.position === action.payload.position,
+                (item) => item.position >= action.payload.position && item.id === element.id,
                 {
                   ...element,
                   position: element.position + 1,
@@ -236,9 +239,7 @@ export class WebSponsorState implements NgxsOnInit {
             }),
           })
         );
-      } else {
-        
-      }
+
     });
 
     ctx.setState(
@@ -261,5 +262,26 @@ export class WebSponsorState implements NgxsOnInit {
         }),
       })
     );
+
+
+    ctx.getState().sponsorPage.sponsors.forEach((element, key) => {
+
+      ctx.setState(
+
+        patch({
+          ...ctx.getState(),
+          sponsorPage: patch({
+            sponsors: updateItem<SponsorList>(
+              (item) => item.position === element.position && item.id === element.id,
+              {
+                ...element,
+                position: element.position - 1,
+              }
+            ),
+          }),
+        })
+      );
+
+  });
   }
 }

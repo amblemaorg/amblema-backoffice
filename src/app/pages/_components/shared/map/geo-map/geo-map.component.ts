@@ -9,7 +9,8 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
-  OnDestroy,
+
+  AfterViewInit,
 } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 import { GeocodeService } from 'src/app/services/geocode.service';
@@ -18,7 +19,7 @@ import { Select } from '@ngxs/store';
 import { AddressState } from 'src/app/store/_address/address.action';
 import { Observable, Subscription } from 'rxjs';
 import { AddressService } from 'src/app/services/address.service';
-import { take, ignoreElements } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-geo-map',
@@ -26,11 +27,12 @@ import { take, ignoreElements } from 'rxjs/operators';
   styleUrls: ['./geo-map.component.scss'],
   providers: [GeocodeService],
 })
-export class GeoMapComponent implements OnInit, OnChanges {
+export class GeoMapComponent implements OnInit, OnChanges, AfterViewInit {
   @Select(AddressState.states) states$: Observable<any[]>;
 
-  @Input() latitude: number | null = null;
-  @Input() longitude: number | null = null;
+  // -- Venezuela coordinate default --
+  @Input() latitude: number | null;
+  @Input() longitude: number | null;
   @Input() label: string | null = 'Marca la ubicación exacta de la escuela';
 
   @Input() municipality: any | null = null;
@@ -121,26 +123,26 @@ export class GeoMapComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+      // -- Load Places Autocomplete --
+    this.mapsAPILoader.load().then(() => {
+      this.geoCoder = new google.maps.Geocoder();
+      if ( this.latitude === null && this.longitude === null ) {
+        this.latitude = 8.0000000;
+        this.longitude = -66.0000000;
+        this.zoom = 8;
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
     // -- Load Places Autocomplete --
     this.mapsAPILoader.load().then(() => {
       this.geoCoder = new google.maps.Geocoder();
-
-      if (this.latitude === 0 && this.longitude === 0) {
-        this.geoCoder.geocode(
-          {
-            address: `Venezuela`,
-          },
-          (results, status) => {
-            if (status === google.maps.GeocoderStatus.OK) {
-              this.latitude = results[0].geometry.location.lat();
-              this.longitude = results[0].geometry.location.lng();
-
-              this.zoom = 8;
-            }
-          }
-        );
+      if ( this.latitude === null && this.longitude === null ) {
+        this.latitude = 8.0000000;
+        this.longitude = -66.0000000;
+        this.zoom = 8;
       }
-      this.zoom = 8;
     });
   }
 

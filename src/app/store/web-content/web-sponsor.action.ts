@@ -1,10 +1,22 @@
 import { Testimonial } from '../../_models/web/testimonial.model';
 import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { WebSponsor, SponsorList } from '../../_models/web/web-sponsor.model';
-import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
+import {
+  append,
+  patch,
+  updateItem,
+  removeItem,
+  insertItem,
+} from '@ngxs/store/operators';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebSponsorService } from '../../services/web-content/web-sponsor.service';
+import {
+  SponsorUserState,
+  SponsorUserModel,
+} from '../user/sponsor-user.action';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { Item } from 'pdfmake-wrapper';
 
 // -- Web Sponsor class action --
 
@@ -64,6 +76,60 @@ export class WebSponsorState implements NgxsOnInit {
   @Selector()
   static webSponsor(state: WebSponsor): WebSponsor | null {
     return state;
+  }
+
+  @Selector()
+  static sponsorHave(state: WebSponsor): SponsorList[] | null {
+    return state.sponsorPage.sponsors;
+  }
+
+  @Selector([SponsorUserState])
+  static sponsorAvailable(
+    state: WebSponsor,
+    userState: SponsorUserModel
+  ): SponsorUser[] | null {
+    let sponsorUser: SponsorUser[] = [];
+
+    if (state.sponsorPage.sponsors.length) {
+      // Filter by ids
+      const object1Names = state.sponsorPage.sponsors.map((obj) => obj.id); // for caching the result
+
+      // Compare ids include the other list
+      sponsorUser = userState.sponsorUsers.filter(
+        (name) => !object1Names.includes(name.id) && name.image && name.webSite
+      );
+    } else {
+      userState.sponsorUsers.forEach((parent) => {
+        if (parent.image && parent.webSite) {
+          sponsorUser.push(parent);
+        }
+      });
+    }
+
+
+    return sponsorUser;
+  }
+
+  @Selector()
+  static sponsorPositions(state: WebSponsor): any[] | null {
+    const position: any[] = [];
+    let i = 0;
+
+    state.sponsorPage.sponsors.forEach((parent) => {
+      if (parent.image && parent.webSite) {
+        i++;
+        position.push({ id: i, name: i });
+      }
+    });
+
+    if (state.sponsorPage.sponsors.length === 0) {
+      position.push({
+        id: state.sponsorPage.sponsors.length + 1,
+        name: state.sponsorPage.sponsors.length + 1,
+      });
+    }
+
+    return position;
   }
 
   constructor(
@@ -152,7 +218,16 @@ export class WebSponsorState implements NgxsOnInit {
   // -- Sponsor list --
 
   @Action(AddSponsor)
-  addSponsor(ctx: StateContext<WebSponsor>, action: AddSponsor) {}
+  addSponsor(ctx: StateContext<WebSponsor>, action: AddSponsor) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        sponsorPage: patch({
+          sponsors: append([action.payload]),
+        }),
+      })
+    );
+  }
 
   @Action(DeleteSponsor)
   deleteSponsor(ctx: StateContext<WebSponsor>, action: DeleteSponsor) {

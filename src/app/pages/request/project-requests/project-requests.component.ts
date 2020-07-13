@@ -115,6 +115,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           type: 'string',
         },
         createdAt: {
+          sortDirection: 'desc',
           title: 'Fecha',
           type: 'string',
           compareFunction: sortDate,

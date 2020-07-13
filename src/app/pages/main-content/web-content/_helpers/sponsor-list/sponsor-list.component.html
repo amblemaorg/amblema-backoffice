@@ -4,20 +4,9 @@
 <div class="row">
   <div class="col-12 col-lg-5">
     <label class="label">Padrinos</label>
-    <!-- <ng-select
-      [items]="states$ | async"
-      notFoundText="Estado no encontrado"
-      placeholder="- Seleccione un estado -"
-      bindLabel="name"
-      bindValue="id"
-      class="custom form-group"
-      (change)="onAddressSelected()"
-      [(ngModel)]="addressStateSelected"
-    >
-    </ng-select> -->
 
     <ng-select
-      [items]="users$ | async"
+      [items]="sponsorAvailable$ | async"
       notFoundText="Padrino no encontrado"
       placeholder="- Seleccione un padrino -"
       bindLabel="name"
@@ -29,11 +18,12 @@
 
   <div class="col-12 col-lg-5">
     <label class="label">Orden</label>
-    <ng-select
-      [items]="dataPosition"
+     <ng-select
+      [items]="sponsorPositions$ | async"
       notFoundText="Posición no encontrada"
       placeholder="- Posición -"
       bindLabel="name"
+      (change)="onSelectPosition($event)"
       class="custom form-group"
     >
     </ng-select>
@@ -41,13 +31,26 @@
 
   <div class="col-12 col-lg d-flex align-items-end">
     <div class="form-group w-100">
-      <button nbButton status="primary" fullWidth> <nb-icon icon="plus"></nb-icon> Agregar</button>
+      <button
+        nbButton
+        size="sm"
+        (click)="addSponsor()"
+        status="primary"
+        [attr.disabled]="dataSponsor && position ? null : true"
+        fullWidth
+      >
+        <nb-icon icon="plus"></nb-icon>
+      </button>
     </div>
   </div>
 
-  <div class="col-12 mt-3">
-
-    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
-
+  <div id="special-table" class="col-12 mt-3">
+    <div class="table-responsive">
+      <ng2-smart-table
+        (deleteConfirm)="onDeleteConfirm($event)"
+        [settings]="settings"
+        [source]="sponsorHave$ | async"
+      ></ng2-smart-table>
+    </div>
   </div>
 </div>

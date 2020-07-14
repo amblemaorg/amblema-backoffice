@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import {
@@ -13,14 +13,13 @@ import { Statal, Municipality } from 'src/app/_models/address.model';
 import { FORM_MODALITY } from '../../abstract-form-mode';
 import { AddressService } from 'src/app/services/address.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-address-form',
   templateUrl: './address-form.component.html',
   styleUrls: ['./address-form.component.scss'],
 })
-export class AddressFormComponent implements OnDestroy {
+export class AddressFormComponent implements OnDestroy, OnInit {
   @Input() address: AbstractControl | null = new FormControl();
   @Input() addressState: AbstractControl | null = new FormControl();
   @Input() addressMunicipality: AbstractControl | null = new FormControl();
@@ -54,6 +53,14 @@ export class AddressFormComponent implements OnDestroy {
     public addressServices: AddressService,
     public store: Store
   ) {}
+
+  ngOnInit(): void {
+    if (this.addressState.value) {
+      this.addressStateSelected = this.addressState.value;
+      this.store.dispatch(new SetStateSelected(this.addressStateSelected));
+      this.addressMunicipalitySelected = this.addressMunicipality.value;
+    }
+  }
 
   ngOnDestroy(): void {
     if (this.subscriptionServices) {

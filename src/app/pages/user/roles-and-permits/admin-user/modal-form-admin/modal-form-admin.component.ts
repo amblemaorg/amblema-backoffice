@@ -16,6 +16,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import {
   SetAdminUser,
   AdminUserState,
+  UpdateAdminUser,
 } from 'src/app/store/user/admin-user.action';
 import { RolesState } from 'src/app/store/role.action';
 import { Role } from 'src/app/_models/permission.model';
@@ -50,11 +51,13 @@ export class ModalFormAdminComponent extends UserAdminForm
         // Save mode
         this.mode = response.value;
 
-        // -- Path values --
+        // -- Path values, from user selected --
         if (response.value === FORM_MODALITY.EDIT.value) {
-          this.subscriptionService = this.userSelected$.subscribe((admin) =>
-            this.onPatchValues(admin)
-          );
+          this.subscriptionService = this.userSelected$.subscribe((admin) => {
+            this.onPatchValues(admin);
+            this.patchCardType(admin.cardType);
+            this.previousData = admin;
+          });
         } else {
           // -- Set role default on create
           this.subscriptionService = this.rolesData$.subscribe((roles) => {
@@ -96,6 +99,30 @@ export class ModalFormAdminComponent extends UserAdminForm
           });
       } else {
         // <-- Edit user admin
+
+        const prepareData: any = this.form.value;
+        /** Remove the password if is data is empty */
+        if ( prepareData.password === '' || prepareData.password === null ) {
+          delete prepareData.password;
+        }
+
+        this.subscriptionService = this.adminUserService
+          .updateAdminUser(this.previousData.id, prepareData)
+          .subscribe(
+            (response: HttpEvent<any>) => {
+
+              switch (response.type) {
+                case HttpEventType.Response:
+                  this.store.dispatch(
+                    new UpdateAdminUser(this.previousData, response.body)
+                  );
+                  this.toast.updateSuccess(
+                    'Actualización',
+                    'Usuario actualizado satisfactoriamente'
+                  );
+                  break;
+              }
+            });
       }
     } else {
       this.validationService.markAllFormFieldsAsTouched(this.form);
@@ -110,6 +137,12 @@ export class ModalFormAdminComponent extends UserAdminForm
 
   onPatchValues(data: any): void {
     this.form.patchValue(data);
-    this.form.controls.role.setValue((data.role as any).id);
+    this.form.controls.role.setValue(data.role.id);
+    this.form.controls.addressState.setValue(data.addressState.id);
+    this.form.controls.addressMunicipality.setValue(
+      data.addressMunicipality.id
+    );
+    // -- Remove validation password, to update the data
+    this.form.controls.password.clearValidators();
   }
 }

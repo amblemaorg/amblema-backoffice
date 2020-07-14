@@ -5,6 +5,8 @@ import {
 } from './reactive-input/_shared/validation-patterns';
 import { EMAIL_PATTERN } from '../../_components/form-components/shared/constant/validation-patterns-list';
 import { AddressForm } from './abstract-address-form';
+import { DOCUMENT_TYPE } from './form/identity-card/document-type-values';
+import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 
 export abstract class UserForm extends AddressForm {
   public nameMessage = `Nombre inválido. Debes agregar solo letras en este campo`;
@@ -16,7 +18,7 @@ export abstract class UserForm extends AddressForm {
 
   public mode: string; // <-- Save the mode when change
   public role: string; // <-- Save the default role id
-
+  public previousData: any; // <-- To back up previous data
 
   constructor() {
     super();
@@ -37,18 +39,26 @@ export abstract class UserForm extends AddressForm {
     });
   }
 
-  private patchCardType( type: string ): void {
+  public patchCardType(type: string): void {
+    switch (type) {
+      case DOCUMENT_TYPE.VENEZUELAN.LABEL:
+        this.form.controls.cardType.setValue(DOCUMENT_TYPE.VENEZUELAN.VALUE);
+        break;
+      case DOCUMENT_TYPE.RIF.LABEL:
+        this.form.controls.cardType.setValue(DOCUMENT_TYPE.RIF.VALUE);
+        break;
 
-
-
-    // this.form.controls.cardType.setValue()
+      case DOCUMENT_TYPE.PASSPORT.LABEL:
+        this.form.controls.cardType.setValue(DOCUMENT_TYPE.PASSPORT.VALUE);
+        break;
+    }
   }
 }
 
 export abstract class UserAdminForm extends UserForm {
   public functionMessage = `Dato inválido, agrega sólo letras`;
 
-  constructor( ) {
+  constructor() {
     super();
     // -- Add attr admin --
     this.form = new FormGroup({
@@ -71,6 +81,7 @@ export abstract class UserAdminForm extends UserForm {
         Validators.required,
         Validators.pattern(CYRILLIC_PATTERN),
       ]),
+      userType: new FormControl( USER_TYPE.ADMIN.VALUE ),
     });
   }
 }

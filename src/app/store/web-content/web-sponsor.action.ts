@@ -254,17 +254,10 @@ export class WebSponsorState implements NgxsOnInit {
 
   @Action(DeleteSponsor)
   deleteSponsor(ctx: StateContext<WebSponsor>, action: DeleteSponsor) {
-    ctx.setState(
-      patch({
-        ...ctx.getState(),
-        sponsorPage: patch({
-          sponsors: removeItem<SponsorList>((user) => user.id === action.id),
-        }),
-      })
-    );
 
 
     ctx.getState().sponsorPage.sponsors.forEach((element, key) => {
+
 
       ctx.setState(
 
@@ -272,7 +265,7 @@ export class WebSponsorState implements NgxsOnInit {
           ...ctx.getState(),
           sponsorPage: patch({
             sponsors: updateItem<SponsorList>(
-              (item) => item.position === element.position && item.id === element.id,
+              (item) => item.position > element.position && item.id === element.id,
               {
                 ...element,
                 position: element.position - 1,
@@ -283,5 +276,17 @@ export class WebSponsorState implements NgxsOnInit {
       );
 
   });
+
+
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        sponsorPage: patch({
+          sponsors: removeItem<SponsorList>((user) => user.id === action.id),
+        }),
+      })
+    );
+
+
   }
 }

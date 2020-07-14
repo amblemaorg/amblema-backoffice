@@ -1,20 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractSmartTable } from '../../../_shared/smart-table/abstract-smart-table';
-import { AdminUserState } from 'src/app/store/user/admin-user.action';
-import { Select } from '@ngxs/store';
-import { AdminUser } from 'src/app/_models/user/admin-user.model';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { AbstractSmartTable } from "../../../_shared/smart-table/abstract-smart-table";
+import { AdminUserState } from "src/app/store/user/admin-user.action";
+import { Select } from "@ngxs/store";
+import { AdminUser } from "src/app/_models/user/admin-user.model";
+import { Observable } from "rxjs";
 
 @Component({
-  selector: 'app-table-form-admin',
-  templateUrl: './table-form-admin.component.html',
-  styleUrls: ['./table-form-admin.component.scss'],
+  selector: "app-table-form-admin",
+  templateUrl: "./table-form-admin.component.html",
+  styleUrls: ["./table-form-admin.component.scss"],
 })
 export class TableFormAdminComponent extends AbstractSmartTable
   implements OnInit {
-
-    @Select(AdminUserState.adminUsers) data$: Observable<AdminUser[]>;
-
+  @Select(AdminUserState.adminUsers) dataUsers$: Observable<AdminUser[]>;
 
   constructor() {
     super();
@@ -23,16 +21,16 @@ export class TableFormAdminComponent extends AbstractSmartTable
   ngOnInit() {
     this.settings.columns = {
       firstName: {
-        title: 'Nombre',
-        type: 'string'
+        title: "Nombre",
+        type: "string",
       },
       lastName: {
-        title: 'Apellido',
-        type: 'string'
+        title: "Apellido",
+        type: "string",
       },
       function: {
-        title: 'Cargo',
-        type: 'string'
+        title: "Cargo",
+        type: "string",
       },
     };
   }

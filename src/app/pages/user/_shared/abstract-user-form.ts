@@ -10,8 +10,13 @@ export abstract class UserForm extends AddressForm {
   public nameMessage = `Nombre inválido. Debes agregar solo letras en este campo`;
   public lastNameMessage = `Apellido inválido. Debes agregar solo letras en este campo`;
   public emailMessage = `El correo electrónico no corresponde a un formato correcto`;
+  public phoneMessage = `Número telefónico inválido, ingrese sólo números`;
 
   public form: FormGroup;
+
+  public mode: string; // <-- Save the mode when change
+  public role: string; // <-- Save the default role id
+
 
   constructor() {
     super();
@@ -30,6 +35,13 @@ export abstract class UserForm extends AddressForm {
       role: new FormControl(null, [Validators.required]),
       status: new FormControl('1', [Validators.required]),
     });
+  }
+
+  private patchCardType( type: string ): void {
+
+
+
+    // this.form.controls.cardType.setValue()
   }
 }
 

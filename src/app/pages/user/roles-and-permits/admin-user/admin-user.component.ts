@@ -16,7 +16,6 @@ export class AdminUserComponent {
     }
 
 
-
   openRegister() {
     this.formModeService.setMode(FORM_MODALITY.CREATE.value);
 
@@ -26,11 +25,4 @@ export class AdminUserComponent {
     );
   }
 
-  onEdit() {
-    this.formModeService.setMode(FORM_MODALITY.EDIT.value);
-    this.modalService.show(
-      ModalFormAdminComponent,
-      Object.assign({}, { class: 'modal-xl modal-dialog-centered' })
-    );
-  }
 }

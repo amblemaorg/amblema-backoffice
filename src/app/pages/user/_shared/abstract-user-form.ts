@@ -36,7 +36,7 @@ export abstract class UserForm extends AddressForm {
 export abstract class UserAdminForm extends UserForm {
   public functionMessage = `Dato inválido, agrega sólo letras`;
 
-  constructor() {
+  constructor( ) {
     super();
     // -- Add attr admin --
     this.form = new FormGroup({

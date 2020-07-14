@@ -6,8 +6,8 @@
       [formControl]="cardType"
       (change)="updateValidation($event.target.value)"
     >
-      <option *ngFor="let item of types" [value]="item.value">{{
-        item.label
+      <option *ngFor="let item of types" [value]="item.VALUE">{{
+        item.LABEL
       }}</option>
     </select>
   </div>

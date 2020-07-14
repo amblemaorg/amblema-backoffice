@@ -15,8 +15,9 @@ export class IdentityCardComponent implements OnInit {
   public msg: string; // <-- Pattern message
   public tooltipMsg: string;
 
+  public types = [DOCUMENT_TYPE.VENEZUELAN, DOCUMENT_TYPE.RIF, DOCUMENT_TYPE.PASSPORT];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     // -- Initial validation --

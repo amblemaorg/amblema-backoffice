@@ -17,8 +17,6 @@ export class SelectRoleComponent extends AbstractReactiveSelect
   roleSelected: any;
 
   ngOnInit(): void {
-    this.control.setValue(this.roleSelected);
-
-
+    this.roleSelected = this.control.value;
   }
 }

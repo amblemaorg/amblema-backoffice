@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
 import { NUMBER_PATTERN } from '../../reactive-input/_shared/validation-patterns';
+import { DOCUMENT_TYPE } from './document-type-values';
 
 @Component({
   selector: 'app-identity-card',
@@ -14,19 +15,6 @@ export class IdentityCardComponent implements OnInit {
   public msg: string; // <-- Pattern message
   public tooltipMsg: string;
 
-  types = [
-    {
-      label: 'V',
-      value: '1',
-      msg: 'Cédula inválida, ingresa una cédula correcta',
-    },
-    { label: 'J', value: '2', msg: 'RIF inválido, ingresa un RIF correcto' },
-    {
-      label: 'E',
-      value: '3',
-      msg: 'Pasaporte inválido, ingresa un pasaporte correcto',
-    },
-  ];
 
   constructor() {}
 
@@ -38,19 +26,19 @@ export class IdentityCardComponent implements OnInit {
   updateValidation(type: string): void {
     // -- Update validation and set the correct message --
     switch (type) {
-      case this.types[0].value:
+      case DOCUMENT_TYPE.VENEZUELAN.VALUE:
         this.tooltipMsg = `Mínimo 7 y máximo 8 caracteres`;
-        this.msg = this.types[0].msg;
+        this.msg = DOCUMENT_TYPE.VENEZUELAN.MSG;
         this.setUpValidation(7, 8);
         break;
-      case this.types[1].value:
+      case DOCUMENT_TYPE.RIF.VALUE:
         this.tooltipMsg = `Mínimo 8 y máximo 9 caracteres`;
-        this.msg = this.types[1].msg;
+        this.msg = DOCUMENT_TYPE.RIF.MSG;
         this.setUpValidation(8, 9);
         break;
-      case this.types[2].value:
+      case DOCUMENT_TYPE.PASSPORT.VALUE:
         this.tooltipMsg = `Mínimo 10 y máximo 10 caracteres`;
-        this.msg = this.types[2].msg;
+        this.msg = DOCUMENT_TYPE.PASSPORT.MSG;
         this.setUpValidation(10, 10);
         break;
     }

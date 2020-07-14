@@ -1,5 +1,7 @@
 <div class="modal-header">
-  <h6 class="modal-title pull-left">{{(formModeService.getMode() | async)?.label}} usuario administrador</h6>
+  <h6 class="modal-title pull-left">
+    {{ (formModeService.getMode() | async)?.label }} usuario administrador
+  </h6>
   <button
     type="button"
     class="close pull-right"
@@ -66,6 +68,27 @@
           [control]="form.get('email')"
         ></app-reactive-input>
       </div>
+
+      <div class="col-lg-6">
+        <app-reactive-input
+          [label]="'Teléfono'"
+          [placeholder]="'Teléfono'"
+          [id]="'phone'"
+          [type]="'tel'"
+          [patternMessage]="phoneMessage"
+          [control]="form.get('phone')"
+        ></app-reactive-input>
+      </div>
+
+      <div class="col-lg-6">
+        <app-reactive-input
+          [label]="'Contraseña'"
+          [placeholder]="'Máximo y mínimo 8 carácteres'"
+          [id]="'password'"
+          [type]="'password'"
+          [control]="form.get('password')"
+        ></app-reactive-input>
+      </div>
     </div>
 
     <!-- Member the address form -->
@@ -76,7 +99,7 @@
     ></app-address-form>
 
     <!-- Estatus -->
-    <hr>
+    <hr />
     <div class="row">
       <div class="col-lg-6">
         <app-select-status [control]="form.get('status')"></app-select-status>
@@ -85,7 +108,13 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button nbButton type="button" (click)="onSubmit()" status="success" class="col-12 col-lg-auto">
+  <button
+    nbButton
+    type="button"
+    (click)="onSubmit()"
+    status="success"
+    class="col-12 col-lg-auto"
+  >
     Registrar
   </button>
   <button

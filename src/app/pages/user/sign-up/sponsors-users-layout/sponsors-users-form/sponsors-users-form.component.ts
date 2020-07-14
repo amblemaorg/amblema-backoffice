@@ -140,12 +140,14 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
       });
     } else {
       this.subscription = this.user$
-        .pipe(take(1))
+        .pipe()
         .subscribe((response: any) => {
           this.backUpData = response;
 
           this.form.patchValue(response);
-          console.log( response );
+
+          console.log( this.backUpData );
+          console.log('Modo edicion de consola');
 
           this.form.controls.role.setValue(response.role.id);
           this.form.controls.addressState.setValue(response.addressState.id);

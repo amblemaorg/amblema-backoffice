@@ -74,6 +74,7 @@ export class SponsorsUsersTableComponent extends BaseTable implements TableActio
         this.modalServices.open('form-sponsor-user');
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
+
         this.store.dispatch( new SelectedSponsorUser( event.data ) );
         break;
       case this.ACTION.DELETE:

@@ -25,6 +25,8 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
 
+    this.selectedSponsor = this.control.value;
+
   }
 
   ngOnChanges(): void {

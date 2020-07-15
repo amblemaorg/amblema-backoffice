@@ -111,13 +111,11 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
         );
       } else if (this.mode === ACTION.EDIT) {
 
-        console.log( this.form.value );
         this.projectService
           .updateProject(this.oldProject.id, this.form.value)
           .subscribe(
             (response) => {
 
-              console.log( response );
               this.toastr.updateSuccess(
                 'Actualización',
                 'Actualización de proyecto exitoso'

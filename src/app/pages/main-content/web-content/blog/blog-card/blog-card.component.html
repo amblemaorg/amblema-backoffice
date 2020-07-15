@@ -5,7 +5,9 @@
     <nb-card-body>
         <section>
             <h5 class="card-title">{{ data.title }}</h5>
-            <p class="card-text">{{ data.text }}</p>
+            
+            <quill-view-html id="view" class="p-0" [content]="data.text"></quill-view-html>
+
             <nb-alert class="d-inline-block mb-0 py-0 px-2" [status]="data.tag == 'Ambiente' ? 'success' : 
             data.tag == 'Lectura' ? 'info' :
             data.tag == 'Matemáticas' ? 'primary' : 'danger'" >

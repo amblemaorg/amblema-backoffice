@@ -1,5 +1,18 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  AfterViewInit,
+} from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { ACTION } from '../../../../../_helpers/text-content/text-crud';
 import { Store } from '@ngxs/store';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -12,10 +25,9 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 @Component({
   selector: 'app-blog-form',
   templateUrl: './blog-form.component.html',
-  styles: []
+  styleUrls: ['./blog-form.component.scss']
 })
 export class BlogFormComponent implements OnInit, OnChanges {
-
   @Input() ID: string;
   @Input() MODE: string | null = 'CREATE'; // <-- Create or edit
   @Input() DATA: Post; // <-- To update blog
@@ -30,23 +42,46 @@ export class BlogFormComponent implements OnInit, OnChanges {
   showProgress = false;
   oldPost: Post;
 
+  modules = {
+    formula: true,
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote'],
+
+      [{ header: 1 }, { header: 2 }], // custom button values
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+      [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+      [{ direction: 'rtl' }], // text direction
+
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+
+      [{ align: [] }],
+
+      ['clean'],
+    ],
+  };
+
   constructor(
     private helper: Utility,
     private blogService: BlogService,
     private toast: CustomToastrService,
     private formBuilder: FormBuilder,
-    private store: Store) {
+    private store: Store
+  ) {
     this.formBlog = this.formBuilder.group({
       title: new FormControl(' ', [Validators.required]),
       tag: new FormControl('Ambiente', [Validators.required]),
       image: new FormControl('', [Validators.required]),
       image2: new FormControl('', [Validators.required]),
       status: new FormControl('Publicado', [Validators.required]),
-      text: new FormControl('', [Validators.required])
+      text: new FormControl('', [Validators.required]),
     }); // <-- Form Blog to create edit
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngOnChanges(): void {
     if (this.MODE === ACTION.EDIT) {
@@ -61,17 +96,25 @@ export class BlogFormComponent implements OnInit, OnChanges {
   onSubmit() {
     this.submitted = true;
 
-    if (this.formBlog.controls.image.invalid || this.formBlog.controls.image2.invalid) {
+    if (
+      this.formBlog.controls.image.invalid ||
+      this.formBlog.controls.image2.invalid
+    ) {
       if (this.MODE === this.ACTION.CREATE) {
-        this.toast.error('Campo requerido', 'Debe cargar un imagen para completar el registro de premios y reconocimientos');
+        this.toast.error(
+          'Campo requerido',
+          'Debe cargar un imagen para completar el registro de premios y reconocimientos'
+        );
       } else if (this.MODE === this.ACTION.EDIT) {
-        this.toast.error('Campo requerido', 'Debe cargar un imagen para actualizar el registro de premios y reconocimientos');
+        this.toast.error(
+          'Campo requerido',
+          'Debe cargar un imagen para actualizar el registro de premios y reconocimientos'
+        );
       }
     }
 
     // Valid form
     if (this.formBlog.valid) {
-
       if (this.MODE === this.ACTION.CREATE) {
         /* To send data */
         let value: Post = this.formBlog.value;
@@ -81,31 +124,33 @@ export class BlogFormComponent implements OnInit, OnChanges {
 
         this.showProgress = true;
 
-        this.blogService.setPost(value).subscribe((response: HttpEvent<any>) => {
+        this.blogService
+          .setPost(value)
+          .subscribe((response: HttpEvent<any>) => {
+            switch (response.type) {
+              case HttpEventType.Response:
+                setTimeout(() => {
+                  this.showProgress = false;
+                }, 2500);
 
-          switch (response.type) {
-            case HttpEventType.Response:
-              setTimeout(() => {
-                this.showProgress = false;
-              }, 2500);
+                let data: any = response.body;
 
-              let data: any = response.body;
+                data = this.helper.convertTagsNumberToString([data])[0];
+                data = this.helper.convertStatusPostToString([data])[0];
+                this.store.dispatch(new SetPost(data));
+                this.toast.registerSuccess(
+                  'Registro Post',
+                  'Nuevo post registrado'
+                );
 
-              data = this.helper.convertTagsNumberToString([data])[0];
-              data = this.helper.convertStatusPostToString([data])[0];
-              this.store.dispatch(new SetPost(data));
-              this.toast.registerSuccess('Registro Post', 'Nuevo post registrado');
-
-              this.formBlog.reset();
-              this.formBlog.controls.tag.setValue('Ambiente');
-              this.formBlog.controls.status.setValue('Publicado');
-              this.submitted = false;
-              break;
-          }
-        });
-
+                this.formBlog.reset();
+                this.formBlog.controls.tag.setValue('Ambiente');
+                this.formBlog.controls.status.setValue('Publicado');
+                this.submitted = false;
+                break;
+            }
+          });
       } else if (this.MODE === this.ACTION.EDIT) {
-
         let prepareData: Post = {
           id: this.DATA.id,
           title: this.formBlog.controls.title.value,
@@ -113,7 +158,7 @@ export class BlogFormComponent implements OnInit, OnChanges {
           status: this.formBlog.controls.status.value,
           image: this.formBlog.controls.image.value,
           image2: this.formBlog.controls.image2.value,
-          text: this.formBlog.controls.text.value
+          text: this.formBlog.controls.text.value,
         };
 
         prepareData = this.helper.convertTagStringToNumber(prepareData);
@@ -121,24 +166,27 @@ export class BlogFormComponent implements OnInit, OnChanges {
 
         this.showProgress = true;
 
-        this.blogService.updatePost(prepareData.id, prepareData).subscribe((response: any) => {
+        this.blogService
+          .updatePost(prepareData.id, prepareData)
+          .subscribe((response: any) => {
+            console.log(response);
 
-          console.log(response);
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2500);
 
-          setTimeout(() => {
-            this.showProgress = false;
-          }, 2500);
+            let value: any = response;
 
-          let value: any = response;
+            this.toast.updateSuccess(
+              'Actualización',
+              'Post actualizado correctamente'
+            );
 
-          this.toast.updateSuccess('Actualización', 'Post actualizado correctamente');
+            value = this.helper.convertTagsNumberToString([value])[0];
+            value = this.helper.convertStatusPostToString([value])[0];
 
-          value = this.helper.convertTagsNumberToString([value])[0];
-          value = this.helper.convertStatusPostToString([value])[0];
-
-          this.store.dispatch(new UpdatePost(this.DATA, value));
-
-        });
+            this.store.dispatch(new UpdatePost(this.DATA, value));
+          });
 
         this.submitted = false;
       }

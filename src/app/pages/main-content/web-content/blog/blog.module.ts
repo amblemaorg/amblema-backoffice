@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPostPipe } from 'src/app/_pipes/search-post.pipe';
 import { PaginatorModule } from 'src/app/pages/_components/shared/paginator/paginator.module';
 import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ProgressModule } from 'src/app/pages/_components/shared/progress/progre
     NbBadgeModule,
     NbAlertModule,
     NbButtonModule,
+    QuillModule.forRoot(),
 
     // Add custom module
     ProgressModule,

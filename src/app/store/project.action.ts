@@ -120,7 +120,8 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
 
         ctx.setState(patch({
             ...ctx.getState(),
-            projects: updateItem<Project>(project => project.id === action.oldProject.id, action.newProject)
+            projects: updateItem<Project>(project => project.id === action.oldProject.id, action.newProject),
+            project: action.newProject
         }));
 
     }

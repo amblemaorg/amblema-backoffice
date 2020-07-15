@@ -126,11 +126,19 @@
       >
       </app-text-area-custom>
 
+
+      <app-text-area-custom
+        [submitted]="false"
+        [label]="'Descripción de actividad'"
+        [placeholder]="'Descripción de actividad'"
+      >
+      </app-text-area-custom>
+
       <div class="col-12 form-group" *ngIf="showProgress">
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
 
-      <div class="col-12">
+      <div class="col-12 px-0">
         <hr />
 
         <button
@@ -139,7 +147,7 @@
           [nbSpinner]="showProgress"
           nbSpinnerStatus="success"
           type="submit"
-          class="col-6 col-md-auto"
+          class="col-12 col-md-auto"
         >
           <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
         </button>

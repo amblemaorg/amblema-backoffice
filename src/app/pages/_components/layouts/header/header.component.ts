@@ -63,6 +63,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
         if ( title === 'Cerrar sesión' ) {
           this.tokenService.clear();
+          localStorage.clear();
+          sessionStorage.clear();
           this.authServiceCustom.removeTokens();
           this.router.navigate(['auth/login']);
         }

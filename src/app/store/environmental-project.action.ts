@@ -42,7 +42,7 @@ export interface EnvironmentalProjectModel extends EnvironmentalProject {
 
 export class SetNameEnvironmentalProject {
     static readonly type = '[EnvironmentalProject] Set Name EnvironmentalProject';
-    constructor(public name: string) { }
+    constructor(public name: string, public description: string) { }
 }
 
 export class SetGeneralObjective {
@@ -101,6 +101,7 @@ export class UpdateTopic {
     name: 'environmentalproject',
     defaults: {
         name: '',
+        description: '',
         lapse1: {
             generalObjective: '',
             topics: [],
@@ -128,6 +129,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
     static environmentalProjectStorable(state: EnvironmentalProjectModel): EnvironmentalProjectModel | null {
         return {
             name: state.name,
+            description: state.description,
             lapse1: state.lapse1,
             lapse2: state.lapse2,
             lapse3: state.lapse3,
@@ -188,6 +190,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
         this.subscriptionEnvironmentalProject = this.environmentalProjectServivce
             .getEnvironmentalProject()
             .subscribe((response) => {
+                console.log( response );
 
                 if (JSON.stringify(response) !== '{}' && response.lapse1 && response.lapse2 && response.lapse3) { // <-- Is not empty
                     ctx.setState(patch(response));
@@ -461,7 +464,6 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             })
         }));
 
-        console.log('dwad');
 
         this.InternalLapseUpdate(ctx);
     }
@@ -474,7 +476,8 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
     setNameEnvironmentalProject(ctx: StateContext<EnvironmentalProjectModel>, action: SetNameEnvironmentalProject) {
         ctx.setState(patch({
             ...ctx.getState(),
-            name: action.name
+            name: action.name,
+            description: action.description
         }));
     }
 
@@ -498,7 +501,6 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
     // -- Selecting lapse updates one of the three lapses --
     InternalLapseUpdate(ctx?: StateContext<EnvironmentalProjectModel>): void {
 
-        console.log( this.referencingLapse );
 
         switch (this.referencingLapse) {
             case '1':

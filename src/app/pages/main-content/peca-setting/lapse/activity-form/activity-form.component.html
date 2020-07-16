@@ -719,6 +719,19 @@
         <!-- / Dynamic list -->
       </div>
 
+      <div class="col-12">
+        <app-text-area-custom
+        *ngIf="!data.isStandard"
+        [submitted]="false"
+        [control]="form.get('description')"
+        [label]="'Descripción web'"
+        [placeholder]="'Descripción web'"
+      >
+      </app-text-area-custom>
+
+      </div>
+
+
 
 
       <div class="col-12 form-group" *ngIf="showProgress">

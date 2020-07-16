@@ -63,9 +63,13 @@ export class ActivityFormComponent extends StepsFormComponent
 
     // Toggles
     this.form.addControl('status', new FormControl(false));
+    this.form.addControl('description', new FormControl(null));
+
 
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
+
+
       if (this.data.isStandard) {
         this.createForm(this.id);
 
@@ -243,6 +247,7 @@ export class ActivityFormComponent extends StepsFormComponent
         teachersMeetingDescription: new FormControl(null, [
           Validators.required,
         ]),
+        description: new FormControl(null, Validators.required)
       });
     } else if (id === this.DEVNAME_STANDARD.AMBLE_COINS) {
       this.formStandard = new FormGroup({
@@ -252,6 +257,7 @@ export class ActivityFormComponent extends StepsFormComponent
         teachersMeetingFile: new FormControl(null, [Validators.required]),
         piggyBankSlider: new FormControl([], [Validators.required]),
         piggyBankDescription: new FormControl(null, [Validators.required]),
+        description: new FormControl(null, Validators.required)
       });
     } else if (id === this.DEVNAME_STANDARD.LAPSE_PLANNING) {
       this.formStandard = new FormGroup({
@@ -271,12 +277,14 @@ export class ActivityFormComponent extends StepsFormComponent
     } else if (id === this.DEVNAME_STANDARD.ANNUAL_CONVENTION) {
       this.formStandard = new FormGroup({
         checklist: new FormControl(null, [Validators.required]),
+        description: new FormControl(null, [Validators.required])
       });
     } else if (id === this.DEVNAME_STANDARD.MATH_OLYMPIC) {
       this.formStandard = new FormGroup({
         date: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
         file: new FormControl(null, [Validators.required]),
+
       });
     }
   }
@@ -313,6 +321,12 @@ export class ActivityFormComponent extends StepsFormComponent
     formData.append(
       'teachersMeetingDescription',
       prepareData.teachersMeetingDescription
+    );
+
+
+    formData.append(
+      'description',
+      prepareData.description
     );
 
     this.showProgress = true;
@@ -353,6 +367,12 @@ export class ActivityFormComponent extends StepsFormComponent
     formData.append(
       'piggyBankDescription',
       prepareData.teachersMeetingDescription
+    );
+
+
+    formData.append(
+      'description',
+      prepareData.description
     );
     formData.append('piggyBankSlider', JSON.stringify(this.sliders));
 
@@ -444,9 +464,16 @@ export class ActivityFormComponent extends StepsFormComponent
   }
 
   onSubmitAnualConvention() {
-    this.data = Object.assign({}, this.data);
 
     const formData = new FormData();
+
+
+    this.data = Object.assign({}, this.data);
+
+    formData.append(
+      'description',
+      this.formStandard.controls.description.value
+    );
 
     formData.append('checklist', JSON.stringify(this.checklist));
 
@@ -471,6 +498,7 @@ export class ActivityFormComponent extends StepsFormComponent
 
   onSubmitMathOlympic() {
     const prepareData: any = this.formStandard.value;
+
     prepareData.date = prepareData.date.toISOString();
 
     const formData = new FormData();

@@ -34,6 +34,7 @@ export class MenuSetUp {
     this.subscriptionLapse = await this.lapses$
       .pipe(first())
       .subscribe((response) => {
+
         this.menu.find((value) => {
           /* Get in 'Contenido' option */
           if (value.title === 'Contenido') {
@@ -56,8 +57,8 @@ export class MenuSetUp {
 
                     response.lapse1.find((option) => {
                       if (
-                        option.status === STATUS.ACTIVE.VALUE &&
-                        option.devName !== 'initialWorkshop'
+                        option.status === STATUS.ACTIVE.VALUE
+                        && option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
                           title: option.name,

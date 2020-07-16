@@ -67,6 +67,17 @@
         </app-input-file>
       </div>
 
+      <div class="col-12">
+        <app-text-area-custom
+        [submitted]="false"
+        [control]="formStandard.get('description')"
+        [label]="'Descripción web'"
+        [placeholder]="'Descripción web'"
+      >
+      </app-text-area-custom>
+
+      </div>
+
       <div class="col-12 form-group" *ngIf="showProgress">
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
@@ -126,11 +137,13 @@
       >
       </app-text-area-custom>
 
-
       <app-text-area-custom
+      *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
+        
         [submitted]="false"
-        [label]="'Descripción de actividad'"
-        [placeholder]="'Descripción de actividad'"
+        [control]="formStandard.get('description')"
+        [label]="'Descripción web'"
+        [placeholder]="'Descripción web'"
       >
       </app-text-area-custom>
 
@@ -292,8 +305,8 @@
     <!-- Anual convention -->
     <!-- ######################################### -->
     <form
-    (ngSubmit)="onSubmitAnualConvention()"  
-    [formGroup]="formStandard"
+      (ngSubmit)="onSubmitAnualConvention()"
+      [formGroup]="formStandard"
       *ngIf="
         id === this.DEVNAME_STANDARD.ANNUAL_CONVENTION &&
         data.isStandard &&
@@ -419,8 +432,25 @@
               </nb-list-item>
             </nb-list>
           </div>
+    
+
         </div>
         <!-- / Dynamic list -->
+
+        <div class="row">
+
+          <div class="col-12">
+            <app-text-area-custom
+            [submitted]="false"
+            [control]="formStandard.get('description')"
+            [label]="'Descripción web'"
+            [placeholder]="'Descripción web'"
+          >
+          </app-text-area-custom>
+    
+          </div>
+        </div>
+
 
         <div class="row">
           <div class="col-12 form-group text-left">
@@ -442,69 +472,76 @@
     <!-- ######################################### -->
     <!-- Math Olympic -->
     <!-- ######################################### -->
-    
+
     <form
-    (ngSubmit)="onSubmitMathOlympic()"  
-    [formGroup]="formStandard"
+      (ngSubmit)="onSubmitMathOlympic()"
+      [formGroup]="formStandard"
       *ngIf="
         id === this.DEVNAME_STANDARD.MATH_OLYMPIC &&
         data.isStandard &&
         formStandard
       "
     >
+      <div class="col-12 col-md">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('description')"
+          [id]="data.id + 'text'"
+          [label]="'Descripción'"
+          [placeholder]="data.name"
+        >
+        </app-text-area-custom>
+      </div>
 
-    <div class="col-12 col-md">
-      <app-text-area-custom
-      
+      <div class="col-12">
+        <app-datepicker
+          [submitted]="false"
+          [control]="formStandard.get('date')"
+          [id]="'olympics-date'"
+          [placeholder]="'Fecha de las olimpíadas'"
+          [label]="'Fecha de las olimpíadas'"
+          [today]="false"
+        ></app-datepicker>
+      </div>
+
+      <div class="col-12">
+        <app-input-file
+          [id]="data.id + 'file'"
+          [submitted]="false"
+          [control]="formStandard.get('file')"
+        >
+        </app-input-file>
+      </div>
+
+      <div class="col-12">
+        <app-text-area-custom
         [submitted]="false"
         [control]="formStandard.get('description')"
-        [id]="data.id + 'text'"
-        [label]="'Descripción'"
-        [placeholder]="data.name"
+        [label]="'Descripción web'"
+        [placeholder]="'Descripción web'"
       >
       </app-text-area-custom>
-    </div>
 
-    <div class="col-12">
-      <app-datepicker
-        [submitted]="false"
-        [control]="formStandard.get('date')"
-        [id]="'olympics-date'"
-        [placeholder]="'Fecha de las olimpíadas'" 
-        [label]="'Fecha de las olimpíadas'"
-        [today]="false"></app-datepicker>      
-    </div> 
+      </div>
+      
+      <div class="col-12 form-group" *ngIf="showProgress">
+        <app-progress (finish)="showProgress = false"></app-progress>
+      </div>
 
+      <div class="col-12"><hr /></div>
 
-    <div class="col-12">
-      <app-input-file
-        [id]="data.id + 'file'"
-        [submitted]="false"
-        [control]="formStandard.get('file')"
-      >
-      </app-input-file>
-    </div>
-
-
-    <div class="col-12 form-group" *ngIf="showProgress">
-      <app-progress (finish)="showProgress = false"></app-progress>
-    </div>
-
-    <div class="col-12"> <hr> </div>
-
-    <div class="col-12 form-group text-left">
-      <button
-        nbButton
-        [attr.disabled]="showProgress ? true : null"
-        [nbSpinner]="showProgress"
-        nbSpinnerStatus="success"
-        type="submit"
-        class="col-6 col-md-auto"
-      >
-        <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
-      </button>
-    </div>
-
+      <div class="col-12 form-group text-left">
+        <button
+          nbButton
+          [attr.disabled]="showProgress ? true : null"
+          [nbSpinner]="showProgress"
+          nbSpinnerStatus="success"
+          type="submit"
+          class="col-6 col-md-auto"
+        >
+          <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+        </button>
+      </div>
     </form>
 
     <!-- ######################################### -->
@@ -682,6 +719,8 @@
         <!-- / Dynamic list -->
       </div>
 
+
+
       <div class="col-12 form-group" *ngIf="showProgress">
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
@@ -699,6 +738,5 @@
         </button>
       </div>
     </form>
-
   </nb-card-body>
 </nb-card>

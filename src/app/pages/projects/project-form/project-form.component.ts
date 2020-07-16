@@ -99,7 +99,15 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
             this.store.dispatch(new AddProject(response));
           },
           (err: any) => {
+            console.log(err)
             this.progress = 0;
+
+            if (err.error.sponsor[0].status === '2' || err.error.school[0].status === '2' || err.error.coordinator[0].status === '2') {
+              this.toastr.error(
+                'Error',
+                'Para poder crear un proyecto, debe selecionar las tres entidades.'
+              );
+            }
 
             if (err.error.school[0].status === '5') {
               this.toastr.error(
@@ -127,6 +135,14 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
             (err: any) => {
               console.log( err );
               this.progress = 0;
+
+
+              if (err.error.sponsor[0].status === '2' || err.error.school[0].status === '2' || err.error.coordinator[0].status === '2') {
+                this.toastr.error(
+                  'Error',
+                  'Para poder crear un proyecto, debe selecionar las tres entidades.'
+                );
+              }
 
               if (err.error.school[0].status === '5') {
                 this.toastr.error(

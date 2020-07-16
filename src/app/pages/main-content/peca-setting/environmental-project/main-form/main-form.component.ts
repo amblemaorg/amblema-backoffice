@@ -42,6 +42,7 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   form: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
+    description: new FormControl(null, [ Validators.required])
   });
 
   formGeneralObjective: FormGroup = new FormGroup({
@@ -86,11 +87,13 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
       // -- Set name --
       this.subscription = this.store
         .dispatch(
-          new SetNameEnvironmentalProject(this.form.controls.name.value)
+          new SetNameEnvironmentalProject(this.form.controls.name.value, this.form.controls.description.value)
         )
         .subscribe(() => {
           // -- Get all data --
           this.subscription = this.storable$.subscribe((value) => {
+            
+            console.log( value )
             if (this.submitted) {
               // <-- Must be submitted
 

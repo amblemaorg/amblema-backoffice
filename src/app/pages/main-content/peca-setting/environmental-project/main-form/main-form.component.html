@@ -12,6 +12,15 @@
       [label]="'Nombre del proyecto ambiental'"
     ></app-input-custom>
 
+    <app-text-area-custom
+    [submitted]="submitted"
+    [control]="form.get('description')"
+    [label]="'Descripción web'"
+    [placeholder]="'Descripción web'"
+  >
+  </app-text-area-custom>
+
+
     <div [ngClass]="{ 'mb-3': showProgress }">
       <app-progress
         *ngIf="showProgress"

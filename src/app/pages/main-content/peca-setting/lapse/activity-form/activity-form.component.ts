@@ -114,6 +114,7 @@ export class ActivityFormComponent extends StepsFormComponent
 
   onSubmitGeneric(): void {
     if (this.form.valid) {
+
       this.data = Object.assign({}, this.data);
 
       this.data.text = this.form.controls.text.value;
@@ -164,6 +165,7 @@ export class ActivityFormComponent extends StepsFormComponent
       formData.append('hasChecklist', String(this.data.hasChecklist));
       formData.append('hasUpload', String(this.data.hasUpload));
       formData.append('status', String(this.data.status));
+      formData.append('description', String(this.form.controls.description.value));
 
       this.showProgress = true;
 

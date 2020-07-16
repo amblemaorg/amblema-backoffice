@@ -243,6 +243,7 @@ export class ActivityFormComponent extends StepsFormComponent
         teachersMeetingDescription: new FormControl(null, [
           Validators.required,
         ]),
+        description: new FormControl(null, Validators.required)
       });
     } else if (id === this.DEVNAME_STANDARD.AMBLE_COINS) {
       this.formStandard = new FormGroup({
@@ -279,7 +280,7 @@ export class ActivityFormComponent extends StepsFormComponent
         date: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
         file: new FormControl(null, [Validators.required]),
-        
+
       });
     }
   }
@@ -316,6 +317,12 @@ export class ActivityFormComponent extends StepsFormComponent
     formData.append(
       'teachersMeetingDescription',
       prepareData.teachersMeetingDescription
+    );
+
+
+    formData.append(
+      'description',
+      prepareData.description
     );
 
     this.showProgress = true;
@@ -458,14 +465,14 @@ export class ActivityFormComponent extends StepsFormComponent
 
 
     this.data = Object.assign({}, this.data);
-    
+
     formData.append(
       'description',
       this.formStandard.controls.description.value
     );
 
     formData.append('checklist', JSON.stringify(this.checklist));
-    
+
     this.showProgress = true;
 
     this.lapseActivityService
@@ -487,6 +494,7 @@ export class ActivityFormComponent extends StepsFormComponent
 
   onSubmitMathOlympic() {
     const prepareData: any = this.formStandard.value;
+
     prepareData.date = prepareData.date.toISOString();
 
     const formData = new FormData();

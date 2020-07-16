@@ -56,8 +56,8 @@ export class MenuSetUp {
 
                     response.lapse1.find((option) => {
                       if (
-                        option.status === STATUS.ACTIVE.VALUE &&
-                        option.devName !== 'initialWorkshop'
+                        option.status === STATUS.ACTIVE.VALUE
+                        && option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
                           title: option.name,

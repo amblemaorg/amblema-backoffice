@@ -67,6 +67,17 @@
         </app-input-file>
       </div>
 
+      <div class="col-12">
+        <app-text-area-custom
+        [submitted]="false"
+        [control]="formStandard.get('description')"
+        [label]="'Descripción de actividad'"
+        [placeholder]="'Descripción de actividad'"
+      >
+      </app-text-area-custom>
+
+      </div>
+
       <div class="col-12 form-group" *ngIf="showProgress">
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>

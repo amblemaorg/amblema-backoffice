@@ -138,6 +138,8 @@
       </app-text-area-custom>
 
       <app-text-area-custom
+      *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
+        
         [submitted]="false"
         [control]="formStandard.get('description')"
         [label]="'Descripción de actividad'"
@@ -716,6 +718,8 @@
         </div>
         <!-- / Dynamic list -->
       </div>
+
+
 
       <div class="col-12 form-group" *ngIf="showProgress">
         <app-progress (finish)="showProgress = false"></app-progress>

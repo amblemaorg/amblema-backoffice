@@ -63,9 +63,13 @@ export class ActivityFormComponent extends StepsFormComponent
 
     // Toggles
     this.form.addControl('status', new FormControl(false));
+    this.form.addControl('description', new FormControl(null));
+
 
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
+
+
       if (this.data.isStandard) {
         this.createForm(this.id);
 

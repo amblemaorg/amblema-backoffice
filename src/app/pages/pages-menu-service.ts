@@ -34,6 +34,7 @@ export class MenuSetUp {
     this.subscriptionLapse = await this.lapses$
       .pipe(first())
       .subscribe((response) => {
+
         this.menu.find((value) => {
           /* Get in 'Contenido' option */
           if (value.title === 'Contenido') {

@@ -67,52 +67,6 @@ registerLocaleData(localeVe, 'es-VE');
     NbToastrModule.forRoot(),
     NbMenuModule.forRoot(),
 
-    // -- NGXS --
-    NgxsModule.forRoot(
-      [
-        /* Auth */
-        RolesState,
-
-        /* Content web */
-        LearningState,
-        WebHomeState,
-        WebAboutState,
-        WebSponsorState,
-        WebCoordinatorState,
-        PostsState,
-
-        /* Users */
-        AdminUserState,
-        CoordinatorUserState,
-        SponsorUserState,
-        SchoolUserState,
-
-        /* PECA */
-        LapseActivityState,
-        ProjectState,
-        StepState,
-        EnvironmentalProjectState,
-
-        // -- Requests --
-        UserCreationRequestState,
-        ProjectRequestState,
-        RequestContentState,
-        ProjectValidationRequestState,
-
-        // --Enrolled --
-        SchoolYearEnrolledState,
-        GeneralEnrolledState,
-
-        AddressState,
-      ],
-      {
-        compatibility: {
-          strictContentSecurityPolicy: true,
-        },
-        developmentMode: !environment.production,
-      }
-    ),
-    NgxsStoragePluginModule.forRoot({}),
   ],
   providers: [
     CustomToastrService,

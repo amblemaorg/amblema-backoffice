@@ -25,6 +25,7 @@ import { ReactiveDatepickerModule } from 'src/app/pages/_components/form-compone
 import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
+import { ReactiveTextAreaModule } from 'src/app/pages/_components/form-components/reactive-text-area/reactive-text-area.module';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ProgressModule } from 'src/app/pages/_components/shared/progress/progre
     CommonModule,
     NbCardModule,
     ReactiveInputModule,
+    ReactiveTextAreaModule,
     NbRadioModule,
     FormsModule,
     NbAlertModule,

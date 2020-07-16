@@ -26,11 +26,13 @@ export interface Topic {
 
 export interface Lapse {
     generalObjective: string;
+    
     topics: Topic[];
 }
 
 export interface EnvironmentalProject {
     name: string;
+    description?: string;
     lapse1: Lapse;
     lapse2: Lapse;
     lapse3: Lapse;

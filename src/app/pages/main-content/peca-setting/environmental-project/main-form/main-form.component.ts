@@ -6,22 +6,22 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   DoCheck,
-} from '@angular/core';
-import { Store, Select } from '@ngxs/store';
+} from "@angular/core";
+import { Store, Select } from "@ngxs/store";
 import {
   SelectLapse,
   SetNameEnvironmentalProject,
   EnvironmentalProjectModel,
   EnvironmentalProjectState,
   SetGeneralObjective,
-} from 'src/app/store/environmental-project.action';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
-import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
+} from "src/app/store/environmental-project.action";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Subscription, Observable } from "rxjs";
+import { EnvironmentalProjectService } from "src/app/services/environmental-project.service";
 @Component({
-  selector: 'app-main-form',
-  templateUrl: './main-form.component.html',
-  styleUrls: ['./main-form.component.scss'],
+  selector: "app-main-form",
+  templateUrl: "./main-form.component.html",
+  styleUrls: ["./main-form.component.scss"],
 })
 export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @Select(EnvironmentalProjectState.environmentalProjectStorable)
@@ -33,9 +33,9 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   showProgress = false;
 
   options = [
-    { value: '1', label: 'Primer lapso' },
-    { value: '2', label: 'Segundo lapso' },
-    { value: '3', label: 'Tercer lapso' },
+    { value: "1", label: "Primer lapso" },
+    { value: "2", label: "Segundo lapso" },
+    { value: "3", label: "Tercer lapso" },
   ];
 
   option = this.options[0].value;
@@ -62,13 +62,11 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
       (response) => {
         this.form.patchValue(response);
         this.formGeneralObjective.patchValue(response.lapseSelected);
-
       }
     );
   }
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -100,9 +98,7 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
               this.subscription = this.environmentalProjectService
                 .updateEnvironmentalProject(value)
                 .subscribe(
-                  (response) => {
-
-                  },
+                  (response) => {},
                   (err) => {}
                 );
             }
@@ -115,7 +111,6 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onUpdateGeneralObjective() {
-
     this.submittedObjective = true;
 
     // -- Set name --
@@ -136,7 +131,7 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
               .updateEnvironmentalProject(value)
               .subscribe(
                 (response) => {},
-                (err) => this.showProgress = false
+                (err) => (this.showProgress = false)
               );
           }
         });

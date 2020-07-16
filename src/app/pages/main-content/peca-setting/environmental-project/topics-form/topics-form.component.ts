@@ -55,6 +55,7 @@ export class TopicsFormComponent
         .dispatch(
           new AddTopic({
             name: '',
+            
             objectives: [],
             strategies: [],
             contents: [],

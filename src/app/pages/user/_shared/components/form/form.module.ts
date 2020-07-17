@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IdentityCardComponent } from './identity-card/identity-card.component';
-import { ReactiveInputModule } from '../reactive-input/reactive-input.module';
+import { ReactiveInputModule } from '../../components/reactive-input/reactive-input.module';
 import {
   NbInputModule,
   NbTooltipModule,

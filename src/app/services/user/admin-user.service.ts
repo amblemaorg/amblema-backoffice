@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
 
 @Injectable({
@@ -34,7 +34,7 @@ export class AdminUserService {
   updateAdminUser(id: string, data: AdminUser): Observable<any> {
     return this.httpClient.put<AdminUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data, {
       reportProgress: true,
-      observe: 'body'
+      observe: 'response'
     });
   }
 

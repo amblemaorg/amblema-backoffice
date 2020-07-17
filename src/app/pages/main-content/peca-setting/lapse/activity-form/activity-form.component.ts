@@ -69,7 +69,7 @@ export class ActivityFormComponent extends StepsFormComponent
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
 
-
+      console.log( this.data );
       if (this.data.isStandard) {
         this.createForm(this.id);
 

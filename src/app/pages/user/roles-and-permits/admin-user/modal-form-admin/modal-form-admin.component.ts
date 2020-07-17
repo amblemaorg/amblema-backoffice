@@ -9,7 +9,7 @@ import {
   FORM_MODALITY,
   USER_DEVNAME,
 } from '../.././../_shared/abstract-form-mode';
-import { ValidationService } from '../../../_shared/reactive-input/_shared/services/validation.service';
+import { ValidationService } from '../../../_shared/components/reactive-input/_shared/services/validation.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -62,7 +62,7 @@ export class ModalFormAdminComponent extends UserAdminForm
           // -- Set role default on create
           this.subscriptionService = this.rolesData$.subscribe((roles) => {
             roles.find((role) => {
-              if (role.devName === 'admin') {
+              if (role.devName === USER_DEVNAME.ADMIN) {
                 this.form.controls.role.setValue(role.id);
                 this.role = role.id;
               }
@@ -85,24 +85,27 @@ export class ModalFormAdminComponent extends UserAdminForm
       if (this.mode === FORM_MODALITY.CREATE.value) {
         this.subscriptionService = this.adminUserService
           .setAdminUser(this.form.value)
-          .subscribe((response: HttpEvent<any>) => {
-            switch (response.type) {
-              case HttpEventType.Response:
-                this.store.dispatch(new SetAdminUser(response.body));
-                this.toast.registerSuccess(
-                  'Registro',
-                  'Usuario registrado satisfactoriamente'
-                );
-                this.onResetForm();
-                break;
-            }
-          });
+          .subscribe(
+            (response: HttpEvent<any>) => {
+              switch (response.type) {
+                case HttpEventType.Response:
+                  this.store.dispatch(new SetAdminUser(response.body));
+                  this.toast.registerSuccess(
+                    'Registro',
+                    'Usuario registrado satisfactoriamente'
+                  );
+                  this.onResetForm();
+                  break;
+              }
+            },
+            (err: any) => this.showErrorMessage(err, this.toast)
+          );
       } else {
         // <-- Edit user admin
 
         const prepareData: any = this.form.value;
         /** Remove the password if is data is empty */
-        if ( prepareData.password === '' || prepareData.password === null ) {
+        if (prepareData.password === '' || prepareData.password === null) {
           delete prepareData.password;
         }
 
@@ -110,7 +113,6 @@ export class ModalFormAdminComponent extends UserAdminForm
           .updateAdminUser(this.previousData.id, prepareData)
           .subscribe(
             (response: HttpEvent<any>) => {
-
               switch (response.type) {
                 case HttpEventType.Response:
                   this.store.dispatch(
@@ -122,7 +124,9 @@ export class ModalFormAdminComponent extends UserAdminForm
                   );
                   break;
               }
-            });
+            },
+            (err: any) => this.showErrorMessage(err, this.toast)
+          );
       }
     } else {
       this.validationService.markAllFormFieldsAsTouched(this.form);

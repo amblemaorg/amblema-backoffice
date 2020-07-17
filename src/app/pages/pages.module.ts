@@ -55,27 +55,6 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     HeaderComponent,
   ],
   imports: [
-    RouterModule,
-    DashboardRoutingModule,
-
-    CommonModule,
-    NbListModule,
-    NbPopoverModule,
-    HttpClientModule,
-    NbLayoutModule,
-    NbSidebarModule.forRoot(),
-    NbAuthModule.forRoot({}),
-    NbCardModule,
-    NbIconModule,
-    NbActionsModule,
-    NbInputModule,
-    NbSelectModule,
-    NbUserModule,
-    NbMenuModule.forRoot(),
-    NbContextMenuModule,
-    NbBadgeModule,
-    NbToastrModule.forRoot(),
-
 
 
 
@@ -117,6 +96,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
         AddressState,
       ],
+
       {
         compatibility: {
           strictContentSecurityPolicy: true,
@@ -125,6 +105,28 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
       }
     ),
     NgxsStoragePluginModule.forRoot({}),
+
+    RouterModule,
+    DashboardRoutingModule,
+
+    CommonModule,
+    NbListModule,
+    NbPopoverModule,
+    HttpClientModule,
+    NbLayoutModule,
+    NbSidebarModule.forRoot(),
+    NbAuthModule.forRoot({}),
+    NbCardModule,
+    NbIconModule,
+    NbActionsModule,
+    NbInputModule,
+    NbSelectModule,
+    NbUserModule,
+    NbMenuModule.forRoot(),
+    NbContextMenuModule,
+    NbBadgeModule,
+    NbToastrModule.forRoot(),
+
   ],
   exports: [ NbIconModule ],
   providers: [

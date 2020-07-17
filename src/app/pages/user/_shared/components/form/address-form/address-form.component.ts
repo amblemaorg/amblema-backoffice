@@ -10,7 +10,7 @@ import {
 } from 'src/app/store/_address/address.action';
 import { Observable, Subscription } from 'rxjs';
 import { Statal, Municipality } from 'src/app/_models/address.model';
-import { FORM_MODALITY } from '../../abstract-form-mode';
+import { FORM_MODALITY } from '../../../abstract-form-mode';
 import { AddressService } from 'src/app/services/address.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 

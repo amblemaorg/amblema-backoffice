@@ -2,10 +2,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   CYRILLIC_PATTERN,
   NUMBER_PATTERN,
-} from './reactive-input/_shared/validation-patterns';
+} from './components/reactive-input/_shared/validation-patterns';
 import { EMAIL_PATTERN } from '../../_components/form-components/shared/constant/validation-patterns-list';
 import { AddressForm } from './abstract-address-form';
-import { DOCUMENT_TYPE } from './form/identity-card/document-type-values';
+import { DOCUMENT_TYPE } from './components/form/identity-card/document-type-values';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 
 export abstract class UserForm extends AddressForm {

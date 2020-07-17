@@ -99,7 +99,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
             this.store.dispatch(new AddProject(response));
           },
           (err: any) => {
-            console.log(err)
+            console.log(err);
             this.progress = 0;
 
             if (err.error.sponsor[0].status === '2' || err.error.school[0].status === '2' || err.error.coordinator[0].status === '2') {

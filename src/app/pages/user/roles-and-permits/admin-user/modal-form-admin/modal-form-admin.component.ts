@@ -9,7 +9,7 @@ import {
   FORM_MODALITY,
   USER_DEVNAME,
 } from '../.././../_shared/abstract-form-mode';
-import { ValidationService } from '../../../_shared/reactive-input/_shared/services/validation.service';
+import { ValidationService } from '../../../_shared/components/reactive-input/_shared/services/validation.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -62,7 +62,7 @@ export class ModalFormAdminComponent extends UserAdminForm
           // -- Set role default on create
           this.subscriptionService = this.rolesData$.subscribe((roles) => {
             roles.find((role) => {
-              if (role.devName === 'admin') {
+              if (role.devName === USER_DEVNAME.ADMIN) {
                 this.form.controls.role.setValue(role.id);
                 this.role = role.id;
               }

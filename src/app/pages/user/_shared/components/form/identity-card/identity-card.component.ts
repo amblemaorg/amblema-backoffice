@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
-import { NUMBER_PATTERN } from '../../reactive-input/_shared/validation-patterns';
+import { NUMBER_PATTERN } from '../../../components/reactive-input/_shared/validation-patterns';
 import { DOCUMENT_TYPE } from './document-type-values';
 
 @Component({

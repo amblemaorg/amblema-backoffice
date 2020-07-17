@@ -30,7 +30,7 @@
     <label class="label">Municipios</label>
 
     <div class="d-flex">
-      <div class="col pl-0">
+      <div class="col col-lg-6 col-xl pl-0">
         <ng-select
           [items]="addressStateSelected ? (municipalities$ | async) : []"
           notFoundText="Municipio no encontrado"
@@ -58,7 +58,7 @@
       <!-- Create or edit button -->
       <div
         (click)="onChangeMode()"
-        class="btn-group col-auto pr-0"
+        class="btn-group col-auto col-lg-6 col-xl-auto pr-0"
         role="group"
         aria-label="Basic example"
       >

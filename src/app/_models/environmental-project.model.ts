@@ -26,7 +26,7 @@ export interface Topic {
 
 export interface Lapse {
     generalObjective: string;
-    
+
     topics: Topic[];
 }
 

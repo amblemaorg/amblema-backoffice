@@ -6,22 +6,22 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   DoCheck,
-} from "@angular/core";
-import { Store, Select } from "@ngxs/store";
+} from '@angular/core';
+import { Store, Select } from '@ngxs/store';
 import {
   SelectLapse,
   SetNameEnvironmentalProject,
   EnvironmentalProjectModel,
   EnvironmentalProjectState,
   SetGeneralObjective,
-} from "src/app/store/environmental-project.action";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Subscription, Observable } from "rxjs";
-import { EnvironmentalProjectService } from "src/app/services/environmental-project.service";
+} from 'src/app/store/environmental-project.action';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
+import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
 @Component({
-  selector: "app-main-form",
-  templateUrl: "./main-form.component.html",
-  styleUrls: ["./main-form.component.scss"],
+  selector: 'app-main-form',
+  templateUrl: './main-form.component.html',
+  styleUrls: ['./main-form.component.scss'],
 })
 export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @Select(EnvironmentalProjectState.environmentalProjectStorable)
@@ -33,9 +33,9 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   showProgress = false;
 
   options = [
-    { value: "1", label: "Primer lapso" },
-    { value: "2", label: "Segundo lapso" },
-    { value: "3", label: "Tercer lapso" },
+    { value: '1', label: 'Primer lapso' },
+    { value: '2', label: 'Segundo lapso' },
+    { value: '3', label: 'Tercer lapso' },
   ];
 
   option = this.options[0].value;
@@ -92,8 +92,8 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(() => {
           // -- Get all data --
           this.subscription = this.storable$.subscribe((value) => {
-            
-            console.log( value )
+
+            console.log( value );
             if (this.submitted) {
               // <-- Must be submitted
 

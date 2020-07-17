@@ -77,11 +77,9 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   }
 
   // Event select another rol
-  onSelected(id: any): void {
-
-    this.subscription = this.roles$.subscribe( response => {
+  async onSelected(id: any) {
+    this.subscription = await this.roles$.subscribe( response => {
       return response.filter( (value, key) => {
-
         if ( value.id === id ) {
           this.store.dispatch( new SelectedRole( value ) );
           return true;

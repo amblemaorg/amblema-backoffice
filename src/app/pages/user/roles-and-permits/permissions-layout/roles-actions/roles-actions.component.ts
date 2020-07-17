@@ -1,25 +1,25 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ACTION } from "../../../../../_helpers/text-content/text-crud";
-import { DomSanitizer } from "@angular/platform-browser";
-import { BaseTable } from "src/app/_helpers/base-table";
-import { Select, Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
-import { Role, Permission } from "src/app/_models/permission.model";
-import { FormControl } from "@angular/forms";
-import { RolesState, SelectedRole } from "src/app/store/role.action";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ACTION } from '../../../../../_helpers/text-content/text-crud';
+import { DomSanitizer } from '@angular/platform-browser';
+import { BaseTable } from 'src/app/_helpers/base-table';
+import { Select, Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { Role, Permission } from 'src/app/_models/permission.model';
+import { FormControl } from '@angular/forms';
+import { RolesState, SelectedRole } from 'src/app/store/role.action';
 
 @Component({
-  selector: "app-roles-actions",
-  templateUrl: "./roles-actions.component.html",
+  selector: 'app-roles-actions',
+  templateUrl: './roles-actions.component.html',
   styles: [
-    
-    ` 
+
+    `
     .table-bordered td, .table-bordered th { border-color: #edf1f7 }
-    .border-b:not(:last-child) { 
+    .border-b:not(:last-child) {
       border-bottom: 1px solid #edf1f7;
       padding-bottom: 12px;
       padding-top: 12px;
-    }   
+    }
     .border-b:first-child { padding-top: 0px; }
     .border-b:last-child { padding-top: 12px; }`
   ]
@@ -37,19 +37,19 @@ export class RolesActionsComponent extends BaseTable
   control: FormControl = new FormControl(); // <-- Get control from rol selector
 
   constructor(private store: Store, private sanitizer: DomSanitizer) {
-    super("form-role-action");
+    super('form-role-action');
 
     this.settings.columns = {
-    
+
       label: {
-        title: "Acción",
-        type: "string",
+        title: 'Acción',
+        type: 'string',
       },
       status: {
-        title: "Estatus",
+        title: 'Estatus',
         filter: false,
-        type: "html",
-        width: "150px",
+        type: 'html',
+        width: '150px',
         valuePrepareFunction: (value) => {
           return this.sanitizer.bypassSecurityTrustHtml(`
           <div class="custom-control custom-switch text-center">

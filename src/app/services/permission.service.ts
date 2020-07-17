@@ -45,7 +45,7 @@ export class PermissionService {
    * Actions
    */
 
-  getActions() :Observable<any> {
+  getActions(): Observable<any> {
     return this.httpClient.get<any[]>(`${environment.api}${this.ACTION}`)
       .pipe(
         map((data: any) => data.records)

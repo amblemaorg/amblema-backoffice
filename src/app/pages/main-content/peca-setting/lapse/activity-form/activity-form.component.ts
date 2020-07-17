@@ -42,6 +42,7 @@ export class ActivityFormComponent extends StepsFormComponent
     ANNUAL_PREPARATION: 'annualpreparation',
     ANNUAL_CONVENTION: 'annualconvention',
     MATH_OLYMPIC: 'matholympic',
+    SPECIAL_SPAN_ACTIVITY: 'speciallapseactivity'
   };
 
   data: any;
@@ -69,7 +70,6 @@ export class ActivityFormComponent extends StepsFormComponent
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
 
-      console.log( this.data );
       if (this.data.isStandard) {
         this.createForm(this.id);
 
@@ -125,6 +125,8 @@ export class ActivityFormComponent extends StepsFormComponent
       this.data.file = this.form.controls.file.value;
 
       const formData = new FormData();
+
+      console.log( this.data );
 
       formData.append('name', this.data.name);
       formData.append('approvalType', this.data.approvalType);
@@ -288,6 +290,12 @@ export class ActivityFormComponent extends StepsFormComponent
         file: new FormControl(null, [Validators.required]),
 
       });
+    } else if ( id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY ) {
+
+      this.formStandard = new FormGroup({
+        description: new FormControl(null, [Validators.required])
+      });
+
     }
   }
 
@@ -522,6 +530,30 @@ export class ActivityFormComponent extends StepsFormComponent
           this.toastr.updateSuccess(
             'Actualización',
             'Olimpíadas matemáticas actualizado'
+          );
+
+          setTimeout(() => {
+            this.showProgress = false;
+          }, 2500);
+        },
+        () => (this.showProgress = false)
+      );
+  }
+
+  onSubmitSpecialSpanActivity() {
+    const formData = new FormData();
+
+    this.showProgress = true;
+    formData.append('description', this.formStandard.controls.description.value);
+
+
+    this.lapseActivityService
+      .updateActivity(this.id, this.lapse, formData)
+      .subscribe(
+        (response) => {
+          this.toastr.updateSuccess(
+            'Actualización',
+            'Actividad especia de lapso'
           );
 
           setTimeout(() => {

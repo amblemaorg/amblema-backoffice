@@ -544,6 +544,52 @@
       </div>
     </form>
 
+    <!-- ########################## -->
+
+    <form
+    (ngSubmit)="onSubmitSpecialSpanActivity()"
+    [formGroup]="formStandard"
+    *ngIf="
+      id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY &&
+      data.isStandard &&
+      formStandard
+    "
+  >
+
+    <div class="col-12">
+      <app-text-area-custom
+      [submitted]="false"
+      [control]="formStandard.get('description')"
+      [label]="'Descripción web'"
+      [placeholder]="'Descripción web'"
+    >
+    </app-text-area-custom>
+
+    </div>
+    
+    <div class="col-12 form-group" *ngIf="showProgress">
+      <app-progress (finish)="showProgress = false"></app-progress>
+    </div>
+
+    <div class="col-12"><hr /></div>
+
+    <div class="col-12 form-group text-left">
+      <button
+        nbButton
+        [attr.disabled]="showProgress || formStandard.invalid ? true : null"
+        [nbSpinner]="showProgress"
+        nbSpinnerStatus="success"
+        type="submit"
+        class="col-6 col-md-auto"
+      >
+        <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+      </button>
+    </div>
+  </form>
+
+
+    <!-- ######################### -->
+
     <!-- ######################################### -->
     <!-- Generic activity -->
     <!-- ######################################### -->

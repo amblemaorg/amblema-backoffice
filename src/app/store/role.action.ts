@@ -9,7 +9,7 @@ import { SelectorMatcher } from '@angular/compiler';
 export interface RoleStateModel {
     role: Role;
     roles: Role[];
-    actions?: Permission[],
+    actions?: Permission[];
 }
 
 /**
@@ -80,12 +80,12 @@ export class RolesState implements NgxsOnInit {
 
 
     @Selector()
-    static actions ( state: RoleStateModel ) : Permission[] | null { return state.actions; }
+    static actions( state: RoleStateModel ): Permission[] | null { return state.actions; }
 
     // Get all roles
     ngxsOnInit(ctx: StateContext<Role[]>) {
         ctx.dispatch(new GetRoles());
-        ctx.dispatch( new GetActions() ); 
+        ctx.dispatch( new GetActions() );
     }
 
     constructor(
@@ -108,10 +108,10 @@ export class RolesState implements NgxsOnInit {
 
     @Action(GetRoles)
     getRoles(ctx: StateContext<RoleStateModel>) {
-        
+
         return this.permissionsService.getRoles()
             .subscribe(response => {
-                console.log( response )
+                console.log( response );
                 response = this.helper.readlyStatus(response);
                 ctx.setState({
                     ...ctx.getState(),
@@ -154,12 +154,12 @@ export class RolesState implements NgxsOnInit {
     @Action( GetActions )
     getActions(ctx: StateContext<RoleStateModel>) {
         this.permissionsService.getActions().subscribe( response => {
-            
+
             ctx.setState(patch( {
                 ...ctx.getState(),
                 actions: response
-            } ))
+            } ));
 
-        } )
+        } );
     }
 }

@@ -4,6 +4,7 @@ import { NgZone } from '@angular/core';
 import { PermissionService } from '../services/permission.service';
 import { Utility } from '../_helpers/utility';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { SelectorMatcher } from '@angular/compiler';
 
 export interface RoleStateModel {
     role: Role;
@@ -77,6 +78,10 @@ export class RolesState implements NgxsOnInit {
     @Selector()
     static role( state: RoleStateModel ): Role | null { return state.role;  }
 
+
+    @Selector()
+    static actions ( state: RoleStateModel ) : Permission[] | null { return state.actions; }
+
     // Get all roles
     ngxsOnInit(ctx: StateContext<Role[]>) {
         ctx.dispatch(new GetRoles());
@@ -128,8 +133,6 @@ export class RolesState implements NgxsOnInit {
 
     @Action(UpdateRole)
     updateRole(ctx: StateContext<RoleStateModel>, action: UpdateRole) {
-
-
         ctx.setState(patch({
             ...ctx.getState(),
             roles: updateItem<Role>(role => role.id === action.oldRole.id, this.helper.readlyStatus([action.newRole])[0])
@@ -151,7 +154,7 @@ export class RolesState implements NgxsOnInit {
     @Action( GetActions )
     getActions(ctx: StateContext<RoleStateModel>) {
         this.permissionsService.getActions().subscribe( response => {
-            console.log( response );
+            
             ctx.setState(patch( {
                 ...ctx.getState(),
                 actions: response

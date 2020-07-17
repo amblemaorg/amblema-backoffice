@@ -1,22 +1,78 @@
 <div>
-    <!-- Nav -->
+  <!-- Nav -->
+  <div>
+    <button
+      nbButton
+      outline
+      status="basic"
+      class="btn btn-outline-secondary col col-md-auto"
+      [routerLink]="['routePath']"
+    >
+      <nb-icon icon="arrow-back-outline"></nb-icon>
+      Atrás
+    </button>
+  </div>
+  <hr />
+
+  <!-- Update -->
+  <p class="font-weight-bold">Actualización de rol</p>
+  <app-select-role
+    [control]="control"
+    (onselected)="onSelected($event)"
+  ></app-select-role>
+  <app-roles-form [MODE]="MODE" [DATA]="role$ | async"></app-roles-form>
+  <hr />
+
+  <!-- List actions -->
+  <p class="font-weight-bold">Lista de acciones</p>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class=" font-weight-light ">Area</th>
+        <th class="font-weight-light">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of (role$ | async)?.permissions">
+        <td>{{ item.entityName }}</td>
+
+        <td class="px-0">
+          <tr
+            *ngFor="let action of item.actions"
+            class="d-flex border-b"
+          >
+            <div class="px-3 d-flex w-100 justify-content-between">
+
+            <span>{{ action.label }}</span>
+            <div class="custom-control custom-switch text-center">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [id]="item.entityName+action.label"
+                [checked]="action.allowed"
+              />
+              <label class="custom-control-label" [for]="item.entityName+action.label"></label>
+            </div>
+            </div>
+          </tr>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- 
+  <div *ngFor="let item of (role$ | async)?.permissions">
+    
     <div>
-        <button nbButton outline status="basic" class="btn btn-outline-secondary col col-md-auto" [routerLink]="['routePath']">
-            <nb-icon icon="arrow-back-outline"></nb-icon>
-            Atrás
-        </button>
-    </div>
-    <hr>
+        <p class="text-secondary font-weight-bold">{{ item.entityName }}</p>
 
-    <!-- Update -->
-    <p class="font-weight-bold">Actualización de rol</p>
-    <app-select-role [control]="control" (onselected)="onSelected($event)"></app-select-role>
-    <app-roles-form [MODE]="MODE" [DATA]="role$ | async"></app-roles-form>
-    <hr>
-
-    <!-- List actions -->
-    <p class="font-weight-bold">Lista de acciones</p>
-    <div class="table-responsive">
-        <ng2-smart-table [source]='data' [settings]="settings"></ng2-smart-table>
+    <div class="table-responsive form-group">
+        <ng2-smart-table
+          [source]="item.actions"
+          [settings]="settings"
+        ></ng2-smart-table>
+      </div>
     </div>
+ 
+  </div> -->
 </div>

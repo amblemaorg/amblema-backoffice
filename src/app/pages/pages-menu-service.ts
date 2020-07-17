@@ -32,7 +32,7 @@ export class MenuSetUp {
     /* Get the lapses and activities to configure the menu*/
 
     this.subscriptionLapse = await this.lapses$
-      .pipe(first())
+      // .pipe(first())
       .subscribe((response) => {
 
         this.menu.find((value) => {

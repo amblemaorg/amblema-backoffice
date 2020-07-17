@@ -85,24 +85,27 @@ export class ModalFormAdminComponent extends UserAdminForm
       if (this.mode === FORM_MODALITY.CREATE.value) {
         this.subscriptionService = this.adminUserService
           .setAdminUser(this.form.value)
-          .subscribe((response: HttpEvent<any>) => {
-            switch (response.type) {
-              case HttpEventType.Response:
-                this.store.dispatch(new SetAdminUser(response.body));
-                this.toast.registerSuccess(
-                  'Registro',
-                  'Usuario registrado satisfactoriamente'
-                );
-                this.onResetForm();
-                break;
-            }
-          });
+          .subscribe(
+            (response: HttpEvent<any>) => {
+              switch (response.type) {
+                case HttpEventType.Response:
+                  this.store.dispatch(new SetAdminUser(response.body));
+                  this.toast.registerSuccess(
+                    'Registro',
+                    'Usuario registrado satisfactoriamente'
+                  );
+                  this.onResetForm();
+                  break;
+              }
+            },
+            (err: any) => this.showErrorMessage(err, this.toast)
+          );
       } else {
         // <-- Edit user admin
 
         const prepareData: any = this.form.value;
         /** Remove the password if is data is empty */
-        if ( prepareData.password === '' || prepareData.password === null ) {
+        if (prepareData.password === '' || prepareData.password === null) {
           delete prepareData.password;
         }
 
@@ -110,7 +113,6 @@ export class ModalFormAdminComponent extends UserAdminForm
           .updateAdminUser(this.previousData.id, prepareData)
           .subscribe(
             (response: HttpEvent<any>) => {
-
               switch (response.type) {
                 case HttpEventType.Response:
                   this.store.dispatch(
@@ -122,7 +124,9 @@ export class ModalFormAdminComponent extends UserAdminForm
                   );
                   break;
               }
-            });
+            },
+            (err: any) => this.showErrorMessage(err, this.toast)
+          );
       }
     } else {
       this.validationService.markAllFormFieldsAsTouched(this.form);

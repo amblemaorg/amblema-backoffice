@@ -12,7 +12,7 @@ export class CustomToastrService {
   public durationInfo = 0;
 
 
-  constructor(private toastrService: NbToastrService) { }
+  constructor(private toastrService?: NbToastrService) { }
 
   registerSuccess(title: string, content: string): void {
     this.toastrService.success(content, title, {

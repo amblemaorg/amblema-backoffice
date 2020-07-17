@@ -7,6 +7,7 @@ import { EMAIL_PATTERN } from '../../_components/form-components/shared/constant
 import { AddressForm } from './abstract-address-form';
 import { DOCUMENT_TYPE } from './components/form/identity-card/document-type-values';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 export abstract class UserForm extends AddressForm {
   public nameMessage = `Nombre inválido. Debes agregar solo letras en este campo`;
@@ -20,7 +21,7 @@ export abstract class UserForm extends AddressForm {
   public role: string; // <-- Save the default role id
   public previousData: any; // <-- To back up previous data
 
-  constructor() {
+  constructor(  ) {
     super();
     this.form = new FormGroup({
       ...this.addressForm.controls,
@@ -52,6 +53,28 @@ export abstract class UserForm extends AddressForm {
         this.form.controls.cardType.setValue(DOCUMENT_TYPE.PASSPORT.VALUE);
         break;
     }
+  }
+
+  public showErrorMessage( error: any, toast: CustomToastrService ): void {
+
+    if (error.error.cardId) {
+      if (String(error.error.cardId[0].status) === '5') {
+         toast.error(
+           'Error de indentidad',
+           'El documento de identidad ya esta registrado'
+         );
+      }
+    }
+
+    if (error.error.email) {
+      if (String(error.error.email[0].status) === '5') {
+          toast.error(
+            'Datos duplicados',
+            'El correo que se intenta registra ya existe.'
+          );
+      }
+    }
+
   }
 }
 

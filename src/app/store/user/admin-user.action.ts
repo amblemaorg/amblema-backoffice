@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, NgxsOnInit, Action, StateContext, Selector, NgxsAfterBootstrap } from '@ngxs/store';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
@@ -65,7 +65,7 @@ export class DeleteAdminUser {
     adminUsers: [],
   },
 })
-export class AdminUserState implements NgxsOnInit, OnDestroy {
+export class AdminUserState implements NgxsOnInit, OnDestroy, NgxsAfterBootstrap {
   subscription: Subscription;
 
   @Selector()
@@ -84,7 +84,13 @@ export class AdminUserState implements NgxsOnInit, OnDestroy {
     private adminUserService: AdminUserService
   ) {}
 
+
+
   ngxsOnInit(ctx: StateContext<AdminUserModel>) {
+    ctx.dispatch(new GetAdminUsers());
+  }
+
+  ngxsAfterBootstrap(ctx: StateContext<AdminUserModel>) {
     ctx.dispatch(new GetAdminUsers());
   }
 

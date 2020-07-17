@@ -4,18 +4,31 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { BaseTable } from 'src/app/_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
-import { Role } from 'src/app/_models/permission.model';
+import { Role, Permission } from 'src/app/_models/permission.model';
 import { FormControl } from '@angular/forms';
 import { RolesState, SelectedRole } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-roles-actions',
   templateUrl: './roles-actions.component.html',
-})
-export class RolesActionsComponent extends BaseTable implements OnInit, OnDestroy {
+  styles: [
 
+    `
+    .table-bordered td, .table-bordered th { border-color: #edf1f7 }
+    .border-b:not(:last-child) {
+      border-bottom: 1px solid #edf1f7;
+      padding-bottom: 12px;
+      padding-top: 12px;
+    }
+    .border-b:first-child { padding-top: 0px; }
+    .border-b:last-child { padding-top: 12px; }`
+  ]
+})
+export class RolesActionsComponent extends BaseTable
+  implements OnInit, OnDestroy {
   @Select(RolesState.role) role$: Observable<Role>; // <-- Get data pre selected
   @Select(RolesState.roles) roles$: Observable<Role[]>; // <-- Get all Roles
+  @Select(RolesState.actions) actions$: Observable<Permission[]>;
 
   subscription: Subscription;
 
@@ -23,20 +36,14 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   role: any = {}; // <-- To update only the rol
   control: FormControl = new FormControl(); // <-- Get control from rol selector
 
-  data: any = [
-    { action: 'Borrar', status: 'activo' },
-    { action: 'Crear', status: 'activo' }
-  ];
-
-  constructor(
-    private store: Store,
-    private sanitizer: DomSanitizer) {
+  constructor(private store: Store, private sanitizer: DomSanitizer) {
     super('form-role-action');
 
     this.settings.columns = {
-      action: {
+
+      label: {
         title: 'Acción',
-        type: 'string'
+        type: 'string',
       },
       status: {
         title: 'Estatus',
@@ -55,14 +62,11 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
     }; // End column
 
     // Remove view action
-    this.settings.actions.custom = [
-      { name: ACTION.EDIT, title: `<i class="nb-edit"></i>` },
-      { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' }
-    ];
+    this.settings.actions = false;
   }
 
   ngOnInit(): void {
-    this.subscription = this.role$.subscribe(role => {
+    this.subscription = this.role$.subscribe((role) => {
       this.role = role;
       setTimeout(() => {
         this.control.setValue(role.id); // Rol pre selected, set in the form
@@ -77,17 +81,14 @@ export class RolesActionsComponent extends BaseTable implements OnInit, OnDestro
   }
 
   // Event select another rol
-  onSelected(id: any): void {
-
-    this.subscription = this.roles$.subscribe( response => {
-      return response.filter( (value, key) => {
-
-        if ( value.id === id ) {
-          this.store.dispatch( new SelectedRole( value ) );
+  async onSelected(id: any) {
+    this.subscription = await this.roles$.subscribe((response) => {
+      return response.filter((value, key) => {
+        if (value.id === id) {
+          this.store.dispatch(new SelectedRole(value));
           return true;
         }
-      } );
-    } );
-
+      });
+    });
   }
 }

@@ -16,6 +16,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 export class RolesTableComponent extends BaseTable implements TableActions, OnInit {
 
   @Select(RolesState.roles) data$: Observable<Role[]>;
+
   data: any = [];
 
   constructor(

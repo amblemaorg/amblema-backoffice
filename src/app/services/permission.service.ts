@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 export class PermissionService {
 
   private readonly ROLE: string = 'roles';
+  private readonly ACTION: string = `entities`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -37,5 +38,17 @@ export class PermissionService {
 
   deleteRole( id: string ): Observable<string> {
     return this.httpClient.delete<string>( `${environment.api}${this.ROLE}/${id}` );
+  }
+
+
+  /**
+   * Actions
+   */
+
+  getActions(): Observable<any> {
+    return this.httpClient.get<any[]>(`${environment.api}${this.ACTION}`)
+      .pipe(
+        map((data: any) => data.records)
+      );
   }
 }

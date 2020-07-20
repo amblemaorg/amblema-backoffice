@@ -34,25 +34,25 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of (role$ | async)?.permissions">
+      <tr *ngFor="let item of (role$ | async)?.permissions; let i = index">
         <td>{{ item.entityName }}</td>
 
         <td class="px-0">
           <tr
-            *ngFor="let action of item.actions"
+            *ngFor="let action of item.actions; let j = index"
             class="d-flex border-b"
           >
             <div class="px-3 d-flex w-100 justify-content-between">
-
             <span>{{ action.label }}</span>
             <div class="custom-control custom-switch text-center">
               <input
+                (change)="onChangeStatusAction( item, action );"
                 type="checkbox"
                 class="custom-control-input"
-                [id]="item.entityName+action.label"
+                [id]="item.entityName+action.label+1"
                 [checked]="action.allowed"
               />
-              <label class="custom-control-label" [for]="item.entityName+action.label"></label>
+              <label class="custom-control-label" [for]="item.entityName+action.label+1"></label>
             </div>
             </div>
           </tr>

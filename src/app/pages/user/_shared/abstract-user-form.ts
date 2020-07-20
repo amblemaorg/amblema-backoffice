@@ -20,6 +20,7 @@ export abstract class UserForm extends AddressForm {
   public mode: string; // <-- Save the mode when change
   public role: string; // <-- Save the default role id
   public previousData: any; // <-- To back up previous data
+  public showProgress = false;
 
   constructor(  ) {
     super();

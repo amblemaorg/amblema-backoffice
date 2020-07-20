@@ -1,16 +1,14 @@
-import { STATUS } from '../_helpers/convention/status';
-
-export interface Action {
+export interface ActionRole {
     name: string;
     label: string;
     sort: string;
-    allowed: string;
+    allowed: boolean;
 }
 
 export interface Permission {
     entityId: string;
     entityName: string;
-    actions: Action[];
+    actions: ActionRole[];
 }
 
 export interface Role {

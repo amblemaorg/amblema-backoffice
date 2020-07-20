@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
 import { ACTION } from '../../../../../_helpers/text-content/text-crud';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 import { STATUS } from 'src/app/_helpers/convention/status';
 import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngxs/store';
-import { SetRole, GetRoles, UpdateRole } from 'src/app/store/role.action';
+import { Subscription, Observable } from 'rxjs';
+import { Store, Select } from '@ngxs/store';
+import { SetRole, UpdateRole, RolesState } from 'src/app/store/role.action';
 import { Role } from 'src/app/_models/permission.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -15,17 +15,19 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
   selector: 'app-roles-form',
   templateUrl: './roles-form.component.html',
 })
-export class RolesFormComponent implements OnDestroy, OnChanges {
+export class RolesFormComponent implements OnDestroy, OnChanges, OnInit {
+
+  @Select( RolesState.role ) role$: Observable<Role>;
 
   @Input() MODE: string | null = ACTION.CREATE;
   @Input() DATA: any | null = {};
-
   @Output() edit = new EventEmitter<string>();
 
   submitted = false;
   ACTION = ACTION;
   subscribe: Subscription;
   showProgress = false;
+  permission: any;
 
   role: Role; // <-- To update the data
 
@@ -42,6 +44,10 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
     private toastr: CustomToastrService) { }
 
 
+    ngOnInit(): void {
+      this.subscribe = this.role$.subscribe( permission => this.permission = permission.permissions );
+    }
+
   ngOnDestroy(): void {
     if (this.subscribe) {
       this.subscribe.unsubscribe();
@@ -52,11 +58,12 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
     if (this.MODE === this.ACTION.EDIT) {
 
       this.formRole.controls.role.setValue(this.DATA.name);
-      this.formRole.controls.status.setValue(this.DATA.status === STATUS.ACTIVE.VALUE ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE);
+      this.formRole.controls.status.setValue(this.DATA.status === STATUS.ACTIVE.LABEL ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE);
+
     } else { this.formRole.controls.status.setValue(STATUS.ACTIVE.VALUE); }
   }
 
-  onSubmit() {
+  onSubmit(  ) {
     this.submitted = true;
 
     // Validate the form
@@ -92,9 +99,9 @@ export class RolesFormComponent implements OnDestroy, OnChanges {
 
         this.subscribe = this.permissionsService.updateRole(this.DATA.id,
           {
-
             name: this.formRole.controls.role.value,
             status: this.formRole.controls.status.value,
+            permissions: this.permission
           }
         ).subscribe(response => {
           this.store.dispatch(new UpdateRole(response, this.DATA));

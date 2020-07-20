@@ -35,10 +35,14 @@ describe('SelectSchoolComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SelectSchoolComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterAll(() => {
+    TestBed.resetTestingModule();
   });
 });

@@ -26,4 +26,9 @@ describe('ValidationService', () => {
 
     expect(form.controls.name.dirty).toBeTruthy();
   });
+
+
+  afterAll(() => {
+    TestBed.resetTestingModule();
+  });
 });

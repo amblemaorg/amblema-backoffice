@@ -75,18 +75,18 @@ run-tests:
   only:
       - master
 
-coverage: 
-  stage: test
-  script: 
-      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
-  artifacts:
-      paths:
-          - coverage/Amblema-BackOffice/
-      expire_in: 7days
-  tags: 
-      - amblema
-  only:
-      - master
+# coverage: 
+#   stage: test
+#   script: 
+#       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
+#   artifacts:
+#       paths:
+#           - coverage/Amblema-BackOffice/
+#       expire_in: 7days
+#   tags: 
+#       - amblema
+#   only:
+#       - master
 
 # DEPLOY
 

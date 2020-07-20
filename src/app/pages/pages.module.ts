@@ -48,11 +48,13 @@ import { GeneralEnrolledState } from '../store/_enrolled/enrolled.action';
 import { AddressState } from '../store/_address/address.action';
 import { environment } from 'src/environments/environment.prod';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { DialogConfirmationComponent } from './_componnets/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 
 @NgModule({
   declarations: [
     PagesComponent,
     HeaderComponent,
+    DialogConfirmationComponent,
   ],
   imports: [
 

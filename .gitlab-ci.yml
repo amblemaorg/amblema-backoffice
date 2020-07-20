@@ -69,7 +69,7 @@ build:
 run-tests:
   stage: test
   script: 
-      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --watch=false
+      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadless --watch=false
   tags: 
       - amblema
   only:

@@ -66,7 +66,7 @@ export class DeleteAdminUser {
     adminUsers: [],
   },
 })
-export class AdminUserState implements NgxsOnInit, OnDestroy {
+export class AdminUserState implements NgxsOnInit, OnDestroy, NgxsAfterBootstrap {
   subscription: Subscription;
 
   @Selector()
@@ -86,7 +86,12 @@ export class AdminUserState implements NgxsOnInit, OnDestroy {
   ) {}
 
 
+
   ngxsOnInit(ctx: StateContext<AdminUserModel>) {
+    ctx.dispatch(new GetAdminUsers());
+  }
+
+  ngxsAfterBootstrap(ctx: StateContext<AdminUserModel>) {
     ctx.dispatch(new GetAdminUsers());
   }
 

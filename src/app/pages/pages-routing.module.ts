@@ -14,10 +14,10 @@ const routes: Routes = [
       },
       {
         path: 'admin-users',
-          // loadChildren: () =>
-          //   import('./user/roles-and-permits/admin-user/admin-user.module').then(
-          //     (m) => m.AdminUserModule
-          //   ),
+          //  loadChildren: () =>
+          //    import('./user/roles-and-permits/admin-user/admin-user.module').then(
+          //      (m) => m.AdminUserModule
+          //    ),
           loadChildren: () =>
             import(
               './user/roles-and-permits/admin-users-layout/admin-users-layout.module'

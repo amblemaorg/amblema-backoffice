@@ -108,8 +108,12 @@
   </form>
 </div>
 <div class="modal-footer">
+  <app-progress
+    class="w-100"
+    *ngIf="showProgress"
+    (finish)="showProgress = false"
+  ></app-progress>
 
-  
   <button
     nbButton
     type="button"

@@ -64,7 +64,7 @@ export class ModalFormAdminComponent extends UserAdminForm
             roles.find((role) => {
               if (role.devName === USER_DEVNAME.ADMIN) {
                 this.form.controls.role.setValue(role.id);
-                this.role = role.id;
+                this.role = role.id; // <-- Save the role to reset the default values
               }
             });
           });
@@ -81,6 +81,7 @@ export class ModalFormAdminComponent extends UserAdminForm
   // -- On submit --
   onSubmit(): void {
     if (this.form.valid) {
+      this.showProgress = true;
       // -- Save new user
       if (this.mode === FORM_MODALITY.CREATE.value) {
         this.subscriptionService = this.adminUserService

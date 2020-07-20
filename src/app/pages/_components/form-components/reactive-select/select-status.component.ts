@@ -7,10 +7,10 @@ import { Utility } from 'src/app/_helpers/utility';
     selector: 'app-select-status',
     template: `
         <div class="form-group">
-            <label for="status" class="label">Estatus</label>
+            <label for="controller-status" class="label">Estatus</label>
             <select
-                name="status"
-                id="status"
+                name="controller-status"
+                id="controller-status"
                 class="form-control form-group"
                 [formControl]="control"
                 (change)="onChange($event.target.value)">

@@ -4,25 +4,32 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { BaseTable } from 'src/app/_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
-import { Role, Permission } from 'src/app/_models/permission.model';
+import { Role, Permission, ActionRole } from 'src/app/_models/permission.model';
 import { FormControl } from '@angular/forms';
-import { RolesState, SelectedRole } from 'src/app/store/role.action';
+import { RolesState, SelectedRole, UpdateActions } from 'src/app/store/role.action';
 
 @Component({
   selector: 'app-roles-actions',
   templateUrl: './roles-actions.component.html',
   styles: [
-
     `
-    .table-bordered td, .table-bordered th { border-color: #edf1f7 }
-    .border-b:not(:last-child) {
-      border-bottom: 1px solid #edf1f7;
-      padding-bottom: 12px;
-      padding-top: 12px;
-    }
-    .border-b:first-child { padding-top: 0px; }
-    .border-b:last-child { padding-top: 12px; }`
-  ]
+      .table-bordered td,
+      .table-bordered th {
+        border-color: #edf1f7;
+      }
+      .border-b:not(:last-child) {
+        border-bottom: 1px solid #edf1f7;
+        padding-bottom: 12px;
+        padding-top: 12px;
+      }
+      .border-b:first-child {
+        padding-top: 0px;
+      }
+      .border-b:last-child {
+        padding-top: 12px;
+      }
+    `,
+  ],
 })
 export class RolesActionsComponent extends BaseTable
   implements OnInit, OnDestroy {
@@ -40,7 +47,6 @@ export class RolesActionsComponent extends BaseTable
     super('form-role-action');
 
     this.settings.columns = {
-
       label: {
         title: 'Acción',
         type: 'string',
@@ -90,5 +96,10 @@ export class RolesActionsComponent extends BaseTable
         }
       });
     });
+  }
+
+  onChangeStatusAction(entity: Permission, action: ActionRole): void {
+
+    this.store.dispatch( new UpdateActions( entity, action ));
   }
 }

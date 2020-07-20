@@ -6,6 +6,7 @@ import { Utility } from 'src/app/_helpers/utility';
 import { append, patch, removeItem, updateItem } from '@ngxs/store/operators';
 import { Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
+import { NgxsBootstrapper } from '@ngxs/store/internals';
 
 // -- State interface --
 

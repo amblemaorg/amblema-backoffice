@@ -104,7 +104,9 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
         developmentMode: !environment.production,
       }
     ),
-    // NgxsStoragePluginModule.forRoot({}),
+    // NgxsStoragePluginModule.forRoot({
+
+    // }),
 
     RouterModule,
     DashboardRoutingModule,

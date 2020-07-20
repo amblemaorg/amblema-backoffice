@@ -44,5 +44,6 @@ describe('SelectSchoolComponent', () => {
 
   afterAll(() => {
     TestBed.resetTestingModule();
+    fixture.destroy();
   });
 });

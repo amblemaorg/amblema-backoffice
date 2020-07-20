@@ -14,4 +14,8 @@ describe('ProjectService', () => {
     const service: ProjectService = TestBed.get(ProjectService);
     expect(service).toBeTruthy();
   });
+
+  afterAll(() => {
+    TestBed.resetTestingModule();
+  });
 });

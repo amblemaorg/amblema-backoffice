@@ -81,4 +81,5 @@ describe('Utility class', () => {
         data[0].type = '2';
         expect( helper.mediaNumberToString(data)[0].type ).toBe('Video');
     });
+
 });

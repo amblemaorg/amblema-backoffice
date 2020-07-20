@@ -26,10 +26,14 @@ describe('InputEmailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InputEmailComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+ 
   });
 
   it('Fields - Should input email defined', () => {
     expect(component).toBeTruthy();
   });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  })
 });

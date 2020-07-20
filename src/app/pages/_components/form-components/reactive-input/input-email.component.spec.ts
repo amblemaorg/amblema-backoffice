@@ -26,7 +26,7 @@ describe('InputEmailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InputEmailComponent);
     component = fixture.componentInstance;
- 
+
   });
 
   it('Fields - Should input email defined', () => {
@@ -35,5 +35,6 @@ describe('InputEmailComponent', () => {
 
   afterEach(() => {
     TestBed.resetTestingModule();
-  })
+    fixture.destroy();
+  });
 });

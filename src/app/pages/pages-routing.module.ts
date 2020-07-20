@@ -18,10 +18,17 @@ const routes: Routes = [
           //    import('./user/roles-and-permits/admin-user/admin-user.module').then(
           //      (m) => m.AdminUserModule
           //    ),
+<<<<<<< HEAD
+           loadChildren: () =>
+             import(
+               './user/roles-and-permits/admin-users-layout/admin-users-layout.module'
+             ).then((m) => m.AdminUsersLayoutModule),
+=======
           loadChildren: () =>
             import(
               './user/roles-and-permits/admin-users-layout/admin-users-layout.module'
             ).then((m) => m.AdminUsersLayoutModule),
+>>>>>>> f149aeb3d1a93536af49ec9a376053ac80c3d512
       },
       {
         path: 'permissions',

@@ -59,6 +59,7 @@ build:
   stage: build
   script:
       - docker-compose up build_amblema_backoffice
+      - docker restart $CONTAINER_SERVER
   tags: 
       - amblema
   only:

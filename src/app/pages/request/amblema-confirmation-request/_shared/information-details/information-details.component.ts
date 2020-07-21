@@ -10,6 +10,8 @@ import { Observable, Subscription } from 'rxjs';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { GetProjects } from 'src/app/store/project.action';
+import { GetGeneralEnrolled } from 'src/app/store/_enrolled/enrolled.action';
 
 @Component({
   selector: 'app-information-details',
@@ -70,7 +72,13 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
                 'Solicitud de confirmación',
                 'Confirmar acción, al aprobar esta solicitud el proyecto estará disponible para ser inscrito en el año escolar'
               );
+              
             }
+
+            // -- Update table proyects, phase of proyect
+            this.store.dispatch( new GetProjects() ); 
+            // -- Update school year school, to add
+            this.store.dispatch( new GetGeneralEnrolled() );
 
             this.store.dispatch(
               new UpdateProjectValidationRequest({

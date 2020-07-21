@@ -36,10 +36,14 @@ services:
     container_name: test_amblema_backoffice
     image: devbinaural/angular:8.0.0
     command: bash -c "npm install && ng test --browsers ChromeHeadless --watch=false"
-    #command: bash -c "wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_79.0.3945.88-1_amd64.deb && dpkg -i google-chrome-stable_79.0.3945.88-1_amd64.deb && npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false && rm -rf google-chrome-stable_79.0.3945.88-1_amd64.deb"
+    #command: bash -c "wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_79.0.3945.88-1_amd64.deb && dpkg -i google-chrome-stable_79.0.3945.88-1_amd64.deb && npm install && ng test --browsers ChromeHeadless --watch=false && rm -rf google-chrome-stable_79.0.3945.88-1_amd64.deb"
 
     ports:
       - 4200:4200
+    deploy:
+      resources:
+        limits:
+          memory: 2GB
     volumes:
       - .:/app
     networks:

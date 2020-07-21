@@ -115,14 +115,28 @@ export class LearningTableComponent extends BaseTable implements OnInit, OnDestr
 
 
 export const sortDate = (direction: any, a: string, b: string): number => {
-  const first = Number(new DatePipe('es-VE').transform(a, 'yyyyMMdd'));
-  const second = Number(new DatePipe('es-VE').transform(b, 'yyyyMMdd'));
+  // const first = Number(new DatePipe('es-VE').transform(a, 'yyyyMMdd'));
+  // const second = Number(new DatePipe('es-VE').transform(b, 'yyyyMMdd'));
 
-  if (first < second) {
-      return -1 * direction;
+  // const first = Number(new DatePipe('es-VE').transform(a,'yyyyMMdd'));
+  // const second = Number(new DatePipe('es-VE').transform(b,'yyyyMMdd'))
+
+
+  // if (first < second) {
+  //     return -1 * direction;
+  // }
+  //  if (first > second) {
+  //      return direction;
+  //  }
+
+  if (new Date(a) as any < new Date(b) as any) {
+    return -1 * direction;
   }
-  if (first > second) {
-      return direction;
+
+
+  if (new Date(a) as any > new Date(b) as any) {
+    return direction;
   }
+
   return 0;
 };

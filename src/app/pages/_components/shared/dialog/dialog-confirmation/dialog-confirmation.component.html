@@ -1,0 +1,26 @@
+<form (ngSubmit)="onConfirm()" *ngIf="active">
+  <div class="modal-header">
+    <h6 class="modal-title pull-left">
+      {{ title }}
+    </h6>
+    <button
+      type="button"
+      class="close pull-right"
+      (click)="hideConfirmationModal()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <nb-alert status="danger" class="mb-0">{{ body }}</nb-alert>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" nbButton status="danger">
+      Confirmar
+    </button>
+    <button type="button" nbButton outline="basic" (click)="onCancel()">
+      Cancelar
+    </button>
+  </div>
+</form>

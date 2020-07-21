@@ -184,7 +184,7 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy');
+          return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy h:mm:ss a');
         },
       },
       status: {

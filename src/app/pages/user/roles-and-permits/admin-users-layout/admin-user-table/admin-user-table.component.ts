@@ -5,6 +5,8 @@ import { AdminUserState, DeleteAdminUser, SelectedAdminUser } from 'src/app/stor
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
 import { Utility } from 'src/app/_helpers/utility';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 
 // To control the bootstrap modal
 declare var $: any;
@@ -12,13 +14,17 @@ declare var $: any;
 @Component({
   selector: 'app-admin-user-table',
   templateUrl: './admin-user-table.component.html',
+  providers: [BsModalService]
 })
 export class AdminUserTableComponent extends BaseTable implements TableActions {
 
   @Select(AdminUserState.adminUsers) data$: Observable<AdminUser[]>;
   subscription: Subscription;
 
+  modalRef: BsModalRef;
+
   constructor(
+    private modalService: BsModalService,
     private helper: Utility,
     private store: Store) {
 
@@ -87,7 +93,27 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         this.store.dispatch(new SelectedAdminUser(event.data));
         break;
       case this.ACTION.DELETE:
-        this.store.dispatch(new DeleteAdminUser(event.data));
+
+        const modal = this.modalService.show(DialogConfirmationComponent);
+
+
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+            'Eliminar usuario administrador',
+            '¿Desea eliminar este usuario de forma permanente?'
+        );
+
+        (modal.content as DialogConfirmationComponent).onClose.subscribe(result => {
+            if (result === true) {
+                // when pressed Yes
+            } else if (result === false) {
+                // when pressed No
+            } else {
+                // When closing the modal without no or yes
+            }
+        });
+
+
+        // this.store.dispatch(new DeleteAdminUser(event.data));
         break;
     }
   }

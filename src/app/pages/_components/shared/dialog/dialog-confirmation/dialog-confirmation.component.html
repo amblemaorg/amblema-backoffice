@@ -15,6 +15,9 @@
   </div>
   <div class="modal-body">
 
+    <nb-alert status="info" *ngIf="info">
+      {{ info }}
+    </nb-alert>
     <h6 class="text-danger font-weight-light">{{ body }}</h6>
     
   </div>

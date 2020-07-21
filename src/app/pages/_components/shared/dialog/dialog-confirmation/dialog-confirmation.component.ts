@@ -15,7 +15,7 @@ export class DialogConfirmationComponent implements OnInit {
 
   public constructor(
       private bsModalRef: BsModalRef
-  ) { }
+  ) {  }
 
   public ngOnInit(): void {
       this.onClose = new Subject();

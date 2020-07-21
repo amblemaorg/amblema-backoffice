@@ -1,4 +1,5 @@
-<form (ngSubmit)="onConfirm()" *ngIf="active">
+
+<form *ngIf="active">
   <div class="modal-header">
     <h6 class="modal-title pull-left">
       {{ title }}
@@ -13,13 +14,15 @@
     </button>
   </div>
   <div class="modal-body">
-    <nb-alert status="danger" class="mb-0">{{ body }}</nb-alert>
+
+    <h6 class="text-danger font-weight-light">{{ body }}</h6>
+    
   </div>
   <div class="modal-footer">
-    <button type="submit" nbButton status="danger">
+    <button type="button" (click)="onConfirm()" nbButton status="danger">
       Confirmar
     </button>
-    <button type="button" nbButton outline="basic" (click)="onCancel()">
+    <button type="button" nbButton outline status="basic" (click)="onCancel()">
       Cancelar
     </button>
   </div>

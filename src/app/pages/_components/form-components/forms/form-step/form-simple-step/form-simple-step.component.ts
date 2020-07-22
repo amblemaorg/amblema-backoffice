@@ -9,23 +9,28 @@ import { VIDEO_PATTERN } from '../../../shared/constant/validation-patterns-list
 import { Store } from '@ngxs/store';
 import { DeleteStep, UpdateStep } from 'src/app/store/step.action';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { Subscription } from 'rxjs';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-form-simple-step',
   templateUrl: './form-simple-step.component.html',
-  styleUrls: ['./form-simple-step.component.scss']
+  styleUrls: ['./form-simple-step.component.scss'],
 })
-export class FormSimpleStepComponent extends StepsFormComponent implements OnInit {
-
+export class FormSimpleStepComponent extends StepsFormComponent
+  implements OnInit {
   @Input() data: Step;
 
   protected oldData: Step;
+  subscription: Subscription;
   showProgress = false;
 
   constructor(
     public stores: Store,
+    private modalServicesBs: BsModalService,
     public toastrService: CustomToastrService,
-    protected updateStepService: StepService,
+    protected updateStepService: StepService
   ) {
     super(stores, toastrService);
 
@@ -34,7 +39,6 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
   }
 
   async ngOnInit() {
-
     this.checklist = this.data.checklist;
     this.checklist = Object.assign([], this.checklist);
 
@@ -56,7 +60,10 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
       if (this.data.hasVideo) {
         this.form.controls.video.setValue(this.data.video.url);
-        this.form.controls.video.setValidators([Validators.required, Validators.pattern(VIDEO_PATTERN)]);
+        this.form.controls.video.setValidators([
+          Validators.required,
+          Validators.pattern(VIDEO_PATTERN),
+        ]);
         this.form.updateValueAndValidity();
       }
 
@@ -69,18 +76,20 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       }
 
       this.form.controls.approvalType.setValue(this.data.approvalType);
-      this.form.controls.status.setValue(this.data.status === STATUS.ACTIVE.VALUE ? true : false);
+      this.form.controls.status.setValue(
+        this.data.status === STATUS.ACTIVE.VALUE ? true : false
+      );
     }
   }
 
   onSubmit(): void {
-
     if (this.form.valid) {
-
       this.data = Object.assign({}, this.data);
 
       this.data.text = this.form.controls.text.value;
-      this.data.status = this.form.controls.status.value ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE;
+      this.data.status = this.form.controls.status.value
+        ? STATUS.ACTIVE.VALUE
+        : STATUS.INACTIVE.VALUE;
       this.data.approvalType = this.form.controls.approvalType.value;
       this.data.file = this.form.controls.file.value;
 
@@ -106,7 +115,13 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
       // To send video, to be true
       if (this.data.hasVideo) {
-        formData.append('video', JSON.stringify({ name: Math.random().toString(), url: this.form.controls.video.value }));
+        formData.append(
+          'video',
+          JSON.stringify({
+            name: Math.random().toString(),
+            url: this.form.controls.video.value,
+          })
+        );
       }
 
       // To send list, to be true
@@ -123,14 +138,19 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
       this.showProgress = true;
 
       // Update step
-      this.updateStepService.updateStep(this.data.id, formData).subscribe((response: any) => {
-        this.toastrService.updateSuccess('Actualización', 'Paso actualizado');
-        this.stores.dispatch(new UpdateStep(response, this.oldData));
-      }, (err: any) => {
-        this.toastrService.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
-      });
+      this.updateStepService.updateStep(this.data.id, formData).subscribe(
+        (response: any) => {
+          this.toastrService.updateSuccess('Actualización', 'Paso actualizado');
+          this.stores.dispatch(new UpdateStep(response, this.oldData));
+        },
+        (err: any) => {
+          this.toastrService.error(
+            'Problemas al registrar',
+            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
+          );
+        }
+      );
     }
-
   }
 
   finishRequest() {
@@ -139,16 +159,46 @@ export class FormSimpleStepComponent extends StepsFormComponent implements OnIni
 
   confirmAction() {
     if (this.MODE_LIST === this.ACTION.EDIT) {
-      this.checklist[this.ID_ITEM] = { name: this.form.controls.checklist.value, id: this.checklist[this.ID_ITEM].id };
+      this.checklist[this.ID_ITEM] = {
+        name: this.form.controls.checklist.value,
+        id: this.checklist[this.ID_ITEM].id,
+      };
     }
     this.MODE_LIST = this.ACTION.CREATE;
     this.form.controls.checklist.reset();
   }
 
   onDelete() {
-    this.updateStepService.deleteStep(this.data.id).subscribe((response: any) => {
-      this.stores.dispatch(new DeleteStep(this.data.id));
-      this.toastrService.deleteRegister('Eliminación', 'Paso eliminado');
-    });
+    const modal = this.modalServicesBs.show(
+      DialogConfirmationComponent,
+      Object.assign({}, { class: 'modal-dialog-centered' })
+    );
+
+    // -- Set up modal
+    (modal.content as DialogConfirmationComponent).showConfirmationModal(
+      'Eliminar paso',
+      '¿Desea eliminar el paso seleccionado?'
+    );
+
+    this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+      (result) => {
+        if (result === true) {
+          this.updateStepService.deleteStep(this.data.id).subscribe(
+            (response: any) => {
+              (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+              this.stores.dispatch(new DeleteStep(this.data.id));
+              this.toastrService.deleteRegister(
+                'Eliminación',
+                'Paso eliminado'
+              );
+            },
+            (err: any) => {
+              (modal.content as DialogConfirmationComponent).errorDelete(err);
+            }
+          );
+        }
+      }
+    );
   }
 }

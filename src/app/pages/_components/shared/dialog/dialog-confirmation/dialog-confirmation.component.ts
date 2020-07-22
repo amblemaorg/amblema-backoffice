@@ -20,7 +20,7 @@ export class DialogConfirmationComponent implements OnInit {
   public constructor(
     private bsModalRef: BsModalRef,
     private toast: CustomToastrService
-  ) {}
+  ) {  }
 
   public ngOnInit(): void {
     this.onClose = new Subject();
@@ -53,10 +53,10 @@ export class DialogConfirmationComponent implements OnInit {
     this.bsModalRef.hide();
   }
 
-  public errorDelete(error: HttpErrorResponse, message: string): void {
+  public errorDelete(error: HttpErrorResponse): void {
     if (error.status === this.ERROR_CODE) {
-      this.body = message;
-      this.toast.error('Error', message);
+      this.body = error.error.msg;
+      this.toast.error('Error', error.error.msg);
     }
   }
 }

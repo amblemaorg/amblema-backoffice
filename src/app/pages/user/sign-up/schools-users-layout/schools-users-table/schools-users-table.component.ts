@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../../_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
-import { SchoolUserState, SelectedSchoolUser, DeleteSchoolUser } from 'src/app/store/user/school-user.action';
-import { Observable } from 'rxjs';
+import {
+  SchoolUserState,
+  SelectedSchoolUser,
+  DeleteSchoolUser,
+} from 'src/app/store/user/school-user.action';
+import { Observable, Subscription } from 'rxjs';
 import { SchoolUser } from 'src/app/_models/user/school.model';
 import { Utility } from 'src/app/_helpers/utility';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { SchoolUserService } from 'src/app/services/user/school-user.service';
 
 // JQuery call
 declare var $: any;
@@ -13,48 +20,53 @@ declare var $: any;
   selector: 'app-schools-users-table',
   templateUrl: './schools-users-table.component.html',
 })
-export class SchoolsUsersTableComponent extends BaseTable implements TableActions {
+export class SchoolsUsersTableComponent extends BaseTable
+  implements TableActions {
+  @Select(SchoolUserState.schoolUsers) data$: Observable<SchoolUser[]>;
 
-  @Select( SchoolUserState.schoolUsers ) data$: Observable<SchoolUser[]>;
+  subscription: Subscription;
 
   constructor(
+    private modalServicesBs: BsModalService,
     private store: Store,
-    private helper: Utility ) {
+    private schoolUserService: SchoolUserService,
+    private helper: Utility
+  ) {
     super('form-schools');
     this.settings.columns = {
       name: {
         title: 'Nombre',
-        type: 'string'
+        type: 'string',
       },
       code: {
         title: 'Código',
-        type: 'string'
+        type: 'string',
       },
       email: {
         title: 'Correo',
-        type: 'string'
+        type: 'string',
       },
       address: {
         title: 'Dirección',
-        type: 'string'
+        type: 'string',
       },
       status: {
         title: 'Estatus',
         type: 'string',
         valuePrepareFunction: (row: any) => {
-          return this.helper.readlyStatus( [{ status: row }] )[0].status;
+          return this.helper.readlyStatus([{ status: row }])[0].status;
         },
         filterFunction(cell?: any, search?: string): boolean {
+          let value: string = cell === '1' ? 'Activo' : 'Inactivo';
 
-
-            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
-
-            value = value.toUpperCase();
-            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
-              return true;
-            } else { return false;  }
-        }
-      }
+          value = value.toUpperCase();
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
     };
   }
 
@@ -62,7 +74,7 @@ export class SchoolsUsersTableComponent extends BaseTable implements TableAction
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
-        this.store.dispatch( new SelectedSchoolUser( event.data ) );
+        this.store.dispatch(new SelectedSchoolUser(event.data));
         $('#school-users-view').modal('show');
         break;
       case this.ACTION.EDIT:
@@ -70,11 +82,44 @@ export class SchoolsUsersTableComponent extends BaseTable implements TableAction
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
         console.log(event.data);
-        this.store.dispatch( new SelectedSchoolUser( event.data ) );
+        this.store.dispatch(new SelectedSchoolUser(event.data));
         break;
       case this.ACTION.DELETE:
         // Call delete modal
-        this.store.dispatch( new DeleteSchoolUser(event.data) );
+        // -- Instance delete
+
+        const modal = this.modalServicesBs.show(
+          DialogConfirmationComponent,
+          Object.assign({}, { class: 'modal-dialog-centered' })
+        );
+
+        // -- Set up modal
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+          'Eliminar usuario',
+          '¿Desea eliminar el usuario seleccionado?'
+        );
+
+        this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
+            if (result === true) {
+              this.subscription = this.schoolUserService
+                .deleteSchoolUser(event.data.id)
+                .subscribe(
+                  (response) => {
+                    (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                    this.store.dispatch(new DeleteSchoolUser(event.data));
+                  },
+                  (err: any) => {
+                    (modal.content as DialogConfirmationComponent).errorDelete(
+                      err
+                    );
+                  }
+                );
+            }
+          }
+        );
+
         break;
     }
   }

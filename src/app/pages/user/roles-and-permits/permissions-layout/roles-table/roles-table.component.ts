@@ -89,10 +89,8 @@ export class RolesTableComponent extends BaseTable
                   (modal.content as DialogConfirmationComponent).hideConfirmationModal();
                 },
                 (err: any) => {
-                  (modal.content as DialogConfirmationComponent).errorDelete(
-                    err,
-                    'Hay usuarios que tienen el rol seleccionado'
-                  );
+
+                  (modal.content as DialogConfirmationComponent).errorDelete(err);
 
                   if (event.data.isStandard) {
                     this.toastr.error(

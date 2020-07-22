@@ -142,12 +142,11 @@ export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
 
     @Action(DeleteCoordinatorUser)
     deleteCoordinatorUser(ctx: StateContext<CoordinatorUserModel>, action: DeleteCoordinatorUser) {
-        this.subscription = this.coordinatorUserService.deleteCoordinatorUser(action.payload.id).subscribe(response => {
-            ctx.setState(patch({
-                ...ctx.getState(),
-                coordinatorUsers: removeItem<CoordinatorUser>(coordinatorUser => coordinatorUser.id === action.payload.id)
-            }));
-            this.toastr.deleteRegister('Eliminación', 'Usuario coordinador eliminado');
-        });
+
+        ctx.setState(patch({
+            ...ctx.getState(),
+            coordinatorUsers: removeItem<CoordinatorUser>(coordinatorUser => coordinatorUser.id === action.payload.id)
+        }));
+        this.toastr.deleteRegister('Eliminación', 'Usuario coordinador eliminado');
     }
 }

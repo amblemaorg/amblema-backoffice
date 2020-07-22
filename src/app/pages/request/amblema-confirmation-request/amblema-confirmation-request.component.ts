@@ -169,7 +169,7 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
         // -- Set up modal
         (modal.content as DialogConfirmationComponent).showConfirmationModal(
           'Eliminar solicitud de confirmación de pasos',
-          '¿Desea eliminar la solictud seleccionada?'
+          '¿Desea eliminar la solicitud seleccionada?'
         );
 
         this.subscriptionService = (modal.content as DialogConfirmationComponent).onClose.subscribe(

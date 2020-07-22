@@ -8,7 +8,7 @@ import {
   UpdateUserCreationRequest,
   GetUserCreationRequests,
 } from 'src/app/store/request/user-creation-request.action';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserCreationRequest } from 'src/app/_models/request/user-creation-request.model';
 import {
   TYPE_REQUEST,
@@ -25,6 +25,8 @@ import { SetSchoolUser } from 'src/app/store/user/school-user.action';
 import { SetSponsorUser } from 'src/app/store/user/sponsor-user.action';
 import { ActivatedRoute } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-creation-requests',
@@ -48,13 +50,16 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   type = TYPE_REQUEST;
   showProgress = false;
 
+  subscription: Subscription;
+
   constructor(
     private router: ActivatedRoute,
     private toast: CustomToastrService,
     private store: Store,
     private userCreationRequestService: UserCreationRequestService,
     private modalService: ModalService,
-    private helper: Utility
+    private helper: Utility,
+    private modalServicesBs: BsModalService
   ) {
     super();
 
@@ -116,7 +121,10 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           type: 'string',
           compareFunction: sortDate,
           valuePrepareFunction: (lastLoginTime: any) => {
-            return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy h:mm:ss a');
+            return new DatePipe('es-VE').transform(
+              lastLoginTime,
+              'dd/MM/yyyy h:mm:ss a'
+            );
           },
         },
         status: {
@@ -173,37 +181,102 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
-        if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
-          this.userCreationRequestService
-            .deleteUserCreationRequestSponsor(event.data.id)
-            .subscribe((value) => {
-              this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicitud de crear usuario'
-              );
-              this.store.dispatch(new DeleteUserCreationRequest(event.data));
-            });
-        } else if (event.data.type === TYPE_REQUEST.SCHOOL.ORIGINAL) {
-          this.userCreationRequestService
-            .deleteUserCreationRequestSchool(event.data.id)
-            .subscribe((value) => {
-              this.store.dispatch(new DeleteUserCreationRequest(event.data));
-              this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicitud de crear usuario'
-              );
-            });
-        } else {
-          this.userCreationRequestService
-            .deleteUserCreationRequestCoordinator(event.data.id)
-            .subscribe((value) => {
-              this.store.dispatch(new DeleteUserCreationRequest(event.data));
-              this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicitud de crear usuario'
-              );
-            });
-        }
+        // Call delete modal
+        // -- Instance delete
+
+        const modal = this.modalServicesBs.show(
+          DialogConfirmationComponent,
+          Object.assign({}, { class: 'modal-dialog-centered' })
+        );
+
+        // -- Set up modal
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+          'Eliminar solicitud de creación de usuario',
+          '¿Desea eliminar la solicitud seleccionado?'
+        );
+
+        // -- Global content services.
+
+        this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
+            if (result === true) {
+              /**
+               * Request sponsor
+               */
+              if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
+                this.userCreationRequestService
+                  .deleteUserCreationRequestSponsor(event.data.id)
+                  .subscribe(
+                    (value) => {
+                      (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                      this.toast.deleteRegister(
+                        'Eliminación',
+                        'Se ha eliminado una solicitud de crear usuario'
+                      );
+                      this.store.dispatch(
+                        new DeleteUserCreationRequest(event.data)
+                      );
+                    },
+                    (err: any) => {
+                      (modal.content as DialogConfirmationComponent).errorDelete(
+                        err
+                      );
+                    }
+                  );
+
+                /**
+                 * Request school
+                 */
+              } else if (event.data.type === TYPE_REQUEST.SCHOOL.ORIGINAL) {
+                this.userCreationRequestService
+                  .deleteUserCreationRequestSchool(event.data.id)
+                  .subscribe(
+                    (value) => {
+                      (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                      this.store.dispatch(
+                        new DeleteUserCreationRequest(event.data)
+                      );
+                      this.toast.deleteRegister(
+                        'Eliminación',
+                        'Se ha eliminado una solicitud de crear usuario'
+                      );
+                    },
+                    (err: any) => {
+                      (modal.content as DialogConfirmationComponent).errorDelete(
+                        err
+                      );
+                    }
+                  );
+              } else {
+                /**
+                 * Request coordinator
+                 */
+                this.userCreationRequestService
+                  .deleteUserCreationRequestCoordinator(event.data.id)
+                  .subscribe(
+                    (value) => {
+                      (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                      this.store.dispatch(
+                        new DeleteUserCreationRequest(event.data)
+                      );
+                      this.toast.deleteRegister(
+                        'Eliminación',
+                        'Se ha eliminado una solicitud de crear usuario'
+                      );
+                    },
+                    (err: any) => {
+                      (modal.content as DialogConfirmationComponent).errorDelete(
+                        err
+                      );
+                    }
+                  );
+              }
+            }
+          }
+        );
 
         break;
     }

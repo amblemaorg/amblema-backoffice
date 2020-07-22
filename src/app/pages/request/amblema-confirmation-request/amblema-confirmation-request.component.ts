@@ -16,6 +16,8 @@ import { InformationDetailsComponent } from './_shared/information-details/infor
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { ActivatedRoute } from '@angular/router';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-amblema-confirmation-request',
@@ -32,6 +34,7 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
   prepareData = new Array<AmblemaConfirmation>();
 
   constructor(
+    private modalServicesBs: BsModalService,
     private projectValidationRequestService: ProjectValidationRequestService,
     private dialogService: NbDialogService,
     private helper: Utility,
@@ -103,8 +106,7 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
 
   ngOnInit() {
     this.router.params.subscribe((query: any) => {
-
-      if (Object.keys( query ).length) {
+      if (Object.keys(query).length) {
         this.subscriptionService = this.data$.subscribe((response) => {
           this.store.dispatch(
             new SelectedProjectValidationRequestn(
@@ -157,17 +159,47 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
         this.dialogService.open(InformationDetailsComponent);
         break;
       case this.ACTION.DELETE:
-        this.projectValidationRequestService
-          .deleteRequestProjectApproval(event.data.id)
-          .subscribe((response) => {
-            this.store.dispatch(
-              new DeleteProjectValidationRequest(event.data.id)
-            );
-            this.toastr.deleteRegister(
-              'Solicitud eliminada',
-              'Se ha eliminado una solicitud'
-            );
-          });
+        // -- Instance delete
+
+        const modal = this.modalServicesBs.show(
+          DialogConfirmationComponent,
+          Object.assign({}, { class: 'modal-dialog-centered' })
+        );
+
+        // -- Set up modal
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+          'Eliminar solicitud de confirmación de pasos',
+          '¿Desea eliminar la solictud seleccionada?'
+        );
+
+        this.subscriptionService = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
+            if (result === true) {
+              this.projectValidationRequestService
+
+                .deleteRequestProjectApproval(event.data.id)
+                .subscribe(
+                  (response) => {
+                    (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                    this.store.dispatch(
+                      new DeleteProjectValidationRequest(event.data.id)
+                    );
+                    this.toastr.deleteRegister(
+                      'Solicitud eliminada',
+                      'Se ha eliminado una solicitud'
+                    );
+                  },
+                  (err: any) => {
+                    (modal.content as DialogConfirmationComponent).errorDelete(
+                      err
+                    );
+                  }
+                );
+            }
+          }
+        );
+
         break;
     }
   }

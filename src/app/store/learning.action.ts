@@ -294,14 +294,13 @@ export class LearningState implements NgxsOnInit {
 
     @Action(DeleteLearning)
     deleteLearning(ctx: StateContext<LearningStateModel>, action: DeleteLearning) {
-        this.learningService.deleteLearning(action.payload.id).subscribe(response => {
-            ctx.setState(patch({
-                ...ctx.getState(),
-                learnings: removeItem<Learning>(learning => learning === action.payload)
-            }));
+        ctx.setState(patch({
+            ...ctx.getState(),
+            learnings: removeItem<Learning>(learning => learning === action.payload)
+        }));
 
-            this.toastr.deleteRegister('Eliminación', 'Modulo de aprendizaje eliminado');
-        });
+        this.toastr.deleteRegister('Eliminación', 'Modulo de aprendizaje eliminado');
+
     }
 
     // -- Step One --

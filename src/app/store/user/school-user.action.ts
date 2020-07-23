@@ -159,12 +159,12 @@ export class SchoolUserState implements NgxsOnInit, OnDestroy {
     @Action(DeleteSchoolUser)
     deleteSchoolUser(ctx: StateContext<SchoolUserModel>, action: DeleteSchoolUser) {
 
-        this.subscription = this.schoolUserService.deleteSchoolUser(action.payload.id).subscribe(response => {
-            ctx.setState(patch({
-                ...ctx.getState(),
-                schoolUsers: removeItem<SchoolUser>(schoolUser => schoolUser.id === action.payload.id)
-            }));
-            this.toastr.deleteRegister('Eliminación', 'Usuario escuela eliminado');
-        });
+
+        ctx.setState(patch({
+            ...ctx.getState(),
+            schoolUsers: removeItem<SchoolUser>(schoolUser => schoolUser.id === action.payload.id)
+        }));
+        this.toastr.deleteRegister('Eliminación', 'Usuario escuela eliminado');
+
     }
 }

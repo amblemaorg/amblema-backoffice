@@ -311,7 +311,8 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
                         name: action.topic.name,
                         objectives: action.topic.objectives,
                         strategies: action.topic.strategies,
-                        contents: action.topic.contents
+                        contents: action.topic.contents,
+                        levels: action.topic.levels
                     }))
                 }),
             })

@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../../_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
-import { AdminUserState, DeleteAdminUser, SelectedAdminUser } from 'src/app/store/user/admin-user.action';
+import {
+  AdminUserState,
+  DeleteAdminUser,
+  SelectedAdminUser,
+} from 'src/app/store/user/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
 import { Utility } from 'src/app/_helpers/utility';
@@ -14,10 +18,9 @@ declare var $: any;
 @Component({
   selector: 'app-admin-user-table',
   templateUrl: './admin-user-table.component.html',
-  providers: [BsModalService]
+  providers: [BsModalService],
 })
 export class AdminUserTableComponent extends BaseTable implements TableActions {
-
   @Select(AdminUserState.adminUsers) data$: Observable<AdminUser[]>;
   subscription: Subscription;
 
@@ -26,23 +29,23 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
   constructor(
     private modalService: BsModalService,
     private helper: Utility,
-    private store: Store) {
-
+    private store: Store
+  ) {
     super('form-admin-user'); // <-- Send ID
 
     // customers columns
     this.settings.columns = {
       firstName: {
         title: 'Nombre',
-        type: 'string'
+        type: 'string',
       },
       lastName: {
         title: 'Apellido',
-        type: 'string'
+        type: 'string',
       },
       function: {
         title: 'Cargo',
-        type: 'string'
+        type: 'string',
       },
       role: {
         title: 'Rol',
@@ -53,30 +56,30 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         filterFunction(cell?: any, search?: string): boolean {
           let value: string = cell.name.toString();
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0  || search === '') {
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
             return true;
-          } else { return false; }
-        }
+          } else {
+            return false;
+          }
+        },
       },
       status: {
         title: 'Estatus',
         type: 'string',
         valuePrepareFunction: (row: any) => {
-
-
-          return this.helper.readlyStatus( [{ status: row }] )[0].status;
+          return this.helper.readlyStatus([{ status: row }])[0].status;
         },
         filterFunction(cell?: any, search?: string): boolean {
+          let value: string = cell === '1' ? 'Activo' : 'Inactivo';
 
-
-            let value: string = cell === '1' ? 'Activo' : 'Inactivo';
-
-            value = value.toUpperCase();
-            if ( value.indexOf( search.toUpperCase() ) === 0 || search === '' ) {
-              return true;
-            } else { return false;  }
-        }
-      }
+          value = value.toUpperCase();
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
     };
   }
 
@@ -85,7 +88,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
       case this.ACTION.VIEW:
         // --  Query all data
         $(`#view-admin-user`).modal('show');
-        this.store.dispatch( new SelectedAdminUser( event.data ) );
+        this.store.dispatch(new SelectedAdminUser(event.data));
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
@@ -93,27 +96,33 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         this.store.dispatch(new SelectedAdminUser(event.data));
         break;
       case this.ACTION.DELETE:
-
-        const modal = this.modalService.show(DialogConfirmationComponent);
-
-
-        (modal.content as DialogConfirmationComponent).showConfirmationModal(
-            'Eliminar usuario administrador',
-            '¿Desea eliminar este usuario de forma permanente?'
+        // -- Instance delete
+        const modal = this.modalService.show(
+          DialogConfirmationComponent,
+          Object.assign({}, { class: 'modal-dialog-centered' })
         );
 
-        (modal.content as DialogConfirmationComponent).onClose.subscribe(result => {
+        // -- Set up modal
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+          'Eliminar usuario administrador',
+          '¿Desea eliminar este usuario de forma permanente?'
+        );
+
+        // -- Listen the action
+        this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
             if (result === true) {
-                // when pressed Yes
+              // -- when pressed Yes
+              this.store.dispatch(new DeleteAdminUser(event.data));
+              ( modal.content as DialogConfirmationComponent ).hideConfirmationModal();
             } else if (result === false) {
-                // when pressed No
+              // -- when pressed No
             } else {
-                // When closing the modal without no or yes
+              // -- When closing the modal without no or yes
             }
-        });
+          }
+        );
 
-
-        // this.store.dispatch(new DeleteAdminUser(event.data));
         break;
     }
   }

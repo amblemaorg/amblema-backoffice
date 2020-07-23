@@ -72,11 +72,11 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
                 'Solicitud de confirmación',
                 'Confirmar acción, al aprobar esta solicitud el proyecto estará disponible para ser inscrito en el año escolar'
               );
-              
+
             }
 
             // -- Update table proyects, phase of proyect
-            this.store.dispatch( new GetProjects() ); 
+            this.store.dispatch( new GetProjects() );
             // -- Update school year school, to add
             this.store.dispatch( new GetGeneralEnrolled() );
 

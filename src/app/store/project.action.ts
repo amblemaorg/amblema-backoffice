@@ -128,12 +128,12 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
 
     @Action(DeleteProject)
     deleteProject(ctx: StateContext<ProjectStateModel>, action: DeleteProject) {
-        this.subscription = this.projectService.deleteProject(action.payload).subscribe(response => {
-            ctx.setState(patch({
-                ...ctx.getState(),
-                projects: removeItem<Project>(project => project.id === action.payload)
-            }));
-            this.toastr.deleteRegister('Eliminación', 'Se ha eliminado un proyecto');
-        });
+
+        ctx.setState(patch({
+            ...ctx.getState(),
+            projects: removeItem<Project>(project => project.id === action.payload)
+        }));
+        this.toastr.deleteRegister('Eliminación', 'Se ha eliminado un proyecto');
+
     }
 }

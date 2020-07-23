@@ -173,6 +173,11 @@ export class FormComponent implements OnInit, OnDestroy {
                   .subscribe((response) => {
                     (modal.content as DialogConfirmationComponent).hideConfirmationModal();
                     // -- Successfully mock delete topic --
+                  },
+                  (err: any) => {
+                    (modal.content as DialogConfirmationComponent).errorDelete(
+                      err
+                    );
                   });
               });
             });

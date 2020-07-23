@@ -6,16 +6,19 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   templateUrl: './content-text.component.html',
 })
 export class ContentTextComponent implements OnInit {
+  @Input() about?: number;
+  @Input() enviroment?: number;
+  @Input() reading?: number;
+  @Input() math?: number;
 
   @Input() data: any = {}; // <-- To update
   @Input() form: FormGroup;
 
   ngOnInit(): void {
-
-    if ( this.data ) {
+    if (this.data) {
       this.form.patchValue(this.data);
     }
   }
 
-  constructor( private formBuilder: FormBuilder ) { }
+  constructor(private formBuilder: FormBuilder) {}
 }

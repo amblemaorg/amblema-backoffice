@@ -3,13 +3,10 @@ import { BaseTable } from 'src/app/_helpers/base-table';
 import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { Select, Store } from '@ngxs/store';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
 import { DatePipe } from '@angular/common';
-import {
-  TYPE_REQUEST,
-  REQUEST_STATUS,
-} from 'src/app/_helpers/convention/request-status';
+import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 import { Utility } from 'src/app/_helpers/utility';
 import { NbDialogService } from '@nebular/theme';
 import { InformationDetailsComponent } from './information-details/information-details.component';
@@ -30,10 +27,11 @@ import { TestimonyDetailsComponent } from './testimony-details/testimony-details
 import { ActivatedRoute } from '@angular/router';
 import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
 import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
 import { SpanPlanningComponent } from './span-planning/span-planning.component';
 import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-school-details.component';
+import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -46,8 +44,11 @@ export class RequestsValidateInformationComponent extends BaseTable
     RequestContent[]
   >;
 
+  subscription: Subscription;
+
   constructor(
     private store: Store,
+    private modalServicesBs: BsModalService,
     private dialogService: NbDialogService,
     private toast: CustomToastrService,
     private modal: ModalService,
@@ -184,7 +185,10 @@ export class RequestsValidateInformationComponent extends BaseTable
         type: 'string',
         compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
-          return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy h:mm:ss a');
+          return new DatePipe('es-VE').transform(
+            lastLoginTime,
+            'dd/MM/yyyy h:mm:ss a'
+          );
         },
       },
       status: {
@@ -289,20 +293,48 @@ export class RequestsValidateInformationComponent extends BaseTable
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log( event.data );
+        console.log(event.data);
         this.showModalDetails(event.data.type);
         this.store.dispatch(new SelectedRequestContent(event.data));
         break;
       case this.ACTION.DELETE:
-        this.serviceInformation
-          .deleteRequestContentApproval(event.data.id)
-          .subscribe(() => {
-            this.store.dispatch(new DeleteRequestContent(event.data.id));
-            this.toast.deleteRegister(
-              'Solicitud eliminada',
-              'Se ha eliminado una solicitud'
-            );
-          });
+        // Call delete modal
+        // -- Instance delete
+
+        const modal = this.modalServicesBs.show(
+          DialogConfirmationComponent,
+          Object.assign({}, { class: 'modal-dialog-centered' })
+        );
+
+        // -- Set up modal
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+          'Eliminar solicitud de validación de información',
+          '¿Desea eliminar la solictud seleccionada?'
+        );
+
+        this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
+            if (result === true) {
+              this.serviceInformation
+                .deleteRequestContentApproval(event.data.id)
+                .subscribe(() => {
+
+                  (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                  this.store.dispatch(new DeleteRequestContent(event.data.id));
+                  this.toast.deleteRegister(
+                    'Solicitud eliminada',
+                    'Se ha eliminado una solicitud'
+                  );
+                },
+                (err: any) => {
+                  (modal.content as DialogConfirmationComponent).errorDelete(
+                    err
+                  );
+                });
+            }
+          }
+        );
 
         break;
     }

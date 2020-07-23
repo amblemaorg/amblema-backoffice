@@ -20,6 +20,8 @@ import { Observable, Subscription } from 'rxjs';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
 import { take } from 'rxjs/operators';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-form',
@@ -59,9 +61,12 @@ export class FormComponent implements OnInit, OnDestroy {
   objectives = new Array<string>();
   strategies = new Array<string>();
   contents = new Array<string>();
+  levelsSchool = new Array<any>();
+
   showProgress = false;
 
   constructor(
+    private modalServicesBs: BsModalService,
     private environmentalProjectService: EnvironmentalProjectService,
     private store: Store
   ) {}
@@ -76,6 +81,7 @@ export class FormComponent implements OnInit, OnDestroy {
           this.objectives = value.objectives;
           this.strategies = value.strategies;
           this.contents = value.contents;
+          this.levelsSchool = value.levels;
 
           this.objectives = Object.assign([], this.objectives);
           this.strategies = Object.assign([], this.strategies);
@@ -142,57 +148,84 @@ export class FormComponent implements OnInit, OnDestroy {
 
   // -- Action to delete topic --
   deleteHimself(): void {
-    this.subscription = this.store
-      .dispatch(new DeleteTopic(this.index))
-      .subscribe(() => {
-        this.subscription = this.storable$.subscribe((value) => {
-          this.subscription = this.environmentalProjectService
-            .updateEnvironmentalProject(value)
-            .subscribe((response) => {
-              // -- Successfully mock delete topic --
+    const modal = this.modalServicesBs.show(
+      DialogConfirmationComponent,
+      Object.assign({}, { class: 'modal-dialog-centered' })
+    );
+
+    // -- Set up modal
+    (modal.content as DialogConfirmationComponent).showConfirmationModal(
+      'Eliminar tema del proyecto ambiental',
+      '¿Desea eliminar el tema de forma permanente?'
+    );
+
+    this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+      (result) => {
+        if (result === true) {
+          this.subscription = this.store
+            .dispatch(new DeleteTopic(this.index))
+            .subscribe(() => {
+              this.subscription = this.storable$.subscribe((value) => {
+
+
+                this.subscription = this.environmentalProjectService
+                  .updateEnvironmentalProject(value)
+                  .subscribe((response) => {
+                    (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+                    // -- Successfully mock delete topic --
+                  },
+                  (err: any) => {
+                    (modal.content as DialogConfirmationComponent).errorDelete(
+                      err
+                    );
+                  });
+              });
             });
-        });
-      });
+        }
+      }
+    );
   }
 
   onUpdateTopic(): void {
     this.showProgress = true;
 
     setTimeout(() => {
-      this.store.dispatch(
-        new UpdateTopic(
-          {
-            name: this.form.controls.name.value,
-            objectives: this.objectives,
-            strategies: this.strategies,
-            contents: this.contents,
-          },
-          this.index
+      this.store
+        .dispatch(
+          new UpdateTopic(
+            {
+              name: this.form.controls.name.value,
+              objectives: this.objectives,
+              strategies: this.strategies,
+              contents: this.contents,
+              levels: this.levelsSchool
+            },
+            this.index
+          )
         )
-      ).toPromise().then().finally( () => {
+        .toPromise()
+        .then()
+        .finally(() => {
+          this.subscription = this.storable$.subscribe((value) => {
 
+            this.subscription = this.environmentalProjectService
+              .updateEnvironmentalProject(value)
+              .subscribe((response: HttpEvent<any>) => {
+                // -- Successfully mock delete topic --
 
-        this.subscription = this.storable$.subscribe((value) => {
-          this.subscription = this.environmentalProjectService
-            .updateEnvironmentalProject(value)
-            .subscribe((response: HttpEvent<any>) => {
-              // -- Successfully mock delete topic --
-
-              switch (response.type) {
-                case HttpEventType.UploadProgress:
-                  this.showProgress = true;
-                  break;
-                case HttpEventType.Response:
-                  setTimeout(() => {
-                    this.showProgress = false;
-                  }, 2500);
-                  break;
-              }
-            });
+                switch (response.type) {
+                  case HttpEventType.UploadProgress:
+                    this.showProgress = true;
+                    break;
+                  case HttpEventType.Response:
+                    setTimeout(() => {
+                      this.showProgress = false;
+                    }, 2500);
+                    break;
+                }
+              });
+          });
         });
-      } );
     });
-
-
   }
 }

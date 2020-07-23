@@ -7,7 +7,7 @@ import {
   UpdateProjectRequests,
   DeleteProjectRequests,
 } from 'src/app/store/request/project-requests.action';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ProjectRequest } from 'src/app/_models/request/project-request.model';
 import { Utility } from 'src/app/_helpers/utility';
 import { sortDate } from '../../main-content/learning/learning-table/learning-table.component';
@@ -24,6 +24,8 @@ import { SetSchoolUser } from 'src/app/store/user/school-user.action';
 import { SetSponsorUser } from 'src/app/store/user/sponsor-user.action';
 import { ActivatedRoute } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-project-requests',
@@ -44,13 +46,16 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   type = TYPE_REQUEST;
   showProgress = false;
 
+  subscription: Subscription;
+
   constructor(
     private router: ActivatedRoute,
     private toast: CustomToastrService,
     private store: Store,
     private projectRequestService: ProjectRequestsService,
     private modalService: ModalService,
-    private helper: Utility
+    private helper: Utility,
+    private modalServicesBs: BsModalService
   ) {
     super('');
   }
@@ -120,7 +125,10 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           type: 'string',
           compareFunction: sortDate,
           valuePrepareFunction: (lastLoginTime: any) => {
-            return new DatePipe('es-VE').transform(lastLoginTime, 'dd/MM/yyyy h:mm:ss a');
+            return new DatePipe('es-VE').transform(
+              lastLoginTime,
+              'dd/MM/yyyy h:mm:ss a'
+            );
           },
         },
         status: {
@@ -149,45 +157,103 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   onAction(event: any): void {
-
-
     switch (event.action) {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
-        if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
-          this.projectRequestService
-            .deleteProjectRequestSponsor(event.data.id)
-            .subscribe((response) => {
-              this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicirud de proyecto'
-              );
-              this.store.dispatch(new DeleteProjectRequests(event.data));
-            });
-        } else if (event.data.type === TYPE_REQUEST.SCHOOL.ORIGINAL) {
-          this.projectRequestService
-            .deleteProjectRequestSchool(event.data.id)
-            .subscribe((response) => {
-              this.store.dispatch(new DeleteProjectRequests(event.data));
-              this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicirud de proyecto'
-              );
-            });
-        } else {
-          this.projectRequestService
-            .deleteProjectRequestCoordinator(event.data.id)
-            .subscribe((response) => {
-              this.store.dispatch(new DeleteProjectRequests(event.data));
-              this.toast.deleteRegister(
-                'Eliminación',
-                'Se ha eliminado una solicirud de proyecto'
-              );
-            });
-        }
+        const modal = this.modalServicesBs.show(
+          DialogConfirmationComponent,
+          Object.assign({}, { class: 'modal-dialog-centered' })
+        );
+
+        // -- Set up modal
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+          'Eliminar solicitud de proyecto',
+          '¿Desea eliminar la solicitud de proyecto?'
+        );
+
+        this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
+            if (result === true) {
+              /**
+               * Sponsor
+               */
+              if (event.data.type === TYPE_REQUEST.SPONSOR.ORIGINAL) {
+                this.projectRequestService
+                  .deleteProjectRequestSponsor(event.data.id)
+                  .subscribe(
+                    (response) => {
+                      this.toast.deleteRegister(
+                        'Eliminación',
+                        'Se ha eliminado una solicirud de proyecto'
+                      );
+                      (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                      this.store.dispatch(
+                        new DeleteProjectRequests(event.data)
+                      );
+                    },
+                    (err: any) => {
+                      (modal.content as DialogConfirmationComponent).errorDelete(
+                        err
+                      );
+                    }
+                  );
+
+                /**
+                 * School
+                 */
+              } else if (event.data.type === TYPE_REQUEST.SCHOOL.ORIGINAL) {
+                this.projectRequestService
+                  .deleteProjectRequestSchool(event.data.id)
+                  .subscribe(
+                    (response) => {
+                      this.store.dispatch(
+                        new DeleteProjectRequests(event.data)
+                      );
+                      (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                      this.toast.deleteRegister(
+                        'Eliminación',
+                        'Se ha eliminado una solicirud de proyecto'
+                      );
+                    },
+                    (err: any) => {
+                      (modal.content as DialogConfirmationComponent).errorDelete(
+                        err
+                      );
+                    }
+                  );
+              } else {
+                /**
+                 * Coordinador
+                 */
+                this.projectRequestService
+                  .deleteProjectRequestCoordinator(event.data.id)
+                  .subscribe(
+                    (response) => {
+                      (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+
+                      this.store.dispatch(
+                        new DeleteProjectRequests(event.data)
+                      );
+                      this.toast.deleteRegister(
+                        'Eliminación',
+                        'Se ha eliminado una solicirud de proyecto'
+                      );
+                    },
+                    (err: any) => {
+                      (modal.content as DialogConfirmationComponent).errorDelete(
+                        err
+                      );
+                    }
+                  );
+              }
+            }
+          }
+        );
 
         break;
     }

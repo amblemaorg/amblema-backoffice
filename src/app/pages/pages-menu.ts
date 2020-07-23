@@ -89,10 +89,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: 'Coordinadores',
             link: '/pages/content/web/coordinators',
           },
-          {
-            title: 'Escuelas',
-            link: '/pages/content/web/schools',
-          },
+          // {
+          //   title: 'Escuelas',
+          //   link: '/pages/content/web/schools',
+          // },
           {
             title: 'Blog',
             link: '/pages/content/web/blog',

@@ -133,14 +133,12 @@ export class SponsorUserState implements NgxsOnInit {
     @Action( DeleteSponsorUser )
     deleteSponsorUser(ctx: StateContext<SponsorUserModel>, action: DeleteSponsorUser  ) {
 
-        this.sponsorUserService.deleteSponsorUser(action.payload.id).subscribe(response => {
-            ctx.setState(patch({
-                ...ctx.getState(),
-                sponsorUsers: removeItem<SponsorUser>(sponsorUser => sponsorUser.id === action.payload.id)
-            }));
-            this.toastr.deleteRegister('Eliminación', 'Usuario padrino eliminado');
-        });
+        ctx.setState(patch({
+            ...ctx.getState(),
+            sponsorUsers: removeItem<SponsorUser>(sponsorUser => sponsorUser.id === action.payload.id)
+        }));
 
+        this.toastr.deleteRegister('Eliminación', 'Usuario padrino eliminado');
 
     }
 

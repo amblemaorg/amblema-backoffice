@@ -77,10 +77,9 @@ export class PostsState implements NgxsOnInit {
 
     @Action( DeletePost )
     deletePost(ctx: StateContext<Post[]>, action: DeletePost ) {
-        this.blogService.deletePost( action.payload.id ).subscribe(response => {
-            this.toastr.deleteRegister('Eliminación', 'Post eliminado');
-            ctx.setState(removeItem<Post>( post => post === action.payload ));
-        });
+        this.toastr.deleteRegister('Eliminación', 'Post eliminado');
+        ctx.setState(removeItem<Post>( post => post === action.payload ));
+
     }
 
 }

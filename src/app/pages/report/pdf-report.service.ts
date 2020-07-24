@@ -300,6 +300,9 @@ export class PDFReport implements OnInit {
             },
             pageSize: 'A4',
             content: [],
+            defaultStyle: {
+                fontSize: 8,
+            }
         };
 
         // -- Title --
@@ -532,7 +535,7 @@ export class PDFReport implements OnInit {
                 if (section.lapse1.logic !== undefined) {
 
 
-                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - mtemático' });
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - matemático' });
                     diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse1.logic.participants });
                     diagnosticResult[2].push({ text: section.lapse1.logic.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse1.logic.overGoalStudents });
@@ -564,7 +567,7 @@ export class PDFReport implements OnInit {
 
                     firstRowHeaderTable = [
                         ...firstRowHeaderTable,
-                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - mtemático`, colSpan: 2 },
+                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - matemático`, colSpan: 2 },
                         {}
                     ];
                 }
@@ -768,7 +771,7 @@ export class PDFReport implements OnInit {
                 if (section.lapse2.logic !== undefined) {
 
 
-                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - mtemático' });
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - matemático' });
                     diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse2.logic.participants });
                     diagnosticResult[2].push({ text: section.lapse2.logic.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse2.logic.overGoalStudents });
@@ -800,7 +803,7 @@ export class PDFReport implements OnInit {
 
                     firstRowHeaderTable = [
                         ...firstRowHeaderTable,
-                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - mtemático`, colSpan: 2 },
+                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - matemático`, colSpan: 2 },
                         {}
                     ];
                 }
@@ -1005,7 +1008,7 @@ export class PDFReport implements OnInit {
                 if (section.lapse3.logic !== undefined) {
 
 
-                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - mtemático' });
+                    diagnosticResult[0].push({ ...colorRowOne, text: 'Diagnóstico de razonamiento lógico - matemático' });
                     diagnosticResult[1].push({ ...colorRowTwo, text: section.lapse3.logic.participants });
                     diagnosticResult[2].push({ text: section.lapse3.logic.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse3.logic.overGoalStudents });
@@ -1037,7 +1040,7 @@ export class PDFReport implements OnInit {
 
                     firstRowHeaderTable = [
                         ...firstRowHeaderTable,
-                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - mtemático`, colSpan: 2 },
+                        { ...colorRowOne, text: `Diagnóstico de razonamiento lógico - matemático`, colSpan: 2 },
                         {}
                     ];
                 }

@@ -29,11 +29,12 @@
                     [id]="'position'">
                 </app-input-position>
             </div>
-            <div class="col-12 col-lg-6">
-                <app-text-area-description 
+            <div class="col-12 col-lg-6 form-group">
+                <app-text-area-custom 
+                    [max]="322"
                     [id]="'description-testimonial'"
                     [submitted]="submitted"
-                    [control]="form.get('description')"></app-text-area-description>
+                    [control]="form.get('description')"></app-text-area-custom>
             </div>
         </div>
     </div>

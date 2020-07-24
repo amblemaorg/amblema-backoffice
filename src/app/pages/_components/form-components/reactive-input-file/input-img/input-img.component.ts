@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
-import { AbstractControl, FormControl } from "@angular/forms";
-import { NgxImageCompressService } from "ngx-image-compress";
+import { Component, OnInit, Input } from '@angular/core';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { AbstractControl, FormControl } from '@angular/forms';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
-  selector: "app-input-img",
+  selector: 'app-input-img',
   template: `
     <div
       style="height: auto;"
@@ -38,11 +38,11 @@ import { NgxImageCompressService } from "ngx-image-compress";
       </label>
     </div>
   `,
-  styleUrls: ["./input-img.component.scss"],
+  styleUrls: ['./input-img.component.scss'],
 })
 export class InputImgComponent implements OnInit {
   @Input() control: AbstractControl | null = new FormControl();
-  @Input() align: string | null = "center";
+  @Input() align: string | null = 'center';
   @Input() url: string | null = null;
   @Input() id: string | null = String(Math.random());
 
@@ -52,7 +52,7 @@ export class InputImgComponent implements OnInit {
   // Get size on bytes
   private size: number;
 
-  private pictureBase64 = "";
+  private pictureBase64 = '';
 
   constructor(
     private compress: NgxImageCompressService,
@@ -64,7 +64,7 @@ export class InputImgComponent implements OnInit {
   }
 
   onClick(event) {
-    event.target.value = "";
+    event.target.value = '';
   }
 
   onLoadPicture(event: any) {
@@ -85,7 +85,7 @@ export class InputImgComponent implements OnInit {
      */
     if (file) {
       if (!this.isValidImage(file)) {
-        this.toast.error("Error de archivo", "Carga una image valida");
+        this.toast.error('Error de archivo', 'Carga una image valida');
         return false;
       }
 

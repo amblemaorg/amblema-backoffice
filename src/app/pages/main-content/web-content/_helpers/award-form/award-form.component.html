@@ -34,17 +34,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 form-group">
                 <app-text-area-custom 
                     [submitted]="submitted"
+                    [max]="481"
                     [control]="form.get('description')"
                     [placeholder]="'Primera descripción'" 
                     [label]="'Primera descripción'" 
                     [id]="'firstDescription'"></app-text-area-custom>
             </div>
 
-            <div class="col-12 col-lg-6">
-                <app-text-area-custom 
+            <div class="col-12 col-lg-6 form-group">
+                <app-text-area-custom
+                    [max]="403" 
                     [control]="form.get('description2')"
                     [submitted]="submitted"
                     [placeholder]="'Segunda descripción'" 

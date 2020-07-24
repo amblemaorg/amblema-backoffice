@@ -15,6 +15,9 @@ export class TestimonialFormComponent extends BaseTable implements OnInit, Table
   @Output() edit = new EventEmitter<Testimonial[]>();
   @Output() delete = new EventEmitter<Testimonial>();
 
+  @Input() maxDescription: number;
+
+
   form: FormGroup;
   submitted = false;
   MODE = this.ACTION.CREATE;

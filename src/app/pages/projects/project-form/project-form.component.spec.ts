@@ -52,7 +52,6 @@ describe('ProjectFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProjectFormComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

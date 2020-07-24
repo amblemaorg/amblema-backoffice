@@ -17,7 +17,7 @@ export class FormSliderComponent extends BaseTable implements OnInit {
   @Output() protected register = new EventEmitter<Slider>();
   @Output() protected edit = new EventEmitter<Slider[]>();
   @Output() protected delete = new EventEmitter<Slider>();
- 
+
 
   public form: FormGroup;
   public MODE = this.ACTION.CREATE;

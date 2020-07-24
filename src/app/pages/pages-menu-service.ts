@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { LapseActivity } from '../_models/lapse-activities.model';
 import { Injectable } from '@angular/core';
 import { STATUS } from '../_helpers/convention/status';
-import { first } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 
 @Injectable()
 export class MenuSetUp {
@@ -32,7 +32,7 @@ export class MenuSetUp {
     /* Get the lapses and activities to configure the menu*/
 
     this.subscriptionLapse = await this.lapses$
-      .pipe(first())
+      .pipe( take(1) )
       .subscribe((response) => {
 
         this.menu.find((value) => {

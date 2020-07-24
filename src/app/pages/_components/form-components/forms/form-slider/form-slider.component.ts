@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
-import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
+import { BaseTable } from 'src/app/_helpers/base-table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Slider } from 'src/app/_models/web/slider.model';
@@ -17,6 +17,7 @@ export class FormSliderComponent extends BaseTable implements OnInit {
   @Output() protected register = new EventEmitter<Slider>();
   @Output() protected edit = new EventEmitter<Slider[]>();
   @Output() protected delete = new EventEmitter<Slider>();
+ 
 
   public form: FormGroup;
   public MODE = this.ACTION.CREATE;
@@ -55,6 +56,8 @@ export class FormSliderComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     this.form = this.formBuilder.group({
       image: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required, Validators.maxLength(56)])

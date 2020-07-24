@@ -19,6 +19,7 @@
                         <hr>
                         <p class="font-weight-bold">Testimonio de los padrinos</p>
                         <app-testimonial-form 
+                        [maxDescription]="197"
                             (delete)="onDeleteTestimonial($event)"
                             (edit)="onEditTestimonial($event)"
                             (register)="onRegisterTestimonial($event)"
@@ -31,6 +32,7 @@
                         <p class="font-weight-bold">¿Cómo ser un padrino?</p>
                     
                         <app-text-area-custom 
+                            [max]="231"
                             *ngFor="let item of steps.controls; let i = index;" 
                             [control]="formSponsor.get('steps').get(''+i)"
                             label='Paso {{i + 1}}' 

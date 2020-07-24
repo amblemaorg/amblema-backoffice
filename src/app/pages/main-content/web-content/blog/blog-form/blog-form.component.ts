@@ -42,6 +42,7 @@ export class BlogFormComponent implements OnInit, OnChanges {
   showProgress = false;
   oldPost: Post;
 
+  maxEdit = 0;
   modules = {
     formula: true,
     toolbar: [
@@ -90,6 +91,15 @@ export class BlogFormComponent implements OnInit, OnChanges {
       this.formBlog.reset();
       this.formBlog.controls.tag.setValue('Ambiente');
       this.formBlog.controls.status.setValue('Publicado');
+    }
+  }
+
+  onContentChanged( $event ) {
+
+    this.maxEdit = $event.text.length;
+    if ($event.text.length > 15555) {
+
+      $event.editor.deleteText(15555, $event.text.length);
     }
   }
 

@@ -320,7 +320,7 @@ export class PDFReport implements OnInit {
                         text: 'Reporte de diagnósticos',
                         color: '#2e8aaa',
                         alignment: 'center',
-                        fontSize: 20,
+                        fontSize: 15,
                         bold: true,
                         margin: [0, 60],
                     },
@@ -428,7 +428,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.multiplicationsPerMin },
-                            { text: student.multiplicationsPerMinIndex },
+                            { text: student.multiplicationsPerMinIndex.toFixed(2) },
                         ];
                     }
 
@@ -436,7 +436,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.wordsPerMin },
-                            { text: student.wordsPerMinIndex },
+                            { text: student.wordsPerMinIndex.toFixed(2) },
                         ];
 
                     }
@@ -445,7 +445,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.operationsPerMin },
-                            { text: student.operationsPerMinIndex },
+                            { text: student.operationsPerMinIndex.toFixed(2) },
                         ];
                     }
                     // -- Columnns --
@@ -465,7 +465,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse1.math.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse1.math.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse1.math.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse1.math.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse1.math.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -503,7 +503,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse1.reading.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse1.reading.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse1.reading.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse1.reading.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse1.reading.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -540,7 +540,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse1.logic.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse1.logic.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse1.logic.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse1.logic.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse1.logic.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -664,7 +664,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.multiplicationsPerMin },
-                            { text: student.multiplicationsPerMinIndex },
+                            { text: student.multiplicationsPerMinIndex.toFixed(2) },
                         ];
                     }
 
@@ -672,7 +672,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.wordsPerMin },
-                            { text: student.wordsPerMinIndex },
+                            { text: student.wordsPerMinIndex.toFixed(2) },
                         ];
 
                     }
@@ -681,7 +681,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.operationsPerMin },
-                            { text: student.operationsPerMinIndex },
+                            { text: student.operationsPerMinIndex.toFixed(2) },
                         ];
                     }
                     // -- Columnns --
@@ -701,7 +701,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse2.math.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse2.math.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse2.math.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse2.math.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse2.math.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -739,7 +739,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse2.reading.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse2.reading.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse2.reading.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse2.reading.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse2.reading.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -776,7 +776,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse2.logic.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse2.logic.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse2.logic.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse2.logic.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse2.logic.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -901,7 +901,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.multiplicationsPerMin },
-                            { text: student.multiplicationsPerMinIndex },
+                            { text: student.multiplicationsPerMinIndex.toFixed(2) },
                         ];
                     }
 
@@ -909,7 +909,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.wordsPerMin },
-                            { text: student.wordsPerMinIndex },
+                            { text: student.wordsPerMinIndex.toFixed(2) },
                         ];
 
                     }
@@ -918,7 +918,7 @@ export class PDFReport implements OnInit {
                         prepareStudent = [
                             ...prepareStudent,
                             { text: student.operationsPerMin },
-                            { text: student.operationsPerMinIndex },
+                            { text: student.operationsPerMinIndex.toFixed(2) },
                         ];
                     }
                     // -- Columnns --
@@ -938,7 +938,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse3.math.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse3.math.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse3.math.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse3.math.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse3.math.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -976,7 +976,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse3.reading.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse3.reading.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse3.reading.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse3.reading.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse3.reading.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,
@@ -1013,7 +1013,7 @@ export class PDFReport implements OnInit {
                     diagnosticResult[2].push({ text: section.lapse3.logic.resultAverage });
                     diagnosticResult[3].push({ ...colorRowOne, text: section.lapse3.logic.overGoalStudents });
                     diagnosticResult[4].push({ ...colorRowTwo, text: section.lapse3.logic.overGoalAverage });
-                    diagnosticResult[5].push({ text: section.lapse3.logic.indexAverage });
+                    diagnosticResult[5].push({ text: section.lapse3.logic.indexAverage.toFixed(2) });
 
                     columnsNameStudent = [
                         ...columnsNameStudent,

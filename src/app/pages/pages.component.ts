@@ -11,7 +11,7 @@ export class PagesComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     setTimeout(() => {
       this.menuSetUp.renderMenu();
-    }, 500);
+    });
   }
 
   ngOnDestroy(): void {

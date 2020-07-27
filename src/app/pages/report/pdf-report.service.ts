@@ -302,6 +302,10 @@ export class PDFReport implements OnInit {
    */
 
   async onGenerate(report: DiagnosticReport) {
+
+
+    console.log( report );
+
     const finalReport: any = {
       info: {
         title: 'Reporte de diagnósticos',

@@ -8,10 +8,8 @@ import { MenuSetUp } from './pages-menu-service';
 export class PagesComponent implements AfterViewInit, OnDestroy {
   constructor(public menuSetUp: MenuSetUp) {}
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.menuSetUp.renderMenu();
-    });
+  async ngAfterViewInit() {
+    await this.menuSetUp.renderMenu(true);
   }
 
   ngOnDestroy(): void {

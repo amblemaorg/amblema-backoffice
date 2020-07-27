@@ -61,12 +61,9 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response) => {
-          this.generatorReport.onGenerate(response);
 
-          // -- To generate summary document
-          if (response.yearSummaryAvailable) {
-            this.generatorReport.onGenerateSummaryDiagnostic(response);
-          }
+
+          this.generatorReport.onGenerate(response);
 
           setTimeout(() => {
             this.disabledBtn = false;

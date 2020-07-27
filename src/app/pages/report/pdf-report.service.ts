@@ -447,7 +447,7 @@ export class PDFReport implements OnInit {
             prepareStudent = [
               ...prepareStudent,
               { text: student.multiplicationsPerMin },
-              { text: student.multiplicationsPerMinIndex.toFixed(2) },
+              { text: student.multiplicationsPerMinIndex ? student.multiplicationsPerMinIndex.toFixed(2) : ''  },
             ];
           }
 
@@ -463,7 +463,7 @@ export class PDFReport implements OnInit {
             prepareStudent = [
               ...prepareStudent,
               { text: student.operationsPerMin },
-              { text: student.operationsPerMinIndex.toFixed(2) },
+              { text: student.operationsPerMinIndex ? student.operationsPerMinIndex.toFixed(2) : '' },
             ];
           }
           // -- Columnns --
@@ -1488,7 +1488,7 @@ export class PDFReport implements OnInit {
         prepareDataReadingResult = [
           ...prepareDataReadingResult,
           { text: section.goal },
-          { text: `${section.improvementPercentage}%` },
+          { text: `${section.improvementPercentage.toFixed(2)}%` },
         ];
 
         allDataReadingResult.push(prepareDataReadingResult);
@@ -1584,7 +1584,7 @@ export class PDFReport implements OnInit {
         prepareDataMultiplicationResult = [
           ...prepareDataMultiplicationResult,
           { text: section.goal },
-          { text: `${section.improvementPercentage}%` },
+          { text: `${section.improvementPercentage.toFixed(2)}%` },
         ];
 
         allDataMultiplicationResult.push(prepareDataMultiplicationResult);
@@ -1683,7 +1683,7 @@ export class PDFReport implements OnInit {
         prepareDataLogicReasoningResult = [
           ...prepareDataLogicReasoningResult,
           { text: section.goal },
-          { text: `${section.improvementPercentage}%` },
+          { text: `${section.improvementPercentage.toFixed(2)}%` },
         ];
 
         allDataLogicReasoningResult.push(prepareDataLogicReasoningResult);

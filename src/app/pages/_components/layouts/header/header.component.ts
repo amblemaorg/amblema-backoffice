@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  items = [{ title: 'Profile' }, { title: 'Cerrar sesión' }];
+  items = [{ title: 'Cerrar sesión' }];
 
   notifications = new Array<any>();
 

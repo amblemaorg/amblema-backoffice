@@ -160,6 +160,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
     this.form.reset();
     this.submitted = false;
     this.progress = 0;
+    this.form.controls.phase.setValue('1');
 
     return true;
   }

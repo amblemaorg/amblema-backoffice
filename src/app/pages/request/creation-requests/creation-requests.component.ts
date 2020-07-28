@@ -192,7 +192,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
         // -- Set up modal
         (modal.content as DialogConfirmationComponent).showConfirmationModal(
           'Eliminar solicitud de creación de usuario',
-          '¿Desea eliminar la solicitud seleccionado?'
+          '¿Desea eliminar la solicitud seleccionada?'
         );
 
         // -- Global content services.

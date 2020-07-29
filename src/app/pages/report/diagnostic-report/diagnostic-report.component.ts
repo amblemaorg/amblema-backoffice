@@ -61,8 +61,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response) => {
-
-
+          console.log(response);
           this.generatorReport.onGenerate(response);
 
           setTimeout(() => {

@@ -302,10 +302,7 @@ export class PDFReport implements OnInit {
    */
 
   async onGenerate(report: DiagnosticReport) {
-
-
-    console.log( report );
-
+    console.log(report);
     const finalReport: any = {
       info: {
         title: 'Reporte de diagnósticos',
@@ -450,15 +447,19 @@ export class PDFReport implements OnInit {
           if (section.lapse1.math !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.multiplicationsPerMin },
-              { text: student.multiplicationsPerMinIndex ? student.multiplicationsPerMinIndex.toFixed(2) : ''  },
+              { text: student.multiplicationsPerMin.toFixed(2) },
+              {
+                text: student.multiplicationsPerMinIndex
+                  ? student.multiplicationsPerMinIndex.toFixed(2)
+                  : '',
+              },
             ];
           }
 
           if (section.lapse1.reading !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.wordsPerMin },
+              { text: student.wordsPerMin.toFixed(2) },
               { text: student.wordsPerMinIndex.toFixed(2) },
             ];
           }
@@ -466,8 +467,12 @@ export class PDFReport implements OnInit {
           if (section.lapse1.logic !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.operationsPerMin },
-              { text: student.operationsPerMinIndex ? student.operationsPerMinIndex.toFixed(2) : '' },
+              { text: student.operationsPerMin.toFixed(2) },
+              {
+                text: student.operationsPerMinIndex
+                  ? student.operationsPerMinIndex.toFixed(2)
+                  : '',
+              },
             ];
           }
           // -- Columnns --
@@ -489,14 +494,16 @@ export class PDFReport implements OnInit {
             ...colorRowTwo,
             text: section.lapse1.math.participants,
           });
-          diagnosticResult[2].push({ text: section.lapse1.math.resultAverage });
+          diagnosticResult[2].push({
+            text: section.lapse1.math.resultAverage.toFixed(2),
+          });
           diagnosticResult[3].push({
             ...colorRowOne,
             text: section.lapse1.math.overGoalStudents,
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse1.math.overGoalAverage,
+            text: `${section.lapse1.math.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse1.math.indexAverage.toFixed(2),
@@ -557,7 +564,7 @@ export class PDFReport implements OnInit {
             text: section.lapse1.reading.participants,
           });
           diagnosticResult[2].push({
-            text: section.lapse1.reading.resultAverage,
+            text: section.lapse1.reading.resultAverage.toFixed(2),
           });
           diagnosticResult[3].push({
             ...colorRowOne,
@@ -565,7 +572,7 @@ export class PDFReport implements OnInit {
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse1.reading.overGoalAverage,
+            text: `${section.lapse1.reading.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse1.reading.indexAverage.toFixed(2),
@@ -622,7 +629,7 @@ export class PDFReport implements OnInit {
             text: section.lapse1.logic.participants,
           });
           diagnosticResult[2].push({
-            text: section.lapse1.logic.resultAverage,
+            text: section.lapse1.logic.resultAverage.toFixed(2),
           });
           diagnosticResult[3].push({
             ...colorRowOne,
@@ -630,7 +637,7 @@ export class PDFReport implements OnInit {
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse1.logic.overGoalAverage,
+            text: `${section.lapse1.logic.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse1.logic.indexAverage.toFixed(2),
@@ -773,7 +780,7 @@ export class PDFReport implements OnInit {
           if (section.lapse2.math !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.multiplicationsPerMin },
+              { text: student.multiplicationsPerMin.toFixed(2) },
               { text: student.multiplicationsPerMinIndex.toFixed(2) },
             ];
           }
@@ -781,7 +788,7 @@ export class PDFReport implements OnInit {
           if (section.lapse2.reading !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.wordsPerMin },
+              { text: student.wordsPerMin.toFixed(2) },
               { text: student.wordsPerMinIndex.toFixed(2) },
             ];
           }
@@ -789,7 +796,7 @@ export class PDFReport implements OnInit {
           if (section.lapse2.logic !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.operationsPerMin },
+              { text: student.operationsPerMin.toFixed(2) },
               { text: student.operationsPerMinIndex.toFixed(2) },
             ];
           }
@@ -812,14 +819,16 @@ export class PDFReport implements OnInit {
             ...colorRowTwo,
             text: section.lapse2.math.participants,
           });
-          diagnosticResult[2].push({ text: section.lapse2.math.resultAverage });
+          diagnosticResult[2].push({
+            text: section.lapse2.math.resultAverage.toFixed(2),
+          });
           diagnosticResult[3].push({
             ...colorRowOne,
             text: section.lapse2.math.overGoalStudents,
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse2.math.overGoalAverage,
+            text: `${section.lapse2.math.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse2.math.indexAverage.toFixed(2),
@@ -880,7 +889,7 @@ export class PDFReport implements OnInit {
             text: section.lapse2.reading.participants,
           });
           diagnosticResult[2].push({
-            text: section.lapse2.reading.resultAverage,
+            text: section.lapse2.reading.resultAverage.toFixed(2),
           });
           diagnosticResult[3].push({
             ...colorRowOne,
@@ -888,7 +897,7 @@ export class PDFReport implements OnInit {
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse2.reading.overGoalAverage,
+            text: `${section.lapse2.reading.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse2.reading.indexAverage.toFixed(2),
@@ -945,7 +954,7 @@ export class PDFReport implements OnInit {
             text: section.lapse2.logic.participants,
           });
           diagnosticResult[2].push({
-            text: section.lapse2.logic.resultAverage,
+            text: section.lapse2.logic.resultAverage.toFixed(2),
           });
           diagnosticResult[3].push({
             ...colorRowOne,
@@ -953,7 +962,7 @@ export class PDFReport implements OnInit {
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse2.logic.overGoalAverage,
+            text: `${section.lapse2.logic.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse2.logic.indexAverage.toFixed(2),
@@ -1096,7 +1105,7 @@ export class PDFReport implements OnInit {
           if (section.lapse3.math !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.multiplicationsPerMin },
+              { text: student.multiplicationsPerMin.toFixed(2) },
               { text: student.multiplicationsPerMinIndex.toFixed(2) },
             ];
           }
@@ -1104,7 +1113,7 @@ export class PDFReport implements OnInit {
           if (section.lapse3.reading !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.wordsPerMin },
+              { text: student.wordsPerMin.toFixed(2) },
               { text: student.wordsPerMinIndex.toFixed(2) },
             ];
           }
@@ -1112,7 +1121,7 @@ export class PDFReport implements OnInit {
           if (section.lapse3.logic !== undefined) {
             prepareStudent = [
               ...prepareStudent,
-              { text: student.operationsPerMin },
+              { text: student.operationsPerMin.toFixed(2) },
               { text: student.operationsPerMinIndex.toFixed(2) },
             ];
           }
@@ -1135,14 +1144,16 @@ export class PDFReport implements OnInit {
             ...colorRowTwo,
             text: section.lapse3.math.participants,
           });
-          diagnosticResult[2].push({ text: section.lapse3.math.resultAverage });
+          diagnosticResult[2].push({
+            text: section.lapse3.math.resultAverage.toFixed(2),
+          });
           diagnosticResult[3].push({
             ...colorRowOne,
             text: section.lapse3.math.overGoalStudents,
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse3.math.overGoalAverage,
+            text: `${section.lapse3.math.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse3.math.indexAverage.toFixed(2),
@@ -1203,7 +1214,7 @@ export class PDFReport implements OnInit {
             text: section.lapse3.reading.participants,
           });
           diagnosticResult[2].push({
-            text: section.lapse3.reading.resultAverage,
+            text: section.lapse3.reading.resultAverage.toFixed(2),
           });
           diagnosticResult[3].push({
             ...colorRowOne,
@@ -1211,7 +1222,7 @@ export class PDFReport implements OnInit {
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse3.reading.overGoalAverage,
+            text: `${section.lapse3.reading.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse3.reading.indexAverage.toFixed(2),
@@ -1268,7 +1279,7 @@ export class PDFReport implements OnInit {
             text: section.lapse3.logic.participants,
           });
           diagnosticResult[2].push({
-            text: section.lapse3.logic.resultAverage,
+            text: section.lapse3.logic.resultAverage.toFixed(2),
           });
           diagnosticResult[3].push({
             ...colorRowOne,
@@ -1276,7 +1287,7 @@ export class PDFReport implements OnInit {
           });
           diagnosticResult[4].push({
             ...colorRowTwo,
-            text: section.lapse3.logic.overGoalAverage,
+            text: `${section.lapse3.logic.overGoalAverage.toFixed(2)}%`,
           });
           diagnosticResult[5].push({
             text: section.lapse3.logic.indexAverage.toFixed(2),
@@ -1371,7 +1382,7 @@ export class PDFReport implements OnInit {
     const TableLogicReasoningDiagnosis: any = {
       table: {
         body: [],
-        widths: '*',
+        widths: 'auto',
       },
 
       layout: this.borderCustom,
@@ -1384,7 +1395,7 @@ export class PDFReport implements OnInit {
     const TableMultiplicationDiagnosis: any = {
       table: {
         body: [],
-        widths: '*',
+        widths: 'auto',
       },
 
       layout: this.borderCustom,
@@ -1397,7 +1408,7 @@ export class PDFReport implements OnInit {
     const TableReadingDiagnosis: any = {
       table: {
         body: [],
-        widths: '*',
+        widths: 'auto',
       },
 
       layout: this.borderCustom,
@@ -1412,7 +1423,7 @@ export class PDFReport implements OnInit {
           ...colorRowOne,
           text: 'Diagnóstico de lectura',
           alignment: 'center',
-          colSpan: 10,
+          colSpan: 13,
         },
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
@@ -1423,16 +1434,25 @@ export class PDFReport implements OnInit {
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
+
+        { ...colorRowOne, text: '' },
+        { ...colorRowOne, text: '' },
+        { ...colorRowOne, text: '' },
       ];
 
       const SecondHeaderReading: any = [
         { ...colorRowTwo, text: '', colSpan: 2 },
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 1', colSpan: 2, alignment: 'center' },
+        { ...colorRowTwo, text: 'Lapso 1', colSpan: 3, alignment: 'center' },
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 2', colSpan: 2, alignment: 'center' },
+
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 3', colSpan: 2, alignment: 'center' },
+        { ...colorRowTwo, text: 'Lapso 2', colSpan: 3, alignment: 'center' },
+        { ...colorRowTwo, text: '' },
+
+        { ...colorRowTwo, text: '' },
+        { ...colorRowTwo, text: 'Lapso 3', colSpan: 3, alignment: 'center' },
+        { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '\nMeta\n', rowSpan: 2 },
         { ...colorRowTwo, text: '\nPorcentaje de mejora\n', rowSpan: 2 },
@@ -1443,10 +1463,16 @@ export class PDFReport implements OnInit {
         { ...colorRowTwo, text: 'Seccion' },
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+        { ...colorRowTwo, text: 'Encima de la meta' },
+
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+
+        { ...colorRowTwo, text: 'Encima de la meta' },
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+
+        { ...colorRowTwo, text: 'Encima de la meta' },
         { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '' },
       ];
@@ -1468,24 +1494,28 @@ export class PDFReport implements OnInit {
         if (section.lapse1 !== undefined) {
           prepareDataReadingResult = [
             ...prepareDataReadingResult,
-            { text: section.lapse1.resultAverage },
+            { text: section.lapse1.resultAverage.toFixed(2) },
             { text: section.lapse1.indexAverage.toFixed(2) },
+            { text: section.lapse1.overGoalStudents },
           ];
         }
 
         if (section.lapse2 !== undefined) {
           prepareDataReadingResult = [
             ...prepareDataReadingResult,
-            { text: section.lapse2.resultAverage },
+            { text: section.lapse2.resultAverage.toFixed(2) },
             { text: section.lapse2.indexAverage.toFixed(2) },
+            { text: section.lapse2.overGoalStudents },
           ];
         }
 
         if (section.lapse3 !== undefined) {
           prepareDataReadingResult = [
             ...prepareDataReadingResult,
-            { text: section.lapse3.resultAverage },
+            { text: section.lapse3.resultAverage.toFixed(2) },
+
             { text: section.lapse3.indexAverage.toFixed(2) },
+            { text: section.lapse3.overGoalStudents },
           ];
         }
 
@@ -1508,7 +1538,7 @@ export class PDFReport implements OnInit {
           ...colorRowOne,
           text: 'Diagnóstico de multiplicación',
           alignment: 'center',
-          colSpan: 10,
+          colSpan: 13,
         },
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
@@ -1519,16 +1549,26 @@ export class PDFReport implements OnInit {
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
+
+        { ...colorRowOne, text: '' },
+        { ...colorRowOne, text: '' },
+        { ...colorRowOne, text: '' },
       ];
 
       const SecondHeaderMultiplication: any = [
         { ...colorRowTwo, text: '', colSpan: 2 },
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 1', colSpan: 2, alignment: 'center' },
+        { ...colorRowTwo, text: 'Lapso 1', colSpan: 3, alignment: 'center' },
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 2', colSpan: 2, alignment: 'center' },
+
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 3', colSpan: 2, alignment: 'center' },
+        { ...colorRowTwo, text: 'Lapso 2', colSpan: 3, alignment: 'center' },
+        { ...colorRowTwo, text: '' },
+
+        { ...colorRowTwo, text: '' },
+        { ...colorRowTwo, text: 'Lapso 3', colSpan: 3, alignment: 'center' },
+        { ...colorRowTwo, text: '' },
+
         { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '\nMeta', rowSpan: 2 },
         { ...colorRowTwo, text: '\nPorcentaje de mejora', rowSpan: 2 },
@@ -1539,10 +1579,19 @@ export class PDFReport implements OnInit {
         { ...colorRowTwo, text: 'Seccion' },
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+
+        { ...colorRowTwo, text: 'Encima de la meta' },
+
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+
+        { ...colorRowTwo, text: 'Encima de la meta' },
+
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+
+        { ...colorRowTwo, text: 'Encima de la meta' },
+
         { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '' },
       ];
@@ -1564,24 +1613,27 @@ export class PDFReport implements OnInit {
         if (section.lapse1 !== undefined) {
           prepareDataMultiplicationResult = [
             ...prepareDataMultiplicationResult,
-            { text: section.lapse1.resultAverage },
+            { text: section.lapse1.resultAverage.toFixed(2) },
             { text: section.lapse1.indexAverage.toFixed(2) },
+            { text: section.lapse1.overGoalStudents },
           ];
         }
 
         if (section.lapse2 !== undefined) {
           prepareDataMultiplicationResult = [
             ...prepareDataMultiplicationResult,
-            { text: section.lapse2.resultAverage },
+            { text: section.lapse2.resultAverage.toFixed(2) },
             { text: section.lapse2.indexAverage.toFixed(2) },
+            { text: section.lapse2.overGoalStudents },
           ];
         }
 
         if (section.lapse3 !== undefined) {
           prepareDataMultiplicationResult = [
             ...prepareDataMultiplicationResult,
-            { text: section.lapse3.resultAverage },
+            { text: section.lapse3.resultAverage.toFixed(2) },
             { text: section.lapse3.indexAverage.toFixed(2) },
+            { text: section.lapse3.overGoalStudents },
           ];
         }
 
@@ -1607,7 +1659,7 @@ export class PDFReport implements OnInit {
           ...colorRowOne,
           text: 'Diagnóstico de razonamiento lógico . matemático',
           alignment: 'center',
-          colSpan: 10,
+          colSpan: 13,
         },
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
@@ -1618,16 +1670,23 @@ export class PDFReport implements OnInit {
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
         { ...colorRowOne, text: '' },
+
+        { ...colorRowOne, text: '' },
+        { ...colorRowOne, text: '' },
+        { ...colorRowOne, text: '' },
       ];
 
       const SecondHeaderLogicReasoning: any = [
         { ...colorRowTwo, text: '', colSpan: 2 },
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 1', colSpan: 2, alignment: 'center' },
+        { ...colorRowTwo, text: 'Lapso 1', colSpan: 3, alignment: 'center' },
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 2', colSpan: 2, alignment: 'center' },
         { ...colorRowTwo, text: '' },
-        { ...colorRowTwo, text: 'Lapso 3', colSpan: 2, alignment: 'center' },
+        { ...colorRowTwo, text: 'Lapso 2', colSpan: 3, alignment: 'center' },
+        { ...colorRowTwo, text: '' },
+        { ...colorRowTwo, text: '' },
+        { ...colorRowTwo, text: 'Lapso 3', colSpan: 3, alignment: 'center' },
+        { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '\nMeta', rowSpan: 2 },
         { ...colorRowTwo, text: '\nPorcentaje de mejora', rowSpan: 2 },
@@ -1638,10 +1697,16 @@ export class PDFReport implements OnInit {
         { ...colorRowTwo, text: 'Seccion' },
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+        { ...colorRowTwo, text: 'Encima de la meta' },
+
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+        { ...colorRowTwo, text: 'Encima de la meta' },
+
         { ...colorRowTwo, text: 'Resultado' },
         { ...colorRowTwo, text: 'Índice' },
+        { ...colorRowTwo, text: 'Encima de la meta' },
+
         { ...colorRowTwo, text: '' },
         { ...colorRowTwo, text: '' },
       ];
@@ -1663,24 +1728,27 @@ export class PDFReport implements OnInit {
         if (section.lapse1 !== undefined) {
           prepareDataLogicReasoningResult = [
             ...prepareDataLogicReasoningResult,
-            { text: section.lapse1.resultAverage },
+            { text: section.lapse1.resultAverage.toFixed(2) },
             { text: section.lapse1.indexAverage.toFixed(2) },
+            { text: section.lapse1.overGoalStudents },
           ];
         }
 
         if (section.lapse2 !== undefined) {
           prepareDataLogicReasoningResult = [
             ...prepareDataLogicReasoningResult,
-            { text: section.lapse2.resultAverage },
+            { text: section.lapse2.resultAverage.toFixed(2) },
             { text: section.lapse2.indexAverage.toFixed(2) },
+            { text: section.lapse1.overGoalStudents },
           ];
         }
 
         if (section.lapse3 !== undefined) {
           prepareDataLogicReasoningResult = [
             ...prepareDataLogicReasoningResult,
-            { text: section.lapse3.resultAverage },
+            { text: section.lapse3.resultAverage.toFixed(2) },
             { text: section.lapse3.indexAverage.toFixed(2) },
+            { text: section.lapse1.overGoalStudents },
           ];
         }
 
@@ -1731,9 +1799,73 @@ export class PDFReport implements OnInit {
         },
       ]);
 
+      // -- Three tables
+
       finalReport.content.push(TableLogicReasoningDiagnosis);
       finalReport.content.push(TableMultiplicationDiagnosis);
       finalReport.content.push(TableReadingDiagnosis);
+
+      // -- Final result
+      finalReport.content.push({
+        table: {
+          body: [
+            [
+              {
+                ...colorRowOne,
+                text: 'Promedio total en el diagnóstico de lectura:',
+              },
+              {
+                text: report.yearSummary.reading.totalResultAverage.toFixed(2),
+              },
+            ],
+            [
+              {
+                ...colorRowTwo,
+                text: 'Promedio total en el diagnóstico de multiplicación:',
+              },
+              { text: report.yearSummary.math.totalResultAverage.toFixed(2) },
+            ],
+            [
+              {
+                text:
+                  'Promedio total en el diagnóstico de razonamiento lógico matemático:',
+              },
+              { text: report.yearSummary.logic.totalResultAverage.toFixed(2) },
+            ],
+            [
+              { ...colorRowOne, text: 'Porcentaje de mejora en lectura:' },
+
+              {
+                text: `${report.yearSummary.reading.improvementPercentageAverage.toFixed(2)}%`,
+              },
+            ],
+            [
+              {
+                ...colorRowTwo,
+                text:
+                  'Porcentaje de mejora en el diagnóstico en multiplicación:',
+              },
+
+              {
+                text: `${report.yearSummary.math.improvementPercentageAverage.toFixed(2)}%`,
+              },
+            ],
+            [
+              {
+                text:
+                  'Porcentaje de mejora en razonamiento lógico - matemático:',
+              },
+              {
+                text: `${report.yearSummary.logic.improvementPercentageAverage.toFixed(2)}%`,
+              },
+            ],
+          ],
+          widths: '*',
+        },
+
+        layout: this.borderCustom,
+        margin: [0, 0, 0, 30],
+      });
     }
 
     finalReport.content.unshift(documentSubHeaderData);

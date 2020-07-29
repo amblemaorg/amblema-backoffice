@@ -60,8 +60,11 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         this.form.patchValue(response);
         this.form.controls.birthdate.setValue(new Date(this.backupOldData.birthdate.toString()));
         this.idState = this.form.controls.addressState.value;
-        this.idMunicipality = this.form.controls.addressMunicipality.value;
+        // this.idMunicipality = this.form.controls.addressMunicipality.value;
         this.form.controls.addressState.setValue(response.addressState.id);
+        this.form.controls.addressMunicipality.setValue(
+          response.addressMunicipality.id
+        );
         this.form.controls.role.setValue(response.role.id);
 
         this.form.get('password').setValue('');

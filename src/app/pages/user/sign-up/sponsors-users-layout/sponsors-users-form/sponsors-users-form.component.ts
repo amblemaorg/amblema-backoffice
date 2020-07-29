@@ -152,6 +152,10 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
           this.form.controls.role.setValue(response.role.id);
           this.form.controls.addressState.setValue(response.addressState.id);
           this.idState = response.addressState;
+
+          this.form.controls.addressMunicipality.setValue(
+            response.addressMunicipality.id
+          );
           this.form.get('password').clearValidators();
           this.form.get('password').updateValueAndValidity();
           this.form.updateValueAndValidity();

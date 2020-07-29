@@ -118,10 +118,31 @@
     nbButton
     type="button"
     (click)="onSubmit()"
-    status="success"
+    [status]="
+      formModality.CREATE.value === (formModeService.getMode() | async)?.value
+        ? 'success'
+        : 'primary'
+    "
+    [nbSpinner]="showProgress"
+    [disabled]="showProgress"
     class="col-12 col-lg-auto"
   >
-    Registrar
+    <span *ngIf="showProgress">Guardando...</span>
+    <span
+      *ngIf="
+        !showProgress &&
+        formModality.CREATE.value === (formModeService.getMode() | async)?.value
+      "
+      >Registrar</span
+    >
+
+    <span
+      *ngIf="
+        !showProgress &&
+        formModality.CREATE.value !== (formModeService.getMode() | async)?.value
+      "
+      >Actualizar</span
+    >
   </button>
   <button
     nbButton

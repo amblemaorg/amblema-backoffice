@@ -70,8 +70,13 @@ export class AdminUserFormComponent extends DetailsForm
         // -- Prepare data in the form to update
         this.form.patchValue(response);
         this.idState = this.form.controls.addressState.value;
-        this.idMunicipality = this.form.controls.addressMunicipality.value;
+
+        // this.idMunicipality = this.form.controls.addressMunicipality.value;
+
         this.form.controls.addressState.setValue(response.addressState.id);
+        this.form.controls.addressMunicipality.setValue(
+          response.addressMunicipality.id
+        );
         this.form.controls.role.setValue(response.role.id);
         this.submitted = false;
 
@@ -191,23 +196,31 @@ export class AdminUserFormComponent extends DetailsForm
 
         this.adminUserService
           .updateAdminUser(this.backupOldData.id, updateData)
-          .subscribe((event: any) => {
-            event = this.helper.readlyTypeDocument([event])[0];
+          .subscribe((event: HttpEvent<any>) => {
+            switch (event.type) {
+              case HttpEventType.Response:
+                let dataPosted: any = event.body;
+                dataPosted =  this.helper.readlyTypeDocument([dataPosted])[0];
 
-            this.store.dispatch(new UpdateAdminUser(this.backupOldData, event));
-            this.toastr.updateSuccess(
-              'Actualización',
-              'Usuario actualizado satisfactoriamente'
-            );
-            this.submitted = false;
+                this.store.dispatch(new UpdateAdminUser(dataPosted));
+                this.toastr.updateSuccess(
+                  'Actualización',
+                  'Usuario actualizado satisfactoriamente'
+                );
+                this.submitted = false;
 
-            this.form.get('password').setValue('');
-            this.form.get('password').setValidators([]);
-            this.form.get('password').updateValueAndValidity();
+                this.form.get('password').setValue('');
+                this.form.get('password').setValidators([]);
+                this.form.get('password').updateValueAndValidity();
 
-            setTimeout(() => {
-              this.showProgress = false;
-            }, 2100);
+                setTimeout(() => {
+                  this.showProgress = false;
+                }, 2100);
+                break;
+
+              default:
+                break;
+            }
           });
       }
     } else {

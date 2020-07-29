@@ -21,6 +21,7 @@ import {
 import { RolesState } from 'src/app/store/role.action';
 import { Role } from 'src/app/_models/permission.model';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-form-admin',
@@ -149,5 +150,6 @@ export class ModalFormAdminComponent extends UserAdminForm
     );
     // -- Remove validation password, to update the data
     this.form.controls.password.clearValidators();
+    this.form.controls.password.setValidators([ Validators.minLength(8), Validators.maxLength(8) ]);
   }
 }

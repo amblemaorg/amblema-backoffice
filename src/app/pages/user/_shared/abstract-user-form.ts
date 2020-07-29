@@ -8,6 +8,7 @@ import { AddressForm } from './abstract-address-form';
 import { DOCUMENT_TYPE } from './components/form/identity-card/document-type-values';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { FORM_MODALITY } from './abstract-form-mode';
 
 export abstract class UserForm extends AddressForm {
   public nameMessage = `Nombre inválido. Debes agregar solo letras en este campo`;
@@ -16,11 +17,13 @@ export abstract class UserForm extends AddressForm {
   public phoneMessage = `Número telefónico inválido, ingrese sólo números`;
 
   public form: FormGroup;
+  public formModality = FORM_MODALITY;
 
   public mode: string; // <-- Save the mode when change
   public role: string; // <-- Save the default role id
   public previousData: any; // <-- To back up previous data
   public showProgress = false;
+
 
   constructor(  ) {
     super();

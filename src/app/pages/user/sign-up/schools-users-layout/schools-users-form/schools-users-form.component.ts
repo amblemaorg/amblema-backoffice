@@ -158,11 +158,25 @@ export class SchoolsUsersFormComponent extends BaseForm
         this.title = 'Actualizar usuario escuela';
 
         this.backupOldData = response;
+        console.log(response);
         this.restar();
         this.form.patchValue(response);
+
+        setTimeout(() => {
+
         this.idState = this.form.controls.addressState.value;
         this.idMunicipality = this.form.controls.addressMunicipality.value;
+
+        }, 1);
+
+        setTimeout(() => {
+
         this.form.controls.addressState.setValue(response.addressState.id);
+        this.form.controls.addressMunicipality.setValue(response.addressMunicipality.id);
+
+        }, 2);
+
+
         this.form.controls.role.setValue(response.role.id);
 
         this.form.controls.name.clearValidators();
@@ -170,6 +184,7 @@ export class SchoolsUsersFormComponent extends BaseForm
 
         this.coordinate.latitude = response.coordinate.latitude;
         this.coordinate.longitude = response.coordinate.longitude;
+
 
         this.form.get('password').setValue('');
         this.form.get('password').clearValidators();
@@ -304,13 +319,11 @@ export class SchoolsUsersFormComponent extends BaseForm
 
         updateData = { ...updateData, coordinate: this.coordinate };
 
-        console.log( updateData );
-
-
         this.schoolUserService
           .updateSchoolUser(this.backupOldData.id, updateData)
           .subscribe(
             (event: any) => {
+
               this.store.dispatch(
                 new UpdateSchoolUser(this.backupOldData, event)
               );

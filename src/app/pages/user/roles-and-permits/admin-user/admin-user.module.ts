@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AdminUserRoutingModule } from './admin-user-routing.module';
 import { ModalFormAdminComponent } from './modal-form-admin/modal-form-admin.component';
 import { AdminUserComponent } from './admin-user.component';
-import { NbCardModule, NbButtonModule, NbSpinnerModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbSpinnerModule, NbTooltipModule } from '@nebular/theme';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputModule } from '../../_shared/components/reactive-input/reactive-input.module';

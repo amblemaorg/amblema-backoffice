@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveValidationComponent } from './reactive-validation/reactive-validation.component';
 import { ReactiveInputComponent } from './inputs/reactive-input/reactive-input.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NbInputModule } from '@nebular/theme';
+import { NbInputModule, NbTooltipModule } from '@nebular/theme';
 
 
 @NgModule({
@@ -13,6 +13,7 @@ import { NbInputModule } from '@nebular/theme';
   imports: [
     NbInputModule,
     CommonModule,
+    NbTooltipModule,
     ReactiveFormsModule,
     FormsModule,
   ],

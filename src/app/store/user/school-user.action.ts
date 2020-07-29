@@ -148,12 +148,20 @@ export class SchoolUserState implements NgxsOnInit, OnDestroy {
 
     @Action(UpdateSchoolUser)
     updateSchoolUser(ctx: StateContext<SchoolUserModel>, action: UpdateSchoolUser) {
+
         ctx.setState(patch({
             ...ctx.getState(),
             schoolUsers: updateItem<SchoolUser>(
                 schoolUser =>
-                    schoolUser.id === action.oldSchoolUser.id, action.newSchoolUser)
+                    schoolUser.id === action.newSchoolUser.id, action.newSchoolUser)
         }));
+
+        ctx.setState(patch({
+            ...ctx.getState(),
+            schoolUser: action.newSchoolUser
+        }));
+
+
     }
 
     @Action(DeleteSchoolUser)

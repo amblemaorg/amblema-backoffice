@@ -118,7 +118,7 @@ export class ModalFormAdminComponent extends UserAdminForm
               switch (response.type) {
                 case HttpEventType.Response:
                   this.store.dispatch(
-                    new UpdateAdminUser(this.previousData, response.body)
+                    new UpdateAdminUser( response.body )
                   );
                   this.toast.updateSuccess(
                     'Actualización',

@@ -18,7 +18,7 @@ export interface AdminUserModel {
 // -- Actions Admin User
 
 export class GetAdminUsers {
-  static readonly type = '[User] Get Users';
+  static readonly type = '[User] Get User';
   constructor() {}
 }
 
@@ -34,7 +34,7 @@ export class SetAdminUser {
 
 export class UpdateAdminUser {
   static readonly type = '[User] Update User';
-  constructor(public oldAdminUser: AdminUser, public newAdminUser: AdminUser) {}
+  constructor(public newAdminUser: AdminUser) {}
 }
 
 export class DeleteAdminUser {
@@ -66,7 +66,7 @@ export class DeleteAdminUser {
     adminUsers: [],
   },
 })
-export class AdminUserState implements NgxsOnInit, OnDestroy, NgxsAfterBootstrap {
+export class AdminUserState implements NgxsOnInit, OnDestroy {
   subscription: Subscription;
 
   @Selector()
@@ -91,9 +91,6 @@ export class AdminUserState implements NgxsOnInit, OnDestroy, NgxsAfterBootstrap
     ctx.dispatch(new GetAdminUsers());
   }
 
-  ngxsAfterBootstrap(ctx: StateContext<AdminUserModel>) {
-    ctx.dispatch(new GetAdminUsers());
-  }
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -149,11 +146,12 @@ export class AdminUserState implements NgxsOnInit, OnDestroy, NgxsAfterBootstrap
       patch({
         ...ctx.getState(),
         adminUsers: updateItem<AdminUser>(
-          (adminUser) => adminUser.id === action.oldAdminUser.id,
+          (item) => item.id === action.newAdminUser.id,
           action.newAdminUser
         ),
       })
     );
+
   }
 
   @Action(DeleteAdminUser)

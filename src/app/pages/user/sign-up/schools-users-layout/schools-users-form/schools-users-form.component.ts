@@ -162,19 +162,13 @@ export class SchoolsUsersFormComponent extends BaseForm
         this.restar();
         this.form.patchValue(response);
 
-        setTimeout(() => {
 
         this.idState = this.form.controls.addressState.value;
-        this.idMunicipality = this.form.controls.addressMunicipality.value;
+//        this.idMunicipality = this.form.controls.addressMunicipality.value;
 
-        }, 1);
-
-        setTimeout(() => {
 
         this.form.controls.addressState.setValue(response.addressState.id);
         this.form.controls.addressMunicipality.setValue(response.addressMunicipality.id);
-
-        }, 2);
 
 
         this.form.controls.role.setValue(response.role.id);

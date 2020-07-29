@@ -7,7 +7,7 @@ import {
 } from 'src/app/store/user/admin-user.action';
 import { Select, Store } from '@ngxs/store';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
-import { Observable, Subscription, SubscriptionLike } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FORM_MODALITY } from '../../../_shared/abstract-form-mode';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormModeService } from '../../../_services/form-mode.service';
@@ -46,6 +46,18 @@ export class TableFormAdminComponent extends AbstractSmartTable
       function: {
         title: 'Cargo',
         type: 'string',
+      },
+      role: {
+        title: 'Rol',
+        type: 'string',
+        valuePrepareFunction: this.objectName,
+        filterFunction: this.stringFilter,
+      },
+      status: {
+        title: 'Estatus',
+        type: 'string',
+        valuePrepareFunction: this.prepareStatus,
+        filterFunction: this.statusFilter,
       },
     };
   }
@@ -88,14 +100,12 @@ export class TableFormAdminComponent extends AbstractSmartTable
         // -- Listen the action
         this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
           (result) => {
-
             // -- Yes then delete it
             if (result === true) {
               this.store.dispatch(new DeleteAdminUser(event.data));
               (modal.content as DialogConfirmationComponent).hideConfirmationModal();
             }
           },
-
           (err: any) =>
             (modal.content as DialogConfirmationComponent).errorDelete(err) // <-- Error messages
         );

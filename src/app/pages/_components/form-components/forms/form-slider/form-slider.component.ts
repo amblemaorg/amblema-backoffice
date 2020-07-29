@@ -1,16 +1,19 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { BaseTable } from 'src/app/_helpers/base-table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Slider } from 'src/app/_models/web/slider.model';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { DialogConfirmationComponent } from '../../../shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { Subscription } from 'rxjs';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-form-slider',
   templateUrl: './form-slider.component.html',
   styleUrls: ['./form-slider.component.scss']
 })
-export class FormSliderComponent extends BaseTable implements OnInit {
+export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy {
 
   @Input() public sliders: Slider[];
 
@@ -18,6 +21,7 @@ export class FormSliderComponent extends BaseTable implements OnInit {
   @Output() protected edit = new EventEmitter<Slider[]>();
   @Output() protected delete = new EventEmitter<Slider>();
 
+  subscription: Subscription;
 
   public form: FormGroup;
   public MODE = this.ACTION.CREATE;
@@ -26,7 +30,9 @@ export class FormSliderComponent extends BaseTable implements OnInit {
   constructor(
     public taostr: CustomToastrService,
     public sanitizer: DomSanitizer,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+
+    protected modalService?: BsModalService, ) {
     super('form-slider');
 
     this.settings.actions.custom = [
@@ -64,6 +70,14 @@ export class FormSliderComponent extends BaseTable implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
+    if ( this.subscription ) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   onAction(event: any): void {
 
     switch (event.action) {
@@ -73,7 +87,35 @@ export class FormSliderComponent extends BaseTable implements OnInit {
         this.form.patchValue(event.data);
         break;
       case this.ACTION.DELETE:
+
+                  // -- Instance dialog
+        const modal = this.modalService.show(
+          DialogConfirmationComponent,
+          Object.assign({}, { class: 'modal-dialog-centered' })
+        );
+
+        // -- Setup dialog
+        (modal.content as DialogConfirmationComponent).showConfirmationModal(
+          'Eliminar diapositiva',
+          '¿Desea eliminar la dispositiva seleccionada?',
+          'No se eliminará hasta que guarde los cambios.'
+        );
+
+
+          // -- Listen the action
+        this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
+            // -- Yes then delete it
+            if (result === true) {
+
         this.delete.emit(event.data);
+        (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+            }
+          },
+          (err: any) =>
+            (modal.content as DialogConfirmationComponent).errorDelete(err) // <-- Error messages
+        );
+
         break;
     }
   }

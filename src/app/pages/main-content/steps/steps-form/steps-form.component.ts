@@ -1,28 +1,39 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { ItemCheck } from 'src/app/_models/step.model';
 import { APPROVAL_TYPE } from '../../../../_models/step.model';
 import { StepService } from 'src/app/services/step.service';
 import { VIDEO_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
-import { FileValidator, EXTENSIONS } from 'src/app/pages/_components/shared/file-validator';
+import {
+  FileValidator,
+  EXTENSIONS,
+} from 'src/app/pages/_components/shared/file-validator';
 import { Store } from '@ngxs/store';
 import { AddStep } from 'src/app/store/step.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-steps-form',
   templateUrl: './steps-form.component.html',
-  styles: []
+  styles: [],
 })
 export class StepsFormComponent implements OnInit {
-
   @Input() id: string;
   @Input() title: string;
   @Input() kind: string;
 
   showProgress = false;
+  subscription: Subscription;
 
   public form: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
@@ -52,22 +63,26 @@ export class StepsFormComponent implements OnInit {
   constructor(
     public store?: Store,
     public toastr?: CustomToastrService,
+
     public stepService?: StepService,
-    public fb?: FormBuilder) {
+    public fb?: FormBuilder,
+    protected modalServicesBs?: BsModalService
+  ) {}
 
-  }
-
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     // This is to valid the check list if has a check
-    const checkListValid = this.form.controls.hasChecklist.value && this.checklist.length > 0 ?
-      true : this.form.controls.hasChecklist.value && this.checklist.length === 0 ? false : true;
+    const checkListValid =
+      this.form.controls.hasChecklist.value && this.checklist.length > 0
+        ? true
+        : this.form.controls.hasChecklist.value && this.checklist.length === 0
+        ? false
+        : true;
 
     this.submitted = true;
 
     if (this.form.valid && checkListValid) {
-
       const formData = new FormData();
 
       formData.append('name', this.form.controls.name.value);
@@ -85,7 +100,13 @@ export class StepsFormComponent implements OnInit {
 
       // To send video, to be true
       if (this.form.controls.hasVideo.value) {
-        formData.append('video', JSON.stringify({ name: Math.random().toString(), url: this.form.controls.video.value }));
+        formData.append(
+          'video',
+          JSON.stringify({
+            name: Math.random().toString(),
+            url: this.form.controls.video.value,
+          })
+        );
       }
 
       // To send list, to be true
@@ -100,22 +121,24 @@ export class StepsFormComponent implements OnInit {
 
       this.showProgress = true;
 
-      this.stepService.setStep(formData).subscribe((response: HttpEvent<any>) => {
-
-        switch (response.type) {
-          case HttpEventType.Response:
-
-            this.resetForm();
-            this.store.dispatch(new AddStep(response.body));
-            this.toastr.registerSuccess('Registro', 'Paso registrado');
-            break;
-
+      this.stepService.setStep(formData).subscribe(
+        (response: HttpEvent<any>) => {
+          switch (response.type) {
+            case HttpEventType.Response:
+              this.resetForm();
+              this.store.dispatch(new AddStep(response.body));
+              this.toastr.registerSuccess('Registro', 'Paso registrado');
+              break;
+          }
+        },
+        (err: any) => {
+          this.showProgress = false;
+          this.toastr.error(
+            'Problemas al registrar',
+            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
+          );
         }
-      }, (err: any) => {
-        this.showProgress = false;
-        this.toastr.error('Problemas al registrar', 'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado');
-
-      });
+      );
     }
   }
 
@@ -134,7 +157,10 @@ export class StepsFormComponent implements OnInit {
 
   changeFile(): void {
     if (this.form.controls.hasFile.value) {
-      this.form.controls.file.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
+      this.form.controls.file.setValidators([
+        Validators.required,
+        FileValidator.fileExtensions(EXTENSIONS),
+      ]);
     } else {
       this.form.controls.file.clearValidators();
     }
@@ -143,12 +169,14 @@ export class StepsFormComponent implements OnInit {
 
   changeVideo(): void {
     if (this.form.controls.hasVideo.value) {
-      this.form.controls.video.setValidators([Validators.required, Validators.pattern(VIDEO_PATTERN)]);
+      this.form.controls.video.setValidators([
+        Validators.required,
+        Validators.pattern(VIDEO_PATTERN),
+      ]);
     } else {
       this.form.controls.video.clearValidators();
     }
     this.form.controls.video.updateValueAndValidity();
-
   }
 
   resetForm() {
@@ -167,8 +195,12 @@ export class StepsFormComponent implements OnInit {
     if (this.checklist.length < 5) {
       this.checklist.push({ name: this.form.controls.checklist.value });
       this.form.controls.checklist.reset();
-
-    } else { this.toastr.error('Limite de registro', 'Solo se pueden registrar 5 objectivos'); }
+    } else {
+      this.toastr.error(
+        'Limite de registro',
+        'Solo se pueden registrar 5 objectivos'
+      );
+    }
   }
 
   public onEditObjective(index: number): void {
@@ -178,8 +210,30 @@ export class StepsFormComponent implements OnInit {
   }
 
   public onDeleteObjective(index: number): void {
-    this.checklist = this.checklist.filter((value, key) => key !== index);
-    this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
+    const modal = this.modalServicesBs.show(
+      DialogConfirmationComponent,
+      Object.assign({}, { class: 'modal-dialog-centered' })
+    );
+
+    // -- Set up modal
+    (modal.content as DialogConfirmationComponent).showConfirmationModal(
+      'Eliminar objectivo',
+      '¿Desea eliminar el objectivo seleccionado?'
+    );
+
+    this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+      (result) => {
+        if (result === true) {
+          this.checklist = this.checklist.filter((value, key) => key !== index);
+          this.toastr.deleteRegister(
+            'Eliminado',
+            'Se ha eliminado el objetivo de la lista'
+          );
+
+          (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+        }
+      }
+    );
   }
 
   protected confirmAction() {
@@ -191,13 +245,16 @@ export class StepsFormComponent implements OnInit {
     this.form.controls.checklist.reset();
   }
 
-  onCheckList(  ) {
-    if ( this.form.controls.hasChecklist.value ) {
-      this.APPROVAL_TYPE.push({ CODE: '2', VALUE: 'Se apueba al completar los campos' });
+  onCheckList() {
+    if (this.form.controls.hasChecklist.value) {
+      this.APPROVAL_TYPE.push({
+        CODE: '2',
+        VALUE: 'Se apueba al completar los campos',
+      });
     } else {
-      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(item => item.CODE !== '2');
+      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
+        (item) => item.CODE !== '2'
+      );
     }
-
   }
 }
-

@@ -8,7 +8,6 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { VIDEO_PATTERN } from '../../../shared/constant/validation-patterns-list';
 import { Store } from '@ngxs/store';
 import { DeleteStep, UpdateStep } from 'src/app/store/step.action';
-import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { Subscription } from 'rxjs';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -28,10 +27,10 @@ export class FormSimpleStepComponent extends StepsFormComponent
 
   constructor(
     public stores: Store,
-    private modalServicesBs: BsModalService,
     public toastrService: CustomToastrService,
-    protected updateStepService: StepService
-  ) {
+    protected updateStepService: StepService,
+    protected modalServicesBs?: BsModalService,
+    ) {
     super(stores, toastrService);
 
     // Add new control status toggle

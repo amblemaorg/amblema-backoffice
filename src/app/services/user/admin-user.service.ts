@@ -15,6 +15,7 @@ export class AdminUserService {
   private readonly ADMIN_USER: string = `users?userType=${USER_TYPE.ADMIN.VALUE}`;
   private readonly USER_TYPE: string = `?userType=${USER_TYPE.ADMIN.VALUE}`;
 
+
   constructor(private httpClient: HttpClient) { }
 
   getAdminUsers(): Observable<AdminUser[]> {
@@ -39,6 +40,6 @@ export class AdminUserService {
   }
 
   deleteAdminUser(id: string): Observable<string> {
-    return this.httpClient.delete<string>(`${environment.api}${this.USER}/${id}`);
+    return this.httpClient.delete<string>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`);
   }
 }

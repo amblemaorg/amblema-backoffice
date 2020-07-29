@@ -26,6 +26,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-steps-form',
   templateUrl: './steps-form.component.html',
   styles: [],
+  providers: [BsModalService]
 })
 export class StepsFormComponent implements OnInit {
   @Input() id: string;
@@ -63,11 +64,11 @@ export class StepsFormComponent implements OnInit {
   constructor(
     public store?: Store,
     public toastr?: CustomToastrService,
-
     public stepService?: StepService,
     public fb?: FormBuilder,
-    protected modalServicesBs?: BsModalService
-  ) {}
+
+    public modalServicesBs?: BsModalService,
+    ) {}
 
   ngOnInit(): void {}
 

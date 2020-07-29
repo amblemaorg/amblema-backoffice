@@ -29,7 +29,7 @@ export class FormSimpleStepComponent extends StepsFormComponent
     public stores: Store,
     public toastrService: CustomToastrService,
     protected updateStepService: StepService,
-    protected modalServicesBs?: BsModalService,
+    public modalServicesBs?: BsModalService,
     ) {
     super(stores, toastrService);
 

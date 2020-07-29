@@ -11,6 +11,8 @@ import { SponsorList } from 'src/app/_models/web/web-sponsor.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-sponsor-list',
@@ -18,11 +20,13 @@ import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
   styleUrls: ['./sponsor-list.component.scss'],
 })
 export class SponsorListComponent implements OnInit, OnDestroy {
-
   @Select(WebSponsorState.sponsorHave) sponsorHave$: Observable<SponsorList[]>;
-  @Select(WebSponsorState.sponsorAvailable) sponsorAvailable$: Observable<SponsorUser[]>;
-  @Select(WebSponsorState.sponsorPositions) sponsorPositions$: Observable<any[]>;
-
+  @Select(WebSponsorState.sponsorAvailable) sponsorAvailable$: Observable<
+    SponsorUser[]
+  >;
+  @Select(WebSponsorState.sponsorPositions) sponsorPositions$: Observable<
+    any[]
+  >;
 
   subscription: Subscription;
   dataPosition: any[] = []; // <-- Selector position
@@ -82,11 +86,11 @@ export class SponsorListComponent implements OnInit, OnDestroy {
     private toastr: CustomToastrService,
     private sanitizer: DomSanitizer,
     private store: Store,
-  ) {
-  }
 
-  ngOnInit() {
-  }
+    protected modalService?: BsModalService,
+  ) {}
+
+  ngOnInit() {}
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -116,8 +120,36 @@ export class SponsorListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteConfirm(event: any): void {
+    // -- Instance dialog
+    const modal = this.modalService.show(
+      DialogConfirmationComponent,
+      Object.assign({}, { class: 'modal-dialog-centered' })
+    );
+
+    // -- Setup dialog
+    (modal.content as DialogConfirmationComponent).showConfirmationModal(
+      'Eliminar padrino',
+      '¿Desea eliminar el padrino seleccionado?',
+      'No se eliminará hasta que guarde los cambios.'
+    );
+
+
+          // -- Listen the action
+    this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+          (result) => {
+            // -- Yes then delete it
+            if (result === true) {
+
     this.store.dispatch(new DeleteSponsor(event.data.id)).subscribe(() => {
       event.confirm.resolve();
     });
+    (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+            }
+          },
+          (err: any) =>
+            (modal.content as DialogConfirmationComponent).errorDelete(err) // <-- Error messages
+        );
+
+
   }
 }

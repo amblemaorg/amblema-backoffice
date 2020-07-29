@@ -39,6 +39,6 @@ export class SponsorUserService {
   }
 
   deleteSponsorUser(id: string): Observable<string> {
-    return this.httpClient.delete<string>(`${environment.api}${this.USER}/${id}`);
+    return this.httpClient.delete<string>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`);
   }
 }

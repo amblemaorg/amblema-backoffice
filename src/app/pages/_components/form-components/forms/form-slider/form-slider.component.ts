@@ -32,7 +32,7 @@ export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy 
     public sanitizer: DomSanitizer,
     public formBuilder: FormBuilder,
 
-    protected modalService?: BsModalService, ) {
+    public modalService?: BsModalService, ) {
     super('form-slider');
 
     this.settings.actions.custom = [

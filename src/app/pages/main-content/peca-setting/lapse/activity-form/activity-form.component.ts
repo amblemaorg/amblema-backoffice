@@ -18,11 +18,14 @@ import { Slider } from 'src/app/_models/web/slider.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { APPROVAL_TYPE } from '../../../../../_models/step.model';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.scss'],
+  providers: [BsModalService]
 })
 export class ActivityFormComponent extends StepsFormComponent
   implements AfterViewInit {
@@ -58,9 +61,12 @@ export class ActivityFormComponent extends StepsFormComponent
     private cd: ChangeDetectorRef,
     private lapseActivityService: LapseActivitiesService,
     public store: Store,
-    public toastr: CustomToastrService
+    public toastr: CustomToastrService ,
+    public modalX: BsModalService
   ) {
     super(store, toastr);
+
+
 
     // Toggles
     this.form.addControl('status', new FormControl(false));
@@ -575,5 +581,32 @@ export class ActivityFormComponent extends StepsFormComponent
         (item) => item.CODE !== '2'
       );
     }
+  }
+
+  public onDeleteObjectiveX(index: number): void {
+    const modal = this.modalX.show(
+      DialogConfirmationComponent,
+      Object.assign({}, { class: 'modal-dialog-centered' })
+    );
+
+    // -- Set up modal
+    (modal.content as DialogConfirmationComponent).showConfirmationModal(
+      'Eliminar objectivo',
+      '¿Desea eliminar el objectivo seleccionado?'
+    );
+
+    this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
+      (result) => {
+        if (result === true) {
+          this.checklist = this.checklist.filter((value, key) => key !== index);
+          this.toastr.deleteRegister(
+            'Eliminado',
+            'Se ha eliminado el objetivo de la lista'
+          );
+
+          (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+        }
+      }
+    );
   }
 }

@@ -70,6 +70,7 @@ build:
 run-tests:
   stage: test
   script: 
+      - docker exec $CONTAINER_RUN npm rebuild
       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadless --watch=false
   tags: 
       - amblema

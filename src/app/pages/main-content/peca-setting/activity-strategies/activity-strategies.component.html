@@ -29,8 +29,12 @@
     ></app-form-slider>
   </nb-card-body>
   <nb-card-footer class="text-right">
+  
+    <app-progress *ngIf="showProgress" class="text-center"></app-progress>
     <button
       nbButton
+      [attr.disabled]="showProgress ? true : null"
+      (click)="onSaveActivityStrategies()"
       status="success"
       class="btn btn-success col-12 col-lg-auto"
     >

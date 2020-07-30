@@ -5,6 +5,7 @@ import { ActivityStrategiesRoutingModule } from './activity-strategies-routing.m
 import { ActivityStrategiesComponent } from './activity-strategies.component';
 import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { FormSliderModule } from 'src/app/pages/_components/form-components/forms/form-slider/form-slider.module';
+import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
 
 @NgModule({
   declarations: [ActivityStrategiesComponent],
@@ -13,6 +14,8 @@ import { FormSliderModule } from 'src/app/pages/_components/form-components/form
     ActivityStrategiesRoutingModule,
     NbCardModule,
     NbButtonModule,
+
+    ProgressModule,
 
     // Add custom module
     FormSliderModule,

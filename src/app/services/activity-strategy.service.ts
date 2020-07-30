@@ -16,4 +16,13 @@ export class ActivityStrategyService {
     return this.httpClient
       .get<ModelActivityStrategy>(`${environment.api}${this.ACTIVITY_STRATEGY}`);
   }
+
+  updateActivityStrategy(data: any): Observable<any> {
+    return this.httpClient
+    .post<any>(`${environment.api}${this.ACTIVITY_STRATEGY}`, data, {
+      reportProgress: true,
+      observe: 'events',
+    });
+
+  }
 }

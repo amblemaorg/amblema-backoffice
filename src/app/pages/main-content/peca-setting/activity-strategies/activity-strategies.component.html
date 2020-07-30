@@ -7,13 +7,26 @@
     <app-form-slider
       [sliders]="$sliderEnviroment | async"
       (register)="onRegisterSliderEnviroment($event)"
+      (edit)="onEditSliderEnviroment($event)"
+      (delete)="onDeleteSliderEnviroment($event)"
     ></app-form-slider>
 
     <p class="font-weight-bold h5">Lectura</p>
-    <app-form-slider></app-form-slider>
+    <app-form-slider
+      [sliders]="$sliderReading | async"
+      (register)="onRegisterSliderReading($event)"
+      (edit)="onEditSliderReading($event)"
+      (delete)="onDeleteSliderReading($event)"
+    ></app-form-slider>
 
     <p class="font-weight-bold h5">Matemáticas</p>
-    <app-form-slider></app-form-slider>
+    <app-form-slider
+
+      [sliders]="$sliderMath | async"
+      (register)="onRegisterSliderMath($event)"
+      (edit)="onEditSliderMath($event)"
+      (delete)="onDeleteSliderMath($event)"
+    ></app-form-slider>
   </nb-card-body>
   <nb-card-footer class="text-right">
     <button

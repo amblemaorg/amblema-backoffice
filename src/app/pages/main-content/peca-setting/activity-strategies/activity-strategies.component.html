@@ -1,16 +1,44 @@
 <nb-card>
-    <nb-card-header>Estrategias de seguimiento de actividades ordinarias</nb-card-header>
-    <nb-card-body>
-        <p class="font-weight-bold h5">Ambiente</p>
-        <app-form-slider></app-form-slider>
+  <nb-card-header
+    >Estrategias de seguimiento de actividades ordinarias</nb-card-header
+  >
+  <nb-card-body>
+    <p class="font-weight-bold h5">Ambiente</p>
+    <app-form-slider
+      [sliders]="$sliderEnviroment | async"
+      (register)="onRegisterSliderEnviroment($event)"
+      (edit)="onEditSliderEnviroment($event)"
+      (delete)="onDeleteSliderEnviroment($event)"
+    ></app-form-slider>
 
-        <p class="font-weight-bold h5">Lectura</p>
-        <app-form-slider></app-form-slider>
+    <p class="font-weight-bold h5">Lectura</p>
+    <app-form-slider
+      [sliders]="$sliderReading | async"
+      (register)="onRegisterSliderReading($event)"
+      (edit)="onEditSliderReading($event)"
+      (delete)="onDeleteSliderReading($event)"
+    ></app-form-slider>
 
-        <p class="font-weight-bold h5">Matemáticas</p>
-        <app-form-slider></app-form-slider>
-    </nb-card-body>
-    <nb-card-footer class="text-right">
-        <button nbButton status="success" class="btn btn-success col-12 col-lg-auto">Guardar</button>
-    </nb-card-footer>
+    <p class="font-weight-bold h5">Matemáticas</p>
+    <app-form-slider
+
+      [sliders]="$sliderMath | async"
+      (register)="onRegisterSliderMath($event)"
+      (edit)="onEditSliderMath($event)"
+      (delete)="onDeleteSliderMath($event)"
+    ></app-form-slider>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+  
+    <app-progress *ngIf="showProgress" class="text-center"></app-progress>
+    <button
+      nbButton
+      [attr.disabled]="showProgress ? true : null"
+      (click)="onSaveActivityStrategies()"
+      status="success"
+      class="btn btn-success col-12 col-lg-auto"
+    >
+      Guardar
+    </button>
+  </nb-card-footer>
 </nb-card>

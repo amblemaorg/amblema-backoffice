@@ -15,10 +15,10 @@ export class PDFReport implements OnInit {
 
   borderCustom = {
     hLineColor(i, node) {
-      return '#024e21';
+      return '#00722e';
     },
     vLineColor(i, node) {
-      return '#024e21';
+      return '#00722e';
     },
   };
 
@@ -54,7 +54,7 @@ export class PDFReport implements OnInit {
     };
 
     const colorHeaderRow: any = {
-      fillColor: '#42b16a',
+      fillColor: '#81b03e',
       color: '#FFF',
       bold: true,
     };
@@ -126,6 +126,7 @@ export class PDFReport implements OnInit {
           body: sponsorRecords,
           layout: this.borderCustom,
         },
+        layout: this.borderCustom,
         margin: [0, 0, 0, 30],
       });
     } else if (dataUsers.typeUser === '1') {
@@ -181,8 +182,8 @@ export class PDFReport implements OnInit {
         table: {
           widths: '7%',
           body: coordinatorRecords,
-          layout: this.borderCustom,
         },
+        layout: this.borderCustom,
         margin: [0, 0, 0, 30],
       });
     } else if (dataUsers.typeUser === '2') {
@@ -235,8 +236,9 @@ export class PDFReport implements OnInit {
         table: {
           widths: '6.6%',
           body: schoolRecords,
-          layout: this.borderCustom,
         },
+
+        layout: this.borderCustom,
         margin: [0, 0, 0, 30],
       });
     } else if (dataUsers.typeUser === '3') {
@@ -286,8 +288,9 @@ export class PDFReport implements OnInit {
         table: {
           widths: '9%',
           body: teacherRecords,
-          layout: this.borderCustom,
         },
+
+        layout: this.borderCustom,
         margin: [0, 0, 0, 30],
       });
     }
@@ -376,12 +379,12 @@ export class PDFReport implements OnInit {
     // -- Variables style --
 
     const colorRowOne: any = {
-      fillColor: '#2e8aaa',
+      fillColor: '#00809a',
       color: '#FFF',
       bold: true,
     };
     const colorRowTwo: any = {
-      fillColor: '#42b16a',
+      fillColor: '#81b03e',
       color: '#FFF',
       bold: true,
     };

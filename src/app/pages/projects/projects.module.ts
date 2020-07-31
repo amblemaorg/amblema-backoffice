@@ -37,7 +37,8 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
     ModalModule,
     NgSelectModule,
     ReactiveInputModule,
-    ProjectsRoutingModule
+    ProjectsRoutingModule,
+    NgSelectModule,
   ]
 })
 export class ProjectsModule { }

@@ -11,6 +11,7 @@ export class AuthService {
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private loggedUser: string;
+  private idUser: string;
 
   constructor(private http: HttpClient) {}
 
@@ -86,5 +87,14 @@ export class AuthService {
   public removeTokens() {
     localStorage.removeItem(this.JWT_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
+  }
+
+  public setIdUser( id: string ) {
+    this.idUser = id;
+  }
+
+
+  public getIdUser(  ): string {
+    return this.idUser;
   }
 }

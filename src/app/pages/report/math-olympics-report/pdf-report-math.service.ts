@@ -8,6 +8,16 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export class PDFReportMath {
 
+
+  borderCustom = {
+    hLineColor(i, node) {
+      return '#00722e';
+    },
+    vLineColor(i, node) {
+      return '#00722e';
+    },
+  };
+
     constructor(@Inject(DOCUMENT) private document: any, private datePipe: DatePipe, ) { }
 
     async generateMathOlympics(mockData: OlympicsReport ) {
@@ -120,8 +130,8 @@ export class PDFReportMath {
 
         // -- / End --
 
-        const colorHeaderRow: any = { fillColor: '#42b16a', color: '#FFF', bold: true };
-        const colorHeaderSecondary: any = { fillColor: '#2e8aaa', color: '#FFF', bold: true };
+        const colorHeaderRow: any = { fillColor: '#81b03e', color: '#FFF', bold: true };
+        const colorHeaderSecondary: any = { fillColor: '#00809a', color: '#FFF', bold: true };
 
         const documentHeader: any = [
             {
@@ -209,6 +219,7 @@ export class PDFReportMath {
                                 ]
                             ]
                         },
+                        layout: this.borderCustom,
                         margin: [0, 0, 0, 20]
                     }
                 ];
@@ -237,6 +248,7 @@ export class PDFReportMath {
                                 ]
                             ]
                         },
+                        layout: this.borderCustom,
                         margin: [0, 0, 0, 30]
                     }
                 ];
@@ -288,7 +300,9 @@ export class PDFReportMath {
                             text: `Estudiantes con medalla de bronce: ${mockData.finalScore.studentsBronzeMedal}`
                         }],
                     ]
-                }
+                },
+
+                layout: this.borderCustom,
             }
         ];
 

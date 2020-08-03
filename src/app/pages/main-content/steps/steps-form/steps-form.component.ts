@@ -259,7 +259,7 @@ export class StepsFormComponent implements OnInit {
     }
   }
 
-  onChangeToGeneteThirdOption(event: any) {
+  public onChangeToGeneteThirdOption(event: any) {
 
 
     const hasCodeThree = this.APPROVAL_TYPE.find(

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
 import { MathOlympicsReportComponent } from '../../math-olympics-report/math-olympics-report.component';
 import { ChartAverage } from '../../_shared/_model/average-graph.model';
@@ -7,6 +7,7 @@ import { Select } from '@ngxs/store';
 import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { Observable } from 'rxjs';
 import { EnrolledSchoolsService } from 'src/app/services/report/enrolled-schools.service';
+import { HttpEventType, HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-enrolled-schools-report',
@@ -15,7 +16,9 @@ import { EnrolledSchoolsService } from 'src/app/services/report/enrolled-schools
   providers: [GraphPdfService],
 })
 export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent {
-  data: ChartAverage[];
+
+
+  public data: ChartAverage[] = [];
 
   @Select(SchoolYearEnrolledState.schoolYearsEnrolled)
   data$: Observable<SchoolYearEnrolled[]>;
@@ -33,41 +36,72 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
   onQueryGraph() {
     // -- Request the data grapch --
 
-    this.data = [
-      {
-        academicPeriod: ['2020', '2021'],
-        coordinates: [
-          {
-            x: 2,
-            y: 0,
-          },
-          {
-            x: 8,
-            y: 10,
-          },
-        ],
-        total: 20
-      },
-      {
-        academicPeriod: ['2021', '2022'],
-        coordinates: [
-          {
-            x: 9,
-            y: 17,
-          },
-          {
-            x: 30,
-            y: 2,
-          },
-        ],
-        total: 20
-      },
-    ];
+    // this.data = [
+    //   {
+    //     academicPeriod: ["2020", "2021"],
+    //     coordinates: [
+    //       {
+    //         x: 2,
+    //         y: 0,
+    //       },
+    //       {
+    //         x: 8,
+    //         y: 10,
+    //       },
+    //     ],
+    //     total: 20,
+    //   },
+    //   {
+    //     academicPeriod: ["2021", "2022"],
+    //     coordinates: [
+    //       {
+    //         x: 9,
+    //         y: 17,
+    //       },
+    //       {
+    //         x: 30,
+    //         y: 2,
+    //       },
+    //     ],
+    //     total: 20,
+    //   },
+    // ];
 
-    this.enrolledSchoolService.getNumberActiveSchool( this.dateInitSelected.id ,  this.dateEndSelected.id ).subscribe( response => {
-
-      console.log( response );
-    } );
+     this.enrolledSchoolService
+       .getNumberActiveSchool(this.dateInitSelected.id, this.dateEndSelected.id)
+       .subscribe((request: HttpEvent<any>) => {
+         switch (request.type) {
+           case HttpEventType.Response:
+             request.body.records.forEach((item) => {
+               this.data.push({
+                 academicPeriod: [
+                   item.academicPeriodYears[0],
+                   item.academicPeriodYears[1],
+                 ],
+                 coordinates: [
+                   {
+                     x: 0,
+                     y: item.trimesterOne,
+                   },
+                   {
+                     x: 1,
+                     y: item.trimesterTwo,
+                   },
+                   {
+                     x: 2,
+                     y: item.trimesterThree,
+                   },
+                   {
+                     x: 3,
+                     y: item.trimesterFour,
+                   },
+                 ],
+               });
+               console.log(item);
+             });
+             break;
+         }
+       });
   }
 
   onGenerateDocument() {
@@ -75,12 +109,10 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
     this.pdfService.pdfOpen(data); // <-- Open in the browser
   }
 
-
-  onSelectInitDate( event: any ) {
+  onSelectInitDate(event: any) {
     this.dateEndSelected = null;
     if (event) {
-      this.onChangeDateInit( event.id );
+      this.onChangeDateInit(event.id);
     }
-
   }
 }

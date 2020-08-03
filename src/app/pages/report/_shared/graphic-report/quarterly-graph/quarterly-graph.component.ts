@@ -12,7 +12,7 @@ import { ChartAverage } from '../../_model/average-graph.model';
 export class QuarterlyGraphComponent implements OnInit {
   @Input() legendy: string | null = 'Eje Y';
   @Input() title: string | null = 'Gráfico';
-  @Input() data: ChartAverage[];
+  @Input() data = Array<ChartAverage>();
 
   constructor() {}
   /**

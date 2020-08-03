@@ -74,11 +74,13 @@
   <nb-card-footer class="text-right">
     <button
       (click)="onGenerateDocument()"
-      [attr.disabled]="showGraph ? null : true"
+      [nbSpinner]="delayGeneratePDF"
+      [attr.disabled]="(!showGraph || delayGeneratePDF) ? true : null"
       status="success"
       nbButton
       class="col-12 col-lg-auto"
     >
+    
       Exportar <nb-icon icon="download-outline"></nb-icon>
     </button>
   </nb-card-footer>

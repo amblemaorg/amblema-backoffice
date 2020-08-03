@@ -12,7 +12,7 @@ import { ChartAverage } from '../../_model/average-graph.model';
 export class QuarterlyGraphComponent implements OnInit {
   @Input() legendy: string | null = 'Eje Y';
   @Input() title: string | null = 'Gráfico';
-  @Input() data : ChartAverage[];
+  @Input() data: ChartAverage[];
 
   constructor() {}
   /**
@@ -110,7 +110,7 @@ export class QuarterlyGraphComponent implements OnInit {
 
     this.data.forEach( (value, key) => {
 
-      let color:any = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+      const color: any = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
 
       this.lineChartData.push({
         data: value.coordinates,

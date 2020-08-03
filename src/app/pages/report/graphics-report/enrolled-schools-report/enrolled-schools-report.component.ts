@@ -1,24 +1,25 @@
-import { Component, ChangeDetectorRef } from "@angular/core";
-import { MathOlympicsReportService } from "src/app/services/report/math-olympics-report.service";
-import { MathOlympicsReportComponent } from "../../math-olympics-report/math-olympics-report.component";
-import { ChartAverage } from "../../_shared/_model/average-graph.model";
-import { GraphPdfService } from "../../_shared/_service/graph-pdf.service";
-import { Select } from "@ngxs/store";
-import { SchoolYearEnrolledState } from "src/app/store/_enrolled/school-year-enrolled.action";
-import { Observable } from "rxjs";
-import { EnrolledSchoolsService } from "src/app/services/report/enrolled-schools.service";
-import { HttpEventType, HttpEvent } from "@angular/common/http";
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
+import { MathOlympicsReportComponent } from '../../math-olympics-report/math-olympics-report.component';
+import { ChartAverage } from '../../_shared/_model/average-graph.model';
+import { GraphPdfService } from '../../_shared/_service/graph-pdf.service';
+import { Select } from '@ngxs/store';
+import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
+import { Observable } from 'rxjs';
+import { EnrolledSchoolsService } from 'src/app/services/report/enrolled-schools.service';
+import { HttpEventType, HttpEvent } from '@angular/common/http';
 
 @Component({
-  selector: "app-enrolled-schools-report",
-  templateUrl: "./enrolled-schools-report.component.html",
-  styleUrls: ["./enrolled-schools-report.component.scss"],
+  selector: 'app-enrolled-schools-report',
+  templateUrl: './enrolled-schools-report.component.html',
+  styleUrls: ['./enrolled-schools-report.component.scss'],
   providers: [GraphPdfService],
 })
 export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent {
   public data: ChartAverage[] = [];
-  public showGraph: boolean = false;
-  public showProgress: boolean = false;
+  public showGraph = false;
+  public showProgress = false;
+  public delayGeneratePDF = false;
 
   @Select(SchoolYearEnrolledState.schoolYearsEnrolled)
   data$: Observable<SchoolYearEnrolled[]>;
@@ -86,8 +87,16 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
   }
 
   onGenerateDocument() {
-    const data = document.getElementById("graphic"); // <-- Get html id
+    this.delayGeneratePDF = true;
+
+    const data = document.getElementById('graphic'); // <-- Get html id
     this.pdfService.pdfOpen(data); // <-- Open in the browser
+
+    setTimeout(() => {
+
+      this.delayGeneratePDF = false;
+      this.cd.detectChanges();
+    }, 3000);
   }
 
   onSelectInitDate(event: any) {

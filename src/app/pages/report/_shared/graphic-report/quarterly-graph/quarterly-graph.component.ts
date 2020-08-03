@@ -12,7 +12,7 @@ import { ChartAverage } from '../../_model/average-graph.model';
 export class QuarterlyGraphComponent implements OnInit {
   @Input() legendy: string | null = 'Eje Y';
   @Input() title: string | null = 'Gráfico';
-  @Input() data = Array<ChartAverage>();
+  @Input() data : ChartAverage[];
 
   constructor() {}
   /**
@@ -99,27 +99,6 @@ export class QuarterlyGraphComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-  // -- Mock data --
-  dataGraph = [
-    // -- period
-    {
-      academicPeriod: ['2016', '2017'],
-
-      // -- School numbers
-      coordinates: [
-        {
-          x: 0, // <-- Trimestre:  4 puntos
-          y: 0, // <-- El number de escuelas
-        },
-      ],
-    },
-
-    // -- period
-    {
-      academicPeriod: ['2016', '2017'],
-    },
-  ];
-
   async ngOnInit() {
     /**
      * Set legends and title
@@ -130,16 +109,19 @@ export class QuarterlyGraphComponent implements OnInit {
     // -- Set data --
 
     this.data.forEach( (value, key) => {
+
+      let color:any = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+
       this.lineChartData.push({
         data: value.coordinates,
         label: `${value.academicPeriod[0]}-${value.academicPeriod[1]}`,
-        fill: true,
-        borderWidth: 2
+        fill: false,
+        borderWidth: 2,
       });
 
       this.lineChartColors.push({
-        backgroundColor: 'transparent',
-        borderColor: '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
+        backgroundColor: color,
+        borderColor: color
       });
 
     });

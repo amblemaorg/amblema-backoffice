@@ -51,7 +51,7 @@
     </div>
 
     <!-- Display graph -->
-    <div id="graphic" #graphic class="row justify-content-center" *ngIf="data">
+    <div id="graphic" #graphic class="row justify-content-center" *ngIf="showGraph">
       <div class="col-12 col-lg-9">
         <app-quarterly-graph
           [data]="data"
@@ -62,16 +62,19 @@
     </div>
 
     <!-- Show message no graph -->
-    <div class="row" *ngIf="!data">
+    <div class="row" *ngIf="!showGraph">
       <div class="col-12 text-center">
         <h4>Seleccione los períodos para generar la gráfica</h4>
+        <nb-alert status="primary" [nbSpinner]="showProgress" *ngIf="showProgress" nbSpinnerStatus="control">
+            Cargando datos...
+        </nb-alert>
       </div>
     </div>
   </nb-card-body>
   <nb-card-footer class="text-right">
     <button
       (click)="onGenerateDocument()"
-      [attr.disabled]="data ? null : true"
+      [attr.disabled]="showGraph ? null : true"
       status="success"
       nbButton
       class="col-12 col-lg-auto"

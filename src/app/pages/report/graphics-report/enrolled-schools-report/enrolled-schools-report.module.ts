@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { EnrolledSchoolsReportRoutingModule } from './enrolled-schools-report-routing.module';
 import { EnrolledSchoolsReportComponent } from './enrolled-schools-report.component';
-import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbAlertModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GraphicReportModule } from '../../_shared/graphic-report/graphic-report.module';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -19,7 +19,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgSelectModule,
     CommonModule,
     NbIconModule,
-    EnrolledSchoolsReportRoutingModule
+    NbAlertModule,
+    EnrolledSchoolsReportRoutingModule,
+    NbSpinnerModule
   ]
 })
 export class EnrolledSchoolsReportModule { }

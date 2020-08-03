@@ -1,24 +1,24 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
-import { MathOlympicsReportComponent } from '../../math-olympics-report/math-olympics-report.component';
-import { ChartAverage } from '../../_shared/_model/average-graph.model';
-import { GraphPdfService } from '../../_shared/_service/graph-pdf.service';
-import { Select } from '@ngxs/store';
-import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
-import { Observable } from 'rxjs';
-import { EnrolledSchoolsService } from 'src/app/services/report/enrolled-schools.service';
-import { HttpEventType, HttpEvent } from '@angular/common/http';
+import { Component, ChangeDetectorRef } from "@angular/core";
+import { MathOlympicsReportService } from "src/app/services/report/math-olympics-report.service";
+import { MathOlympicsReportComponent } from "../../math-olympics-report/math-olympics-report.component";
+import { ChartAverage } from "../../_shared/_model/average-graph.model";
+import { GraphPdfService } from "../../_shared/_service/graph-pdf.service";
+import { Select } from "@ngxs/store";
+import { SchoolYearEnrolledState } from "src/app/store/_enrolled/school-year-enrolled.action";
+import { Observable } from "rxjs";
+import { EnrolledSchoolsService } from "src/app/services/report/enrolled-schools.service";
+import { HttpEventType, HttpEvent } from "@angular/common/http";
 
 @Component({
-  selector: 'app-enrolled-schools-report',
-  templateUrl: './enrolled-schools-report.component.html',
-  styleUrls: ['./enrolled-schools-report.component.scss'],
+  selector: "app-enrolled-schools-report",
+  templateUrl: "./enrolled-schools-report.component.html",
+  styleUrls: ["./enrolled-schools-report.component.scss"],
   providers: [GraphPdfService],
 })
 export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent {
-
-
   public data: ChartAverage[] = [];
+  public showGraph: boolean = false;
+  public showProgress: boolean = false;
 
   @Select(SchoolYearEnrolledState.schoolYearsEnrolled)
   data$: Observable<SchoolYearEnrolled[]>;
@@ -34,78 +34,59 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
 
   // -- Event get data --
   onQueryGraph() {
+    this.showProgress = true;
+
     // -- Request the data grapch --
 
-    // this.data = [
-    //   {
-    //     academicPeriod: ["2020", "2021"],
-    //     coordinates: [
-    //       {
-    //         x: 2,
-    //         y: 0,
-    //       },
-    //       {
-    //         x: 8,
-    //         y: 10,
-    //       },
-    //     ],
-    //     total: 20,
-    //   },
-    //   {
-    //     academicPeriod: ["2021", "2022"],
-    //     coordinates: [
-    //       {
-    //         x: 9,
-    //         y: 17,
-    //       },
-    //       {
-    //         x: 30,
-    //         y: 2,
-    //       },
-    //     ],
-    //     total: 20,
-    //   },
-    // ];
+    this.enrolledSchoolService
+      .getNumberActiveSchool(this.dateInitSelected.id, this.dateEndSelected.id)
+      .subscribe(
+        (request: HttpEvent<any>) => {
+          switch (request.type) {
+            case HttpEventType.Response:
+              request.body.records.forEach((item) => {
+                this.data.push({
+                  academicPeriod: [
+                    item.academicPeriodYears[0],
+                    item.academicPeriodYears[1],
+                  ],
+                  coordinates: [
+                    {
+                      x: 0,
+                      y: item.trimesterOne,
+                    },
+                    {
+                      x: 1,
+                      y: item.trimesterTwo,
+                    },
+                    {
+                      x: 2,
+                      y: item.trimesterThree,
+                    },
+                    {
+                      x: 3,
+                      y: item.trimesterFour,
+                    },
+                  ],
+                });
+              });
 
-     this.enrolledSchoolService
-       .getNumberActiveSchool(this.dateInitSelected.id, this.dateEndSelected.id)
-       .subscribe((request: HttpEvent<any>) => {
-         switch (request.type) {
-           case HttpEventType.Response:
-             request.body.records.forEach((item) => {
-               this.data.push({
-                 academicPeriod: [
-                   item.academicPeriodYears[0],
-                   item.academicPeriodYears[1],
-                 ],
-                 coordinates: [
-                   {
-                     x: 0,
-                     y: item.trimesterOne,
-                   },
-                   {
-                     x: 1,
-                     y: item.trimesterTwo,
-                   },
-                   {
-                     x: 2,
-                     y: item.trimesterThree,
-                   },
-                   {
-                     x: 3,
-                     y: item.trimesterFour,
-                   },
-                 ],
-               });
-               console.log(item);
-             });
-             break;
-         }
-       });
+              setTimeout(() => {
+                this.showGraph = true;
+                this.showProgress = false;
+              }, 2500);
+              break;
+          }
+        },
+        () => {
+          this.showProgress = false;
+          this.showGraph = false;
+        }
+      );
   }
 
   onGenerateDocument() {
-    const data = document.getElementById('graphic'); // <-- Get html id
+    const data = document.getElementById("graphic"); // <-- Get html id
     this.pdfService.pdfOpen(data); // <-- Open in the browser
   }
 

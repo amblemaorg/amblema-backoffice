@@ -3,6 +3,7 @@ import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch } from '@ngxs/store/operators';
 import { STATUS } from 'src/app/_helpers/convention/status';
+import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 
 class SchoolYearEnrolledModel {
     schoolYears: SchoolYearEnrolled[];

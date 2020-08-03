@@ -5,6 +5,7 @@ import { GeneralEnrolled } from '../_models/_enrolled/general-enrolled.model';
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { SchoolYearEnrolled } from '../_models/_enrolled/school-year.model';
 
 @Injectable({
   providedIn: 'root',

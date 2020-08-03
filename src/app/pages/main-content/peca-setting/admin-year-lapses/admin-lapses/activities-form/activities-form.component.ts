@@ -88,6 +88,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
       formData.append('hasChecklist', this.form.controls.hasChecklist.value);
       formData.append('hasUpload', this.form.controls.hasUpload.value);
       formData.append('hasDate', this.form.controls.hasDate.value);
+      formData.append('status', '1');
       this.showProgress = true;
       this.lapseActivityService.createActivity(this.lapse, formData).subscribe(
         (response: HttpEvent<any>) => {

@@ -7,37 +7,34 @@
       <div class="col-12">
         <h6>Filtro por rango de período académico</h6>
       </div>
-      <div class="col-12 col-lg-6">
-        <label class="label">Inicio</label>
-        <select
-          class="form-control form-group"
-          (change)="onChangeDateInit($event.target.value)"
-          [(ngModel)]="dateInitSelected"
-        >
-          <option [value]="null" disabled>- Inicio Período académico -</option>
-          <option [value]="item.id" *ngFor="let item of datesInit">{{
-            item.name
-          }}</option>
-        </select>
+      <div class="col-12 col-lg-6 form-group">
+        
+        <label class="label">- Inicio Período académico -</label>
+        <ng-select
+          *ngIf="datesInit"
+          [items]="datesInit"
+          bindLabel="name"
+          placeholder="- Inicio Período académico -"
+          (change)="onSelectInitDate($event)"
+          [(ngModel)]="dateInitSelected">
+        </ng-select>
       </div>
 
-      <div class="col-12 col-lg-6">
-        <label class="label">Fin</label>
-        <select
-          [attr.disabled]="!dateInitSelected ? true : null"
-          class="form-control form-group"
+      <div class="col-12 col-lg-6 form-group">
+
+        <label class="label">- Fin Período académico -</label>
+        <ng-select
+          *ngIf="datesEnd"
+          [items]="datesEnd"
+          bindLabel="name"
+          placeholder="- Fin Período académico -"
           [(ngModel)]="dateEndSelected"
         >
-          <option [value]="null" disabled>- Fin Período académico -</option>
-          <option [value]="item.id" *ngFor="let item of datesEnd">{{
-            item.name
-          }}</option>
-        </select>
+        </ng-select>
       </div>
 
       <div class="col-12 text-right">
         <button
-        
           [attr.disabled]="dateInitSelected && dateEndSelected ? null : true"
           nbButton
           class="col-12 col-lg-auto"
@@ -54,7 +51,7 @@
     </div>
 
     <!-- Display graph -->
-    <div id="graphic" #graphic  class="row justify-content-center" *ngIf="data">
+    <div id="graphic" #graphic class="row justify-content-center" *ngIf="data">
       <div class="col-12 col-lg-9">
         <app-quarterly-graph
           [data]="data"

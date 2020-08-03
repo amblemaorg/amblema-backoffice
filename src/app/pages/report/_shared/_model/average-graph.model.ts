@@ -1,4 +1,3 @@
-
 export interface ChartAverage {
   academicPeriod: string[];
   coordinates: Coordinate[];

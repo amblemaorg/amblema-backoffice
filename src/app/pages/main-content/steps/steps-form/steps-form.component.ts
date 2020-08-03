@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-steps-form',
   templateUrl: './steps-form.component.html',
   styles: [],
-  providers: [BsModalService]
+  providers: [BsModalService],
 })
 export class StepsFormComponent implements OnInit {
   @Input() id: string;
@@ -67,8 +67,8 @@ export class StepsFormComponent implements OnInit {
     public stepService?: StepService,
     public fb?: FormBuilder,
 
-    public modalServicesBs?: BsModalService,
-    ) {}
+    public modalServicesBs?: BsModalService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -255,6 +255,37 @@ export class StepsFormComponent implements OnInit {
     } else {
       this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
         (item) => item.CODE !== '2'
+      );
+    }
+  }
+
+  onChangeToGeneteThirdOption(event: any) {
+
+
+    const hasCodeThree = this.APPROVAL_TYPE.find(
+      (item) => {
+
+        if (item.CODE === '3') {
+          return true;
+        }
+
+      }
+    );
+    if (
+      (this.form.controls.hasDate.value ||
+        this.form.controls.hasFile.value ||
+        this.form.controls.hasUpload.value) && hasCodeThree === undefined
+    ) {
+      this.APPROVAL_TYPE.push({
+        CODE: '3',
+        VALUE: 'Generar solicitud de aprobación',
+      });
+    } else if ((this.form.controls.hasDate.value ||
+      this.form.controls.hasFile.value ||
+      this.form.controls.hasUpload.value) === false) {
+
+      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
+        (item) => item.CODE !== '3'
       );
     }
   }

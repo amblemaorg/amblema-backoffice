@@ -6,6 +6,7 @@ import {
   AfterViewChecked,
   AfterContentChecked,
   DoCheck,
+  OnDestroy,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -21,7 +22,7 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
   styleUrls: ['./activities-form.component.scss'],
 })
 export class ActivitiesFormComponent extends StepsFormComponent
-  implements OnInit {
+  implements OnInit, OnDestroy {
   @Input() lapse: string;
 
   showProgress = false;
@@ -29,14 +30,18 @@ export class ActivitiesFormComponent extends StepsFormComponent
   constructor(
     public store: Store,
     private lapseActivityService: LapseActivitiesService,
-    public toastr: CustomToastrService
+    public toastr: CustomToastrService,
+
   ) {
     super(store, toastr);
   }
 
   ngOnInit(): void {
-
     this.form.addControl('hasDate', new FormControl(false));
+  }
+
+  ngOnDestroy(): void {
+
   }
 
   onSubmit(): void {
@@ -103,6 +108,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
             this.form.controls.hasVideo.setValue(false);
             this.form.controls.hasChecklist.setValue(false);
             this.toastr.registerSuccess('Registro', 'Actividad registrada');
+            this.onCheckList();
           }
         },
         (err: any) => {

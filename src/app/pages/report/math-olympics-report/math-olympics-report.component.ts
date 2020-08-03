@@ -32,7 +32,6 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.mathOlympicsReportService
       .getSchoolYears()
       .subscribe((response) => {
-
         this.datesInit = response;
         this.datesEnd = response;
       });

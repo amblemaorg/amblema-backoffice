@@ -271,7 +271,7 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onChangeToGeneteThirdOption(event: any) {
+  public onChangeToGeneteThirdOption() {
 
 
     const hasCodeThree = this.APPROVAL_TYPE.find(

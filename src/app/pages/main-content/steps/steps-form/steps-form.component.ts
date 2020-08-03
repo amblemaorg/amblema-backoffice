@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -26,9 +26,9 @@ import { Subscription } from 'rxjs';
   selector: 'app-steps-form',
   templateUrl: './steps-form.component.html',
   styles: [],
-  providers: [BsModalService]
+  providers: [BsModalService],
 })
-export class StepsFormComponent implements OnInit {
+export class StepsFormComponent implements OnInit, OnDestroy {
   @Input() id: string;
   @Input() title: string;
   @Input() kind: string;
@@ -53,7 +53,7 @@ export class StepsFormComponent implements OnInit {
 
   public submitted = false;
 
-  public APPROVAL_TYPE = APPROVAL_TYPE;
+  public APPROVAL_TYPE;
 
   // Conf checklist
   public checklist: ItemCheck[] = []; // Objective list
@@ -66,11 +66,20 @@ export class StepsFormComponent implements OnInit {
     public toastr?: CustomToastrService,
     public stepService?: StepService,
     public fb?: FormBuilder,
+    public modalServicesBs?: BsModalService
+  ) {
 
-    public modalServicesBs?: BsModalService,
-    ) {}
+    this.APPROVAL_TYPE = APPROVAL_TYPE;
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.resetForm();
+    this.onCheckList();
+  }
+
+  ngOnDestroy(): void {
+
+  }
 
   onSubmit(): void {
     // This is to valid the check list if has a check
@@ -129,10 +138,13 @@ export class StepsFormComponent implements OnInit {
               this.resetForm();
               this.store.dispatch(new AddStep(response.body));
               this.toastr.registerSuccess('Registro', 'Paso registrado');
+              this.onCheckList();
               break;
           }
         },
         (err: any) => {
+
+          console.log( err );
           this.showProgress = false;
           this.toastr.error(
             'Problemas al registrar',
@@ -246,7 +258,7 @@ export class StepsFormComponent implements OnInit {
     this.form.controls.checklist.reset();
   }
 
-  onCheckList() {
+  public onCheckList() {
     if (this.form.controls.hasChecklist.value) {
       this.APPROVAL_TYPE.push({
         CODE: '2',
@@ -255,6 +267,37 @@ export class StepsFormComponent implements OnInit {
     } else {
       this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
         (item) => item.CODE !== '2'
+      );
+    }
+  }
+
+  public onChangeToGeneteThirdOption(event: any) {
+
+
+    const hasCodeThree = this.APPROVAL_TYPE.find(
+      (item) => {
+
+        if (item.CODE === '3') {
+          return true;
+        }
+
+      }
+    );
+    if (
+      (this.form.controls.hasDate.value ||
+        this.form.controls.hasFile.value ||
+        this.form.controls.hasUpload.value) && hasCodeThree === undefined
+    ) {
+      this.APPROVAL_TYPE.push({
+        CODE: '3',
+        VALUE: 'Generar solicitud de aprobación',
+      });
+    } else if ((this.form.controls.hasDate.value ||
+      this.form.controls.hasFile.value ||
+      this.form.controls.hasUpload.value) === false) {
+
+      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
+        (item) => item.CODE !== '3'
       );
     }
   }

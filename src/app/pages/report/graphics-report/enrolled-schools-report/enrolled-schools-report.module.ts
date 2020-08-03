@@ -6,6 +6,7 @@ import { EnrolledSchoolsReportComponent } from './enrolled-schools-report.compon
 import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GraphicReportModule } from '../../_shared/graphic-report/graphic-report.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [EnrolledSchoolsReportComponent],
@@ -15,6 +16,7 @@ import { GraphicReportModule } from '../../_shared/graphic-report/graphic-report
     FormsModule,
     GraphicReportModule,
     ReactiveFormsModule,
+    NgSelectModule,
     CommonModule,
     NbIconModule,
     EnrolledSchoolsReportRoutingModule

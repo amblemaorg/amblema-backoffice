@@ -11,11 +11,11 @@ import { Subscription } from 'rxjs';
   providers: [PDFReportMath, DatePipe],
 })
 export class MathOlympicsReportComponent implements OnInit, OnDestroy {
-  dateInitSelected: any = null;
-  dateEndSelected: any = null;
+  public dateInitSelected: any = null;
+  public dateEndSelected: any = null;
 
-  datesInit = new Array<any>();
-  datesEnd = new Array<any>();
+  public datesInit = new Array<any>();
+  public datesEnd = new Array<any>();
 
   subscriptionService: Subscription;
 
@@ -28,7 +28,7 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
     private generateReporte?: PDFReportMath
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.subscriptionService = this.mathOlympicsReportService
       .getSchoolYears()
       .subscribe((response) => {
@@ -60,7 +60,8 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
 
   }
 
-  onChangeDateInit(event: any) {
+  public onChangeDateInit(event: any) {
+
     let position: any;
 
     this.datesInit.forEach((value, index) => {

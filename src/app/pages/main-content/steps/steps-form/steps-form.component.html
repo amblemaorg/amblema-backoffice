@@ -1,155 +1,258 @@
 <app-modal [size]="'lg'" extra="true" [title]="title" [ID]="id">
-    <form [formGroup]="form" class="row" content>
+  <form [formGroup]="form" class="row" content>
+    <!-- Name -->
+    <div class="col-12 col-lg-6">
+      <app-input-custom
+        [submitted]="submitted"
+        [control]="form.get('name')"
+        [label]="'Nombre'"
+        [placeholder]="'Nombre'"
+        [id]="'name-steps'"
+      ></app-input-custom>
+    </div>
 
-        <!-- Name -->
-        <div class="col-12 col-lg-6">
-            <app-input-custom [submitted]='submitted' [control]="form.get('name')" [label]="'Nombre'"
-                [placeholder]="'Nombre'" [id]="'name-steps'"></app-input-custom>
-        </div>
+    <!-- Approval -->
+    <div class="col-12 col-lg-6">
+      <label for="" class="label">Aprobación</label>
+      <select formControlName="approvalType" class="form-control form-group">
+        <option value="null" disabled>
+          - Seleccione el tipo de aprobación -
+        </option>
+        <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{
+          item.VALUE
+        }}</option>
+      </select>
+      <div
+        class="alert alert-primary"
+        *ngIf="submitted && form.get('approvalType').invalid"
+      >
+        <strong>Campo requerido</strong>
+      </div>
+    </div>
 
-        <!-- Approval -->
-        <div class="col-12 col-lg-6">
-            <label for="" class="label">Aprobación</label>
-            <select formControlName="approvalType" class="form-control form-group">
-                <option value="null" disabled> - Seleccione el tipo de aprobación - </option>
-                <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{ item.VALUE }}</option>
-            </select>
-            <div class="alert alert-primary" *ngIf="submitted && form.get('approvalType').invalid">
-                <strong>Campo requerido</strong>
-            </div>
-        </div>
-
-        <!-- Enable/Disabled inputs -->
+    <!-- Enable/Disabled inputs -->
+    <div class="col-12">
+      <div class="row">
         <div class="col-12">
-            <div class="row">
-                <div class="col-12">
-                    <label class="label">Selecciona los elementos del paso</label>
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
+          <label class="label">Selecciona los elementos del paso</label>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <!-- Text -->
+              <nb-checkbox
+                formControlName="hasText"
+                (change)="changeText()"
+                class="d-block form-group"
+                >Descripción
+              </nb-checkbox>
+              <app-text-area-custom
+                *ngIf="form.get('hasText').value"
+                [id]="'description'"
+                [label]="'Descripción'"
+                [submitted]="submitted"
+                [control]="form.get('text')"
+                [placeholder]="'Descripción'"
+              ></app-text-area-custom>
 
-                            <!-- Text -->
-                            <nb-checkbox formControlName="hasText" (change)="changeText()" class="d-block form-group">Descripción
-                            </nb-checkbox>
-                            <app-text-area-custom *ngIf="form.get('hasText').value" [id]="'description'"
-                                [label]="'Descripción'" [submitted]="submitted" [control]="form.get('text')"
-                                [placeholder]="'Descripción'"></app-text-area-custom>
+              <!-- Date -->
+              <nb-checkbox
+                formControlName="hasDate"
+                (change)="onChangeToGeneteThirdOption($event)"
+                class="d-block form-group"
+                >Fecha</nb-checkbox
+              >
 
-                            <!-- Date -->
-                            <nb-checkbox formControlName="hasDate" class="d-block form-group">Fecha</nb-checkbox>
+              <!-- File - BackOffice -->
+              <nb-checkbox
+                (change)="changeFile(); onChangeToGeneteThirdOption($event)"
+                formControlName="hasFile"
+                class="d-block form-group"
+                >Archivo adjunto
+              </nb-checkbox>
+              <app-input-file
+                [submitted]="submitted"
+                [control]="form.get('file')"
+                *ngIf="form.get('hasFile').value"
+              ></app-input-file>
+            </div>
 
-                            <!-- File - BackOffice -->
-                            <nb-checkbox (change)="changeFile()" formControlName="hasFile" class="d-block form-group">Archivo adjunto
-                            </nb-checkbox>
-                            <app-input-file 
-                                [submitted]="submitted" 
-                                [control]="form.get('file')"
-                                *ngIf="form.get('hasFile').value"></app-input-file>
-                        </div>
+            <div class="col-12 col-lg-6">
+              <!-- Video -->
+              <nb-checkbox
+                formControlName="hasVideo"
+                (change)="changeVideo()"
+                class="d-block form-group"
+                >Video</nb-checkbox
+              >
+              <app-input-custom
+                *ngIf="form.get('hasVideo').value"
+                [id]="'url-video'"
+                [submitted]="submitted"
+                [control]="form.get('video')"
+                [placeholder]="'URL del video'"
+                [label]="'URL del video'"
+              ></app-input-custom>
 
-                        <div class="col-12 col-lg-6">
+              <!-- Check loader -->
+              <nb-checkbox
+                formControlName="hasChecklist"
+                (change)="onCheckList()"
+                class="d-block form-group"
+                >Checklist
+              </nb-checkbox>
 
-                            <!-- Video -->
-                            <nb-checkbox formControlName="hasVideo" (change)="changeVideo()" class="d-block form-group">Video</nb-checkbox>
-                            <app-input-custom *ngIf="form.get('hasVideo').value" [id]="'url-video'"
-                                [submitted]="submitted" [control]="form.get('video')" [placeholder]="'URL del video'"
-                                [label]="'URL del video'"></app-input-custom>
+              <nb-alert
+                status="info"
+                class="form-group py-2"
+                *ngIf="form.get('hasChecklist').value && checklist.length === 0"
+              >
+                Recuerda registrar por lo menos un elemento en la lista
+              </nb-alert>
 
-                            <!-- Check loader -->
-                            <nb-checkbox formControlName="hasChecklist" (change)="onCheckList()" class="d-block form-group">Checklist
-                            </nb-checkbox>
-
-                            <nb-alert status="info" class="form-group py-2" *ngIf="form.get('hasChecklist').value && checklist.length === 0">
-                                Recuerda registrar por lo menos un elemento en la lista
-                            </nb-alert>
-
-                            <!-- Dynamic list -->
-                            <div class="row" *ngIf="form.get('hasChecklist').value">
-
-                                <div class="col-12 form-group">
-                                    <div class="row">
-                                        <div class="col">
-                                            <app-input-custom [id]="'checklist'" [label]="'Opciones'"
-                                                [control]="form.get('checklist')" [placeholder]="'Opciones'"
-                                                [submitted]="submitted">
-                                            </app-input-custom>
-                                        </div>
-                                        <div class="col-auto">
-                                            <button nbButton status="primary"
-                                                style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                                                *ngIf="MODE_LIST === ACTION.CREATE"
-                                                [attr.disabled]="!form.controls['checklist'].value ? true : null"
-                                                (click)="addObjective()" class="btn btn-outline-info m-inline-form">
-                                                <nb-icon icon="plus"></nb-icon>
-                                            </button>
-
-                                            <div class="btn-group m-inline-parcial" role="group"
-                                                *ngIf="MODE_LIST === ACTION.EDIT">
-                                                <button style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline
-                                                    nbButton status="info" type="button" class="btn btn-outline-info"
-                                                    (click)="confirmAction()">
-                                                    Confirmar
-                                                </button>
-                                                <button nbButton
-                                                    style="padding-top: 0.6rem; padding-bottom: 0.6rem; border-bottom-left-radius: 0; border-top-left-radius: 0;"
-                                                    outline status="danger" type="button" class="btn btn-outline-danger"
-                                                    (click)="MODE_LIST = ACTION.CREATE; 
-                                form.controls['checklist'].enable();
-                                form.controls['checklist'].reset();">
-                                                    Cancelar
-                                                </button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 form-group">
-                                    <nb-list>
-                                        <nb-list-item *ngFor="let item of checklist; let i = index;"
-                                            class="d-flex w-100 justify-content-between">
-                                            <span>{{ item.name }}</span>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button nbButton status="info"
-                                                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;" outline
-                                                    type="button" class="btn btn-outline-info"
-                                                    (click)="onEditObjective(i)">
-                                                    <nb-icon icon="edit-outline"></nb-icon>
-                                                </button>
-                                                <button nbButton status="danger"
-                                                    style="border-bottom-left-radius: 0; border-top-left-radius: 0; padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                                                    outline type="button" class="btn btn-outline-danger"
-                                                    (click)="onDeleteObjective(i)">
-                                                    <nb-icon icon="trash-2-outline"></nb-icon>
-                                                </button>
-                                            </div>
-                                        </nb-list-item>
-                                    </nb-list>
-                                </div>
-
-                                
-                            </div>
-                            <!-- / Dynamic list -->
-
-                            <!-- / Check loader -->
-
-                            <nb-checkbox formControlName="hasUpload">Adjuntar archivo - Pasos</nb-checkbox>
-                        </div>
+              <!-- Dynamic list -->
+              <div class="row" *ngIf="form.get('hasChecklist').value">
+                <div class="col-12 form-group">
+                  <div class="row">
+                    <div class="col">
+                      <app-input-custom
+                        [id]="'checklist'"
+                        [label]="'Opciones'"
+                        [control]="form.get('checklist')"
+                        [placeholder]="'Opciones'"
+                        [submitted]="submitted"
+                      >
+                      </app-input-custom>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <app-progress *ngIf="showProgress" (finish)="showProgress = false"></app-progress>
-        </div>
-    </form>
+                    <div class="col-auto">
+                      <button
+                        nbButton
+                        status="primary"
+                        style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                        *ngIf="MODE_LIST === ACTION.CREATE"
+                        [attr.disabled]="
+                          !form.controls['checklist'].value ? true : null
+                        "
+                        (click)="addObjective()"
+                        class="btn btn-outline-info m-inline-form"
+                      >
+                        <nb-icon icon="plus"></nb-icon>
+                      </button>
 
-    <button 
-        [disabled]="showProgress"
-        [nbSpinner]="showProgress" nbSpinnerStatus="success"
-        nbButton 
-        button 
-        (click)="onSubmit()" 
-        class="col-6 col-md-auto btn btn-success">Guardar</button>
+                      <div
+                        class="btn-group m-inline-parcial"
+                        role="group"
+                        *ngIf="MODE_LIST === ACTION.EDIT"
+                      >
+                        <button
+                          style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                          outline
+                          nbButton
+                          status="info"
+                          type="button"
+                          class="btn btn-outline-info"
+                          (click)="confirmAction()"
+                        >
+                          Confirmar
+                        </button>
+                        <button
+                          nbButton
+                          style="
+                            padding-top: 0.6rem;
+                            padding-bottom: 0.6rem;
+                            border-bottom-left-radius: 0;
+                            border-top-left-radius: 0;
+                          "
+                          outline
+                          status="danger"
+                          type="button"
+                          class="btn btn-outline-danger"
+                          (click)="
+                            MODE_LIST = ACTION.CREATE;
+                            form.controls['checklist'].enable();
+                            form.controls['checklist'].reset()
+                          "
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 form-group">
+                  <nb-list>
+                    <nb-list-item
+                      *ngFor="let item of checklist; let i = index"
+                      class="d-flex w-100 justify-content-between"
+                    >
+                      <span>{{ item.name }}</span>
+                      <div
+                        class="btn-group"
+                        role="group"
+                        aria-label="Basic example"
+                      >
+                        <button
+                          nbButton
+                          status="info"
+                          style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                          outline
+                          type="button"
+                          class="btn btn-outline-info"
+                          (click)="onEditObjective(i)"
+                        >
+                          <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                        <button
+                          nbButton
+                          status="danger"
+                          style="
+                            border-bottom-left-radius: 0;
+                            border-top-left-radius: 0;
+                            padding-top: 0.6rem;
+                            padding-bottom: 0.6rem;
+                          "
+                          outline
+                          type="button"
+                          class="btn btn-outline-danger"
+                          (click)="onDeleteObjective(i)"
+                        >
+                          <nb-icon icon="trash-2-outline"></nb-icon>
+                        </button>
+                      </div>
+                    </nb-list-item>
+                  </nb-list>
+                </div>
+              </div>
+              <!-- / Dynamic list -->
+
+              <!-- / Check loader -->
+
+              <nb-checkbox formControlName="hasUpload" (change)="onChangeToGeneteThirdOption($event)"
+                >Adjuntar archivo - Pasos</nb-checkbox
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <app-progress
+        *ngIf="showProgress"
+        (finish)="showProgress = false"
+      ></app-progress>
+    </div>
+  </form>
+
+  <button
+    [disabled]="showProgress"
+    [nbSpinner]="showProgress"
+    nbSpinnerStatus="success"
+    nbButton
+    button
+    (click)="onSubmit()"
+    class="col-6 col-md-auto btn btn-success"
+  >
+    Guardar
+  </button>
 </app-modal>

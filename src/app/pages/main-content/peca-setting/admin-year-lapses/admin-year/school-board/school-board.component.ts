@@ -57,7 +57,7 @@ export class SchoolBoardComponent extends BaseTable {
     // -- Set up modal
     (modal.content as DialogConfirmationComponent).showConfirmationModal(
       'Circunscribir escuela',
-      '¿Desea Circunscribir la escuela seleccionada?'
+      '¿Desea circunscribir la escuela seleccionada?'
     );
 
     this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(

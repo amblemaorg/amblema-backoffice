@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, Type } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { PROJECT_PHASE } from 'src/app/_helpers/convention/phase';
 import { Observable } from 'rxjs';
-import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { Select } from '@ngxs/store';
 import { AuthService } from 'src/app/services/user/auth.service';
+import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
+import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 
 @Component({
   selector: 'app-project-details',

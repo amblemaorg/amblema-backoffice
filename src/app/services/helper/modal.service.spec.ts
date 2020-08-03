@@ -18,4 +18,8 @@ describe('ModalService', () => {
     expect( service.open('modal') ).toBeUndefined();
     expect( service.close('modal') ).toBeUndefined();
   });
+
+  afterAll(() => {
+    
+  })
 });

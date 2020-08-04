@@ -8,45 +8,38 @@
         <h6>Filtro por rango de período académico</h6>
       </div>
       <div class="col-12 col-md-6 col-lg-4">
-        <label class="label">Inicio</label>
-        <select
-          class="form-control form-group"
-          (change)="onChangeDateInit($event.target.value)"
+        <label class="label">- Inicio Período académico -</label>
+        <ng-select
+          *ngIf="datesInit"
+          [items]="datesInit"
+          bindLabel="name"
+          placeholder="- Inicio Período académico -"
+          (change)="onSelectInitDate($event)"
           [(ngModel)]="dateInitSelected"
         >
-          <option [value]="null" disabled>- Inicio Período académico -</option>
-          <option [value]="item.id" *ngFor="let item of datesInit">{{
-            item.name
-          }}</option>
-        </select>
+        </ng-select>
       </div>
 
       <div class="col-12 col-md-6 col-lg-4">
-        <label class="label">Fin</label>
-        <select
-          [attr.disabled]="!dateInitSelected ? true : null"
-          class="form-control form-group"
+        <label class="label">- Fin Período académico -</label>
+        <ng-select
+          *ngIf="datesEnd"
+          [items]="datesEnd"
+          bindLabel="name"
+          placeholder="- Fin Período académico -"
           [(ngModel)]="dateEndSelected"
         >
-          <option [value]="null" disabled>- Fin Período académico -</option>
-          <option [value]="item.id" *ngFor="let item of datesEnd">{{
-            item.name
-          }}</option>
-        </select>
+        </ng-select>
       </div>
 
       <div class="col-12 col-md-6 col-lg-4 form-group">
         <label class="label">Estatus</label>
-        <select
-          class="form-control form-group"
-          [(ngModel)]="statusSelected"
-        >
+        <select class="form-control form-group" [(ngModel)]="statusSelected">
           <option [value]="item.value" *ngFor="let item of status">{{
             item.label
           }}</option>
         </select>
       </div>
-
 
       <div class="col-12 text-right">
         <button
@@ -66,7 +59,12 @@
     </div>
 
     <!-- Display graph -->
-    <div id="graphic" #graphic class="row justify-content-center" *ngIf="data">
+    <div
+      id="graphic"
+      #graphic
+      class="row justify-content-center"
+      *ngIf="showGraph"
+    >
       <div class="col-12 col-lg-9">
         <app-quarterly-graph
           [data]="data"
@@ -77,16 +75,25 @@
     </div>
 
     <!-- Show message no graph -->
-    <div class="row" *ngIf="!data">
+    <div class="row" *ngIf="!showGraph">
       <div class="col-12 text-center">
         <h4>Seleccione los períodos para generar la gráfica</h4>
+        <nb-alert
+          status="primary"
+          [nbSpinner]="showProgress"
+          *ngIf="showProgress"
+          nbSpinnerStatus="control"
+        >
+          Cargando datos...
+        </nb-alert>
       </div>
     </div>
   </nb-card-body>
   <nb-card-footer class="text-right">
     <button
       (click)="onGenerateDocument()"
-      [attr.disabled]="data ? null : true"
+      [nbSpinner]="delayGeneratePDF"
+      [attr.disabled]="(!showGraph || delayGeneratePDF) ? true : null"
       status="success"
       nbButton
       class="col-12 col-lg-auto"

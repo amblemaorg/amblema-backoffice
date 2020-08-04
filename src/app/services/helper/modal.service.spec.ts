@@ -20,6 +20,6 @@ describe('ModalService', () => {
   });
 
   afterAll(() => {
-    
-  })
+
+  });
 });

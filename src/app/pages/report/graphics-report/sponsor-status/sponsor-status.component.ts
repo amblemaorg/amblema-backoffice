@@ -34,8 +34,7 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
 
   // -- Event get data --
   onQueryGraph() {
-    this.showProgress = true;
-
+    this.generateReset();
     // -- Request the data grapch --
 
     if (this.statusSelected === '1') {
@@ -49,7 +48,26 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
           }
         });
     } else {
+      this.sponsorGraphicStatuService
+        .getInactiveSponsor(this.dateInitSelected.id, this.dateEndSelected.id)
+        .subscribe((request: HttpEvent<any>) => {
+          switch (request.type) {
+            case HttpEventType.Response:
+              this.prepareDataToShow(request.body.records);
+              break;
+          }
+        });
     }
+  }
+
+
+
+  generateReset() {
+    this.data = [];
+    this.showProgress = true;
+    this.showGraph = false;
+    this.delayGeneratePDF = false;
+
   }
 
   private prepareDataToShow(records: any[]): void {

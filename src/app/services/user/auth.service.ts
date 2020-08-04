@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { tap, mapTo, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,6 @@ export class AuthService {
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private loggedUser: string;
-  private idUser: string;
 
   constructor(private http: HttpClient) {}
 
@@ -46,15 +46,21 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.http.post<any>(`${environment.api}auth/refresh`, {}, {
-      headers: {
-        Authorization : `Bearer ${this.getRefreshToken()}`
-      }
-    }).pipe(
-      tap((tokens: any) => {
-        this.storeJwtToken(tokens.jwt);
-      })
-    );
+    return this.http
+      .post<any>(
+        `${environment.api}auth/refresh`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${this.getRefreshToken()}`,
+          },
+        }
+      )
+      .pipe(
+        tap((tokens: any) => {
+          this.storeJwtToken(tokens.jwt);
+        })
+      );
   }
 
   getJwtToken() {
@@ -89,12 +95,9 @@ export class AuthService {
     localStorage.removeItem(this.REFRESH_TOKEN);
   }
 
-  public setIdUser( id: string ) {
-    this.idUser = id;
-  }
+  public getIdUser(): string {
+    const user: any = jwt_decode(this.getJwtToken());
 
-
-  public getIdUser(  ): string {
-    return this.idUser;
+    return user.identity.id;
   }
 }

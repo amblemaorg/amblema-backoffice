@@ -80,6 +80,7 @@
               *ngIf="data$ | async"
               [items]="data$ | async"
               bindLabel="name"
+              (change)="onSelectedYear()"
               placeholder="Selecciona un periodo escolar"
               [(ngModel)]="selectedSchoolYears"
             >
@@ -89,6 +90,7 @@
             <button
               class="col-12 col-md-auto"
               nbButton
+              [attr.disabled]=" selectedSchoolYears ? null : true "
               status="info"
               (click)="onNavigate()"
             >

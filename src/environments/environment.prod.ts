@@ -4,4 +4,7 @@ export const environment = {
   // api: 'http://157.245.131.248:10507/', // <--- Staging
   // api: 'http://0.0.0.0:10505/',
   // api: `http://201.210.203.169:10505/`
+
+  // -- Web page Amblema --
+  web: `http://testing.binaural.com.ve:10512/`
 };

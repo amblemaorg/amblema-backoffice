@@ -58,14 +58,14 @@
               <!-- Date -->
               <nb-checkbox
                 formControlName="hasDate"
-                (change)="onChangeToGeneteThirdOption($event)"
+                (change)="onChangeToGeneteThirdOption()"
                 class="d-block form-group"
                 >Fecha</nb-checkbox
               >
 
               <!-- File - BackOffice -->
               <nb-checkbox
-                (change)="changeFile(); onChangeToGeneteThirdOption($event)"
+                (change)="changeFile(); onChangeToGeneteThirdOption()"
                 formControlName="hasFile"
                 class="d-block form-group"
                 >Archivo adjunto
@@ -228,7 +228,7 @@
 
               <!-- / Check loader -->
 
-              <nb-checkbox formControlName="hasUpload" (change)="onChangeToGeneteThirdOption($event)"
+              <nb-checkbox formControlName="hasUpload" (change)="onChangeToGeneteThirdOption()"
                 >Adjuntar archivo - Pasos</nb-checkbox
               >
             </div>

@@ -103,6 +103,6 @@ export class AuthService {
   public getActionsAdmin(): any {
 
       const actions: any = jwt_decode( this.getJwtToken() );
-      return actions;
+      return actions.identity.permissions;
   }
 }

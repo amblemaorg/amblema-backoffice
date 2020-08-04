@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { MenuSetUp } from './pages-menu-service';
+import { RolesState } from '../store/role.action';
 
 @Component({
   selector: 'app-pages',
@@ -8,6 +9,8 @@ import { MenuSetUp } from './pages-menu-service';
 export class PagesComponent implements AfterViewInit, OnDestroy {
 
   constructor(public menuSetUp: MenuSetUp) {
+
+    console.log(RolesState.getInstance().hello())
 
   }
 

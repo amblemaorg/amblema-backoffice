@@ -1,46 +1,49 @@
-import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
-import { Role, Permission, ActionRole } from '../_models/permission.model';
-import { NgZone } from '@angular/core';
-import { PermissionService } from '../services/permission.service';
-import { Utility } from '../_helpers/utility';
-import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { State, Action, StateContext, Selector, NgxsOnInit } from "@ngxs/store";
+import { Role, Permission, ActionRole } from "../_models/permission.model";
+import { NgZone } from "@angular/core";
+import { PermissionService } from "../services/permission.service";
+import { Utility } from "../_helpers/utility";
+import { patch, append, updateItem, removeItem } from "@ngxs/store/operators";
+import { AuthService } from "../services/user/auth.service";
 
 export interface RoleStateModel {
   role: Role;
   roles: Role[];
   actions?: Permission[];
-}
 
+  // --- actions of the logged in user
+  actionsLoggedUser?: any[];
+}
 
 /**
  * Get roles
  */
 
 export class GetRoles {
-  static readonly type = '[Roles] Get Roles';
+  static readonly type = "[Roles] Get Roles";
 }
 
 export class GetRole {
-  static readonly type = '[Role] Get Role';
+  static readonly type = "[Role] Get Role";
 }
 
 export class SetRole {
-  static readonly type = '[Role] Set Role';
+  static readonly type = "[Role] Set Role";
   constructor(public payload: Role) {}
 }
 
 export class UpdateRole {
-  static readonly type = '[Role] Update Role';
+  static readonly type = "[Role] Update Role";
   constructor(public newRole: Role, public oldRole: Role) {}
 }
 
 export class DeleteRole {
-  static readonly type = '[Role] Delete Role';
+  static readonly type = "[Role] Delete Role";
   constructor(public payload: Role) {}
 }
 
 export class SelectedRole {
-  static readonly type = '[Role] Selected Role';
+  static readonly type = "[Role] Selected Role";
   constructor(public payload: Role) {}
 }
 
@@ -49,28 +52,36 @@ export class SelectedRole {
  */
 
 export class GetActions {
-  static readonly type = '[Actions] Get Actions';
+  static readonly type = "[Actions] Get Actions";
 }
 
 export class UpdateActions {
-  static readonly type = '[Actions] Update Action';
+  static readonly type = "[Actions] Update Action";
   constructor(public entity: Permission, public action: ActionRole) {}
 }
 
+export class SaveActionsLoggedUser {
+  static readonly type = `[Actions] Save Actions Logged User`;
+  constructor(public actionsLoggedUser: any) {}
+}
+
 @State<RoleStateModel>({
-  name: 'roles',
+  name: "roles",
   defaults: {
     role: {
-      id: '',
-      name: '',
+      id: "",
+      name: "",
       permissions: [],
-      status: '',
+      status: "",
     },
     roles: [],
     actions: [],
+    actionsLoggedUser: [],
   },
 })
 export class RolesState implements NgxsOnInit {
+  private static roleStateInstance: RolesState;
+
   @Selector()
   static roles(state: RoleStateModel): Role[] | null {
     return state.roles;
@@ -90,11 +101,15 @@ export class RolesState implements NgxsOnInit {
   ngxsOnInit(ctx: StateContext<Role[]>) {
     ctx.dispatch(new GetRoles());
     ctx.dispatch(new GetActions());
+
+    // -- Save Actions logged User
+    ctx.dispatch(new SaveActionsLoggedUser(this.authService.getActionsAdmin()));
   }
 
   constructor(
     private helper: Utility,
     private ngZone: NgZone,
+    private authService: AuthService,
     private permissionsService: PermissionService
   ) {}
 
@@ -182,20 +197,48 @@ export class RolesState implements NgxsOnInit {
         ...ctx.getState(),
         role: patch({
           ...ctx.getState().role,
-          permissions: updateItem<Permission>( permit => permit.entityId === action.entity.entityId, patch({
+          permissions: updateItem<Permission>(
+            (permit) => permit.entityId === action.entity.entityId,
+            patch({
               ...action.entity,
-              actions: updateItem<ActionRole>( actionx => actionx.name === action.action.name, {
+              actions: updateItem<ActionRole>(
+                (actionx) => actionx.name === action.action.name,
+                {
                   ...action.action,
-                  allowed: !action.action.allowed
-              } )
-          })  )
+                  allowed: !action.action.allowed,
+                }
+              ),
+            })
+          ),
         }),
       })
     );
   }
 
-  // ================================================
-  // -- Singleton para obtener la funciona directa --
-  // ================================================
+  // ======================================================
+  // -- Functions and actions for back office permitting --
+  // ======================================================
 
+  @Action(SaveActionsLoggedUser)
+  saveActionsLoggedUser(
+    ctx: StateContext<RoleStateModel>,
+    action: SaveActionsLoggedUser
+  ) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        actionsLoggedUser: action.actionsLoggedUser,
+      })
+    );
+  }
+
+  public static getInstance(): RolesState {
+    if (this.roleStateInstance === null) {
+      this.roleStateInstance = new RolesState(null, null, null, null);
+    }
+    return this.roleStateInstance;
+  } 
+
+
+  public hello () { console.log('hello world') }
 }

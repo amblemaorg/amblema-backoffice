@@ -36,7 +36,9 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
 
   // -- Event get data --
   onQueryGraph() {
-    this.showProgress = true;
+
+
+    this.generateReset();
 
     // -- Request the data grapch --
 
@@ -98,6 +100,14 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
       this.delayGeneratePDF = false;
       this.cd.detectChanges();
     }, 3000);
+  }
+
+  generateReset() {
+    this.data = [];
+    this.showProgress = true;
+    this.showGraph = false;
+    this.delayGeneratePDF = false;
+
   }
 
   onSelectInitDate(event: any) {

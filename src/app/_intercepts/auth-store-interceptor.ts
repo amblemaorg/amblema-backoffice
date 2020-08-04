@@ -31,11 +31,16 @@ export class AuthStoreInterceptor implements HttpInterceptor {
         if (url === 'auth/login') {
           switch (response.type) {
             case HttpEventType.Response:
+
+
+
               // -- Save it --
               this.authService.storeTokens({
                 jwt: response.body.access_token,
                 refreshToken: response.body.refresh_token,
               });
+
+              console.log( this.authService.getActionsAdmin() );
               break;
           }
         }

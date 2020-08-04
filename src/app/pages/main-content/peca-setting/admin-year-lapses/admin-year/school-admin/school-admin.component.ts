@@ -13,6 +13,7 @@ import {
   SchoolYearEnrolledState,
   GetSchoolYearsEnrolled,
 } from 'src/app/store/_enrolled/school-year-enrolled.action';
+import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 
 @Component({
   selector: 'app-school-admin',

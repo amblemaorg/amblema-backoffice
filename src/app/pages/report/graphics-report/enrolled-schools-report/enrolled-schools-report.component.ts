@@ -8,6 +8,7 @@ import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enr
 import { Observable } from 'rxjs';
 import { EnrolledSchoolsService } from 'src/app/services/report/enrolled-schools.service';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
+import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 
 @Component({
   selector: 'app-enrolled-schools-report',

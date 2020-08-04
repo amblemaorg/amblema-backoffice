@@ -7,6 +7,7 @@ import { Select } from '@ngxs/store';
 import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { SchoolUserState } from 'src/app/store/user/school-user.action';
 import { SchoolUser } from 'src/app/_models/user/school.model';
+import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 
 @Component({
   selector: 'app-diagnostic-report',

@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment.prod";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SponsorGraphicStatusService {
   private readonly ACTIVE_SPONSOR_GRAPHICS = `statistics/activesponsorsgraphic/`;
@@ -20,7 +20,7 @@ export class SponsorGraphicStatusService {
       `${environment.api}${this.ACTIVE_SPONSOR_GRAPHICS}${startPeriodId}/${endPeriodId}`,
       {
         reportProgress: true,
-        observe: "events",
+        observe: 'events',
       }
     );
   }
@@ -33,7 +33,7 @@ export class SponsorGraphicStatusService {
       `${environment.api}${this.INACTIVE_SPONSOR_GRAPHICS}${startPeriodId}/${endPeriodId}`,
       {
         reportProgress: true,
-        observe: "events",
+        observe: 'events',
       }
     );
   }

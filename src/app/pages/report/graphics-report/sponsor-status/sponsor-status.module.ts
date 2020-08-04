@@ -19,9 +19,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     CommonModule,
     NbIconModule,
-    SponsorStatusRoutingModule, 
+    SponsorStatusRoutingModule,
     NgSelectModule,
-    NbAlertModule, 
+    NbAlertModule,
     NbSpinnerModule,
   ]
 })

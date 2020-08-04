@@ -3,6 +3,7 @@ import { MathOlympicsReportComponent } from '../../math-olympics-report/math-oly
 import { ChartAverage } from '../../_shared/_model/average-graph.model';
 import { GraphPdfService } from '../../_shared/_service/graph-pdf.service';
 import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
+import { SponsorGraphicStatusService } from 'src/app/services/report/sponsor-graphic-status.service';
 
 @Component({
   selector: 'app-sponsor-status',
@@ -11,7 +12,11 @@ import { MathOlympicsReportService } from 'src/app/services/report/math-olympics
 })
 export class SponsorStatusComponent extends MathOlympicsReportComponent {
 
-  data: ChartAverage[];
+  public data: ChartAverage[] = [];
+  public showGraph = false;
+  public showProgress = false;
+  public delayGeneratePDF = false;
+
 
   status = [{ label: 'Activo', value: '1' }, { label: 'Inactivo', value: '2' }];
   statusSelected = '1';
@@ -19,6 +24,7 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
   constructor(
     public cd: ChangeDetectorRef,
     public mathOlympicsReportService: MathOlympicsReportService,
+    private sponsorGraphicStatuService: SponsorGraphicStatusService,
     private pdfService: GraphPdfService
   ) {
     super(cd, mathOlympicsReportService);

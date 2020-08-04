@@ -97,7 +97,12 @@ export class AuthService {
 
   public getIdUser(): string {
     const user: any = jwt_decode(this.getJwtToken());
-
     return user.identity.id;
+  }
+
+  public getActionsAdmin(): any {
+
+      const actions: any = jwt_decode( this.getJwtToken() );
+      return actions;
   }
 }

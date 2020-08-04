@@ -6,7 +6,10 @@ import { MenuSetUp } from './pages-menu-service';
   templateUrl: 'pages.component.html',
 })
 export class PagesComponent implements AfterViewInit, OnDestroy {
-  constructor(public menuSetUp: MenuSetUp) {}
+
+  constructor(public menuSetUp: MenuSetUp) {
+
+  }
 
   async ngAfterViewInit() {
     await this.menuSetUp.renderMenu(true);

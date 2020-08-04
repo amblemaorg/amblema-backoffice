@@ -3,13 +3,14 @@ import { Role, Permission, ActionRole } from '../_models/permission.model';
 import { NgZone } from '@angular/core';
 import { PermissionService } from '../services/permission.service';
 import { Utility } from '../_helpers/utility';
-import { patch, append, updateItem, removeItem, iif } from '@ngxs/store/operators';
+import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 
 export interface RoleStateModel {
   role: Role;
   roles: Role[];
   actions?: Permission[];
 }
+
 
 /**
  * Get roles
@@ -115,6 +116,7 @@ export class RolesState implements NgxsOnInit {
   getRoles(ctx: StateContext<RoleStateModel>) {
     return this.permissionsService.getRoles().subscribe((response) => {
       response = this.helper.readlyStatus(response);
+
       ctx.setState({
         ...ctx.getState(),
         roles: response,
@@ -190,8 +192,10 @@ export class RolesState implements NgxsOnInit {
         }),
       })
     );
-
-    console.log(ctx.getState().role);
-
   }
+
+  // ================================================
+  // -- Singleton para obtener la funciona directa --
+  // ================================================
+
 }

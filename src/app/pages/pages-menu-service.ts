@@ -153,5 +153,30 @@ export class MenuSetUp {
     this.menu[3].children[1].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_FIND_USER_VIEW);
     this.menu[3].children[2].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_VIEW);
     this.menu[3].children[3].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_VIEW);
+  
+    // -- Proyects --
+    this.menu[5].hidden = !new AuthService().isAllowed(ALL_ACTIONS.PROJECT_VIEW);
+
+    /**
+     * Diagnosis
+     * Godparents
+     * Coordinators
+     * Schools
+     * Teachers
+     * Olympics report.
+     * Registered schools.
+     * Godparents active - inactive.
+     */
+  
+    this.menu[6].children[0].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_DIAGNOSTICS_VIEW);
+    this.menu[6].children[1].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_SPONSORS_VIEW);
+    this.menu[6].children[2].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_COORDINATOR_VIEW);
+    this.menu[6].children[3].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_SCHOOL_VIEW);
+    this.menu[6].children[4].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_TEACHER_VIEW);
+    this.menu[6].children[5].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_OLYMPICS_VIEW);
+    this.menu[6].children[6].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_ENROLLED_SCHOOLS_VIEW);
+    this.menu[6].children[7].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_SPONSOR_ACTIVES_VIEW);
+    
+
   }
 }

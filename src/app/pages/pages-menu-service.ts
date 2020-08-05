@@ -5,7 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { LapseActivity } from '../_models/lapse-activities.model';
 import { Injectable } from '@angular/core';
 import { STATUS } from '../_helpers/convention/status';
-import { first, take } from 'rxjs/operators';
+import { AuthService } from '../services/user/auth.service';
+import { ALL_ACTIONS } from '../store/_shader/all-actions';
 
 @Injectable()
 export class MenuSetUp {
@@ -27,6 +28,8 @@ export class MenuSetUp {
 
   @Select(LapseActivityState.lapses) lapses$: Observable<LapseActivity>;
   subscriptionLapse: Subscription;
+
+//  constructor( private authService: AuthService ) {}
 
   public async renderMenu(isUpdate: boolean = false) {
     /* Get the lapses and activities to configure the menu*/
@@ -127,4 +130,12 @@ export class MenuSetUp {
         }); // <-- End menu
       }); // <-- End subscription
   } // <-- End render menu
+
+  public async validateActions() {
+    // -- Validation menu view --
+    this.menu[1].children[0].hidden = !(new AuthService().isAllowed( ALL_ACTIONS.ADMIN_VIEW ));
+    this.menu[1].children[2].hidden = !(new AuthService().isAllowed( ALL_ACTIONS.ROLE_VIEW ));
+
+  }
+
 }

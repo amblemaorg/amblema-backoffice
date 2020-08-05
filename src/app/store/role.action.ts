@@ -1,10 +1,19 @@
-import { State, Action, StateContext, Selector, NgxsOnInit } from "@ngxs/store";
-import { Role, Permission, ActionRole } from "../_models/permission.model";
-import { NgZone } from "@angular/core";
-import { PermissionService } from "../services/permission.service";
-import { Utility } from "../_helpers/utility";
-import { patch, append, updateItem, removeItem } from "@ngxs/store/operators";
-import { AuthService } from "../services/user/auth.service";
+import {
+  State,
+  Action,
+  StateContext,
+  Selector,
+  NgxsOnInit,
+  Store,
+  Select,
+} from '@ngxs/store';
+import { Role, Permission, ActionRole } from '../_models/permission.model';
+import { NgZone } from '@angular/core';
+import { PermissionService } from '../services/permission.service';
+import { Utility } from '../_helpers/utility';
+import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { AuthService } from '../services/user/auth.service';
+import { ALL_ACTIONS } from './_shader/all-actions';
 
 export interface RoleStateModel {
   role: Role;
@@ -20,30 +29,30 @@ export interface RoleStateModel {
  */
 
 export class GetRoles {
-  static readonly type = "[Roles] Get Roles";
+  static readonly type = '[Roles] Get Roles';
 }
 
 export class GetRole {
-  static readonly type = "[Role] Get Role";
+  static readonly type = '[Role] Get Role';
 }
 
 export class SetRole {
-  static readonly type = "[Role] Set Role";
+  static readonly type = '[Role] Set Role';
   constructor(public payload: Role) {}
 }
 
 export class UpdateRole {
-  static readonly type = "[Role] Update Role";
+  static readonly type = '[Role] Update Role';
   constructor(public newRole: Role, public oldRole: Role) {}
 }
 
 export class DeleteRole {
-  static readonly type = "[Role] Delete Role";
+  static readonly type = '[Role] Delete Role';
   constructor(public payload: Role) {}
 }
 
 export class SelectedRole {
-  static readonly type = "[Role] Selected Role";
+  static readonly type = '[Role] Selected Role';
   constructor(public payload: Role) {}
 }
 
@@ -52,11 +61,11 @@ export class SelectedRole {
  */
 
 export class GetActions {
-  static readonly type = "[Actions] Get Actions";
+  static readonly type = '[Actions] Get Actions';
 }
 
 export class UpdateActions {
-  static readonly type = "[Actions] Update Action";
+  static readonly type = '[Actions] Update Action';
   constructor(public entity: Permission, public action: ActionRole) {}
 }
 
@@ -66,13 +75,13 @@ export class SaveActionsLoggedUser {
 }
 
 @State<RoleStateModel>({
-  name: "roles",
+  name: 'roles',
   defaults: {
     role: {
-      id: "",
-      name: "",
+      id: '',
+      name: '',
       permissions: [],
-      status: "",
+      status: '',
     },
     roles: [],
     actions: [],
@@ -80,7 +89,15 @@ export class SaveActionsLoggedUser {
   },
 })
 export class RolesState implements NgxsOnInit {
-  private static roleStateInstance: RolesState;
+
+  constructor(
+    private store?: Store,
+    private helper?: Utility,
+    private ngZone?: NgZone,
+    private authService?: AuthService,
+    private permissionsService?: PermissionService
+  ) {}
+  private static roleStateInstance: RolesState = null;
 
   @Selector()
   static roles(state: RoleStateModel): Role[] | null {
@@ -97,21 +114,24 @@ export class RolesState implements NgxsOnInit {
     return state.actions;
   }
 
+  public static getInstance(): RolesState {
+    if (
+      this.roleStateInstance === null ||
+      this.roleStateInstance === undefined
+    ) {
+      this.roleStateInstance = new RolesState();
+    }
+    return this.roleStateInstance;
+  }
+
   // Get all roles
-  ngxsOnInit(ctx: StateContext<Role[]>) {
+  ngxsOnInit(ctx: StateContext<RoleStateModel>) {
     ctx.dispatch(new GetRoles());
     ctx.dispatch(new GetActions());
 
     // -- Save Actions logged User
     ctx.dispatch(new SaveActionsLoggedUser(this.authService.getActionsAdmin()));
   }
-
-  constructor(
-    private helper: Utility,
-    private ngZone: NgZone,
-    private authService: AuthService,
-    private permissionsService: PermissionService
-  ) {}
 
   /**
    * Roles actions
@@ -222,7 +242,7 @@ export class RolesState implements NgxsOnInit {
   @Action(SaveActionsLoggedUser)
   saveActionsLoggedUser(
     ctx: StateContext<RoleStateModel>,
-    action: SaveActionsLoggedUser
+    action?: SaveActionsLoggedUser
   ) {
     ctx.setState(
       patch({
@@ -232,13 +252,17 @@ export class RolesState implements NgxsOnInit {
     );
   }
 
-  public static getInstance(): RolesState {
-    if (this.roleStateInstance === null) {
-      this.roleStateInstance = new RolesState(null, null, null, null);
-    }
-    return this.roleStateInstance;
-  } 
+  // public isActionHaveIt(action: string, allAction: any[]): boolean {
 
+  //   // -- Search action's user logged --
 
-  public hello () { console.log('hello world') }
+  //   for (const iterator of Object.keys(allAction)) {
+  //     allAction[iterator];
+
+  //     if (action === allAction[iterator]) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 }

@@ -1,4 +1,6 @@
 import { NbMenuItem } from '@nebular/theme';
+import { AuthService } from '../services/user/auth.service';
+import { ALL_ACTIONS } from '../store/_shader/all-actions';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -14,6 +16,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Administrar',
         link: '/pages/admin-users',
+
       },
       {
         title: 'Roles',

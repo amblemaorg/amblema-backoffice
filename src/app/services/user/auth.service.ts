@@ -13,7 +13,7 @@ export class AuthService {
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private loggedUser: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http?: HttpClient) {}
 
   login(user: { username: string; password: string }): Observable<boolean> {
     return this.http.post<any>(`${environment.api}auth/login`, user).pipe(
@@ -101,8 +101,20 @@ export class AuthService {
   }
 
   public getActionsAdmin(): any {
-
       const actions: any = jwt_decode( this.getJwtToken() );
       return actions.identity.permissions;
+  }
+
+  public isAllowed(action: string): boolean {
+
+    const ALL_ACTIONS_LOGGED: any =  this.getActionsAdmin();
+
+    for (const iterator of Object.keys(ALL_ACTIONS_LOGGED)) {
+
+      if (action === ALL_ACTIONS_LOGGED[iterator]) {
+        return true;
+      }
+    }
+    return false;
   }
 }

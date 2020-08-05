@@ -1,16 +1,28 @@
-import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
+import {
+  State,
+  Action,
+  StateContext,
+  Selector,
+  NgxsOnInit,
+  Store,
+  Select,
+} from '@ngxs/store';
 import { Role, Permission, ActionRole } from '../_models/permission.model';
 import { NgZone } from '@angular/core';
 import { PermissionService } from '../services/permission.service';
 import { Utility } from '../_helpers/utility';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { AuthService } from '../services/user/auth.service';
+import { ALL_ACTIONS } from './_shader/all-actions';
 
 export interface RoleStateModel {
   role: Role;
   roles: Role[];
   actions?: Permission[];
-}
 
+  // --- actions of the logged in user
+  actionsLoggedUser?: any[];
+}
 
 /**
  * Get roles
@@ -57,6 +69,11 @@ export class UpdateActions {
   constructor(public entity: Permission, public action: ActionRole) {}
 }
 
+export class SaveActionsLoggedUser {
+  static readonly type = `[Actions] Save Actions Logged User`;
+  constructor(public actionsLoggedUser: any) {}
+}
+
 @State<RoleStateModel>({
   name: 'roles',
   defaults: {
@@ -68,9 +85,20 @@ export class UpdateActions {
     },
     roles: [],
     actions: [],
+    actionsLoggedUser: [],
   },
 })
 export class RolesState implements NgxsOnInit {
+
+  constructor(
+    private store?: Store,
+    private helper?: Utility,
+    private ngZone?: NgZone,
+    private authService?: AuthService,
+    private permissionsService?: PermissionService
+  ) {}
+  private static roleStateInstance: RolesState = null;
+
   @Selector()
   static roles(state: RoleStateModel): Role[] | null {
     return state.roles;
@@ -86,17 +114,24 @@ export class RolesState implements NgxsOnInit {
     return state.actions;
   }
 
-  // Get all roles
-  ngxsOnInit(ctx: StateContext<Role[]>) {
-    ctx.dispatch(new GetRoles());
-    ctx.dispatch(new GetActions());
+  public static getInstance(): RolesState {
+    if (
+      this.roleStateInstance === null ||
+      this.roleStateInstance === undefined
+    ) {
+      this.roleStateInstance = new RolesState();
+    }
+    return this.roleStateInstance;
   }
 
-  constructor(
-    private helper: Utility,
-    private ngZone: NgZone,
-    private permissionsService: PermissionService
-  ) {}
+  // Get all roles
+  ngxsOnInit(ctx: StateContext<RoleStateModel>) {
+    ctx.dispatch(new GetRoles());
+    ctx.dispatch(new GetActions());
+
+    // -- Save Actions logged User
+    ctx.dispatch(new SaveActionsLoggedUser(this.authService.getActionsAdmin()));
+  }
 
   /**
    * Roles actions
@@ -182,20 +217,52 @@ export class RolesState implements NgxsOnInit {
         ...ctx.getState(),
         role: patch({
           ...ctx.getState().role,
-          permissions: updateItem<Permission>( permit => permit.entityId === action.entity.entityId, patch({
+          permissions: updateItem<Permission>(
+            (permit) => permit.entityId === action.entity.entityId,
+            patch({
               ...action.entity,
-              actions: updateItem<ActionRole>( actionx => actionx.name === action.action.name, {
+              actions: updateItem<ActionRole>(
+                (actionx) => actionx.name === action.action.name,
+                {
                   ...action.action,
-                  allowed: !action.action.allowed
-              } )
-          })  )
+                  allowed: !action.action.allowed,
+                }
+              ),
+            })
+          ),
         }),
       })
     );
   }
 
-  // ================================================
-  // -- Singleton para obtener la funciona directa --
-  // ================================================
+  // ======================================================
+  // -- Functions and actions for back office permitting --
+  // ======================================================
 
+  @Action(SaveActionsLoggedUser)
+  saveActionsLoggedUser(
+    ctx: StateContext<RoleStateModel>,
+    action?: SaveActionsLoggedUser
+  ) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        actionsLoggedUser: action.actionsLoggedUser,
+      })
+    );
+  }
+
+  // public isActionHaveIt(action: string, allAction: any[]): boolean {
+
+  //   // -- Search action's user logged --
+
+  //   for (const iterator of Object.keys(allAction)) {
+  //     allAction[iterator];
+
+  //     if (action === allAction[iterator]) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 }

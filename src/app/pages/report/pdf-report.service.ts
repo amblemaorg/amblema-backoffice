@@ -30,7 +30,7 @@ export class PDFReport implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: any,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   /**
    * User report
@@ -74,10 +74,10 @@ export class PDFReport implements OnInit {
               dataUsers.typeUser === '0'
                 ? 'Reporte de Padrinos'
                 : dataUsers.typeUser === '1'
-                  ? 'Reporte de Coordinadores'
-                  : dataUsers.typeUser === '2'
-                    ? 'Reporte de Escuelas'
-                    : 'Reporte de Docentes',
+                ? 'Reporte de Coordinadores'
+                : dataUsers.typeUser === '2'
+                ? 'Reporte de Escuelas'
+                : 'Reporte de Docentes',
             color: '#2e8aaa',
             alignment: 'center',
             fontSize: 20,
@@ -160,8 +160,8 @@ export class PDFReport implements OnInit {
               coordinator.cardType === '1'
                 ? `V-${coordinator.cardId}`
                 : coordinator.cardType === '2'
-                  ? `J-${coordinator.cardId}`
-                  : `E-${coordinator.cardId}`,
+                ? `J-${coordinator.cardId}`
+                : `E-${coordinator.cardId}`,
           },
           { text: coordinator.phone },
           { text: coordinator.homePhone },
@@ -268,8 +268,8 @@ export class PDFReport implements OnInit {
               teacher.cardType === '1'
                 ? `V-${teacher.cardId}`
                 : teacher.cardType === '2'
-                  ? `J-${teacher.cardId}`
-                  : `E-${teacher.cardId}`,
+                ? `J-${teacher.cardId}`
+                : `E-${teacher.cardId}`,
           },
           { text: teacher.gender === '1' ? 'Femenino' : 'Masculino' },
           { text: teacher.email },
@@ -533,7 +533,7 @@ export class PDFReport implements OnInit {
               section.lapse1.math.overGoalAverage !== undefined
                 ? section.lapse1.math.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -562,10 +562,10 @@ export class PDFReport implements OnInit {
             section.lapse1.math.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse1.math.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse1.math.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -612,7 +612,7 @@ export class PDFReport implements OnInit {
               section.lapse1.reading.overGoalAverage !== undefined
                 ? section.lapse1.reading.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -641,10 +641,10 @@ export class PDFReport implements OnInit {
             section.lapse1.reading.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse1.reading.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse1.reading.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -687,7 +687,7 @@ export class PDFReport implements OnInit {
               section.lapse1.logic.overGoalAverage !== undefined
                 ? section.lapse1.logic.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -716,10 +716,10 @@ export class PDFReport implements OnInit {
             section.lapse1.logic.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse1.logic.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse1.logic.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -918,7 +918,7 @@ export class PDFReport implements OnInit {
               section.lapse2.math.overGoalAverage !== undefined
                 ? section.lapse2.math.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -947,10 +947,10 @@ export class PDFReport implements OnInit {
             section.lapse2.math.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse2.math.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse2.math.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -997,7 +997,7 @@ export class PDFReport implements OnInit {
               section.lapse2.reading.overGoalAverage !== undefined
                 ? section.lapse2.reading.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -1026,10 +1026,10 @@ export class PDFReport implements OnInit {
             section.lapse2.reading.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse2.reading.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse2.reading.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -1072,7 +1072,7 @@ export class PDFReport implements OnInit {
               section.lapse2.logic.overGoalAverage !== undefined
                 ? section.lapse2.logic.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -1101,10 +1101,10 @@ export class PDFReport implements OnInit {
             section.lapse2.logic.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse2.logic.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse2.logic.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -1303,7 +1303,7 @@ export class PDFReport implements OnInit {
               section.lapse3.math.overGoalAverage !== undefined
                 ? section.lapse3.math.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -1332,10 +1332,10 @@ export class PDFReport implements OnInit {
             section.lapse3.math.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse3.math.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse3.math.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -1382,7 +1382,7 @@ export class PDFReport implements OnInit {
               section.lapse3.reading.overGoalAverage !== undefined
                 ? section.lapse3.reading.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -1411,10 +1411,10 @@ export class PDFReport implements OnInit {
             section.lapse3.reading.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse3.reading.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse3.reading.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -1457,7 +1457,7 @@ export class PDFReport implements OnInit {
               section.lapse3.logic.overGoalAverage !== undefined
                 ? section.lapse3.logic.overGoalAverage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           });
           diagnosticResult[5].push({
             text:
@@ -1486,10 +1486,10 @@ export class PDFReport implements OnInit {
             section.lapse3.logic.lastTestDate === ''
               ? ''
               : formatDate(
-                section.lapse3.logic.lastTestDate,
-                'd MMMM y',
-                'es-VE'
-              );
+                  section.lapse3.logic.lastTestDate,
+                  'd MMMM y',
+                  'es-VE'
+                );
           penultimateRowHeaderTable = [
             ...penultimateRowHeaderTable,
             {
@@ -1658,84 +1658,87 @@ export class PDFReport implements OnInit {
       allDataReadingResult.push(SecondHeaderReading);
       allDataReadingResult.push(ThirdHeaderReading);
 
-      report.yearSummary.logic.sections.forEach((section, key) => {
-        prepareDataReadingResult = [
-          { text: section.grade },
-          { text: section.name },
-        ];
+      // -- Validate if selected logic
+      if (report.yearSummary.logic) {
+        report.yearSummary.logic.sections.forEach((section, key) => {
+          prepareDataReadingResult = [
+            { text: section.grade },
+            { text: section.name },
+          ];
 
-        if (section.lapse1 !== undefined) {
+          if (section.lapse1 !== undefined) {
+            prepareDataReadingResult = [
+              ...prepareDataReadingResult,
+              {
+                text:
+                  section.lapse1.resultAverage !== undefined
+                    ? section.lapse1.resultAverage.toFixed(2)
+                    : '',
+              },
+              {
+                text:
+                  section.lapse1.indexAverage !== undefined
+                    ? section.lapse1.indexAverage.toFixed(2)
+                    : '',
+              },
+              { text: section.lapse1.overGoalStudents },
+            ];
+          }
+
+          if (section.lapse2 !== undefined) {
+            prepareDataReadingResult = [
+              ...prepareDataReadingResult,
+              {
+                text:
+                  section.lapse2.resultAverage !== undefined
+                    ? section.lapse2.resultAverage.toFixed(2)
+                    : '',
+              },
+              {
+                text:
+                  section.lapse2.indexAverage !== undefined
+                    ? section.lapse2.indexAverage.toFixed(2)
+                    : '',
+              },
+              { text: section.lapse2.overGoalStudents },
+            ];
+          }
+
+          if (section.lapse3 !== undefined) {
+            prepareDataReadingResult = [
+              ...prepareDataReadingResult,
+              {
+                text:
+                  section.lapse3.resultAverage !== undefined
+                    ? section.lapse3.resultAverage.toFixed(2)
+                    : '',
+              },
+
+              {
+                text:
+                  section.lapse3.indexAverage !== undefined
+                    ? section.lapse3.indexAverage.toFixed(2)
+                    : '',
+              },
+              { text: section.lapse3.overGoalStudents },
+            ];
+          }
+
           prepareDataReadingResult = [
             ...prepareDataReadingResult,
+            { text: section.goal },
             {
-              text:
-                section.lapse1.resultAverage !== undefined
-                  ? section.lapse1.resultAverage.toFixed(2)
-                  : '',
-            },
-            {
-              text:
-                section.lapse1.indexAverage !== undefined
-                  ? section.lapse1.indexAverage.toFixed(2)
-                  : '',
-            },
-            { text: section.lapse1.overGoalStudents },
-          ];
-        }
-
-        if (section.lapse2 !== undefined) {
-          prepareDataReadingResult = [
-            ...prepareDataReadingResult,
-            {
-              text:
-                section.lapse2.resultAverage !== undefined
-                  ? section.lapse2.resultAverage.toFixed(2)
-                  : '',
-            },
-            {
-              text:
-                section.lapse2.indexAverage !== undefined
-                  ? section.lapse2.indexAverage.toFixed(2)
-                  : '',
-            },
-            { text: section.lapse2.overGoalStudents },
-          ];
-        }
-
-        if (section.lapse3 !== undefined) {
-          prepareDataReadingResult = [
-            ...prepareDataReadingResult,
-            {
-              text:
-                section.lapse3.resultAverage !== undefined
-                  ? section.lapse3.resultAverage.toFixed(2)
-                  : '',
-            },
-
-            {
-              text:
-                section.lapse3.indexAverage !== undefined
-                  ? section.lapse3.indexAverage.toFixed(2)
-                  : '',
-            },
-            { text: section.lapse3.overGoalStudents },
-          ];
-        }
-
-        prepareDataReadingResult = [
-          ...prepareDataReadingResult,
-          { text: section.goal },
-          {
-            text: `${
-              section.improvementPercentage !== undefined
-                ? section.improvementPercentage.toFixed(2)
-                : 0
+              text: `${
+                section.improvementPercentage !== undefined
+                  ? section.improvementPercentage.toFixed(2)
+                  : 0
               }%`,
-          },
-        ];
+            },
+          ];
 
-        allDataReadingResult.push(prepareDataReadingResult);
-      });
+          allDataReadingResult.push(prepareDataReadingResult);
+        });
+      }
 
       TableReadingDiagnosis.table.body = allDataReadingResult;
 
@@ -1884,7 +1887,7 @@ export class PDFReport implements OnInit {
               section.improvementPercentage !== undefined
                 ? section.improvementPercentage.toFixed(2)
                 : 0
-              }%`,
+            }%`,
           },
         ];
 
@@ -1964,83 +1967,86 @@ export class PDFReport implements OnInit {
       allDataLogicReasoningResult.push(SecondHeaderLogicReasoning);
       allDataLogicReasoningResult.push(ThirdHeaderLogicReasoning);
 
-      report.yearSummary.logic.sections.forEach((section, key) => {
-        prepareDataLogicReasoningResult = [
-          { text: section.grade },
-          { text: section.name },
-        ];
+      // -- If selected logic
+      if (report.yearSummary.logic) {
+        report.yearSummary.logic.sections.forEach((section, key) => {
+          prepareDataLogicReasoningResult = [
+            { text: section.grade },
+            { text: section.name },
+          ];
 
-        if (section.lapse1 !== undefined) {
+          if (section.lapse1 !== undefined) {
+            prepareDataLogicReasoningResult = [
+              ...prepareDataLogicReasoningResult,
+              {
+                text:
+                  section.lapse1.resultAverage !== undefined
+                    ? section.lapse1.resultAverage.toFixed(2)
+                    : '',
+              },
+              {
+                text:
+                  section.lapse1.indexAverage !== undefined
+                    ? section.lapse1.indexAverage.toFixed(2)
+                    : '',
+              },
+              { text: section.lapse1.overGoalStudents },
+            ];
+          }
+
+          if (section.lapse2 !== undefined) {
+            prepareDataLogicReasoningResult = [
+              ...prepareDataLogicReasoningResult,
+              {
+                text:
+                  section.lapse2.resultAverage !== undefined
+                    ? section.lapse2.resultAverage.toFixed(2)
+                    : '',
+              },
+              {
+                text:
+                  section.lapse2.indexAverage !== undefined
+                    ? section.lapse2.indexAverage.toFixed(2)
+                    : '',
+              },
+              { text: section.lapse1.overGoalStudents },
+            ];
+          }
+
+          if (section.lapse3 !== undefined) {
+            prepareDataLogicReasoningResult = [
+              ...prepareDataLogicReasoningResult,
+              {
+                text:
+                  section.lapse3.resultAverage !== undefined
+                    ? section.lapse3.resultAverage.toFixed(2)
+                    : ' ',
+              },
+              {
+                text:
+                  section.lapse3.indexAverage !== undefined
+                    ? section.lapse3.indexAverage.toFixed(2)
+                    : '',
+              },
+              { text: section.lapse1.overGoalStudents },
+            ];
+          }
+
           prepareDataLogicReasoningResult = [
             ...prepareDataLogicReasoningResult,
+            { text: section.goal },
             {
-              text:
-                section.lapse1.resultAverage !== undefined
-                  ? section.lapse1.resultAverage.toFixed(2)
-                  : '',
-            },
-            {
-              text:
-                section.lapse1.indexAverage !== undefined
-                  ? section.lapse1.indexAverage.toFixed(2)
-                  : '',
-            },
-            { text: section.lapse1.overGoalStudents },
-          ];
-        }
-
-        if (section.lapse2 !== undefined) {
-          prepareDataLogicReasoningResult = [
-            ...prepareDataLogicReasoningResult,
-            {
-              text:
-                section.lapse2.resultAverage !== undefined
-                  ? section.lapse2.resultAverage.toFixed(2)
-                  : '',
-            },
-            {
-              text:
-                section.lapse2.indexAverage !== undefined
-                  ? section.lapse2.indexAverage.toFixed(2)
-                  : '',
-            },
-            { text: section.lapse1.overGoalStudents },
-          ];
-        }
-
-        if (section.lapse3 !== undefined) {
-          prepareDataLogicReasoningResult = [
-            ...prepareDataLogicReasoningResult,
-            {
-              text:
-                section.lapse3.resultAverage !== undefined
-                  ? section.lapse3.resultAverage.toFixed(2)
-                  : ' ',
-            },
-            {
-              text:
-                section.lapse3.indexAverage !== undefined
-                  ? section.lapse3.indexAverage.toFixed(2)
-                  : '',
-            },
-            { text: section.lapse1.overGoalStudents },
-          ];
-        }
-
-        prepareDataLogicReasoningResult = [
-          ...prepareDataLogicReasoningResult,
-          { text: section.goal },
-          {
-            text: `${
-              section.improvementPercentage !== undefined
-                ? section.improvementPercentage.toFixed(2)
-                : 0
+              text: `${
+                section.improvementPercentage !== undefined
+                  ? section.improvementPercentage.toFixed(2)
+                  : 0
               }%`,
-          },
-        ];
+            },
+          ];
 
-        allDataLogicReasoningResult.push(prepareDataLogicReasoningResult);
-      });
+          allDataLogicReasoningResult.push(prepareDataLogicReasoningResult);
+        });
+      }
 
       TableLogicReasoningDiagnosis.table.body = allDataLogicReasoningResult;
 
@@ -2097,6 +2103,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
+                  report.yearSummary.reading &&
                   report.yearSummary.reading.totalResultAverage !== undefined
                     ? report.yearSummary.reading.totalResultAverage.toFixed(2)
                     : '',
@@ -2121,7 +2128,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
-                  report.yearSummary.logic.totalResultAverage !== undefined
+                report.yearSummary.logic && report.yearSummary.logic.totalResultAverage !== undefined
                     ? report.yearSummary.logic.totalResultAverage.toFixed(2)
                     : '',
               },
@@ -2131,13 +2138,13 @@ export class PDFReport implements OnInit {
 
               {
                 text: `${
-                  report.yearSummary.reading.improvementPercentageAverage !==
-                    undefined
+                  report.yearSummary.reading && report.yearSummary.reading.improvementPercentageAverage !==
+                  undefined
                     ? report.yearSummary.reading.improvementPercentageAverage.toFixed(
-                      2
-                    )
+                        2
+                      )
                     : 0
-                  }%`,
+                }%`,
               },
             ],
             [
@@ -2150,12 +2157,12 @@ export class PDFReport implements OnInit {
               {
                 text: `${
                   report.yearSummary.math.improvementPercentageAverage !==
-                    undefined
+                  undefined
                     ? report.yearSummary.math.improvementPercentageAverage.toFixed(
-                      2
-                    )
+                        2
+                      )
                     : 0
-                  }%`,
+                }%`,
               },
             ],
             [
@@ -2165,13 +2172,13 @@ export class PDFReport implements OnInit {
               },
               {
                 text: `${
-                  report.yearSummary.logic.improvementPercentageAverage !==
-                    undefined
+                  report.yearSummary.logic && report.yearSummary.logic.improvementPercentageAverage !==
+                  undefined
                     ? report.yearSummary.logic.improvementPercentageAverage.toFixed(
-                      2
-                    )
+                        2
+                      )
                     : 0
-                  }%`,
+                }%`,
               },
             ],
           ],
@@ -2188,5 +2195,5 @@ export class PDFReport implements OnInit {
     pdfMake.createPdf(finalReport).open();
   }
 
-  async onGenerateSummaryDiagnostic(report: DiagnosticReport) { }
+  async onGenerateSummaryDiagnostic(report: DiagnosticReport) {}
 }

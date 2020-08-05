@@ -1,5 +1,7 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { MenuSetUp } from './pages-menu-service';
+import { AuthService } from '../services/user/auth.service';
+
 
 @Component({
   selector: 'app-pages',
@@ -7,12 +9,14 @@ import { MenuSetUp } from './pages-menu-service';
 })
 export class PagesComponent implements AfterViewInit, OnDestroy {
 
-  constructor(public menuSetUp: MenuSetUp) {
-
+  constructor(
+    public authService: AuthService,
+    public menuSetUp: MenuSetUp) {
   }
 
   async ngAfterViewInit() {
     await this.menuSetUp.renderMenu(true);
+    await this.menuSetUp.validateActions();
   }
 
   ngOnDestroy(): void {

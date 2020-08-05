@@ -12,6 +12,8 @@ import { Utility } from 'src/app/_helpers/utility';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 // JQuery call
 declare var $: any;
@@ -25,6 +27,8 @@ export class CoordinatorsUsersTableComponent extends BaseTable
   @Select(CoordinatorUserState.coordinatorUsers) data$: Observable<
     CoordinatorUser[]
   >;
+
+  public itCan = new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_CREATE);
 
   subscription: Subscription;
 
@@ -72,6 +76,11 @@ export class CoordinatorsUsersTableComponent extends BaseTable
         },
       },
     };
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_EDIT),
+      !new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_DELETE)
+    );
   }
 
   ngOnInit(): void {}

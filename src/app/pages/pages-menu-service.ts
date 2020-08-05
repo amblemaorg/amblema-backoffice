@@ -29,7 +29,7 @@ export class MenuSetUp {
   @Select(LapseActivityState.lapses) lapses$: Observable<LapseActivity>;
   subscriptionLapse: Subscription;
 
-//  constructor( private authService: AuthService ) {}
+  //  constructor( private authService: AuthService ) {}
 
   public async renderMenu(isUpdate: boolean = false) {
     /* Get the lapses and activities to configure the menu*/
@@ -37,7 +37,6 @@ export class MenuSetUp {
     this.subscriptionLapse = await this.lapses$
       // .pipe( first() )
       .subscribe((response) => {
-
         this.menu.find((value) => {
           /* Get in 'Contenido' option */
           if (value.title === 'Contenido') {
@@ -60,8 +59,8 @@ export class MenuSetUp {
 
                     response.lapse1.find((option) => {
                       if (
-                        option.status === STATUS.ACTIVE.VALUE
-                        && option.devName !== 'initialWorkshop'
+                        option.status === STATUS.ACTIVE.VALUE &&
+                        option.devName !== 'initialWorkshop'
                       ) {
                         lapses.children.push({
                           title: option.name,
@@ -132,10 +131,23 @@ export class MenuSetUp {
   } // <-- End render menu
 
   public async validateActions() {
-    // -- Validation menu view --
-    this.menu[1].children[0].hidden = !(new AuthService().isAllowed( ALL_ACTIONS.ADMIN_VIEW ));
-    this.menu[1].children[2].hidden = !(new AuthService().isAllowed( ALL_ACTIONS.ROLE_VIEW ));
+    /**
+     * Validation menu view
+     */
+
+    // -- User admin and role --
+    this.menu[1].children[0].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.ADMIN_VIEW
+    );
+    this.menu[1].children[1].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.ROLE_VIEW
+    );
+
+    // -- User school, sponsor and coordinator --
+    this.menu[2].children[0].hidden = !new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_VIEW);
+    this.menu[2].children[1].hidden = !new AuthService().isAllowed(ALL_ACTIONS.SPONSOR_USER_VIEW);
+    this.menu[2].children[2].hidden = !new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_VIEW);
+
 
   }
-
 }

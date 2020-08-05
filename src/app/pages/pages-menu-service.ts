@@ -148,6 +148,10 @@ export class MenuSetUp {
     this.menu[2].children[1].hidden = !new AuthService().isAllowed(ALL_ACTIONS.SPONSOR_USER_VIEW);
     this.menu[2].children[2].hidden = !new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_VIEW);
 
-
+    // -- Request project, creation user, validate info and validate step --
+    this.menu[3].children[0].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_VIEW);
+    this.menu[3].children[1].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_FIND_USER_VIEW);
+    this.menu[3].children[2].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_VIEW);
+    this.menu[3].children[3].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_VIEW);
   }
 }

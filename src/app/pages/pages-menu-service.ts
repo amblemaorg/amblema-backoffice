@@ -154,7 +154,7 @@ export class MenuSetUp {
     this.menu[3].children[2].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_VIEW);
     this.menu[3].children[3].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_VIEW);
 
-    
+
     /** Web content  */
 
     // -- Web --
@@ -164,6 +164,9 @@ export class MenuSetUp {
     this.menu[4].children[0].children[3].hidden = !new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_PAGE_EDIT);
     this.menu[4].children[0].children[4].hidden = !new AuthService().isAllowed(ALL_ACTIONS.BLOG_PAGE_EDIT);
 
+
+    // -- Steps for all --
+    this.menu[4].children[1].hidden = !new AuthService().isAllowed(ALL_ACTIONS.STEP_VIEW);
 
     // -- Proyects --
     this.menu[5].hidden = !new AuthService().isAllowed(ALL_ACTIONS.PROJECT_VIEW);
@@ -178,7 +181,7 @@ export class MenuSetUp {
      * Registered schools.
      * Godparents active - inactive.
      */
-  
+
     this.menu[6].children[0].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_DIAGNOSTICS_VIEW);
     this.menu[6].children[1].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_SPONSORS_VIEW);
     this.menu[6].children[2].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_COORDINATOR_VIEW);
@@ -187,7 +190,7 @@ export class MenuSetUp {
     this.menu[6].children[5].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_OLYMPICS_VIEW);
     this.menu[6].children[6].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_ENROLLED_SCHOOLS_VIEW);
     this.menu[6].children[7].hidden = !new AuthService().isAllowed(ALL_ACTIONS.REPORT_SPONSOR_ACTIVES_VIEW);
-    
+
 
   }
 }

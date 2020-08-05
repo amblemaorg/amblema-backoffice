@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { InformationDetailsComponent } from '../information-details/information-details.component';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-initial-workshop-details',
@@ -10,7 +12,10 @@ import { InformationDetailsComponent } from '../information-details/information-
 })
 export class InitialWorkshopDetailsComponent extends InformationDetailsComponent
   implements OnInit {
-  customOptions: OwlOptions = {
+
+    public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_EDIT );
+
+    customOptions: OwlOptions = {
     stagePadding: 50,
 
     autoHeight: true,

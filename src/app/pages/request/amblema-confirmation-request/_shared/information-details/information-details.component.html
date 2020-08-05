@@ -51,7 +51,7 @@
       </div>
 
       <div class="col-12">
-        <div *ngIf="(data$ | async)?.status === '1'">
+        <div *ngIf="(data$ | async)?.status === '1' && canEdit">
           <hr />
           <div *ngIf="confirmAction">
             <label class="label"> Acciones para la solicitud</label>

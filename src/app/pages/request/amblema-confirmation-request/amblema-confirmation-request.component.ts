@@ -18,6 +18,8 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-amblema-confirmation-request',
@@ -102,6 +104,8 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
         },
       },
     };
+
+    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_DELETE ) ) );
   }
 
   ngOnInit() {

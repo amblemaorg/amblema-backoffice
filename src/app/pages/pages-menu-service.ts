@@ -156,7 +156,7 @@ export class MenuSetUp {
 
     // -- Request project, creation user, validate info and validate step --
     this.menu[3].children[0].hidden = !new AuthService().isAllowed(
-      ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_VIEW
+      ALL_ACTIONS.REQUEST_CREATE_PROJECT_VIEW
     );
     this.menu[3].children[1].hidden = !new AuthService().isAllowed(
       ALL_ACTIONS.REQUEST_FIND_USER_VIEW

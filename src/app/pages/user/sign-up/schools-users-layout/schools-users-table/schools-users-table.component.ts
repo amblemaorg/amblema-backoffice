@@ -12,6 +12,8 @@ import { Utility } from 'src/app/_helpers/utility';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 // JQuery call
 declare var $: any;
@@ -23,6 +25,8 @@ declare var $: any;
 export class SchoolsUsersTableComponent extends BaseTable
   implements TableActions {
   @Select(SchoolUserState.schoolUsers) data$: Observable<SchoolUser[]>;
+
+  public isCan =  new AuthService().isAllowed( ALL_ACTIONS.SCHOOL_USER_CREATE );
 
   subscription: Subscription;
 
@@ -68,6 +72,11 @@ export class SchoolsUsersTableComponent extends BaseTable
         },
       },
     };
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_EDIT),
+      new AuthService().isAllowed(ALL_ACTIONS.ROLE_DELETE)
+    );
   }
 
   onAction(event: any) {

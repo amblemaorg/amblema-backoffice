@@ -27,6 +27,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-creation-requests',
@@ -49,6 +51,9 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   confirmAction = true;
   type = TYPE_REQUEST;
   showProgress = false;
+
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_FIND_USER_EDIT );
+
 
   subscription: Subscription;
 
@@ -150,6 +155,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           },
         },
       });
+
+    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_FIND_USER_DELETE ) ) );
   }
 
   ngOnInit() {

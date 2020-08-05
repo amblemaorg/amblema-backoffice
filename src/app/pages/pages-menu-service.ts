@@ -195,6 +195,30 @@ export class MenuSetUp {
       ALL_ACTIONS.STEP_VIEW
     );
 
+    /** Config PECA */
+
+    // -- Config goal
+    this.menu[4].children[2].children[3].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.GOAL_SETTING_VIEW
+    );
+
+    // -- Environment
+    this.menu[4].children[2].children[4].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.ENVIRONMENTAL_PROJECT_VIEW
+    );
+
+    // -- Strategy activity
+    this.menu[4].children[2].children[5].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.MONITORING_ACTIVITY_VIEW
+    );
+
+    // -- Lapse and school year
+    this.menu[4].children[2].children[6].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.SCHOOL_YEAR_VIEW
+    );
+
+    /** / End config PECA */
+
     /** Pensum */
 
     this.menu[4].children[3].hidden = !new AuthService().isAllowed(

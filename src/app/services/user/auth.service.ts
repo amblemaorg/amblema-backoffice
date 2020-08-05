@@ -106,9 +106,7 @@ export class AuthService {
   }
 
   public isAllowed(action: string): boolean {
-
     const ALL_ACTIONS_LOGGED: any =  this.getActionsAdmin();
-
     for (const iterator of Object.keys(ALL_ACTIONS_LOGGED)) {
 
       if (action === ALL_ACTIONS_LOGGED[iterator]) {

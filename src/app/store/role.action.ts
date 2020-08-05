@@ -6,6 +6,7 @@ import {
   NgxsOnInit,
   Store,
   Select,
+  createSelector,
 } from '@ngxs/store';
 import { Role, Permission, ActionRole } from '../_models/permission.model';
 import { NgZone } from '@angular/core';
@@ -89,16 +90,6 @@ export class SaveActionsLoggedUser {
   },
 })
 export class RolesState implements NgxsOnInit {
-
-  constructor(
-    private store?: Store,
-    private helper?: Utility,
-    private ngZone?: NgZone,
-    private authService?: AuthService,
-    private permissionsService?: PermissionService
-  ) {}
-  private static roleStateInstance: RolesState = null;
-
   @Selector()
   static roles(state: RoleStateModel): Role[] | null {
     return state.roles;
@@ -114,15 +105,26 @@ export class RolesState implements NgxsOnInit {
     return state.actions;
   }
 
-  public static getInstance(): RolesState {
-    if (
-      this.roleStateInstance === null ||
-      this.roleStateInstance === undefined
-    ) {
-      this.roleStateInstance = new RolesState();
-    }
-    return this.roleStateInstance;
+  @Selector()
+  static isAllowed(action: string): any {
+    return createSelector([RolesState], () => {
+      const ALL_ACTIONS_LOGGED: any = (new AuthService().getActionsAdmin());
+      for (const iterator of Object.keys(ALL_ACTIONS_LOGGED)) {
+        if (action === ALL_ACTIONS_LOGGED[iterator]) {
+          return true;
+        }
+      }
+      return false;
+    });
   }
+
+  constructor(
+    private store?: Store,
+    private helper?: Utility,
+    private ngZone?: NgZone,
+    private authService?: AuthService,
+    private permissionsService?: PermissionService
+  ) {}
 
   // Get all roles
   ngxsOnInit(ctx: StateContext<RoleStateModel>) {
@@ -251,18 +253,4 @@ export class RolesState implements NgxsOnInit {
       })
     );
   }
-
-  // public isActionHaveIt(action: string, allAction: any[]): boolean {
-
-  //   // -- Search action's user logged --
-
-  //   for (const iterator of Object.keys(allAction)) {
-  //     allAction[iterator];
-
-  //     if (action === allAction[iterator]) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
 }

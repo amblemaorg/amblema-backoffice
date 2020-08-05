@@ -1,27 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { ACTION } from '../../../../../_helpers/text-content/text-crud';
-import { Router } from '@angular/router';
-import { TableActions, BaseTable } from '../../../../../_helpers/base-table';
-import { Role } from 'src/app/_models/permission.model';
-import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { ACTION } from "../../../../../_helpers/text-content/text-crud";
+import { Router } from "@angular/router";
+import { TableActions, BaseTable } from "../../../../../_helpers/base-table";
+import { Role } from "src/app/_models/permission.model";
+import { Select, Store } from "@ngxs/store";
+import { Observable } from "rxjs";
 import {
   RolesState,
   DeleteRole,
   SelectedRole,
-} from 'src/app/store/role.action';
-import { PermissionService } from 'src/app/services/permission.service';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+} from "src/app/store/role.action";
+import { PermissionService } from "src/app/services/permission.service";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { BsModalService } from "ngx-bootstrap/modal";
+import { DialogConfirmationComponent } from "src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
+import { AuthService } from "src/app/services/user/auth.service";
+import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 
 @Component({
-  selector: 'app-roles-table',
-  templateUrl: './roles-table.component.html',
+  selector: "app-roles-table",
+  templateUrl: "./roles-table.component.html",
 })
 export class RolesTableComponent extends BaseTable
   implements TableActions, OnInit {
   @Select(RolesState.roles) data$: Observable<Role[]>;
+
+  public itCan = new AuthService().isAllowed(ALL_ACTIONS.ROLE_CREATE);
 
   data: any = [];
 
@@ -32,18 +36,18 @@ export class RolesTableComponent extends BaseTable
     private store: Store,
     private router: Router
   ) {
-    super('form-role'); // Related form
+    super("form-role"); // Related form
     this.MODE = this.ACTION.CREATE;
 
     // Custom columns
     this.settings.columns = {
       name: {
-        title: 'Rol',
-        type: 'string',
+        title: "Rol",
+        type: "string",
       },
       status: {
-        title: 'Estatus',
-        type: 'string',
+        title: "Estatus",
+        type: "string",
       },
     };
 
@@ -52,6 +56,11 @@ export class RolesTableComponent extends BaseTable
       { name: ACTION.EDIT, title: `<i class="nb-edit"></i>` },
       { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' },
     ];
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.ROLE_EDIT),
+      !new AuthService().isAllowed(ALL_ACTIONS.ROLE_DELETE)
+    );
   }
 
   ngOnInit(): void {}
@@ -59,7 +68,7 @@ export class RolesTableComponent extends BaseTable
   onAction(event: any) {
     switch (event.action) {
       case ACTION.EDIT:
-        this.router.navigate(['/pages/permissions/actions']);
+        this.router.navigate(["/pages/permissions/actions"]);
         this.store.dispatch(new SelectedRole(event.data));
         break;
       case ACTION.DELETE:
@@ -67,13 +76,13 @@ export class RolesTableComponent extends BaseTable
 
         const modal = this.modalService.show(
           DialogConfirmationComponent,
-          Object.assign({}, { class: 'modal-dialog-centered' })
+          Object.assign({}, { class: "modal-dialog-centered" })
         );
 
         // -- Set up modal
         (modal.content as DialogConfirmationComponent).showConfirmationModal(
-          'Eliminar rol',
-          '¿Desea eliminar el rol seleccionado?',
+          "Eliminar rol",
+          "¿Desea eliminar el rol seleccionado?",
           `Si hay usuarios, que tengan designado este rol,
            tendras que modifcarlo antes de eliminar. Los roles estandares no se pueden eliminar.`
         );
@@ -89,13 +98,14 @@ export class RolesTableComponent extends BaseTable
                   (modal.content as DialogConfirmationComponent).hideConfirmationModal();
                 },
                 (err: any) => {
-
-                  (modal.content as DialogConfirmationComponent).errorDelete(err);
+                  (modal.content as DialogConfirmationComponent).errorDelete(
+                    err
+                  );
 
                   if (event.data.isStandard) {
                     this.toastr.error(
-                      'Error',
-                      'No puedes eliminar un rol estandarizado'
+                      "Error",
+                      "No puedes eliminar un rol estandarizado"
                     );
                   }
                 }

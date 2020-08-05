@@ -1,5 +1,5 @@
-import { ACTION } from "./text-content/text-crud";
-import { LocalDataSource } from "ng2-smart-table";
+import { ACTION } from './text-content/text-crud';
+import { LocalDataSource } from 'ng2-smart-table';
 
 export class BaseTable {
   ID_FORM: string; // <-- To relate it to some form
@@ -9,10 +9,10 @@ export class BaseTable {
   // Settings
   source: LocalDataSource = new LocalDataSource();
   settings: any = {
-    noDataMessage: "No hay registros",
-    mode: "external",
+    noDataMessage: 'No hay registros',
+    mode: 'external',
     actions: {
-      columnTitle: "Acciones",
+      columnTitle: 'Acciones',
       add: false,
       edit: false,
       //  Fake action

@@ -28,7 +28,7 @@
       (delete)="onDeleteSliderMath($event)"
     ></app-form-slider>
   </nb-card-body>
-  <nb-card-footer class="text-right">
+  <nb-card-footer class="text-right" *ngIf="canEdit">
   
     <app-progress *ngIf="showProgress" class="text-center"></app-progress>
     <button

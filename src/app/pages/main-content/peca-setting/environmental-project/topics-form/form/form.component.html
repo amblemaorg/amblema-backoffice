@@ -13,7 +13,7 @@
                     <app-progress *ngIf="showProgress"></app-progress>
                 </div>
 
-                <div class="col-12 form-group text-right">
+                <div class="col-12 form-group text-right" *ngIf="canEdit">
                     <button (click)="deleteHimself()" class="col-12 col-lg-auto mr-0 mr-lg-3 mb-3 mb-lg-0" nbButton
                         size="small" outline status="danger" type="button" nbTooltip="Eliminar tema">
                         Eliminar tema<nb-icon icon="trash-2-outline"></nb-icon>
@@ -47,6 +47,7 @@
                 <div class="col-12">
                     <hr>
                     <button 
+                        *ngIf="canEdit"
                         [disabled]="!optionsSelected.length"
                         size="small" 
                         nbButton 
@@ -54,7 +55,7 @@
                         status="success" (click)="addLevel()"
                         class="form-group">CREAR NIVEL <nb-icon icon="plus-outline"></nb-icon></button>
 
-                    <div class="row">
+                    <div *ngIf="canEdit" class="row">
 
                         <div class="col-12 form-group">
                             <label class="label">Grados escolares</label>

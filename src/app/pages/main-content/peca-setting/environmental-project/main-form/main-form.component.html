@@ -29,6 +29,7 @@
     </div>
 
     <button
+      *ngIf="canEdit"
       [attr.disabled]="form.invalid || showProgress ? true : null"
       size="small"
       type="submit"
@@ -84,6 +85,7 @@
       ></app-progress>
     </div>
     <button
+      *ngIf="canEdit"
       [attr.disabled]="
         formGeneralObjective.invalid || submittedObjective ? true : null
       "

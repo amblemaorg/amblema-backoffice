@@ -15,6 +15,8 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-topics-form',
@@ -26,6 +28,8 @@ export class TopicsFormComponent
   @Select(EnvironmentalProjectState.topics) topics$: Observable<Topic[]>;
   @Select(EnvironmentalProjectState.environmentalProjectStorable)
   storable$: Observable<EnvironmentalProjectModel>;
+
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT );
 
   subscription: Subscription;
 

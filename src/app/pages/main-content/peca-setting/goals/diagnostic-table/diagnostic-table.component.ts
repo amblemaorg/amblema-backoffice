@@ -3,6 +3,8 @@ import { GoalService } from 'src/app/services/goal.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-diagnostic-table',
@@ -28,7 +30,7 @@ export class DiagnosticTableComponent implements OnInit, OnDestroy {
         columnTitle: 'Acciones',
         add: false,
         delete: false,
-        edit: true
+        edit: new AuthService().isAllowed( ALL_ACTIONS.GOAL_SETTING_EDIT )
       },
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -68,6 +70,8 @@ export class DiagnosticTableComponent implements OnInit, OnDestroy {
         }
       },
     };
+
+
   }
 
   ngOnDestroy(): void {

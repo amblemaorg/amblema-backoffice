@@ -9,7 +9,7 @@ import { ReactiveTextAreaModule } from 'src/app/pages/_components/form-component
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from 'src/app/pages/_components/form-components/reactive-input-file/reactive-input-file.module';
 import { AwardFormComponent } from './award-form/award-form.component';
-import { NbButtonModule, NbIconModule } from '@nebular/theme';
+import { NbButtonModule, NbIconModule, NbAlertModule } from '@nebular/theme';
 import { SponsorListComponent } from './sponsor-list/sponsor-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -34,6 +34,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         ReactiveSelectModule,
         ReactiveTextAreaModule,
         ReactiveInputFileModule,
+        NbAlertModule
     ],
     exports: [
         ContentTextComponent,

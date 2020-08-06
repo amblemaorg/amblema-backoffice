@@ -446,30 +446,13 @@ export class PDFReport implements OnInit {
           // =======================
           // Columns
 
-          if (section.lapse1.math !== undefined) {
-            prepareStudent = [
-              ...prepareStudent,
-              {
-                text:
-                  student.multiplicationsPerMin !== undefined
-                    ? student.multiplicationsPerMin.toFixed(2)
-                    : "",
-              },
-              {
-                text: student.multiplicationsPerMinIndex
-                  ? student.multiplicationsPerMinIndex.toFixed(2)
-                  : "",
-              },
-            ];
-          }
-
           if (section.lapse1.reading !== undefined) {
             prepareStudent = [
               ...prepareStudent,
               {
                 text:
                   student.wordsPerMin !== undefined
-                    ? student.wordsPerMin.toFixed(2)
+                    ? student.wordsPerMin
                     : "",
               },
               {
@@ -480,6 +463,24 @@ export class PDFReport implements OnInit {
               },
             ];
           }
+          
+
+          if (section.lapse1.math !== undefined) {
+            prepareStudent = [
+              ...prepareStudent,
+              {
+                text:
+                  student.multiplicationsPerMin !== undefined
+                    ? student.multiplicationsPerMin
+                    : "",
+              },
+              {
+                text: student.multiplicationsPerMinIndex
+                  ? student.multiplicationsPerMinIndex.toFixed(2)
+                  : "",
+              },
+            ];
+          }
 
           if (section.lapse1.logic !== undefined) {
             prepareStudent = [
@@ -487,7 +488,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   student.operationsPerMin !== undefined
-                    ? student.operationsPerMin.toFixed(2)
+                    ? student.operationsPerMin
                     : "",
               },
               {
@@ -506,6 +507,82 @@ export class PDFReport implements OnInit {
 
         // ==========================
         // -- Creating diagnostics --
+
+
+        if (section.lapse1.reading !== undefined) {
+          diagnosticResult[0].push({
+            ...colorRowOne,
+            text: "Diagnóstico de lectura",
+          });
+          diagnosticResult[1].push({
+            ...colorRowTwo,
+            text: section.lapse1.reading.participants,
+          });
+          diagnosticResult[2].push({
+            text:
+              section.lapse1.reading.resultAverage !== undefined
+                ? section.lapse1.reading.resultAverage.toFixed(2)
+                : "",
+          });
+          diagnosticResult[3].push({
+            ...colorRowOne,
+            text: section.lapse1.reading.overGoalStudents,
+          });
+          diagnosticResult[4].push({
+            ...colorRowTwo,
+            text: `${
+              section.lapse1.reading.overGoalAverage !== undefined
+                ? section.lapse1.reading.overGoalAverage.toFixed(2)
+                : 0
+            }%`,
+          });
+          diagnosticResult[5].push({
+            text:
+              section.lapse1.reading.indexAverage !== undefined
+                ? section.lapse1.reading.indexAverage.toFixed(2)
+                : "",
+          });
+
+          columnsNameStudent = [
+            ...columnsNameStudent,
+            { ...colorRowTwo, text: "Resultado" },
+            { ...colorRowTwo, text: "Índice" },
+          ];
+
+          latestRowHeaderTable = [
+            ...latestRowHeaderTable,
+            {
+              ...colorRowOne,
+              text: `Meta: ${section.lapse1.reading.goal}`,
+              colSpan: 2,
+            },
+            {},
+          ];
+
+          const datePrepare: any =
+            section.lapse1.reading.lastTestDate === ""
+              ? ""
+              : formatDate(
+                  section.lapse1.reading.lastTestDate,
+                  "d MMMM y",
+                  "es-VE"
+                );
+          penultimateRowHeaderTable = [
+            ...penultimateRowHeaderTable,
+            {
+              ...colorRowOne,
+              text: "Fecha del diagnóstico: \n" + datePrepare,
+              colSpan: 2,
+            },
+            {},
+          ];
+
+          firstRowHeaderTable = [
+            ...firstRowHeaderTable,
+            { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
+            {},
+          ];
+        }
 
         if (section.lapse1.math !== undefined) {
           diagnosticResult[0].push({
@@ -586,80 +663,6 @@ export class PDFReport implements OnInit {
           ];
         }
 
-        if (section.lapse1.reading !== undefined) {
-          diagnosticResult[0].push({
-            ...colorRowOne,
-            text: "Diagnóstico de lectura",
-          });
-          diagnosticResult[1].push({
-            ...colorRowTwo,
-            text: section.lapse1.reading.participants,
-          });
-          diagnosticResult[2].push({
-            text:
-              section.lapse1.reading.resultAverage !== undefined
-                ? section.lapse1.reading.resultAverage.toFixed(2)
-                : "",
-          });
-          diagnosticResult[3].push({
-            ...colorRowOne,
-            text: section.lapse1.reading.overGoalStudents,
-          });
-          diagnosticResult[4].push({
-            ...colorRowTwo,
-            text: `${
-              section.lapse1.reading.overGoalAverage !== undefined
-                ? section.lapse1.reading.overGoalAverage.toFixed(2)
-                : 0
-            }%`,
-          });
-          diagnosticResult[5].push({
-            text:
-              section.lapse1.reading.indexAverage !== undefined
-                ? section.lapse1.reading.indexAverage.toFixed(2)
-                : "",
-          });
-
-          columnsNameStudent = [
-            ...columnsNameStudent,
-            { ...colorRowTwo, text: "Resultado" },
-            { ...colorRowTwo, text: "Índice" },
-          ];
-
-          latestRowHeaderTable = [
-            ...latestRowHeaderTable,
-            {
-              ...colorRowOne,
-              text: `Meta: ${section.lapse1.reading.goal}`,
-              colSpan: 2,
-            },
-            {},
-          ];
-
-          const datePrepare: any =
-            section.lapse1.reading.lastTestDate === ""
-              ? ""
-              : formatDate(
-                  section.lapse1.reading.lastTestDate,
-                  "d MMMM y",
-                  "es-VE"
-                );
-          penultimateRowHeaderTable = [
-            ...penultimateRowHeaderTable,
-            {
-              ...colorRowOne,
-              text: "Fecha del diagnóstico: \n" + datePrepare,
-              colSpan: 2,
-            },
-            {},
-          ];
-
-          firstRowHeaderTable = [
-            ...firstRowHeaderTable,
-            { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
-            {},
-          ];
-        }
 
         if (section.lapse1.logic !== undefined) {
           diagnosticResult[0].push({
@@ -695,12 +698,15 @@ export class PDFReport implements OnInit {
                 : "",
           });
 
+          // -- Points evaluation
           columnsNameStudent = [
             ...columnsNameStudent,
             { ...colorRowTwo, text: "Resultado" },
             { ...colorRowTwo, text: "Índice" },
           ];
 
+
+          // -- Goal
           latestRowHeaderTable = [
             ...latestRowHeaderTable,
             {
@@ -710,7 +716,8 @@ export class PDFReport implements OnInit {
             },
             {},
           ];
-
+          
+          // -- Date diagnostic
           const datePrepare: any =
             section.lapse1.logic.lastTestDate === ""
               ? ""
@@ -729,6 +736,7 @@ export class PDFReport implements OnInit {
             {},
           ];
 
+          // -- Title subject
           firstRowHeaderTable = [
             ...firstRowHeaderTable,
             {
@@ -829,31 +837,13 @@ export class PDFReport implements OnInit {
           // =======================
           // Columns
 
-          if (section.lapse2.math !== undefined) {
-            prepareStudent = [
-              ...prepareStudent,
-              {
-                text:
-                  student.multiplicationsPerMin !== undefined
-                    ? student.multiplicationsPerMin.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  student.multiplicationsPerMinIndex !== undefined
-                    ? student.multiplicationsPerMinIndex.toFixed(2)
-                    : "",
-              },
-            ];
-          }
-
           if (section.lapse2.reading !== undefined) {
             prepareStudent = [
               ...prepareStudent,
               {
                 text:
                   student.wordsPerMin !== undefined
-                    ? student.wordsPerMin.toFixed(2)
+                    ? student.wordsPerMin
                     : "",
               },
               {
@@ -865,13 +855,32 @@ export class PDFReport implements OnInit {
             ];
           }
 
+
+          if (section.lapse2.math !== undefined) {
+            prepareStudent = [
+              ...prepareStudent,
+              {
+                text:
+                  student.multiplicationsPerMin !== undefined
+                    ? student.multiplicationsPerMin
+                    : "",
+              },
+              {
+                text:
+                  student.multiplicationsPerMinIndex !== undefined
+                    ? student.multiplicationsPerMinIndex.toFixed(2)
+                    : "",
+              },
+            ];
+          }
+
           if (section.lapse2.logic !== undefined) {
             prepareStudent = [
               ...prepareStudent,
               {
                 text:
                   student.operationsPerMin !== undefined
-                    ? student.operationsPerMin.toFixed(2)
+                    ? student.operationsPerMin
                     : "",
               },
               {
@@ -891,6 +900,82 @@ export class PDFReport implements OnInit {
 
         // ==========================
         // -- Creating diagnostics --
+
+
+        if (section.lapse2.reading !== undefined) {
+          diagnosticResult[0].push({
+            ...colorRowOne,
+            text: "Diagnóstico de lectura",
+          });
+          diagnosticResult[1].push({
+            ...colorRowTwo,
+            text: section.lapse2.reading.participants,
+          });
+          diagnosticResult[2].push({
+            text:
+              section.lapse2.reading.resultAverage !== undefined
+                ? section.lapse2.reading.resultAverage.toFixed(2)
+                : 0,
+          });
+          diagnosticResult[3].push({
+            ...colorRowOne,
+            text: section.lapse2.reading.overGoalStudents,
+          });
+          diagnosticResult[4].push({
+            ...colorRowTwo,
+            text: `${
+              section.lapse2.reading.overGoalAverage !== undefined
+                ? section.lapse2.reading.overGoalAverage.toFixed(2)
+                : 0
+            }%`,
+          });
+          diagnosticResult[5].push({
+            text:
+              section.lapse2.reading.indexAverage !== undefined
+                ? section.lapse2.reading.indexAverage.toFixed(2)
+                : "",
+          });
+
+          columnsNameStudent = [
+            ...columnsNameStudent,
+            { ...colorRowTwo, text: "Resultado" },
+            { ...colorRowTwo, text: "Índice" },
+          ];
+
+          latestRowHeaderTable = [
+            ...latestRowHeaderTable,
+            {
+              ...colorRowOne,
+              text: `Meta: ${section.lapse2.reading.goal}`,
+              colSpan: 2,
+            },
+            {},
+          ];
+
+          const datePrepare: any =
+            section.lapse2.reading.lastTestDate === ""
+              ? ""
+              : formatDate(
+                  section.lapse2.reading.lastTestDate,
+                  "d MMMM y",
+                  "es-VE"
+                );
+          penultimateRowHeaderTable = [
+            ...penultimateRowHeaderTable,
+            {
+              ...colorRowOne,
+              text: "Fecha del diagnóstico: \n" + datePrepare,
+              colSpan: 2,
+            },
+            {},
+          ];
+
+          firstRowHeaderTable = [
+            ...firstRowHeaderTable,
+            { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
+            {},
+          ];
+        }
 
         if (section.lapse2.math !== undefined) {
           diagnosticResult[0].push({
@@ -967,81 +1052,6 @@ export class PDFReport implements OnInit {
               text: `Diagnóstico de multiplicación`,
               colSpan: 2,
             },
-            {},
-          ];
-        }
-
-        if (section.lapse2.reading !== undefined) {
-          diagnosticResult[0].push({
-            ...colorRowOne,
-            text: "Diagnóstico de lectura",
-          });
-          diagnosticResult[1].push({
-            ...colorRowTwo,
-            text: section.lapse2.reading.participants,
-          });
-          diagnosticResult[2].push({
-            text:
-              section.lapse2.reading.resultAverage !== undefined
-                ? section.lapse2.reading.resultAverage.toFixed(2)
-                : 0,
-          });
-          diagnosticResult[3].push({
-            ...colorRowOne,
-            text: section.lapse2.reading.overGoalStudents,
-          });
-          diagnosticResult[4].push({
-            ...colorRowTwo,
-            text: `${
-              section.lapse2.reading.overGoalAverage !== undefined
-                ? section.lapse2.reading.overGoalAverage.toFixed(2)
-                : 0
-            }%`,
-          });
-          diagnosticResult[5].push({
-            text:
-              section.lapse2.reading.indexAverage !== undefined
-                ? section.lapse2.reading.indexAverage.toFixed(2)
-                : "",
-          });
-
-          columnsNameStudent = [
-            ...columnsNameStudent,
-            { ...colorRowTwo, text: "Resultado" },
-            { ...colorRowTwo, text: "Índice" },
-          ];
-
-          latestRowHeaderTable = [
-            ...latestRowHeaderTable,
-            {
-              ...colorRowOne,
-              text: `Meta: ${section.lapse2.reading.goal}`,
-              colSpan: 2,
-            },
-            {},
-          ];
-
-          const datePrepare: any =
-            section.lapse2.reading.lastTestDate === ""
-              ? ""
-              : formatDate(
-                  section.lapse2.reading.lastTestDate,
-                  "d MMMM y",
-                  "es-VE"
-                );
-          penultimateRowHeaderTable = [
-            ...penultimateRowHeaderTable,
-            {
-              ...colorRowOne,
-              text: "Fecha del diagnóstico: \n" + datePrepare,
-              colSpan: 2,
-            },
-            {},
-          ];
-
-          firstRowHeaderTable = [
-            ...firstRowHeaderTable,
-            { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
             {},
           ];
         }
@@ -1214,31 +1224,13 @@ export class PDFReport implements OnInit {
           // =======================
           // Columns
 
-          if (section.lapse3.math !== undefined) {
-            prepareStudent = [
-              ...prepareStudent,
-              {
-                text:
-                  student.multiplicationsPerMin !== undefined
-                    ? student.multiplicationsPerMin.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  student.multiplicationsPerMinIndex !== undefined
-                    ? student.multiplicationsPerMinIndex.toFixed(2)
-                    : "",
-              },
-            ];
-          }
-
           if (section.lapse3.reading !== undefined) {
             prepareStudent = [
               ...prepareStudent,
               {
                 text:
                   student.wordsPerMin !== undefined
-                    ? student.wordsPerMin.toFixed(2)
+                    ? student.wordsPerMin
                     : "",
               },
               {
@@ -1250,13 +1242,31 @@ export class PDFReport implements OnInit {
             ];
           }
 
+          if (section.lapse3.math !== undefined) {
+            prepareStudent = [
+              ...prepareStudent,
+              {
+                text:
+                  student.multiplicationsPerMin !== undefined
+                    ? student.multiplicationsPerMin
+                    : "",
+              },
+              {
+                text:
+                  student.multiplicationsPerMinIndex !== undefined
+                    ? student.multiplicationsPerMinIndex.toFixed(2)
+                    : "",
+              },
+            ];
+          }
+
           if (section.lapse3.logic !== undefined) {
             prepareStudent = [
               ...prepareStudent,
               {
                 text:
                   student.operationsPerMin !== undefined
-                    ? student.operationsPerMin.toFixed(2)
+                    ? student.operationsPerMin
                     : "",
               },
               {
@@ -1276,6 +1286,82 @@ export class PDFReport implements OnInit {
 
         // ==========================
         // -- Creating diagnostics --
+
+
+        if (section.lapse3.reading !== undefined) {
+          diagnosticResult[0].push({
+            ...colorRowOne,
+            text: "Diagnóstico de lectura",
+          });
+          diagnosticResult[1].push({
+            ...colorRowTwo,
+            text: section.lapse3.reading.participants,
+          });
+          diagnosticResult[2].push({
+            text:
+              section.lapse3.reading.resultAverage !== undefined
+                ? section.lapse3.reading.resultAverage.toFixed(2)
+                : "",
+          });
+          diagnosticResult[3].push({
+            ...colorRowOne,
+            text: section.lapse3.reading.overGoalStudents,
+          });
+          diagnosticResult[4].push({
+            ...colorRowTwo,
+            text: `${
+              section.lapse3.reading.overGoalAverage !== undefined
+                ? section.lapse3.reading.overGoalAverage.toFixed(2)
+                : 0
+            }%`,
+          });
+          diagnosticResult[5].push({
+            text:
+              section.lapse3.reading.indexAverage !== undefined
+                ? section.lapse3.reading.indexAverage.toFixed(2)
+                : "",
+          });
+
+          columnsNameStudent = [
+            ...columnsNameStudent,
+            { ...colorRowTwo, text: "Resultado" },
+            { ...colorRowTwo, text: "Índice" },
+          ];
+
+          latestRowHeaderTable = [
+            ...latestRowHeaderTable,
+            {
+              ...colorRowOne,
+              text: `Meta: ${section.lapse3.reading.goal}`,
+              colSpan: 2,
+            },
+            {},
+          ];
+
+          const datePrepare: any =
+            section.lapse3.reading.lastTestDate === ""
+              ? ""
+              : formatDate(
+                  section.lapse3.reading.lastTestDate,
+                  "d MMMM y",
+                  "es-VE"
+                );
+          penultimateRowHeaderTable = [
+            ...penultimateRowHeaderTable,
+            {
+              ...colorRowOne,
+              text: "Fecha del diagnóstico: \n" + datePrepare,
+              colSpan: 2,
+            },
+            {},
+          ];
+
+          firstRowHeaderTable = [
+            ...firstRowHeaderTable,
+            { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
+            {},
+          ];
+        }
 
         if (section.lapse3.math !== undefined) {
           diagnosticResult[0].push({
@@ -1352,81 +1438,6 @@ export class PDFReport implements OnInit {
               text: `Diagnóstico de multiplicación`,
               colSpan: 2,
             },
-            {},
-          ];
-        }
-
-        if (section.lapse3.reading !== undefined) {
-          diagnosticResult[0].push({
-            ...colorRowOne,
-            text: "Diagnóstico de lectura",
-          });
-          diagnosticResult[1].push({
-            ...colorRowTwo,
-            text: section.lapse3.reading.participants,
-          });
-          diagnosticResult[2].push({
-            text:
-              section.lapse3.reading.resultAverage !== undefined
-                ? section.lapse3.reading.resultAverage.toFixed(2)
-                : "",
-          });
-          diagnosticResult[3].push({
-            ...colorRowOne,
-            text: section.lapse3.reading.overGoalStudents,
-          });
-          diagnosticResult[4].push({
-            ...colorRowTwo,
-            text: `${
-              section.lapse3.reading.overGoalAverage !== undefined
-                ? section.lapse3.reading.overGoalAverage.toFixed(2)
-                : 0
-            }%`,
-          });
-          diagnosticResult[5].push({
-            text:
-              section.lapse3.reading.indexAverage !== undefined
-                ? section.lapse3.reading.indexAverage.toFixed(2)
-                : "",
-          });
-
-          columnsNameStudent = [
-            ...columnsNameStudent,
-            { ...colorRowTwo, text: "Resultado" },
-            { ...colorRowTwo, text: "Índice" },
-          ];
-
-          latestRowHeaderTable = [
-            ...latestRowHeaderTable,
-            {
-              ...colorRowOne,
-              text: `Meta: ${section.lapse3.reading.goal}`,
-              colSpan: 2,
-            },
-            {},
-          ];
-
-          const datePrepare: any =
-            section.lapse3.reading.lastTestDate === ""
-              ? ""
-              : formatDate(
-                  section.lapse3.reading.lastTestDate,
-                  "d MMMM y",
-                  "es-VE"
-                );
-          penultimateRowHeaderTable = [
-            ...penultimateRowHeaderTable,
-            {
-              ...colorRowOne,
-              text: "Fecha del diagnóstico: \n" + datePrepare,
-              colSpan: 2,
-            },
-            {},
-          ];
-
-          firstRowHeaderTable = [
-            ...firstRowHeaderTable,
-            { ...colorRowOne, text: `Diagnóstico de lectura`, colSpan: 2 },
             {},
           ];
         }
@@ -1657,9 +1668,9 @@ export class PDFReport implements OnInit {
       allDataReadingResult.push(SecondHeaderReading);
       allDataReadingResult.push(ThirdHeaderReading);
 
-      // -- Validate if selected logic
-      if (report.yearSummary.logic) {
-        report.yearSummary.logic.sections.forEach((section, key) => {
+      // -- Validate if selected reading
+      if (report.yearSummary.reading) {
+        report.yearSummary.reading.sections.forEach((section, key) => {
           prepareDataReadingResult = [
             { text: section.grade },
             { text: section.name },
@@ -1671,7 +1682,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse1.resultAverage !== undefined
-                    ? section.lapse1.resultAverage.toFixed(2)
+                    ? section.lapse1.resultAverage
                     : "",
               },
               {
@@ -1690,7 +1701,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse2.resultAverage !== undefined
-                    ? section.lapse2.resultAverage.toFixed(2)
+                    ? section.lapse2.resultAverage
                     : "",
               },
               {
@@ -1709,7 +1720,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse3.resultAverage !== undefined
-                    ? section.lapse3.resultAverage.toFixed(2)
+                    ? section.lapse3.resultAverage
                     : "",
               },
 
@@ -1828,7 +1839,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse1.resultAverage !== undefined
-                    ? section.lapse1.resultAverage.toFixed(2)
+                    ? section.lapse1.resultAverage
                     : "",
               },
               {
@@ -1847,7 +1858,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse2.resultAverage !== undefined
-                    ? section.lapse2.resultAverage.toFixed(2)
+                    ? section.lapse2.resultAverage
                     : "",
               },
               {
@@ -1866,7 +1877,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse3.resultAverage !== undefined
-                    ? section.lapse3.resultAverage.toFixed(2)
+                    ? section.lapse3.resultAverage
                     : "",
               },
               {
@@ -1906,7 +1917,7 @@ export class PDFReport implements OnInit {
       const FirstHeaderLogicReasoning: any = [
         {
           ...colorRowOne,
-          text: "Diagnóstico de razonamiento lógico . matemático",
+          text: "Diagnóstico de razonamiento lógico - matemático",
           alignment: "center",
           colSpan: 13,
         },
@@ -1982,7 +1993,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse1.resultAverage !== undefined
-                    ? section.lapse1.resultAverage.toFixed(2)
+                    ? section.lapse1.resultAverage
                     : "",
               },
               {
@@ -2001,7 +2012,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse2.resultAverage !== undefined
-                    ? section.lapse2.resultAverage.toFixed(2)
+                    ? section.lapse2.resultAverage
                     : "",
               },
               {
@@ -2020,7 +2031,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse3.resultAverage !== undefined
-                    ? section.lapse3.resultAverage.toFixed(2)
+                    ? section.lapse3.resultAverage
                     : " ",
               },
               {
@@ -2204,7 +2215,10 @@ export class PDFReport implements OnInit {
 
     finalReport.content.unshift(documentSubHeaderData);
     finalReport.content.unshift(titleDocument);
-    pdfMake.createPdf(finalReport).open();
+
+    // -- Generate document --
+    let window = pdfMake.createPdf(finalReport);
+    window.open();
   }
 
   async onGenerateSummaryDiagnostic(report: DiagnosticReport) {}

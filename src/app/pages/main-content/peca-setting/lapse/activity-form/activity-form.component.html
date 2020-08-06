@@ -1,6 +1,7 @@
 <nb-card>
   <nb-card-header>{{ data.name }}</nb-card-header>
   <nb-card-body>
+    
     <!-- ######################################### -->
     <!-- Initial workshop form -->
     <!-- ######################################### -->
@@ -82,7 +83,7 @@
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" *ngIf="canEdit">
         <hr />
         <button
           nbButton
@@ -151,7 +152,7 @@
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
 
-      <div class="col-12 px-0">
+      <div class="col-12 px-0" *ngIf="canEdit">
         <hr />
 
         <button
@@ -210,7 +211,7 @@
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" *ngIf="canEdit">
         <hr />
 
         <button
@@ -286,7 +287,7 @@
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" *ngIf="canEdit">
         <hr />
         <button
           nbButton
@@ -444,7 +445,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row" *ngIf="canEdit">
           <div class="col-12 form-group text-left">
             <button
               nbButton
@@ -522,7 +523,7 @@
 
       <div class="col-12"><hr /></div>
 
-      <div class="col-12 form-group text-left">
+      <div class="col-12 form-group text-left" *ngIf="canEdit">
         <button
           nbButton
           [attr.disabled]="showProgress ? true : null"
@@ -565,7 +566,7 @@
 
     <div class="col-12"><hr /></div>
 
-    <div class="col-12 form-group text-left">
+    <div class="col-12 form-group text-left" *ngIf="canEdit">
       <button
         nbButton
         [attr.disabled]="showProgress || formStandard.invalid ? true : null"
@@ -776,7 +777,7 @@
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
 
-      <div class="col-12 form-group text-right">
+      <div *ngIf="canEdit" class="col-12 form-group text-right">
         <button
           nbButton
           [attr.disabled]="showProgress ? true : null"

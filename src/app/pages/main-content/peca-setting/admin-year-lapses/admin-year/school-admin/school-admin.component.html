@@ -10,7 +10,7 @@
             <span>{{ (schoolActive$ | async)?.name }}</span>
           </nb-alert>
         </div>
-        <div class="col-12 col-md-auto form-group">
+        <div *ngIf="canInit" class="col-12 col-md-auto form-group">
           <button
             nbButton
             [attr.disabled]="(schoolActive$ | async) ? true : null"
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="col-12">
+    <div class="col-12" *ngIf="canEnrolled">
       <div class="row">
         <div class="col-12 col-md form-group">
           <label class="label">Escuela</label>

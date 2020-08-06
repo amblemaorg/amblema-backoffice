@@ -984,11 +984,20 @@
               class="col-12 form-group"
               *ngIf="requestSelected.record.coordinate"
             >
-              <app-geo-map
-                [label]="'Ubicación de la escuela'"
-                [(longitude)]="requestSelected.record.coordinate.longitude"
-                [(latitude)]="requestSelected.record.coordinate.latitude"
-              ></app-geo-map>
+              <hr>
+              <label class="label">Ubicación de la escuela</label>
+              <div class="wrapper-agm-map">
+                <agm-map
+                  [latitude]="requestSelected.record.coordinate.latitude"
+                  [longitude]="requestSelected.record.coordinate.longitude"
+                  [zoom]="8"
+                >
+                  <agm-marker
+                    [latitude]="requestSelected.record.coordinate.latitude"
+                    [longitude]="requestSelected.record.coordinate.longitude"
+                  ></agm-marker>
+                </agm-map>
+              </div>
             </div>
 
             <div

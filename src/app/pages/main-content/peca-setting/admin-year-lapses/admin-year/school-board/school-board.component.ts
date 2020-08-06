@@ -11,6 +11,8 @@ import { EnrolledService } from 'src/app/services/enrolled.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-school-board',
@@ -32,9 +34,11 @@ export class SchoolBoardComponent extends BaseTable {
   ) {
     super('form-admin-school');
 
-    this.settings.actions.custom = [
-      { name: this.ACTION.DELETE, title: '<i class="nb-trash"></i>' },
-    ];
+    if (new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_YEAR_ENROLL_SCHOOL)) {
+      this.settings.actions.custom = [
+        { name: this.ACTION.DELETE, title: '<i class="nb-trash"></i>' },
+      ];
+    } else { this.settings.actions = false; }
 
     this.settings.columns = {
       name: {

@@ -160,6 +160,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit() {
+    console.log( this.data );
     this.router.params.subscribe((value) => {
       if (Object.keys(value).length) {
         this.requestSelected = value;

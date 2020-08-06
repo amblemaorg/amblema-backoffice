@@ -3,8 +3,9 @@
 
 <div class="row">
   <div class="col-12">
-    <nb-alert outline="basic"> Se mostrará en el selector los padrinos que tengan imagenes y sitio web. </nb-alert>
-    
+    <nb-alert outline="basic">
+      Se mostrará en el selector los padrinos que tengan imagenes y sitio web.
+    </nb-alert>
   </div>
   <div class="col-12 col-lg-5">
     <label class="label">Padrinos</label>
@@ -22,7 +23,7 @@
 
   <div class="col-12 col-lg-5">
     <label class="label">Orden</label>
-     <ng-select
+    <ng-select
       [items]="sponsorPositions$ | async"
       notFoundText="Posición no encontrada"
       placeholder="- Posición -"

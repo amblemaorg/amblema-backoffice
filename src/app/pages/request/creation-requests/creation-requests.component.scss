@@ -1,0 +1,10 @@
+.wrapper-agm-map {
+    overflow: auto;
+    resize: vertical;
+    min-height: 20rem;
+    height: 20rem;
+    border: 2px solid #3ea4b9;
+    agm-map {
+      height: 100%;
+    }
+  }

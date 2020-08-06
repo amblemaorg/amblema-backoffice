@@ -12,7 +12,6 @@ import { LapseActivity } from 'src/app/_models/lapse-activities.model';
 import { ButtonDeleteComponent } from '../button-delete/button-delete.component';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-activity-board',
@@ -84,7 +83,7 @@ export class ActivityBoardComponent extends BaseTable
       },
     };
 
-    if (new AuthService().isAllowed(ALL_ACTIONS.ACTIVITY_EDIT)) {
+    if (new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_YEAR_ENABLE_ACTIVITY)) {
       this.settings.columns = {
         ...this.settings.columns,
         status: {

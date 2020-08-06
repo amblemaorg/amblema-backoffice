@@ -124,6 +124,7 @@
     <div class="col-12 form-group text-right">
         
         <button 
+            *ngIf="edit"
             [attr.disabled]="showProgress ? true : null"
             [nbSpinner]="showProgress ? true : null" 
             nbSpinnerStatus="success"
@@ -134,7 +135,7 @@
             Guardar <nb-icon icon="edit-outline"></nb-icon>
         </button>
 
-        <button *ngIf="!data.isStandard" (click)="onDelete()" nbButton type="button" status="danger"
+        <button *ngIf="!data.isStandard && remove" (click)="onDelete()" nbButton type="button" status="danger"
             class="col-12 col-md-auto ml-md-3 mt-3 mt-md-0">
             Eliminar <nb-icon icon="trash-2-outline"></nb-icon>
         </button>

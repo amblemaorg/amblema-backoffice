@@ -21,6 +21,9 @@ export class FormSimpleStepComponent extends StepsFormComponent
   implements OnInit {
   @Input() data: Step;
 
+  @Input() edit: boolean;
+  @Input() remove: boolean;
+
   protected oldData: Step;
   subscription: Subscription;
   showProgress = false;

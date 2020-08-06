@@ -4,7 +4,7 @@
             <div class="col-12 col-lg-auto mb-3 mb-lg-0">
                 Coordinador
             </div >
-            <div class="col-12 col-lg-auto">
+            <div *ngIf="canCreate" class="col-12 col-lg-auto">
 
             <button nbButton status="success" (click)="modalService.open(modal)"
             class="btn btn-success col-12 col-lg-auto">Agregar paso</button>
@@ -13,10 +13,11 @@
     </nb-card-header>
 
     <nb-card-body>
+
         <div *ngIf="steps$ | async">
             <div *ngFor="let item of steps$ | async" class="border p-3 rounded mb-4">
                 <h6 class="mb-3">{{ item.name }}</h6>
-                <app-form-simple-step [data]="item"></app-form-simple-step>
+                <app-form-simple-step [data]="item" [edit]='canEdit' [remove]="canRemove"></app-form-simple-step>
 
             </div>
         </div>

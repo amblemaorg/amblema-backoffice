@@ -5,6 +5,8 @@ import { StepState } from 'src/app/store/step.action';
 import { Observable, Subscription } from 'rxjs';
 import { Step } from 'src/app/_models/step.model';
 import { Select } from '@ngxs/store';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-school',
@@ -18,6 +20,10 @@ export class SchoolComponent implements OnInit {
 
   modal = 'form-step-general';
   kind: string = KIND_STEP.SCHOOL.CODE;
+
+  public canCreate = new AuthService().isAllowed( ALL_ACTIONS.STEP_CREATE );
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.STEP_EDIT );
+  public canRemove = new AuthService().isAllowed(ALL_ACTIONS.STEP_DELETE);
 
 
   constructor(

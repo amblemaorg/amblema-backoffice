@@ -20,6 +20,8 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { APPROVAL_TYPE } from '../../../../../_models/step.model';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-activity-form',
@@ -35,6 +37,7 @@ export class ActivityFormComponent extends StepsFormComponent
   @Input() lapse: string;
   @Input() id: string;
 
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ACTIVITY_EDIT );
   formStandard: FormGroup;
   formCoin: FormGroup;
 

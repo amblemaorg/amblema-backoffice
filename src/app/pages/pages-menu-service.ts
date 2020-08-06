@@ -156,7 +156,7 @@ export class MenuSetUp {
 
     // -- Request project, creation user, validate info and validate step --
     this.menu[3].children[0].hidden = !new AuthService().isAllowed(
-      ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_VIEW
+      ALL_ACTIONS.REQUEST_CREATE_PROJECT_VIEW
     );
     this.menu[3].children[1].hidden = !new AuthService().isAllowed(
       ALL_ACTIONS.REQUEST_FIND_USER_VIEW
@@ -197,6 +197,19 @@ export class MenuSetUp {
 
     /** Config PECA */
 
+    // -- Lapse
+    this.menu[4].children[2].children[0].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.ACTIVITY_VIEW
+    );
+
+    this.menu[4].children[2].children[1].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.ACTIVITY_VIEW
+    );
+
+    this.menu[4].children[2].children[2].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.ACTIVITY_VIEW
+    );
+
     // -- Config goal
     this.menu[4].children[2].children[3].hidden = !new AuthService().isAllowed(
       ALL_ACTIONS.GOAL_SETTING_VIEW
@@ -213,7 +226,11 @@ export class MenuSetUp {
     );
 
     // -- Lapse and school year
-    this.menu[4].children[2].children[6].hidden = !new AuthService().isAllowed(
+
+    this.menu[4].children[2].children[6].children[0].hidden = !new AuthService().isAllowed(
+      ALL_ACTIONS.ACTIVITY_VIEW
+    );
+    this.menu[4].children[2].children[6].children[1].hidden = !new AuthService().isAllowed(
       ALL_ACTIONS.SCHOOL_YEAR_VIEW
     );
 

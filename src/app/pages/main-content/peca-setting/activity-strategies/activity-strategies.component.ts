@@ -17,6 +17,8 @@ import { Slider } from 'src/app/_models/web/slider.model';
 import { ActivityStrategyService } from 'src/app/services/activity-strategy.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-activity-strategies',
@@ -35,6 +37,8 @@ export class ActivityStrategiesComponent implements OnInit {
   $sliderReading: Observable<Slider[]>;
 
   showProgress = false;
+
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.MONITORING_ACTIVITY_EDIT );
 
   constructor(
     private store: Store,

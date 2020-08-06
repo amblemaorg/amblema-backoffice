@@ -10,9 +10,11 @@ import { FORM_MODALITY } from '../../_shared/abstract-form-mode';
   styles: [],
 })
 export class AdminUserComponent {
+
   constructor(
     private formModeService: FormModeService,
     private modalService: BsModalService) {
+
     }
 
 

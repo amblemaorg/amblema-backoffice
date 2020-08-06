@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseTable, TableActions } from 'src/app/_helpers/base-table';
-import { Subscription, Observable, SubscriptionLike } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import {
   LearningState,
@@ -15,6 +15,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { LearningService } from 'src/app/services/learning.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 declare var $: any;
 
@@ -29,6 +31,8 @@ export class LearningTableComponent extends BaseTable
   subscription: Subscription;
 
   data: Learning;
+
+  public canCreate = new AuthService().isAllowed( ALL_ACTIONS.LEARNING_MODULE_CREATE );
 
   learnings: Learning[];
 
@@ -75,6 +79,11 @@ export class LearningTableComponent extends BaseTable
         },
       },
     };
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.LEARNING_MODULE_EDIT),
+      !new AuthService().isAllowed(ALL_ACTIONS.LEARNING_MODULE_DELETE)
+    );
   }
 
   ngOnInit(): void {

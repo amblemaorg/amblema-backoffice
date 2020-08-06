@@ -13,6 +13,8 @@ import { ModalService } from 'src/app/services/helper/modal.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 // JQuery call
 declare var $: any;
@@ -24,6 +26,8 @@ declare var $: any;
 export class SponsorsUsersTableComponent extends BaseTable
   implements TableActions {
   @Select(SponsorUserState.sponsorUsers) data$: Observable<SponsorUser[]>;
+
+    public isCan =  new AuthService().isAllowed( ALL_ACTIONS.SPONSOR_USER_CREATE );
 
   constructor(
     private modalServices: ModalService,
@@ -70,6 +74,11 @@ export class SponsorsUsersTableComponent extends BaseTable
         },
       },
     };
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.SPONSOR_USER_EDIT),
+      !new AuthService().isAllowed(ALL_ACTIONS.SPONSOR_USER_DELETE)
+    );
   }
 
   onAction(event: any): void {

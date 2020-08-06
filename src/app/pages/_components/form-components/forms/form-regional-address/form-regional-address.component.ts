@@ -10,6 +10,8 @@ import {
   AddressService,
   DataMunicipality,
 } from 'src/app/services/address.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-form-regional-address',
@@ -27,6 +29,10 @@ export class FormRegionaladdressComponent extends AbstractReactive
   // This is for update data
   @Input() idState: any | null = '';
   @Input() idMunicipality: any | null = ' ';
+
+  public canCreate = new AuthService().isAllowed( ALL_ACTIONS.MUNICIPALITY_CREATE );
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.MUNICIPALITY_EDIT );
+  public canDelete = new AuthService().isAllowed( ALL_ACTIONS.MUNICIPALITY_DELETE );
 
   MODE = 'NORMAL';
   CRUD = ACTION;

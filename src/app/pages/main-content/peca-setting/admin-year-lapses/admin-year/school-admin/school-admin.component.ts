@@ -14,6 +14,8 @@ import {
   GetSchoolYearsEnrolled,
 } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-school-admin',
@@ -29,6 +31,9 @@ export class SchoolAdminComponent {
   >;
 
   selectedSchool: string;
+
+  public canInit = new AuthService().isAllowed( ALL_ACTIONS.SCHOOL_YEAR_CREATE );
+  public canEnrolled = new AuthService().isAllowed( ALL_ACTIONS.SCHOOL_YEAR_ENROLL_SCHOOL );
 
   constructor(
     private store: Store,

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SponsorsRoutingModule } from './sponsors-routing.module';
 import { SponsorsComponent } from './sponsors.component';
-import { NbCardModule, NbButtonModule, NbSpinnerModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbSpinnerModule, NbAlertModule } from '@nebular/theme';
 import { HelperModule } from '../_helpers/helper.module';
 import { ReactiveInputFileModule } from 'src/app/pages/_components/form-components/reactive-input-file/reactive-input-file.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -31,7 +31,8 @@ import { ProgressModule } from 'src/app/pages/_components/shared/progress/progre
     ProgressModule,
     NbSpinnerModule,
     ReactiveInputFileModule,
-    ReactiveSelectModule
+    ReactiveSelectModule,
+    NbAlertModule
   ]
 })
 export class SponsorsModule { }

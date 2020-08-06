@@ -22,6 +22,8 @@ import { take } from 'rxjs/operators';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-form',
@@ -32,6 +34,9 @@ export class FormComponent implements OnInit, OnDestroy {
   @Select(EnvironmentalProjectState.environmentalProjectStorable)
   storable$: Observable<EnvironmentalProjectModel>;
   @Select(EnvironmentalProjectState.lapseSelected) lapse$: Observable<Lapse>;
+
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT );
+
 
   subscription: Subscription;
 

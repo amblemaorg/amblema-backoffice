@@ -18,6 +18,8 @@ import {
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 @Component({
   selector: 'app-main-form',
   templateUrl: './main-form.component.html',
@@ -31,6 +33,8 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription;
 
   showProgress = false;
+
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT );
 
   options = [
     { value: '1', label: 'Primer lapso' },

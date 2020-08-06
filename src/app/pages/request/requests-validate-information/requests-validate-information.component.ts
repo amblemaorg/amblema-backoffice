@@ -32,6 +32,8 @@ import { InitialWorkshopDetailsComponent } from './initial-workshop-details/init
 import { SpanPlanningComponent } from './span-planning/span-planning.component';
 import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-school-details.component';
 import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-requests-validate-information',
@@ -216,6 +218,8 @@ export class RequestsValidateInformationComponent extends BaseTable
         },
       },
     };
+
+    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_DELETE ) ) );
   }
 
   ngOnInit() {

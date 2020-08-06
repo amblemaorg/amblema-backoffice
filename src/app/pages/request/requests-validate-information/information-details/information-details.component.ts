@@ -10,6 +10,8 @@ import {
 } from 'src/app/store/request/request-content-approval.action';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+import { AuthService } from 'src/app/services/user/auth.service';
 
 @Component({
   selector: 'app-information-details',
@@ -28,6 +30,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   comment;
 
   public showProgress = false;
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_EDIT );
 
   constructor(
     public bsModalRef: BsModalRef,

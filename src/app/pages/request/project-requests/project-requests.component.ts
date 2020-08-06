@@ -26,6 +26,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-project-requests',
@@ -39,6 +41,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
 
   modal = 'project-request-modal';
   requestSelected: any = {};
+
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CREATE_PROJECT_EDIT );
 
   statusSelected = '2';
 
@@ -154,6 +158,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           },
         },
       });
+
+    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CREATE_PROJECT_DELETE ) ) );
   }
 
   onAction(event: any): void {

@@ -17,6 +17,8 @@ import {
 import { FormGroup, FormControl } from '@angular/forms';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-levels-form',
@@ -35,6 +37,10 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   @Input() options: any[];
 
   form: FormGroup;
+
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT );
+
+
 
   target = new Array<string>();
   techniques = new Array<string>();

@@ -14,6 +14,8 @@ import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-roles-table',
@@ -22,6 +24,8 @@ import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/di
 export class RolesTableComponent extends BaseTable
   implements TableActions, OnInit {
   @Select(RolesState.roles) data$: Observable<Role[]>;
+
+  public itCan = new AuthService().isAllowed(ALL_ACTIONS.ROLE_CREATE);
 
   data: any = [];
 
@@ -52,6 +56,11 @@ export class RolesTableComponent extends BaseTable
       { name: ACTION.EDIT, title: `<i class="nb-edit"></i>` },
       { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' },
     ];
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.ROLE_EDIT),
+      !new AuthService().isAllowed(ALL_ACTIONS.ROLE_DELETE)
+    );
   }
 
   ngOnInit(): void {}
@@ -89,8 +98,9 @@ export class RolesTableComponent extends BaseTable
                   (modal.content as DialogConfirmationComponent).hideConfirmationModal();
                 },
                 (err: any) => {
-
-                  (modal.content as DialogConfirmationComponent).errorDelete(err);
+                  (modal.content as DialogConfirmationComponent).errorDelete(
+                    err
+                  );
 
                   if (event.data.isStandard) {
                     this.toastr.error(

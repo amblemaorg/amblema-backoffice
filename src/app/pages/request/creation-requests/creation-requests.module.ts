@@ -7,9 +7,9 @@ import { NbCardModule, NbAlertModule, NbButtonModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AppModule } from 'src/app/app.module';
 import { ProgressModule } from '../../_components/shared/progress/progress.module';
 import { MapModule } from '../../_components/shared/map/map.module';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -25,7 +25,15 @@ import { MapModule } from '../../_components/shared/map/map.module';
     ProgressModule,
     NbButtonModule,
     NbAlertModule,
-    CreationRequestsRoutingModule
+    CreationRequestsRoutingModule,
+    AgmCoreModule.forRoot({
+      // apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_xxx',
+       apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_yrs',
+      libraries: ['places'],
+      region: 'Venezuela',
+      language: 'es'
+    }),
+
   ]
 })
 export class CreationRequestsModule { }

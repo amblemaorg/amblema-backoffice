@@ -11,6 +11,9 @@ import { AdminUser } from 'src/app/_models/user/admin-user.model';
 import { Utility } from 'src/app/_helpers/utility';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { RolesState } from 'src/app/store/role.action';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+import { AuthService } from 'src/app/services/user/auth.service';
 
 // To control the bootstrap modal
 declare var $: any;
@@ -22,6 +25,9 @@ declare var $: any;
 })
 export class AdminUserTableComponent extends BaseTable implements TableActions {
   @Select(AdminUserState.adminUsers) data$: Observable<AdminUser[]>;
+
+  public itCan = new AuthService().isAllowed( ALL_ACTIONS.ADMIN_CREATE );
+
   subscription: Subscription;
 
   modalRef: BsModalRef;
@@ -81,6 +87,11 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
         },
       },
     };
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.ADMIN_EDIT),
+      !new AuthService().isAllowed(ALL_ACTIONS.ADMIN_DELETE)
+    );
   }
 
   onAction(event: any) {
@@ -114,7 +125,7 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
             if (result === true) {
               // -- when pressed Yes
               this.store.dispatch(new DeleteAdminUser(event.data));
-              ( modal.content as DialogConfirmationComponent ).hideConfirmationModal();
+              (modal.content as DialogConfirmationComponent).hideConfirmationModal();
             } else if (result === false) {
               // -- when pressed No
             } else {

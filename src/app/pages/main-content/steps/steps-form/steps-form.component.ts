@@ -21,6 +21,8 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-steps-form',
@@ -73,8 +75,10 @@ export class StepsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.resetForm();
     this.onCheckList();
+
   }
 
   ngOnDestroy(): void {
@@ -126,6 +130,7 @@ export class StepsFormComponent implements OnInit, OnDestroy {
 
       formData.append('hasFile', this.form.controls.hasFile.value);
       formData.append('hasVideo', this.form.controls.hasVideo.value);
+
       formData.append('hasChecklist', this.form.controls.hasChecklist.value);
       formData.append('hasUpload', this.form.controls.hasUpload.value);
 
@@ -194,6 +199,15 @@ export class StepsFormComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.form.reset();
+
+    this.form.controls.hasText.setValue(false);
+    this.form.controls.hasDate.setValue(false);
+    this.form.controls.hasFile.setValue(false);
+    this.form.controls.hasVideo.setValue(false);
+    this.form.controls.hasChecklist.setValue(false);
+    this.form.controls.hasUpload.setValue(false);
+
+
     this.submitted = false;
     this.checklist = [];
   }

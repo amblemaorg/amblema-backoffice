@@ -14,6 +14,8 @@ import { PROJECT_PHASE } from 'src/app/_helpers/convention/phase';
 import { DialogConfirmationComponent } from '../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ProjectService } from 'src/app/services/project.service';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 declare var $: any;
 
@@ -29,6 +31,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   subscription: Subscription;
 
   MODAL = 'form-project';
+
+  public canCreate = new AuthService().isAllowed(ALL_ACTIONS.PROJECT_CREATE);
 
   /**
    * Arrow functions
@@ -161,6 +165,11 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         filterFunction: this.filterFunction,
       },
     };
+
+    this.validateAction(
+      !new AuthService().isAllowed(ALL_ACTIONS.PROJECT_EDIT),
+      !new AuthService().isAllowed(ALL_ACTIONS.PROJECT_DELETE)
+    );
   }
 
   clear() {}

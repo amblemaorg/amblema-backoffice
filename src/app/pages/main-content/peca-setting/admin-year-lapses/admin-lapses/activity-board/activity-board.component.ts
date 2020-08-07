@@ -111,6 +111,7 @@ export class ActivityBoardComponent extends BaseTable
           sort: true,
           filter: false,
           onComponentInitFunction(instance: any) {
+
             instance.save.subscribe();
           },
         },

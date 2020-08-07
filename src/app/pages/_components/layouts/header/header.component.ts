@@ -26,17 +26,8 @@ import { AuthService } from 'src/app/services/user/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  /**
-   * Get all notifications
-   */
-  @Select(ProjectRequestState.projectRquestsPending)
-  projectRequest$: Observable<any[]>;
-  @Select(UserCreationRequestState.creationRequestsPending)
-  createRequest$: Observable<any[]>;
-  @Select(ProjectValidationRequestState.projectValidationRequestPending)
-  projectValidationRequest$: Observable<any[]>;
-  @Select(RequestContentState.requestsContentPending)
-  requestContent$: Observable<any>;
+  // All notifications
+  @Select(ProjectRequestState.allRequest) allNotifications$: Observable<any>;
 
   subscription: Subscription;
 
@@ -56,6 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+
     /* To the user menu */
     this.subscription = this.menuService.onItemClick().pipe(
       filter(({ tag }) => tag === 'user-menu'),
@@ -80,6 +72,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.sidebarService.compact('menu-sidebar');
         }
       });
+
+
   }
 
   ngOnDestroy(): void {
@@ -94,6 +88,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSelectNotification(item: any, define: string): void {
+
+    define = define.toString();
+
     this.popover.hide();
 
     switch (define) {
@@ -124,10 +121,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
     }
   }
-}
-
-interface Notification {
-  name?: string;
-  date?: string;
-  id: string;
 }

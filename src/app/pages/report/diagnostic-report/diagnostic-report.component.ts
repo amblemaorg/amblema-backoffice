@@ -8,6 +8,7 @@ import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enr
 import { SchoolUserState } from 'src/app/store/user/school-user.action';
 import { SchoolUser } from 'src/app/_models/user/school.model';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-diagnostic-report',
@@ -40,7 +41,8 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
   constructor(
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
-    private diagnosticsReportService: DiagnosticReportService
+    private diagnosticsReportService: DiagnosticReportService,
+    private toastr: CustomToastrService
   ) {}
 
   async ngOnInit() {}
@@ -70,7 +72,14 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
             this.cd.detectChanges();
           }, 3500);
         },
-        (err) => {
+        (err: any) => {
+
+          if ( err.status === 404 ) {
+            this.toastr.info('Información', 'No se encontraron registros');
+
+          }
+
+
           this.disabledBtn = false;
           this.cd.detectChanges();
         }

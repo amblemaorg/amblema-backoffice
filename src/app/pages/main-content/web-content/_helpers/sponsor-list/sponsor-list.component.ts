@@ -52,7 +52,7 @@ export class SponsorListComponent implements OnInit, OnDestroy {
         title: 'Nombre',
       },
       image: {
-        title: 'Imagen',
+        title: 'Imagen de perfil',
         type: 'html',
         filter: false,
         valuePrepareFunction: (cell: any) => {

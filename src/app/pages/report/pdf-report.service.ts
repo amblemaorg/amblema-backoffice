@@ -1764,7 +1764,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse1.resultAverage !== undefined
-                    ? section.lapse1.resultAverage
+                    ? section.lapse1.resultAverage.toFixed(2)
                     : '',
               },
               {
@@ -1783,7 +1783,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse2.resultAverage !== undefined
-                    ? section.lapse2.resultAverage
+                    ? section.lapse2.resultAverage.toFixed(2)
                     : '',
               },
               {
@@ -1802,7 +1802,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse3.resultAverage !== undefined
-                    ? section.lapse3.resultAverage
+                    ? section.lapse3.resultAverage.toFixed(2)
                     : '',
               },
 
@@ -1921,7 +1921,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse1.resultAverage !== undefined
-                    ? section.lapse1.resultAverage
+                    ? section.lapse1.resultAverage.toFixed(2)
                     : '',
               },
               {
@@ -1940,7 +1940,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse2.resultAverage !== undefined
-                    ? section.lapse2.resultAverage
+                    ? section.lapse2.resultAverage.toFixed(2)
                     : '',
               },
               {
@@ -1959,7 +1959,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse3.resultAverage !== undefined
-                    ? section.lapse3.resultAverage
+                    ? section.lapse3.resultAverage.toFixed(2)
                     : '',
               },
               {
@@ -2075,7 +2075,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse1.resultAverage !== undefined
-                    ? section.lapse1.resultAverage
+                    ? section.lapse1.resultAverage.toFixed(2)
                     : '',
               },
               {
@@ -2094,7 +2094,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse2.resultAverage !== undefined
-                    ? section.lapse2.resultAverage
+                    ? section.lapse2.resultAverage.toFixed(2)
                     : '',
               },
               {
@@ -2113,7 +2113,7 @@ export class PDFReport implements OnInit {
               {
                 text:
                   section.lapse3.resultAverage !== undefined
-                    ? section.lapse3.resultAverage
+                    ? section.lapse3.resultAverage.toFixed(2)
                     : ' ',
               },
               {

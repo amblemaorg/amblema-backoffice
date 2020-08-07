@@ -30,7 +30,7 @@ import { ProgressModule } from 'src/app/pages/_components/shared/progress/progre
     ReactiveInputModule,
     ProgressModule,
     NbSpinnerModule,
-    
+
     ReactiveInputFileModule,
     ReactiveSelectModule,
     NbAlertModule

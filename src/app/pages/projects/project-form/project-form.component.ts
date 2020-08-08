@@ -1,25 +1,25 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { ACTION } from 'src/app/_helpers/text-content/text-crud';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import { ACTION } from "src/app/_helpers/text-content/text-crud";
 import {
   FormGroup,
   FormBuilder,
   Validators,
   FormControl,
-} from '@angular/forms';
-import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/_models/project.model';
-import { Subscription, Observable } from 'rxjs';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { Store, Select } from '@ngxs/store';
+} from "@angular/forms";
+import { ProjectService } from "src/app/services/project.service";
+import { Project } from "src/app/_models/project.model";
+import { Subscription, Observable } from "rxjs";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { Store, Select } from "@ngxs/store";
 import {
   AddProject,
   ProjectState,
   UpdateProject,
-} from 'src/app/store/project.action';
+} from "src/app/store/project.action";
 
 @Component({
-  selector: 'app-project-form',
-  templateUrl: './project-form.component.html',
+  selector: "app-project-form",
+  templateUrl: "./project-form.component.html",
   styles: [],
 })
 export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
@@ -28,7 +28,10 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
   @Select(ProjectState.project) project$: Observable<Project>;
 
-  phases: any = [ { label: 'En pasos', value: '1' }, { label: 'En PECA', value: '2' } ];
+  phases: any = [
+    { label: "En pasos", value: "1" },
+    { label: "En PECA", value: "2" },
+  ];
 
   title: string;
   form: FormGroup;
@@ -50,7 +53,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
       sponsor: new FormControl(null),
       school: new FormControl(null),
       coordinator: new FormControl(null),
-      phase: new FormControl('1'),
+      phase: new FormControl("1"),
     });
   }
 
@@ -58,20 +61,19 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(): void {
     this.title =
-      this.mode === ACTION.CREATE ? 'Registrar proyecto' : 'Editar proyecto';
+      this.mode === ACTION.CREATE ? "Registrar proyecto" : "Editar proyecto";
 
     if (this.mode === ACTION.EDIT) {
       this.project$.subscribe((response: any) => {
-
         this.oldProject = response;
         this.form.controls.sponsor.setValue(response.sponsor.id);
         this.form.controls.school.setValue(response.school.id);
         this.form.controls.coordinator.setValue(response.coordinator.id);
-        this.form.controls.phase.setValue( response.phase );
+        this.form.controls.phase.setValue(response.phase);
       });
     } else {
       this.form.reset();
-      this.form.controls.phase.setValue( '1' );
+      this.form.controls.phase.setValue("1");
       this.progress = 0;
       this.submitted = false;
     }
@@ -93,72 +95,92 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
           (response) => {
             this.reset();
             this.toastr.registerSuccess(
-              'Registro proyecto',
-              'Proyecto registrado correctamente'
+              "Registro proyecto",
+              "Proyecto registrado correctamente"
             );
             this.store.dispatch(new AddProject(response));
           },
           (err: any) => {
-            console.log(err);
             this.progress = 0;
 
-
+            if (err.status === 400 && this.form.controls.phase.value === "2") {
+              this.toastr.error(
+                "Error",
+                "Al crear un proyecto en fase PECA, se debe seleccionar las tres entidades."
+              );
+              return true;
+            }
 
             if (err.error.school) {
+              if (err.error.school[0].status === "5") {
+                this.toastr.error(
+                  "Escuela dublicada",
+                  "No se puede realizar el registro. Existe un proyecto con la escuela seleccionada"
+                );
 
-              if ( err.error.school[0].status === '5') {
-
-              this.toastr.error(
-                'Escuela dublicada',
-                'No se puede realizar el registro. Existe un proyecto con la escuela seleccionada'
-              );
-
-              return true;
+                return true;
               }
             }
 
-
-            if (err.error.sponsor || err.error.school || err.error.coordinator || err.error._schema ) {
+            if (
+              err.error.sponsor ||
+              err.error.school ||
+              err.error.coordinator ||
+              err.error._schema
+            ) {
               this.toastr.error(
-                'Error',
-                'Para poder crear un proyecto, debe selecionar las tres entidades.'
+                "Error",
+                "Para poder crear un proyecto, debe seleccionar una de las tres entidades."
               );
-            }
 
+              return true;
+            }
           }
         );
       } else if (this.mode === ACTION.EDIT) {
-
         this.projectService
           .updateProject(this.oldProject.id, this.form.value)
           .subscribe(
             (response) => {
-
               this.toastr.updateSuccess(
-                'Actualización',
-                'Actualización de proyecto exitoso'
+                "Actualización",
+                "Actualización de proyecto exitoso"
               );
               this.store.dispatch(new UpdateProject(response, this.oldProject));
               this.progress = 0;
               this.submitted = false;
             },
             (err: any) => {
-              console.log( err );
               this.progress = 0;
 
-
-              if (err.status === 400) {
+              if (
+                err.status === 400 &&
+                this.form.controls.phase.value === "2"
+              ) {
                 this.toastr.error(
-                  'Error',
-                  'Para poder crear un proyecto, debe selecionar las tres entidades.'
+                  "Error",
+                  "Para poder actualizar el proyecto, debes seleccionar las tres entidades."
                 );
+                return true;
               }
 
-              if (err.error.school[0].status === '5') {
+              if (err.error.school[0].status === "5") {
                 this.toastr.error(
-                  'Escuela dublicada',
-                  'No se puede actualizars el proyecto. Ya existe un proyecto con ésta escuela'
+                  "Escuela dublicada",
+                  "No se puede actualizar el proyecto. Ya existe un proyecto con ésta escuela."
                 );
+                return true;
+              }
+
+              if (
+                err.status === 400 &&
+                this.form.controls.phase.value === "1"
+              ) {
+                this.toastr.error(
+                  "Error",
+                  "Para poder actualizar el proyecto debes seleccionar una de las tres entidades."
+                );
+                return true;
               }
             }
           );
@@ -170,7 +192,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
     this.form.reset();
     this.submitted = false;
     this.progress = 0;
-    this.form.controls.phase.setValue('1');
+    this.form.controls.phase.setValue("1");
 
     return true;
   }

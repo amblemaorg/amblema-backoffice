@@ -76,9 +76,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
           if ( err.status === 404 ) {
             this.toastr.info('Información', 'No se encontraron registros');
-
           }
-
 
           this.disabledBtn = false;
           this.cd.detectChanges();

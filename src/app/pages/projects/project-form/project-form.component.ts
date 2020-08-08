@@ -147,7 +147,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
               this.progress = 0;
 
 
-              if (err.error.sponsor[0].status === '2' || err.error.school[0].status === '2' || err.error.coordinator[0].status === '2') {
+              if (err.status === 400) {
                 this.toastr.error(
                   'Error',
                   'Para poder crear un proyecto, debe selecionar las tres entidades.'

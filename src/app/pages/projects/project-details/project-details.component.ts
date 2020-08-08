@@ -46,8 +46,8 @@ export class ProjectDetailsComponent implements OnChanges {
         '/' +
         this.deliveryData.idUser + '/' +
         this.deliveryData.idProject + '/' +
-        this.deliveryData.token + '/' +
-        this.deliveryData.yearSchool + '/' +
+        this.deliveryData.refreshToken + '/' +
+        this.deliveryData.schoolYear + '/' +
         this.deliveryData.step,
       '_blank'
     );
@@ -59,14 +59,14 @@ export class ProjectDetailsComponent implements OnChanges {
       idProject: this.data.id,
       idUser: this.authService.getIdUser(),
       step: value,
-      token: this.authService.getJwtToken(),
+      refreshToken: this.authService.getRefreshToken()
     };
   }
 
   onSelectedYear() {
     this.deliveryData = {
       ...this.deliveryData,
-      yearSchool: this.selectedSchoolYears.id,
+      schoolYear: this.selectedSchoolYears.id,
     };
 
     localStorage.setItem('historicalData', JSON.stringify(this.deliveryData));
@@ -77,7 +77,8 @@ export class ProjectDetailsComponent implements OnChanges {
 export interface SyncHistoricalData {
   idUser?: string;
   token?: string;
+  refreshToken?: string;
   idProject?: string;
-  yearSchool?: string;
+  schoolYear?: string;
   step?: number; // <-- Steps = 1, PECA = 2
 }

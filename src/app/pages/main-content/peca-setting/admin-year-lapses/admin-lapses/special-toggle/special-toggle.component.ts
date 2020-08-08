@@ -100,7 +100,7 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
 
 
       this.menuSetUp.renderMenu(true);
-    
+
       setTimeout(() => {
         this.store.dispatch( new GetLapActivities() );
       }, 1000);

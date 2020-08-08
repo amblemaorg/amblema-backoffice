@@ -21,6 +21,7 @@
       <!-- Type approval -->
       <label class="label">Tipo de aprobación</label>
       <select
+      (change)="onSelectedApproval($event.target.value)"
         formControlName="approvalType"
         [id]="'type-aprobate' + lapse"
         class="form-control"
@@ -31,19 +32,25 @@
         <option *ngFor="let item of APPROVAL_TYPE" [value]="item.CODE">{{
           item.VALUE
         }}</option>
-        <option [value]="'5'">No requiere aprobación</option>
       </select>
     </div>
 
     <div class="col-12 form-group">
       <hr />
-      <label class="label">Elementos del paso</label>
+      <label class="label">Elementos de la actividad</label>
     </div>
     <div class="col-12 col-md-6">
       <!-- Text -->
       <nb-checkbox
         formControlName="hasText"
         (change)="changeText()"
+        *ngIf="
+          selectedApproval === '1' ||
+          selectedApproval === '2' ||
+          selectedApproval === '3' ||
+          selectedApproval === '4' ||
+          selectedApproval === '5'
+        "
         class="d-block form-group"
         >Texto
       </nb-checkbox>
@@ -59,7 +66,14 @@
 
       <!--Has file -->
       <nb-checkbox
-        (change)="changeFile();"
+        *ngIf="
+          selectedApproval === '1' ||
+          selectedApproval === '2' ||
+          selectedApproval === '4' ||
+          selectedApproval === '3' ||
+          selectedApproval === '5'
+        "
+        (change)="changeFile()"
         formControlName="hasFile"
         class="d-block form-group"
       >
@@ -73,14 +87,26 @@
       </app-input-file>
 
       <!-- Has Upload -->
-      <nb-checkbox formControlName="hasUpload" (change)="onChangeToGeneteThirdOption()" class="d-block form-group"
+      <nb-checkbox
+        *ngIf="selectedApproval === '3'"
+        formControlName="hasUpload"
+        class="d-block form-group"
         >Adjuntar archivo - PECA
       </nb-checkbox>
     </div>
 
     <div class="col-12 col-md-6">
       <!-- Video -->
-      <nb-checkbox formControlName="hasVideo" class="d-block form-group"
+      <nb-checkbox
+        *ngIf="
+          selectedApproval === '1' ||
+          selectedApproval === '3' ||
+          selectedApproval === '2' ||
+          selectedApproval === '4' ||
+          selectedApproval === '5'
+        "
+        formControlName="hasVideo"
+        class="d-block form-group"
         >Video</nb-checkbox
       >
       <app-input-custom
@@ -93,13 +119,18 @@
       ></app-input-custom>
 
       <!-- Has a date -->
-      <nb-checkbox formControlName="hasDate" (change)="onChangeToGeneteThirdOption()" class="d-block form-group"
+      <nb-checkbox
+        *ngIf="selectedApproval === '3' || selectedApproval === '5'"
+        formControlName="hasDate"
+        (change)="onChangeToGeneteThirdOption()"
+        class="d-block form-group"
         >Fecha</nb-checkbox
       >
       <!-- <app-datepicker *ngIf="form.get('checkedDate').value" [label]="'Fecha'" [today]="false"></app-datepicker> -->
 
       <!-- Check loader -->
       <nb-checkbox
+        *ngIf="selectedApproval === '2' || selectedApproval === '5'"
         formControlName="hasChecklist"
         (change)="onCheckList()"
         class="d-block form-group"

@@ -21,8 +21,6 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/user/auth.service';
-import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-steps-form',
@@ -55,7 +53,9 @@ export class StepsFormComponent implements OnInit, OnDestroy {
 
   public submitted = false;
 
+  // -- Change mode form --
   public APPROVAL_TYPE;
+  public selectedApproval;
 
   // Conf checklist
   public checklist: ItemCheck[] = []; // Objective list
@@ -75,13 +75,27 @@ export class StepsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.resetForm();
-    this.onCheckList();
-
   }
 
   ngOnDestroy(): void {
+
+  }
+
+  public onSelectedApproval(event: any): void {
+    this.selectedApproval = event;
+
+    this.form.controls.hasText.setValue(false);
+    this.form.controls.text.reset();
+    this.form.controls.hasDate.setValue(false);
+    this.form.controls.hasFile.setValue(false);
+    this.form.controls.file.reset();
+    this.form.controls.hasVideo.setValue(false);
+    this.form.controls.video.reset();
+    this.form.controls.hasChecklist.setValue(false);
+    this.form.controls.checklist.reset();
+    this.form.controls.hasUpload.setValue(false);
+
 
   }
 
@@ -143,13 +157,11 @@ export class StepsFormComponent implements OnInit, OnDestroy {
               this.resetForm();
               this.store.dispatch(new AddStep(response.body));
               this.toastr.registerSuccess('Registro', 'Paso registrado');
-              this.onCheckList();
               break;
           }
         },
         (err: any) => {
-
-          console.log( err );
+          console.log(err);
           this.showProgress = false;
           this.toastr.error(
             'Problemas al registrar',
@@ -270,49 +282,5 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     }
     this.MODE_LIST = ACTION.CREATE;
     this.form.controls.checklist.reset();
-  }
-
-  public onCheckList() {
-    if (this.form.controls.hasChecklist.value) {
-      this.APPROVAL_TYPE.push({
-        CODE: '2',
-        VALUE: 'Se apueba al completar los campos',
-      });
-    } else {
-      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
-        (item) => item.CODE !== '2'
-      );
-    }
-  }
-
-  public onChangeToGeneteThirdOption() {
-
-
-    const hasCodeThree = this.APPROVAL_TYPE.find(
-      (item) => {
-
-        if (item.CODE === '3') {
-          return true;
-        }
-
-      }
-    );
-    if (
-      (this.form.controls.hasDate.value ||
-        this.form.controls.hasFile.value ||
-        this.form.controls.hasUpload.value) && hasCodeThree === undefined
-    ) {
-      this.APPROVAL_TYPE.push({
-        CODE: '3',
-        VALUE: 'Generar solicitud de aprobación',
-      });
-    } else if ((this.form.controls.hasDate.value ||
-      this.form.controls.hasFile.value ||
-      this.form.controls.hasUpload.value) === false) {
-
-      this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
-        (item) => item.CODE !== '3'
-      );
-    }
   }
 }

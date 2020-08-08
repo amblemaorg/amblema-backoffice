@@ -22,7 +22,7 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
   styleUrls: ['./activities-form.component.scss'],
 })
 export class ActivitiesFormComponent extends StepsFormComponent
-  implements OnInit, OnDestroy {
+  implements OnInit {
   @Input() lapse: string;
 
   showProgress = false;
@@ -38,10 +38,10 @@ export class ActivitiesFormComponent extends StepsFormComponent
 
   ngOnInit(): void {
     this.form.addControl('hasDate', new FormControl(false));
-  }
-
-  ngOnDestroy(): void {
-
+    this.APPROVAL_TYPE = [
+      ...this.APPROVAL_TYPE,
+      { CODE: '5', VALUE: 'No requiere aprobación' }
+    ];
   }
 
   onSubmit(): void {
@@ -108,7 +108,6 @@ export class ActivitiesFormComponent extends StepsFormComponent
             this.form.controls.hasVideo.setValue(false);
             this.form.controls.hasChecklist.setValue(false);
             this.toastr.registerSuccess('Registro', 'Actividad registrada');
-            this.onCheckList();
           }
         },
         (err: any) => {

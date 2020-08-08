@@ -42,7 +42,9 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   modal = 'project-request-modal';
   requestSelected: any = {};
 
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CREATE_PROJECT_EDIT );
+  public canEdit = new AuthService().isAllowed(
+    ALL_ACTIONS.REQUEST_CREATE_PROJECT_EDIT
+  );
 
   statusSelected = '2';
 
@@ -159,14 +161,15 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
         },
       });
 
-    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CREATE_PROJECT_DELETE ) ) );
+    this.validateAction(
+      false,
+      !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_CREATE_PROJECT_DELETE)
+    );
   }
 
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-
-        console.log( event.data );
         this.requestSelected = event.data;
         this.modalService.open(this.modal);
         break;
@@ -277,21 +280,37 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.id,
             this.statusSelected.toString()
           )
-          .subscribe((response: HttpEvent<any>) => {
-            switch (response.type) {
-              case HttpEventType.Response:
-                this.store.dispatch(
-                  new UpdateProjectRequests(response.body, this.requestSelected)
-                );
+          .subscribe(
+            (response: HttpEvent<any>) => {
+              switch (response.type) {
+                case HttpEventType.Response:
+                  console.log(response);
+                  this.store.dispatch(
+                    new UpdateProjectRequests(
+                      response.body,
+                      this.requestSelected
+                    )
+                  );
+                  this.requestSelected.status = response.status.toString();
+                  this.toast.info(
+                    'Solicitud',
+                    'Se ha cambiado de estatus la solicitud'
+                  );
+                  this.showProgress = false;
 
-                this.requestSelected.status = response.status.toString();
-                this.toast.info(
-                  'Solicitud',
-                  'Se ha cambiado de estatus la solicitud'
-                );
-                break;
+                  break;
+              }
+            },
+            (err) => {
+              console.log(err);
+
+              this.showProgress = false;
+              this.toast.error(
+                'Error',
+                'Error al cambiar el estatus a la solicitud'
+              );
             }
-          });
+          );
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
         this.projectRequestService
@@ -299,33 +318,50 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.id,
             this.statusSelected.toString()
           )
-          .subscribe((response: HttpEvent<any>) => {
-            switch (response.type) {
-              case HttpEventType.Response:
-                // Save storage Project, School and Sponsor if they have it
-                this.store.dispatch(
-                  new UpdateProjectRequests(response.body, this.requestSelected)
-                );
+          .subscribe(
+            (response: HttpEvent<any>) => {
+              switch (response.type) {
+                case HttpEventType.Response:
+                  console.log(response);
+                  this.showProgress = false;
+                  // Save storage Project, School and Sponsor if they have it
+                  this.store.dispatch(
+                    new UpdateProjectRequests(
+                      response.body,
+                      this.requestSelected
+                    )
+                  );
 
-                // Create users and projects when the request is accepted
-                if (this.requestSelected === '2') {
-                  this.store.dispatch(new AddProject(response.body.project));
-                  this.store.dispatch(new SetSchoolUser(response.body.school));
-                  if (response.body.sponsor.id) {
+                  // Create users and projects when the request is accepted
+                  if (this.requestSelected === '2') {
+                    this.store.dispatch(new AddProject(response.body.project));
                     this.store.dispatch(
-                      new SetSponsorUser(response.body.sponsor)
+                      new SetSchoolUser(response.body.school)
                     );
+                    if (response.body.sponsor.id) {
+                      this.store.dispatch(
+                        new SetSponsorUser(response.body.sponsor)
+                      );
+                    }
                   }
-                }
 
-                this.requestSelected.status = response.body.record.status.toString();
-                this.toast.info(
-                  'Solicitud',
-                  'Se ha cambiado de estatus la solicitud'
-                );
-                break;
+                  this.requestSelected.status = response.body.record.status.toString();
+                  this.toast.info(
+                    'Solicitud',
+                    'Se ha cambiado de estatus la solicitud'
+                  );
+                  break;
+              }
+            },
+            (err) => {
+              console.log(err);
+              this.showProgress = false;
+              this.toast.error(
+                'Error',
+                'Error al cambiar el estatus a la solicitud'
+              );
             }
-          });
+          );
         break;
       case TYPE_REQUEST.SPONSOR.ORIGINAL:
         this.projectRequestService
@@ -333,36 +369,52 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.id,
             this.statusSelected.toString()
           )
-          .subscribe((response: HttpEvent<any>) => {
-            switch (response.type) {
-              case HttpEventType.Response:
-                // Save Storage project
-                this.store.dispatch(
-                  new UpdateProjectRequests(response.body, this.requestSelected)
-                );
-
-                // Create users and project, sponsor and school
-                if (this.requestSelected === '2') {
-                  this.store.dispatch(new AddProject(response.body.project));
+          .subscribe(
+            (response: HttpEvent<any>) => {
+              switch (response.type) {
+                case HttpEventType.Response:
+                  console.log(response);
+                  this.showProgress = false;
+                  // Save Storage project
                   this.store.dispatch(
-                    new SetSponsorUser(response.body.sponsor)
+                    new UpdateProjectRequests(
+                      response.body,
+                      this.requestSelected
+                    )
                   );
 
-                  if (response.body.school.id) {
+                  // Create users and project, sponsor and school
+                  if (this.requestSelected === '2') {
+                    this.store.dispatch(new AddProject(response.body.project));
                     this.store.dispatch(
-                      new SetSchoolUser(response.body.school)
+                      new SetSponsorUser(response.body.sponsor)
                     );
-                  }
-                }
 
-                this.requestSelected.status = response.body.record.status.toString();
-                this.toast.info(
-                  'Solicitud',
-                  'Se ha cambiado de estatus la solicitud'
-                );
-                break;
+                    if (response.body.school.id) {
+                      this.store.dispatch(
+                        new SetSchoolUser(response.body.school)
+                      );
+                    }
+                  }
+
+                  this.requestSelected.status = response.body.record.status.toString();
+                  this.toast.info(
+                    'Solicitud',
+                    'Se ha cambiado de estatus la solicitud'
+                  );
+                  break;
+              }
+            },
+            (err) => {
+              console.log(err);
+
+              this.showProgress = false;
+              this.toast.error(
+                'Error',
+                'Error al cambiar el estatus a la solicitud'
+              );
             }
-          });
+          );
         break;
     }
 

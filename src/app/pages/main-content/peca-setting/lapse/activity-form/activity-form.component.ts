@@ -400,7 +400,7 @@ export class ActivityFormComponent extends StepsFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess('Actualización', 'AbLeCoins actualizado');
+          this.toastr.updateSuccess('Actualización', 'AmbLeCoins actualizado');
         },
         (err: any) => {
           this.toastr.error(

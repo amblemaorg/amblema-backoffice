@@ -4,7 +4,7 @@ import { LapseActivitiesService } from 'src/app/services/lapse-activities.servic
 import { ViewCell } from 'ng2-smart-table';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { Store } from '@ngxs/store';
-import { UpdateStatusLapseActivity } from 'src/app/store/lapse-activities.action';
+import { UpdateStatusLapseActivity, GetLapActivities } from 'src/app/store/lapse-activities.action';
 import { STATUS } from 'src/app/_helpers/convention/status';
 import { MenuSetUp } from 'src/app/pages/pages-menu-service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -98,7 +98,12 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
         new UpdateStatusLapseActivity(newData, newData.lapse)
       );
 
+
       this.menuSetUp.renderMenu(true);
+    
+      setTimeout(() => {
+        this.store.dispatch( new GetLapActivities() );
+      }, 1000);
     });
   }
 }

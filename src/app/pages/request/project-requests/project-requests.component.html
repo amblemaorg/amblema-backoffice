@@ -879,12 +879,21 @@
 
             <!-- Maps -->
             <div class="col-12 form-group" *ngIf="requestSelected.coordinate">
-              <app-geo-map
-                (laT)="requestSelected.coordinate.latitude = $event"
-                (longT)="requestSelected.coordinate.longitude = $event"
-                [(longitude)]="requestSelected.coordinate.longitude"
-                [(latitude)]="requestSelected.coordinate.latitude"
-              ></app-geo-map>
+              
+              <hr>
+              <label class="label">Ubicación de la escuela</label>
+              <div class="wrapper-agm-map">
+                <agm-map
+                  [latitude]="requestSelected.coordinate.latitude"
+                  [longitude]="requestSelected.coordinate.longitude"
+                  [zoom]="8"
+                >
+                  <agm-marker
+                    [latitude]="requestSelected.coordinate.latitude"
+                    [longitude]="requestSelected.coordinate.longitude"
+                  ></agm-marker>
+                </agm-map>
+              </div>
             </div>
 
             <div *ngIf="requestSelected.hasSponsor" class="col-12 form-group">

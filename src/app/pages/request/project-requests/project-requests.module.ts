@@ -9,6 +9,7 @@ import { ModalModule } from '../../_components/shared/modal/modal-forms/modal.mo
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProgressModule } from '../../_components/shared/progress/progress.module';
 import { MapModule } from '../../_components/shared/map/map.module';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -24,7 +25,14 @@ import { MapModule } from '../../_components/shared/map/map.module';
     FormsModule,
     ProgressModule,
     ProjectRequestsRoutingModule,
-    NbAlertModule
+    NbAlertModule,
+    AgmCoreModule.forRoot({
+      // apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_xxx',
+       apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_yrs',
+      libraries: ['places'],
+      region: 'Venezuela',
+      language: 'es'
+    }),
   ]
 })
 export class ProjectRequestsModule { }

@@ -107,14 +107,14 @@ export class AdminUserFormComponent extends DetailsForm
 
       this.subscription = this.role$.subscribe((response) => {
         response.find((value) => {
-          console.log( value )
+          console.log( value );
           if (value.devName === DEVNAME_ROLE.ADMIN) {
             this.roleId = value.id;
             this.form.controls.role.setValue(value.id);
           }
         });
       }, ( err ) => {
-        console.log( err ); 
+        console.log( err );
       });
     }
   }
@@ -155,14 +155,14 @@ export class AdminUserFormComponent extends DetailsForm
                 );
                 this.restar();
 
-            this.form.controls.role.setValue(this.roleId);
+                this.form.controls.role.setValue(this.roleId);
 
                 break;
             }
           },
           (err: any) => {
             this.showProgress = false;
-            console.log( err )
+            console.log( err );
 
             if (err.error.cardId) {
               if (String(err.error.cardId[0].status) === '5') {

@@ -66,6 +66,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         title: 'AmbLePensum',
         type: 'string',
         valuePrepareFunction: (row: any) => {
+          console.log( row );
           return row ? 'Completado' : 'No completado';
         },
         filterFunction: FilterAmblemPensum,
@@ -114,6 +115,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.userReporteService
       .getUserReport('1', '1')
       .subscribe((usersActive) => {
+
         this.data = usersActive.users;
         this.subscriptionService = this.userReporteService
           .getUserReport('1', '0')
@@ -139,6 +141,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
       .getUserReport('1', this.statusSelected, this.selectedAmbLePensum)
       .subscribe(
         (response) => {
+
           if (response.users.length) {
             this.generatorReport.generateUserReport(response);
           } else {

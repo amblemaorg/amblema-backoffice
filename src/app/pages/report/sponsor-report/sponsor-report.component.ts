@@ -88,10 +88,9 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
     private generatorReport: PDFReport,
     private userReporteService: UserReportService) { }
 
-  async ngOnInit() {
+  ngOnInit() {
 
     this.subscriptionService = this.userReporteService.getUserReport('0', '1').subscribe(usersActive => {
-
       this.data = usersActive.users;
       this.subscriptionService = this.userReporteService.getUserReport('0', '0').subscribe(response => {
         if (response.users.length) {

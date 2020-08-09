@@ -273,37 +273,29 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   onApprovedRequest(): void {
     this.showProgress = true;
     this.requestSelected = Object.assign({}, this.requestSelected);
+
     switch (this.requestSelected.type) {
       case TYPE_REQUEST.COORDINATOR.ORIGINAL:
+        console.log('aprobando solicitud por parte del usuaio coordinador');
+
         this.projectRequestService
           .putProjectRequestCoordinator(
             this.requestSelected.id,
             this.statusSelected.toString()
           )
           .subscribe(
-            (response: HttpEvent<any>) => {
-              switch (response.type) {
-                case HttpEventType.Response:
-                  console.log(response);
-                  this.store.dispatch(
-                    new UpdateProjectRequests(
-                      response.body,
-                      this.requestSelected
-                    )
-                  );
-                  this.requestSelected.status = response.status.toString();
-                  this.toast.info(
-                    'Solicitud',
-                    'Se ha cambiado de estatus la solicitud'
-                  );
-                  this.showProgress = false;
-
-                  break;
-              }
+            (response: any) => {
+              this.store.dispatch(
+                new UpdateProjectRequests(response.record, this.requestSelected)
+              );
+              this.requestSelected.status = response.record.status.toString();
+              this.toast.info(
+                'Solicitud',
+                'Se ha cambiado de estatus la solicitud'
+              );
+              this.showProgress = false;
             },
             (err) => {
-              console.log(err);
-
               this.showProgress = false;
               this.toast.error(
                 'Error',
@@ -313,45 +305,39 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           );
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
+        console.log('aprobando solicitud por parte del usuaio escuela');
+
         this.projectRequestService
           .putProjectRequestSchool(
             this.requestSelected.id,
             this.statusSelected.toString()
           )
           .subscribe(
-            (response: HttpEvent<any>) => {
-              switch (response.type) {
-                case HttpEventType.Response:
-                  console.log(response);
-                  this.showProgress = false;
-                  // Save storage Project, School and Sponsor if they have it
+            (response: any) => {
+              console.log(response);
+
+              this.showProgress = false;
+              // Save storage Project, School and Sponsor if they have it
+              this.store.dispatch(
+                new UpdateProjectRequests(response.record, this.requestSelected)
+              );
+
+              // Create users and projects when the request is accepted
+              if (this.requestSelected === '2') {
+                this.store.dispatch(new AddProject(response.record.project));
+                this.store.dispatch(new SetSchoolUser(response.record.school));
+                if (response.record.sponsor.id) {
                   this.store.dispatch(
-                    new UpdateProjectRequests(
-                      response.body,
-                      this.requestSelected
-                    )
+                    new SetSponsorUser(response.record.sponsor)
                   );
-
-                  // Create users and projects when the request is accepted
-                  if (this.requestSelected === '2') {
-                    this.store.dispatch(new AddProject(response.body.project));
-                    this.store.dispatch(
-                      new SetSchoolUser(response.body.school)
-                    );
-                    if (response.body.sponsor.id) {
-                      this.store.dispatch(
-                        new SetSponsorUser(response.body.sponsor)
-                      );
-                    }
-                  }
-
-                  this.requestSelected.status = response.body.record.status.toString();
-                  this.toast.info(
-                    'Solicitud',
-                    'Se ha cambiado de estatus la solicitud'
-                  );
-                  break;
+                }
               }
+
+              this.requestSelected.status = response.record.status.toString();
+              this.toast.info(
+                'Solicitud',
+                'Se ha cambiado de estatus la solicitud'
+              );
             },
             (err) => {
               console.log(err);
@@ -364,46 +350,38 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           );
         break;
       case TYPE_REQUEST.SPONSOR.ORIGINAL:
+        console.log('aprobando solicitud por parte del usuaio padrino');
+
         this.projectRequestService
           .putProjectRequestSponsor(
             this.requestSelected.id,
             this.statusSelected.toString()
           )
           .subscribe(
-            (response: HttpEvent<any>) => {
-              switch (response.type) {
-                case HttpEventType.Response:
-                  console.log(response);
-                  this.showProgress = false;
-                  // Save Storage project
-                  this.store.dispatch(
-                    new UpdateProjectRequests(
-                      response.body,
-                      this.requestSelected
-                    )
-                  );
+            (response: any) => {
+              console.log(response);
+              this.showProgress = false;
 
-                  // Create users and project, sponsor and school
-                  if (this.requestSelected === '2') {
-                    this.store.dispatch(new AddProject(response.body.project));
-                    this.store.dispatch(
-                      new SetSponsorUser(response.body.sponsor)
-                    );
+              // Save Storage project
+              this.store.dispatch(
+                new UpdateProjectRequests(response.record, this.requestSelected)
+              );
 
-                    if (response.body.school.id) {
-                      this.store.dispatch(
-                        new SetSchoolUser(response.body.school)
-                      );
-                    }
-                  }
+              // Create users and project, sponsor and school
+              if (this.requestSelected === '2') {
+                this.store.dispatch(new AddProject(response.project));
+                this.store.dispatch(new SetSponsorUser(response.sponsor));
 
-                  this.requestSelected.status = response.body.record.status.toString();
-                  this.toast.info(
-                    'Solicitud',
-                    'Se ha cambiado de estatus la solicitud'
-                  );
-                  break;
+                if (response.school.id) {
+                  this.store.dispatch(new SetSchoolUser(response.school));
+                }
               }
+
+              this.requestSelected.status = response.record.status.toString();
+              this.toast.info(
+                'Solicitud',
+                'Se ha cambiado de estatus la solicitud'
+              );
             },
             (err) => {
               console.log(err);

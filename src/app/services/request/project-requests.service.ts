@@ -27,33 +27,21 @@ export class ProjectRequestsService {
   putProjectRequestSchool(id: string, status: string): Observable<any> {
     return this.httpClient.put<ProjectRequest>(
       `${environment.api}${this.SCHOOL_REQUESTS}/${id}`,
-      { status },
-      {
-        reportProgress: true,
-        observe: 'body',
-      }
+      { status }
     );
   }
 
   putProjectRequestCoordinator(id: string, status: string): Observable<any> {
     return this.httpClient.put<ProjectRequest>(
       `${environment.api}${this.COORDINATOR_REQUESTS}/${id}`,
-      { status },
-      {
-        reportProgress: true,
-        observe: 'body',
-      }
+      { status }
     );
   }
 
   putProjectRequestSponsor(id: string, status: string): Observable<any> {
     return this.httpClient.put<ProjectRequest>(
       `${environment.api}${this.SPONSOR_REQUESTS}/${id}`,
-      { status },
-      {
-        reportProgress: true,
-        observe: 'body',
-      }
+      { status }
     );
   }
 

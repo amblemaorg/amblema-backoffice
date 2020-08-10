@@ -72,6 +72,7 @@
         <app-text-area-custom
         [submitted]="false"
         [control]="formStandard.get('description')"
+        [max]="100"
         [label]="'Descripción web'"
         [placeholder]="'Descripción web'"
       >
@@ -113,6 +114,7 @@
       <app-text-area-custom
         *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
         [submitted]="false"
+        [max]="730"
         [control]="formStandard.get('teachersMeetingDescription')"
         [id]="data.id + 'teachersMeetingDescription'"
         [label]="'Descripción de la reunión de maestras'"
@@ -140,7 +142,7 @@
 
       <app-text-area-custom
       *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
-        
+        [max]="100"
         [submitted]="false"
         [control]="formStandard.get('description')"
         [label]="'Descripción web'"
@@ -183,6 +185,7 @@
       <div class="col-12 col-md">
         <app-text-area-custom
           [submitted]="false"
+          [max]="730"
           [control]="formStandard.get('proposalFundationDescription')"
           [id]="data.id + 'proposalFundationDescription'"
           [label]="'Propuesta de la Fundación'"
@@ -199,6 +202,7 @@
 
         <app-text-area-custom
           [submitted]="false"
+          [max]="730"
           [control]="formStandard.get('meetingDescription')"
           [id]="data.id + 'meetingDescription'"
           [label]="'Descripción de la reunión'"
@@ -331,6 +335,7 @@
                 <app-input-custom
                   [id]="'checklist'"
                   [label]="'Opciones'"
+                  [max]="196"
                   [control]="form.get('checklist')"
                   [placeholder]="'Opciones'"
                   [submitted]="submitted"
@@ -435,6 +440,7 @@
           <div class="col-12">
             <app-text-area-custom
             [submitted]="false"
+            [max]="100"
             [control]="formStandard.get('description')"
             [label]="'Descripción web'"
             [placeholder]="'Descripción web'"
@@ -478,6 +484,7 @@
       <div class="col-12 col-md">
         <app-text-area-custom
           [submitted]="false"
+          [max]="730"
           [control]="formStandard.get('description')"
           [id]="data.id + 'text'"
           [label]="'Descripción'"
@@ -510,6 +517,7 @@
         <app-text-area-custom
         [submitted]="false"
         [control]="formStandard.get('description')"
+        [max]="100"
         [label]="'Descripción web'"
         [placeholder]="'Descripción web'"
       >
@@ -553,6 +561,7 @@
       <app-text-area-custom
       [submitted]="false"
       [control]="formStandard.get('description')"
+      [max]="100"
       [label]="'Descripción web'"
       [placeholder]="'Descripción web'"
     >
@@ -763,6 +772,7 @@
         *ngIf="!data.isStandard"
         [submitted]="false"
         [control]="form.get('description')"
+        [max]="100"
         [label]="'Descripción web'"
         [placeholder]="'Descripción web'"
       >

@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ChangeDetectorRef, OnChanges } from '@angular
 import { AbstractReactive } from '../../abstract-reactive';
 import { Validators } from '@angular/forms';
 import { FileValidator, EXTENSIONS } from '../../../shared/file-validator';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
   selector: 'app-input-file',
@@ -40,7 +41,9 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
   nameFile: string;
   url: string = null;
 
-  constructor(private cd: ChangeDetectorRef) { super(); }
+  constructor(
+    private toast: CustomToastrService,
+    private cd: ChangeDetectorRef) { super(); }
 
   ngOnChanges(): void {
 
@@ -53,6 +56,9 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
           this.control.updateValueAndValidity();
         } else {
           this.url = null;
+
+
+
           this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
           this.control.updateValueAndValidity();
         }
@@ -61,18 +67,36 @@ export class InputFileComponent extends AbstractReactive implements AfterViewIni
   }
 
   ngAfterViewInit(): void {
-
     if (this.control) {
       this.control.setValidators([Validators.required, FileValidator.fileExtensions(EXTENSIONS)]);
       this.control.updateValueAndValidity();
       this.cd.detectChanges();
-
     }
-
   }
 
-  handleUpload(file: File) {
-    this.control.setValue(file[0] as File);
-    this.nameFile = file[0].name;
+  handleUpload(event: any) {
+
+    console.log(  );
+
+    // Get file
+    const file = event[0];
+
+    // Instance reader
+    const reader = new FileReader();
+
+    // Get file's size on bytes, convert to Kb
+    const size = event[0].size / 1000;
+
+
+
+    if ( size <= 500 ) {
+      this.control.setValue(event[0] as File);
+      this.nameFile = event[0].name;
+    } else {
+      this.toast.error('Error de peso', 'El archivo debe pesar máximo 500 kb');
+      this.control.setValue( null );
+      this.nameFile = null;
+
+    }
   }
 }

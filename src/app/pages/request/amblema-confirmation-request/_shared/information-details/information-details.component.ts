@@ -25,7 +25,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   data$: Observable<ProjectValidationRequest>;
   subscription: Subscription;
 
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_EDIT );
 
   statusSelected = '2';
   confirmAction = true;

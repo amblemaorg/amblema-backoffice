@@ -13,7 +13,7 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 export class InitialWorkshopDetailsComponent extends InformationDetailsComponent
   implements OnInit {
 
-    public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_EDIT );
+    public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
 
     customOptions: OwlOptions = {
     stagePadding: 50,

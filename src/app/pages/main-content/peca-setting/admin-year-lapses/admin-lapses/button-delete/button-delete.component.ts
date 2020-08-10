@@ -60,6 +60,10 @@ export class ButtonDeleteComponent implements OnInit {
                 new DeleteLapseActivity(this.rowData.id, this.rowData.lapse)
               );
               this.menuService.renderMenu(true);
+            }, (err: any) => {
+              (modal.content as DialogConfirmationComponent).errorDelete(err);
+
+
             });
         }
       }

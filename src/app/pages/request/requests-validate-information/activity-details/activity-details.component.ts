@@ -9,5 +9,5 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
   styleUrls: ['./activity-details.component.scss']
 })
 export class ActivityDetailsComponent extends InformationDetailsComponent {
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_EDIT );
+  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
 }

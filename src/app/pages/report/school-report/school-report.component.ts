@@ -93,7 +93,7 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
 
   status = [
     { label: 'Activo', value: '1' },
-    { label: 'Inactivo', value: '0' },
+    { label: 'Inactivo', value: '2' },
   ];
 
   statusSelected = '1';
@@ -114,10 +114,13 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
         this.data = usersActive.users;
 
         this.subscriptionService = this.userReporteService
-          .getUserReport('2', '0')
+          .getUserReport('2', '2')
           .subscribe((response) => {
+
             if (response.users.length) {
-              this.data = [...this.data, response.users];
+              response.users.forEach((element) => {
+                this.data = [...this.data, element];
+              });
             }
             this.source.load(this.data);
           });

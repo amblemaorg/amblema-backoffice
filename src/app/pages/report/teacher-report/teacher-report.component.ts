@@ -133,7 +133,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
 
   status = [
     { label: 'Activo', value: '1' },
-    { label: 'Inactivo', value: '0' },
+    { label: 'Inactivo', value: '2' },
   ];
 
   disabledBtn = false;
@@ -161,10 +161,14 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       .subscribe((usersActive) => {
         this.data = usersActive.users;
         this.subscriptionService = this.userReporteService
-          .getUserReport('3', '0')
+          .getUserReport('3', '2')
           .subscribe((response) => {
+
+            console.log( response );
             if (response.users.length) {
-              this.data = [...this.data, response.users];
+              response.users.forEach((element) => {
+                this.data = [...this.data, element];
+              });
             }
 
             this.source.load(this.data);

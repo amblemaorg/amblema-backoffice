@@ -105,7 +105,7 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
       },
     };
 
-    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_DELETE ) ) );
+    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_DELETE ) ) );
   }
 
   ngOnInit() {

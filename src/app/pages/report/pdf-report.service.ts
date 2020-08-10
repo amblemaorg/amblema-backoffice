@@ -363,7 +363,7 @@ export class PDFReport implements OnInit {
 
     finalReport.content.unshift(headerDocument);
 
-    pdfMake.createPdf(finalReport).open();
+    pdfMake.createPdf(finalReport).download();
   }
 
   /**
@@ -2303,7 +2303,7 @@ export class PDFReport implements OnInit {
 
     // -- Generate document --
     const window = pdfMake.createPdf(finalReport);
-    window.open();
+    window.download();
   }
 
   async onGenerateSummaryDiagnostic(report: DiagnosticReport) {}

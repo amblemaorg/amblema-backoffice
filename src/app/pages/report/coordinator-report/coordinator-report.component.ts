@@ -119,6 +119,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         this.subscriptionService = this.userReporteService
           .getUserReport('1', '2')
           .subscribe((response) => {
+
             if (response.users.length) {
               response.users.forEach((element) => {
                 this.data = [...this.data, element];

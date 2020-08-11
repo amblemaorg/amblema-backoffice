@@ -159,10 +159,9 @@ export class AdminUserFormComponent extends DetailsForm
 
                 break;
             }
-          },
-          (err: any) => {
+          }, (err: any) => {
             this.showProgress = false;
-            console.log( err );
+
 
             if (err.error.cardId) {
               if (String(err.error.cardId[0].status) === '5') {

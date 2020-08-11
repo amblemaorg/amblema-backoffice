@@ -9,7 +9,7 @@ export interface Level {
     week: string[];
     duration: string;
     techniques: string[];
-    activities: string[];
+    activities: any[];
     resources: string[];
     evaluations: string[];
     supportMaterial: string[];

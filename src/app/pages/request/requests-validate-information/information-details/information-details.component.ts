@@ -68,6 +68,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
         comments: this.comment,
       })
       .subscribe((resp: HttpEvent<any>) => {
+        console.log( resp );
         setTimeout(() => {
           this.store.dispatch(
             new UpdateRequestContent({
@@ -81,6 +82,11 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
             'Se ha cambiado el estatus de la solicitud'
           );
         }, 2500);
+      }, err => {
+
+        console.log('se ha imprimido el error');
+        console.log( err );
+
       });
   }
 }

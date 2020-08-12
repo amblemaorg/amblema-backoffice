@@ -41,6 +41,11 @@ export class SchoolAdminComponent {
     private toastr: CustomToastrService
   ) {}
 
+  ngOnInit(): void {
+    // -- To update always -- 
+    this.store.dispatch( new GetGeneralEnrolled() );
+  }
+
   onEnrolledSchool() {
     this.enrolledService
       .enrollSchools(this.selectedSchool)

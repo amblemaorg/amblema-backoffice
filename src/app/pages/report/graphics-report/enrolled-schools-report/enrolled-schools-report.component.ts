@@ -92,8 +92,10 @@ export class EnrolledSchoolsReportComponent extends MathOlympicsReportComponent 
   onGenerateDocument() {
     this.delayGeneratePDF = true;
 
-    const data = document.getElementById('graphic'); // <-- Get html id
+    window.scrollTo(0, 0);
+    const data = document.querySelector('#graphic'); // <-- Get html id
     this.pdfService.pdfOpen(data); // <-- Open in the browser
+
 
     setTimeout(() => {
 

@@ -28,6 +28,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from '../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+import { SetCoordinatorUser } from 'src/app/store/user/coordinator-user.action';
 
 @Component({
   selector: 'app-project-requests',
@@ -171,6 +172,9 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
     switch (event.action) {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
+
+        console.log('-- Solicitud seleccionada | - Compara con la estructura seleccionada--');
+        console.log( this.requestSelected );
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
@@ -285,15 +289,29 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           .subscribe(
             (response: any) => {
 
+              console.log( response );
+
+              this.showProgress = false;
+
+              // -- Update project request
               this.store.dispatch(
                 new UpdateProjectRequests(response.record, this.requestSelected)
               );
-              this.requestSelected.status = response.record.status.toString();
+
+              // -- Add new project no 'projec request'
+              this.store.dispatch(new AddProject(response.project));
+
+              // -- New school
+              this.store.dispatch(new SetCoordinatorUser(response.coordinator));
+
+
+              this.requestSelected = response.record;
+              this.requestSelected = Object.assign({}, this.requestSelected);
+              this.requestSelected.type = this.type.COORDINATOR.ORIGINAL;
               this.toast.info(
                 'Solicitud',
                 'Se ha cambiado de estatus la solicitud'
               );
-              this.showProgress = false;
             },
             (err) => {
               this.showProgress = false;
@@ -305,7 +323,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           );
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-        console.log('aprobando solicitud por parte del usuaio escuela');
 
         this.projectRequestService
           .putProjectRequestSchool(
@@ -314,27 +331,32 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           )
           .subscribe(
             (response: any) => {
-
-              console.log(`respuesta del endpoint por parte del usuario escuela`);
-              console.log(response);
+              console.log( '-- Respuesta del endpoint - Compara con la estructura seleccionada --' );
+              console.log( response );
 
               this.showProgress = false;
-              // Save storage Project, School and Sponsor if they have it
+
+              // -- Update project request
               this.store.dispatch(
                 new UpdateProjectRequests(response.record, this.requestSelected)
               );
 
-              // Create users and projects when the request is accepted
-
+              // -- Add new project no 'project request'
               this.store.dispatch(new AddProject(response.project));
+
+              // -- New school
               this.store.dispatch(new SetSchoolUser(response.school));
+
+              // -- Create a user sponsor
               if (response.sponsor.id) {
                 this.store.dispatch(
                   new SetSponsorUser(response.sponsor)
                 );
               }
 
-              this.requestSelected.status = response.status.toString();
+              this.requestSelected = response.record;
+              this.requestSelected = Object.assign({}, this.requestSelected);
+              this.requestSelected.type = this.type.SCHOOL.ORIGINAL;
 
               this.toast.info(
                 'Solicitud',
@@ -359,15 +381,18 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           )
           .subscribe(
             (response: any) => {
+
               this.showProgress = false;
 
-              // Save Storage project
+              // -- Update project request
               this.store.dispatch(
                 new UpdateProjectRequests(response.record, this.requestSelected)
               );
 
-              // --  Add new project and new Sponsor user
+              // --  Add new project
               this.store.dispatch(new AddProject(response.project));
+
+              // -- New sponsir
               this.store.dispatch(new SetSponsorUser(response.sponsor));
 
               // -- If have school user, then create
@@ -375,8 +400,11 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
                 this.store.dispatch(new SetSchoolUser(response.school));
               }
 
-              // -- Change status and show message
-              this.requestSelected.status = response.record.status.toString();
+              this.requestSelected = response.record;
+              this.requestSelected = Object.assign({}, this.requestSelected);
+              this.requestSelected.type = this.type.SCHOOL.ORIGINAL;
+
+
               this.toast.info(
                 'Solicitud',
                 'Se ha cambiado de estatus la solicitud'

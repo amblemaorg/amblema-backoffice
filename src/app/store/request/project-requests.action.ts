@@ -115,8 +115,6 @@ export class ProjectRequestState implements NgxsOnInit {
 
      } );
 
-    console.log( notifications );
-
     return notifications;
   }
 

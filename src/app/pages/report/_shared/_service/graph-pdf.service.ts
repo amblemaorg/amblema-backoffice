@@ -16,8 +16,6 @@ export class GraphPdfService {
 
     html2canvas(htmlData).then((canvas) => {
 
-      document.body.appendChild(canvas);
-
       const imgWidth = 208;
       const pageHeight = 295;
 

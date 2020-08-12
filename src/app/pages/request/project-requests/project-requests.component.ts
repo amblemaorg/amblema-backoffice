@@ -196,6 +196,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
                   .deleteProjectRequestSponsor(event.data.id)
                   .subscribe(
                     (response) => {
+
                       this.toast.deleteRegister(
                         'Eliminación',
                         'Se ha eliminado una solicirud de proyecto'
@@ -283,6 +284,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           )
           .subscribe(
             (response: any) => {
+
               this.store.dispatch(
                 new UpdateProjectRequests(response.record, this.requestSelected)
               );
@@ -312,6 +314,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           )
           .subscribe(
             (response: any) => {
+
+              console.log(`respuesta del endpoint por parte del usuario escuela`);
               console.log(response);
 
               this.showProgress = false;
@@ -322,15 +326,16 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
 
               // Create users and projects when the request is accepted
 
-              this.store.dispatch(new AddProject(response.record.project));
-              this.store.dispatch(new SetSchoolUser(response.record.school));
-              if (response.record.sponsor.id) {
+              this.store.dispatch(new AddProject(response.project));
+              this.store.dispatch(new SetSchoolUser(response.school));
+              if (response.sponsor.id) {
                 this.store.dispatch(
-                  new SetSponsorUser(response.record.sponsor)
+                  new SetSponsorUser(response.sponsor)
                 );
               }
 
-              this.requestSelected.status = response.record.status.toString();
+              this.requestSelected.status = response.status.toString();
+
               this.toast.info(
                 'Solicitud',
                 'Se ha cambiado de estatus la solicitud'

@@ -1,7 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import { IMAGE } from '../../img-base-64';
-
 const html2canvas = require('html2canvas');
 
 @Injectable({
@@ -14,10 +13,14 @@ export class GraphPdfService {
 
   public pdfOpen(htmlData: any): void {
     // -- An instance of the html canvas is obtained --
+
     html2canvas(htmlData).then((canvas) => {
+
+      document.body.appendChild(canvas);
 
       const imgWidth = 208;
       const pageHeight = 295;
+
       const imgHeight = (canvas.height * imgWidth) / canvas.width; // <-- Calculate the width
       const heightLeft = imgHeight;
 
@@ -28,7 +31,10 @@ export class GraphPdfService {
 
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       pdf.addImage(IMAGE, 'PNG', 18, 15, 25, 25 );
-      pdf.output('dataurlnewwindow'); // <-- Open in the taps
+
+      // pdf.save(`${Math.random()}.pdf`)
+      // pdf.output('dataurlnewwindow'); // <-- Open in the taps
+      window.open(pdf.output('bloburl'), '_blank');
     });
   }
 }

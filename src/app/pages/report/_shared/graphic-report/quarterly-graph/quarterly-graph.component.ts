@@ -100,6 +100,8 @@ export class QuarterlyGraphComponent implements OnInit {
   public lineChartType = 'line';
 
   async ngOnInit() {
+
+
     /**
      * Set legends and title
      */

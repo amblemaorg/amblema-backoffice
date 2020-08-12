@@ -108,6 +108,7 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
 
     this.delayGeneratePDF = true;
 
+    window.scrollTo(0, 0);
     const data = document.getElementById('graphic'); // <-- Get html id
     this.pdfService.pdfOpen(data); // <-- Open in the browser
 

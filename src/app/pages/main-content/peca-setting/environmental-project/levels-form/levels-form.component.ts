@@ -44,7 +44,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   target = new Array<string>();
   techniques = new Array<string>();
-  activities = new Array<string>();
+  activities = new Array<any>();
   resources = new Array<string>();
   evaluations = new Array<string>();
   supportMaterial = new Array<string>();

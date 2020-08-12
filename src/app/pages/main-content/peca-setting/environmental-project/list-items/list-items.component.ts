@@ -13,7 +13,12 @@ import { Subscription } from 'rxjs';
 })
 export class ListItemsComponent implements OnInit {
   @Input() title: string;
-  @Input() list = new Array<string>();
+  @Input() list = new Array<any>();
+
+  // -- This attribute is for activities, since
+  // -- they are treated as an object and not as
+  // -- a simple arrangement like the others
+  @Input() asAnObject: boolean | null = false;
 
   @Output() delete = new EventEmitter<any>();
 
@@ -36,14 +41,25 @@ export class ListItemsComponent implements OnInit {
   }
 
   addItem() {
-    this.list.push(this.control.value);
-    this.control.reset();
+    if (this.asAnObject) {
+      this.list.push({ name: this.control.value });
+      this.control.reset();
+    } else {
+      this.list.push(this.control.value);
+      this.control.reset();
+    }
   }
 
   public onEditItem(index: number): void {
     this.MODE_LIST = ACTION.EDIT;
     this.ID_ITEM = index;
-    this.control.setValue(this.list[index]);
+
+    if ( this.asAnObject ) {
+      this.control.setValue(this.list[index].name);
+    } else {
+      this.control.setValue(this.list[index]);
+    }
+
   }
 
   public onDeleteItem(index: number): void {
@@ -80,9 +96,17 @@ export class ListItemsComponent implements OnInit {
   }
 
   confirmAction() {
-    //
     if (this.MODE_LIST === ACTION.EDIT) {
-      this.list[this.ID_ITEM] = this.control.value;
+
+      if ( this.asAnObject ) {
+
+        this.list[this.ID_ITEM] = Object.assign( {}, this.list[this.ID_ITEM] );
+        this.list[this.ID_ITEM].name = this.control.value;
+
+      } else {
+        this.list[this.ID_ITEM] = this.control.value;
+      }
+
     }
     this.MODE_LIST = ACTION.CREATE;
     this.control.reset();

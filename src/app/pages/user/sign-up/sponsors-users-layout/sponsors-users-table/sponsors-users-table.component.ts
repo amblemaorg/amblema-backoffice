@@ -85,6 +85,10 @@ export class SponsorsUsersTableComponent extends BaseTable
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
+
+        console.log( 'Informacion del padrino seleccionado ' );
+        console.log( event.data );
+
         this.store.dispatch(new SelectedSponsorUser(event.data));
         $('#sponsor-users-view').modal('show');
         break;

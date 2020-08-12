@@ -15,13 +15,11 @@ import {
 } from '../_models/environmental-project.model';
 import { OnDestroy } from '@angular/core';
 import { EnvironmentalProjectService } from '../services/environmental-project.service';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
     patch,
     append,
-    insertItem,
     updateItem,
-    compose,
     iif,
     removeItem,
 } from '@ngxs/store/operators';

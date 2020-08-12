@@ -62,10 +62,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
 
     // -- Company data --
     image: new FormControl(null),
-    webSite: new FormControl('', [
-
-      Validators.pattern(VIDEO_PATTERN),
-    ]),
+    webSite: new FormControl('', [Validators.pattern(VIDEO_PATTERN)]),
     companyRif: new FormControl(null, [
       Validators.required,
       Validators.minLength(8),
@@ -73,7 +70,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
     ]),
     cardType: new FormControl('J'),
     companyType: new FormControl(null, [Validators.required]),
-    companyOtherType: new FormControl(null),
+    companyOtherType: new FormControl(''),
     companyPhone: new FormControl(null, [
       Validators.required,
       Validators.pattern(NUMBER_PATTERN),
@@ -139,36 +136,41 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
         });
       });
     } else {
-      this.subscription = this.user$
-        .pipe()
-        .subscribe((response: any) => {
-          this.backUpData = response;
+      this.subscription = this.user$.pipe().subscribe((response: any) => {
+        this.backUpData = response;
 
-          this.form.patchValue(response);
+        this.form.patchValue(response);
 
-          console.log( this.backUpData );
-          console.log('Modo edicion de consola');
+        console.log(this.backUpData);
+        console.log('Modo edicion de consola');
 
-          this.form.controls.role.setValue(response.role.id);
-          this.form.controls.addressState.setValue(response.addressState.id);
-          this.idState = response.addressState;
+        this.form.controls.role.setValue(response.role.id);
+        this.form.controls.addressState.setValue(response.addressState.id);
+        this.idState = response.addressState;
 
-          this.form.controls.addressMunicipality.setValue(
-            response.addressMunicipality.id
-          );
-          this.form.get('password').clearValidators();
-          this.form.get('password').updateValueAndValidity();
-          this.form.updateValueAndValidity();
+        this.form.controls.addressMunicipality.setValue(
+          response.addressMunicipality.id
+        );
+        this.form.get('password').clearValidators();
+        this.form.get('password').updateValueAndValidity();
+        this.form.updateValueAndValidity();
 
-          this.form
-            .get('companyRif')
-            .setValidators([
-              Validators.required,
-              Validators.minLength(8),
-              Validators.maxLength(9),
-            ]);
-          this.form.get('companyRif').updateValueAndValidity();
-        });
+        this.form
+          .get('companyRif')
+          .setValidators([
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(9),
+          ]);
+        this.form.get('companyRif').updateValueAndValidity();
+
+        this.form.controls.companyOtherType.setValue(
+          this.form.controls.companyOtherType.value
+            ? this.form.controls.companyOtherType.value
+            : ''
+        );
+
+      });
     }
   }
 
@@ -183,7 +185,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
       this.toastr.info('Guardando', 'Enviando información, espere...');
       this.showProgress = true;
 
-      if ( data.webSite === null  ) {
+      if (data.webSite === null) {
         data.webSite = '';
       }
 
@@ -204,6 +206,9 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
           (err: any) => this.errorResponse(err)
         );
       } else {
+        console.log('Informacion de la edicion');
+        console.log(data);
+
         if (data.password === '' || data.password === null) {
           delete data.password;
         }
@@ -212,6 +217,8 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
           .updateSponsorUser(this.backUpData.id, data)
           .subscribe(
             (event: any) => {
+              console.log('Respuesta satisfactoria del endpoint');
+
               this.store.dispatch(
                 new UpdateSponsorUser(this.backUpData, event)
               );
@@ -224,7 +231,13 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
               this.form.get('password').clearValidators();
               this.form.get('password').updateValueAndValidity();
             },
-            (err: any) => this.errorResponse(err)
+            (err: any) => {
+              console.log(
+                'Error de respuesta de la edicion del usuario padrinos'
+              );
+              this.errorResponse(err);
+              console.log(err);
+            }
           );
       }
     } else {

@@ -170,7 +170,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log( event.data );
         this.requestSelected = event.data;
         this.modalService.open(this.modal);
         break;
@@ -277,8 +276,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
 
     switch (this.requestSelected.type) {
       case TYPE_REQUEST.COORDINATOR.ORIGINAL:
-        console.log('aprobando solicitud por parte del usuaio coordinador');
-
         this.projectRequestService
           .putProjectRequestCoordinator(
             this.requestSelected.id,
@@ -324,14 +321,13 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
               );
 
               // Create users and projects when the request is accepted
-              if (this.requestSelected === '2') {
-                this.store.dispatch(new AddProject(response.record.project));
-                this.store.dispatch(new SetSchoolUser(response.record.school));
-                if (response.record.sponsor.id) {
-                  this.store.dispatch(
-                    new SetSponsorUser(response.record.sponsor)
-                  );
-                }
+
+              this.store.dispatch(new AddProject(response.record.project));
+              this.store.dispatch(new SetSchoolUser(response.record.school));
+              if (response.record.sponsor.id) {
+                this.store.dispatch(
+                  new SetSponsorUser(response.record.sponsor)
+                );
               }
 
               this.requestSelected.status = response.record.status.toString();
@@ -351,8 +347,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           );
         break;
       case TYPE_REQUEST.SPONSOR.ORIGINAL:
-        console.log('aprobando solicitud por parte del usuaio padrino');
-
         this.projectRequestService
           .putProjectRequestSponsor(
             this.requestSelected.id,
@@ -360,7 +354,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           )
           .subscribe(
             (response: any) => {
-              console.log(response);
               this.showProgress = false;
 
               // Save Storage project
@@ -368,16 +361,16 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
                 new UpdateProjectRequests(response.record, this.requestSelected)
               );
 
-              // Create users and project, sponsor and school
-              if (this.requestSelected === '2') {
-                this.store.dispatch(new AddProject(response.project));
-                this.store.dispatch(new SetSponsorUser(response.sponsor));
+              // --  Add new project and new Sponsor user
+              this.store.dispatch(new AddProject(response.project));
+              this.store.dispatch(new SetSponsorUser(response.sponsor));
 
-                if (response.school.id) {
-                  this.store.dispatch(new SetSchoolUser(response.school));
-                }
+              // -- If have school user, then create
+              if (response.school.id) {
+                this.store.dispatch(new SetSchoolUser(response.school));
               }
 
+              // -- Change status and show message
               this.requestSelected.status = response.record.status.toString();
               this.toast.info(
                 'Solicitud',
@@ -385,8 +378,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
               );
             },
             (err) => {
-              console.log(err);
-
               this.showProgress = false;
               this.toast.error(
                 'Error',

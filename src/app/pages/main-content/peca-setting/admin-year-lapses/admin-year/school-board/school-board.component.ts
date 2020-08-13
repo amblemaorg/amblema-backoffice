@@ -79,6 +79,10 @@ export class SchoolBoardComponent extends BaseTable {
               );
 
               (modal.content as DialogConfirmationComponent).hideConfirmationModal();
+            }, (err: any) => {
+              console.log( err );
+              (modal.content as DialogConfirmationComponent).errorDelete(err);
+
             });
         }
       }

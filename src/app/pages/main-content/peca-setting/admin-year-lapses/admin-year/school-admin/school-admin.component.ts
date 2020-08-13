@@ -22,7 +22,7 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
   templateUrl: './school-admin.component.html',
   styles: [],
 })
-export class SchoolAdminComponent {
+export class SchoolAdminComponent implements OnInit {
   @Select(GeneralEnrolledState.availableSchools) data$: Observable<
     EnrolledSchool[]
   >;
@@ -42,7 +42,7 @@ export class SchoolAdminComponent {
   ) {}
 
   ngOnInit(): void {
-    // -- To update always -- 
+    // -- To update always --
     this.store.dispatch( new GetGeneralEnrolled() );
   }
 

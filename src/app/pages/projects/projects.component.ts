@@ -178,6 +178,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
+        console.log( event.data );
         this.store.dispatch(new SelectedProject(event.data));
         this.modal.open('view-project');
         break;

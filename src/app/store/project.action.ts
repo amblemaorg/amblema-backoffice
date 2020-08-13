@@ -107,7 +107,7 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
     }
 
     @Action(AddProject)
-    setProject(ctx: StateContext<ProjectStateModel>, action: AddProject) {
+    addProject(ctx: StateContext<ProjectStateModel>, action: AddProject) {
 
         ctx.setState(patch({
             ...ctx.getState(),

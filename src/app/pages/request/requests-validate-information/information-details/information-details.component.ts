@@ -60,15 +60,20 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   onApprovedRequest( ) {
     this.showProgress = true;
 
-    console.log( this.data );
+    console.log(`Aprobando solicitud de informacion.`);
+
     this.subscription = this.serviceRequestStepApproval
       .updateRequestContentApproval({
         ...this.data,
         status: this.statusSelected,
         comments: this.comment,
       })
-      .subscribe((resp: HttpEvent<any>) => {
+      .subscribe((resp: any) => {
+
+        console.log(`-- Respuesta en la solicitud de informacion`);
         console.log( resp );
+
+
         setTimeout(() => {
           this.store.dispatch(
             new UpdateRequestContent({

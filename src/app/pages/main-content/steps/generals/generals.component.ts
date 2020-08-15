@@ -31,6 +31,11 @@ export class GeneralsComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
 
+
+  this.steps$.subscribe( response => {
+    console.log( response );
+  } );
+
   }
 
   ngOnDestroy(): void {

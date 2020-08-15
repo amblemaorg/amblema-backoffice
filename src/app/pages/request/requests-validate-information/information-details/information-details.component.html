@@ -173,7 +173,7 @@
           class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Video: </span>
-          <span> {{ (data$ | async)?.detail.stepVideo }}</span>
+          <a [href]="(data$ | async)?.detail.stepVideo.url"> {{ (data$ | async)?.detail.stepVideo.name }}</a>
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasVideo"

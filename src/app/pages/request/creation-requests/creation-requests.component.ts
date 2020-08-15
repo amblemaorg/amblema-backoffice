@@ -52,8 +52,9 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   type = TYPE_REQUEST;
   showProgress = false;
 
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_FIND_USER_EDIT );
-
+  public canEdit = new AuthService().isAllowed(
+    ALL_ACTIONS.REQUEST_FIND_USER_EDIT
+  );
 
   subscription: Subscription;
 
@@ -156,11 +157,14 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
         },
       });
 
-    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_FIND_USER_DELETE ) ) );
+    this.validateAction(
+      false,
+      !new AuthService().isAllowed(ALL_ACTIONS.REQUEST_FIND_USER_DELETE)
+    );
   }
 
   ngOnInit() {
-    console.log( this.data );
+    console.log(this.data);
     this.router.params.subscribe((value) => {
       if (Object.keys(value).length) {
         this.requestSelected = value;
@@ -183,7 +187,9 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
+        console.log(`-- Solicitud de creacion de usuario seleccionada --`);
         console.log(event.data);
+
         this.requestSelected = event.data;
         this.oldRequest = event.data;
         this.modalService.open(this.modal);
@@ -301,60 +307,61 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.id,
             this.statusSelected.toString()
           )
-          .subscribe((resq: HttpEvent<any>) => {
-            switch (resq.type) {
-              case HttpEventType.Response:
-                if (this.statusSelected === '2') {
-                  this.store.dispatch(new SetCoordinatorUser(resq.body));
+          .subscribe((resq: any) => {
+            if (this.statusSelected === '2') {
+              this.store.dispatch(new SetCoordinatorUser(resq.body));
 
-                  this.requestSelected.status = this.statusSelected;
+              this.requestSelected.status = this.statusSelected;
 
-                  this.store.dispatch(
-                    new UpdateUserCreationRequest(
-                      this.requestSelected,
-                      this.oldRequest
-                    )
-                  );
+              this.store.dispatch(
+                new UpdateUserCreationRequest(
+                  this.requestSelected,
+                  this.oldRequest
+                )
+              );
 
-                  this.toast.info(
-                    'Solicitud',
-                    'Se ha cambiado de estatus la solicitud'
-                  );
-                }
-                break;
+              this.toast.info(
+                'Solicitud',
+                'Se ha cambiado de estatus la solicitud'
+              );
             }
+
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2500);
           });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
+        console.log(`-- Solicitud de creacion de usuario escuela`);
+
         this.userCreationRequestService
           .putUserCreationRequestSchool(
             this.requestSelected.id,
             this.statusSelected.toString()
           )
           .subscribe(
-            (resq: HttpEvent<any>) => {
-              switch (resq.type) {
-                case HttpEventType.Response:
-                  if (this.statusSelected === '2') {
-                    this.store.dispatch(new SetSchoolUser(resq.body));
+            (resq: any) => {
+              if (this.statusSelected === '2') {
+                this.store.dispatch(new SetSchoolUser(resq));
 
-                    this.requestSelected.status = this.statusSelected;
+                this.requestSelected.status = this.statusSelected;
 
-                    this.store.dispatch(
-                      new UpdateUserCreationRequest(
-                        this.requestSelected,
-                        this.oldRequest
-                      )
-                    );
+                this.store.dispatch(
+                  new UpdateUserCreationRequest(
+                    this.requestSelected,
+                    this.oldRequest
+                  )
+                );
 
-                    this.toast.info(
-                      'Solicitud',
-                      'Se ha cambiado de estatus la solicitud'
-                    );
-                  }
-
-                  break;
+                this.toast.info(
+                  'Solicitud',
+                  'Se ha cambiado de estatus la solicitud'
+                );
               }
+
+              setTimeout(() => {
+                this.showProgress = false;
+              }, 2500);
             },
             (err: any) => {
               console.log(err);
@@ -367,28 +374,27 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
             this.requestSelected.id,
             this.statusSelected.toString()
           )
-          .subscribe((resq: HttpEvent<any>) => {
-            switch (resq.type) {
-              case HttpEventType.Response:
-                if (this.statusSelected === '2') {
-                  this.store.dispatch(new SetSponsorUser(resq.body));
+          .subscribe((resq: any) => {
+            if (this.statusSelected === '2') {
+              this.store.dispatch(new SetSponsorUser(resq));
 
-                  this.requestSelected.status = this.statusSelected;
+              this.requestSelected.status = this.statusSelected;
 
-                  this.store.dispatch(
-                    new UpdateUserCreationRequest(
-                      this.requestSelected,
-                      this.oldRequest
-                    )
-                  );
+              this.store.dispatch(
+                new UpdateUserCreationRequest(
+                  this.requestSelected,
+                  this.oldRequest
+                )
+              );
 
-                  this.toast.info(
-                    'Solicitud',
-                    'Se ha cambiado de estatus la solicitud'
-                  );
-                }
-                break;
+              this.toast.info(
+                'Solicitud',
+                'Se ha cambiado de estatus la solicitud'
+              );
             }
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2500);
           });
         break;
     }

@@ -86,13 +86,10 @@ export class ActivityFormComponent extends StepsFormComponent
 
           this.formStandard.patchValue(this.data);
 
-
           if (this.id === this.DEVNAME_STANDARD.MATH_OLYMPIC ) {
             console.log( this.data );
             this.formStandard.controls.date.setValue(new Date(this.data.date as string ));
           }
-
-
         }
         if (this.id === this.DEVNAME_STANDARD.AMBLE_COINS) {
           const value: any = JSON.stringify(
@@ -214,6 +211,8 @@ export class ActivityFormComponent extends StepsFormComponent
     this.form.controls.name.setValidators([]);
     this.form.controls.approvalType.setValidators([]);
     this.form.updateValueAndValidity();
+
+    this.form.controls.checklist.setValue('');
 
     // Prepare the data in the form
     if (this.data) {

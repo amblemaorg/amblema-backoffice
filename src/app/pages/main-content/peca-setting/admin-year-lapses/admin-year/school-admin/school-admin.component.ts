@@ -50,12 +50,16 @@ export class SchoolAdminComponent implements OnInit {
     this.enrolledService
       .enrollSchools(this.selectedSchool)
       .subscribe((response) => {
+
+        console.log(`Se ha inscrito una nueva escuela`);
+
         this.store.dispatch(new SetEnrolledSchool(this.selectedSchool));
         this.selectedSchool = null;
         this.toastr.updateSuccess(
           'Actualización',
           'Escuela inscrita en el año escolar'
         );
+      }, (err) => {
       });
   }
 

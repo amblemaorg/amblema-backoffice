@@ -75,7 +75,7 @@ export class SchoolsUsersTableComponent extends BaseTable
 
     this.validateAction(
       !new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_EDIT),
-      new AuthService().isAllowed(ALL_ACTIONS.ROLE_DELETE)
+      !new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_DELETE)
     );
   }
 

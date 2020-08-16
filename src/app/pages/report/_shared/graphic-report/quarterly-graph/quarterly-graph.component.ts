@@ -47,13 +47,13 @@ export class QuarterlyGraphComponent implements OnInit {
     },
     elements: {
       line: {
-        tension: 0.001,
+        tension: 0.000,
       },
     },
     scales: {
       yAxes: [
         {
-          stacked: true,
+          stacked: false,
           scaleLabel: {
             display: true,
             labelString: this.legendy,
@@ -112,6 +112,7 @@ export class QuarterlyGraphComponent implements OnInit {
 
     this.data.forEach( (value, key) => {
 
+      // -- Random color --
       const color: any = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
 
       this.lineChartData.push({

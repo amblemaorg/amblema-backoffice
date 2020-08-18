@@ -68,8 +68,8 @@
       <div class="col-12 col-lg-9">
         <app-quarterly-graph
           [data]="data"
-          [title]="'Reporte de padrinos activos'"
-          [legendy]="'Número de padrinos activos'"
+          [title]="statusSelected === '1' ? 'Reporte de padrinos activos' : 'Reporte de padrinos inactivos'"
+          [legendy]=" statusSelected === '1' ? 'Número de padrinos activos' : 'Número de padrinos inactivos'"
         ></app-quarterly-graph>
       </div>
     </div>

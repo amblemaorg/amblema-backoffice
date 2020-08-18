@@ -55,6 +55,7 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
           switch (request.type) {
             case HttpEventType.Response:
 
+              console.log( request.body.records );
               this.prepareDataToShow(request.body.records);
               break;
           }

@@ -10,5 +10,4 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 })
 export class YearbookDetailsComponent extends InformationDetailsComponent {
   public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
-
 }

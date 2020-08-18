@@ -164,13 +164,6 @@
             >Sin imagen</span
           >
           <div class="media-body">
-            <p class="mt-0 font-weight-bold">
-              {{
-                (data$ | async)?.detail?.historicalReview?.name
-                  ? (data$ | async)?.detail?.historicalReview?.name
-                  : "Sin titulo en la reseña"
-              }}
-            </p>
             {{
               (data$ | async)?.detail?.historicalReview?.content
                 ? (data$ | async)?.detail?.historicalReview?.content
@@ -203,6 +196,61 @@
 
   <!-- Info lapse -->
   <div id="container-lapse">
+
+    <!-- Diagnostic -->
+    <div class="row">
+      <div class="col-12">
+        <p class="text-info font-weight-bold">Análisis de diagnóstico - lapso 1</p>
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lógica</p>
+        {{ (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis }}
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Matemáticas</p>
+        {{ (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis }}
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lectura</p>
+        {{ (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis }}
+      </div>
+
+
+      <div class="col-12">
+        <p class="text-info font-weight-bold">Análisis de diagnóstico - lapso 2</p>
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lógica</p>
+        {{ (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis }}
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Matemáticas</p>
+        {{ (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis }}
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lectura</p>
+        {{ (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis }}
+      </div>
+
+
+      <div class="col-12">
+        <p class="text-info font-weight-bold">Análisis de diagnóstico - lapso 3</p>
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lógica</p>
+        {{ (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis }}
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Matemáticas</p>
+        {{ (data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis }}
+      </div>
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lectura</p>
+        {{ (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis }}
+      </div>
+    </div> 
+    <!-- / End diagnostic -->
+
     <div class="row">
       <div class="col-xl-4">
         <p class="text-info font-weight-bold">Actividades del lapso 1</p>

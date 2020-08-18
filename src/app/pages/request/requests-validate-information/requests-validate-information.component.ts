@@ -297,10 +297,13 @@ export class RequestsValidateInformationComponent extends BaseTable
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log(event.data);
-        this.showModalDetails(event.data.type);
-        this.store.dispatch(new SelectedRequestContent(event.data));
-        break;
+
+      console.log(event.data);
+
+
+      this.showModalDetails(event.data.type);
+      this.store.dispatch(new SelectedRequestContent(event.data));
+      break;
       case this.ACTION.DELETE:
         // Call delete modal
         // -- Instance delete

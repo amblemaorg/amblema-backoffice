@@ -63,8 +63,6 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
     }
   }
 
-
-
   generateReset() {
     this.data = [];
     this.showProgress = true;

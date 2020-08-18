@@ -73,7 +73,6 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
         console.log(`-- Respuesta en la solicitud de informacion`);
         console.log( resp );
 
-
         setTimeout(() => {
           this.store.dispatch(
             new UpdateRequestContent({
@@ -88,10 +87,8 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
           );
         }, 2500);
       }, err => {
-
         console.log('se ha imprimido el error');
         console.log( err );
-
       });
   }
 }

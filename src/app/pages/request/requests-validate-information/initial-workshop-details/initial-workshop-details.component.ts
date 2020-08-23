@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { InformationDetailsComponent } from '../information-details/information-details.component';
@@ -11,7 +11,7 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
   styleUrls: ['./initial-workshop-details.component.scss'],
 })
 export class InitialWorkshopDetailsComponent extends InformationDetailsComponent
-  implements OnInit {
+  implements AfterViewInit {
 
     public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
 
@@ -37,7 +37,7 @@ export class InitialWorkshopDetailsComponent extends InformationDetailsComponent
 
   show = false;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     setTimeout(() => (this.show = true));
   }
 }

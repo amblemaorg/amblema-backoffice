@@ -68,12 +68,12 @@
       <div class="col-12 col-lg-9">
         <app-quarterly-graph
           [data]="data"
-          [title]="statusSelected === '1' ? 'Reporte de padrinos activos' : 'Reporte de padrinos inactivos'"
-          [legendy]=" statusSelected === '1' ? 'Número de padrinos activos' : 'Número de padrinos inactivos'"
+          [title]="statusSelected === '1' ? 'Reporte de padrinos con proyectos' : 'Reporte de padrinos sin proyectos'"
+          [legendy]=" statusSelected === '1' ? 'Número de padrinos con proyectos' : 'Número de padrinos sin proyectos'"
         ></app-quarterly-graph>
       </div>
     </div>
-
+    
     <!-- Show message no graph -->
     <div class="row" *ngIf="!showGraph">
       <div class="col-12 text-center">

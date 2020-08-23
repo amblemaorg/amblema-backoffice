@@ -18,8 +18,8 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
   public delayGeneratePDF = false;
 
   status = [
-    { label: 'Activo', value: '1' },
-    { label: 'Inactivo', value: '2' },
+    { label: 'Con proyectos', value: '1' },
+    { label: 'Sin proyectos', value: '2' },
   ];
   statusSelected = '1';
 

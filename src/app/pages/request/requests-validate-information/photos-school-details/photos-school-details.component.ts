@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import { InformationDetailsComponent } from '../information-details/information-details.component';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -11,7 +11,7 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
   styleUrls: ['./photos-school-details.component.scss'],
 })
 export class PhotosSchoolDetailsComponent extends InformationDetailsComponent
-  implements OnInit {
+  implements AfterViewInit {
 
 
     public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
@@ -38,12 +38,11 @@ export class PhotosSchoolDetailsComponent extends InformationDetailsComponent
 
   show = false;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     setTimeout(() => (this.show = true));
 
     this.subscription = this.data$.subscribe((response) => {
       this.data = response;
-      console.log( this.data );
     });
   }
 }

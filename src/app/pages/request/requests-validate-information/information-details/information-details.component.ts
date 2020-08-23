@@ -43,6 +43,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.data$.subscribe((response) => {
+
       this.data = response;
     });
   }
@@ -59,8 +60,6 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
 
   onApprovedRequest( ) {
     this.showProgress = true;
-
-    console.log(`Aprobando solicitud de informacion.`);
 
     this.subscription = this.serviceRequestStepApproval
       .updateRequestContentApproval({

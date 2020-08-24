@@ -105,7 +105,7 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
       console.log(this.data);
     }, 100);
   }
-  
+
   private fillChart(dataSections: any[]) {
     dataSections.forEach((element) => {
       this.labelLapseOne.push(

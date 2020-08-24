@@ -33,9 +33,9 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
 
   constructor(
-    public bsModalRef: BsModalRef,
-    public modalService: BsModalService,
-    public elem: ElementRef,
+    public bsModalRef?: BsModalRef,
+    public modalService?: BsModalService,
+    public elem?: ElementRef,
     public serviceRequestStepApproval?: InformationRequestService,
     public store?: Store,
     public toastr?: CustomToastrService

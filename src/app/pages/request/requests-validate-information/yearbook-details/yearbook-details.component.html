@@ -198,17 +198,16 @@
   <div id="container-lapse">
     <!-- Diagnostic -->
     <div class="row">
-
       <!-- Lapse One -->
       <div class="col-12">
         <p class="text-info font-weight-bold">
           Análisis de diagnóstico - lapso 1
         </p>
       </div>
-      <div class="col-12 form-group">
-        <p class="font-weight-bold">Lógica</p>
-        {{ (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis }}
 
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lectura</p>
+        {{ (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -223,19 +222,21 @@
               <tr *ngFor="let item of (data$ | async)?.detail?.sections">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse1.operationsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse1.operationsPerMinIndex }}</td>
+                <td>{{ item.diagnostics.lapse1.wordsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse1.wordsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataLogicLapseOne" [barChartLabels]="labelLapseOne"></app-graphic-bar>
-        </div> 
-
-
+          <app-graphic-bar
+            [barChartData]="dataReadingLapseOne"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
+        </div>
       </div>
+
       <div class="col-12 form-group">
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis }}
@@ -263,12 +264,16 @@
         </div>
 
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataMathLapseOne" [barChartLabels]="labelLapseOne"></app-graphic-bar>
-        </div> 
+          <app-graphic-bar
+            [barChartData]="dataMathLapseOne"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
+        </div>
       </div>
       <div class="col-12 form-group">
-        <p class="font-weight-bold">Lectura</p>
-        {{ (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis }}
+        <p class="font-weight-bold">Lógica</p>
+        {{ (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis }}
+
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -283,16 +288,18 @@
               <tr *ngFor="let item of (data$ | async)?.detail?.sections">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse1.wordsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse1.wordsPerMinIndex }}</td>
+                <td>{{ item.diagnostics.lapse1.operationsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse1.operationsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataReadingLapseOne" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+          <app-graphic-bar
+            [barChartData]="dataLogicLapseOne"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
         </div>
       </div>
       <!-- / End lapse one -->
@@ -303,10 +310,10 @@
           Análisis de diagnóstico - lapso 2
         </p>
       </div>
-      <div class="col-12 form-group">
-        <p class="font-weight-bold">Lógica</p>
-        {{ (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis }}
 
+      <div class="col-12 form-group">
+        <p class="font-weight-bold">Lectura</p>
+        {{ (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -321,18 +328,21 @@
               <tr *ngFor="let item of (data$ | async)?.detail?.sections">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse2.operationsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse2.operationsPerMinIndex }}</td>
+                <td>{{ item.diagnostics.lapse2.wordsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse2.wordsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataLogicLapseTwo" [barChartLabels]="labelLapseOne"></app-graphic-bar>
-        </div> 
-
+          <app-graphic-bar
+            [barChartData]="dataReadingLapseTwo"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
+        </div>
       </div>
+
       <div class="col-12 form-group">
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis }}
@@ -360,12 +370,16 @@
         </div>
 
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataMathLapseTwo" [barChartLabels]="labelLapseOne"></app-graphic-bar>
-        </div> 
+          <app-graphic-bar
+            [barChartData]="dataMathLapseTwo"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
+        </div>
       </div>
       <div class="col-12 form-group">
-        <p class="font-weight-bold">Lectura</p>
-        {{ (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis }}
+        <p class="font-weight-bold">Lógica</p>
+        {{ (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis }}
+
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -380,18 +394,21 @@
               <tr *ngFor="let item of (data$ | async)?.detail?.sections">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse2.wordsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse2.wordsPerMinIndex }}</td>
+                <td>{{ item.diagnostics.lapse2.operationsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse2.operationsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataReadingLapseTwo" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+          <app-graphic-bar
+            [barChartData]="dataLogicLapseTwo"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
         </div>
       </div>
+
       <!-- / End lapse two -->
 
       <div class="col-12">
@@ -400,8 +417,8 @@
         </p>
       </div>
       <div class="col-12 form-group">
-        <p class="font-weight-bold">Lógica</p>
-        {{ (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis }}
+        <p class="font-weight-bold">Lectura</p>
+        {{ (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -416,17 +433,21 @@
               <tr *ngFor="let item of (data$ | async)?.detail?.sections">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse3.operationsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse3.operationsPerMinIndex }}</td>
+                <td>{{ item.diagnostics.lapse3.wordsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse3.wordsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataLogicLapseThree" [barChartLabels]="labelLapseOne"></app-graphic-bar>
-        </div> 
+          <app-graphic-bar
+            [barChartData]="dataReadingLapseThree"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
+        </div>
       </div>
+
       <div class="col-12 form-group">
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis }}
@@ -454,12 +475,15 @@
         </div>
 
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataMathLapseThree" [barChartLabels]="labelLapseOne"></app-graphic-bar>
-        </div> 
+          <app-graphic-bar
+            [barChartData]="dataMathLapseThree"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
+        </div>
       </div>
       <div class="col-12 form-group">
-        <p class="font-weight-bold">Lectura</p>
-        {{ (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis }}
+        <p class="font-weight-bold">Lógica</p>
+        {{ (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -474,16 +498,18 @@
               <tr *ngFor="let item of (data$ | async)?.detail?.sections">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse3.wordsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse3.wordsPerMinIndex }}</td>
+                <td>{{ item.diagnostics.lapse3.operationsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse3.operationsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-
         <div class="mt-3">
-          <app-graphic-bar [barChartData]="dataReadingLapseThree" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+          <app-graphic-bar
+            [barChartData]="dataLogicLapseThree"
+            [barChartLabels]="labelLapseOne"
+          ></app-graphic-bar>
         </div>
       </div>
     </div>

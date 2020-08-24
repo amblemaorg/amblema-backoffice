@@ -63,9 +63,13 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
         this.diagnostics
       )
       .subscribe(
-        (response) => {
-          console.log(response);
-          this.generatorReport.onGenerate(response);
+        (response: any) => {
+
+          if (response.sections.length) {
+            this.generatorReport.onGenerate(response);
+          } else {
+            this.toastr.info('Información', 'No se encontraron registros');
+          }
 
           setTimeout(() => {
             this.disabledBtn = false;
@@ -73,8 +77,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
           }, 3500);
         },
         (err: any) => {
-
-          if ( err.status === 404 ) {
+          if (err.status === 404) {
             this.toastr.info('Información', 'No se encontraron registros');
           }
 

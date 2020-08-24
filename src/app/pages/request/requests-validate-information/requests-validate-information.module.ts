@@ -28,6 +28,9 @@ import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.co
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SpanPlanningComponent } from './span-planning/span-planning.component';
 import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-school-details.component';
+import { GraphicReportModule } from '../../report/_shared/graphic-report/graphic-report.module';
+import { GraphicBarComponent } from './_shared/graphic-bar/graphic-bar.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   entryComponents: [
@@ -52,6 +55,7 @@ import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-sch
     YearbookDetailsComponent,
     SpanPlanningComponent,
     PhotosSchoolDetailsComponent,
+    GraphicBarComponent,
   ],
   imports: [
     CarouselModule,
@@ -67,6 +71,7 @@ import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-sch
     NbInputModule,
     RequestsValidateInformationRoutingModule,
     NbDialogModule.forChild(),
+    ChartsModule
   ],
 })
 export class RequestsValidateInformationModule {}

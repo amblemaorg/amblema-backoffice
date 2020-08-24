@@ -70,7 +70,7 @@
     <p class="text-info font-weight-bold">Información de usuario</p>
 
     <div class="row">
-      <div class="col-lg-6 col-xl-4 mb-4">
+      <div class="col-12 mb-4">
         <label class="label">Coordinador</label>
         <div class="media">
           <img
@@ -95,7 +95,7 @@
         </div>
       </div>
 
-      <div class="col-lg-6 col-xl-4 mb-4">
+      <div class="col-12 mb-4">
         <label class="label">Escuela</label>
         <div class="media">
           <img
@@ -120,7 +120,7 @@
         </div>
       </div>
 
-      <div class="col-lg-6 col-xl-4 mb-4">
+      <div class="col-12 mb-4">
         <label class="label">Padrino</label>
         <div class="media">
           <img
@@ -145,7 +145,7 @@
         </div>
       </div>
 
-      <div class="col-lg-6 col-xl-4 mb-4">
+      <div class="col-12 mb-4">
         <label class="label">Reseña histórica</label>
         <div class="media">
           <img
@@ -196,59 +196,297 @@
 
   <!-- Info lapse -->
   <div id="container-lapse">
-
     <!-- Diagnostic -->
     <div class="row">
+
+      <!-- Lapse One -->
       <div class="col-12">
-        <p class="text-info font-weight-bold">Análisis de diagnóstico - lapso 1</p>
+        <p class="text-info font-weight-bold">
+          Análisis de diagnóstico - lapso 1
+        </p>
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Lógica</p>
         {{ (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis }}
+
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse1.operationsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse1.operationsPerMinIndex }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataLogicLapseOne" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div> 
+
+
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis }}
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse1.multiplicationsPerMin }}</td>
+                <td>
+                  {{ item.diagnostics.lapse1.multiplicationsPerMinIndex }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataMathLapseOne" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div> 
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Lectura</p>
         {{ (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis }}
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse1.wordsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse1.wordsPerMinIndex }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataReadingLapseOne" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div>
       </div>
+      <!-- / End lapse one -->
 
-
+      <!-- Lapse Two -->
       <div class="col-12">
-        <p class="text-info font-weight-bold">Análisis de diagnóstico - lapso 2</p>
+        <p class="text-info font-weight-bold">
+          Análisis de diagnóstico - lapso 2
+        </p>
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Lógica</p>
         {{ (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis }}
+
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse2.operationsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse2.operationsPerMinIndex }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataLogicLapseTwo" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div> 
+
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis }}
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse2.multiplicationsPerMin }}</td>
+                <td>
+                  {{ item.diagnostics.lapse2.multiplicationsPerMinIndex }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataMathLapseTwo" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div> 
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Lectura</p>
         {{ (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis }}
-      </div>
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse2.wordsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse2.wordsPerMinIndex }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataReadingLapseTwo" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div>
+      </div>
+      <!-- / End lapse two -->
 
       <div class="col-12">
-        <p class="text-info font-weight-bold">Análisis de diagnóstico - lapso 3</p>
+        <p class="text-info font-weight-bold">
+          Análisis de diagnóstico - lapso 3
+        </p>
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Lógica</p>
         {{ (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis }}
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse3.operationsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse3.operationsPerMinIndex }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataLogicLapseThree" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div> 
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis }}
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse3.multiplicationsPerMin }}</td>
+                <td>
+                  {{ item.diagnostics.lapse3.multiplicationsPerMinIndex }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataMathLapseThree" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div> 
       </div>
       <div class="col-12 form-group">
         <p class="font-weight-bold">Lectura</p>
         {{ (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis }}
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Grado</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Resultado de lectura</th>
+                <th scope="col">Índice de lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+                <th>{{ item.grade }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.diagnostics.lapse3.wordsPerMin }}</td>
+                <td>{{ item.diagnostics.lapse3.wordsPerMinIndex }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="mt-3">
+          <app-graphic-bar [barChartData]="dataReadingLapseThree" [barChartLabels]="labelLapseOne"></app-graphic-bar>
+        </div>
       </div>
-    </div> 
+    </div>
     <!-- / End diagnostic -->
 
     <div class="row">

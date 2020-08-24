@@ -39,7 +39,10 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
     public serviceRequestStepApproval?: InformationRequestService,
     public store?: Store,
     public toastr?: CustomToastrService
-  ) {}
+  ) {
+
+
+  }
 
   ngOnInit() {
     this.subscription = this.data$.subscribe((response) => {

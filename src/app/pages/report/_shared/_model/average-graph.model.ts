@@ -5,6 +5,6 @@ export interface ChartAverage {
 }
 
 interface Coordinate {
-  x: number;
-  y: number;
+  x: any;
+  y: any;
 }

@@ -103,13 +103,6 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
           (err: any) => {
             this.progress = 0;
 
-            if (err.status === 400 && this.form.controls.phase.value === '2') {
-              this.toastr.error(
-                'Error',
-                'Al crear un proyecto en fase PECA, se debe seleccionar las tres entidades.'
-              );
-              return true;
-            }
 
             if (err.error.school) {
               if (err.error.school[0].status === '5') {
@@ -120,6 +113,14 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
 
                 return true;
               }
+            }
+
+            if (err.status === 400 && this.form.controls.phase.value === '2') {
+              this.toastr.error(
+                'Error',
+                'Al crear un proyecto en fase PECA, se debe seleccionar las tres entidades.'
+              );
+              return true;
             }
 
             if (

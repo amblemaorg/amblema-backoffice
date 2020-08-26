@@ -331,6 +331,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           )
           .subscribe(
             (response: any) => {
+
               console.log( '-- Respuesta del endpoint - Compara con la estructura seleccionada --' );
               console.log( response );
 

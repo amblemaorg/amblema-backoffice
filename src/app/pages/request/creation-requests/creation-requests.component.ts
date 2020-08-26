@@ -332,7 +332,9 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
+        console.log('============================================');
         console.log(`-- Solicitud de creacion de usuario escuela`);
+        console.log('============================================');
 
         this.userCreationRequestService
           .putUserCreationRequestSchool(

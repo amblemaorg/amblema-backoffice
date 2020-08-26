@@ -89,6 +89,8 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
           );
         }, 2500);
       }, err => {
+
+        console.log(this.data);
         console.log('se ha imprimido el error');
         console.log( err );
       });

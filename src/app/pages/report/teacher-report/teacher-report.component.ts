@@ -12,6 +12,7 @@ import {
 } from 'src/app/_helpers/utility';
 import { TeacherService } from 'src/app/services/user/teacher.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teacher-report',
@@ -22,9 +23,17 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 export class TeacherReportComponent implements OnInit, OnDestroy {
   subscriptionService: Subscription;
 
+  isNotInscription = false;
   settings: any = {
+    rowClassFunction: (row) => {
+      if ( row.data.annualPreparationStatus === null && row.isInEditing) {
+        row.isInEditing = false;
+        this.cd.detectChanges();
+      }
+    },
     noDataMessage: 'No hay registros',
     actions: {
+      columnTitle: 'Acciones',
       add: false,
       delete: false,
       edit: true,
@@ -59,6 +68,15 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         },
         filterFunction: FilterGender,
         editable: false,
+        editor: {
+          type: 'list',
+          config: {
+            list: [
+              { value: '1', title: 'Femenino' },
+              { value: '2', title: 'Masculino' },
+            ],
+          },
+        },
       },
       email: {
         title: 'Correo',
@@ -92,18 +110,22 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       },
       annualPreparationStatus: {
         title: 'Inscripción de la convención',
+        type: 'html',
         valuePrepareFunction: (row: any) => {
-          return row === '1'
-            ? 'Preinscripto'
-            : row === '2'
-            ? 'Inscrito'
-            : 'No esta inscrito';
+          return this.sanatizer.bypassSecurityTrustHtml(
+            `<div><span>${
+              row === '1'
+                ? 'Preinscrito'
+                : row === '2'
+                ? 'Inscrito'
+                : 'No esta inscrito'
+            }</span></div>`
+          );
         },
         editor: {
           type: 'list',
           config: {
             list: [
-              { value: null, title: 'No esta inscrito' },
               { value: '1', title: 'Preinscripto' },
               { value: '2', title: 'Inscrito' },
             ],
@@ -152,7 +174,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     private toast: CustomToastrService,
     private userReporteService: UserReportService,
     private userTeacherService: TeacherService,
-    private toastrService: CustomToastrService
+    private toastrService: CustomToastrService,
+    private sanatizer: DomSanitizer
   ) {}
 
   async ngOnInit() {
@@ -163,8 +186,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         this.subscriptionService = this.userReporteService
           .getUserReport('3', '2')
           .subscribe((response) => {
-
-            console.log( response );
             if (response.users.length) {
               response.users.forEach((element) => {
                 this.data = [...this.data, element];

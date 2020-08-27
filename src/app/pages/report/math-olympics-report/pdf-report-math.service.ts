@@ -22,114 +22,6 @@ export class PDFReportMath {
 
     async generateMathOlympics(mockData: OlympicsReport ) {
 
-        // -- Mock data --
-
-        // const mockData: any = {
-        //     allPeriods: [
-        //         {
-        //             academicPeriod: ['2016', '2017'],
-        //             schools: [
-        //                 {
-        //                     meta: {
-        //                         name: 'Rafael',
-        //                         coordinator: 'Jose',
-        //                         sponsor: 'Coca cola'
-        //                     },
-        //                     grades: [
-        //                         {
-        //                             name: '1',
-        //                             sections: [
-        //                                 {
-        //                                     name: 'A',
-        //                                     inscribed: 3,
-        //                                     classified: 9,
-        //                                     medalsGold: 10,
-        //                                     medalsSilver: 9,
-        //                                     medalsBronze: 9
-        //                                 },
-        //                                 {
-        //                                     name: 'B',
-        //                                     inscribed: 3,
-        //                                     classified: 9,
-        //                                     medalsGold: 10,
-        //                                     medalsSilver: 9,
-        //                                     medalsBronze: 9
-        //                                 }
-        //                             ]
-        //                         }
-        //                     ],
-        //                     total: {
-        //                         totalEnrolled: 20,
-        //                         totalClassified: 10,
-        //                         totalGoldMedals: 10,
-        //                         totalSilverMedals: 10,
-        //                         totalBronzeMedals: 10,
-        //                     }
-        //                 },
-
-        //             ],
-
-        //         },
-        //         {
-        //             academicPeriod: ['2017', '2018'],
-        //             schools: [
-        //                 {
-        //                     meta: {
-        //                         name: 'Maestra',
-        //                         coordinator: 'Jose',
-        //                         sponsor: 'Pepsi cola'
-        //                     },
-        //                     grades: [
-        //                         {
-        //                             name: '1',
-        //                             sections: [
-        //                                 {
-        //                                     name: 'A',
-        //                                     inscribed: 3,
-        //                                     classified: 9,
-        //                                     medalsGold: 10,
-        //                                     medalsSilver: 9,
-        //                                     medalsBronze: 9
-        //                                 },
-        //                             ]
-        //                         },
-        //                         {
-        //                             name: '2',
-        //                             sections: [
-        //                                 {
-        //                                     name: 'B',
-        //                                     inscribed: 3,
-        //                                     classified: 9,
-        //                                     medalsGold: 10,
-        //                                     medalsSilver: 9,
-        //                                     medalsBronze: 9
-        //                                 },
-        //                             ]
-        //                         },
-        //                     ],
-        //                     total: {
-        //                         totalEnrolled: 20,
-        //                         totalClassified: 10,
-        //                         totalGoldMedals: 10,
-        //                         totalSilverMedals: 10,
-        //                         totalBronzeMedals: 10,
-        //                     }
-        //                 }
-        //             ],
-
-        //         },
-        //     ],
-        //     finalScore: {
-        //         enrolledStudents: 100,
-        //         classifiedStudents: 80,
-        //         studentsGoldMedal: 10,
-        //         studentsSilverMedal: 20,
-        //         studentsBronzeMedal: 20,
-        //     }
-        // };
-
-        // -- / End --
-
         const colorHeaderRow: any = { fillColor: '#81b03e', color: '#FFF', bold: true };
         const colorHeaderSecondary: any = { fillColor: '#00809a', color: '#FFF', bold: true };
 
@@ -157,9 +49,9 @@ export class PDFReportMath {
 
         const finalDocument: any = {
             info: {
-                title: 'Reporte de usuarios',
+                title: 'Reporte de olimpíadas de matemáticas',
                 author: 'Binaural C.A',
-                subject: 'Reporte de usuarios',
+                subject: 'Reporte de olimpíadas de matemáticas',
                 keywords: 'Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante',
             },
             pageSize: 'A4',

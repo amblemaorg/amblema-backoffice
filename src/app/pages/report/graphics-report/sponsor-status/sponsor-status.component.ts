@@ -73,6 +73,7 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
 
   private prepareDataToShow(records: any[]): void {
     records.forEach((item) => {
+
       this.data.push({
         academicPeriod: [
           item.academicPeriodYears[0],

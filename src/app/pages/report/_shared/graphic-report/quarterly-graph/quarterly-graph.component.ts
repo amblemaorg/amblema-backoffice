@@ -24,10 +24,10 @@ export class QuarterlyGraphComponent implements OnInit {
    * Labels
    */
   public lineChartLabels: Label[] = [
-    ['Enero', 'Febrero', 'Marzo'],
-    ['Abril', 'Mayo', 'Junio'],
-    ['Julio', 'Agosto', 'Septiembre'],
-    ['Octubre', 'Noviembre', 'Diciembre'],
+    ['Septiembre', 'Octubre', 'Noviembre'],
+    ['Diciembre', 'Enero', 'Febrero'],
+    ['Marzo', 'Abril', 'Mayo'],
+    ['Junio', 'Julio', 'Agosto']
   ];
 
   /**

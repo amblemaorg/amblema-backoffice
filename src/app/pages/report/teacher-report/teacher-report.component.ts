@@ -26,7 +26,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   isNotInscription = false;
   settings: any = {
     rowClassFunction: (row) => {
-      if ( row.data.annualPreparationStatus === null && row.isInEditing) {
+      if (row.data.annualPreparationStatus === null && row.isInEditing) {
         row.isInEditing = false;
         this.cd.detectChanges();
       }
@@ -122,6 +122,17 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             }</span></div>`
           );
         },
+        filterFunction: (cell?: any, search?: string): boolean => {
+          let value: string = cell === '1' ? 'Preinscrito' : cell === '2' ? 'Inscrito' : 'No esta inscrito';
+
+          value = value.toUpperCase();
+
+          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
         editor: {
           type: 'list',
           config: {
@@ -206,6 +217,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   onGenerateReport() {
     this.disabledBtn = true;
 
+    console.log(this.statusSelected);
+    console.log(this.selectedAnnualConvention);
+
     this.subscriptionService = this.userReporteService
       .getUserReport(
         '3',
@@ -215,9 +229,12 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response) => {
+          console.log( response );
+          console.log( response.users.length );
           if (response.users.length) {
             this.generatorReport.generateUserReport(response);
           } else {
+
             this.toast.info(
               'Información',
               'No hay registro en el estatus o configuración seleccionada'

@@ -38,9 +38,11 @@ export class FormSimpleStepComponent extends StepsFormComponent
 
     // Add new control status toggle
     this.form.addControl('status', new FormControl(false));
+      
   }
 
   async ngOnInit() {
+    
     this.checklist = this.data.checklist;
     this.checklist = Object.assign([], this.checklist);
 
@@ -54,6 +56,7 @@ export class FormSimpleStepComponent extends StepsFormComponent
 
     // Prepare the data in the form
     if (this.data) {
+
       if (this.data.hasText) {
         this.form.controls.text.setValue(this.data.text);
         this.form.controls.text.setValidators([Validators.required]);
@@ -61,7 +64,12 @@ export class FormSimpleStepComponent extends StepsFormComponent
       }
 
       if (this.data.hasVideo) {
+       
+        if(this.data.video) {
+
         this.form.controls.video.setValue(this.data.video.url);
+        }
+       
         this.form.controls.video.setValidators([
           Validators.required,
           Validators.pattern(VIDEO_PATTERN),
@@ -77,7 +85,9 @@ export class FormSimpleStepComponent extends StepsFormComponent
         }
       }
 
+
       this.form.controls.approvalType.setValue(this.data.approvalType);
+      
       this.form.controls.status.setValue(
         this.data.status === STATUS.ACTIVE.VALUE ? true : false
       );

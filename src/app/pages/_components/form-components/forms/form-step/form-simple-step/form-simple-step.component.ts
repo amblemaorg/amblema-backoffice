@@ -90,7 +90,7 @@ export class FormSimpleStepComponent
   }
 
   onSubmit(): void {
-    if (this.form.valid) {
+    // if (this.form.valid) {
       this.data = Object.assign({}, this.data);
 
       this.data.text = this.form.controls.text.value;
@@ -122,6 +122,8 @@ export class FormSimpleStepComponent
 
       // To send video, to be true
       if (this.data.hasVideo) {
+
+
         formData.append(
           'video',
           JSON.stringify({
@@ -151,13 +153,14 @@ export class FormSimpleStepComponent
           this.stores.dispatch(new UpdateStep(response, this.oldData));
         },
         (err: any) => {
+          console.log(err);
           this.toastrService.error(
             'Problemas al registrar',
             'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
           );
         }
       );
-    }
+    // }
   }
 
   finishRequest() {

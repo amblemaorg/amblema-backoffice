@@ -3,30 +3,30 @@ import {
   Input,
   ChangeDetectorRef,
   AfterViewInit,
-} from "@angular/core";
-import { StepsFormComponent } from "../../../steps/steps-form/steps-form.component";
-import { Store, Select } from "@ngxs/store";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
-import { LapseActivityState } from "src/app/store/lapse-activities.action";
-import { Observable, Subscription } from "rxjs";
-import { Activity } from "src/app/_models/lapse-activities.model";
-import { FormControl, Validators, FormGroup } from "@angular/forms";
-import { STATUS } from "src/app/_helpers/convention/status";
-import { VIDEO_PATTERN } from "src/app/pages/_components/form-components/shared/constant/validation-patterns-list";
-import { LapseActivitiesService } from "src/app/services/lapse-activities.service";
-import { Slider } from "src/app/_models/web/slider.model";
-import { HttpEvent, HttpEventType } from "@angular/common/http";
+} from '@angular/core';
+import { StepsFormComponent } from '../../../steps/steps-form/steps-form.component';
+import { Store, Select } from '@ngxs/store';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { LapseActivityState } from 'src/app/store/lapse-activities.action';
+import { Observable, Subscription } from 'rxjs';
+import { Activity } from 'src/app/_models/lapse-activities.model';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { STATUS } from 'src/app/_helpers/convention/status';
+import { VIDEO_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
+import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
+import { Slider } from 'src/app/_models/web/slider.model';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
-import { APPROVAL_TYPE } from "../../../../../_models/step.model";
-import { BsModalService } from "ngx-bootstrap/modal";
-import { DialogConfirmationComponent } from "src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
-import { AuthService } from "src/app/services/user/auth.service";
-import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
+import { APPROVAL_TYPE } from '../../../../../_models/step.model';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { AuthService } from 'src/app/services/user/auth.service';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
-  selector: "app-activity-form",
-  templateUrl: "./activity-form.component.html",
-  styleUrls: ["./activity-form.component.scss"],
+  selector: 'app-activity-form',
+  templateUrl: './activity-form.component.html',
+  styleUrls: ['./activity-form.component.scss'],
   providers: [BsModalService],
 })
 export class ActivityFormComponent
@@ -43,13 +43,13 @@ export class ActivityFormComponent
   formCoin: FormGroup;
 
   readonly DEVNAME_STANDARD = {
-    INITIAL_WORKSHOP: "initialworkshop",
-    AMBLE_COINS: "amblecoins",
-    LAPSE_PLANNING: "lapseplanning",
-    ANNUAL_PREPARATION: "annualpreparation",
-    ANNUAL_CONVENTION: "annualconvention",
-    MATH_OLYMPIC: "matholympic",
-    SPECIAL_SPAN_ACTIVITY: "speciallapseactivity",
+    INITIAL_WORKSHOP: 'initialworkshop',
+    AMBLE_COINS: 'amblecoins',
+    LAPSE_PLANNING: 'lapseplanning',
+    ANNUAL_PREPARATION: 'annualpreparation',
+    ANNUAL_CONVENTION: 'annualconvention',
+    MATH_OLYMPIC: 'matholympic',
+    SPECIAL_SPAN_ACTIVITY: 'speciallapseactivity',
   };
 
   data: any;
@@ -71,8 +71,8 @@ export class ActivityFormComponent
     super(store, toastr);
 
     // Toggles
-    this.form.addControl("status", new FormControl(false));
-    this.form.addControl("description", new FormControl(null));
+    this.form.addControl('status', new FormControl(false));
+    this.form.addControl('description', new FormControl(null));
 
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
@@ -132,28 +132,28 @@ export class ActivityFormComponent
 
       console.log(this.data);
 
-      formData.append("name", this.data.name);
-      formData.append("approvalType", this.data.approvalType);
+      formData.append('name', this.data.name);
+      formData.append('approvalType', this.data.approvalType);
 
-      formData.append("tag", this.data.tag);
-      formData.append("hasDate", String(this.data.hasDate));
-      formData.append("hasText", String(this.data.hasText));
-      formData.append("text", this.data.text);
+      formData.append('tag', this.data.tag);
+      formData.append('hasDate', String(this.data.hasDate));
+      formData.append('hasText', String(this.data.hasText));
+      formData.append('text', this.data.text);
 
       // To send file, to be true
       if (this.data.hasFile) {
         const isUpload: any = this.data.file;
         if (isUpload.url) {
-          formData.append("file", JSON.stringify(this.data.file));
+          formData.append('file', JSON.stringify(this.data.file));
         } else {
-          formData.append("file", this.data.file);
+          formData.append('file', this.data.file);
         }
       }
 
       // To send video, to be true
       if (this.data.hasVideo) {
         formData.append(
-          "video",
+          'video',
           JSON.stringify({
             name: Math.random().toString(),
             url: this.form.controls.video.value,
@@ -163,16 +163,16 @@ export class ActivityFormComponent
 
       // To send list, to be true
       if (this.data.hasChecklist) {
-        formData.append("checklist", JSON.stringify(this.checklist));
+        formData.append('checklist', JSON.stringify(this.checklist));
       }
 
-      formData.append("hasFile", String(this.data.hasFile));
-      formData.append("hasVideo", String(this.data.hasVideo));
-      formData.append("hasChecklist", String(this.data.hasChecklist));
-      formData.append("hasUpload", String(this.data.hasUpload));
-      formData.append("status", String(this.data.status));
+      formData.append('hasFile', String(this.data.hasFile));
+      formData.append('hasVideo', String(this.data.hasVideo));
+      formData.append('hasChecklist', String(this.data.hasChecklist));
+      formData.append('hasUpload', String(this.data.hasUpload));
+      formData.append('status', String(this.data.status));
       formData.append(
-        "description",
+        'description',
         String(this.form.controls.description.value)
       );
 
@@ -185,15 +185,15 @@ export class ActivityFormComponent
           (response: HttpEvent<any>) => {
             if (HttpEventType.Response === response.type) {
               this.toastr.updateSuccess(
-                "Actualización",
-                "Actividad actualizada"
+                'Actualización',
+                'Actividad actualizada'
               );
             }
           },
           (err: any) => {
             this.toastr.error(
-              "Problemas al registrar",
-              "Las fallas pueden ser la conexión o el nombre del paso esta dúplicado"
+              'Problemas al registrar',
+              'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
             );
           }
         );
@@ -213,7 +213,7 @@ export class ActivityFormComponent
     this.form.controls.approvalType.setValidators([]);
     this.form.updateValueAndValidity();
 
-    this.form.controls.checklist.setValue("");
+    this.form.controls.checklist.setValue('');
 
     // Prepare the data in the form
     if (this.data) {
@@ -312,35 +312,35 @@ export class ActivityFormComponent
     const formData = new FormData();
 
     formData.append(
-      "agreementFile",
+      'agreementFile',
       prepareData.agreementFile.url
         ? JSON.stringify(prepareData.agreementFile)
         : prepareData.agreementFile
     );
     formData.append(
-      "teachersMeetingFile",
+      'teachersMeetingFile',
       prepareData.teachersMeetingFile.url
         ? JSON.stringify(prepareData.teachersMeetingFile)
         : prepareData.teachersMeetingFile
     );
     formData.append(
-      "planningMeetingFile",
+      'planningMeetingFile',
       prepareData.planningMeetingFile.url
         ? JSON.stringify(prepareData.planningMeetingFile)
         : prepareData.planningMeetingFile
     );
-    formData.append("agreementDescription", prepareData.agreementDescription);
+    formData.append('agreementDescription', prepareData.agreementDescription);
 
     formData.append(
-      "planningMeetingDescription",
+      'planningMeetingDescription',
       prepareData.planningMeetingDescription
     );
     formData.append(
-      "teachersMeetingDescription",
+      'teachersMeetingDescription',
       prepareData.teachersMeetingDescription
     );
 
-    formData.append("description", prepareData.description);
+    formData.append('description', prepareData.description);
 
     this.showProgress = true;
     this.lapseActivityService
@@ -348,14 +348,14 @@ export class ActivityFormComponent
       .subscribe(
         (response) => {
           this.toastr.updateSuccess(
-            "Actualización",
-            "Taller inicial actualizado"
+            'Actualización',
+            'Taller inicial actualizado'
           );
         },
         (err: any) => {
           this.toastr.error(
-            "Problemas al registrar",
-            "Las fallas pueden ser la conexión o el nombre del paso esta dúplicado"
+            'Problemas al registrar',
+            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
           );
         }
       );
@@ -368,7 +368,7 @@ export class ActivityFormComponent
 
     if (prepareData.teachersMeetingFile) {
       formData.append(
-        "teachersMeetingFile",
+        'teachersMeetingFile',
         prepareData.teachersMeetingFile.url
           ? JSON.stringify(prepareData.teachersMeetingFile)
           : prepareData.teachersMeetingFile
@@ -376,28 +376,28 @@ export class ActivityFormComponent
     }
 
     formData.append(
-      "teachersMeetingDescription",
+      'teachersMeetingDescription',
       prepareData.teachersMeetingDescription
     );
     formData.append(
-      "piggyBankDescription",
+      'piggyBankDescription',
       prepareData.teachersMeetingDescription
     );
 
-    formData.append("description", prepareData.description);
-    formData.append("piggyBankSlider", JSON.stringify(this.sliders));
+    formData.append('description', prepareData.description);
+    formData.append('piggyBankSlider', JSON.stringify(this.sliders));
 
     this.showProgress = true;
     this.lapseActivityService
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess("Actualización", "AmbLeCoins actualizado");
+          this.toastr.updateSuccess('Actualización', 'AmbLeCoins actualizado');
         },
         (err: any) => {
           this.toastr.error(
-            "Problemas al registrar",
-            "Las fallas pueden ser la conexión o el nombre del paso esta dúplicado"
+            'Problemas al registrar',
+            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
           );
         }
       );
@@ -410,7 +410,7 @@ export class ActivityFormComponent
 
     if (prepareData.proposalFundationFile) {
       formData.append(
-        "proposalFundationFile",
+        'proposalFundationFile',
         prepareData.proposalFundationFile.url
           ? JSON.stringify(prepareData.proposalFundationFile)
           : prepareData.proposalFundationFile
@@ -418,10 +418,10 @@ export class ActivityFormComponent
     }
 
     formData.append(
-      "proposalFundationDescription",
+      'proposalFundationDescription',
       prepareData.proposalFundationDescription
     );
-    formData.append("meetingDescription", prepareData.meetingDescription);
+    formData.append('meetingDescription', prepareData.meetingDescription);
 
     this.showProgress = true;
     this.lapseActivityService
@@ -429,14 +429,14 @@ export class ActivityFormComponent
       .subscribe(
         (response) => {
           this.toastr.updateSuccess(
-            "Actualización",
-            "Planificación inicial actualizado"
+            'Actualización',
+            'Planificación inicial actualizado'
           );
         },
         (err: any) => {
           this.toastr.error(
-            "Problemas al registrar",
-            "Las fallas pueden ser la conexión o el nombre del paso esta dúplicado"
+            'Problemas al registrar',
+            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
           );
         }
       );
@@ -447,10 +447,10 @@ export class ActivityFormComponent
 
     const formData = new FormData();
 
-    formData.append("step4Description", prepareData.step4Description);
-    formData.append("step3Description", prepareData.step3Description);
-    formData.append("step2Description", prepareData.step2Description);
-    formData.append("step1Description", prepareData.step1Description);
+    formData.append('step4Description', prepareData.step4Description);
+    formData.append('step3Description', prepareData.step3Description);
+    formData.append('step2Description', prepareData.step2Description);
+    formData.append('step1Description', prepareData.step1Description);
 
     this.showProgress = true;
     this.lapseActivityService
@@ -458,8 +458,8 @@ export class ActivityFormComponent
       .subscribe(
         (response) => {
           this.toastr.updateSuccess(
-            "Actualización",
-            "Preparación anual actualizado"
+            'Actualización',
+            'Preparación anual actualizado'
           );
 
           setTimeout(() => {
@@ -469,8 +469,8 @@ export class ActivityFormComponent
         (err: any) => {
           this.showProgress = false;
           this.toastr.error(
-            "Problemas al registrar",
-            "Las fallas pueden ser la conexión o el nombre del paso esta dúplicado"
+            'Problemas al registrar',
+            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
           );
         }
       );
@@ -482,11 +482,11 @@ export class ActivityFormComponent
     this.data = Object.assign({}, this.data);
 
     formData.append(
-      "description",
+      'description',
       this.formStandard.controls.description.value
     );
 
-    formData.append("checklist", JSON.stringify(this.checklist));
+    formData.append('checklist', JSON.stringify(this.checklist));
 
     this.showProgress = true;
 
@@ -495,8 +495,8 @@ export class ActivityFormComponent
       .subscribe(
         (response) => {
           this.toastr.updateSuccess(
-            "Actualización",
-            "Convención anual actualizado"
+            'Actualización',
+            'Convención anual actualizado'
           );
 
           setTimeout(() => {
@@ -510,14 +510,14 @@ export class ActivityFormComponent
   onSubmitMathOlympic() {
     const prepareData: any = this.formStandard.value;
 
-    console.log(prepareData )
+    console.log(prepareData );
     prepareData.date = prepareData.date.toISOString();
 
     const formData = new FormData();
 
     if (prepareData.file) {
       formData.append(
-        "file",
+        'file',
         prepareData.file.url
           ? JSON.stringify(prepareData.file)
           : prepareData.file
@@ -526,17 +526,17 @@ export class ActivityFormComponent
 
     this.showProgress = true;
 
-    formData.append("description", prepareData.description);
-    formData.append("descriptionWeb",prepareData.descriptionWeb);
-    formData.append("date", prepareData.date);
+    formData.append('description', prepareData.description);
+    formData.append('descriptionWeb', prepareData.descriptionWeb);
+    formData.append('date', prepareData.date);
 
     this.lapseActivityService
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
           this.toastr.updateSuccess(
-            "Actualización",
-            "Olimpíadas matemáticas actualizado"
+            'Actualización',
+            'Olimpíadas matemáticas actualizado'
           );
 
           setTimeout(() => {
@@ -552,7 +552,7 @@ export class ActivityFormComponent
 
     this.showProgress = true;
     formData.append(
-      "description",
+      'description',
       this.formStandard.controls.description.value
     );
 
@@ -561,8 +561,8 @@ export class ActivityFormComponent
       .subscribe(
         (response) => {
           this.toastr.updateSuccess(
-            "Actualización",
-            "Actividad especia de lapso"
+            'Actualización',
+            'Actividad especia de lapso'
           );
 
           setTimeout(() => {
@@ -576,12 +576,12 @@ export class ActivityFormComponent
   onCheckList() {
     if (this.form.controls.hasChecklist.value) {
       this.APPROVAL_TYPE.push({
-        CODE: "2",
-        VALUE: "Se apueba al completar los campos",
+        CODE: '2',
+        VALUE: 'Se apueba al completar los campos',
       });
     } else {
       this.APPROVAL_TYPE = this.APPROVAL_TYPE.filter(
-        (item) => item.CODE !== "2"
+        (item) => item.CODE !== '2'
       );
     }
   }
@@ -589,13 +589,13 @@ export class ActivityFormComponent
   public onDeleteObjectiveX(index: number): void {
     const modal = this.modalX.show(
       DialogConfirmationComponent,
-      Object.assign({}, { class: "modal-dialog-centered" })
+      Object.assign({}, { class: 'modal-dialog-centered' })
     );
 
     // -- Set up modal
     (modal.content as DialogConfirmationComponent).showConfirmationModal(
-      "Eliminar objectivo",
-      "¿Desea eliminar el objectivo seleccionado?"
+      'Eliminar objectivo',
+      '¿Desea eliminar el objectivo seleccionado?'
     );
 
     this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
@@ -603,8 +603,8 @@ export class ActivityFormComponent
         if (result === true) {
           this.checklist = this.checklist.filter((value, key) => key !== index);
           this.toastr.deleteRegister(
-            "Eliminado",
-            "Se ha eliminado el objetivo de la lista"
+            'Eliminado',
+            'Se ha eliminado el objetivo de la lista'
           );
 
           (modal.content as DialogConfirmationComponent).hideConfirmationModal();

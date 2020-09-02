@@ -17,7 +17,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './form-simple-step.component.html',
   styleUrls: ['./form-simple-step.component.scss'],
 })
-export class FormSimpleStepComponent extends StepsFormComponent
+export class FormSimpleStepComponent
+  extends StepsFormComponent
   implements OnInit {
   @Input() data: Step;
 
@@ -32,17 +33,15 @@ export class FormSimpleStepComponent extends StepsFormComponent
     public stores: Store,
     public toastrService: CustomToastrService,
     protected updateStepService: StepService,
-    public modalServicesBs?: BsModalService,
-    ) {
+    public modalServicesBs?: BsModalService
+  ) {
     super(stores, toastrService);
 
     // Add new control status toggle
     this.form.addControl('status', new FormControl(false));
-
   }
 
   async ngOnInit() {
-
     this.checklist = this.data.checklist;
     this.checklist = Object.assign([], this.checklist);
 
@@ -56,7 +55,6 @@ export class FormSimpleStepComponent extends StepsFormComponent
 
     // Prepare the data in the form
     if (this.data) {
-
       if (this.data.hasText) {
         this.form.controls.text.setValue(this.data.text);
         this.form.controls.text.setValidators([Validators.required]);
@@ -64,10 +62,8 @@ export class FormSimpleStepComponent extends StepsFormComponent
       }
 
       if (this.data.hasVideo) {
-
         if (this.data.video) {
-
-        this.form.controls.video.setValue(this.data.video.url);
+          this.form.controls.video.setValue(this.data.video.url);
         }
 
         this.form.controls.video.setValidators([
@@ -80,11 +76,10 @@ export class FormSimpleStepComponent extends StepsFormComponent
       if (this.data.hasFile) {
         const isUpload: any = this.data.file;
 
-        if (isUpload.url) {
+        if (isUpload) {
           this.form.controls.file.setValue(isUpload);
         }
       }
-
 
       this.form.controls.approvalType.setValue(this.data.approvalType);
 

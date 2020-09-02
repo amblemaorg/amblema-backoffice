@@ -297,7 +297,7 @@ export class ActivityFormComponent
         date: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
         file: new FormControl(null, [Validators.required]),
-        descriptionWeb: new FormControl(null, [Validators.required])
+        webDescription: new FormControl(null, [Validators.required])
       });
     } else if (id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY) {
       this.formStandard = new FormGroup({
@@ -510,7 +510,6 @@ export class ActivityFormComponent
   onSubmitMathOlympic() {
     const prepareData: any = this.formStandard.value;
 
-    console.log(prepareData );
     prepareData.date = prepareData.date.toISOString();
 
     const formData = new FormData();
@@ -527,7 +526,7 @@ export class ActivityFormComponent
     this.showProgress = true;
 
     formData.append('description', prepareData.description);
-    formData.append('descriptionWeb', prepareData.descriptionWeb);
+    formData.append('webDescription', prepareData.webDescription);
     formData.append('date', prepareData.date);
 
     this.lapseActivityService

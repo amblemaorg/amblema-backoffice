@@ -33,7 +33,7 @@ export class GeneralsComponent implements OnInit, OnDestroy {
 
 
   this.steps$.subscribe( response => {
-    console.log( response );
+
   } );
 
   }

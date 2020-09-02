@@ -27,9 +27,10 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.scss'],
-  providers: [BsModalService]
+  providers: [BsModalService],
 })
-export class ActivityFormComponent extends StepsFormComponent
+export class ActivityFormComponent
+  extends StepsFormComponent
   implements AfterViewInit {
   @Select(LapseActivityState.selectedActivity) activity$: Observable<Activity>;
   subscription: Subscription;
@@ -37,7 +38,7 @@ export class ActivityFormComponent extends StepsFormComponent
   @Input() lapse: string;
   @Input() id: string;
 
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ACTIVITY_EDIT );
+  public canEdit = new AuthService().isAllowed(ALL_ACTIONS.ACTIVITY_EDIT);
   formStandard: FormGroup;
   formCoin: FormGroup;
 
@@ -48,7 +49,7 @@ export class ActivityFormComponent extends StepsFormComponent
     ANNUAL_PREPARATION: 'annualpreparation',
     ANNUAL_CONVENTION: 'annualconvention',
     MATH_OLYMPIC: 'matholympic',
-    SPECIAL_SPAN_ACTIVITY: 'speciallapseactivity'
+    SPECIAL_SPAN_ACTIVITY: 'speciallapseactivity',
   };
 
   data: any;
@@ -64,17 +65,14 @@ export class ActivityFormComponent extends StepsFormComponent
     private cd: ChangeDetectorRef,
     private lapseActivityService: LapseActivitiesService,
     public store: Store,
-    public toastr: CustomToastrService ,
+    public toastr: CustomToastrService,
     public modalX: BsModalService
   ) {
     super(store, toastr);
 
-
-
     // Toggles
     this.form.addControl('status', new FormControl(false));
     this.form.addControl('description', new FormControl(null));
-
 
     this.subscription = this.activity$.subscribe((response: any) => {
       this.data = response;
@@ -83,12 +81,13 @@ export class ActivityFormComponent extends StepsFormComponent
         this.createForm(this.id);
 
         if (this.formStandard) {
-
           this.formStandard.patchValue(this.data);
 
-          if (this.id === this.DEVNAME_STANDARD.MATH_OLYMPIC ) {
-            console.log( this.data );
-            this.formStandard.controls.date.setValue(new Date(this.data.date as string ));
+          if (this.id === this.DEVNAME_STANDARD.MATH_OLYMPIC) {
+            console.log(this.data);
+            this.formStandard.controls.date.setValue(
+              new Date(this.data.date as string)
+            );
           }
         }
         if (this.id === this.DEVNAME_STANDARD.AMBLE_COINS) {
@@ -120,7 +119,6 @@ export class ActivityFormComponent extends StepsFormComponent
 
   onSubmitGeneric(): void {
     if (this.form.valid) {
-
       this.data = Object.assign({}, this.data);
 
       this.data.text = this.form.controls.text.value;
@@ -132,7 +130,7 @@ export class ActivityFormComponent extends StepsFormComponent
 
       const formData = new FormData();
 
-      console.log( this.data );
+      console.log(this.data);
 
       formData.append('name', this.data.name);
       formData.append('approvalType', this.data.approvalType);
@@ -173,7 +171,10 @@ export class ActivityFormComponent extends StepsFormComponent
       formData.append('hasChecklist', String(this.data.hasChecklist));
       formData.append('hasUpload', String(this.data.hasUpload));
       formData.append('status', String(this.data.status));
-      formData.append('description', String(this.form.controls.description.value));
+      formData.append(
+        'description',
+        String(this.form.controls.description.value)
+      );
 
       this.showProgress = true;
 
@@ -259,7 +260,7 @@ export class ActivityFormComponent extends StepsFormComponent
         teachersMeetingDescription: new FormControl(null, [
           Validators.required,
         ]),
-        description: new FormControl(null, Validators.required)
+        description: new FormControl(null, Validators.required),
       });
     } else if (id === this.DEVNAME_STANDARD.AMBLE_COINS) {
       this.formStandard = new FormGroup({
@@ -269,7 +270,7 @@ export class ActivityFormComponent extends StepsFormComponent
         teachersMeetingFile: new FormControl(null, [Validators.required]),
         piggyBankSlider: new FormControl([], [Validators.required]),
         piggyBankDescription: new FormControl(null, [Validators.required]),
-        description: new FormControl(null, Validators.required)
+        description: new FormControl(null, Validators.required),
       });
     } else if (id === this.DEVNAME_STANDARD.LAPSE_PLANNING) {
       this.formStandard = new FormGroup({
@@ -289,21 +290,19 @@ export class ActivityFormComponent extends StepsFormComponent
     } else if (id === this.DEVNAME_STANDARD.ANNUAL_CONVENTION) {
       this.formStandard = new FormGroup({
         checklist: new FormControl(null, [Validators.required]),
-        description: new FormControl(null, [Validators.required])
+        description: new FormControl(null, [Validators.required]),
       });
     } else if (id === this.DEVNAME_STANDARD.MATH_OLYMPIC) {
       this.formStandard = new FormGroup({
         date: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
         file: new FormControl(null, [Validators.required]),
-
+        descriptionWeb: new FormControl(null, [Validators.required])
       });
-    } else if ( id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY ) {
-
+    } else if (id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY) {
       this.formStandard = new FormGroup({
-        description: new FormControl(null, [Validators.required])
+        description: new FormControl(null, [Validators.required]),
       });
-
     }
   }
 
@@ -341,11 +340,7 @@ export class ActivityFormComponent extends StepsFormComponent
       prepareData.teachersMeetingDescription
     );
 
-
-    formData.append(
-      'description',
-      prepareData.description
-    );
+    formData.append('description', prepareData.description);
 
     this.showProgress = true;
     this.lapseActivityService
@@ -371,12 +366,14 @@ export class ActivityFormComponent extends StepsFormComponent
 
     const formData = new FormData();
 
-    formData.append(
-      'teachersMeetingFile',
-      prepareData.teachersMeetingFile.url
-        ? JSON.stringify(prepareData.teachersMeetingFile)
-        : prepareData.teachersMeetingFile
-    );
+    if (prepareData.teachersMeetingFile) {
+      formData.append(
+        'teachersMeetingFile',
+        prepareData.teachersMeetingFile.url
+          ? JSON.stringify(prepareData.teachersMeetingFile)
+          : prepareData.teachersMeetingFile
+      );
+    }
 
     formData.append(
       'teachersMeetingDescription',
@@ -387,11 +384,7 @@ export class ActivityFormComponent extends StepsFormComponent
       prepareData.teachersMeetingDescription
     );
 
-
-    formData.append(
-      'description',
-      prepareData.description
-    );
+    formData.append('description', prepareData.description);
     formData.append('piggyBankSlider', JSON.stringify(this.sliders));
 
     this.showProgress = true;
@@ -415,12 +408,14 @@ export class ActivityFormComponent extends StepsFormComponent
 
     const formData = new FormData();
 
-    formData.append(
-      'proposalFundationFile',
-      prepareData.proposalFundationFile.url
-        ? JSON.stringify(prepareData.proposalFundationFile)
-        : prepareData.proposalFundationFile
-    );
+    if (prepareData.proposalFundationFile) {
+      formData.append(
+        'proposalFundationFile',
+        prepareData.proposalFundationFile.url
+          ? JSON.stringify(prepareData.proposalFundationFile)
+          : prepareData.proposalFundationFile
+      );
+    }
 
     formData.append(
       'proposalFundationDescription',
@@ -482,9 +477,7 @@ export class ActivityFormComponent extends StepsFormComponent
   }
 
   onSubmitAnualConvention() {
-
     const formData = new FormData();
-
 
     this.data = Object.assign({}, this.data);
 
@@ -517,18 +510,24 @@ export class ActivityFormComponent extends StepsFormComponent
   onSubmitMathOlympic() {
     const prepareData: any = this.formStandard.value;
 
+    console.log(prepareData );
     prepareData.date = prepareData.date.toISOString();
 
     const formData = new FormData();
 
-    formData.append(
-      'file',
-      prepareData.file.url ? JSON.stringify(prepareData.file) : prepareData.file
-    );
+    if (prepareData.file) {
+      formData.append(
+        'file',
+        prepareData.file.url
+          ? JSON.stringify(prepareData.file)
+          : prepareData.file
+      );
+    }
 
     this.showProgress = true;
 
     formData.append('description', prepareData.description);
+    formData.append('descriptionWeb', prepareData.descriptionWeb);
     formData.append('date', prepareData.date);
 
     this.lapseActivityService
@@ -552,8 +551,10 @@ export class ActivityFormComponent extends StepsFormComponent
     const formData = new FormData();
 
     this.showProgress = true;
-    formData.append('description', this.formStandard.controls.description.value);
-
+    formData.append(
+      'description',
+      this.formStandard.controls.description.value
+    );
 
     this.lapseActivityService
       .updateActivity(this.id, this.lapse, formData)

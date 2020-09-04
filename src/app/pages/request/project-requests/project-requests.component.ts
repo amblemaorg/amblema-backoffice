@@ -68,7 +68,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.params.subscribe((response) => {
+    this.router.params.subscribe((data) => {
+      const response = JSON.parse(data.item ? data.item : {});
       if (Object.keys(response).length) {
         this.requestSelected = response;
         setTimeout(() => {

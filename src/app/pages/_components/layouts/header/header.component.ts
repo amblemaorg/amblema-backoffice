@@ -88,7 +88,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSelectNotification(item: any, define: string): void {
-
     define = define.toString();
 
     this.popover.hide();
@@ -96,7 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     switch (define) {
       // Creation project
       case '1':
-        this.router.navigate(['/pages/requests/project-requests', item]);
+        this.router.navigate(['/pages/requests/project-requests', { item: JSON.stringify(item) }]);
 
         break;
       // Creation user

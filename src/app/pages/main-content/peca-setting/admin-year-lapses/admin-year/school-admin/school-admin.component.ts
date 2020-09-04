@@ -27,10 +27,11 @@ export class SchoolAdminComponent implements OnInit {
     EnrolledSchool[]
   >;
   @Select(SchoolYearEnrolledState.schoolYearActive) schoolActive$: Observable<
-    SchoolYearEnrolled
+    any
   >;
 
   selectedSchool: string;
+  timeOut: boolean;
 
   public canInit = new AuthService().isAllowed( ALL_ACTIONS.SCHOOL_YEAR_CREATE );
   public canEnrolled = new AuthService().isAllowed( ALL_ACTIONS.SCHOOL_YEAR_ENROLL_SCHOOL );
@@ -41,9 +42,17 @@ export class SchoolAdminComponent implements OnInit {
     private toastr: CustomToastrService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     // -- To update always --
     this.store.dispatch( new GetGeneralEnrolled() );
+
+    this.schoolActive$.subscribe( response => {
+
+      if ( response ) {
+        this.timeOut = Date.parse( response.endDate ) < Date.parse( new Date().toString() ) ? true : false;
+      }
+
+    });
   }
 
   onEnrolledSchool() {

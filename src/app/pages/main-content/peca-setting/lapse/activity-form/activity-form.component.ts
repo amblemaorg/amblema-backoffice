@@ -297,7 +297,7 @@ export class ActivityFormComponent
         date: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
         file: new FormControl(null, [Validators.required]),
-        webDescription: new FormControl(null, [Validators.required])
+        webDescription: new FormControl(null, [Validators.required]),
       });
     } else if (id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY) {
       this.formStandard = new FormGroup({
@@ -311,24 +311,33 @@ export class ActivityFormComponent
 
     const formData = new FormData();
 
-    formData.append(
-      'agreementFile',
-      prepareData.agreementFile.url
-        ? JSON.stringify(prepareData.agreementFile)
-        : prepareData.agreementFile
-    );
-    formData.append(
-      'teachersMeetingFile',
-      prepareData.teachersMeetingFile.url
-        ? JSON.stringify(prepareData.teachersMeetingFile)
-        : prepareData.teachersMeetingFile
-    );
-    formData.append(
-      'planningMeetingFile',
-      prepareData.planningMeetingFile.url
-        ? JSON.stringify(prepareData.planningMeetingFile)
-        : prepareData.planningMeetingFile
-    );
+    if (prepareData.agreementFile) {
+      formData.append(
+        'agreementFile',
+        prepareData.agreementFile.url
+          ? JSON.stringify(prepareData.agreementFile)
+          : prepareData.agreementFile
+      );
+    }
+
+    if (prepareData.teachersMeetingFile) {
+      formData.append(
+        'teachersMeetingFile',
+        prepareData.teachersMeetingFile.url
+          ? JSON.stringify(prepareData.teachersMeetingFile)
+          : prepareData.teachersMeetingFile
+      );
+    }
+
+    if (prepareData.planningMeetingFile) {
+      formData.append(
+        'planningMeetingFile',
+        prepareData.planningMeetingFile.url
+          ? JSON.stringify(prepareData.planningMeetingFile)
+          : prepareData.planningMeetingFile
+      );
+    }
+
     formData.append('agreementDescription', prepareData.agreementDescription);
 
     formData.append(

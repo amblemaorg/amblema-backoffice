@@ -13,7 +13,7 @@
         <div *ngIf="canInit" class="col-12 col-md-auto form-group">
           <button
             nbButton
-            [attr.disabled]=" timeOut ? true : null"
+            [attr.disabled]=" !timeOut ? true : null"
             status="success"
             (click)="onStartNewYearSchool()"
             class="btn btn-success col-12 col-lg-auto"

@@ -59,8 +59,7 @@ export class MenuSetUp {
 
                     response.lapse1.find((option) => {
                       if (
-                        option.status === STATUS.ACTIVE.VALUE &&
-                        option.devName !== 'initialWorkshop'
+                        option.status === STATUS.ACTIVE.VALUE
                       ) {
                         lapses.children.push({
                           title: option.name,
@@ -81,8 +80,7 @@ export class MenuSetUp {
                     response.lapse2.find((option) => {
                       // Add activity
                       if (
-                        option.status === STATUS.ACTIVE.VALUE &&
-                        option.devName !== 'initialWorkshop'
+                        option.status === STATUS.ACTIVE.VALUE
                       ) {
                         lapses.children.push({
                           title: option.name,
@@ -103,8 +101,7 @@ export class MenuSetUp {
                     response.lapse3.find((option) => {
                       // Add activity
                       if (
-                        option.status === STATUS.ACTIVE.VALUE &&
-                        option.devName !== 'initialWorkshop'
+                        option.status === STATUS.ACTIVE.VALUE
                       ) {
                         lapses.children.push({
                           title: option.name,

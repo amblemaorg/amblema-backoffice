@@ -27,7 +27,7 @@ export class SchoolYearEnrolledState implements NgxsOnInit {
     }
 
     @Selector()
-    static schoolYearActive(state: SchoolYearEnrolledModel): SchoolYearEnrolled | null {
+    static schoolYearActive(state: SchoolYearEnrolledModel): any | null {
 
         let schoolYearActive: SchoolYearEnrolled;
 
@@ -38,7 +38,6 @@ export class SchoolYearEnrolledState implements NgxsOnInit {
             }
 
         } );
-
         return schoolYearActive;
     }
 

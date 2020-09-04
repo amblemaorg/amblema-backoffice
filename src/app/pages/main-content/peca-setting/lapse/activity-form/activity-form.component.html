@@ -14,7 +14,7 @@
       "
       class="row"
     >
-      <div class="col-12">
+      <div class="col-12" *ngIf="false">
         <app-text-area-custom
           *ngIf="id === this.DEVNAME_STANDARD.INITIAL_WORKSHOP"
           [submitted]="false"
@@ -33,7 +33,7 @@
         </app-input-file>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" *ngIf="false">
         <app-text-area-custom
           [submitted]="false"
           [control]="formStandard.get('agreementDescription')"
@@ -50,7 +50,7 @@
         </app-input-file>
       </div>
 
-      <div class="col-12">
+      <div class="col-12"  *ngIf="false" >
         <app-text-area-custom
           [submitted]="false"
           [control]="formStandard.get('planningMeetingDescription')"

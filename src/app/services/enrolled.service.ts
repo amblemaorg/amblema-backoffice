@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { GeneralEnrolled } from '../_models/_enrolled/general-enrolled.model';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SchoolYearEnrolled } from '../_models/_enrolled/school-year.model';

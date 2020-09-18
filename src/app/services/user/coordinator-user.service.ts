@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { USER_TYPE } from 'src/app/_helpers/convention/user-type';
 import { Observable } from 'rxjs';
 import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 
 @Injectable({

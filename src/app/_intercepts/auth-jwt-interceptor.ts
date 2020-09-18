@@ -12,7 +12,7 @@ import { catchError, filter, take, switchMap, tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../services/user/auth.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthJWTInterceptor implements HttpInterceptor {

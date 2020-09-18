@@ -5,7 +5,7 @@ import { Select } from '@ngxs/store';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 @Component({

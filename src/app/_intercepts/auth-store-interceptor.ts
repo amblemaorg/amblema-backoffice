@@ -6,7 +6,7 @@ import {
   HttpRequest,
   HttpEventType,
 } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/user/auth.service';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';

@@ -19,7 +19,7 @@ import {
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { RequestPasswordComponent } from './request-password/request-password.component';
 
 import { AuthStoreInterceptor } from '../_intercepts/auth-store-interceptor';

@@ -22,8 +22,7 @@ services:
     container_name: build_amblema_backoffice
     image: devbinaural/angular:8.0.0
     command:
-      bash -c "npm install && ng build --prod --build-optimizer --aot && usermod -u 1018 node &&
-      chown -R node:node node_modules/ && chown -R node:node dist/"
+      bash -c "npm install && ng build --configuration=staging --build-optimizer --aot && usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
     ports:
       - 4000:4000
     volumes:

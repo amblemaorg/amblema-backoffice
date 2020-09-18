@@ -1,6 +1,24 @@
-# AmblemaBackOffice
+# Amblema BackOffice
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.3.20.
+
+## Despliegue a producción
+
+### Build docker images
+
+1. Verificar que las variables en el archivo `src/environments/environmets.prod.ts` son las correctas para producción
+
+2. Agregar credenciales de un usuario gitlab en el comando `docker login` en el archivo `build.sh` para poder subir imagenes al container registry del repositorio
+
+3. Ejecutar el script `build.sh`
+
+  NOTA: El paso 2 se puede reimplementar a través de variables de CI/CD y un pipeline
+
+### Deploy
+
+1. Agregar credenciales de un usuario gitlab en el comando `docker login` en el archivo `build.sh` para poder subir imagenes al container registry del repositorio
+
+2. Ejecutar el script `deploy.sh` en el servidor para recrear los contenedores
 
 ## Development server
 

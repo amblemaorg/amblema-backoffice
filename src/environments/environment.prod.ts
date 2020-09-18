@@ -1,8 +1,5 @@
 export const environment = {
-  production: false,
-  api: 'http://157.245.131.248:10506/', // <--- QA
-  // api: 'http://0.0.0.0:10505/',
-  // api: 'http://186.88.121.11:10505/',
-  // -- Web page Amblema --
-  web: `http://testing.binaural.com.ve:10512/`
+  production: true,
+  api: 'http://167.71.187.213/api/',
+  web: 'http://167.71.187.213/'
 };

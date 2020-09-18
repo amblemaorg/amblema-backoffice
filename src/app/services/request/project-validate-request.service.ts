@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 

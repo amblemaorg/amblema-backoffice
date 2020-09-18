@@ -46,7 +46,7 @@ import { ProjectRequestState } from '../store/request/project-requests.action';
 import { SchoolYearEnrolledState } from '../store/_enrolled/school-year-enrolled.action';
 import { GeneralEnrolledState } from '../store/_enrolled/enrolled.action';
 import { AddressState } from '../store/_address/address.action';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { ActivityStrategyState } from '../store/activity-strategy.action';
 

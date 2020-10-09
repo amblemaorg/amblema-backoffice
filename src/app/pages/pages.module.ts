@@ -57,8 +57,6 @@ import { ActivityStrategyState } from '../store/activity-strategy.action';
   ],
   imports: [
 
-
-
     // -- NGXS --
     NgxsModule.forRoot(
       [

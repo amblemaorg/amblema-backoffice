@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   
   //api: "https://amblema.org/api/",
   //web: "https://amblema.org/",

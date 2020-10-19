@@ -6,6 +6,6 @@ export const environment = {
   // -- Web page Amblema --
   //web: `https://amblema.org/`,
 
-  api: "http://157.245.131.248:10506/", 
-  web: "http://157.245.131.248:10512/", 
+   api: "http://157.245.131.248:10506/", 
+   web: "http://157.245.131.248:10512/", 
 };

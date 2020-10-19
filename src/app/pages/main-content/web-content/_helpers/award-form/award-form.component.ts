@@ -56,7 +56,7 @@ export class AwardFormComponent extends BaseTable implements TableActions {
 
     this.settings.columns = {
       title: {
-        title: 'Titulo',
+        title: 'Título',
         type: 'string',
       },
       description: {

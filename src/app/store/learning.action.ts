@@ -299,7 +299,7 @@ export class LearningState implements NgxsOnInit {
             learnings: removeItem<Learning>(learning => learning === action.payload)
         }));
 
-        this.toastr.deleteRegister('Eliminación', 'Modulo de aprendizaje eliminado');
+        this.toastr.deleteRegister('Eliminación', 'Módulo de Aprendizaje eliminado');
 
     }
 

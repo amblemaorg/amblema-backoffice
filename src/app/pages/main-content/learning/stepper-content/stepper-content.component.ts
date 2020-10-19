@@ -74,7 +74,7 @@ export class StepperContentComponent implements OnInit, OnChanges {
       this.learningService.setLearning(learning).subscribe((response: HttpEvent<any>) => {
         switch (response.type) {
           case HttpEventType.Response:
-            this.toastr.registerSuccess('Registro', 'Modulo de aprendizaje registrado correctamente.');
+            this.toastr.registerSuccess('Registro', 'Módulo de Aprendizaje registrado correctamente.');
             this.store.dispatch(new AddLearning(response.body));
             break;
         }

@@ -1,74 +1,138 @@
 <nb-accordion class="shadow-none border">
-    <nb-accordion-item [expanded]="index === 0 ? true : false">
-        <nb-accordion-item-header>
-            <nb-icon icon="trending-up-outline" class="mr-2"></nb-icon> Nivel escolar {{  index + 1 }}
-        </nb-accordion-item-header>
-        <nb-accordion-item-body>
-            <form [formGroup]="form" (ngSubmit)="onUpdateLevel()" class="row">
-                
-                <div class="col-12">
-                    <app-progress *ngIf="showProgress" (finish)="showProgress=false"></app-progress>
+  <nb-accordion-item [expanded]="index === 0 ? true : false">
+    <nb-accordion-item-header>
+      <nb-icon icon="trending-up-outline" class="mr-2"></nb-icon> Nivel escolar
+      {{ index + 1 }}
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <form [formGroup]="form" (ngSubmit)="onUpdateLevel()" class="row">
+        <div class="col-12">
+          <app-progress
+            *ngIf="showProgress"
+            (finish)="showProgress = false"
+          ></app-progress>
+        </div>
 
-                </div>
-                
-                <div class="col-12 form-group text-right" *ngIf="canEdit">
-                    <button (click)="deleteHimself()" class="col-12 col-lg-auto mr-0 mr-lg-3 mb-3 mb-lg-0" nbButton
-                        size="small" outline status="danger" type="button" nbTooltip="Eliminar tema">
-                        Eliminar nivel escolar<nb-icon icon="trash-2-outline"></nb-icon>
-                    </button>
-                    <button class="col-12 col-lg-auto" size="small" nbButton type="submit" status="primary">Guardar
-                        datos<nb-icon icon="save-outline"></nb-icon></button>
-                </div>
+        <div class="col-12 form-group text-right" *ngIf="canEdit">
+          <button
+            (click)="deleteHimself()"
+            class="col-12 col-lg-auto mr-0 mr-lg-3 mb-3 mb-lg-0"
+            nbButton
+            size="small"
+            outline
+            status="danger"
+            type="button"
+            nbTooltip="Eliminar tema"
+          >
+            Eliminar nivel escolar<nb-icon icon="trash-2-outline"></nb-icon>
+          </button>
+          <button
+            class="col-12 col-lg-auto"
+            size="small"
+            nbButton
+            type="submit"
+            status="primary"
+          >
+            Guardar datos<nb-icon icon="save-outline"></nb-icon>
+          </button>
+        </div>
 
-                <div class="col-12 form-group">
-                    <div class="alert-info border px-3 pt-2">
-                        <label class="label d-block" *ngIf="environmentalProjectSelected | async">Niveles</label>
-                        <div class="d-inline" *ngFor="let item of options">
-                            <nb-checkbox [disabled]="item.value" *ngIf="item.value" (change)="item.value=!item.value"
-                                [checked]="item.value" status="primary" class="mr-4 mb-2">{{ 
-                                item.label === '0' ? 'Prescolar' 
-                                : item.label === '1' ? 'Primer grado'
-                                : item.label === '2' ? 'Segundo grado'
-                                : item.label === '3' ? 'Tercer grado'
-                                : item.label === '4' ? 'Cuarto grado'
-                                : item.label === '5' ? 'Quinto grado'
-                                : 'Sexto grado'
-                            }}
-                            </nb-checkbox>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-12 form-group">
+          <div class="alert-info border px-3 pt-2">
+            <label
+              class="label d-block"
+              *ngIf="environmentalProjectSelected | async"
+              >Niveles</label
+            >
+            <div class="d-inline" *ngFor="let item of options">
+              <nb-checkbox
+                [disabled]="item.value"
+                *ngIf="item.value"
+                (change)="item.value = !item.value"
+                [checked]="item.value"
+                status="primary"
+                class="mr-4 mb-2"
+                >{{
+                  item.label === "0"
+                    ? "Prescolar"
+                    : item.label === "1"
+                    ? "Primer grado"
+                    : item.label === "2"
+                    ? "Segundo grado"
+                    : item.label === "3"
+                    ? "Tercer grado"
+                    : item.label === "4"
+                    ? "Cuarto grado"
+                    : item.label === "5"
+                    ? "Quinto grado"
+                    : "Sexto grado"
+                }}
+              </nb-checkbox>
+            </div>
+          </div>
+        </div>
 
-                <div class="col-12 col-lg-6">
-                    <app-datepicker-range [control]="form.get('week')" [label]="'Semanas'"></app-datepicker-range>
-                </div>
+        <div class="col-12 col-lg-6">
+          <app-datepicker-range
+            [control]="form.get('week')"
+            [label]="'Semanas'"
+          ></app-datepicker-range>
+        </div>
 
-                <div class="col-12 col-lg-6 form-group">
-                    <label class="label">Tiempo estimado de ejecución</label>
-                    <input formControlName="duration" type="text" class="form-control" fullWidth nbInput mask="00:00"
-                        placeholder="HH:MM">
-                </div>
+        <div class="col-12 col-lg-6 form-group">
+          <label class="label">Tiempo estimado de ejecución</label>
+          <input
+            formControlName="duration"
+            type="text"
+            class="form-control"
+            fullWidth
+            nbInput
+            mask="00:00"
+            placeholder="HH:MM"
+          />
+        </div>
 
-                <div class="col-12 col-lg-6">
-                    <app-list-items [list]="techniques" [title]="'Lista de técnicas'"></app-list-items>
-                </div>
+        <div class="col-12 col-lg-6">
+          <app-list-items
+            (delete)="techniques = $event"
+            [list]="techniques"
+            [title]="'Lista de técnicas'"
+          ></app-list-items>
+        </div>
 
-                <div class="col-12 col-lg-6">
-                    <app-list-items [list]="activities" [asAnObject]="true" [title]="'Lista de actividades'"></app-list-items>
-                </div>
+        <div class="col-12 col-lg-6">
+          <app-list-items
+            (delete)="activities = $event"
+            [list]="activities"
+            [asAnObject]="true"
+            [title]="'Lista de actividades'"
+          ></app-list-items>
+        </div>
 
-                <div class="col-12 col-lg-6">
-                    <app-list-items [list]="resources" [title]="'Lista de recursos'"></app-list-items>
-                </div>
+        <div class="col-12 col-lg-6">
+          <app-list-items
+            (delete)="resources = $event"
+            [list]="resources"
+            [title]="'Lista de recursos'"
+          ></app-list-items>
+        </div>
 
-                <div class="col-12 col-lg-6">
-                    <app-list-items [list]="evaluations" [title]="'Lista de evaluación'"></app-list-items>
-                </div>
+        <div class="col-12 col-lg-6">
+          <app-list-items
+            (delete)="evaluations = $event"
+            [list]="evaluations"
+            [title]="'Lista de evaluación'"
+          ></app-list-items>
+        </div>
 
-                <div class="col-12 col-lg-6">
-                    <app-list-items [list]="supportMaterial" [title]="'Lista de material de apoyo'"></app-list-items>
-                </div>
-            </form>
-        </nb-accordion-item-body>
-    </nb-accordion-item>
+        <div class="col-12 col-lg-6">
+          <app-list-items
+            (delete)="supportMaterial = $event"
+            [list]="supportMaterial"
+            [title]="'Lista de material de apoyo'"
+          ></app-list-items>
+        </div>
+      </form>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
 </nb-accordion>

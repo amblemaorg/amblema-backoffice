@@ -4,26 +4,26 @@ import {
   Input,
   OnDestroy,
   ChangeDetectorRef,
-} from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
-import { Store, Select } from '@ngxs/store';
-import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
+} from "@angular/core";
+import { Subscription, Observable } from "rxjs";
+import { Store, Select } from "@ngxs/store";
+import { EnvironmentalProjectService } from "src/app/services/environmental-project.service";
 import {
   EnvironmentalProjectState,
   EnvironmentalProjectModel,
   DeleteSchoolLevel,
   UpdateSchoolLevel,
-} from 'src/app/store/environmental-project.action';
-import { FormGroup, FormControl } from '@angular/forms';
-import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { AuthService } from 'src/app/services/user/auth.service';
-import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+} from "src/app/store/environmental-project.action";
+import { FormGroup, FormControl } from "@angular/forms";
+import { DialogConfirmationComponent } from "src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
+import { BsModalService } from "ngx-bootstrap/modal";
+import { AuthService } from "src/app/services/user/auth.service";
+import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 
 @Component({
-  selector: 'app-levels-form',
-  templateUrl: './levels-form.component.html',
-  styleUrls: ['./levels-form.component.scss'],
+  selector: "app-levels-form",
+  templateUrl: "./levels-form.component.html",
+  styleUrls: ["./levels-form.component.scss"],
 })
 export class LevelsFormComponent implements OnInit, OnDestroy {
   @Select(EnvironmentalProjectState.environmentalProjectStorable)
@@ -38,9 +38,9 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT );
-
-
+  public canEdit = new AuthService().isAllowed(
+    ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT
+  );
 
   target = new Array<string>();
   techniques = new Array<string>();
@@ -107,14 +107,14 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
   deleteHimself(): void {
     const modal = this.modalServicesBs.show(
       DialogConfirmationComponent,
-      Object.assign({}, { class: 'modal-dialog-centered' })
+      Object.assign({}, { class: "modal-dialog-centered" })
     );
 
     // -- Set up modal
     (modal.content as DialogConfirmationComponent).showConfirmationModal(
-      'Eliminar nivel escolar',
-      '¿Desea eliminar nivel escolar seleccionado?',
-      'Verificar el tema asociado antes de eliminar'
+      "Eliminar nivel escolar",
+      "¿Desea eliminar nivel escolar seleccionado?",
+      "Verificar el tema asociado antes de eliminar"
     );
 
     this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
@@ -139,7 +139,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   async onUpdateLevel() {
     this.showProgress = true;
-
+    
     setTimeout(() => {
       this.subscription = this.store
         .dispatch(
@@ -162,9 +162,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
           this.subscription = this.storable$.subscribe((value) => {
             this.subscription = this.environmentalProjectService
               .updateEnvironmentalProject(value)
-              .subscribe((response) => {
-                // -- Successfully mock delete topic --
-              });
+              .subscribe((response) => {});
           });
         });
     });

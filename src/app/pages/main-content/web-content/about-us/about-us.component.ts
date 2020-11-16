@@ -118,6 +118,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
         }
 
       }, (err: any) => {
+        console.log(err)
         this.showProgress = false;
 
         this.toastr.error('Error', 'No se ha completado el registro.');

@@ -1,27 +1,17 @@
-import {
-  Component,
-  OnInit,
-  DoCheck,
-  AfterViewChecked,
-  AfterContentChecked,
-  AfterViewInit,
-  OnChanges,
-  ElementRef,
-} from '@angular/core';
-import { InformationDetailsComponent } from '../information-details/information-details.component';
-import { AuthService } from 'src/app/services/user/auth.service';
-import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
-import { ChartAverage } from 'src/app/pages/report/_shared/_model/average-graph.model';
-import { ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
-import { InformationRequestService } from 'src/app/services/request/information-request.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Store } from '@ngxs/store';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { Component, ElementRef } from "@angular/core";
+import { InformationDetailsComponent } from "../information-details/information-details.component";
+import { AuthService } from "src/app/services/user/auth.service";
+import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
+import { ChartDataSets } from "chart.js";
+import { Label } from "ng2-charts";
+import { InformationRequestService } from "src/app/services/request/information-request.service";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { Store } from "@ngxs/store";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
 
 @Component({
-  selector: 'app-yearbook-details',
-  templateUrl: './yearbook-details.component.html',
+  selector: "app-yearbook-details",
+  templateUrl: "./yearbook-details.component.html",
   styleUrls: [`./yearbook-details.component.scss`],
 })
 export class YearbookDetailsComponent extends InformationDetailsComponent {
@@ -33,19 +23,19 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
   dataLogicLapseOne: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Lógica',
+      label: "Diagnóstico - Lógica",
     },
   ];
   dataMathLapseOne: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Matemáticas',
+      label: "Diagnóstico - Matemáticas",
     },
   ];
   dataReadingLapseOne: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Lectura',
+      label: "Diagnóstico - Lectura",
     },
   ];
   labelLapseOne: Label[] = [];
@@ -53,43 +43,42 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
   dataLogicLapseTwo: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Lógica',
+      label: "Diagnóstico - Lógica",
     },
   ];
   dataMathLapseTwo: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Matemáticas',
+      label: "Diagnóstico - Matemáticas",
     },
   ];
   dataReadingLapseTwo: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Lectura',
+      label: "Diagnóstico - Lectura",
     },
   ];
 
   dataLogicLapseThree: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Lógica',
+      label: "Diagnóstico - Lógica",
     },
   ];
   dataMathLapseThree: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Matemáticas',
+      label: "Diagnóstico - Matemáticas",
     },
   ];
   dataReadingLapseThree: ChartDataSets[] = [
     {
       data: [],
-      label: 'Diagnóstico - Lectura',
+      label: "Diagnóstico - Lectura",
     },
   ];
 
   constructor(
-
     public bsModalRef?: BsModalRef,
     public modalService?: BsModalService,
     public elem?: ElementRef,
@@ -102,7 +91,6 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
       if (this.data) {
         this.fillChart(this.data.detail.sections);
       }
-      console.log(this.data);
     }, 100);
   }
 
@@ -130,7 +118,6 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
       this.dataReadingLapseTwo[0].data.push(
         element.diagnostics.lapse2.wordsPerMinIndex
       );
-
       this.dataLogicLapseThree[0].data.push(
         element.diagnostics.lapse3.operationsPerMinIndex
       );

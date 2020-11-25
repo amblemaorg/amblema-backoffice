@@ -1,22 +1,20 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
-import { Observable, Subscription } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
-import { InformationRequestService } from 'src/app/services/request/information-request.service';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { Component, OnInit, OnDestroy, ElementRef } from "@angular/core";
+import { Observable, Subscription } from "rxjs";
+import { Select, Store } from "@ngxs/store";
+import { InformationRequestService } from "src/app/services/request/information-request.service";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
 import {
   RequestContentState,
   UpdateRequestContent,
-} from 'src/app/store/request/request-content-approval.action';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
-import { AuthService } from 'src/app/services/user/auth.service';
+} from "src/app/store/request/request-content-approval.action";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
+import { AuthService } from "src/app/services/user/auth.service";
 
 @Component({
-  selector: 'app-information-details',
-  templateUrl: './information-details.component.html',
-  styleUrls: ['./information-details.component.scss'],
+  selector: "app-information-details",
+  templateUrl: "./information-details.component.html",
+  styleUrls: ["./information-details.component.scss"],
 })
 export class InformationDetailsComponent implements OnInit, OnDestroy {
   @Select(RequestContentState.selectedContentRequest) data$: Observable<{
@@ -25,12 +23,14 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   data: any;
-  statusSelected = '2';
+  statusSelected = "2";
   confirmAction = true;
   comment;
 
   public showProgress = false;
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT );
+  public canEdit = new AuthService().isAllowed(
+    ALL_ACTIONS.REQUEST_CONTENT_APPROVAL_EDIT
+  );
 
   constructor(
     public bsModalRef?: BsModalRef,
@@ -39,14 +39,10 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
     public serviceRequestStepApproval?: InformationRequestService,
     public store?: Store,
     public toastr?: CustomToastrService
-  ) {
-
-
-  }
+  ) {}
 
   ngOnInit() {
     this.subscription = this.data$.subscribe((response) => {
-
       this.data = response;
     });
   }
@@ -61,7 +57,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
     this.bsModalRef.hide();
   }
 
-  onApprovedRequest( ) {
+  onApprovedRequest() {
     this.showProgress = true;
 
     this.subscription = this.serviceRequestStepApproval
@@ -70,31 +66,23 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
         status: this.statusSelected,
         comments: this.comment,
       })
-      .subscribe((resp: any) => {
-
-        console.log(`-- Respuesta en la solicitud de informacion`);
-        console.log( resp );
-
-        setTimeout(() => {
-          this.store.dispatch(
-            new UpdateRequestContent({
-              ...this.data,
-              status: this.statusSelected,
-              comments: this.comment,
-            })
-          );
-          this.toastr.updateSuccess(
-            'Estatus actualizado',
-            'Se ha cambiado el estatus de la solicitud'
-          );
-        }, 2500);
-      }, err => {
-
-        console.log(this.data);
-
-
-        console.log('se ha imprimido el error');
-        console.log( err );
-      });
+      .subscribe(
+        (resp: any) => {
+          setTimeout(() => {
+            this.store.dispatch(
+              new UpdateRequestContent({
+                ...this.data,
+                status: this.statusSelected,
+                comments: this.comment,
+              })
+            );
+            this.toastr.updateSuccess(
+              "Estatus actualizado",
+              "Se ha cambiado el estatus de la solicitud"
+            );
+          }, 2500);
+        },
+        (err) => {}
+      );
   }
 }

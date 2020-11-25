@@ -1,36 +1,35 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { RequestsValidateInformationRoutingModule } from './requests-validate-information-routing.module';
-import { RequestsValidateInformationComponent } from './requests-validate-information.component';
+import { RequestsValidateInformationRoutingModule } from "./requests-validate-information-routing.module";
+import { RequestsValidateInformationComponent } from "./requests-validate-information.component";
 import {
   NbCardModule,
   NbDialogModule,
   NbButtonModule,
   NbAlertModule,
   NbInputModule,
-} from '@nebular/theme';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { InformationDetailsComponent } from './information-details/information-details.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { InitialWorkshopDetailsComponent } from './initial-workshop-details/initial-workshop-details.component';
+} from "@nebular/theme";
+import { Ng2SmartTableModule } from "ng2-smart-table";
+import { InformationDetailsComponent } from "./information-details/information-details.component";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { InitialWorkshopDetailsComponent } from "./initial-workshop-details/initial-workshop-details.component";
 
 // Import the library
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CarouselModule } from "ngx-owl-carousel-o";
 // Needs to import the BrowserAnimationsModule
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivityDetailsComponent } from './activity-details/activity-details.component';
-import { SliderDetailsComponent } from './slider-details/slider-details.component';
-import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
-import { ProgressModule } from '../../_components/shared/progress/progress.module';
-import { SpecialActivityDetailsComponent } from './special-activity-details/special-activity-details.component';
-import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { SpanPlanningComponent } from './span-planning/span-planning.component';
-import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-school-details.component';
-import { GraphicReportModule } from '../../report/_shared/graphic-report/graphic-report.module';
-import { GraphicBarComponent } from './_shared/graphic-bar/graphic-bar.component';
-import { ChartsModule } from 'ng2-charts';
+import { ActivityDetailsComponent } from "./activity-details/activity-details.component";
+import { SliderDetailsComponent } from "./slider-details/slider-details.component";
+import { TestimonyDetailsComponent } from "./testimony-details/testimony-details.component";
+import { ProgressModule } from "../../_components/shared/progress/progress.module";
+import { SpecialActivityDetailsComponent } from "./special-activity-details/special-activity-details.component";
+import { YearbookDetailsComponent } from "./yearbook-details/yearbook-details.component";
+import { ModalModule } from "ngx-bootstrap/modal";
+import { SpanPlanningComponent } from "./span-planning/span-planning.component";
+import { PhotosSchoolDetailsComponent } from "./photos-school-details/photos-school-details.component";
+
+import { GraphicBarComponent } from "./_shared/graphic-bar/graphic-bar.component";
+import { ChartsModule } from "ng2-charts";
 
 @NgModule({
   entryComponents: [
@@ -42,7 +41,7 @@ import { ChartsModule } from 'ng2-charts';
     SpanPlanningComponent,
     InitialWorkshopDetailsComponent,
     PhotosSchoolDetailsComponent,
-    SpecialActivityDetailsComponent
+    SpecialActivityDetailsComponent,
   ],
   declarations: [
     RequestsValidateInformationComponent,
@@ -71,7 +70,8 @@ import { ChartsModule } from 'ng2-charts';
     NbInputModule,
     RequestsValidateInformationRoutingModule,
     NbDialogModule.forChild(),
-    ChartsModule
+
+    ChartsModule,
   ],
 })
 export class RequestsValidateInformationModule {}

@@ -109,7 +109,7 @@ export class InputFileComponent
 
     // Get file's size on bytes, convert to Kb
     const size = event[0].size / 1000;
-    
+
     if (size <= 1024) {
       this.control.setValue(event[0] as File);
       this.nameFile = event[0].name;

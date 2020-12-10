@@ -111,6 +111,9 @@ export class ActivitiesFormComponent extends StepsFormComponent
           }
         },
         (err: any) => {
+
+          console.log( err )
+
           this.toastr.error(
             'Problemas al registrar',
             'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'

@@ -39,6 +39,7 @@ export class SelectedSchoolUser {
     constructor(public payload: SchoolUser) { }
 }
 
+// TODO: Add Angular decorator.
 @State<SchoolUserModel>({
     name: 'schooluser',
     defaults: {

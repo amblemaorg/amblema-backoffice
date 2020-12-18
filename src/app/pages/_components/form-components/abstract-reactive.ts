@@ -1,7 +1,8 @@
-import { Input, DoCheck } from '@angular/core';
+import { Input, DoCheck, Directive } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { MESSAGES } from './shared/constant/validation-messages-list';
 
+@Directive()
 export abstract class AbstractReactive implements DoCheck {
 
     /**

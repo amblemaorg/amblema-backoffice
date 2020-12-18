@@ -1,6 +1,8 @@
 import { BaseForm } from './base-form';
 import { FormControl } from '@angular/forms';
+import { Directive } from "@angular/core";
 
+@Directive()
 export abstract class DetailsForm extends BaseForm {
     constructor(who?: string) {
         super(who);

@@ -39,6 +39,7 @@ export class SelectedCoordinatorUser {
     constructor(public payload: CoordinatorUser) { }
 }
 
+// TODO: Add Angular decorator.
 @State<CoordinatorUserModel>({
     name: 'coordinatoruser',
     defaults: {

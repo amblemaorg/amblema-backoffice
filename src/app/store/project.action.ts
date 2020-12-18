@@ -42,6 +42,7 @@ export class ClearProject {
     constructor( ) {}
 }
 
+// TODO: Add Angular decorator.
 @State<ProjectStateModel>({
     name: 'projects',
     defaults: {

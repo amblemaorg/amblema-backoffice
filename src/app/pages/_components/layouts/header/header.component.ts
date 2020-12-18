@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   notifications = new Array<any>();
 
-  @ViewChild(NbPopoverDirective, { static: false }) popover: NbPopoverDirective;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
 
   constructor(
     private router: Router,

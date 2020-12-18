@@ -42,6 +42,7 @@ export class DeleteAdminUser {
   constructor(public payload: AdminUser) {}
 }
 
+// TODO: Add Angular decorator.
 @State<AdminUserModel>({
   name: 'adminuser',
   defaults: {

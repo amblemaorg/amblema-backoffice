@@ -101,6 +101,7 @@ export class UpdateTopic {
   constructor(public topic: Topic, public indexTopic: number) {}
 }
 
+// TODO: Add Angular decorator.
 @State<EnvironmentalProjectModel>({
   name: "environmentalproject",
   defaults: {

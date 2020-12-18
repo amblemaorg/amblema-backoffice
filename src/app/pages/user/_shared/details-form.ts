@@ -1,6 +1,6 @@
 import { BaseForm } from './base-form';
 import { FormControl } from '@angular/forms';
-import { Directive } from "@angular/core";
+import { Directive } from '@angular/core';
 
 @Directive()
 export abstract class DetailsForm extends BaseForm {

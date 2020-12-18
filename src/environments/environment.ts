@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   // api: "https://amblema.org/api/",
   // web: "https://amblema.org/",
 
@@ -11,8 +11,8 @@ export const environment = {
   // api: 'http://186.88.121.11:10505/',
   // -- Web page Amblema --
 
-  api: "http://157.245.131.248:10506/",
-  web: "http://157.245.131.248:10512/",
+  api: 'http://157.245.131.248:10506/',
+  web: 'http://157.245.131.248:10512/',
 
 };
 

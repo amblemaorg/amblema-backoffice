@@ -109,11 +109,11 @@ export class GeoMapComponent implements OnInit, OnChanges, AfterViewInit {
                       },
                       (results, status) => {
                         if (
-                          status === google.maps.GeocoderStatus.OK 
+                          status === google.maps.GeocoderStatus.OK
                           && (!this.latitude || !this.longitude)
                         ) {
                           this.latitude = results[0].geometry.location.lat();
-                          this.longitude = results[0].geometry.location.lng()
+                          this.longitude = results[0].geometry.location.lng();
                           this.zoom = 8;
                         }
                       }

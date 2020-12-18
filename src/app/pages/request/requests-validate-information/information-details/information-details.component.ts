@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy, ElementRef } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
-import { Select, Store } from "@ngxs/store";
-import { InformationRequestService } from "src/app/services/request/information-request.service";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { InformationRequestService } from 'src/app/services/request/information-request.service';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import {
   RequestContentState,
   UpdateRequestContent,
-} from "src/app/store/request/request-content-approval.action";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
-import { AuthService } from "src/app/services/user/auth.service";
+} from 'src/app/store/request/request-content-approval.action';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+import { AuthService } from 'src/app/services/user/auth.service';
 
 @Component({
-  selector: "app-information-details",
-  templateUrl: "./information-details.component.html",
-  styleUrls: ["./information-details.component.scss"],
+  selector: 'app-information-details',
+  templateUrl: './information-details.component.html',
+  styleUrls: ['./information-details.component.scss'],
 })
 export class InformationDetailsComponent implements OnInit, OnDestroy {
   @Select(RequestContentState.selectedContentRequest) data$: Observable<{
@@ -23,7 +23,7 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   data: any;
-  statusSelected = "2";
+  statusSelected = '2';
   confirmAction = true;
   comment;
 
@@ -77,8 +77,8 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
               })
             );
             this.toastr.updateSuccess(
-              "Estatus actualizado",
-              "Se ha cambiado el estatus de la solicitud"
+              'Estatus actualizado',
+              'Se ha cambiado el estatus de la solicitud'
             );
           }, 2500);
         },

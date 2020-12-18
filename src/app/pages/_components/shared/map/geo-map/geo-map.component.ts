@@ -46,7 +46,7 @@ export class GeoMapComponent implements OnInit, OnChanges, AfterViewInit {
   address: string;
   private geoCoder;
 
-  @ViewChild('search', { static: false })
+  @ViewChild('search')
   public searchElementRef: ElementRef;
 
   labelState: string;

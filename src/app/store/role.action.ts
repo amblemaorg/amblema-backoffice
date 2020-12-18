@@ -5,7 +5,6 @@ import {
   Selector,
   NgxsOnInit,
   Store,
-  Select,
   createSelector,
 } from '@ngxs/store';
 import { Role, Permission, ActionRole } from '../_models/permission.model';
@@ -14,7 +13,8 @@ import { PermissionService } from '../services/permission.service';
 import { Utility } from '../_helpers/utility';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 import { AuthService } from '../services/user/auth.service';
-import { ALL_ACTIONS } from './_shader/all-actions';
+
+import { Injectable } from '@angular/core';
 
 export interface RoleStateModel {
   role: Role;
@@ -89,6 +89,8 @@ export class SaveActionsLoggedUser {
     actionsLoggedUser: [],
   },
 })
+
+@Injectable()
 export class RolesState implements NgxsOnInit {
   @Selector()
   static roles(state: RoleStateModel): Role[] | null {

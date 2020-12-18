@@ -3,6 +3,7 @@ import { State, Selector, NgxsOnInit, StateContext, Action } from '@ngxs/store';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
+import { Injectable } from '@angular/core';
 
 export interface RequestContentModel {
   requestsContent: RequestContent[];
@@ -34,6 +35,7 @@ export class DeleteRequestContent {
     requestsContent: [],
   },
 })
+@Injectable()
 export class RequestContentState implements NgxsOnInit {
   @Selector()
   static requestsContent(

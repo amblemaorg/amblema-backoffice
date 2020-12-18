@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { InputEmailComponent } from './input-email.component';
 import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ describe('InputEmailComponent', () => {
   let component: InputEmailComponent;
   let fixture: ComponentFixture<InputEmailComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
           InputEmailComponent

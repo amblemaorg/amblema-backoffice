@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   // api: "https://amblema.org/api/",
   // web: "https://amblema.org/",
 
@@ -13,6 +13,7 @@ export const environment = {
 
   api: "http://157.245.131.248:10506/",
   web: "http://157.245.131.248:10512/",
+
 };
 
 /*

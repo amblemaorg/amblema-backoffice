@@ -4,6 +4,7 @@ import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
+import { Injectable } from '@angular/core';
 
 export interface SponsorUserModel {
     sponsorUser: SponsorUser;
@@ -67,6 +68,7 @@ export class DeleteSponsorUser {
         sponsorUsers: []
     }
 })
+@Injectable()
 export class SponsorUserState implements NgxsOnInit {
 
     @Selector()

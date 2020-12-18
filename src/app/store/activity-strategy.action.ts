@@ -3,6 +3,7 @@ import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
 import { ActivityStrategyService } from '../services/activity-strategy.service';
 import { Subscription } from 'rxjs';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { Injectable } from '@angular/core';
 
 export interface ModelActivityStrategy {
   environmentActivities: Slider[];
@@ -91,6 +92,7 @@ export class DeleteSliderToActivityStrategy {
     mathActivities: [],
   },
 })
+@Injectable()
 export class ActivityStrategyState implements NgxsOnInit {
   subscription: Subscription;
 

@@ -1,5 +1,6 @@
-import { Input, Output } from '@angular/core';
+import { Input, Output, Directive } from '@angular/core';
 
+@Directive()
 export abstract class AbstractModalComponent {
 
     /**

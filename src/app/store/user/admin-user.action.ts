@@ -1,12 +1,11 @@
-import { State, NgxsOnInit, Action, StateContext, Selector, NgxsAfterBootstrap } from '@ngxs/store';
+import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
 import { Utility } from 'src/app/_helpers/utility';
 import { append, patch, removeItem, updateItem } from '@ngxs/store/operators';
 import { Subscription } from 'rxjs';
-import { OnDestroy } from '@angular/core';
-import { NgxsBootstrapper } from '@ngxs/store/internals';
+import { Injectable, OnDestroy } from '@angular/core';
 
 // -- State interface --
 
@@ -67,6 +66,7 @@ export class DeleteAdminUser {
     adminUsers: [],
   },
 })
+@Injectable()
 export class AdminUserState implements NgxsOnInit, OnDestroy {
   subscription: Subscription;
 

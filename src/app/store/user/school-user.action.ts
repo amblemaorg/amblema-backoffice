@@ -5,7 +5,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 import { Subscription } from 'rxjs';
-import { OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 export interface SchoolUserModel {
     schoolUser: SchoolUser;
@@ -86,6 +86,7 @@ export class SelectedSchoolUser {
         schoolUsers: []
     }
 })
+@Injectable()
 export class SchoolUserState implements NgxsOnInit, OnDestroy {
 
     subscription: Subscription;

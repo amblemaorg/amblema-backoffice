@@ -3,6 +3,7 @@ import { Step } from '../_models/step.model';
 import { StepService } from '../services/step.service';
 import { patch, removeItem, append, updateItem } from '@ngxs/store/operators';
 import { KIND_STEP } from '../pages/main-content/steps/_shared/shared';
+import { Injectable } from '@angular/core';
 
 interface StepStateModel {
     step: Step;
@@ -63,7 +64,7 @@ export class UpdateStep {
         steps: []
     }
 })
-
+@Injectable()
 export class StepState implements NgxsOnInit {
 
     @Selector()

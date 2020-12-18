@@ -112,7 +112,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
         },
         (err: any) => {
 
-          console.log( err )
+          console.log( err );
 
           this.toastr.error(
             'Problemas al registrar',

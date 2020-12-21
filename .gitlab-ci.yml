@@ -11,9 +11,10 @@ variables:
   CONTAINER_SUPPORT: "amblema-backoffice-support"
   CONTAINER_SERVER: "nginx-amblema"
 
-build-image:
-  stage: building
-  tags: amblema
+building:
+  stage: build-image
+  tags: 
+    - amblema
   script:
     - docker build -f deploy.Dockerfile -t angular:amblema-backoffice .
     - docker run --name $CONTAINER_RUN -v ${PWD}:/app -v /app/node_modules angular:amblema-backoffice
@@ -21,18 +22,20 @@ build-image:
     - master
     - support
 
-build:
-  stage: building-app
-  tags: amblema
+building-app:
+  stage: build
+  tags: 
+    - amblema
   script:
     - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:prod"
   only:
     - master
     - support
 
-cleanup:
-  stage: cleaning
-  tags: amblema
+cleaning:
+  stage: cleanup
+  tags: 
+    - amblema
   script:
     - docker container rm $CONTAINER_RUN --force
     - docker rmi angular:amblema-backoffice --force
@@ -41,9 +44,10 @@ cleanup:
     - master
     - support
 
-deploy-support:
-  stage: deploying_support
-  tags: amblema
+deploying_support:
+  stage: deploy-support
+  tags: 
+    - amblema
   script:
     - if [ "$(docker ps -q -f name=$CONTAINER_SUPPORT)" ]; then
     -   echo "container exist"

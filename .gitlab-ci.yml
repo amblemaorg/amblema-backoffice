@@ -1,114 +1,122 @@
 stages:
   - cleanup
-  - build
   - test
-  - code-quality
-  - performance
-  - review # <-- SCRIPT AUTO DEVOPS
+  - build
   - deploy
-  - staging
-  - production # <-- CONDITIONAL
 
-variables:
-  CONTAINER_RUN: "running_amblema_backoffice"
-  CONTAINER_TEST: "test_amblema_backoffice"
-  CONTAINER_BUILD: "build_amblema_backoffice"
-  CONTAINER_SERVER: "nginx-amblema"
-      
-  # PATH TO STAGING
-  PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
   
-before_script:
-  - cd $PATH_PROJECT_STAGING
-  
-  - docker-compose down
-  # TURN ON SERVER
-  - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
-  -   docker-compose up -d linking_amblema_nginx
-  - fi
 
-  # TURN ON CONTAINER
-  - if [ ! "$(docker ps -q -f name=$CONTAINER_RUN)" ]; then
-  -   docker-compose up -d run_amblema_backoffice
-  - fi
+  # stages:
+#   - cleanup
+#   - build
+#   - test
+#   - code-quality
+#   - performance
+#   - review # <-- SCRIPT AUTO DEVOPS
+#   - deploy
+#   - staging
+#   - production # <-- CONDITIONAL
 
-# PREPARE ENVIROMENT
+# variables:
+#   CONTAINER_RUN: "running_amblema_backoffice"
+#   CONTAINER_TEST: "test_amblema_backoffice"
+#   CONTAINER_BUILD: "build_amblema_backoffice"
+#   CONTAINER_SERVER: "nginx-amblema"
 
-update-environment: 
-  stage: cleanup
-  script:
-      - git config user.email "franklin@binauraldev.com"
-      - git config user.name "franklinp"
-      - git stash
-      - git pull $CI_REPOSITORY_URL master
-  tags:
-      - amblema
-  only:
-      - master
+#   # PATH TO STAGING
+#   PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
 
-# linting:
+# before_script:
+#   - cd $PATH_PROJECT_STAGING
+
+#   - docker-compose down
+#   # TURN ON SERVER
+#   - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
+#   -   docker-compose up -d linking_amblema_nginx
+#   - fi
+
+#   # TURN ON CONTAINER
+#   - if [ ! "$(docker ps -q -f name=$CONTAINER_RUN)" ]; then
+#   -   docker-compose up -d run_amblema_backoffice
+#   - fi
+
+# # PREPARE ENVIROMENT
+
+# update-environment:
 #   stage: cleanup
 #   script:
-#       - docker exec $CONTAINER_RUN ng lint --fix
-#   only:
-#       - master
-
-# BUILD
-
-build:
-  stage: build
-  script:
-      - docker-compose up build_amblema_backoffice
-      - docker restart $CONTAINER_SERVER
-  tags: 
-      - amblema
-  only:
-      - master
-
-# TEST
-
-run-tests:
-  stage: test
-  script: 
-      - docker exec $CONTAINER_RUN npm rebuild
-      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadless --watch=false
-  tags: 
-      - amblema
-  only:
-      - master
-
-# coverage: 
-#   stage: test
-#   script: 
-#       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
-#   artifacts:
-#       paths:
-#           - coverage/Amblema-BackOffice/
-#       expire_in: 7days
-#   tags: 
+#       - git config user.email "franklin@binauraldev.com"
+#       - git config user.name "franklinp"
+#       - git stash
+#       - git pull $CI_REPOSITORY_URL master
+#   tags:
 #       - amblema
 #   only:
 #       - master
 
-# DEPLOY
+# # linting:
+# #   stage: cleanup
+# #   script:
+# #       - docker exec $CONTAINER_RUN ng lint --fix
+# #   only:
+# #       - master
 
-linking:
-  stage: deploy
-  script:
-      - docker restart $CONTAINER_SERVER
-  tags: 
-      - amblema
-  only:
-      - master
+# # BUILD
 
-# STAGING
+# build:
+#   stage: build
+#   script:
+#       - docker-compose up build_amblema_backoffice
+#       - docker restart $CONTAINER_SERVER
+#   tags:
+#       - amblema
+#   only:
+#       - master
 
-staging:
-  stage: staging
-  script: 
-      - docker container stop $CONTAINER_RUN
-      - docker container rm $CONTAINER_RUN 
-  tags:
-      - amblema
-  only: 
-      - master
+# # TEST
+
+# run-tests:
+#   stage: test
+#   script:
+#       - docker exec $CONTAINER_RUN npm rebuild
+#       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadless --watch=false
+#   tags:
+#       - amblema
+#   only:
+#       - master
+
+# # coverage:
+# #   stage: test
+# #   script:
+# #       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
+# #   artifacts:
+# #       paths:
+# #           - coverage/Amblema-BackOffice/
+# #       expire_in: 7days
+# #   tags:
+# #       - amblema
+# #   only:
+# #       - master
+
+# # DEPLOY
+
+# linking:
+#   stage: deploy
+#   script:
+#       - docker restart $CONTAINER_SERVER
+#   tags:
+#       - amblema
+#   only:
+#       - master
+
+# # STAGING
+
+# staging:
+#   stage: staging
+#   script:
+#       - docker container stop $CONTAINER_RUN
+#       - docker container rm $CONTAINER_RUN
+#   tags:
+#       - amblema
+#   only:
+#       - master

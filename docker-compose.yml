@@ -1,64 +1,48 @@
-version: "3.4"
+version: "3.7"
 
 services:
-  # RUN
+  # LOCAL DEV
   run_amblema_backoffice:
-    container_name: running_amblema_backoffice
-    image: devbinaural/angular:8.0.0
-    deploy:
-      resources:
-        limits:
-          memory: 2GB
-    ports:
-      - 4200:4200
+    image: angular:dev
+    container_name: amblema-backoffice-dev
+    command: bash -c "npm install && ng serve --host 0.0.0.0"
     volumes:
-      - .:/app
-    networks:
-      - amblema_net
-
-  # BUILD
-  build_amblema_backoffice:
-    container_name: build_amblema_backoffice
-    image: devbinaural/angular:8.0.0
-    command:
-      bash -c "npm install && ng build --configuration=staging --build-optimizer --aot && usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
+      - "${PWD}:/app"
     ports:
-      - 4000:4000
-    volumes:
-      - .:/app
+      - "4200:4200"
     networks:
       - amblema_net
 
   # UNIT TEST
   test_amblema_backoffice:
-    container_name: test_amblema_backoffice
-    image: devbinaural/angular:8.0.0
+    image: angular:dev
+    container_name: amblema-backoffice-test
     command: bash -c "npm install && ng test --browsers ChromeHeadless --watch=false"
-    #command: bash -c "wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_79.0.3945.88-1_amd64.deb && dpkg -i google-chrome-stable_79.0.3945.88-1_amd64.deb && npm install && ng test --browsers ChromeHeadless --watch=false && rm -rf google-chrome-stable_79.0.3945.88-1_amd64.deb"
-
-    ports:
-      - 4200:4200
-    deploy:
-      resources:
-        limits:
-          memory: 2GB
-    volumes:
-      - .:/app
     networks:
       - amblema_net
 
-  # LINKING NGINX
-  linking_amblema_nginx:
-    container_name: nginx-amblema
+  # BUILD
+  build_amblema_backoffice:
+    image: angular:dev
+    container_name: amblema-backoffice-build
+    command: bash -c "npm run build:prod && usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
+    volumes:
+      - "${PWD}:/app"
+      - "/app/node_modules"
+    ports:
+      - "4200:4200"
+    networks:
+      - amblema_net
+
+  # NGINX
+  nginx_amblema:
     image: devbinaural/nginx
+    container_name: nginx-amblema
+    volumes:
+      - "./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/"
+      - "./server/:/etc/nginx/"
     ports:
       - 10502:10502
-    volumes:
-      # SHARE THE BUILT PROJECTS
-      - ./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/
-
-      # SERVER FILES CONFIGURATION
-      - ./server/:/etc/nginx/
     networks:
       - amblema_net
 

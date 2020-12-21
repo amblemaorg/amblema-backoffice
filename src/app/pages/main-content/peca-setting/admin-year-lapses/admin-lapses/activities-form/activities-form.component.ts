@@ -7,21 +7,22 @@ import {
   AfterContentChecked,
   DoCheck,
   OnDestroy,
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/steps-form.component';
-import { Store } from '@ngxs/store';
-import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
-import { AddLapseActivity } from 'src/app/store/lapse-activities.action';
-import { HttpEventType, HttpEvent } from '@angular/common/http';
+} from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { StepsFormComponent } from "src/app/pages/main-content/steps/steps-form/steps-form.component";
+import { Store } from "@ngxs/store";
+import { LapseActivitiesService } from "src/app/services/lapse-activities.service";
+import { AddLapseActivity } from "src/app/store/lapse-activities.action";
+import { HttpEventType, HttpEvent } from "@angular/common/http";
 
 @Component({
-  selector: 'app-activities-form',
-  templateUrl: './activities-form.component.html',
-  styleUrls: ['./activities-form.component.scss'],
+  selector: "app-activities-form",
+  templateUrl: "./activities-form.component.html",
+  styleUrls: ["./activities-form.component.scss"],
 })
-export class ActivitiesFormComponent extends StepsFormComponent
+export class ActivitiesFormComponent
+  extends StepsFormComponent
   implements OnInit {
   @Input() lapse: string;
 
@@ -30,17 +31,16 @@ export class ActivitiesFormComponent extends StepsFormComponent
   constructor(
     public store: Store,
     private lapseActivityService: LapseActivitiesService,
-    public toastr: CustomToastrService,
-
+    public toastr: CustomToastrService
   ) {
     super(store, toastr);
   }
 
   ngOnInit(): void {
-    this.form.addControl('hasDate', new FormControl(false));
+    this.form.addControl("hasDate", new FormControl(false));
     this.APPROVAL_TYPE = [
       ...this.APPROVAL_TYPE,
-      { CODE: '5', VALUE: 'No requiere aprobación' }
+      { CODE: "5", VALUE: "No requiere aprobación" },
     ];
   }
 
@@ -59,23 +59,23 @@ export class ActivitiesFormComponent extends StepsFormComponent
       this.showProgress = true;
       const formData = new FormData();
 
-      formData.append('name', this.form.controls.name.value);
-      formData.append('approvalType', this.form.controls.approvalType.value);
+      formData.append("name", this.form.controls.name.value);
+      formData.append("approvalType", this.form.controls.approvalType.value);
 
-      formData.append('tag', this.kind);
-      formData.append('hasDate', this.form.controls.hasDate.value);
-      formData.append('hasText', this.form.controls.hasText.value);
-      formData.append('text', this.form.controls.text.value);
+      formData.append("tag", this.kind);
+      formData.append("hasDate", this.form.controls.hasDate.value);
+      formData.append("hasText", this.form.controls.hasText.value);
+      formData.append("text", this.form.controls.text.value);
 
       // To send file, to be true
       if (this.form.controls.hasFile.value) {
-        formData.append('file', this.form.controls.file.value);
+        formData.append("file", this.form.controls.file.value);
       }
 
       // To send video, to be true
       if (this.form.controls.hasVideo.value) {
         formData.append(
-          'video',
+          "video",
           JSON.stringify({
             name: Math.random().toString(),
             url: this.form.controls.video.value,
@@ -85,15 +85,15 @@ export class ActivitiesFormComponent extends StepsFormComponent
 
       // To send list, to be true
       if (this.form.controls.hasChecklist.value) {
-        formData.append('checklist', JSON.stringify(this.checklist));
+        formData.append("checklist", JSON.stringify(this.checklist));
       }
 
-      formData.append('hasFile', this.form.controls.hasFile.value);
-      formData.append('hasVideo', this.form.controls.hasVideo.value);
-      formData.append('hasChecklist', this.form.controls.hasChecklist.value);
-      formData.append('hasUpload', this.form.controls.hasUpload.value);
-      formData.append('hasDate', this.form.controls.hasDate.value);
-      formData.append('status', '1');
+      formData.append("hasFile", this.form.controls.hasFile.value);
+      formData.append("hasVideo", this.form.controls.hasVideo.value);
+      formData.append("hasChecklist", this.form.controls.hasChecklist.value);
+      formData.append("hasUpload", this.form.controls.hasUpload.value);
+      formData.append("hasDate", this.form.controls.hasDate.value);
+      formData.append("status", "1");
       this.showProgress = true;
       this.lapseActivityService.createActivity(this.lapse, formData).subscribe(
         (response: HttpEvent<any>) => {
@@ -107,22 +107,19 @@ export class ActivitiesFormComponent extends StepsFormComponent
             this.form.controls.hasDate.setValue(false);
             this.form.controls.hasVideo.setValue(false);
             this.form.controls.hasChecklist.setValue(false);
-            this.toastr.registerSuccess('Registro', 'Actividad registrada');
+            this.toastr.registerSuccess("Registro", "Actividad registrada");
           }
         },
         (err: any) => {
-
-          console.log( err )
+          console.log(err);
 
           this.toastr.error(
-            'Problemas al registrar',
-            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
+            "Problemas al registrar",
+            "Las fallas pueden ser la conexión o el nombre del paso esta dúplicado"
           );
           this.showProgress = false;
         }
       );
     }
   }
-
-
 }

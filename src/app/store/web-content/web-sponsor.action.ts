@@ -6,7 +6,6 @@ import {
   patch,
   updateItem,
   removeItem,
-  insertItem,
 } from '@ngxs/store/operators';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebSponsorService } from '../../services/web-content/web-sponsor.service';
@@ -15,8 +14,7 @@ import {
   SponsorUserModel,
 } from '../user/sponsor-user.action';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { Item } from 'pdfmake-wrapper';
+import { Injectable } from '@angular/core';
 
 // -- Web Sponsor class action --
 
@@ -43,7 +41,6 @@ export class UpdateTestimonialWebSponsor {
     public newTestimonial: Testimonial
   ) {}
 }
-
 export class DeleteTestimonialWebSponsor {
   static readonly type = '[Testimonial] Delete Testimonial';
   constructor(public payload: Testimonial) {}
@@ -72,6 +69,7 @@ export class DeleteSponsor {
     },
   },
 })
+@Injectable()
 export class WebSponsorState implements NgxsOnInit {
   @Selector()
   static webSponsor(state: WebSponsor): WebSponsor | null {

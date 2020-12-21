@@ -1,34 +1,35 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Injector } from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
   FormControl,
   Validators,
-} from '@angular/forms';
-import { ACTION } from 'src/app/_helpers/text-content/text-crud';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { ItemCheck } from 'src/app/_models/step.model';
-import { APPROVAL_TYPE } from '../../../../_models/step.model';
-import { StepService } from 'src/app/services/step.service';
-import { VIDEO_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
+} from "@angular/forms";
+import { ACTION } from "src/app/_helpers/text-content/text-crud";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { ItemCheck } from "src/app/_models/step.model";
+import { APPROVAL_TYPE } from "../../../../_models/step.model";
+import { StepService } from "src/app/services/step.service";
+import { VIDEO_PATTERN } from "src/app/pages/_components/form-components/shared/constant/validation-patterns-list";
 import {
   FileValidator,
   EXTENSIONS,
-} from 'src/app/pages/_components/shared/file-validator';
-import { Store } from '@ngxs/store';
-import { AddStep } from 'src/app/store/step.action';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
+} from "src/app/pages/_components/shared/file-validator";
+import { Store } from "@ngxs/store";
+import { AddStep } from "src/app/store/step.action";
+import { HttpEvent, HttpEventType } from "@angular/common/http";
+import { DialogConfirmationComponent } from "src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
+import { BsModalService } from "ngx-bootstrap/modal";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-steps-form',
-  templateUrl: './steps-form.component.html',
+  selector: "app-steps-form",
+  templateUrl: "./steps-form.component.html",
   styles: [],
   providers: [BsModalService],
 })
 export class StepsFormComponent implements OnInit, OnDestroy {
+  
   @Input() id: string;
   @Input() title: string;
   @Input() kind: string;
@@ -68,9 +69,9 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     public toastr?: CustomToastrService,
     public stepService?: StepService,
     public fb?: FormBuilder,
-    public modalServicesBs?: BsModalService
+    public modalServicesBs?: BsModalService,
+    private injector?: Injector
   ) {
-
     this.APPROVAL_TYPE = APPROVAL_TYPE;
   }
 
@@ -78,9 +79,7 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  ngOnDestroy(): void {
-
-  }
+  ngOnDestroy(): void {}
 
   public onSelectedApproval(event: any): void {
     this.selectedApproval = event;
@@ -95,8 +94,6 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     this.form.controls.hasChecklist.setValue(false);
     this.form.controls.checklist.reset();
     this.form.controls.hasUpload.setValue(false);
-
-
   }
 
   onSubmit(): void {
@@ -113,23 +110,23 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     if (this.form.valid && checkListValid) {
       const formData = new FormData();
 
-      formData.append('name', this.form.controls.name.value);
-      formData.append('approvalType', this.form.controls.approvalType.value);
+      formData.append("name", this.form.controls.name.value);
+      formData.append("approvalType", this.form.controls.approvalType.value);
 
-      formData.append('tag', this.kind);
-      formData.append('hasDate', this.form.controls.hasDate.value);
-      formData.append('hasText', this.form.controls.hasText.value);
-      formData.append('text', this.form.controls.text.value);
+      formData.append("tag", this.kind);
+      formData.append("hasDate", this.form.controls.hasDate.value);
+      formData.append("hasText", this.form.controls.hasText.value);
+      formData.append("text", this.form.controls.text.value);
 
       // To send file, to be true
       if (this.form.controls.hasFile.value) {
-        formData.append('file', this.form.controls.file.value);
+        formData.append("file", this.form.controls.file.value);
       }
 
       // To send video, to be true
       if (this.form.controls.hasVideo.value) {
         formData.append(
-          'video',
+          "video",
           JSON.stringify({
             name: Math.random().toString(),
             url: this.form.controls.video.value,
@@ -139,33 +136,30 @@ export class StepsFormComponent implements OnInit, OnDestroy {
 
       // To send list, to be true
       if (this.form.controls.hasChecklist.value) {
-        formData.append('checklist', JSON.stringify(this.checklist));
+        formData.append("checklist", JSON.stringify(this.checklist));
       }
 
-      formData.append('hasFile', this.form.controls.hasFile.value);
-      formData.append('hasVideo', this.form.controls.hasVideo.value);
+      formData.append("hasFile", this.form.controls.hasFile.value);
+      formData.append("hasVideo", this.form.controls.hasVideo.value);
 
-      formData.append('hasChecklist', this.form.controls.hasChecklist.value);
-      formData.append('hasUpload', this.form.controls.hasUpload.value);
+      formData.append("hasChecklist", this.form.controls.hasChecklist.value);
+      formData.append("hasUpload", this.form.controls.hasUpload.value);
 
       this.showProgress = true;
 
-
-      console.log('paso --');
-      console.log( this.form.value );
-
+      console.log("paso --");
+      console.log(this.form.value);
 
       this.stepService.setStep(formData).subscribe(
         (response: HttpEvent<any>) => {
           switch (response.type) {
             case HttpEventType.Response:
-              console.log('respueste --');
-              console.log( response.body );
-
+              console.log("respueste --");
+              console.log(response.body);
 
               this.resetForm();
               this.store.dispatch(new AddStep(response.body));
-              this.toastr.registerSuccess('Registro', 'Paso registrado');
+              this.toastr.registerSuccess("Registro", "Paso registrado");
               break;
           }
         },
@@ -173,8 +167,8 @@ export class StepsFormComponent implements OnInit, OnDestroy {
           console.log(err);
           this.showProgress = false;
           this.toastr.error(
-            'Problemas al registrar',
-            'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
+            "Problemas al registrar",
+            "Las fallas pueden ser la conexión o el nombre del paso esta dúplicado"
           );
         }
       );
@@ -228,7 +222,6 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     this.form.controls.hasChecklist.setValue(false);
     this.form.controls.hasUpload.setValue(false);
 
-
     this.submitted = false;
     this.checklist = [];
   }
@@ -245,8 +238,8 @@ export class StepsFormComponent implements OnInit, OnDestroy {
       this.form.controls.checklist.reset();
     } else {
       this.toastr.error(
-        'Limite de registro',
-        'Solo se pueden registrar 5 objectivos'
+        "Limite de registro",
+        "Solo se pueden registrar 5 objectivos"
       );
     }
   }
@@ -260,13 +253,13 @@ export class StepsFormComponent implements OnInit, OnDestroy {
   public onDeleteObjective(index: number): void {
     const modal = this.modalServicesBs.show(
       DialogConfirmationComponent,
-      Object.assign({}, { class: 'modal-dialog-centered' })
+      Object.assign({}, { class: "modal-dialog-centered" })
     );
 
     // -- Set up modal
     (modal.content as DialogConfirmationComponent).showConfirmationModal(
-      'Eliminar objectivo',
-      '¿Desea eliminar el objectivo seleccionado?'
+      "Eliminar objectivo",
+      "¿Desea eliminar el objectivo seleccionado?"
     );
 
     this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(
@@ -274,8 +267,8 @@ export class StepsFormComponent implements OnInit, OnDestroy {
         if (result === true) {
           this.checklist = this.checklist.filter((value, key) => key !== index);
           this.toastr.deleteRegister(
-            'Eliminado',
-            'Se ha eliminado el objetivo de la lista'
+            "Eliminado",
+            "Se ha eliminado el objetivo de la lista"
           );
 
           (modal.content as DialogConfirmationComponent).hideConfirmationModal();

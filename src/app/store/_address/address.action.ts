@@ -3,6 +3,7 @@ import { Statal, Municipality } from 'src/app/_models/address.model';
 import { AddressService } from 'src/app/services/address.service';
 import { Subscription } from 'rxjs';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { Injectable } from '@angular/core';
 
 /**
  * New name added to states, this is to avoid confusion with the NGXS library
@@ -56,6 +57,7 @@ export class SetStateSelected {
     availableMunicipalities: [],
   },
 })
+@Injectable()
 export class AddressState implements NgxsOnInit {
   subscriptionService: Subscription;
 

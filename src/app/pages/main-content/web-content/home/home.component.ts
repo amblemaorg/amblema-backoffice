@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSaveWebHome() {
 
-    console.log("se esta disparando")
+    console.log('se esta disparando');
     this.subscription = this.store.dispatch(new SetWebHome(this.form.value)).subscribe(response => {
 
       this.showProgress = true;
@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             break;
         }
       }, (err: any) => {
-        console.log(err)
+        console.log(err);
         this.showProgress = false;
         this.toastr.error('Error', 'No se ha completado el registro.');
       });

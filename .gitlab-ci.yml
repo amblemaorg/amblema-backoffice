@@ -21,6 +21,7 @@ building:
   only:
     - master
     - support
+    
 
 building-app:
   stage: build

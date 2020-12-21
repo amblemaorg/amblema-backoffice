@@ -17,7 +17,7 @@ building:
     - amblema
   script:
     - docker build -f deploy.Dockerfile -t angular:amblema-backoffice .
-    - docker run --name $CONTAINER_RUN -v ${PWD}:/app -v /app/node_modules angular:amblema-backoffice
+    - docker run --name -t -d $CONTAINER_RUN -v ${PWD}:/app -v /app/node_modules angular:amblema-backoffice
   only:
     - master
     - support

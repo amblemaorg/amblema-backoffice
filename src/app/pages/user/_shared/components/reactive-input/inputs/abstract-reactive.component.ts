@@ -1,6 +1,7 @@
-import { OnInit, DoCheck, Input } from '@angular/core';
+import { OnInit, DoCheck, Input, Directive } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
+@Directive()
 export abstract class AbstractReactiveComponent implements OnInit, DoCheck {
   @Input() id: string | null = null;
 

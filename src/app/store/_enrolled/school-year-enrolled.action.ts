@@ -4,6 +4,7 @@ import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch } from '@ngxs/store/operators';
 import { STATUS } from 'src/app/_helpers/convention/status';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
+import { Injectable } from '@angular/core';
 
 class SchoolYearEnrolledModel {
     schoolYears: SchoolYearEnrolled[];
@@ -19,6 +20,7 @@ export class GetSchoolYearsEnrolled {
         schoolYears : []
     }
 })
+@Injectable()
 export class SchoolYearEnrolledState implements NgxsOnInit {
 
     @Selector()

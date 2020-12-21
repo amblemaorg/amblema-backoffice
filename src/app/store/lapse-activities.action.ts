@@ -2,6 +2,7 @@ import { State, NgxsOnInit, StateContext, Action, Selector, getActionTypeFromIns
 import { LapseActivity, Activity, Lapse } from '../_models/lapse-activities.model';
 import { LapseActivitiesService } from '../services/lapse-activities.service';
 import { patch, updateItem, append, removeItem } from '@ngxs/store/operators';
+import { Injectable } from '@angular/core';
 
 export interface LapseActivityModel {
     lapses?: LapseActivity;
@@ -68,6 +69,8 @@ export class DeleteLapseActivity {
         }
     }
 })
+
+@Injectable()
 export class LapseActivityState implements NgxsOnInit {
 
     @Selector()

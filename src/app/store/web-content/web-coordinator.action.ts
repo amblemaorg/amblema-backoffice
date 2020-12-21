@@ -4,6 +4,7 @@ import { State, NgxsOnInit, StateContext, Selector, Action } from '@ngxs/store';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebCoordinatorService } from '../../services/web-content/web-coordinator.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
+import { Injectable } from '@angular/core';
 
 // -- Web coordinator class action --
 
@@ -43,6 +44,7 @@ export class DeleteTestimonialWebCoordinator {
         }
     }
 })
+@Injectable()
 export class WebCoordinatorState implements NgxsOnInit {
 
     @Selector()

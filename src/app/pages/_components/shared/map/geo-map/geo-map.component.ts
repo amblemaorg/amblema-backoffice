@@ -12,7 +12,7 @@ import {
 
   AfterViewInit,
 } from '@angular/core';
-import { MapsAPILoader } from '@agm/core';
+import { MapsAPILoader, AgmMap } from '@agm/core';
 import { GeocodeService } from 'src/app/services/geocode.service';
 
 import { Select } from '@ngxs/store';
@@ -44,10 +44,13 @@ export class GeoMapComponent implements OnInit, OnChanges, AfterViewInit {
   subscription: Subscription;
   zoom: number;
   address: string;
+
   private geoCoder;
 
-  @ViewChild('search', { static: false })
+  @ViewChild('search')
   public searchElementRef: ElementRef;
+  @ViewChild(AgmMap, {static: false}) agmMap: AgmMap;
+
 
   labelState: string;
   labelMunicipality: string;
@@ -106,11 +109,11 @@ export class GeoMapComponent implements OnInit, OnChanges, AfterViewInit {
                       },
                       (results, status) => {
                         if (
-                          status === google.maps.GeocoderStatus.OK 
+                          status === google.maps.GeocoderStatus.OK
                           && (!this.latitude || !this.longitude)
                         ) {
                           this.latitude = results[0].geometry.location.lat();
-                          this.longitude = results[0].geometry.location.lng()
+                          this.longitude = results[0].geometry.location.lng();
                           this.zoom = 8;
                         }
                       }

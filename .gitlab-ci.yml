@@ -1,17 +1,17 @@
 stages:
-  - build_image
+  - build-image
   - test
   - build
   - cleanup
   - deploy
-  - deploy_support
+  - deploy-support
 
 variables:
   CONTAINER_RUN: "running_amblema_backoffice"
   CONTAINER_SUPPORT: "amblema-backoffice-support"
   CONTAINER_SERVER: "nginx-amblema"
 
-build_image:
+build-image:
   stage: building
   tags: amblema
   script:
@@ -41,14 +41,14 @@ cleanup:
     - master
     - support
 
-deploy_support:
+deploy-support:
   stage: deploying_support
   tags: amblema
   script:
     - if [ "$(docker ps -q -f name=$CONTAINER_SUPPORT)" ]; then
     -   echo "container exist"
     -   docker restart $CONTAINER_SUPPORT
-    - else 
+    - else
     -   echo "container does not exist"
     -   docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
     -   echo "container created!"

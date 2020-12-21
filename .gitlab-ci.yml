@@ -28,6 +28,7 @@ building-app:
     - amblema
   script:
     - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:prod"
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
   only:
     - master
     - support

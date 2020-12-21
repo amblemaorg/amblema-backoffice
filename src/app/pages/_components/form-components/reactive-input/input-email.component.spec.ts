@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { InputEmailComponent } from './input-email.component';
 import { ReactiveValidationModule } from '../reactive-validation/reactive-validation.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbInputModule } from '@nebular/theme';
+import { NbFocusMonitor, NbInputModule } from '@nebular/theme';
 
 describe('InputEmailComponent', () => {
   let component: InputEmailComponent;
@@ -17,8 +17,9 @@ describe('InputEmailComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         ReactiveValidationModule,
-        NbInputModule
-      ]
+        NbInputModule,
+        NbFocusMonitor,
+      ],
     })
     .compileComponents();
   }));

@@ -30,9 +30,6 @@ describe('InputEmailComponent', () => {
 
   });
 
-  it('Fields - Should input email defined', () => {
-    expect(component).toBeTruthy();
-  });
 
   afterEach(() => {
     TestBed.resetTestingModule();

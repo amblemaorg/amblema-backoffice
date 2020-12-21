@@ -1,122 +1,57 @@
 stages:
-  - cleanup
+  - build_image
   - test
   - build
+  - cleanup
   - deploy
+  - deploy_support
 
-  
+variables:
+  CONTAINER_RUN: "running_amblema_backoffice"
+  CONTAINER_SUPPORT: "amblema-backoffice-support"
+  CONTAINER_SERVER: "nginx-amblema"
 
-  # stages:
-#   - cleanup
-#   - build
-#   - test
-#   - code-quality
-#   - performance
-#   - review # <-- SCRIPT AUTO DEVOPS
-#   - deploy
-#   - staging
-#   - production # <-- CONDITIONAL
+build_image:
+  stage: building
+  tags: amblema
+  script:
+    - docker build -f deploy.Dockerfile -t angular:amblema-backoffice .
+    - docker run --name $CONTAINER_RUN -v ${PWD}:/app -v /app/node_modules angular:amblema-backoffice
+  only:
+    - master
+    - support
 
-# variables:
-#   CONTAINER_RUN: "running_amblema_backoffice"
-#   CONTAINER_TEST: "test_amblema_backoffice"
-#   CONTAINER_BUILD: "build_amblema_backoffice"
-#   CONTAINER_SERVER: "nginx-amblema"
+build:
+  stage: building-app
+  tags: amblema
+  script:
+    - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:prod"
+  only:
+    - master
+    - support
 
-#   # PATH TO STAGING
-#   PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
+cleanup:
+  stage: cleaning
+  tags: amblema
+  script:
+    - docker container rm $CONTAINER_RUN --force
+    - docker rmi angular:amblema-backoffice --force
+    - docker-compose down
+  only:
+    - master
+    - support
 
-# before_script:
-#   - cd $PATH_PROJECT_STAGING
-
-#   - docker-compose down
-#   # TURN ON SERVER
-#   - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
-#   -   docker-compose up -d linking_amblema_nginx
-#   - fi
-
-#   # TURN ON CONTAINER
-#   - if [ ! "$(docker ps -q -f name=$CONTAINER_RUN)" ]; then
-#   -   docker-compose up -d run_amblema_backoffice
-#   - fi
-
-# # PREPARE ENVIROMENT
-
-# update-environment:
-#   stage: cleanup
-#   script:
-#       - git config user.email "franklin@binauraldev.com"
-#       - git config user.name "franklinp"
-#       - git stash
-#       - git pull $CI_REPOSITORY_URL master
-#   tags:
-#       - amblema
-#   only:
-#       - master
-
-# # linting:
-# #   stage: cleanup
-# #   script:
-# #       - docker exec $CONTAINER_RUN ng lint --fix
-# #   only:
-# #       - master
-
-# # BUILD
-
-# build:
-#   stage: build
-#   script:
-#       - docker-compose up build_amblema_backoffice
-#       - docker restart $CONTAINER_SERVER
-#   tags:
-#       - amblema
-#   only:
-#       - master
-
-# # TEST
-
-# run-tests:
-#   stage: test
-#   script:
-#       - docker exec $CONTAINER_RUN npm rebuild
-#       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadless --watch=false
-#   tags:
-#       - amblema
-#   only:
-#       - master
-
-# # coverage:
-# #   stage: test
-# #   script:
-# #       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
-# #   artifacts:
-# #       paths:
-# #           - coverage/Amblema-BackOffice/
-# #       expire_in: 7days
-# #   tags:
-# #       - amblema
-# #   only:
-# #       - master
-
-# # DEPLOY
-
-# linking:
-#   stage: deploy
-#   script:
-#       - docker restart $CONTAINER_SERVER
-#   tags:
-#       - amblema
-#   only:
-#       - master
-
-# # STAGING
-
-# staging:
-#   stage: staging
-#   script:
-#       - docker container stop $CONTAINER_RUN
-#       - docker container rm $CONTAINER_RUN
-#   tags:
-#       - amblema
-#   only:
-#       - master
+deploy_support:
+  stage: deploying_support
+  tags: amblema
+  script:
+    - if [ "$(docker ps -q -f name=$CONTAINER_SUPPORT)" ]; then
+    -   echo "container exist"
+    -   docker restart $CONTAINER_SUPPORT
+    - else 
+    -   echo "container does not exist"
+    -   docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    -   echo "container created!"
+    - fi
+  only:
+    - support

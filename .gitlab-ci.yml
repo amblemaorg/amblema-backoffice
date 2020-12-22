@@ -21,7 +21,7 @@ building:
   only:
     - master
     - support
-    
+
 
 building-app:
   stage: build
@@ -41,7 +41,6 @@ cleaning:
   script:
     - docker container rm $CONTAINER_RUN --force
     - docker rmi angular:amblema-backoffice --force
-    - docker-compose down
   only:
     - master
     - support

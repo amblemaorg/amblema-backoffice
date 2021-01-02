@@ -211,7 +211,7 @@ export class FormComponent implements OnInit, OnDestroy {
         .finally(() => {
           this.subscription = this.storable$.subscribe((value) => {
 
-            console.log(value.lapse1.topics[0])
+            console.log(value.lapse1.topics[0]);
 
             this.subscription = this.environmentalProjectService
               .updateEnvironmentalProject(value)

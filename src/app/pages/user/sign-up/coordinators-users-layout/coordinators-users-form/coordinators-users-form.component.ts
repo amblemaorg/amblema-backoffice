@@ -58,12 +58,12 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
         this.restar();
         this.form.patchValue(response);
-        
-        
-        let parseDate = this.backupOldData.birthdate.toString();
+
+
+        const parseDate = this.backupOldData.birthdate.toString();
 
         this.form.controls.birthdate.setValue(parseDate);
-        
+
         this.idState = this.form.controls.addressState.value;
         // this.idMunicipality = this.form.controls.addressMunicipality.value;
         this.form.controls.addressState.setValue(response.addressState.id);

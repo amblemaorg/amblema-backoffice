@@ -1,5 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
-import * as jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
+
 import { IMAGE } from '../../img-base-64';
 const html2canvas = require('html2canvas');
 
@@ -32,7 +33,7 @@ export class GraphPdfService {
 
       // pdf.save(`${Math.random()}.pdf`)
       // pdf.output('dataurlnewwindow'); // <-- Open in the taps
-      window.open(pdf.output('bloburl'), '_blank');
+      window.open(pdf.output('bloburl') as any, '_blank');
     });
   }
 }

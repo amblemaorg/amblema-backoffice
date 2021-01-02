@@ -3,8 +3,6 @@ import {
   OnInit,
   Input,
   OnDestroy,
-  SimpleChanges,
-  OnChanges,
 } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import {
@@ -212,6 +210,8 @@ export class FormComponent implements OnInit, OnDestroy {
         .then()
         .finally(() => {
           this.subscription = this.storable$.subscribe((value) => {
+
+            console.log(value.lapse1.topics[0]);
 
             this.subscription = this.environmentalProjectService
               .updateEnvironmentalProject(value)

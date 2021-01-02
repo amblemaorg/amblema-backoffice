@@ -72,22 +72,22 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
             if (topic.levels.length >= 0) {
               topic.levels.forEach((value, key) => {
                 if (key === this.index) {
-                  
-                  let parse = JSON.stringify(value); 
-                  parse = JSON.parse(parse)
-                  console.log(parse)
+
+                  let parse = JSON.stringify(value);
+                  parse = JSON.parse(parse);
+                  console.log(parse);
                   this.form.patchValue(parse as any);
 
-                   this.options =
+                  this.options =
                      value.target.length > 0
                        ? JSON.parse(JSON.stringify(value.target))
                        : this.options;
 
-                   this.techniques = Object.assign([], value.techniques);
-                   this.activities = Object.assign([], value.activities);
-                   this.resources = Object.assign([], value.resources);
-                   this.evaluations = Object.assign([], value.evaluations);
-                   this.supportMaterial = Object.assign(
+                  this.techniques = Object.assign([], value.techniques);
+                  this.activities = Object.assign([], value.activities);
+                  this.resources = Object.assign([], value.resources);
+                  this.evaluations = Object.assign([], value.evaluations);
+                  this.supportMaterial = Object.assign(
                      [],
                      value.supportMaterial
                    );

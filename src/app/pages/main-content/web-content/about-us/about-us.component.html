@@ -1,55 +1,66 @@
 <div class="row">
-    <div class="col-12">
-        <nb-card>
-            <nb-card-header>Nosotros</nb-card-header>
-            <nb-card-body>
-                <div class="row">
-                    
-                    <!-- Slider -->
-                    <div class="col-12 form-group">
-                        <app-form-slider 
-                            (delete)="onDeleteSlider($event)"
-                            (edit)="onEditSlider($event)"
-                            (register)="onRegisterSlider($event)"
-                            [sliders]="sliders"></app-form-slider>
-                    </div>
-
-                    <!-- Content-->
-                    <div class="col-12">
-                      <app-content-text 
-                        [about]="1728"
-                        [enviroment]="579"
-                        [reading]="579"
-                        [math]="579"
-                        [form]="form"></app-content-text>
-                    </div>
-
-                    <!-- Form awards -->
-                    <div class="col-12">
-                        <hr>
-                        <p class="font-weight-bold">Premios y Reconocimientos</p>
-                        <app-award-form 
-                            (delete)="onDeleteAward($event)"
-                            (edit)="onEditAward($event)"
-                            (register)="onRegisterAward($event)"
-                            [awards]="awards">
-                        </app-award-form>
-                    </div>
-
-                    <div class="col-12 text-right">
-                        <hr> 
-                        <app-progress *ngIf="showProgress" class="form-group text-left"></app-progress>
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>Nosotros</nb-card-header>
+      <nb-card-body>
+        <div class="row">
             
-                        <button nbButton 
-                            [ngClass]="{'mt-3': showProgress}"
-                            [attr.disabled]="showProgress ? true : null"
-                            [nbSpinner]="showProgress ? true : null" 
-                            nbSpinnerStatus="success"
-                            (click)="onSaveWebAbout()" 
-                            class="btn btn-primary col-12 col-lg-auto">Guardar cambios</button>  
-                    </div>
-                </div>
-            </nb-card-body>
-        </nb-card>
-    </div>
+          <!-- Slider -->
+          <div class="col-12 form-group">
+            <app-form-slider
+              (delete)="onDeleteSlider($event)"
+              (edit)="onEditSlider($event)"
+              (register)="onRegisterSlider($event)"
+              [sliders]="sliders"
+            ></app-form-slider>
+          </div>
+
+          <!-- Content-->
+          <div class="col-12">
+            <app-content-text
+              [about]="1728"
+              [enviroment]="579"
+              [reading]="579"
+              [math]="579"
+              [form]="form"
+            >
+            </app-content-text>
+          </div>
+
+          <!-- Form awards -->
+          <div class="col-12">
+            <hr />
+            <p class="font-weight-bold">Premios y Reconocimientos</p>
+            <app-award-form
+              (delete)="onDeleteAward($event)"
+              (edit)="onEditAward($event)"
+              (register)="onRegisterAward($event)"
+              [awards]="awards"
+            >
+            </app-award-form>
+          </div>
+
+          <div class="col-12 text-right">
+            <hr />
+            <app-progress
+              *ngIf="showProgress"
+              class="form-group text-left"
+            ></app-progress>
+
+            <button
+              nbButton
+              [ngClass]="{ 'mt-3': showProgress }"
+              [attr.disabled]="showProgress ? true : null"
+              [nbSpinner]="showProgress ? true : null"
+              nbSpinnerStatus="success"
+              (click)="onSaveWebAbout()"
+              class="btn btn-primary col-12 col-lg-auto"
+            >
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
 </div>

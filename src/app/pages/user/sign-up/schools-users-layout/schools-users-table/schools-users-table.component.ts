@@ -90,7 +90,7 @@ export class SchoolsUsersTableComponent extends BaseTable
         // Change mode purpose
         this.MODE = this.ACTION.EDIT;
         $(`#${this.ID_FORM}`).modal('show');
-        console.log(event.data);
+        
         this.store.dispatch(new SelectedSchoolUser(event.data));
         break;
       case this.ACTION.DELETE:

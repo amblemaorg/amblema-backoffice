@@ -164,7 +164,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
+
     this.router.params.subscribe((value) => {
       if (Object.keys(value).length) {
         this.requestSelected = value;
@@ -187,9 +187,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log(`-- Solicitud de creacion de usuario seleccionada --`);
-        console.log(event.data);
-
+        
         this.requestSelected = event.data;
         this.oldRequest = event.data;
         this.modalService.open(this.modal);
@@ -332,10 +330,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-        console.log('============================================');
-        console.log(`-- Solicitud de creacion de usuario escuela`);
-        console.log('============================================');
-
+        
         this.userCreationRequestService
           .putUserCreationRequestSchool(
             this.requestSelected.id,
@@ -366,7 +361,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
               }, 2500);
             },
             (err: any) => {
-              console.log(err);
+
             }
           );
         break;

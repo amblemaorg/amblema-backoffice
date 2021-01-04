@@ -43,11 +43,11 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
         .subscribe((request: HttpEvent<any>) => {
           switch (request.type) {
             case HttpEventType.Response:
-              console.log( request.body.records );
+
               this.prepareDataToShow(request.body.records);
               break;
           }
-        }, ( err ) => console.log(err));
+        }, ( err ) => {});
     } else {
       this.sponsorGraphicStatuService
         .getInactiveSponsor(this.dateInitSelected.id, this.dateEndSelected.id)
@@ -55,7 +55,6 @@ export class SponsorStatusComponent extends MathOlympicsReportComponent {
           switch (request.type) {
             case HttpEventType.Response:
 
-              console.log( request.body.records );
               this.prepareDataToShow(request.body.records);
               break;
           }

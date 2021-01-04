@@ -73,7 +73,9 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   // -- CRUD Sliders --
 
   onRegisterSlider(slider: Slider) {
+    console.log( `Este es el slider que se esta cargando ${slider}` )
     this.store.dispatch(new SetSliderWebAbout(slider));
+  
   }
 
   onEditSlider(slider: any[]) {
@@ -118,7 +120,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
         }
 
       }, (err: any) => {
-        console.log(err)
+
         this.showProgress = false;
 
         this.toastr.error('Error', 'No se ha completado el registro.');

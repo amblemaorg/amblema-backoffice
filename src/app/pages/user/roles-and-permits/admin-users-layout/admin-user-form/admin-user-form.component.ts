@@ -107,14 +107,14 @@ export class AdminUserFormComponent extends DetailsForm
 
       this.subscription = this.role$.subscribe((response) => {
         response.find((value) => {
-          console.log( value );
+
           if (value.devName === DEVNAME_ROLE.ADMIN) {
             this.roleId = value.id;
             this.form.controls.role.setValue(value.id);
           }
         });
       }, ( err ) => {
-        console.log( err );
+
       });
     }
   }

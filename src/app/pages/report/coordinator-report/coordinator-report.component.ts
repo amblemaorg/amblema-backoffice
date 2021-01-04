@@ -66,7 +66,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         title: 'AmbLePensum',
         type: 'string',
         valuePrepareFunction: (row: any) => {
-          console.log(row);
+          
           return row ? 'Completado' : 'No completado';
         },
         filterFunction: FilterAmblemPensum,

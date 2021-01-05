@@ -49,18 +49,10 @@ export class AboutUsComponent implements OnInit, OnDestroy {
       this.sliders = response.aboutUsPage.slider;
       this.awards = response.aboutUsPage.awards;
 
-      if (response.aboutUsPage.aboutUsText) {
-        this.form.controls.aboutUsText.setValue(response.aboutUsPage.aboutUsText);
-      }
-      if (response.aboutUsPage.environmentText) {
-        this.form.controls.environmentText.setValue(response.aboutUsPage.environmentText);
-      }
-      if (response.aboutUsPage.readingText) {
-        this.form.controls.readingText.setValue(response.aboutUsPage.readingText);
-      }
-      if (response.aboutUsPage.mathText) {
-        this.form.controls.mathText.setValue(response.aboutUsPage.mathText);
-      }
+      this.form.controls.aboutUsText.setValue(this.form.controls.aboutUsText.value ? this.form.controls.aboutUsText.value : response.aboutUsPage.aboutUsText);
+      this.form.controls.environmentText.setValue(this.form.controls.environmentText.value ? this.form.controls.environmentText.value : response.aboutUsPage.environmentText);
+      this.form.controls.readingText.setValue(this.form.controls.readingText.value ? this.form.controls.readingText.value : response.aboutUsPage.readingText);
+      this.form.controls.mathText.setValue(this.form.controls.mathText.value ? this.form.controls.mathText.value : response.aboutUsPage.mathText);
     });
   }
 
@@ -73,7 +65,9 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   // -- CRUD Sliders --
 
   onRegisterSlider(slider: Slider) {
+    console.log(`Este es el slider que se esta cargando ${slider}`)
     this.store.dispatch(new SetSliderWebAbout(slider));
+
   }
 
   onEditSlider(slider: any[]) {
@@ -105,7 +99,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
 
       this.showProgress = true;
 
-      this.webAboutService.setContentWebAbout(response.webabout).subscribe((event: HttpEvent<any> ) => {
+      this.webAboutService.setContentWebAbout(response.webabout).subscribe((event: HttpEvent<any>) => {
 
         switch (event.type) {
           case HttpEventType.Response:
@@ -118,7 +112,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
         }
 
       }, (err: any) => {
-        console.log(err)
+
         this.showProgress = false;
 
         this.toastr.error('Error', 'No se ha completado el registro.');

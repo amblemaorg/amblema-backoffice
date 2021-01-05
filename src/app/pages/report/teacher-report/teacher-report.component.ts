@@ -217,9 +217,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   onGenerateReport() {
     this.disabledBtn = true;
 
-    console.log(this.statusSelected);
-    console.log(this.selectedAnnualConvention);
-
     this.subscriptionService = this.userReporteService
       .getUserReport(
         '3',
@@ -229,8 +226,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response) => {
-          console.log( response );
-          console.log( response.users.length );
           if (response.users.length) {
             this.generatorReport.generateUserReport(response);
           } else {
@@ -262,7 +257,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             'Se ha cambiado el estatus de inscripción del docente.'
           );
         },
-        (err) => console.log(err)
+        (err) => {}
       );
     event.confirm.resolve(); // <-- Return to previous stock status
   }

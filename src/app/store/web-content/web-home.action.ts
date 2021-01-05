@@ -2,7 +2,6 @@ import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
 import { WebHome } from '../../_models/web/web-home.model';
 import { WebHomeService } from '../../services/web-content/web-home.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
-import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { Slider } from '../../_models/web/slider.model';
 import { Testimonial } from '../../_models/web/testimonial.model';
 
@@ -20,17 +19,17 @@ export class SetWebHome {
 // -- Slider class action --
 
 export class SetSliderWebHome {
-    static readonly type = '[Slider] Set Slider';
+    static readonly type = '[SliderWebHome] Set SliderWebHome';
     constructor(public payload: Slider) { }
 }
 
 export class UpdateSliderWebHome {
-    static readonly type = '[Slider] Update Slider';
+    static readonly type = '[SliderWebHome] Update SliderWebHome';
     constructor(public oldSlider: Slider, public newSlider: Slider) { }
 }
 
 export class DeleteSliderWebHome {
-    static readonly type = '[Slider] Delete Slider';
+    static readonly type = '[SliderWebHome] Delete SliderWebHome';
     constructor(public payload: Slider) { }
 }
 
@@ -70,7 +69,6 @@ export class WebHomeState implements NgxsOnInit {
     }
 
     constructor(
-        private toastr: CustomToastrService,
         private webHomeService: WebHomeService
     ) { }
 
@@ -106,6 +104,7 @@ export class WebHomeState implements NgxsOnInit {
                 slider: append([action.payload])
             })
         );
+
     }
 
     @Action(UpdateSliderWebHome)

@@ -46,14 +46,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     private store: Store) { }
 
   async ngOnInit() {
-
     this.subscription = this.data$.subscribe(response => {
       this.sliders = response.slider; // <-- Get sliders, show on the table
       this.testimonials = response.testimonials; // <-- Get testimonials show on the table
       this.form.controls.aboutUsText.setValue(this.form.controls.aboutUsText.value ? this.form.controls.aboutUsText.value : response.aboutUsText);
       this.form.controls.environmentText.setValue(this.form.controls.environmentText.value ? this.form.controls.environmentText.value : response.environmentText);
       this.form.controls.readingText.setValue(this.form.controls.readingText.value ? this.form.controls.readingText.value : response.readingText);
-      this.form.controls.mathText.setValue(this.form.controls.mathText.value ? this.form.controls.mathText.value : response.mathText);
+      this.form.controls.mathText.setValue(this.form.controls.mathText.value ? this.form.controls.mathText.value : response.mathText); 
     });
   }
 
@@ -91,9 +90,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Save
   onSaveWebHome() {
-
     this.subscription = this.store.dispatch(new SetWebHome(this.form.value)).subscribe(response => {
-
       this.showProgress = true;
       this.subscription = this.webHomeService.setContentWebHome({ homePage: response.webhome }).subscribe((event: HttpEvent<any>) => {
 

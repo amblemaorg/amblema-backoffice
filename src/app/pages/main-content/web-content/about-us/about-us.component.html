@@ -4,17 +4,16 @@
       <nb-card-header>Nosotros</nb-card-header>
       <nb-card-body>
         <div class="row">
-            
+
           <!-- Slider -->
           <div class="col-12 form-group">
             <app-form-slider
               (delete)="onDeleteSlider($event)"
               (edit)="onEditSlider($event)"
               (register)="onRegisterSlider($event)"
-              [sliders]="sliders"
+              [sliders]="(data$ | async)?.aboutUsPage.slider"
             ></app-form-slider>
           </div>
-
           <!-- Content-->
           <div class="col-12">
             <app-content-text

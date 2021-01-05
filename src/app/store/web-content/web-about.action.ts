@@ -64,6 +64,7 @@ export class DeleteAwardWebAbout {
         }
     }
 })
+
 export class WebAboutState implements NgxsOnInit {
 
     @Selector()

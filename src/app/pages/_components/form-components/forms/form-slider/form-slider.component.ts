@@ -16,7 +16,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy {
 
   @Input() public sliders: Slider[];
-
   @Output() protected register = new EventEmitter<Slider>();
   @Output() protected edit = new EventEmitter<Slider[]>();
   @Output() protected delete = new EventEmitter<Slider>();
@@ -62,8 +61,6 @@ export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-
-
     this.form = this.formBuilder.group({
       image: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required, Validators.maxLength(56)])
@@ -115,16 +112,12 @@ export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy 
           (err: any) =>
             (modal.content as DialogConfirmationComponent).errorDelete(err) // <-- Error messages
         );
-
         break;
     }
   }
 
   onSubmit() {
-
-
     if (this.MODE === this.ACTION.CREATE) {
-
       if ( this.sliders.length < 6 ) {
         this.register.emit(this.form.value);
         this.form.reset();

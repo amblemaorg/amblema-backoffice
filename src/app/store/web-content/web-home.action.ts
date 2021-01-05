@@ -45,6 +45,7 @@ export class UpdateTestimonialWebHome {
     constructor(public oldTestimonial: Testimonial, public newTestimonial: Testimonial) { }
 }
 
+
 export class DeleteTestimonialWebHome {
     static readonly type = '[Testimonial] Delete Testimonial';
     constructor(public payload: Testimonial) { }

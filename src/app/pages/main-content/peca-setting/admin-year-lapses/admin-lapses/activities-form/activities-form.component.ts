@@ -58,11 +58,10 @@ export class ActivitiesFormComponent extends StepsFormComponent
 
     this.submitted = true;
 
-    console.log(this.form.valid); 
-    console.log(checkListValid)
 
     if (this.form.valid && checkListValid) {
       
+
       this.showProgress = true;
       const formData = new FormData();
 

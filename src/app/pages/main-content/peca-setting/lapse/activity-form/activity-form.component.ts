@@ -115,9 +115,14 @@ export class ActivityFormComponent
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
+
+    console.log("Estas ubicado en una actividad generica");
   }
 
   onSubmitGeneric(): void {
+
+    console.log("Evento: se esta enviando info a de una actividad generica");
+
     if (this.form.valid) {
       this.data = Object.assign({}, this.data);
 
@@ -129,8 +134,6 @@ export class ActivityFormComponent
       this.data.file = this.form.controls.file.value;
 
       const formData = new FormData();
-
-      console.log(this.data);
 
       formData.append('name', this.data.name);
       formData.append('approvalType', this.data.approvalType);
@@ -183,6 +186,8 @@ export class ActivityFormComponent
         .updateActivity(this.id, this.lapse, formData)
         .subscribe(
           (response: HttpEvent<any>) => {
+            console.log("Respuesta de la peticion")
+            console.log(response)
             if (HttpEventType.Response === response.type) {
               this.toastr.updateSuccess(
                 'Actualización',
@@ -191,6 +196,8 @@ export class ActivityFormComponent
             }
           },
           (err: any) => {
+            console.log("Error de la peticion")
+            console.log(err)
             this.toastr.error(
               'Problemas al registrar',
               'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'

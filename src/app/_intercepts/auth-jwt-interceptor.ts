@@ -5,10 +5,9 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
-  HttpEventType,
 } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, take, switchMap, tap } from 'rxjs/operators';
+import { catchError, filter, take, switchMap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../services/user/auth.service';
@@ -62,11 +61,9 @@ export class AuthJWTInterceptor implements HttpInterceptor {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
-      console.log('Se hace el refresh token');
+      
       return this.authService.refreshToken().pipe(
         switchMap((token: any) => {
-
-
           this.isRefreshing = false;
 
           this.authService.storeJwtToken(token.access_token); // <-- Save new token

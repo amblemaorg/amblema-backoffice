@@ -37,6 +37,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
   }
 
   ngOnInit(): void {
+
     this.form.addControl('hasDate', new FormControl(false));
     this.APPROVAL_TYPE = [
       ...this.APPROVAL_TYPE,

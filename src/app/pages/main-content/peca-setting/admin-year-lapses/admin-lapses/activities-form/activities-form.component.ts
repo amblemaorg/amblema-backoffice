@@ -37,6 +37,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
   }
 
   ngOnInit(): void {
+    console.log("Formulario para crear una actividad generica")
 
     this.form.addControl('hasDate', new FormControl(false));
     this.APPROVAL_TYPE = [
@@ -46,6 +47,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
   }
 
   onSubmit(): void {
+
     // This is to valid the check list if has a check
     const checkListValid =
       this.form.controls.hasChecklist.value && this.checklist.length > 0
@@ -56,14 +58,18 @@ export class ActivitiesFormComponent extends StepsFormComponent
 
     this.submitted = true;
 
+    console.log(this.form.valid); 
+    console.log(checkListValid)
+
     if (this.form.valid && checkListValid) {
+      
       this.showProgress = true;
       const formData = new FormData();
 
       formData.append('name', this.form.controls.name.value);
       formData.append('approvalType', this.form.controls.approvalType.value);
-
       formData.append('tag', this.kind);
+
       formData.append('hasDate', this.form.controls.hasDate.value);
       formData.append('hasText', this.form.controls.hasText.value);
       formData.append('text', this.form.controls.text.value);
@@ -96,9 +102,16 @@ export class ActivitiesFormComponent extends StepsFormComponent
       formData.append('hasDate', this.form.controls.hasDate.value);
       formData.append('status', '1');
       this.showProgress = true;
+
       this.lapseActivityService.createActivity(this.lapse, formData).subscribe(
+      
         (response: HttpEvent<any>) => {
+
+          console.log("respuesta del registro"); 
+          console.log(response);
+
           if (HttpEventType.Response === response.type) {
+            
             this.store.dispatch(
               new AddLapseActivity(response.body, this.lapse)
             );

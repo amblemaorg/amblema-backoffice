@@ -4,7 +4,7 @@ import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
-import { Subscription, SubscriptionLike } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 
 export interface CoordinatorUserModel {

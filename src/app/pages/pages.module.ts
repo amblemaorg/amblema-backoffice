@@ -17,7 +17,8 @@ import {
   NbToastrModule,
   NbListModule,
   NbPopoverModule,
-  NbBadgeModule, } from '@nebular/theme';
+  NbBadgeModule,
+} from '@nebular/theme';
 import { HeaderComponent } from './_components/layouts/header/header.component';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
@@ -47,7 +48,6 @@ import { SchoolYearEnrolledState } from '../store/_enrolled/school-year-enrolled
 import { GeneralEnrolledState } from '../store/_enrolled/enrolled.action';
 import { AddressState } from '../store/_address/address.action';
 import { environment } from 'src/environments/environment';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { ActivityStrategyState } from '../store/activity-strategy.action';
 
 @NgModule({
@@ -130,7 +130,7 @@ import { ActivityStrategyState } from '../store/activity-strategy.action';
     NbToastrModule.forRoot(),
 
   ],
-  exports: [ NbIconModule ],
+  exports: [NbIconModule],
   providers: [
     MenuSetUp,
     CustomToastrService,

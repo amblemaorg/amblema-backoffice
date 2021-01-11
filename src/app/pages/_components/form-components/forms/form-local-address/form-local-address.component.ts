@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { AddressService } from 'src/app/services/address.service';
 
 @Component({
   selector: 'app-form-local-address',
@@ -8,21 +10,39 @@ import { AbstractControl, FormControl } from '@angular/forms';
 })
 export class FormLocalAddressComponent implements OnInit {
 
-  @Input() state: AbstractControl | null = new FormControl();
-  @Input() municipality: AbstractControl | null = new FormControl();
+  // inputs
+  @Input() state: AbstractControl | null = new FormControl(null);
+  @Input() municipality: AbstractControl | null = new FormControl(null);
 
-  selectedCar: number;
+  // list from api
+  states: any[];
+  municipalities: any[];
 
-  cars = [
-    { id: 1, name: 'Volvo' },
-    { id: 2, name: 'Saab' },
-    { id: 3, name: 'Opel' },
-    { id: 4, name: 'Audi' },
-  ];
+  // model ng selected
+  stateSelected: string;
+  municipalitySelected: string;
 
-  constructor() { }
+  subscription: Subscription;
 
-  ngOnInit() {
+  constructor(
+    private addressService: AddressService
+  ) {
+    // state change refresh munipalities
+    this.subscription = this.state.valueChanges.subscribe(async (response) => {
+      
+      // update municipalities
+      this.municipalities = await this.addressService.getMunicipalityByState(response).toPromise().then(response => response);
+    });
   }
 
+  async ngOnInit() {
+    this.stateSelected = this.state.value;
+    this.municipalitySelected = this.municipality.value;
+
+    this.states = await this.addressService.getStates().toPromise().then(response => response);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
+  }
 }

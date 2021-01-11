@@ -63,6 +63,13 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // ---------------
+
+    
+
+    // ---------------
+
     this.MODE = this.ACTION.CREATE;
 
     // Add columns

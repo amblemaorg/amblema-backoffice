@@ -25,6 +25,7 @@ import { ReactiveInputFileModule } from '../../../_components/form-components/re
 import { AddressCoordinatorComponent } from './address-coordinator/address-coordinator.component';
 import { CoordinatorsUsersViewComponent } from './coordinators-users-view/coordinators-users-view.component';
 import { ProgressModule } from '../../../_components/shared/progress/progress.module';
+import { FormLocalAddressModule } from 'src/app/pages/_components/form-components/forms/form-local-address/form-local-address.module';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ProgressModule } from '../../../_components/shared/progress/progress.mo
     ModalModule,
     FormDocumentModule,
     FormRegionaladdressModule,
+    FormLocalAddressModule,
   ]
 })
 export class CoordinatorsUsersLayoutsModule { }

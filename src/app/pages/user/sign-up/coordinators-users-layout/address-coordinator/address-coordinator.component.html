@@ -1,5 +1,5 @@
-<div class="row">
-  <!-- State -->
+<!-- <div class="row">
+
   <div class="col-12 col-lg-6">
     <label for="state" class="label">Estado</label>
     <select
@@ -21,14 +21,11 @@
     </div>
   </div>
 
-  <!-- Municipality -->
   <div class="col-12 col-lg-6">
     <div class="row">
-      <!-- Fields -->
       <div class="col">
         <label for="municipality" class="label">Municipio</label>
 
-        <!-- Select -->
         <select
           *ngIf="MODE == 'NORMAL'"
           fullWidth
@@ -45,7 +42,6 @@
           }}</option>
         </select>
 
-        <!-- Input -->
         <app-input-custom
           *ngIf="MODE == CRUD.CREATE || MODE == CRUD.EDIT"
           [id]="'municipalityCRUD'"
@@ -54,7 +50,6 @@
           [submitted]="submitted"
         ></app-input-custom>
 
-        <!-- Only read - Delete -->
         <input
           *ngIf="MODE == CRUD.DELETE"
           type="text"
@@ -65,7 +60,6 @@
         />
       </div>
 
-      <!-- CRUD Button group -->
       <div class="col-auto form-group m-inline-form">
         <div
           class="btn-group"
@@ -113,7 +107,6 @@
           </button>
         </div>
 
-        <!-- Confirm actions -->
         <div
           class="btn-group"
           role="group"
@@ -145,7 +138,6 @@
         </div>
       </div>
 
-      <!-- Message -->
       <div class="col-12">
         <div
           class="alert alert-primary"
@@ -157,7 +149,6 @@
     </div>
   </div>
 
-  <!-- Key street -->
   <div class="col-12 col-lg-6">
     <app-input-custom
       [submitted]="submitted"
@@ -187,4 +178,4 @@
       [placeholder]="'Casa / Edificio'"
     ></app-input-custom>
   </div>
-</div>
+</div> -->

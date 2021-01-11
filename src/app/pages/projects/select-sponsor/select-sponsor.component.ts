@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { SponsorUserState } from 'src/app/store/user/sponsor-user.action';
+import { Select, Store } from '@ngxs/store';
+import { GetSponsorUsers, SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { Observable } from 'rxjs';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { FormControl, AbstractControl } from '@angular/forms';
@@ -22,6 +22,12 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
   @Input() mode: string;
 
   selectedSponsor;
+
+  constructor(
+    private store: Store
+  ) {
+    store.dispatch( new GetSponsorUsers() )
+  }
 
   ngOnInit(): void {
 

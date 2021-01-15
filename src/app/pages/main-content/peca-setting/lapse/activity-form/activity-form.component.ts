@@ -120,10 +120,12 @@ export class ActivityFormComponent
   }
 
   onSubmitGeneric(): void {
-
-    console.log("Evento: se esta enviando info a de una actividad generica");
-
     if (this.form.valid) {
+
+      console.log( `esta es la info que se esta enviando`)
+      console.log(this.form.value)
+
+
       this.data = Object.assign({}, this.data);
 
       this.data.text = this.form.controls.text.value;
@@ -147,9 +149,11 @@ export class ActivityFormComponent
       if (this.data.hasFile) {
         const isUpload: any = this.data.file;
         if (isUpload.url) {
+          console.log('se mantiene el mismo archivo')
           formData.append('file', JSON.stringify(this.data.file));
         } else {
           formData.append('file', this.data.file);
+
         }
       }
 
@@ -179,25 +183,27 @@ export class ActivityFormComponent
         String(this.form.controls.description.value)
       );
 
+      console.log(`Archivo desde el form data`);
+      console.log(formData.get("file"))
+
       this.showProgress = true;
 
       // Update activity
       this.lapseActivityService
         .updateActivity(this.id, this.lapse, formData)
         .subscribe(
-          (response: HttpEvent<any>) => {
-            console.log("Respuesta de la peticion")
+          (response: any) => {
+
+
+            console.log(`respuesta de la peticion:`); 
             console.log(response)
-            if (HttpEventType.Response === response.type) {
-              this.toastr.updateSuccess(
-                'Actualización',
-                'Actividad actualizada'
-              );
-            }
+
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Actividad actualizada'
+            );
           },
           (err: any) => {
-            console.log("Error de la peticion")
-            console.log(err)
             this.toastr.error(
               'Problemas al registrar',
               'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'

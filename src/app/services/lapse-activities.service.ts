@@ -29,10 +29,8 @@ export class LapseActivitiesService {
   }
 
   updateActivity( id: string, lapse: any, data: FormData ): Observable<any> {
-    return this.httpClient.put<Activity>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`, data, {
-      reportProgress: true,
-      observe: 'body'
-    }).
+
+    return this.httpClient.put<Activity>(`${environment.api}${this.LAPSE_ACTIVITY}/${id}/${lapse}`, data).
       pipe(
         map( (records: any) => records )
       );

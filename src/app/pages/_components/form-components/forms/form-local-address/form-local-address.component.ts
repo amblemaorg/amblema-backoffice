@@ -1,26 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AddressService, DataMunicipality } from 'src/app/services/address.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 import { errorMessages } from 'src/app/_helpers/text-content/error-manager';
+import { FormLocalAddressAbstractComponent } from './form-local-address.abstract.component';
 
 @Component({
   selector: 'app-form-local-address',
   templateUrl: './form-local-address.component.html',
   styleUrls: ['./form-local-address.component.scss']
 })
-export class FormLocalAddressComponent implements OnInit {
+export class FormLocalAddressComponent extends FormLocalAddressAbstractComponent implements OnInit {
 
-  /** inputs */
-  @Input() state: AbstractControl | null = new FormControl(null);
-  @Input() municipality: AbstractControl | null = new FormControl(null);
-  @Input() address: AbstractControl | null = new FormControl('');
-  @Input() submitted: boolean | null = false;
-
-  /** permission */
+  /** permission crud municipality */
   public canCreate = new AuthService().isAllowed(ALL_ACTIONS.MUNICIPALITY_CREATE);
   public canEdit = new AuthService().isAllowed(ALL_ACTIONS.MUNICIPALITY_EDIT);
   public canDelete = new AuthService().isAllowed(ALL_ACTIONS.MUNICIPALITY_DELETE);
@@ -40,9 +35,10 @@ export class FormLocalAddressComponent implements OnInit {
   subscription = new Subscription();
 
   constructor(
+    private cd: ChangeDetectorRef,
     private addressService: AddressService,
     private toastr: CustomToastrService
-  ) { }
+  ) { super(); }
 
   async ngOnInit() {
     this.states = await this.addressService.getStates().toPromise().then(response => response);
@@ -106,7 +102,7 @@ export class FormLocalAddressComponent implements OnInit {
   }
 
   onEditMunicipality(): void {
-    this.addressService.updateMunicipality(
+    this.subscription.add(this.addressService.updateMunicipality(
       this.municipalitySelected, {
       name: this.municipalityInput.value,
       state: this.stateSelected
@@ -128,7 +124,7 @@ export class FormLocalAddressComponent implements OnInit {
       ) {
         this.toastr.error('Error', errorMessages.duplicated.msg);
       }
-    });
+    }));
   }
 
   onDeleteMunicipality(): void {

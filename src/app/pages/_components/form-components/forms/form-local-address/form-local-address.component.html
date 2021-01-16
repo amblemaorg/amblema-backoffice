@@ -1,31 +1,91 @@
 <div class="row">
   <div class="col-12 col-lg-6">
     <label for="state" class="label">Estado</label>
-    <ng-select
-      placeholder="- Seleccionar un estado -"
-      notFoundText="No hay estados"
-      (change)="state.setValue($event)"
-      [(ngModel)]="stateSelected"
-    >
-      <ng-option *ngFor="let state of states" [value]="state.id">{{
-        state.name
-      }}</ng-option>
-    </ng-select>
+    <div class="form-group">
+      <ng-select
+        placeholder="- Seleccionar un estado -"
+        notFoundText="No hay estados"
+        (change)="state.setValue($event)"
+        [(ngModel)]="stateSelected">
+        <ng-option *ngFor="let state of states" [value]="state.id">{{
+          state.name
+        }}</ng-option>
+      </ng-select>
+    </div>
+
+    <div class="alert alert-primary" *ngIf="submitted && !state.value">
+      <strong> Selección requerida </strong>
+    </div>
   </div>
 
   <div class="col-12 col-lg-6">
-    <label for="municipality" class="label">Municipio</label>
-    <ng-select
-      placeholder="- Seleccionar un municipio -"
-      notFoundText="No hay municipios"
-      (change)="municipality.setValue($event)"
-      [(ngModel)]="municipalitySelected"
-    >
-      <ng-option
-        *ngFor="let municipality of municipalities"
-        [value]="municipality.id"
-        >{{ municipality.name }}</ng-option
-      >
-    </ng-select>
+    <div class="row">
+      <!-- selector -->
+      <div class="col">
+        <label for="municipality" class="label">Municipio</label>
+        <div class="form-group">
+          <ng-select
+            placeholder="- Seleccionar un municipio -"
+            notFoundText="No hay municipios"
+            (change)="municipality.setValue($event)"
+            [(ngModel)]="municipalitySelected"
+          >
+            <ng-option
+              *ngFor="let municipality of municipalities"
+              [value]="municipality.id"
+              >{{ municipality.name }}</ng-option
+            >
+          </ng-select>
+        </div>
+
+        <div
+          class="alert alert-primary"
+          *ngIf="submitted && !municipality.value"
+        >
+          <strong> Selección requerida </strong>
+        </div>
+      </div>
+
+      <!-- crud -->
+      <div class="col-auto form-group m-inline-form">
+        <div class="btn-group">
+          <button
+            nbTooltip="Registrar municipio"
+            nbButton
+            status="info"
+            class="btn-left"
+          >
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+          <button
+            nbTooltip="Editar municipio"
+            nbButton
+            class="rounded-0"
+            status="info"
+          >
+            <nb-icon icon="edit-outline"></nb-icon>
+          </button>
+          <button
+            nbTooltip="Eliminar municipio"
+            nbButton
+            outline
+            class="btn-right"
+            status="danger"
+          >
+            <nb-icon icon="trash-2-outline"></nb-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <app-input-custom
+      [id]="'address'"
+      [placeholder]="'Calles / carreras'"
+      [label]="'Calles / carreras'"
+      [submitted]="submitted"
+      [control]="address"
+    ></app-input-custom>
   </div>
 </div>

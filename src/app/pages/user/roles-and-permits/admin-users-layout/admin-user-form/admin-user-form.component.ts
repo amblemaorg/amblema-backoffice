@@ -113,7 +113,7 @@ export class AdminUserFormComponent extends DetailsForm
             this.form.controls.role.setValue(value.id);
           }
         });
-      }, ( err ) => {
+      }, (err) => {
 
       });
     }
@@ -209,7 +209,7 @@ export class AdminUserFormComponent extends DetailsForm
             switch (event.type) {
               case HttpEventType.Response:
                 let dataPosted: any = event.body;
-                dataPosted =  this.helper.readlyTypeDocument([dataPosted])[0];
+                dataPosted = this.helper.readlyTypeDocument([dataPosted])[0];
 
                 this.store.dispatch(new UpdateAdminUser(dataPosted));
                 this.toastr.updateSuccess(

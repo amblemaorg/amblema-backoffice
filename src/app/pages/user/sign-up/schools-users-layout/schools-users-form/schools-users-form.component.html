@@ -74,18 +74,17 @@
       </div>
       <div class="col-12">
         <app-school-address
+          [state]="form.get('addressState')"
+          [municipality]="form.get('addressMunicipality')"
+          [submitted]="submitted"
+          [address]="form.get('address')"
+          [addressCity]="form.get('addressCity')"
           [addressZoneType]="form.get('addressZoneType')"
           [addressZone]="form.get('addressZone')"
-          [idState]="idState"
-          [state]="form.get('addressState')"
-          [control]="form.get('address')"
-          [municipality]="form.get('addressMunicipality')"
-          [addressCity]="form.get('addressCity')"
-          [submitted]="submitted"
         ></app-school-address>
       </div>
       <div class="col-12">
-        <app-geo-map 
+        <app-geo-map
           (laT)="coordinate.latitude = $event"
           (longT)="coordinate.longitude = $event"
           [state]="form.get('addressState').value"
@@ -304,11 +303,9 @@
                     class="form-control form-group"
                   >
                     <option value="null">- Seleccione un turno -</option>
-                    <option
-                      *ngFor="let item of classTime"
-                      [value]="item.value"
-                      >{{ item.label }}</option
-                    >
+                    <option *ngFor="let item of classTime" [value]="item.value">
+                      {{ item.label }}
+                    </option>
                   </select>
                 </div>
 
@@ -324,8 +321,9 @@
                     <option
                       *ngFor="let item of typeSchool"
                       [value]="item.value"
-                      >{{ item.label }}</option
                     >
+                      {{ item.label }}
+                    </option>
                   </select>
                 </div>
               </div>

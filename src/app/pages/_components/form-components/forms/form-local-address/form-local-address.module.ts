@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormLocalAddressComponent } from './form-local-address.component';
-import { FormModule } from 'src/app/pages/user/_shared/components/form/form.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NbButtonModule, NbIconModule, NbInputModule, NbTooltipModule } from '@nebular/theme';
+import { ReactiveInputModule } from '../../reactive-input/reactive-input.module';
 
 @NgModule({
   declarations: [
@@ -11,9 +12,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   imports: [
     CommonModule,
-    FormModule,
+    ReactiveInputModule,
+    FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTooltipModule,
+    NbInputModule
   ],
   exports: [FormLocalAddressComponent]
 })

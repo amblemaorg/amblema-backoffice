@@ -37,7 +37,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
   }
 
   ngOnInit(): void {
-    console.log("Formulario para crear una actividad generica")
+    console.log('Formulario para crear una actividad generica');
 
     this.form.addControl('hasDate', new FormControl(false));
     this.APPROVAL_TYPE = [
@@ -60,7 +60,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
 
 
     if (this.form.valid && checkListValid) {
-      
+
 
       this.showProgress = true;
       const formData = new FormData();
@@ -103,14 +103,14 @@ export class ActivitiesFormComponent extends StepsFormComponent
       this.showProgress = true;
 
       this.lapseActivityService.createActivity(this.lapse, formData).subscribe(
-      
+
         (response: HttpEvent<any>) => {
 
-          console.log("respuesta del registro"); 
+          console.log('respuesta del registro');
           console.log(response);
 
           if (HttpEventType.Response === response.type) {
-            
+
             this.store.dispatch(
               new AddLapseActivity(response.body, this.lapse)
             );
@@ -125,7 +125,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
         },
         (err: any) => {
 
-          console.log( err )
+          console.log( err );
 
           this.toastr.error(
             'Problemas al registrar',

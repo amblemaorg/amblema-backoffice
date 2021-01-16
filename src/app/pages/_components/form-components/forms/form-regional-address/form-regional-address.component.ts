@@ -200,7 +200,6 @@ export class FormRegionaladdressComponent extends AbstractReactive
             // Void if the array is empty
             if (this.municipalities.length > 0) {
               this.municipality.setValue(this.municipalities[0].id);
-
               this.fillValuesMunicipality(this.municipalities[0].id);
             } else {
               this.municipality.setValue(null);

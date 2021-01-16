@@ -26,7 +26,7 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
   constructor(
     private store: Store
   ) {
-    store.dispatch( new GetSponsorUsers() )
+    store.dispatch( new GetSponsorUsers() );
   }
 
   ngOnInit(): void {

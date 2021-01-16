@@ -6,23 +6,23 @@ import {
   Selector,
   actionMatcher,
   StateOperator,
-} from "@ngxs/store";
+} from '@ngxs/store';
 import {
   EnvironmentalProject,
   Lapse,
   Topic,
   Level,
-} from "../_models/environmental-project.model";
-import { OnDestroy } from "@angular/core";
-import { EnvironmentalProjectService } from "../services/environmental-project.service";
-import { Subscription } from "rxjs";
+} from '../_models/environmental-project.model';
+import { OnDestroy } from '@angular/core';
+import { EnvironmentalProjectService } from '../services/environmental-project.service';
+import { Subscription } from 'rxjs';
 import {
   patch,
   append,
   updateItem,
   iif,
   removeItem,
-} from "@ngxs/store/operators";
+} from '@ngxs/store/operators';
 
 // -- Interfaces --
 
@@ -38,22 +38,22 @@ export interface EnvironmentalProjectModel extends EnvironmentalProject {
 // -- Action project --
 
 export class SetNameEnvironmentalProject {
-  static readonly type = "[EnvironmentalProject] Set Name EnvironmentalProject";
+  static readonly type = '[EnvironmentalProject] Set Name EnvironmentalProject';
   constructor(public name: string, public description: string) {}
 }
 
 export class SetGeneralObjective {
   static readonly type =
-    "[EnvironmentalProject] Set General Objective EnvironmentalProject";
+    '[EnvironmentalProject] Set General Objective EnvironmentalProject';
   constructor(public generalObjective: string) {}
 }
 
 export class GetEnvironmentalProject {
-  static readonly type = "[EnvironmentalProject] Get All EnvironmentalProject";
+  static readonly type = '[EnvironmentalProject] Get All EnvironmentalProject';
 }
 
 export class SelectLapse {
-  static readonly type = "[EnvironmentalProject] Select A EnvironmentalProject";
+  static readonly type = '[EnvironmentalProject] Select A EnvironmentalProject';
   constructor(public lapse: string) {}
 }
 
@@ -61,19 +61,19 @@ export class SelectLapse {
 
 export class AddSchoolLevel {
   static readonly type =
-    "[EnvironmentalProject] Add School level EnvironmentalProject";
+    '[EnvironmentalProject] Add School level EnvironmentalProject';
   constructor(public schoolLevel: Level, public indexTopic: number) {}
 }
 
 export class DeleteSchoolLevel {
   static readonly type =
-    "[EnvironmentalProject] Delete School level EnvironmentalProject";
+    '[EnvironmentalProject] Delete School level EnvironmentalProject';
   constructor(public indexTopic: number, public indexLevel: number) {}
 }
 
 export class UpdateSchoolLevel {
   static readonly type =
-    "[EnvironmentalProject] Update School level EnvironmentalProject";
+    '[EnvironmentalProject] Update School level EnvironmentalProject';
   constructor(
     public schoolLevel: Level,
     public indexTopic: number,
@@ -85,41 +85,41 @@ export class UpdateSchoolLevel {
 
 export class AddTopic {
   static readonly type =
-    "[EnvironmentalProject] Add Topic EnvironmentalProject";
+    '[EnvironmentalProject] Add Topic EnvironmentalProject';
   constructor(public topic: Topic) {}
 }
 
 export class DeleteTopic {
   static readonly type =
-    "[EnvironmentalProject] Delete Topic EnvironmentalProject";
+    '[EnvironmentalProject] Delete Topic EnvironmentalProject';
   constructor(public indexTopic: number) {}
 }
 
 export class UpdateTopic {
   static readonly type =
-    "[EnvironmentalProject] Update Topic EnvironmentalProject";
+    '[EnvironmentalProject] Update Topic EnvironmentalProject';
   constructor(public topic: Topic, public indexTopic: number) {}
 }
 
 @State<EnvironmentalProjectModel>({
-  name: "environmentalproject",
+  name: 'environmentalproject',
   defaults: {
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     lapse1: {
-      generalObjective: "",
+      generalObjective: '',
       topics: [],
     },
     lapse2: {
-      generalObjective: "",
+      generalObjective: '',
       topics: [],
     },
     lapse3: {
-      generalObjective: "",
+      generalObjective: '',
       topics: [],
     },
     lapseSelected: {
-      generalObjective: "",
+      generalObjective: '',
       topics: [],
     },
   },
@@ -127,7 +127,7 @@ export class UpdateTopic {
 export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
   subscriptionEnvironmentalProject: Subscription;
 
-  referencingLapse = "1";
+  referencingLapse = '1';
 
   @Selector()
   static environmentalProjectStorable(
@@ -197,7 +197,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
       .getEnvironmentalProject()
       .subscribe((response) => {
         if (
-          JSON.stringify(response) !== "{}" &&
+          JSON.stringify(response) !== '{}' &&
           response.lapse1 &&
           response.lapse2 &&
           response.lapse3
@@ -209,7 +209,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
             ...ctx.getState(),
             lapseSelected: ctx.getState().lapse1,
           });
-          this.referencingLapse = "1";
+          this.referencingLapse = '1';
         }
       });
   }
@@ -220,29 +220,29 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
     action: SelectLapse
   ) {
     switch (action.lapse) {
-      case "1":
+      case '1':
         ctx.setState(
           patch({
             lapseSelected: ctx.getState().lapse1,
           })
         );
-        this.referencingLapse = "1";
+        this.referencingLapse = '1';
         break;
-      case "2":
+      case '2':
         ctx.setState(
           patch({
             lapseSelected: ctx.getState().lapse2,
           })
         );
-        this.referencingLapse = "2";
+        this.referencingLapse = '2';
         break;
-      case "3":
+      case '3':
         ctx.setState(
           patch({
             lapseSelected: ctx.getState().lapse3,
           })
         );
-        this.referencingLapse = "3";
+        this.referencingLapse = '3';
         break;
     }
   }
@@ -542,21 +542,21 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
   // -- Selecting lapse updates one of the three lapses --
   InternalLapseUpdate(ctx?: StateContext<EnvironmentalProjectModel>): void {
     switch (this.referencingLapse) {
-      case "1":
+      case '1':
         ctx.setState(
           patch({
             lapse1: ctx.getState().lapseSelected,
           })
         );
         break;
-      case "2":
+      case '2':
         ctx.setState(
           patch({
             lapse2: ctx.getState().lapseSelected,
           })
         );
         break;
-      case "3":
+      case '3':
         ctx.setState(
           patch({
             lapse3: ctx.getState().lapseSelected,

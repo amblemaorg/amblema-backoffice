@@ -3,14 +3,14 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   OnChanges,
-} from "@angular/core";
-import { AbstractReactive } from "../../abstract-reactive";
-import { Validators } from "@angular/forms";
-import { FileValidator, EXTENSIONS } from "../../../shared/file-validator";
-import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+} from '@angular/core';
+import { AbstractReactive } from '../../abstract-reactive';
+import { Validators } from '@angular/forms';
+import { FileValidator, EXTENSIONS } from '../../../shared/file-validator';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 @Component({
-  selector: "app-input-file",
+  selector: 'app-input-file',
   template: `
     <div class="form-group" *ngIf="control">
       <button
@@ -48,7 +48,7 @@ import { CustomToastrService } from "src/app/services/helper/custom-toastr.servi
       </nb-alert>
     </div>
   `,
-  styleUrls: ["./input-file.component.scss"],
+  styleUrls: ['./input-file.component.scss'],
 })
 export class InputFileComponent
   extends AbstractReactive
@@ -67,7 +67,7 @@ export class InputFileComponent
     if (this.control) {
       if (this.control.value !== null) {
         if (
-          typeof this.control.value.url === "string" ||
+          typeof this.control.value.url === 'string' ||
           this.control.value.url instanceof String
         ) {
           this.url = this.control.value.url;
@@ -114,7 +114,7 @@ export class InputFileComponent
       this.control.setValue(event[0] as File);
       this.nameFile = event[0].name;
     } else {
-      this.toast.error("Error de peso", "El archivo debe pesar máximo 1 mb");
+      this.toast.error('Error de peso', 'El archivo debe pesar máximo 1 mb');
       this.control.setValue(null);
       this.nameFile = null;
     }

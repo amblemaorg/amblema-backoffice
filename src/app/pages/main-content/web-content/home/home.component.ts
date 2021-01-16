@@ -52,13 +52,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.form.controls.aboutUsText.setValue(this.form.controls.aboutUsText.value ? this.form.controls.aboutUsText.value : response.aboutUsText);
       this.form.controls.environmentText.setValue(this.form.controls.environmentText.value ? this.form.controls.environmentText.value : response.environmentText);
       this.form.controls.readingText.setValue(this.form.controls.readingText.value ? this.form.controls.readingText.value : response.readingText);
-      this.form.controls.mathText.setValue(this.form.controls.mathText.value ? this.form.controls.mathText.value : response.mathText); 
-    
+      this.form.controls.mathText.setValue(this.form.controls.mathText.value ? this.form.controls.mathText.value : response.mathText);
+
     });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) this.subscription.unsubscribe();
+    if (this.subscription) { this.subscription.unsubscribe(); }
   }
 
   // -- Testimonials slider --

@@ -6,8 +6,7 @@
         placeholder="- Seleccionar un estado -"
         notFoundText="No hay estados"
         (change)="state.setValue($event)"
-        [(ngModel)]="stateSelected"
-      >
+        [(ngModel)]="stateSelected">
         <ng-option *ngFor="let state of states" [value]="state.id">{{
           state.name
         }}</ng-option>
@@ -137,4 +136,7 @@
       [control]="address"
     ></app-input-custom>
   </div>
+
+  <!-- expand the address -->
+  <ng-content></ng-content>
 </div>

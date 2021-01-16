@@ -1,154 +1,9 @@
- <div class="row">
-
-  <div class="col-12 col-lg-6">
-    <label for="state" class="label">Estado</label>
-    <select
-      fullWidth
-      name="state"
-      id="state"
-      hero
-      [formControl]="state"
-      class="form-control form-group"
-      (change)="onSelectState($event.target.value)"
-    >
-      <option disabled [value]="null">- Seleccione un estado -</option>
-      <option *ngFor="let item of states" [value]="item.id">{{
-        item.name
-      }}</option>
-    </select>
-    <div class="alert alert-primary" *ngIf="submitted && !state.value">
-      <strong> Selección requerida </strong>
-    </div>
-  </div>
-
-  <div class="col-12 col-lg-6">
-    <div class="row">
-      <div class="col">
-        <label for="municipality" class="label">Municipio</label>
-
-        <select
-          *ngIf="MODE == 'NORMAL'"
-          fullWidth
-          name="municipality"
-          id="municipality"
-          hero
-          [formControl]="municipality"
-          class="form-control w-100 form-group"
-          (change)="onSelectMunicipality($event.target.value)"
-        >
-          <option disabled [value]="null">- Seleccione un municipio -</option>
-          <option *ngFor="let item of municipalities" [value]="item.id">{{
-            item.name
-          }}</option>
-        </select>
-
-        <app-input-custom
-          *ngIf="MODE == CRUD.CREATE || MODE == CRUD.EDIT"
-          [id]="'municipalityCRUD'"
-          [placeholder]="'Municipio'"
-          [control]="inputCRUD"
-          [submitted]="submitted"
-        ></app-input-custom>
-
-        <input
-          *ngIf="MODE == CRUD.DELETE"
-          type="text"
-          readonly
-          class="form-control form-group"
-          nbInput
-          [value]="inputCRUD.value"
-        />
-      </div>
-
-      <div class="col-auto form-group m-inline-form">
-        <div
-          class="btn-group"
-          role="group"
-          aria-label="Basic example"
-          *ngIf="MODE == 'NORMAL'"
-        >
-          <button
-            nbButton
-            outline
-
-            *ngIf="canCreate"
-            status="info"
-            [attr.disabled]="state.value ? null : true"
-            class="button-left border-right-0"
-            nbTooltip="Registrar municipio"
-            (click)="MODE = CRUD.CREATE; inputCRUD.reset()"
-          >
-            <nb-icon icon="plus-outline"></nb-icon>
-          </button>
-          <button
-            nbButton
-
-            *ngIf="canEdit"
-            outline
-            status="info"
-            [attr.disabled]="municipality.value ? null : true"
-            class="rounded-0"
-            nbTooltip="Editar municipio"
-            (click)="MODE = CRUD.EDIT; inputCRUD.setValue(nameMuni)"
-          >
-            <nb-icon icon="edit-outline"></nb-icon>
-          </button>
-          <button
-            nbButton
-            outline
-            *ngIf="canDelete"
-            status="danger"
-            [attr.disabled]="municipality.value ? null : true"
-            class="button-right border-left-0"
-            nbTooltip="Eliminar municipio"
-            (click)="MODE = CRUD.DELETE; inputCRUD.setValue(nameMuni)"
-          >
-            <nb-icon icon="trash-2-outline"></nb-icon>
-          </button>
-        </div>
-
-        <div
-          class="btn-group"
-          role="group"
-          aria-label="Basic example"
-          *ngIf="MODE != 'NORMAL'"
-        >
-          <button
-            nbButton
-            outline
-            status="info"
-            class="button-left border-right-0"
-            [attr.disabled]="inputCRUD.value ? null : true"
-            nbTooltip="Confirmar"
-            (click)="onConfirm()"
-          >
-            Confirmar
-          </button>
-          <button
-            nbButton
-            outline
-            status="danger"
-            nbButton
-            class="button-right"
-            nbTooltip="Cancelar"
-            (click)="MODE = 'NORMAL'"
-          >
-            Cancelar
-          </button>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <div
-          class="alert alert-primary"
-          *ngIf="submitted && !municipality.value"
-        >
-          <strong> Selección requerida </strong>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<app-form-local-address
+  [state]="state"
+  [municipality]="municipality"
+  [submitted]="submitted"
+  [address]="address"
+>
   <div class="col-12 col-lg-6">
     <app-input-custom
       [submitted]="submitted"
@@ -161,16 +16,6 @@
 
   <div class="col-12 col-lg-6">
     <app-input-custom
-      [id]="'street'"
-      [placeholder]="'Calles / carreras'"
-      [label]="'Calles / carreras'"
-      [control]="control"
-      [submitted]="submitted"
-    ></app-input-custom>
-  </div>
-
-  <div class="col-12 col-lg-6">
-    <app-input-custom
       [submitted]="submitted"
       [id]="'house-building'"
       [control]="addressHome"
@@ -178,4 +23,4 @@
       [placeholder]="'Casa / Edificio'"
     ></app-input-custom>
   </div>
-</div> 
+</app-form-local-address>

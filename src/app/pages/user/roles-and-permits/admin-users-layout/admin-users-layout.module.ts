@@ -17,7 +17,6 @@ import { ReactiveInputModule } from '../../../_components/form-components/reacti
 import { ReactiveSelectModule } from '../../../_components/form-components/reactive-select/reactive-select.module';
 import { ModalModule } from '../../../_components/shared/modal/modal-forms/modal.module';
 import { FormDocumentModule } from '../../../_components/form-components/forms/form-document/form-document.module';
-import { FormRegionaladdressModule } from '../../../_components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUserViewComponent } from './admin-user-view/admin-user-view.component';
 import { ProgressModule } from '../../../_components/shared/progress/progress.module';
@@ -46,7 +45,6 @@ import { FormLocalAddressModule } from 'src/app/pages/_components/form-component
     ProgressModule,
     ModalModule,
     FormDocumentModule,
-    FormRegionaladdressModule,
     FormLocalAddressModule
   ],
 })

@@ -58,7 +58,7 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
         this.form.controls.backgroundImage.value : null;
 
 
-      const allEmpty = JSON.stringify(this.form.controls.steps.value)
+      const allEmpty = JSON.stringify(this.form.controls.steps.value);
 
       if (allEmpty === '["","","","","","",""]') {
 

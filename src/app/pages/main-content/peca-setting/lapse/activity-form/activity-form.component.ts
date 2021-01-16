@@ -116,14 +116,14 @@ export class ActivityFormComponent
   ngAfterViewInit(): void {
     this.cd.detectChanges();
 
-    console.log("Estas ubicado en una actividad generica");
+    console.log('Estas ubicado en una actividad generica');
   }
 
   onSubmitGeneric(): void {
     if (this.form.valid) {
 
-      console.log( `esta es la info que se esta enviando`)
-      console.log(this.form.value)
+      console.log( `esta es la info que se esta enviando`);
+      console.log(this.form.value);
 
 
       this.data = Object.assign({}, this.data);
@@ -149,7 +149,7 @@ export class ActivityFormComponent
       if (this.data.hasFile) {
         const isUpload: any = this.data.file;
         if (isUpload.url) {
-          console.log('se mantiene el mismo archivo')
+          console.log('se mantiene el mismo archivo');
           formData.append('file', JSON.stringify(this.data.file));
         } else {
           formData.append('file', this.data.file);
@@ -184,7 +184,7 @@ export class ActivityFormComponent
       );
 
       console.log(`Archivo desde el form data`);
-      console.log(formData.get("file"))
+      console.log(formData.get('file'));
 
       this.showProgress = true;
 
@@ -195,8 +195,8 @@ export class ActivityFormComponent
           (response: any) => {
 
 
-            console.log(`respuesta de la peticion:`); 
-            console.log(response)
+            console.log(`respuesta de la peticion:`);
+            console.log(response);
 
             this.toastr.updateSuccess(
               'Actualización',

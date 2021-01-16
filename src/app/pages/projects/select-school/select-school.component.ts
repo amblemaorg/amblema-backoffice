@@ -24,7 +24,7 @@ export class SelectSchoolComponent implements OnInit, OnChanges {
 
 
   constructor(private store: Store) {
-    store.dispatch( new GetSchoolUsers() )
+    store.dispatch( new GetSchoolUsers() );
   }
 
   ngOnInit(): void {

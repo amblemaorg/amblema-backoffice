@@ -15,7 +15,7 @@ import { ReactiveInputModule } from '../../reactive-input/reactive-input.module'
     ReactiveInputModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule, 
+    NgSelectModule,
     NbButtonModule,
     NbIconModule,
     NbTooltipModule,

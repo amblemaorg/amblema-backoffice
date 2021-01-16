@@ -59,12 +59,12 @@ export class SponsorsComponent implements OnInit, OnDestroy {
         : null;
 
 
-        const allEmpty = JSON.stringify( this.formSponsor.controls.steps.value )
+      const allEmpty = JSON.stringify( this.formSponsor.controls.steps.value );
 
-        if(allEmpty === '["","","","","","",""]') {
+      if (allEmpty === '["","","","","","",""]') {
           this.formSponsor.patchValue(response.sponsorPage);
         }
-      
+
 
       if (imageBackUp) {
         this.formSponsor.controls.backgroundImage.setValue(imageBackUp);

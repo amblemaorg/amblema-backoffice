@@ -31,7 +31,7 @@ export class GeocodeService {
   }
 
   geocodeAddress(location: string): Observable<any> {
-    
+
     return this.waitForMapsToLoad().pipe(
       // filter(loaded => loaded),
       switchMap(() => {
@@ -40,7 +40,7 @@ export class GeocodeService {
           this.geocoder.geocode({ address: location }, (results, status) => {
 
             if (status === google.maps.GeocoderStatus.OK) {
-            
+
               observer.next({
                 lat: results[0].geometry.location.lat(),
                 lng: results[0].geometry.location.lng(),

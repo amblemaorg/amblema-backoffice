@@ -41,7 +41,7 @@ export class SliderDetailsComponent extends InformationDetailsComponent implemen
 
     this.subscription = this.data$.subscribe((response) => {
       this.data = response;
-      
+
     });
   }
 }

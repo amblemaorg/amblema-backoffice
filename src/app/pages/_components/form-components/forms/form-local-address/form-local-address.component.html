@@ -6,7 +6,8 @@
         placeholder="- Seleccionar un estado -"
         notFoundText="No hay estados"
         (change)="state.setValue($event)"
-        [(ngModel)]="stateSelected">
+        [(ngModel)]="stateSelected"
+      >
         <ng-option *ngFor="let state of states" [value]="state.id">{{
           state.name
         }}</ng-option>
@@ -25,6 +26,7 @@
         <label for="municipality" class="label">Municipio</label>
         <div class="form-group">
           <ng-select
+            *ngIf="modality === 'view'"
             placeholder="- Seleccionar un municipio -"
             notFoundText="No hay municipios"
             (change)="municipality.setValue($event)"
@@ -36,6 +38,23 @@
               >{{ municipality.name }}</ng-option
             >
           </ng-select>
+
+          <!-- input -->
+          <app-input-custom
+            *ngIf="modality !== 'view' && modality !== 'delete'"
+            [id]="'municipality-input'"
+            [placeholder]="'Municipio'"
+            [control]="municipalityInput"
+            [submitted]="submitted"
+          ></app-input-custom>
+
+          <!-- readonly -->
+          <input
+            *ngIf="modality === 'delete'"
+            [value]="municipalityInput.value"
+            class="form-control form-group"
+            readonly
+            nbInput/>
         </div>
 
         <div
@@ -46,12 +65,15 @@
         </div>
       </div>
 
-      <!-- crud -->
+      <!-- btn group -->
       <div class="col-auto form-group m-inline-form">
-        <div class="btn-group">
+        <!-- btn crud -->
+        <div *ngIf="modality === 'view'" class="btn-group">
           <button
             nbTooltip="Registrar municipio"
             nbButton
+            [attr.disabled]="!canCreate ? true: null"
+            (click)="onPrepareCreation()"
             status="info"
             class="btn-left"
           >
@@ -60,6 +82,8 @@
           <button
             nbTooltip="Editar municipio"
             nbButton
+            [attr.disabled]="!canEdit ? true: null"
+            (click)="onPrepareEdition()"
             class="rounded-0"
             status="info"
           >
@@ -69,10 +93,35 @@
             nbTooltip="Eliminar municipio"
             nbButton
             outline
+            [attr.disabled]="!canDelete ? true: null"
+            (click)="onPrepareDelete()"
             class="btn-right"
             status="danger"
           >
             <nb-icon icon="trash-2-outline"></nb-icon>
+          </button>
+        </div>
+
+        <!-- btn confirm -->
+        <div class="btn-group" *ngIf="modality !== 'view'">
+          <button
+            nbButton
+            status="info"
+            class="btn-left"
+            (click)="onConfirmAction(modality)"
+            [attr.disabled]="municipalityInput.value ? null : true"
+            nbTooltip="Confirmar">
+            Confirmar
+          </button>
+          <button
+            nbButton
+            outline
+            status="basic"
+            class="btn-right"
+            nbTooltip="Cancelar"
+            (click)="modality = 'view'"
+          >
+            Cancelar
           </button>
         </div>
       </div>

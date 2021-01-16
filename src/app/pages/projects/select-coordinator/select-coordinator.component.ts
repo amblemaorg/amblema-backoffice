@@ -27,7 +27,7 @@ export class SelectCoordinatorComponent implements OnInit, OnChanges {
   constructor(
     private store: Store
   ) {
-    store.dispatch( new GetCoordinatorUsers() )
+    store.dispatch( new GetCoordinatorUsers() );
   }
 
   ngOnInit(): void { }

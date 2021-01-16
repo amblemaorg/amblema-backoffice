@@ -50,7 +50,7 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
 
   ngOnChanges(): void {
 
-    
+
     if (this.MODE === this.ACTION.EDIT) {
       this.subscription = this.user$.subscribe(response => {
         this.title = 'Actualizar usuario coordinador';

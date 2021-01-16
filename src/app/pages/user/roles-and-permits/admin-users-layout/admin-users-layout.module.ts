@@ -21,6 +21,7 @@ import { FormRegionaladdressModule } from '../../../_components/form-components/
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUserViewComponent } from './admin-user-view/admin-user-view.component';
 import { ProgressModule } from '../../../_components/shared/progress/progress.module';
+import { FormLocalAddressModule } from 'src/app/pages/_components/form-components/forms/form-local-address/form-local-address.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ProgressModule } from '../../../_components/shared/progress/progress.mo
     ModalModule,
     FormDocumentModule,
     FormRegionaladdressModule,
+    FormLocalAddressModule
   ],
 })
 export class AdminUsersLayoutModule {}

@@ -77,16 +77,19 @@
                 <hr>
             </div>
             <div class="col-12">
-                <!-- <app-address-coordinator 
+                 <!-- <app-address-coordinator 
                     [idState]="idState"
                     [addressHome]="form.get('addressHome')" 
                     [addressCity]="form.get('addressCity')"
                     [state]="form.get('addressState')" 
                     [municipality]="form.get('addressMunicipality')"
                     [control]="form.get('address')" 
-                    [submitted]="submitted"></app-address-coordinator> -->
+                    [submitted]="submitted"></app-address-coordinator>   -->
 
-                    <app-form-local-address></app-form-local-address>
+                    <app-form-local-address       
+                        [state]="form.get('addressState')"
+                        [municipality]="form.get('addressMunicipality')">
+                    </app-form-local-address>
 
             </div>
         </div><!-- / End address data -->
@@ -154,5 +157,4 @@
         <span *ngIf="showProgress">Guardando...</span>
         <span *ngIf="MODE === ACTION.EDIT && !showProgress && !submitted">Editar</span>
     </button>
-
 </app-modal>

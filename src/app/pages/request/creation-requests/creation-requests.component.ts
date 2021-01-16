@@ -187,7 +187,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-        
+
         this.requestSelected = event.data;
         this.oldRequest = event.data;
         this.modalService.open(this.modal);
@@ -330,7 +330,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
           });
         break;
       case TYPE_REQUEST.SCHOOL.ORIGINAL:
-        
+
         this.userCreationRequestService
           .putUserCreationRequestSchool(
             this.requestSelected.id,

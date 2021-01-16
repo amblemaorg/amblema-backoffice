@@ -49,7 +49,7 @@ export class SchoolAdminComponent implements OnInit {
 
       if ( response ) {
         this.timeOut = Date.parse( response.endDate ) < Date.parse( new Date( ).toString() ) ? true : false;
-        console.log( this.timeOut )
+        console.log( this.timeOut );
       }
 
     });
@@ -67,8 +67,8 @@ export class SchoolAdminComponent implements OnInit {
           'Escuela inscrita en el año escolar'
         );
       }, (err) => {
-        console.log('error en al inscripcion de escuela'); 
-        console.log(err)
+        console.log('error en al inscripcion de escuela');
+        console.log(err);
       });
   }
 

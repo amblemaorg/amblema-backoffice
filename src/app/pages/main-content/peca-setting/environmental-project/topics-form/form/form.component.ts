@@ -215,7 +215,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
           this.subscription = this.storable$.subscribe((value) => {
             this.subscription = this.environmentalProjectService
-              .updateEnvironmentalProject(value)              
+              .updateEnvironmentalProject(value)
               .subscribe((response: HttpEvent<any>) => {
                 // -- Successfully mock delete topic --
                 switch (response.type) {
@@ -229,7 +229,7 @@ export class FormComponent implements OnInit, OnDestroy {
                     break;
                 }
               }, (error: any) => {
-              
+
               });
           });
         });

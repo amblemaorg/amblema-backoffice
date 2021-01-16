@@ -211,7 +211,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
           .updateSponsorUser(this.backUpData.id, data)
           .subscribe(
             (event: any) => {
-              
+
               this.store.dispatch(
                 new UpdateSponsorUser(this.backUpData, event)
               );
@@ -225,7 +225,7 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
               this.form.get('password').updateValueAndValidity();
             },
             (err: any) => {
-              
+
               this.errorResponse(err);
 
             }

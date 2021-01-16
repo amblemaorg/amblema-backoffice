@@ -1,10 +1,142 @@
 <div class="row">
   <div class="col-12 col-lg-6">
     <label for="state" class="label">Estado</label>
-    
+    <div class="form-group">
+      <ng-select
+        placeholder="- Seleccionar un estado -"
+        notFoundText="No hay estados"
+        (change)="state.setValue($event)"
+        [(ngModel)]="stateSelected">
+        <ng-option *ngFor="let state of states" [value]="state.id">{{
+          state.name
+        }}</ng-option>
+      </ng-select>
+    </div>
+
+    <div class="alert alert-primary" *ngIf="submitted && !state.value">
+      <strong> Selección requerida </strong>
+    </div>
   </div>
 
   <div class="col-12 col-lg-6">
-    <label for="municipality" class="label">Municipio</label>
+    <div class="row">
+      <!-- selector -->
+      <div class="col">
+        <label for="municipality" class="label">Municipio</label>
+        <div class="form-group">
+          <ng-select
+            *ngIf="modality === 'view'"
+            placeholder="- Seleccionar un municipio -"
+            notFoundText="No hay municipios"
+            (change)="municipality.setValue($event)"
+            [(ngModel)]="municipalitySelected"
+          >
+            <ng-option
+              *ngFor="let municipality of municipalities"
+              [value]="municipality.id"
+              >{{ municipality.name }}</ng-option
+            >
+          </ng-select>
+
+          <!-- input -->
+          <app-input-custom
+            *ngIf="modality !== 'view' && modality !== 'delete'"
+            [id]="'municipality-input'"
+            [placeholder]="'Municipio'"
+            [control]="municipalityInput"
+            [submitted]="submitted"
+          ></app-input-custom>
+
+          <!-- readonly -->
+          <input
+            *ngIf="modality === 'delete'"
+            [value]="municipalityInput.value"
+            class="form-control form-group"
+            readonly
+            nbInput/>
+        </div>
+
+        <div
+          class="alert alert-primary"
+          *ngIf="submitted && !municipality.value"
+        >
+          <strong> Selección requerida </strong>
+        </div>
+      </div>
+
+      <!-- btn group -->
+      <div class="col-auto form-group m-inline-form">
+        <!-- btn crud -->
+        <div *ngIf="modality === 'view'" class="btn-group">
+          <button
+            nbTooltip="Registrar municipio"
+            nbButton
+            [attr.disabled]="!canCreate ? true: null"
+            (click)="onPrepareCreation()"
+            status="info"
+            class="btn-left"
+          >
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+          <button
+            nbTooltip="Editar municipio"
+            nbButton
+            [attr.disabled]="!canEdit ? true: null"
+            (click)="onPrepareEdition()"
+            class="rounded-0"
+            status="info"
+          >
+            <nb-icon icon="edit-outline"></nb-icon>
+          </button>
+          <button
+            nbTooltip="Eliminar municipio"
+            nbButton
+            outline
+            [attr.disabled]="!canDelete ? true: null"
+            (click)="onPrepareDelete()"
+            class="btn-right"
+            status="danger"
+          >
+            <nb-icon icon="trash-2-outline"></nb-icon>
+          </button>
+        </div>
+
+        <!-- btn confirm -->
+        <div class="btn-group" *ngIf="modality !== 'view'">
+          <button
+            nbButton
+            status="info"
+            class="btn-left"
+            (click)="onConfirmAction(modality)"
+            [attr.disabled]="municipalityInput.value ? null : true"
+            nbTooltip="Confirmar">
+            Confirmar
+          </button>
+          <button
+            nbButton
+            outline
+            status="basic"
+            class="btn-right"
+            nbTooltip="Cancelar"
+            (click)="modality = 'view'"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <div class="col-12 col-lg-6">
+    <app-input-custom
+      [id]="'address'"
+      [placeholder]="'Calles / carreras'"
+      [label]="'Calles / carreras'"
+      [submitted]="submitted"
+      [control]="address"
+    ></app-input-custom>
+  </div>
+
+  <!-- expand the address -->
+  <ng-content></ng-content>
 </div>

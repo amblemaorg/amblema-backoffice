@@ -17,7 +17,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../../_components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../../_components/form-components/reactive-select/reactive-select.module';
 import { FormDocumentModule } from '../../../_components/form-components/forms/form-document/form-document.module';
-import { FormRegionaladdressModule } from '../../../_components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ModalModule } from '../../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveDatepickerModule } from '../../../_components/form-components/reactive-datepicker/reactive-datepicker.module';
@@ -57,7 +56,6 @@ import { FormLocalAddressModule } from 'src/app/pages/_components/form-component
     ReactiveSelectModule,
     ModalModule,
     FormDocumentModule,
-    FormRegionaladdressModule,
     FormLocalAddressModule,
   ]
 })

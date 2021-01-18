@@ -10,7 +10,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../../_components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../../_components/form-components/reactive-select/reactive-select.module';
 import { FormDocumentModule } from '../../../_components/form-components/forms/form-document/form-document.module';
-import { FormRegionaladdressModule } from '../../../_components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ModalModule } from '../../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from '../../../_components/form-components/reactive-input-file/reactive-input-file.module';
@@ -19,6 +18,7 @@ import { TypeCompanyComponent } from './type-company/type-company.component';
 import { ReactiveValidationModule } from '../../../_components/form-components/reactive-validation/reactive-validation.module';
 import { SponsorsUsersViewComponent } from './sponsors-users-view/sponsors-users-view.component';
 import { ProgressModule } from '../../../_components/shared/progress/progress.module';
+import { FormLocalAddressModule } from 'src/app/pages/_components/form-components/forms/form-local-address/form-local-address.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,6 @@ import { ProgressModule } from '../../../_components/shared/progress/progress.mo
     NbCardModule,
     Ng2SmartTableModule,
     ReactiveFormsModule,
-    FormRegionaladdressModule,
     NbIconModule,
     NbSpinnerModule,
     NbAlertModule,
@@ -48,8 +47,8 @@ import { ProgressModule } from '../../../_components/shared/progress/progress.mo
     ReactiveInputFileModule,
     ReactiveValidationModule,
     FormDocumentModule,
-    FormRegionaladdressModule,
     ModalModule,
+    FormLocalAddressModule
   ]
 })
 export class SponsorsUsersLayoutModule { }

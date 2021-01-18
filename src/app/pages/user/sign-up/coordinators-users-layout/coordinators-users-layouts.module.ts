@@ -17,7 +17,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../../_components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../../_components/form-components/reactive-select/reactive-select.module';
 import { FormDocumentModule } from '../../../_components/form-components/forms/form-document/form-document.module';
-import { FormRegionaladdressModule } from '../../../_components/form-components/forms/form-regional-address/form-regional-address.module';
 import { ModalModule } from '../../../_components/shared/modal/modal-forms/modal.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveDatepickerModule } from '../../../_components/form-components/reactive-datepicker/reactive-datepicker.module';
@@ -25,6 +24,7 @@ import { ReactiveInputFileModule } from '../../../_components/form-components/re
 import { AddressCoordinatorComponent } from './address-coordinator/address-coordinator.component';
 import { CoordinatorsUsersViewComponent } from './coordinators-users-view/coordinators-users-view.component';
 import { ProgressModule } from '../../../_components/shared/progress/progress.module';
+import { FormLocalAddressModule } from 'src/app/pages/_components/form-components/forms/form-local-address/form-local-address.module';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,7 @@ import { ProgressModule } from '../../../_components/shared/progress/progress.mo
     ReactiveSelectModule,
     ModalModule,
     FormDocumentModule,
-    FormRegionaladdressModule,
+    FormLocalAddressModule,
   ]
 })
 export class CoordinatorsUsersLayoutsModule { }

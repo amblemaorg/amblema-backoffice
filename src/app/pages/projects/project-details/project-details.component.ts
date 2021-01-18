@@ -70,7 +70,7 @@ export class ProjectDetailsComponent implements OnChanges {
     };
 
     localStorage.setItem('historicalData', JSON.stringify(this.deliveryData));
-    console.log(JSON.parse(localStorage.getItem('historicalData')));
+
   }
 }
 

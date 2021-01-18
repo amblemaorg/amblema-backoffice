@@ -227,7 +227,6 @@ export class SchoolsUsersFormComponent
   onSubmit() {
     this.submitted = true;
 
-    console.log(this.form.valid);
     // Working on your validated form data
     if (this.form.valid) {
       // Mode
@@ -243,7 +242,6 @@ export class SchoolsUsersFormComponent
 
         this.sanitizeNoRequiredData(data);
 
-        console.log(data);
         this.schoolUserService.setSchoolUser(data).subscribe(
           (event: HttpEvent<any>) => {
             switch (event.type) {
@@ -258,7 +256,7 @@ export class SchoolsUsersFormComponent
             }
           },
           (err: any) => {
-            console.log(err);
+
 
             this.showProgress = false;
 
@@ -335,7 +333,7 @@ export class SchoolsUsersFormComponent
             },
             (err: any) => {
               this.showProgress = false;
-              console.log(err);
+
               if (err.error.code) {
                 this.toastr.error(
                   'Error de datos',

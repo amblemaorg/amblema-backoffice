@@ -84,7 +84,7 @@ export class RolesFormComponent implements OnDestroy, OnChanges, OnInit {
           switch (response.type) {
             case HttpEventType.Response:
               this.resetForm();
-              console.log( response.body );
+
               this.store.dispatch(new SetRole(response.body));
               this.toastr.registerSuccess('Registro rol', 'Nuevo rol registrado');
               break;

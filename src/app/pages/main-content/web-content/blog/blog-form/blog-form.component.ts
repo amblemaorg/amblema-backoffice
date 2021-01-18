@@ -179,7 +179,7 @@ export class BlogFormComponent implements OnInit, OnChanges {
         this.blogService
           .updatePost(prepareData.id, prepareData)
           .subscribe((response: any) => {
-            console.log(response);
+
 
             setTimeout(() => {
               this.showProgress = false;

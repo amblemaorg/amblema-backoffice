@@ -22,10 +22,9 @@ building:
     - master
     - support
 
-
 building-app:
   stage: build
-  tags: 
+  tags:
     - amblema
   script:
     - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:prod"
@@ -36,7 +35,7 @@ building-app:
 
 cleaning:
   stage: cleanup
-  tags: 
+  tags:
     - amblema
   script:
     - docker container rm $CONTAINER_RUN --force
@@ -45,10 +44,26 @@ cleaning:
     - master
     - support
 
+deploying:
+  stage: deploy
+  tags:
+    - amblema
+  script:
+    - if [ "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
+    -   echo "container exist"
+    -   docker restart $CONTAINER_SERVER
+    - else
+    -   echo "container does not exist"
+    -   docker run -it -d --name $CONTAINER_SERVER -p 10502:10502 -v ${PWD}/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    -   echo "container created!"
+    -   echo "Staging BackOffice Amblema"
+    - fi
+  only:
+    - master
 
 deploying_support:
   stage: deploy-support
-  tags: 
+  tags:
     - amblema
   script:
     - if [ "$(docker ps -q -f name=$CONTAINER_SUPPORT)" ]; then
@@ -58,6 +73,7 @@ deploying_support:
     -   echo "container does not exist"
     -   docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
     -   echo "container created!"
+    -   echo "Support BackOffice Amblema"
     - fi
   only:
     - support

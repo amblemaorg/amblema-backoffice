@@ -45,29 +45,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     private webHomeService: WebHomeService,
     private store: Store) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.subscription = this.data$.subscribe(response => {
       this.sliders = response.slider; // <-- Get sliders, show on the table
       this.testimonials = response.testimonials; // <-- Get testimonials show on the table
-      if (response.aboutUsText) {
-        this.form.controls.aboutUsText.setValue(response.aboutUsText);
-      }
-      if (response.environmentText) {
-        this.form.controls.environmentText.setValue(response.environmentText);
-      }
-      if (response.readingText) {
-        this.form.controls.readingText.setValue(response.readingText);
-      }
-      if (response.mathText) {
-        this.form.controls.mathText.setValue(response.mathText);
-      }
+      this.form.controls.aboutUsText.setValue(this.form.controls.aboutUsText.value ? this.form.controls.aboutUsText.value : response.aboutUsText);
+      this.form.controls.environmentText.setValue(this.form.controls.environmentText.value ? this.form.controls.environmentText.value : response.environmentText);
+      this.form.controls.readingText.setValue(this.form.controls.readingText.value ? this.form.controls.readingText.value : response.readingText);
+      this.form.controls.mathText.setValue(this.form.controls.mathText.value ? this.form.controls.mathText.value : response.mathText);
+
     });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    if (this.subscription) { this.subscription.unsubscribe(); }
   }
 
   // -- Testimonials slider --
@@ -99,12 +90,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   // Save
-
   onSaveWebHome() {
-
-    console.log('se esta disparando');
     this.subscription = this.store.dispatch(new SetWebHome(this.form.value)).subscribe(response => {
-
       this.showProgress = true;
       this.subscription = this.webHomeService.setContentWebHome({ homePage: response.webhome }).subscribe((event: HttpEvent<any>) => {
 
@@ -118,7 +105,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             break;
         }
       }, (err: any) => {
-        console.log(err);
         this.showProgress = false;
         this.toastr.error('Error', 'No se ha completado el registro.');
       });

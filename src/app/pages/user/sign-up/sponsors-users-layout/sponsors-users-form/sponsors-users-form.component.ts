@@ -141,9 +141,6 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
 
         this.form.patchValue(response);
 
-        console.log(this.backUpData);
-        console.log('Modo edicion de consola');
-
         this.form.controls.role.setValue(response.role.id);
         this.form.controls.addressState.setValue(response.addressState.id);
         this.idState = response.addressState;
@@ -206,9 +203,6 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
           (err: any) => this.errorResponse(err)
         );
       } else {
-        console.log('Informacion de la edicion');
-        console.log(data);
-
         if (data.password === '' || data.password === null) {
           delete data.password;
         }
@@ -217,7 +211,6 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
           .updateSponsorUser(this.backUpData.id, data)
           .subscribe(
             (event: any) => {
-              console.log('Respuesta satisfactoria del endpoint');
 
               this.store.dispatch(
                 new UpdateSponsorUser(this.backUpData, event)
@@ -232,11 +225,9 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
               this.form.get('password').updateValueAndValidity();
             },
             (err: any) => {
-              console.log(
-                'Error de respuesta de la edicion del usuario padrinos'
-              );
+
               this.errorResponse(err);
-              console.log(err);
+
             }
           );
       }
@@ -258,7 +249,6 @@ export class SponsorsUsersFormComponent implements OnChanges, OnDestroy {
   errorResponse(err: any) {
     this.showProgress = false;
 
-    console.log(err);
 
     if (err.error.status === 0) {
       this.toastr.error('Error de datos', 'Verifica los datos del formulario');

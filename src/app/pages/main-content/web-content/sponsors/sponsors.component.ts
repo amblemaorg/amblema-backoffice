@@ -45,6 +45,7 @@ export class SponsorsComponent implements OnInit, OnDestroy {
       this.steps.push(new FormControl(''));
     }
 
+
     this.formSponsor.addControl('steps', this.steps);
 
     this.subscription = this.data$.subscribe((response) => {
@@ -57,7 +58,13 @@ export class SponsorsComponent implements OnInit, OnDestroy {
         ? this.formSponsor.controls.backgroundImage.value
         : null;
 
-      this.formSponsor.patchValue(response.sponsorPage);
+
+      const allEmpty = JSON.stringify( this.formSponsor.controls.steps.value );
+
+      if (allEmpty === '["","","","","","",""]') {
+          this.formSponsor.patchValue(response.sponsorPage);
+        }
+
 
       if (imageBackUp) {
         this.formSponsor.controls.backgroundImage.setValue(imageBackUp);

@@ -147,15 +147,11 @@ export class StepsFormComponent implements OnInit, OnDestroy {
 
       this.showProgress = true;
 
-      console.log('paso --');
-      console.log(this.form.value);
 
       this.stepService.setStep(formData).subscribe(
         (response: HttpEvent<any>) => {
           switch (response.type) {
             case HttpEventType.Response:
-              console.log('respueste --');
-              console.log(response.body);
 
               this.resetForm();
               this.store.dispatch(new AddStep(response.body));

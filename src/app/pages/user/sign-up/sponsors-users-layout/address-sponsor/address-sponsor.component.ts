@@ -1,10 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import {
-  FormRegionaladdressComponent
-} from 'src/app/pages/_components/form-components/forms/form-regional-address/form-regional-address.component';
+import { Component, Input } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { AuthService } from 'src/app/services/user/auth.service';
-import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+import { FormLocalAddressAbstractComponent } from 'src/app/pages/_components/form-components/forms/form-local-address/form-local-address.abstract.component';
 
 @Component({
   selector: 'app-address-sponsor',
@@ -25,13 +21,6 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
     `
   ]
 })
-export class AddressSponsorComponent extends FormRegionaladdressComponent {
-
+export class AddressSponsorComponent extends FormLocalAddressAbstractComponent {
   @Input() addressCity: AbstractControl | null = new FormControl();
-
-
-  public canCreate = new AuthService().isAllowed( ALL_ACTIONS.MUNICIPALITY_CREATE );
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.MUNICIPALITY_EDIT );
-  public canDelete = new AuthService().isAllowed( ALL_ACTIONS.MUNICIPALITY_DELETE );
-
 }

@@ -207,17 +207,15 @@ export class FormComponent implements OnInit, OnDestroy {
           )
         )
         .toPromise()
-        .then()
+        .then( )
         .finally(() => {
+
+
           this.subscription = this.storable$.subscribe((value) => {
-
-            console.log(value.lapse1.topics[0]);
-
             this.subscription = this.environmentalProjectService
               .updateEnvironmentalProject(value)
               .subscribe((response: HttpEvent<any>) => {
                 // -- Successfully mock delete topic --
-
                 switch (response.type) {
                   case HttpEventType.UploadProgress:
                     this.showProgress = true;
@@ -228,6 +226,8 @@ export class FormComponent implements OnInit, OnDestroy {
                     }, 2500);
                     break;
                 }
+              }, (error: any) => {
+
               });
           });
         });

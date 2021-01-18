@@ -13,7 +13,6 @@ import {
   SchoolYearEnrolledState,
   GetSchoolYearsEnrolled,
 } from 'src/app/store/_enrolled/school-year-enrolled.action';
-import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
@@ -61,8 +60,6 @@ export class SchoolAdminComponent implements OnInit {
       .enrollSchools(this.selectedSchool)
       .subscribe((response) => {
 
-        console.log(`Se ha inscrito una nueva escuela`);
-
         this.store.dispatch(new SetEnrolledSchool(this.selectedSchool));
         this.selectedSchool = null;
         this.toastr.updateSuccess(
@@ -70,6 +67,8 @@ export class SchoolAdminComponent implements OnInit {
           'Escuela inscrita en el año escolar'
         );
       }, (err) => {
+        console.log('error en al inscripcion de escuela');
+        console.log(err);
       });
   }
 

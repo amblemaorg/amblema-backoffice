@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { SchoolUserState } from 'src/app/store/user/school-user.action';
+import { Select, Store } from '@ngxs/store';
+import { GetSchoolUsers, SchoolUserState } from 'src/app/store/user/school-user.action';
 import { Observable } from 'rxjs';
 import { SchoolUser } from 'src/app/_models/user/school.model';
 import { AbstractControl, FormControl } from '@angular/forms';
@@ -21,6 +21,11 @@ export class SelectSchoolComponent implements OnInit, OnChanges {
   @Input() mode: string;
 
   selectedSchool;
+
+
+  constructor(private store: Store) {
+    store.dispatch( new GetSchoolUsers() );
+  }
 
   ngOnInit(): void {
   }

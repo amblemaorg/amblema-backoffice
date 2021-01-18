@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { ACTION } from 'src/app/_helpers/text-content/text-crud';
 import { ProjectState } from 'src/app/store/project.action';
 import { Project } from 'src/app/_models/project.model';
-import { CoordinatorUserState } from 'src/app/store/user/coordinator-user.action';
+import { CoordinatorUserState, GetCoordinatorUsers } from 'src/app/store/user/coordinator-user.action';
 
 @Component({
   selector: 'app-select-coordinator',
@@ -22,6 +22,13 @@ export class SelectCoordinatorComponent implements OnInit, OnChanges {
   @Input() mode: string;
 
   selectedCoordinator;
+
+
+  constructor(
+    private store: Store
+  ) {
+    store.dispatch( new GetCoordinatorUsers() );
+  }
 
   ngOnInit(): void { }
 

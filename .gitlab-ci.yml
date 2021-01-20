@@ -13,7 +13,7 @@ variables:
 
 building:
   stage: build-image
-  tags:
+  tags: 
     - amblema
   script:
     - docker build -f deploy.Dockerfile -t angular:amblema-backoffice .

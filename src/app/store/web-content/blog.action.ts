@@ -4,6 +4,7 @@ import { BlogService } from '../../services/web-content/blog.service';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { append, updateItem, removeItem, patch } from '@ngxs/store/operators';
 import { Utility } from '../../_helpers/utility';
+import { Injectable } from '@angular/core';
 
 // -- Post Actions --
 
@@ -32,6 +33,7 @@ export class DeletePost {
     name: 'posts',
     defaults: []
 })
+@Injectable()
 export class PostsState implements NgxsOnInit {
 
     @Selector()

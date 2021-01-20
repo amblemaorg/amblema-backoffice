@@ -1,6 +1,7 @@
 import { AbstractReactive } from '../abstract-reactive';
-import { Output, EventEmitter } from '@angular/core';
+import { Output, EventEmitter, Directive } from '@angular/core';
 
+@Directive()
 export class AbstractReactiveSelect extends AbstractReactive {
     @Output() onselected = new EventEmitter<any>(); // <-- Event emitter
 

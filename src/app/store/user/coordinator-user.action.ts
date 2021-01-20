@@ -5,7 +5,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { Subscription } from 'rxjs';
-import { OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -39,6 +39,7 @@ export class SelectedCoordinatorUser {
     constructor(public payload: CoordinatorUser) { }
 }
 
+// TODO: Add Angular decorator.
 @State<CoordinatorUserModel>({
     name: 'coordinatoruser',
     defaults: {
@@ -67,6 +68,7 @@ export class SelectedCoordinatorUser {
         coordinatorUsers: []
     }
 })
+@Injectable()
 export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
 
     subscription: Subscription;

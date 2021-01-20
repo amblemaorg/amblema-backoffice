@@ -1,8 +1,9 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ACTION } from '../../../../_helpers/text-content/text-crud';
-import { Input } from '@angular/core';
+import { Input, Directive } from '@angular/core';
 
 
+@Directive()
 export abstract class AbtractStepForm {
 
     // General form

@@ -13,7 +13,7 @@ import {
   Topic,
   Level,
 } from '../_models/environmental-project.model';
-import { OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { EnvironmentalProjectService } from '../services/environmental-project.service';
 import { Subscription } from 'rxjs';
 import {
@@ -101,6 +101,7 @@ export class UpdateTopic {
   constructor(public topic: Topic, public indexTopic: number) {}
 }
 
+// TODO: Add Angular decorator.
 @State<EnvironmentalProjectModel>({
   name: 'environmentalproject',
   defaults: {
@@ -124,6 +125,7 @@ export class UpdateTopic {
     },
   },
 })
+@Injectable()
 export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
   subscriptionEnvironmentalProject: Subscription;
 

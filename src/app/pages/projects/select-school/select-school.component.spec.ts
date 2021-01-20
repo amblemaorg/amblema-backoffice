@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SelectSchoolComponent } from './select-school.component';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -14,7 +14,7 @@ describe('SelectSchoolComponent', () => {
   let component: SelectSchoolComponent;
   let fixture: ComponentFixture<SelectSchoolComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SelectSchoolComponent ],
       imports: [

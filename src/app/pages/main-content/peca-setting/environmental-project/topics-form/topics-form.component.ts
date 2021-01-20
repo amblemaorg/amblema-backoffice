@@ -29,7 +29,7 @@ export class TopicsFormComponent
   @Select(EnvironmentalProjectState.environmentalProjectStorable)
   storable$: Observable<EnvironmentalProjectModel>;
 
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT );
+  public canEdit = new AuthService().isAllowed(ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT);
 
   subscription: Subscription;
 
@@ -39,9 +39,9 @@ export class TopicsFormComponent
     private cd: ChangeDetectorRef,
     private environmentalProjectService: EnvironmentalProjectService,
     private store: Store
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewChecked(): void {
     this.cd.detectChanges();

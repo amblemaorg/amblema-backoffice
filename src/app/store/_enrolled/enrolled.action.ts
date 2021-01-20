@@ -3,6 +3,7 @@ import { GeneralEnrolled } from 'src/app/_models/_enrolled/general-enrolled.mode
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch, removeItem, append } from '@ngxs/store/operators';
 import { EnrolledSchool } from 'src/app/_models/_enrolled/enrolled-school.model';
+import { Injectable } from '@angular/core';
 
 export class GetGeneralEnrolled {
   static readonly type = '[GeneralEnrolled] Get General Enrolled';
@@ -25,6 +26,7 @@ export class SetEnrolledSchool {
     availableSchools: [],
   },
 })
+@Injectable()
 export class GeneralEnrolledState implements NgxsOnInit {
   @Selector()
   static availableSchools(state: GeneralEnrolled): EnrolledSchool[] | null {

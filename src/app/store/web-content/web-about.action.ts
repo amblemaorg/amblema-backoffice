@@ -4,6 +4,8 @@ import { State, StateContext, Selector, Action, NgxsOnInit } from '@ngxs/store';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebAboutService } from '../../services/web-content/web-about.service';
 import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { Injectable } from '@angular/core';
+
 
 // -- Web about's class actions --
 
@@ -64,7 +66,7 @@ export class DeleteAwardWebAbout {
         }
     }
 })
-
+@Injectable()
 export class WebAboutState implements NgxsOnInit {
 
     @Selector()

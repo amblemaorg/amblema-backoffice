@@ -3,6 +3,7 @@ import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
+import { Inject, Injectable } from '@angular/core';
 
 export interface UserCreationRequestModel {
   userCreationRequests: UserCreationRequest[];
@@ -31,6 +32,7 @@ export class DeleteUserCreationRequest {
     userCreationRequests: [],
   },
 })
+@Injectable()
 export class UserCreationRequestState implements NgxsOnInit {
   @Selector()
   static creationRequests(

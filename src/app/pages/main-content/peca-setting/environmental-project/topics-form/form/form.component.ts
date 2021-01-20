@@ -3,8 +3,6 @@ import {
   OnInit,
   Input,
   OnDestroy,
-  SimpleChanges,
-  OnChanges,
 } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import {

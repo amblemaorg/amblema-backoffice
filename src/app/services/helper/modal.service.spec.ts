@@ -15,11 +15,9 @@ describe('ModalService', () => {
   it('TestCase#2944 - Should be modal functions', () => {
     const service: ModalService = TestBed.get(ModalService);
 
-    expect( service.open('modal') ).toBeUndefined();
-    expect( service.close('modal') ).toBeUndefined();
+    expect(service.open('modal')).toBeUndefined();
+    expect(service.close('modal')).toBeUndefined();
   });
 
-  afterAll(() => {
-
-  });
+  afterAll(() => {});
 });

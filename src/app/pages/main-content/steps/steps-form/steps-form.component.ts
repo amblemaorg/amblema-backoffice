@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Injector } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -29,6 +29,7 @@ import { Subscription } from 'rxjs';
   providers: [BsModalService],
 })
 export class StepsFormComponent implements OnInit, OnDestroy {
+
   @Input() id: string;
   @Input() title: string;
   @Input() kind: string;
@@ -68,9 +69,9 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     public toastr?: CustomToastrService,
     public stepService?: StepService,
     public fb?: FormBuilder,
-    public modalServicesBs?: BsModalService
+    public modalServicesBs?: BsModalService,
+    private injector?: Injector
   ) {
-
     this.APPROVAL_TYPE = APPROVAL_TYPE;
   }
 
@@ -78,9 +79,7 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  ngOnDestroy(): void {
-
-  }
+  ngOnDestroy(): void {}
 
   public onSelectedApproval(event: any): void {
     this.selectedApproval = event;
@@ -95,8 +94,6 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     this.form.controls.hasChecklist.setValue(false);
     this.form.controls.checklist.reset();
     this.form.controls.hasUpload.setValue(false);
-
-
   }
 
   onSubmit(): void {
@@ -149,7 +146,6 @@ export class StepsFormComponent implements OnInit, OnDestroy {
       formData.append('hasUpload', this.form.controls.hasUpload.value);
 
       this.showProgress = true;
-
 
 
       this.stepService.setStep(formData).subscribe(
@@ -221,7 +217,6 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     this.form.controls.hasVideo.setValue(false);
     this.form.controls.hasChecklist.setValue(false);
     this.form.controls.hasUpload.setValue(false);
-
 
     this.submitted = false;
     this.checklist = [];

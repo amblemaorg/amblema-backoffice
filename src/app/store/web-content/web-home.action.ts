@@ -4,6 +4,7 @@ import { WebHomeService } from '../../services/web-content/web-home.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 import { Slider } from '../../_models/web/slider.model';
 import { Testimonial } from '../../_models/web/testimonial.model';
+import { Injectable } from '@angular/core';
 
 // -- Web Home class action --
 
@@ -62,6 +63,7 @@ export class DeleteTestimonialWebHome {
         testimonials: []
     }
 })
+@Injectable()
 export class WebHomeState implements NgxsOnInit {
 
     @Selector()

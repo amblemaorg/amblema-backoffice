@@ -3,7 +3,7 @@ import { State, NgxsOnInit, Selector, StateContext, Action } from '@ngxs/store';
 import { ProjectService } from '../services/project.service';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
-import { OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 interface ProjectStateModel {
@@ -42,6 +42,7 @@ export class ClearProject {
     constructor( ) {}
 }
 
+// TODO: Add Angular decorator.
 @State<ProjectStateModel>({
     name: 'projects',
     defaults: {
@@ -59,6 +60,7 @@ export class ClearProject {
         projects: []
     }
 })
+@Injectable()
 export class ProjectState implements NgxsOnInit, OnDestroy {
     private subscription: Subscription;
 

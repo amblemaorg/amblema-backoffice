@@ -2,11 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  AfterViewInit,
-  AfterViewChecked,
-  AfterContentChecked,
-  DoCheck,
-  OnDestroy,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -21,7 +16,8 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
   templateUrl: './activities-form.component.html',
   styleUrls: ['./activities-form.component.scss'],
 })
-export class ActivitiesFormComponent extends StepsFormComponent
+export class ActivitiesFormComponent
+  extends StepsFormComponent
   implements OnInit {
   @Input() lapse: string;
 
@@ -30,8 +26,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
   constructor(
     public store: Store,
     private lapseActivityService: LapseActivitiesService,
-    public toastr: CustomToastrService,
-
+    public toastr: CustomToastrService
   ) {
     super(store, toastr);
   }
@@ -42,7 +37,7 @@ export class ActivitiesFormComponent extends StepsFormComponent
     this.form.addControl('hasDate', new FormControl(false));
     this.APPROVAL_TYPE = [
       ...this.APPROVAL_TYPE,
-      { CODE: '5', VALUE: 'No requiere aprobación' }
+      { CODE: '5', VALUE: 'No requiere aprobación' },
     ];
   }
 
@@ -124,9 +119,6 @@ export class ActivitiesFormComponent extends StepsFormComponent
           }
         },
         (err: any) => {
-
-          console.log( err );
-
           this.toastr.error(
             'Problemas al registrar',
             'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
@@ -136,6 +128,4 @@ export class ActivitiesFormComponent extends StepsFormComponent
       );
     }
   }
-
-
 }

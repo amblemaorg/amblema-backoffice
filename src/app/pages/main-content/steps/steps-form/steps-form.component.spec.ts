@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StepsFormComponent } from './steps-form.component';
 import { ModalModule } from 'src/app/pages/_components/shared/modal/modal-forms/modal.module';
@@ -24,7 +24,7 @@ describe('StepsFormComponent', () => {
   let component: StepsFormComponent;
   let fixture: ComponentFixture<StepsFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         StepsFormComponent ],

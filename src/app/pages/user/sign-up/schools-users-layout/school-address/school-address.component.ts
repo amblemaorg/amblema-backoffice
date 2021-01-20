@@ -20,6 +20,7 @@ import { FormLocalAddressAbstractComponent } from 'src/app/pages/_components/for
     `,
   ],
 })
+
 export class SchooladdressComponent extends FormLocalAddressAbstractComponent {
   @Input() addressCity: AbstractControl | null = new FormControl();
   @Input() addressZoneType: AbstractControl | null = new FormControl();

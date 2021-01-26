@@ -4,6 +4,8 @@ import {
   Validators,
   FormGroup,
   FormBuilder,
+  ValidationErrors,
+  AbstractControl,
 } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 
@@ -23,13 +25,13 @@ import {
   SchoolUserState,
   UpdateSchoolUser,
 } from 'src/app/store/user/school-user.action';
-import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { SchoolUser, Coordinate } from 'src/app/_models/user/school.model';
 import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
 import { BaseForm } from '../../../_shared/base-form';
 import { AddressState } from 'src/app/store/_address/address.action';
-import { Statal } from 'src/app/_models/address.model';
+
 
 @Component({
   selector: 'app-schools-users-form',
@@ -82,7 +84,7 @@ export class SchoolsUsersFormComponent
 
     // Data school
     this.form.addControl('image', new FormControl(null));
-    this.form.addControl('code', new FormControl('', [Validators.required]));
+    this.form.addControl('code', new FormControl('', [Validators.required, CodeValidator.cannotContainSpace]));
     this.form.addControl('role', new FormControl());
 
     // Data address
@@ -414,5 +416,16 @@ export class SchoolsUsersFormComponent
   // -- Event selected rol --
   onselected(event: any) {
     this.form.controls.role.setValue(event);
+  }
+}
+
+
+export class CodeValidator {
+  static cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+      if((control.value as string).indexOf(' ') >= 0){
+          return {cannotContainSpace: true}
+      }
+
+      return null;
   }
 }

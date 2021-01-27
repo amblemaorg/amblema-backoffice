@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.ts`.
 // The list of file replacements can be found in `angular.json`.
@@ -25,3 +26,12 @@ export const environment = {
    */
   // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
   
+=======
+export const environment = {
+    production: true,
+      
+    api: 'http://157.245.131.248:10516/',
+    web: 'http://157.245.131.248:10512/',
+  
+  };
+>>>>>>> 977ee9a718429ba425c856f92e4fbf88896cbdae

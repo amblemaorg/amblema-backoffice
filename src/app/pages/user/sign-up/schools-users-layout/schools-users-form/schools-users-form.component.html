@@ -31,9 +31,13 @@
           [label]="'Código del plantel'"
           [placeholder]="'Código del plantel'"
           [submitted]="submitted"
-          [patternMsg]="MESSAGES.NAME_MESSAGE"
+          [patternMsg]="'No se permiten espacios'"
         >
         </app-input-custom>
+        <div *ngIf="submitted && form.get('code').errors?.cannotContainSpace" class="alert alert-primary">
+          <strong>No se permiten espacios</strong>
+        </div>
+        
       </div>
 
       <div class="col-12 col-lg-6">

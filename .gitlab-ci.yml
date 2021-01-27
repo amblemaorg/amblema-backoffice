@@ -26,8 +26,8 @@ building-app:
   stage: build
   tags:
     - amblema
-  script:
-    - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:prod"
+  script: 
+    - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:staging"
     - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
   only:
     - master
@@ -64,7 +64,7 @@ deploying:
     -   docker restart $CONTAINER_SERVER
     - else
     -   echo "container does not exist"
-    -   docker run -it -d --name $CONTAINER_SERVER -p 10502:10502 -v ${PWD}/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    -   docker run -it -d --name $CONTAINER_SERVER -p 10502:10502 -v ${PWD}/dist/staging/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
     -   echo "container created!"
     -   echo "Staging BackOffice Amblema"
     - fi

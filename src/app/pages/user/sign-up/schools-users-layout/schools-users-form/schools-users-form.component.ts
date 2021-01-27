@@ -422,7 +422,7 @@ export class SchoolsUsersFormComponent
 
 export class CodeValidator {
   static cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
-      if((control.value as string).indexOf(' ') >= 0){
+      if( control.value && ((control.value as string).indexOf(' ') >= 0)){
           return {cannotContainSpace: true}
       }
 

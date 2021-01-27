@@ -40,12 +40,11 @@
               "node_modules/nebular-icons/css/nebular-icons.css"
             ],
             "scripts": [
-
               "node_modules/jquery/dist/jquery.min.js",
               "./node_modules/katex/dist/katex.min.js",
               "./node_modules/quill/dist/quill.min.js",
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js", 
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/html2canvas/dist/html2canvas.min.js"
             ]
           },

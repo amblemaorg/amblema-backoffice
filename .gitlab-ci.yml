@@ -31,6 +31,16 @@ building-app:
     - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
   only:
     - master
+
+
+building-app-support:
+  stage: build
+  tags:
+    - amblema
+  script:
+    - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:support"
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
+  only:
     - support
 
 cleaning:
@@ -61,7 +71,7 @@ deploying:
   only:
     - master
 
-deploying_support:
+deploying-support:
   stage: deploy-support
   tags:
     - amblema
@@ -71,7 +81,7 @@ deploying_support:
     -   docker restart $CONTAINER_SUPPORT
     - else
     -   echo "container does not exist"
-    -   docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    -   docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/support/:/usr/share/nginx/html/Amblema-BackOffice-Support -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
     -   echo "container created!"
     -   echo "Support BackOffice Amblema"
     - fi

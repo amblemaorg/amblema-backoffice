@@ -28,7 +28,7 @@ building-app:
     - amblema
   script: 
     - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:staging"
-    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/staging"
   only:
     - master
 
@@ -39,7 +39,7 @@ building-app-support:
     - amblema
   script:
     - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:support"
-    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/support"
   only:
     - support
 
@@ -48,6 +48,7 @@ cleaning:
   tags:
     - amblema
   script:
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node * --verbose"
     - docker container rm $CONTAINER_RUN --force
     - docker rmi angular:amblema-backoffice --force
   only:

@@ -1,0 +1,1 @@
+docker run --name amblema-backoffice-support -p 10503:10503 -v '${PWD}/dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/ devbinaural/nginx'

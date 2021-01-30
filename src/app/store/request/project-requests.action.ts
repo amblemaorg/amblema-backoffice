@@ -22,6 +22,7 @@ import {
   RequestContentState,
   RequestContentModel,
 } from './request-content-approval.action';
+import { Injectable } from '@angular/core';
 
 export interface ProjectRequestModel {
   projectRequests: ProjectRequest[];
@@ -50,6 +51,7 @@ export class DeleteProjectRequests {
     projectRequests: [],
   },
 })
+@Injectable()
 export class ProjectRequestState implements NgxsOnInit {
   @Selector([
     UserCreationRequestState,

@@ -1,17 +1,7 @@
-import {
-  Component,
-  OnInit,
-  DoCheck,
-  AfterViewChecked,
-  AfterContentChecked,
-  AfterViewInit,
-  OnChanges,
-  ElementRef,
-} from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { InformationDetailsComponent } from '../information-details/information-details.component';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
-import { ChartAverage } from 'src/app/pages/report/_shared/_model/average-graph.model';
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { InformationRequestService } from 'src/app/services/request/information-request.service';
@@ -89,7 +79,6 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
   ];
 
   constructor(
-
     public bsModalRef?: BsModalRef,
     public modalService?: BsModalService,
     public elem?: ElementRef,
@@ -102,7 +91,6 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
       if (this.data) {
         this.fillChart(this.data.detail.sections);
       }
-      console.log(this.data);
     }, 100);
   }
 
@@ -130,7 +118,6 @@ export class YearbookDetailsComponent extends InformationDetailsComponent {
       this.dataReadingLapseTwo[0].data.push(
         element.diagnostics.lapse2.wordsPerMinIndex
       );
-
       this.dataLogicLapseThree[0].data.push(
         element.diagnostics.lapse3.operationsPerMinIndex
       );

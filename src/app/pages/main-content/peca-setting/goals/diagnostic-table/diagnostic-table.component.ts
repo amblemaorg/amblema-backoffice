@@ -54,17 +54,17 @@ export class DiagnosticTableComponent implements OnInit, OnDestroy {
           editable: false
         },
         multiplicationsPerMin: {
-          title: 'Meta de multiplicación',
+          title: 'Meta de Multiplicación',
           type: 'number',
           editable: true
         },
         operationsPerMin: {
-          title: 'Meta de razonamiento lógico matemático',
+          title: 'Meta de Razonamiento Lógico - Matemático',
           type: 'number',
           editable: true
         },
         wordsPerMin: {
-          title: 'Meta de lectura',
+          title: 'Meta de Lectura',
           type: 'number',
           editable: true
         }

@@ -107,14 +107,14 @@ export class AdminUserFormComponent extends DetailsForm
 
       this.subscription = this.role$.subscribe((response) => {
         response.find((value) => {
-          console.log( value );
+
           if (value.devName === DEVNAME_ROLE.ADMIN) {
             this.roleId = value.id;
             this.form.controls.role.setValue(value.id);
           }
         });
-      }, ( err ) => {
-        console.log( err );
+      }, (err) => {
+
       });
     }
   }
@@ -209,7 +209,7 @@ export class AdminUserFormComponent extends DetailsForm
             switch (event.type) {
               case HttpEventType.Response:
                 let dataPosted: any = event.body;
-                dataPosted =  this.helper.readlyTypeDocument([dataPosted])[0];
+                dataPosted = this.helper.readlyTypeDocument([dataPosted])[0];
 
                 this.store.dispatch(new UpdateAdminUser(dataPosted));
                 this.toastr.updateSuccess(

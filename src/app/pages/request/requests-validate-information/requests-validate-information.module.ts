@@ -18,7 +18,6 @@ import { InitialWorkshopDetailsComponent } from './initial-workshop-details/init
 // Import the library
 import { CarouselModule } from 'ngx-owl-carousel-o';
 // Needs to import the BrowserAnimationsModule
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { SliderDetailsComponent } from './slider-details/slider-details.component';
 import { TestimonyDetailsComponent } from './testimony-details/testimony-details.component';
@@ -28,7 +27,7 @@ import { YearbookDetailsComponent } from './yearbook-details/yearbook-details.co
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SpanPlanningComponent } from './span-planning/span-planning.component';
 import { PhotosSchoolDetailsComponent } from './photos-school-details/photos-school-details.component';
-import { GraphicReportModule } from '../../report/_shared/graphic-report/graphic-report.module';
+
 import { GraphicBarComponent } from './_shared/graphic-bar/graphic-bar.component';
 import { ChartsModule } from 'ng2-charts';
 
@@ -42,7 +41,7 @@ import { ChartsModule } from 'ng2-charts';
     SpanPlanningComponent,
     InitialWorkshopDetailsComponent,
     PhotosSchoolDetailsComponent,
-    SpecialActivityDetailsComponent
+    SpecialActivityDetailsComponent,
   ],
   declarations: [
     RequestsValidateInformationComponent,
@@ -71,7 +70,8 @@ import { ChartsModule } from 'ng2-charts';
     NbInputModule,
     RequestsValidateInformationRoutingModule,
     NbDialogModule.forChild(),
-    ChartsModule
+
+    ChartsModule,
   ],
 })
 export class RequestsValidateInformationModule {}

@@ -7,6 +7,7 @@ import {
   ProjectState,
   DeleteProject,
   SelectedProject,
+  GetProjects,
 } from 'src/app/store/project.action';
 import { Project } from 'src/app/_models/project.model';
 import { Observable, SubscriptionLike, Subscription } from 'rxjs';
@@ -63,6 +64,9 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.store.dispatch(new GetProjects());
+
     this.MODE = this.ACTION.CREATE;
 
     // Add columns
@@ -172,13 +176,13 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     );
   }
 
-  clear() {}
+  clear() { }
 
   // Events table
   onAction(event: any): void {
     switch (event.action) {
       case this.ACTION.VIEW:
-        console.log( event.data );
+        console.log(event.data);
         this.store.dispatch(new SelectedProject(event.data));
         this.modal.open('view-project');
         break;

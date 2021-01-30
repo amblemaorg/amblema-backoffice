@@ -50,7 +50,7 @@
         </app-input-file>
       </div>
 
-      <div class="col-12"  *ngIf="false" >
+      <div class="col-12" *ngIf="false">
         <app-text-area-custom
           [submitted]="false"
           [control]="formStandard.get('planningMeetingDescription')"
@@ -69,14 +69,13 @@
 
       <div class="col-12">
         <app-text-area-custom
-        [submitted]="false"
-        [control]="formStandard.get('description')"
-        [max]="100"
-        [label]="'Descripción web'"
-        [placeholder]="'Descripción web'"
-      >
-      </app-text-area-custom>
-
+          [submitted]="false"
+          [control]="formStandard.get('description')"
+          [max]="100"
+          [label]="'Descripción web'"
+          [placeholder]="'Descripción web'"
+        >
+        </app-text-area-custom>
       </div>
 
       <div class="col-12 form-group" *ngIf="showProgress">
@@ -140,7 +139,7 @@
       </app-text-area-custom> -->
 
       <app-text-area-custom
-      *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
+        *ngIf="id === this.DEVNAME_STANDARD.AMBLE_COINS"
         [max]="100"
         [submitted]="false"
         [control]="formStandard.get('description')"
@@ -345,7 +344,7 @@
                 <button
                   nbButton
                   status="primary"
-                  style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                  style="padding-top: 0.6rem; padding-bottom: 0.6rem"
                   *ngIf="MODE_LIST === ACTION.CREATE"
                   [attr.disabled]="
                     !form.controls['checklist'].value ? true : null
@@ -362,7 +361,7 @@
                   *ngIf="MODE_LIST === ACTION.EDIT"
                 >
                   <button
-                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem"
                     outline
                     nbButton
                     status="info"
@@ -409,7 +408,7 @@
                   <button
                     nbButton
                     status="info"
-                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem"
                     outline
                     type="button"
                     class="btn btn-outline-info"
@@ -417,38 +416,41 @@
                   >
                     <nb-icon icon="edit-outline"></nb-icon>
                   </button>
-                  <button  nbButton status="danger" style="border-bottom-left-radius: 0; border-top-left-radius: 0; padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                    outlinen 
+                  <button
+                    nbButton
+                    status="danger"
+                    style="
+                      border-bottom-left-radius: 0;
+                      border-top-left-radius: 0;
+                      padding-top: 0.6rem;
+                      padding-bottom: 0.6rem;
+                    "
+                    outlinen
                     type="button"
                     class="btn btn-outline-danger"
                     (click)="onDeleteObjectiveX(i)"
                   >
                     <nb-icon icon="trash-2-outline"></nb-icon>
-                  </button> 
+                  </button>
                 </div>
               </nb-list-item>
             </nb-list>
           </div>
-    
-
         </div>
         <!-- / Dynamic list -->
 
         <div class="row">
-
           <div class="col-12">
             <app-text-area-custom
-            [submitted]="false"
-            [max]="100"
-            [control]="formStandard.get('description')"
-            [label]="'Descripción web'"
-            [placeholder]="'Descripción web'"
-          >
-          </app-text-area-custom>
-    
+              [submitted]="false"
+              [max]="100"
+              [control]="formStandard.get('description')"
+              [label]="'Descripción web'"
+              [placeholder]="'Descripción web'"
+            >
+            </app-text-area-custom>
           </div>
         </div>
-
 
         <div class="row" *ngIf="canEdit">
           <div class="col-12 form-group text-left">
@@ -514,16 +516,15 @@
 
       <div class="col-12">
         <app-text-area-custom
-        [submitted]="false"
-        [control]="formStandard.get('webDescription')"
-        [max]="100"
-        [label]="'Descripción web'"
-        [placeholder]="'Descripción web'"
-      >
-      </app-text-area-custom>
-
+          [submitted]="false"
+          [control]="formStandard.get('webDescription')"
+          [max]="100"
+          [label]="'Descripción web'"
+          [placeholder]="'Descripción web'"
+        >
+        </app-text-area-custom>
       </div>
-      
+
       <div class="col-12 form-group" *ngIf="showProgress">
         <app-progress (finish)="showProgress = false"></app-progress>
       </div>
@@ -547,47 +548,44 @@
     <!-- ########################## -->
 
     <form
-    (ngSubmit)="onSubmitSpecialSpanActivity()"
-    [formGroup]="formStandard"
-    *ngIf="
-      id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY &&
-      data.isStandard &&
-      formStandard
-    "
-  >
-
-    <div class="col-12">
-      <app-text-area-custom
-      [submitted]="false"
-      [control]="formStandard.get('description')"
-      [max]="100"
-      [label]="'Descripción web'"
-      [placeholder]="'Descripción web'"
+      (ngSubmit)="onSubmitSpecialSpanActivity()"
+      [formGroup]="formStandard"
+      *ngIf="
+        id === this.DEVNAME_STANDARD.SPECIAL_SPAN_ACTIVITY &&
+        data.isStandard &&
+        formStandard
+      "
     >
-    </app-text-area-custom>
+      <div class="col-12">
+        <app-text-area-custom
+          [submitted]="false"
+          [control]="formStandard.get('description')"
+          [max]="100"
+          [label]="'Descripción web'"
+          [placeholder]="'Descripción web'"
+        >
+        </app-text-area-custom>
+      </div>
 
-    </div>
-    
-    <div class="col-12 form-group" *ngIf="showProgress">
-      <app-progress (finish)="showProgress = false"></app-progress>
-    </div>
+      <div class="col-12 form-group" *ngIf="showProgress">
+        <app-progress (finish)="showProgress = false"></app-progress>
+      </div>
 
-    <div class="col-12"><hr /></div>
+      <div class="col-12"><hr /></div>
 
-    <div class="col-12 form-group text-left" *ngIf="canEdit">
-      <button
-        nbButton
-        [attr.disabled]="showProgress || formStandard.invalid ? true : null"
-        [nbSpinner]="showProgress"
-        nbSpinnerStatus="success"
-        type="submit"
-        class="col-6 col-md-auto"
-      >
-        <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
-      </button>
-    </div>
-  </form>
-
+      <div class="col-12 form-group text-left" *ngIf="canEdit">
+        <button
+          nbButton
+          [attr.disabled]="showProgress || formStandard.invalid ? true : null"
+          [nbSpinner]="showProgress"
+          nbSpinnerStatus="success"
+          type="submit"
+          class="col-6 col-md-auto"
+        >
+          <span>Guardar <nb-icon icon="edit-outline"></nb-icon></span>
+        </button>
+      </div>
+    </form>
 
     <!-- ######################### -->
 
@@ -625,7 +623,11 @@
 
       <div class="col-12">
         <label for="" class="label">Aprobación</label>
-        <select disabled formControlName="approvalType" class="form-control form-group">
+        <select
+          disabled
+          formControlName="approvalType"
+          class="form-control form-group"
+        >
           <option value="null" disabled>
             - Seleccione el tipo de aprobación -
           </option>
@@ -670,7 +672,7 @@
                 <button
                   nbButton
                   status="primary"
-                  style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                  style="padding-top: 0.6rem; padding-bottom: 0.6rem"
                   *ngIf="MODE_LIST === ACTION.CREATE"
                   [attr.disabled]="
                     !form.controls['checklist'].value ? true : null
@@ -687,7 +689,7 @@
                   *ngIf="MODE_LIST === ACTION.EDIT"
                 >
                   <button
-                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem"
                     outline
                     nbButton
                     status="info"
@@ -734,7 +736,7 @@
                   <button
                     nbButton
                     status="info"
-                    style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
+                    style="padding-top: 0.6rem; padding-bottom: 0.6rem"
                     outline
                     type="button"
                     class="btn btn-outline-info"
@@ -754,7 +756,7 @@
                     outline
                     type="button"
                     class="btn btn-outline-danger"
-                    (click)="onDeleteObjective(i)"
+                    (click)="onDeleteObjectiveX(i)"
                   >
                     <nb-icon icon="trash-2-outline"></nb-icon>
                   </button>
@@ -768,19 +770,15 @@
 
       <div class="col-12">
         <app-text-area-custom
-        *ngIf="!data.isStandard"
-        [submitted]="false"
-        [control]="form.get('description')"
-        [max]="100"
-        [label]="'Descripción web'"
-        [placeholder]="'Descripción web'"
-      >
-      </app-text-area-custom>
-
+          *ngIf="!data.isStandard"
+          [submitted]="false"
+          [control]="form.get('description')"
+          [max]="100"
+          [label]="'Descripción web'"
+          [placeholder]="'Descripción web'"
+        >
+        </app-text-area-custom>
       </div>
-
-
-
 
       <div class="col-12 form-group" *ngIf="showProgress">
         <app-progress (finish)="showProgress = false"></app-progress>

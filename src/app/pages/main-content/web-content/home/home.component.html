@@ -3,54 +3,60 @@
     <nb-card>
       <nb-card-header>Inicio</nb-card-header>
       <nb-card-body>
-
         <div class="row">
-
           <!-- Slider -->
           <div class="col-12 form-group">
-            <app-form-slider 
+            <app-form-slider
               (delete)="onDeleteSlider($event)"
               (edit)="onEditSlider($event)"
               (register)="onRegisterSlider($event)"
-              [sliders]="sliders"></app-form-slider>
+              [sliders]="(data$ | async).slider"
+            ></app-form-slider>
           </div>
 
           <!-- Content-->
           <div class="col-12">
-            <app-content-text 
+            <app-content-text
               [about]="317"
               [enviroment]="313"
               [reading]="313"
               [math]="313"
               [form]="form"
-              ></app-content-text>
+            ></app-content-text>
           </div>
 
           <!-- Form -->
           <div class="col-12">
-            <hr>
-            <p class="font-weight-bold">Testimonio de los fundadores</p>
+            <hr />
+            <p class="font-weight-bold">Testimonio de los Fundadores</p>
           </div>
-          <app-testimonial-form 
-          [maxDescription]="322"
+          <app-testimonial-form
+            [maxDescription]="322"
             (delete)="onDeleteTestimonial($event)"
             (edit)="onEditTestimonial($event)"
             (register)="onRegisterTestimonial($event)"
             [testimonials]="testimonials"
-            class="col-12"></app-testimonial-form>
+            class="col-12"
+          ></app-testimonial-form>
 
           <!-- Save changes -->
           <div class="col-12 text-right">
-            <hr>
-            <app-progress *ngIf="showProgress" class="form-group text-left"></app-progress>
-            <button 
+            <hr />
+            <app-progress
+              *ngIf="showProgress"
+              class="form-group text-left"
+            ></app-progress>
+            <button
               nbButton
-              [ngClass]="{'mt-3': showProgress}"
+              [ngClass]="{ 'mt-3': showProgress }"
               [attr.disabled]="showProgress ? true : null"
-              [nbSpinner]="showProgress ? true : null" 
+              [nbSpinner]="showProgress ? true : null"
               nbSpinnerStatus="success"
               (click)="onSaveWebHome()"
-              class="btn btn-primary col-12 col-lg-auto">Guardar cambios</button>
+              class="btn btn-primary col-12 col-lg-auto"
+            >
+              Guardar cambios
+            </button>
           </div>
         </div>
       </nb-card-body>

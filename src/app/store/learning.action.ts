@@ -5,6 +5,7 @@ import { LearningService } from '../services/learning.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { Slider } from '../_models/web/slider.model';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';
+import { Injectable } from '@angular/core';
 
 // -- State Model --
 
@@ -158,6 +159,7 @@ export class DeleteQuizze {
         learnings: []
     }
 })
+@Injectable()
 export class LearningState implements NgxsOnInit {
 
     @Selector()
@@ -299,7 +301,7 @@ export class LearningState implements NgxsOnInit {
             learnings: removeItem<Learning>(learning => learning === action.payload)
         }));
 
-        this.toastr.deleteRegister('Eliminación', 'Modulo de aprendizaje eliminado');
+        this.toastr.deleteRegister('Eliminación', 'Módulo de Aprendizaje eliminado');
 
     }
 

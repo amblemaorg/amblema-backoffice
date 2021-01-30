@@ -10,32 +10,25 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
 @Component({
   selector: 'app-generals',
-  templateUrl: './generals.component.html'
+  templateUrl: './generals.component.html',
 })
 export class GeneralsComponent implements OnInit, OnDestroy {
-
   @Select(StepState.generalSteps) steps$: Observable<Step[]>;
   subscription: Subscription;
 
   modal = 'form-step-general';
   kind: string = KIND_STEP.GENERAL.CODE;
 
-  public canCreate = new AuthService().isAllowed( ALL_ACTIONS.STEP_CREATE );
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.STEP_EDIT );
+  public canCreate = new AuthService().isAllowed(ALL_ACTIONS.STEP_CREATE);
+  public canEdit = new AuthService().isAllowed(ALL_ACTIONS.STEP_EDIT);
   public canRemove = new AuthService().isAllowed(ALL_ACTIONS.STEP_DELETE);
 
-
-  constructor(
-    public modalService: ModalService
-  ) { }
+  constructor(public modalService: ModalService) {}
 
   async ngOnInit() {
-
-
-  this.steps$.subscribe( response => {
-
-  } );
-
+    this.steps$.subscribe((response) => {
+      console.log(response);
+    });
   }
 
   ngOnDestroy(): void {

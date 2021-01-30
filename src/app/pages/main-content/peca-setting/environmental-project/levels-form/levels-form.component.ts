@@ -38,9 +38,9 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
-  public canEdit = new AuthService().isAllowed( ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT );
-
-
+  public canEdit = new AuthService().isAllowed(
+    ALL_ACTIONS.ENVIRONMENTAL_PROJECT_EDIT
+  );
 
   target = new Array<string>();
   techniques = new Array<string>();
@@ -68,24 +68,30 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
       (response) => {
         response.lapseSelected.topics.forEach((topic, index) => {
           if (this.indexTopic === index) {
+
             if (topic.levels.length >= 0) {
               topic.levels.forEach((value, key) => {
                 if (key === this.index) {
-                  this.form.patchValue(value);
+
+                  let parse = JSON.stringify(value);
+                  parse = JSON.parse(parse);
+                  console.log(parse);
+                  this.form.patchValue(parse as any);
 
                   this.options =
-                    value.target.length > 0
-                      ? JSON.parse(JSON.stringify(value.target))
-                      : this.options;
+                     value.target.length > 0
+                       ? JSON.parse(JSON.stringify(value.target))
+                       : this.options;
 
                   this.techniques = Object.assign([], value.techniques);
                   this.activities = Object.assign([], value.activities);
                   this.resources = Object.assign([], value.resources);
                   this.evaluations = Object.assign([], value.evaluations);
                   this.supportMaterial = Object.assign(
-                    [],
-                    value.supportMaterial
-                  );
+                     [],
+                     value.supportMaterial
+                   );
+
                 }
               });
             }
@@ -162,9 +168,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
           this.subscription = this.storable$.subscribe((value) => {
             this.subscription = this.environmentalProjectService
               .updateEnvironmentalProject(value)
-              .subscribe((response) => {
-                // -- Successfully mock delete topic --
-              });
+              .subscribe((response) => {});
           });
         });
     });

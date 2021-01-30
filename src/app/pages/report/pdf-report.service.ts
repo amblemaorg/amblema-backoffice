@@ -2,10 +2,11 @@ import { PdfMakeWrapper } from 'pdfmake-wrapper';
 const pdfMake = require('pdfmake/build/pdfmake.js');
 const pdfFonts = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { OnInit, Inject } from '@angular/core';
+import { OnInit, Inject, Injectable } from '@angular/core';
 import { DOCUMENT, DatePipe, formatDate } from '@angular/common';
 import { IMAGE } from './img-base-64';
 
+@Injectable()
 export class PDFReport implements OnInit {
   wait = false;
 

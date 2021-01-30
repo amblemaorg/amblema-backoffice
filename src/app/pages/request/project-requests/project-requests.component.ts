@@ -174,8 +174,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
       case this.ACTION.VIEW:
         this.requestSelected = event.data;
 
-        console.log('-- Solicitud seleccionada | - Compara con la estructura seleccionada--');
-        console.log( this.requestSelected );
         this.modalService.open(this.modal);
         break;
       case this.ACTION.DELETE:
@@ -290,8 +288,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           .subscribe(
             (response: any) => {
 
-              console.log( response );
-
               this.showProgress = false;
 
               // -- Update project request
@@ -333,9 +329,6 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
           .subscribe(
             (response: any) => {
 
-              console.log( '-- Respuesta del endpoint - Compara con la estructura seleccionada --' );
-              console.log( response );
-
               this.showProgress = false;
 
               // -- Update project request
@@ -366,7 +359,7 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
               );
             },
             (err) => {
-              console.log(err);
+
               this.showProgress = false;
               this.toast.error(
                 'Error',

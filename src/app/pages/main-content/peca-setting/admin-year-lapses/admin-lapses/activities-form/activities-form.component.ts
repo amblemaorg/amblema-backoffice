@@ -2,11 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  AfterViewInit,
-  AfterViewChecked,
-  AfterContentChecked,
-  DoCheck,
-  OnDestroy,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -21,7 +16,8 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
   templateUrl: './activities-form.component.html',
   styleUrls: ['./activities-form.component.scss'],
 })
-export class ActivitiesFormComponent extends StepsFormComponent
+export class ActivitiesFormComponent
+  extends StepsFormComponent
   implements OnInit {
   @Input() lapse: string;
 
@@ -30,21 +26,23 @@ export class ActivitiesFormComponent extends StepsFormComponent
   constructor(
     public store: Store,
     private lapseActivityService: LapseActivitiesService,
-    public toastr: CustomToastrService,
-
+    public toastr: CustomToastrService
   ) {
     super(store, toastr);
   }
 
   ngOnInit(): void {
+    console.log('Formulario para crear una actividad generica');
+
     this.form.addControl('hasDate', new FormControl(false));
     this.APPROVAL_TYPE = [
       ...this.APPROVAL_TYPE,
-      { CODE: '5', VALUE: 'No requiere aprobación' }
+      { CODE: '5', VALUE: 'No requiere aprobación' },
     ];
   }
 
   onSubmit(): void {
+
     // This is to valid the check list if has a check
     const checkListValid =
       this.form.controls.hasChecklist.value && this.checklist.length > 0
@@ -55,14 +53,17 @@ export class ActivitiesFormComponent extends StepsFormComponent
 
     this.submitted = true;
 
+
     if (this.form.valid && checkListValid) {
+
+
       this.showProgress = true;
       const formData = new FormData();
 
       formData.append('name', this.form.controls.name.value);
       formData.append('approvalType', this.form.controls.approvalType.value);
-
       formData.append('tag', this.kind);
+
       formData.append('hasDate', this.form.controls.hasDate.value);
       formData.append('hasText', this.form.controls.hasText.value);
       formData.append('text', this.form.controls.text.value);
@@ -95,9 +96,16 @@ export class ActivitiesFormComponent extends StepsFormComponent
       formData.append('hasDate', this.form.controls.hasDate.value);
       formData.append('status', '1');
       this.showProgress = true;
+
       this.lapseActivityService.createActivity(this.lapse, formData).subscribe(
+
         (response: HttpEvent<any>) => {
+
+          console.log('respuesta del registro');
+          console.log(response);
+
           if (HttpEventType.Response === response.type) {
+
             this.store.dispatch(
               new AddLapseActivity(response.body, this.lapse)
             );
@@ -120,6 +128,4 @@ export class ActivitiesFormComponent extends StepsFormComponent
       );
     }
   }
-
-
 }

@@ -1,11 +1,11 @@
-import { Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { STATUS } from './convention/status';
 import { Post } from '../_models/web/blog.model';
 import { SliderMedia } from '../_models/learning.model';
 import { DOCUMENT_TYPE } from './convention/document-type';
 import { REQUEST_STATUS } from './convention/request-status';
 
-@Inject('root')
+@Injectable()
 export class Utility {
   /* Convert the request status */
 

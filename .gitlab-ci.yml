@@ -1,114 +1,90 @@
 stages:
-  - cleanup
-  - build
+  - build-image
   - test
-  - code-quality
-  - performance
-  - review # <-- SCRIPT AUTO DEVOPS
+  - build
+  - cleanup
   - deploy
-  - staging
-  - production # <-- CONDITIONAL
+  - deploy-support
 
 variables:
   CONTAINER_RUN: "running_amblema_backoffice"
-  CONTAINER_TEST: "test_amblema_backoffice"
-  CONTAINER_BUILD: "build_amblema_backoffice"
+  CONTAINER_SUPPORT: "amblema-backoffice-support"
   CONTAINER_SERVER: "nginx-amblema"
-      
-  # PATH TO STAGING
-  PATH_PROJECT_STAGING: /home/amblema/amblema---backoffice
-  
-before_script:
-  - cd $PATH_PROJECT_STAGING
-  
-  - docker-compose down
-  # TURN ON SERVER
-  - if [ ! "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
-  -   docker-compose up -d linking_amblema_nginx
-  - fi
 
-  # TURN ON CONTAINER
-  - if [ ! "$(docker ps -q -f name=$CONTAINER_RUN)" ]; then
-  -   docker-compose up -d run_amblema_backoffice
-  - fi
-
-# PREPARE ENVIROMENT
-
-update-environment: 
-  stage: cleanup
+building:
+  stage: build-image
+  tags: 
+    - amblema
   script:
-      - git config user.email "franklin@binauraldev.com"
-      - git config user.name "franklinp"
-      - git stash
-      - git pull $CI_REPOSITORY_URL master
-  tags:
-      - amblema
+    - docker build -f deploy.Dockerfile -t angular:amblema-backoffice .
+    - docker run --name $CONTAINER_RUN -t -d -v ${PWD}:/app -v /app/node_modules angular:amblema-backoffice
   only:
-      - master
+    - master
+    - support
 
-# linting:
-#   stage: cleanup
-#   script:
-#       - docker exec $CONTAINER_RUN ng lint --fix
-#   only:
-#       - master
-
-# BUILD
-
-build:
+building-app:
   stage: build
-  script:
-      - docker-compose up build_amblema_backoffice
-      - docker restart $CONTAINER_SERVER
-  tags: 
-      - amblema
-  only:
-      - master
-
-# TEST
-
-run-tests:
-  stage: test
-  script: 
-      - docker exec $CONTAINER_RUN npm rebuild
-      - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadless --watch=false
-  tags: 
-      - amblema
-  only:
-      - master
-
-# coverage: 
-#   stage: test
-#   script: 
-#       - docker exec $CONTAINER_RUN ng test --browsers ChromeHeadlessNoSandbox --code-coverage --watch=false
-#   artifacts:
-#       paths:
-#           - coverage/Amblema-BackOffice/
-#       expire_in: 7days
-#   tags: 
-#       - amblema
-#   only:
-#       - master
-
-# DEPLOY
-
-linking:
-  stage: deploy
-  script:
-      - docker restart $CONTAINER_SERVER
-  tags: 
-      - amblema
-  only:
-      - master
-
-# STAGING
-
-staging:
-  stage: staging
-  script: 
-      - docker container stop $CONTAINER_RUN
-      - docker container rm $CONTAINER_RUN 
   tags:
-      - amblema
-  only: 
-      - master
+    - amblema
+  script: 
+    - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:staging"
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/staging"
+  only:
+    - master
+
+
+building-app-support:
+  stage: build
+  tags:
+    - amblema
+  script:
+    - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:support"
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/support"
+  only:
+    - support
+
+cleaning:
+  stage: cleanup
+  tags:
+    - amblema
+  script:
+    - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node * --verbose"
+    - docker container rm $CONTAINER_RUN --force
+    - docker rmi angular:amblema-backoffice --force
+  only:
+    - master
+    - support
+
+deploying:
+  stage: deploy
+  tags:
+    - amblema
+  script:
+    - if [ "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
+    -   echo "container exist"
+    -   docker restart $CONTAINER_SERVER
+    - else
+    -   echo "container does not exist"
+    -   docker run -it -d --name $CONTAINER_SERVER -p 10502:10502 -v ${PWD}/dist/staging/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    -   echo "container created!"
+    -   echo "Staging BackOffice Amblema"
+    - fi
+  only:
+    - master
+
+deploying-support:
+  stage: deploy-support
+  tags:
+    - amblema
+  script:
+    - if [ "$(docker ps -q -f name=$CONTAINER_SUPPORT)" ]; then
+    -   echo "container exist"
+    -   docker restart $CONTAINER_SUPPORT
+    - else
+    -   echo "container does not exist"
+    -   docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/support/:/usr/share/nginx/html/Amblema-BackOffice-Support -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    -   echo "container created!"
+    -   echo "Support BackOffice Amblema"
+    - fi
+  only:
+    - support

@@ -26,6 +26,7 @@ import { AuthJWTInterceptor } from './_intercepts/auth-jwt-interceptor';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from './pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { DialogModule } from './pages/_components/shared/dialog/dialog.module';
+import { ThemeService } from 'ng2-charts';
 
 registerLocaleData(localeVe, 'es-VE');
 
@@ -45,16 +46,14 @@ registerLocaleData(localeVe, 'es-VE');
     NbToastrModule.forRoot(),
     NbMenuModule.forRoot(),
 
-
-
     ModalModule.forRoot(),
-    DialogModule
+    DialogModule,
   ],
   entryComponents: [DialogConfirmationComponent],
   providers: [
     CustomToastrService,
     AuthGuard,
-
+    ThemeService,
     // -- Custom Helper --
     Utility,
     {

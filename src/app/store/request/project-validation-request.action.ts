@@ -3,6 +3,7 @@ import { ProjectValidationRequest } from 'src/app/_models/request/project-valida
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
+import { Injectable } from '@angular/core';
 
 export interface ProjectValidationRequestModel {
   projectValidationRequests: ProjectValidationRequest[];
@@ -38,6 +39,7 @@ export class DeleteProjectValidationRequest {
     projectValidationRequests: [],
   },
 })
+@Injectable()
 export class ProjectValidationRequestState implements NgxsOnInit {
   @Selector()
   static projectValidationRequest(

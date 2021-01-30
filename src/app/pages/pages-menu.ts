@@ -62,7 +62,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/requests/requests-validate-information',
       },
       {
-        title: 'Confirmación de pasos ',
+        title: 'Confirmación AmbLeMa',
         icon: 'done-all-outline',
         link: '/pages/requests/amblema-confirmation-request',
       },

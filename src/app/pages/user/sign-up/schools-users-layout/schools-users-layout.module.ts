@@ -10,7 +10,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveInputModule } from '../../../_components/form-components/reactive-input/reactive-input.module';
 import { ReactiveSelectModule } from '../../../_components/form-components/reactive-select/reactive-select.module';
 import { ModalModule } from '../../../_components/shared/modal/modal-forms/modal.module';
-import { FormRegionaladdressModule } from '../../../_components/form-components/forms/form-regional-address/form-regional-address.module';
 import { FormDocumentModule } from '../../../_components/form-components/forms/form-document/form-document.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveInputFileModule } from '../../../_components/form-components/reactive-input-file/reactive-input-file.module';
@@ -18,6 +17,7 @@ import { SchooladdressComponent } from './school-address/school-address.componen
 import { SchoolsUsersViewComponent } from './schools-users-view/schools-users-view.component';
 import { ProgressModule } from '../../../_components/shared/progress/progress.module';
 import { MapModule } from '../../../_components/shared/map/map.module';
+import { FormLocalAddressModule } from 'src/app/pages/_components/form-components/forms/form-local-address/form-local-address.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { MapModule } from '../../../_components/shared/map/map.module';
     NbCardModule,
     Ng2SmartTableModule,
     ReactiveFormsModule,
-    FormRegionaladdressModule,
+    FormLocalAddressModule,
     NbIconModule,
     NbSpinnerModule,
     NbAccordionModule,
@@ -47,7 +47,6 @@ import { MapModule } from '../../../_components/shared/map/map.module';
     ReactiveInputModule,
     ReactiveSelectModule,
     ModalModule,
-    FormRegionaladdressModule,
     FormDocumentModule,
   ]
 })

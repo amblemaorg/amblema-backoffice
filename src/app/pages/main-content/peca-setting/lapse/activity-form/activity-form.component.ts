@@ -115,10 +115,17 @@ export class ActivityFormComponent
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
+
+    console.log('Estas ubicado en una actividad generica');
   }
 
   onSubmitGeneric(): void {
     if (this.form.valid) {
+
+      console.log( `esta es la info que se esta enviando`);
+      console.log(this.form.value);
+
+
       this.data = Object.assign({}, this.data);
 
       this.data.text = this.form.controls.text.value;
@@ -129,8 +136,6 @@ export class ActivityFormComponent
       this.data.file = this.form.controls.file.value;
 
       const formData = new FormData();
-
-      console.log(this.data);
 
       formData.append('name', this.data.name);
       formData.append('approvalType', this.data.approvalType);
@@ -144,9 +149,11 @@ export class ActivityFormComponent
       if (this.data.hasFile) {
         const isUpload: any = this.data.file;
         if (isUpload.url) {
+          console.log('se mantiene el mismo archivo');
           formData.append('file', JSON.stringify(this.data.file));
         } else {
           formData.append('file', this.data.file);
+
         }
       }
 
@@ -176,19 +183,25 @@ export class ActivityFormComponent
         String(this.form.controls.description.value)
       );
 
+      console.log(`Archivo desde el form data`);
+      console.log(formData.get('file'));
+
       this.showProgress = true;
 
       // Update activity
       this.lapseActivityService
         .updateActivity(this.id, this.lapse, formData)
         .subscribe(
-          (response: HttpEvent<any>) => {
-            if (HttpEventType.Response === response.type) {
-              this.toastr.updateSuccess(
-                'Actualización',
-                'Actividad actualizada'
-              );
-            }
+          (response: any) => {
+
+
+            console.log(`respuesta de la peticion:`);
+            console.log(response);
+
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Actividad actualizada'
+            );
           },
           (err: any) => {
             this.toastr.error(

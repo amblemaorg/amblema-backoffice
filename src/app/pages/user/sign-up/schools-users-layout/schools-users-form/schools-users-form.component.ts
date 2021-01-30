@@ -4,6 +4,8 @@ import {
   Validators,
   FormGroup,
   FormBuilder,
+  ValidationErrors,
+  AbstractControl,
 } from '@angular/forms';
 import { ValidationService } from 'src/app/pages/_components/form-components/shared/services/validation.service';
 
@@ -23,19 +25,20 @@ import {
   SchoolUserState,
   UpdateSchoolUser,
 } from 'src/app/store/user/school-user.action';
-import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { SchoolUser, Coordinate } from 'src/app/_models/user/school.model';
 import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
 import { BaseForm } from '../../../_shared/base-form';
 import { AddressState } from 'src/app/store/_address/address.action';
-import { Statal } from 'src/app/_models/address.model';
+
 
 @Component({
   selector: 'app-schools-users-form',
   templateUrl: './schools-users-form.component.html',
 })
-export class SchoolsUsersFormComponent extends BaseForm
+export class SchoolsUsersFormComponent
+  extends BaseForm
   implements OnInit, OnChanges, OnDestroy {
   @Select(AddressState.states) states$: Observable<any[]>;
 
@@ -76,9 +79,12 @@ export class SchoolsUsersFormComponent extends BaseForm
   }
 
   ngOnInit(): void {
+    this.form.controls.name.clearValidators();
+    this.form.controls.name.setValidators([Validators.required]);
+
     // Data school
     this.form.addControl('image', new FormControl(null));
-    this.form.addControl('code', new FormControl('', [Validators.required]));
+    this.form.addControl('code', new FormControl('', [Validators.required, CodeValidator.cannotContainSpace]));
     this.form.addControl('role', new FormControl());
 
     // Data address
@@ -147,29 +153,29 @@ export class SchoolsUsersFormComponent extends BaseForm
     this.form.addControl('schoolShift', new FormControl());
     this.form.addControl('schoolType', new FormControl());
 
-    this.form.controls.name.clearValidators();
-    this.form.controls.name.setValidators([Validators.required]);
     this.form.updateValueAndValidity();
   }
 
   ngOnChanges(): void {
+    this.form.controls.name.clearValidators();
+    this.form.controls.name.setValidators([Validators.required]);
+
     if (this.MODE === this.ACTION.EDIT) {
       this.subscription = this.user$.subscribe((response) => {
         this.title = 'Actualizar usuario escuela';
 
         this.backupOldData = response;
-        console.log(response);
+
         this.restar();
         this.form.patchValue(response);
 
-
         this.idState = this.form.controls.addressState.value;
-//        this.idMunicipality = this.form.controls.addressMunicipality.value;
-
+        //        this.idMunicipality = this.form.controls.addressMunicipality.value;
 
         this.form.controls.addressState.setValue(response.addressState.id);
-        this.form.controls.addressMunicipality.setValue(response.addressMunicipality.id);
-
+        this.form.controls.addressMunicipality.setValue(
+          response.addressMunicipality.id
+        );
 
         this.form.controls.role.setValue(response.role.id);
 
@@ -179,15 +185,11 @@ export class SchoolsUsersFormComponent extends BaseForm
         this.coordinate.latitude = response.coordinate.latitude;
         this.coordinate.longitude = response.coordinate.longitude;
 
-
         this.form.get('password').setValue('');
         this.form.get('password').clearValidators();
         this.form.get('password').updateValueAndValidity();
       });
     } else if (this.MODE === this.ACTION.CREATE) {
-      this.form.controls.name.clearValidators();
-      this.form.controls.name.setValidators([Validators.required]);
-
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
           this.coordinate.latitude = position.coords.latitude;
@@ -227,7 +229,6 @@ export class SchoolsUsersFormComponent extends BaseForm
   onSubmit() {
     this.submitted = true;
 
-    console.log(this.form.valid);
     // Working on your validated form data
     if (this.form.valid) {
       // Mode
@@ -243,7 +244,6 @@ export class SchoolsUsersFormComponent extends BaseForm
 
         this.sanitizeNoRequiredData(data);
 
-        console.log(data);
         this.schoolUserService.setSchoolUser(data).subscribe(
           (event: HttpEvent<any>) => {
             switch (event.type) {
@@ -258,7 +258,7 @@ export class SchoolsUsersFormComponent extends BaseForm
             }
           },
           (err: any) => {
-            console.log(err);
+
 
             this.showProgress = false;
 
@@ -317,7 +317,6 @@ export class SchoolsUsersFormComponent extends BaseForm
           .updateSchoolUser(this.backupOldData.id, updateData)
           .subscribe(
             (event: any) => {
-
               this.store.dispatch(
                 new UpdateSchoolUser(this.backupOldData, event)
               );
@@ -336,7 +335,7 @@ export class SchoolsUsersFormComponent extends BaseForm
             },
             (err: any) => {
               this.showProgress = false;
-              console.log(err);
+
               if (err.error.code) {
                 this.toastr.error(
                   'Error de datos',
@@ -417,5 +416,16 @@ export class SchoolsUsersFormComponent extends BaseForm
   // -- Event selected rol --
   onselected(event: any) {
     this.form.controls.role.setValue(event);
+  }
+}
+
+
+export class CodeValidator {
+  static cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+      if( control.value && ((control.value as string).indexOf(' ') >= 0)){
+          return {cannotContainSpace: true}
+      }
+
+      return null;
   }
 }

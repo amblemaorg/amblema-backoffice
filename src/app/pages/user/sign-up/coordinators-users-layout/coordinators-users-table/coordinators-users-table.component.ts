@@ -86,7 +86,11 @@ export class CoordinatorsUsersTableComponent extends BaseTable
   ngOnInit(): void {}
 
   onAction(event: any): void {
+
+    
+
     switch (event.action) {
+
       case this.ACTION.VIEW:
         // Call view modal
         this.store.dispatch(new SelectedCoordinatorUser(event.data));

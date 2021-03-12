@@ -66,7 +66,7 @@ export class SponsorsUsersTableComponent extends BaseTable
           let value: string = cell === '1' ? 'Activo' : 'Inactivo';
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.includes(search.toUpperCase()) || search === '') {
             return true;
           } else {
             return false;

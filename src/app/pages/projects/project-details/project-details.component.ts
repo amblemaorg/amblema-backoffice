@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { PROJECT_PHASE } from 'src/app/_helpers/convention/phase';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.scss'],
 })
-export class ProjectDetailsComponent implements OnChanges {
+export class ProjectDetailsComponent implements OnChanges, OnInit {
   @Input() data: any;
 
   PROJECT_PHASE = PROJECT_PHASE;
@@ -31,6 +31,13 @@ export class ProjectDetailsComponent implements OnChanges {
   public place = `historical`;
 
   constructor(private router: Router, private authService: AuthService) {}
+ 
+  ngOnInit() {
+    
+    this.showYear = false;
+    this.selectedSchoolYears = null; 
+    this.deliveryData = {}; 
+  }
 
   ngOnChanges(): void {
     this.phase =
@@ -40,6 +47,7 @@ export class ProjectDetailsComponent implements OnChanges {
   }
 
   onNavigate(): void {
+    this.showYear = false;
     window.open(
       this.url +
         this.place +

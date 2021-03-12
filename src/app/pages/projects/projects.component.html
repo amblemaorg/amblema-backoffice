@@ -1,21 +1,17 @@
 <nb-card>
     <nb-card-header>Proyectos</nb-card-header>
     <nb-card-body>
-
         <!-- Button Create -->
         <div *ngIf="canCreate">
-            <button nbButton 
-                status="success"
-                (click)="modal.open(MODAL); MODE = ACTION.CREATE; clear()" 
-                class="mb-3 btn btn-success col-12 col-md-auto">Registrar</button>
+            <button nbButton status="success" (click)="modal.open(MODAL); MODE = ACTION.CREATE; clear()"
+                class="mb-3 btn btn-success col-12 col-md-auto">
+                Registrar
+            </button>
         </div>
 
         <!-- Table -->
         <div class="table-responsive">
-            <ng2-smart-table 
-                *ngIf="projects$ | async"
-                (custom)="onAction($event)" 
-                [source]='projects$ | async' 
+            <ng2-smart-table *ngIf="projects$ | async" (custom)="onAction($event)" [source]="projects$ | async"
                 [settings]="settings"></ng2-smart-table>
         </div>
     </nb-card-body>
@@ -23,4 +19,3 @@
 
 <app-project-form [mode]="MODE" [MODAL]="MODAL"></app-project-form>
 <app-project-details [data]="project$ | async"></app-project-details>
-

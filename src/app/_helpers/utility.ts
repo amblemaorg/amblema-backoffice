@@ -152,7 +152,7 @@ export const FilterStatus = (cell?: any, search?: string): boolean => {
 
   value = value.toUpperCase();
 
-  if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+  if (value.includes(search.toUpperCase()) || search === '') {
     return true;
   } else {
     return false;
@@ -164,7 +164,7 @@ export const FilterAmblemPensum = (cell?: any, search?: string): boolean => {
 
   value = value.toUpperCase();
 
-  if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+  if (value.includes(search.toUpperCase()) || search === '') {
     return true;
   } else {
     return false;
@@ -178,7 +178,7 @@ export const FilterGender = (cell?: any, search?: string): boolean => {
 
   value = value.toUpperCase();
 
-  if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+  if (value.includes(search.toUpperCase()) || search === '') {
     return true;
   } else {
     return false;

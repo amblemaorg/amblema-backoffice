@@ -84,7 +84,7 @@ export class RequestsValidateInformationComponent extends BaseTable
         valuePrepareFunction: (row: any) => row.code,
         filterFunction: (cell?: any, search?: string) => {
           const value: string = cell.code;
-          return value.indexOf(search.toUpperCase()) === 0 || search === ''
+          return value.includes(search.toUpperCase()) || search === ''
             ? true
             : false;
         },
@@ -107,7 +107,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               ? USER_TYPE.SCHOOL.LABEL
               : USER_TYPE.SPONSOR.LABEL;
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.includes(search.toUpperCase()) || search === '') {
             return true;
           } else {
             return false;
@@ -123,7 +123,7 @@ export class RequestsValidateInformationComponent extends BaseTable
 
           value = value.toUpperCase();
 
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.includes(search.toUpperCase()) || search === '') {
             return true;
           } else {
             return false;
@@ -174,7 +174,7 @@ export class RequestsValidateInformationComponent extends BaseTable
 
           value = value.toUpperCase();
 
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.includes(search.toUpperCase()) || search === '') {
             return true;
           } else {
             return false;
@@ -210,7 +210,7 @@ export class RequestsValidateInformationComponent extends BaseTable
               : REQUEST_STATUS.CANCELLED.VALUE;
 
           value = value.toUpperCase();
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.includes(search.toUpperCase()) || search === '') {
             return true;
           } else {
             return false;

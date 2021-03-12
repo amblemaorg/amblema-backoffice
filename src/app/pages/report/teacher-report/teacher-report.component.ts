@@ -127,7 +127,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
 
           value = value.toUpperCase();
 
-          if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+          if (value.includes(search.toUpperCase()) || search === '') {
             return true;
           } else {
             return false;

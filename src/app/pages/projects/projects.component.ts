@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseTable } from 'src/app/_helpers/base-table';
-import { Utility } from 'src/app/_helpers/utility';
-import { ModalService } from 'src/app/services/helper/modal.service';
-import { Select, Store } from '@ngxs/store';
+import { Component, OnInit } from "@angular/core";
+import { BaseTable } from "src/app/_helpers/base-table";
+import { Utility } from "src/app/_helpers/utility";
+import { ModalService } from "src/app/services/helper/modal.service";
+import { Select, Store } from "@ngxs/store";
 import {
   ProjectState,
   DeleteProject,
   SelectedProject,
   GetProjects,
-} from 'src/app/store/project.action';
-import { Project } from 'src/app/_models/project.model';
-import { Observable, SubscriptionLike, Subscription } from 'rxjs';
-import { PROJECT_PHASE } from 'src/app/_helpers/convention/phase';
-import { DialogConfirmationComponent } from '../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { ProjectService } from 'src/app/services/project.service';
-import { AuthService } from 'src/app/services/user/auth.service';
-import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+} from "src/app/store/project.action";
+import { Project } from "src/app/_models/project.model";
+import { Observable, Subscription } from "rxjs";
+import { PROJECT_PHASE } from "src/app/_helpers/convention/phase";
+import { DialogConfirmationComponent } from "../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
+import { BsModalService } from "ngx-bootstrap/modal";
+import { ProjectService } from "src/app/services/project.service";
+import { AuthService } from "src/app/services/user/auth.service";
+import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 
 declare var $: any;
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects.component.html',
+  selector: "app-projects",
+  templateUrl: "./projects.component.html",
   styles: [],
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
@@ -31,7 +31,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
 
   subscription: Subscription;
 
-  MODAL = 'form-project';
+  MODAL = "form-project";
 
   public canCreate = new AuthService().isAllowed(ALL_ACTIONS.PROJECT_CREATE);
 
@@ -41,17 +41,17 @@ export class ProjectsComponent extends BaseTable implements OnInit {
 
   valuePrepareFunction = (row: any) => {
     return this.helper.readlyStatus([{ status: row }])[0].status;
-  }
+  };
 
   filterFunction = (cell?: any, search?: string) => {
-    let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+    let value: string = cell === "1" ? "Activo" : "Inactivo";
     value = value.toUpperCase();
-    if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+    if (value.includes(search.toUpperCase()) || search === "") {
       return true;
     } else {
       return false;
     }
-  }
+  };
 
   constructor(
     private store: Store,
@@ -64,7 +64,6 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.store.dispatch(new GetProjects());
 
     this.MODE = this.ACTION.CREATE;
@@ -72,8 +71,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     // Add columns
     this.settings.columns = {
       coordinator: {
-        title: 'Coordinador',
-        type: 'string',
+        title: "Coordinador",
+        type: "string",
         valuePrepareFunction: (row: any) => {
           return row.name;
         },
@@ -82,7 +81,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
             let value: string = cell.name;
             value = value.toUpperCase();
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.includes(search.toUpperCase()) || search === "") {
               return true;
             } else {
               return false;
@@ -93,8 +92,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         },
       },
       school: {
-        title: 'Escuela',
-        type: 'string',
+        title: "Escuela",
+        type: "string",
         valuePrepareFunction: (row: any) => {
           return row.name;
         },
@@ -103,7 +102,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
             let value: string = cell.name;
             value = value.toUpperCase();
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.includes(search.toUpperCase()) || search === "") {
               return true;
             } else {
               return false;
@@ -114,8 +113,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         },
       },
       sponsor: {
-        title: 'Padrino',
-        type: 'string',
+        title: "Padrino",
+        type: "string",
         valuePrepareFunction: (row: any) => {
           return row.name;
         },
@@ -124,7 +123,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
             let value: string = cell.name;
             value = value.toUpperCase();
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.includes(search.toUpperCase()) || search === "") {
               return true;
             } else {
               return false;
@@ -135,8 +134,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         },
       },
       phase: {
-        title: 'Fase',
-        type: 'string',
+        title: "Fase",
+        type: "string",
         valuePrepareFunction: (row: any) => {
           const value: string =
             row === PROJECT_PHASE.STEPS.CODE
@@ -152,7 +151,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
                 : PROJECT_PHASE.PECA.VALUE;
             value = value.toUpperCase();
 
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.includes(search.toUpperCase()) || search === "") {
               return true;
             } else {
               return false;
@@ -163,8 +162,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         },
       },
       status: {
-        title: 'Estatus',
-        type: 'string',
+        title: "Estatus",
+        type: "string",
         valuePrepareFunction: this.valuePrepareFunction,
         filterFunction: this.filterFunction,
       },
@@ -176,7 +175,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     );
   }
 
-  clear() { }
+  clear() {}
 
   // Events table
   onAction(event: any): void {
@@ -184,7 +183,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       case this.ACTION.VIEW:
         console.log(event.data);
         this.store.dispatch(new SelectedProject(event.data));
-        this.modal.open('view-project');
+        this.modal.open("view-project");
         break;
       case this.ACTION.EDIT:
         this.MODE = this.ACTION.EDIT;
@@ -194,13 +193,13 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       case this.ACTION.DELETE:
         const modal = this.modalServicesBs.show(
           DialogConfirmationComponent,
-          Object.assign({}, { class: 'modal-dialog-centered' })
+          Object.assign({}, { class: "modal-dialog-centered" })
         );
 
         // -- Set up modal
         (modal.content as DialogConfirmationComponent).showConfirmationModal(
-          'Eliminar proyecto',
-          '¿Desea eliminar el proyecto?'
+          "Eliminar proyecto",
+          "¿Desea eliminar el proyecto?"
         );
 
         this.subscription = (modal.content as DialogConfirmationComponent).onClose.subscribe(

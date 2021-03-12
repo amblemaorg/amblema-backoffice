@@ -110,7 +110,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
                 : TYPE_REQUEST.SPONSOR.CONVERTION;
 
             value = value.toUpperCase();
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.includes(search.toUpperCase()) || search === '') {
               return true;
             } else {
               return false;
@@ -148,7 +148,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
                 : REQUEST_STATUS.REJECTED.VALUE;
 
             value = value.toUpperCase();
-            if (value.indexOf(search.toUpperCase()) === 0 || search === '') {
+            if (value.includes(search.toUpperCase()) || search === '') {
               return true;
             } else {
               return false;

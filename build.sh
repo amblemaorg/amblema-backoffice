@@ -1,5 +1,5 @@
 #!/bin/bash
-export REGISTRY=dev.binaural.com.ve:5050
+export REGISTRY=gitlab.binauraldev.com:5050
 
 export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema---backoffice
 

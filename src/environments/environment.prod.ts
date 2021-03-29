@@ -3,3 +3,4 @@ export const environment = {
   api: "https://amblema.org/api/",
   web: "https://amblema.org/",
 };
+

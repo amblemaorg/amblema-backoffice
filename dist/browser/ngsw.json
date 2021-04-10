@@ -1,0 +1,156 @@
+{
+  "configVersion": 1,
+  "timestamp": 1618007312863,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/5-es2015.c29903c46b7347445613.js",
+        "/5-es5.c29903c46b7347445613.js",
+        "/6-es2015.3bfdd2c54849a0dc8c60.js",
+        "/6-es5.3bfdd2c54849a0dc8c60.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main-es2015.9ce0833e4dafc72ab87a.js",
+        "/main-es5.9ce0833e4dafc72ab87a.js",
+        "/manifest.webmanifest",
+        "/polyfills-es2015.7934a91efac916a1120a.js",
+        "/polyfills-es5.99a2118deca25db535ad.js",
+        "/runtime-es2015.4ebf83d23834b8850335.js",
+        "/runtime-es5.4ebf83d23834b8850335.js",
+        "/scripts.c072d4e66797fc1c1516.js",
+        "/styles.288ce36012f6733634f0.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/img/logo-amblema-base64.json",
+        "/assets/img/logo-amblema.png",
+        "/assets/scss/_animations.scss",
+        "/assets/scss/_main.scss",
+        "/assets/scss/_mixins.scss",
+        "/assets/scss/_normalize.scss",
+        "/assets/scss/_placeholders.scss",
+        "/assets/scss/_variables.scss",
+        "/assets/scss/modules/_alerts.scss",
+        "/assets/scss/modules/_selects.scss",
+        "/assets/scss/modules/_spacing.scss",
+        "/nebular.5c0b043a3fee669cccbf.eot",
+        "/nebular.a115dc417c9c6dac2113.svg",
+        "/nebular.dd6b235b610f306cdbab.ttf",
+        "/nebular.e553da5ebddf5d96565a.woff",
+        "/owl.video.play.7f01b07148f205f6e825.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "cache-first-greeting",
+      "patterns": [
+        "http:\\/\\/157\\.245\\.131\\.248:10506"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 86400000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    },
+    {
+      "name": "cache-first-greeting",
+      "patterns": [
+        "http:\\/\\/157\\.245\\.131\\.248:10506"
+      ],
+      "strategy": "freshness",
+      "maxSize": 10,
+      "maxAge": 3600000,
+      "timeoutMs": 5000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/5-es2015.c29903c46b7347445613.js": "3b3d56bbaf91c6b14c50ae7db15f306a05dc9435",
+    "/5-es5.c29903c46b7347445613.js": "ebcb688befb5532fdac8a638cc2728ea51687ddd",
+    "/6-es2015.3bfdd2c54849a0dc8c60.js": "3fa5b8f9fd3e8c5615e6793fdd429db26a823c4c",
+    "/6-es5.3bfdd2c54849a0dc8c60.js": "3fa5b8f9fd3e8c5615e6793fdd429db26a823c4c",
+    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/img/logo-amblema-base64.json": "cbedb23cdb79a74fe5856a7a3ae367e2e1cd19dd",
+    "/assets/img/logo-amblema.png": "93437c59188ee52177025a5f3d78d4fac5e009b2",
+    "/assets/scss/_animations.scss": "7890eeb4aee309680efc333f7072b330dcf3eda5",
+    "/assets/scss/_main.scss": "984821c80b76159edbf2559e5d1a28a06256d700",
+    "/assets/scss/_mixins.scss": "018258af6506986747cdd4758b11c35ed3dc6a83",
+    "/assets/scss/_normalize.scss": "38ea0bff8785fe211845a4fba2c0eefa17923bbb",
+    "/assets/scss/_placeholders.scss": "871e809612a8827f0df6a39f2b5cd65207c2221e",
+    "/assets/scss/_variables.scss": "133abfeeefa910ea26d46c8c4287b89e86f8f3c4",
+    "/assets/scss/modules/_alerts.scss": "197717885e3842b54f44c228166f72b5802a280d",
+    "/assets/scss/modules/_selects.scss": "51f830aa5716bd962064b7daef887d91934c229f",
+    "/assets/scss/modules/_spacing.scss": "f7d10dfbe883f34417e11b4c7c32ce28b6a072be",
+    "/favicon.ico": "7fd4782709f442783200c3c59f136e22069ef6ba",
+    "/index.html": "642a2cf79052e3bd7c8a7edf68037589bdb77e0d",
+    "/main-es2015.9ce0833e4dafc72ab87a.js": "9f18a33129fc57ffd204e9fdd928ffb52c0f98dd",
+    "/main-es5.9ce0833e4dafc72ab87a.js": "e22ebddbadb6fac4972be0dfec891ee7d81112ed",
+    "/manifest.webmanifest": "954d7bbf99f19f8d8e5a2d8a727466851812e276",
+    "/nebular.5c0b043a3fee669cccbf.eot": "290b6c75a0af38b8606a9d2b843e6b4af4dacf31",
+    "/nebular.a115dc417c9c6dac2113.svg": "e98dd44dada2a5fa7bcf7afed08c9c6b0eb2092f",
+    "/nebular.dd6b235b610f306cdbab.ttf": "9e89de0ceca347c2877748d84035e1b7910f82d0",
+    "/nebular.e553da5ebddf5d96565a.woff": "ccef7bb01bbec4b2fd438dabf939d7036ed3b51d",
+    "/owl.video.play.7f01b07148f205f6e825.png": "c0d64356ec2758cb280d183b4829c923e5ff61e5",
+    "/polyfills-es2015.7934a91efac916a1120a.js": "30e01283a620d5a3fc26b15bc539a5fe685f39e6",
+    "/polyfills-es5.99a2118deca25db535ad.js": "982f052f152d62e9554bdc49a910b30a681d7980",
+    "/runtime-es2015.4ebf83d23834b8850335.js": "b9a9e4338537db73fec166d6766a4a326dfe6d0b",
+    "/runtime-es5.4ebf83d23834b8850335.js": "0bdf06946e77b4ae922855f99efa5be3d261a2ee",
+    "/scripts.c072d4e66797fc1c1516.js": "b9d663c2c96bac64a8ec915a645d9b008f1fa3bb",
+    "/styles.288ce36012f6733634f0.css": "59c530012ff3496a14b9e51c2f4e2fe087d441cd"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

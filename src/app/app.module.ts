@@ -27,6 +27,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from './pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { DialogModule } from './pages/_components/shared/dialog/dialog.module';
 import { ThemeService } from 'ng2-charts';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 registerLocaleData(localeVe, 'es-VE');
 
@@ -48,6 +50,7 @@ registerLocaleData(localeVe, 'es-VE');
 
     ModalModule.forRoot(),
     DialogModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   entryComponents: [DialogConfirmationComponent],
   providers: [

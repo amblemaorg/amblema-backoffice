@@ -17,8 +17,10 @@ export class CustomToastrService {
   registerSuccess(title: string, content: string): void {
     this.toastrService.success(content, title, {
       position: this.position,
-      iconPack: 'eva',
-      icon: 'checkmark-outline',
+      icon: {
+        icon: 'checkmark-outline',
+        pack: 'eva'
+      },
       duration: this.duration
     });
   }
@@ -26,8 +28,10 @@ export class CustomToastrService {
   updateSuccess(title: string, content: string): void {
     this.toastrService.primary(content, title, {
       position: this.position,
-      iconPack: 'eva',
-      icon: 'flip-2-outline',
+      icon: {
+        icon: 'flip-2-outline',
+        pack: 'eva'
+      },
       duration: this.duration
     });
   }
@@ -35,8 +39,10 @@ export class CustomToastrService {
   deleteRegister(title: string, content: string): void {
     this.toastrService.warning( content, title, {
       position: this.position,
-      iconPack: 'eva',
-      icon: 'alert-circle-outline',
+      icon: {
+        icon: 'alert-circle-outline',
+        pack: 'eva'
+      },
       duration: this.duration
     });
   }
@@ -45,8 +51,10 @@ export class CustomToastrService {
 
     this.toastrService.danger( content, title, {
       position: this.position,
-      iconPack: 'eva',
-      icon: 'alert-triangle-outline',
+      icon: {
+        icon: 'alert-triangle-outline',
+        pack: 'eva'
+      },
       duration: this.duration
     });
   }
@@ -55,8 +63,10 @@ export class CustomToastrService {
 
     this.toastrService.info( content, title, {
       position: this.position,
-      iconPack: 'eva',
-      icon: 'alert-triangle-outline',
+      icon: {
+        icon: 'alert-triangle-outline',
+        pack: 'eva'
+      },
       duration: this.duration,
     });
   }

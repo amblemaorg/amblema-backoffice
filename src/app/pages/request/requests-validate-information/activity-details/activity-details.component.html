@@ -75,6 +75,18 @@
         </li> -->
       </ul>
     </div>
+    <div class="list-unstyled d-inline-block" *ngIf="(data$ | async)?.comments">
+      <li class="">
+        <p class="font-weight-bold">Comentario de recahazo:</p>
+        <p>
+          {{
+            (data$ | async)?.comments
+              ? (data$ | async)?.comments
+              : "Sin comentario"
+          }}
+        </p>
+      </li>
+    </div>
   </div>
 
   <hr />

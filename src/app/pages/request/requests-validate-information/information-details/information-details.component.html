@@ -48,7 +48,6 @@
         </li>
       </ul>
 
-      
       <ul class="list-unstyled d-inline-block">
         <li class="d-flex justify-content-between">
           <span class="font-weight-bold">Padrino: </span>
@@ -75,6 +74,18 @@
           }}</span>
         </li> -->
       </ul>
+    </div>
+    <div class="list-unstyled d-inline-block" *ngIf="(data$ | async)?.comments">
+      <li class="">
+        <p class="font-weight-bold">Comentario de recahazo:</p>
+        <p>
+          {{
+            (data$ | async)?.comments
+              ? (data$ | async)?.comments
+              : "Sin comentario"
+          }}
+        </p>
+      </li>
     </div>
   </div>
 
@@ -173,7 +184,9 @@
           class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Video: </span>
-          <a [href]="(data$ | async)?.detail.stepVideo.url"> {{ (data$ | async)?.detail.stepVideo.name }}</a>
+          <a [href]="(data$ | async)?.detail.stepVideo.url">
+            {{ (data$ | async)?.detail.stepVideo.name }}</a
+          >
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.stepHasVideo"

@@ -184,10 +184,10 @@ export class RequestsValidateInformationComponent
         },
       },
       updatedAt: {
-        sortDirection: "desc",
+        //sortDirection: "desc",
         title: "Fecha",
         type: "string",
-        compareFunction: sortDate,
+        //compareFunction: sortDate,
         valuePrepareFunction: (lastLoginTime: any) => {
           return new DatePipe("es-VE").transform(
             lastLoginTime,

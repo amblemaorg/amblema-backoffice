@@ -13,7 +13,7 @@ variables:
 
 building:
   stage: build-image
-  tags: 
+  tags:
     - amblema
   script:
     - docker build -f deploy.Dockerfile -t angular:amblema-backoffice .
@@ -26,12 +26,11 @@ building-app:
   stage: build
   tags:
     - amblema
-  script: 
+  script:
     - docker exec $CONTAINER_RUN bash -c "npm install && npm run build:staging"
     - docker exec $CONTAINER_RUN bash -c "usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/staging"
   only:
     - master
-
 
 building-app-support:
   stage: build
@@ -60,14 +59,15 @@ deploying:
   tags:
     - amblema
   script:
+    - echo "${PWD}"
     - if [ "$(docker ps -q -f name=$CONTAINER_SERVER)" ]; then
-    -   echo "container exist"
-    -   docker restart $CONTAINER_SERVER
+    - echo "container exist"
+    - docker restart $CONTAINER_SERVER
     - else
-    -   echo "container does not exist"
-    -   docker run -it -d --name $CONTAINER_SERVER -p 10502:10502 -v ${PWD}/dist/staging/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
-    -   echo "container created!"
-    -   echo "Staging BackOffice Amblema"
+    - echo "container does not exist"
+    - docker run -it -d --name $CONTAINER_SERVER -p 10502:10502 -v ${PWD}/dist/staging/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    - echo "container created!"
+    - echo "Staging BackOffice Amblema"
     - fi
   only:
     - master
@@ -78,13 +78,13 @@ deploying-support:
     - amblema
   script:
     - if [ "$(docker ps -q -f name=$CONTAINER_SUPPORT)" ]; then
-    -   echo "container exist"
-    -   docker restart $CONTAINER_SUPPORT
+    - echo "container exist"
+    - docker restart $CONTAINER_SUPPORT
     - else
-    -   echo "container does not exist"
-    -   docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/support/:/usr/share/nginx/html/Amblema-BackOffice-Support -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
-    -   echo "container created!"
-    -   echo "Support BackOffice Amblema"
+    - echo "container does not exist"
+    - docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/support/:/usr/share/nginx/html/Amblema-BackOffice-Support -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
+    - echo "container created!"
+    - echo "Support BackOffice Amblema"
     - fi
   only:
     - support

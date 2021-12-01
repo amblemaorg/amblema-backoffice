@@ -76,13 +76,26 @@
         </li>
       </ul>
     </div>
+    <div class="list-unstyled d-inline-block" *ngIf="(data$ | async)?.comments">
+      <li class="">
+        <p class="font-weight-bold">Comentario de recahazo:</p>
+        <p>
+          {{
+            (data$ | async)?.comments
+              ? (data$ | async)?.comments
+              : "Sin comentario"
+          }}
+        </p>
+      </li>
+    </div>
   </div>
 
   <hr />
 
   <div>
-
-    <p class="text-info font-weight-bold">Fotos de las activdades de la escuela</p>
+    <p class="text-info font-weight-bold">
+      Fotos de las activdades de la escuela
+    </p>
 
     <div class="position-relative" *ngIf="show">
       <owl-carousel-o [options]="customOptions">
@@ -91,18 +104,12 @@
           *ngFor="let item of (data$ | async)?.detail.slider"
         >
           <div class="card">
-            <img
-              class="p-1"
-              [src]="item"
-              [alt]="item"
-            />
+            <img class="p-1" [src]="item" [alt]="item" />
           </div>
         </ng-template>
       </owl-carousel-o>
     </div>
-
   </div>
-
 
   <div>
     <div *ngIf="(data$ | async)?.status === '1' && canEdit">

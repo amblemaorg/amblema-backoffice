@@ -75,6 +75,18 @@
         </li>
       </ul>
     </div>
+    <div class="list-unstyled d-inline-block" *ngIf="(data$ | async)?.comments">
+      <li class="">
+        <p class="font-weight-bold">Comentario de recahazo:</p>
+        <p>
+          {{
+            (data$ | async)?.comments
+              ? (data$ | async)?.comments
+              : "Sin comentario"
+          }}
+        </p>
+      </li>
+    </div>
   </div>
   <hr />
 
@@ -95,11 +107,12 @@
               [alt]="item.firstName"
             />
             <div class="card-body">
-              <h6 class="card-title">{{ item.firstName }} {{ item.lastName }}</h6>
+              <h6 class="card-title">
+                {{ item.firstName }} {{ item.lastName }}
+              </h6>
               <p class="card-text">
                 {{ item.description }}
               </p>
-
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">{{ item.position }}</li>

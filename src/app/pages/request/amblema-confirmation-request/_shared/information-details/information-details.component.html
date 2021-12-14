@@ -14,6 +14,17 @@
       </div>
       <div class="col-12 col-md-6 col-lg-4">
         <p class="d-flex w-100">
+          <span class="pl-0 font-weight-bold col-5"
+            >Fecha de actualización:</span
+          >
+          <span>
+            {{ (data$ | async).updatedAt | date: "dd/MM/yyyy" }}
+          </span>
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <p class="d-flex w-100">
           <span class="pl-0 font-weight-bold col-5">Código del proyecto:</span>
           <span>
             {{ (data$ | async).project.code }}
@@ -65,9 +76,7 @@
             </select>
           </div>
 
-          <app-progress
-            *ngIf="showProgress"
-          ></app-progress>
+          <app-progress *ngIf="showProgress"></app-progress>
 
           <div class="w-100 text-right justify-content-end">
             <button
@@ -80,16 +89,16 @@
               Proceder
             </button>
 
-          <div *ngIf="!confirmAction">
-            <nb-alert status="info" class="text-left"
-              >Confirmar acción, al aprobar o rechazar esta solicitud no se
-              podrá cambiar de estatus.</nb-alert
-            >
-            
-            <div class="row justify-content-end">
+            <div *ngIf="!confirmAction">
+              <nb-alert status="info" class="text-left"
+                >Confirmar acción, al aprobar o rechazar esta solicitud no se
+                podrá cambiar de estatus.</nb-alert
+              >
+
+              <div class="row justify-content-end">
                 <div class="col-6 col-md-auto">
                   <button
-                    (click)="onApprovedRequest( )"
+                    (click)="onApprovedRequest()"
                     nbButton
                     fullWidth
                     *ngIf="!confirmAction"
@@ -117,7 +126,7 @@
       </div>
     </div>
   </nb-card-body>
-  <nb-card-footer  class="text-right">
+  <nb-card-footer class="text-right">
     <button
       nbButton
       (click)="onClose()"

@@ -49,6 +49,12 @@
               >
               {{ requestSelected.createdAt | date: "dd/MM/yyyy" }}
             </p>
+            <p *ngIf="requestSelected.email" class="d-flex w-100">
+              <span class="pl-0 font-weight-bold col-5"
+                >Fecha de actualización:</span
+              >
+              {{ requestSelected.updatedAt | date: "dd/MM/yyyy" }}
+            </p>
           </div>
         </div>
 
@@ -879,8 +885,7 @@
 
             <!-- Maps -->
             <div class="col-12 form-group" *ngIf="requestSelected.coordinate">
-              
-              <hr>
+              <hr />
               <label class="label">Ubicación de la escuela</label>
               <div class="wrapper-agm-map">
                 <agm-map
@@ -1081,9 +1086,7 @@
         </div>
 
         <div class="w-100 text-right justify-content-end">
-          <app-progress
-            *ngIf="showProgress"
-          ></app-progress>
+          <app-progress *ngIf="showProgress"></app-progress>
 
           <button
             class="col-12 col-md-auto"

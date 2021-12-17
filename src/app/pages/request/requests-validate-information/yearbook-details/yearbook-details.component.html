@@ -265,7 +265,14 @@
     <div class="row">
       <!-- Lapse One -->
       <div class="col-12">
-        <p class="text-info font-weight-bold">
+        <p
+          class="text-info font-weight-bold"
+          *ngIf="
+            (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis
+          "
+        >
           Análisis de diagnóstico - lapso 1
         </p>
       </div>
@@ -380,7 +387,14 @@
 
       <!-- Lapse Two -->
       <div class="col-12">
-        <p class="text-info font-weight-bold">
+        <p
+          class="text-info font-weight-bold"
+          *ngIf="
+            (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis
+          "
+        >
           Análisis de diagnóstico - lapso 2
         </p>
       </div>
@@ -495,7 +509,14 @@
       <!-- / End lapse two -->
 
       <div class="col-12">
-        <p class="text-info font-weight-bold">
+        <p
+          class="text-info font-weight-bold"
+          *ngIf="
+            (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis
+          "
+        >
           Análisis de diagnóstico - lapso 3
         </p>
       </div>

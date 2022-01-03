@@ -31,7 +31,6 @@ export class InformationRequestService {
       { reportProgress: true, observe: "body" }
     );
   }
-
   deleteRequestContentApproval(id: string): Observable<any> {
     return this.httpClient.delete<string>(
       `${environment.api}${this.REQUEST_CONTENT_APPROVAL}/${id}`,

@@ -6,6 +6,8 @@ import { DatePipe } from "@angular/common";
 import { PecaReportService } from "src/app/services/report/peca-report.service";
 import { LocalDataSource } from "ng2-smart-table";
 import { DomSanitizer } from "@angular/platform-browser";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 @Component({
   selector: "app-peca-report",
@@ -19,7 +21,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   filterType = null;
   filterSelected = "";
   multiSelectPlaceholder = "";
-  multiSelectLapsePlaceholder = "Lapsos"
+  multiSelectLapsePlaceholder = "Lapsos";
   dropdownList = [];
   dropdownListLapses = [];
   selectedItems = [];
@@ -233,11 +235,30 @@ export class PecaReportComponent implements OnInit, OnDestroy {
           this.settings = Object.assign({}, newSettings);
           this.data = data;
           this.source.load(this.data);
+          this.exportData();
         }
       });
   }
 
   ngOnDestroy(): void {}
+
+  exportData(): void {
+    const workbookBin = this.makeExcel();
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `Data de reporte.xls`
+    );
+  }
+
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
+  }
 
   changeType(value) {
     this.clearTable();
@@ -251,8 +272,43 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     this.fillMultiSelect();
   }
 
+  makeExcel(): void {
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: `Reporte de actividades del PECA`,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+
+    workbook.SheetNames.push("Data de estudiantes");
+    console.log("columnz: ", this.settings.columns);
+    const columns_header = Object.keys(this.settings.columns);
+    let matrix = [];
+    let row_aux = [];
+    for (let count = 1, i = 0; count <= this.data.length; count++, i++) {
+      const data = Object.values(this.data[i]);
+      console.log("row: ", i);
+      console.log("data: ", data);
+      row_aux.push(data);
+    }
+
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+    console.log("matrix: ", matrix);
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets["Data de estudiantes"] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+
   clearTable() {
-    this.data = []
+    this.data = [];
     const defaultSettings: any = {
       noDataMessage: "No hay registros",
       actions: {

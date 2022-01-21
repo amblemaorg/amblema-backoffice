@@ -62,6 +62,7 @@
     "jwt-decode": "^3.1.2",
     "katex": "^0.13.18",
     "nebular-icons": "^1.1.0",
+    "ng-multiselect-dropdown": "^0.3.7",
     "ng2-charts": "^2.4.3",
     "ng2-completer": "^9.0.1",
     "ng2-search-filter": "^0.5.1",

@@ -1,23 +1,23 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { UserReportService } from 'src/app/services/report/user-report.service';
-import { Subscription } from 'rxjs';
-import { ReadlyStatusConvert, FilterStatus } from 'src/app/_helpers/utility';
-import { PDFReport } from '../pdf-report.service';
-import { DatePipe } from '@angular/common';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { LocalDataSource } from "ng2-smart-table";
+import { UserReportService } from "src/app/services/report/user-report.service";
+import { Subscription } from "rxjs";
+import { ReadlyStatusConvert, FilterStatus } from "src/app/_helpers/utility";
+import { PDFReport } from "../pdf-report.service";
+import { DatePipe } from "@angular/common";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
 
 @Component({
-  selector: 'app-sponsor-report',
-  templateUrl: './sponsor-report.component.html',
-  styleUrls: ['./sponsor-report.component.scss'],
+  selector: "app-sponsor-report",
+  templateUrl: "./sponsor-report.component.html",
+  styleUrls: ["./sponsor-report.component.scss"],
   providers: [PDFReport, DatePipe],
 })
 export class SponsorReportComponent implements OnInit, OnDestroy {
   subscriptionService: Subscription;
 
   settings: any = {
-    noDataMessage: 'No hay registros',
+    noDataMessage: "No hay registros",
     actions: {
       add: false,
       delete: false,
@@ -26,40 +26,40 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
 
     columns: {
       name: {
-        title: 'Nombre de la empresa',
-        type: 'string',
+        title: "Nombre de la empresa",
+        type: "string",
       },
       companyRif: {
-        title: 'RIF',
-        type: 'number',
+        title: "RIF",
+        type: "number",
       },
       email: {
-        title: 'Correo',
-        type: 'string',
+        title: "Correo",
+        type: "string",
       },
       companyPhone: {
-        title: 'Teléfono',
-        type: 'number',
+        title: "Teléfono",
+        type: "number",
       },
       addressState: {
-        title: 'Estado',
-        type: 'string',
+        title: "Estado",
+        type: "string",
       },
       addressMunicipality: {
-        title: 'Municipio',
-        type: 'string',
+        title: "Municipio",
+        type: "string",
       },
       addressCity: {
-        title: 'Ciudad',
-        type: 'string',
+        title: "Ciudad",
+        type: "string",
       },
       schools: {
-        title: 'Escuela(s) que apadrina',
-        type: 'string',
+        title: "Escuela(s) que apadrina",
+        type: "string",
       },
       status: {
-        title: 'Estatus',
-        type: 'string',
+        title: "Estatus",
+        type: "string",
         valuePrepareFunction: (row: any) => {
           return ReadlyStatusConvert([{ status: row }])[0].status;
         },
@@ -72,11 +72,11 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
   data: any = [];
 
   status = [
-    { label: 'Activo', value: '1' },
-    { label: 'Inactivo', value: '2' },
+    { label: "Activo", value: "1" },
+    { label: "Inactivo", value: "2" },
   ];
 
-  statusSelected = '1';
+  statusSelected = "1";
 
   disabledBtn = false;
 
@@ -89,19 +89,18 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptionService = this.userReporteService
-      .getUserReport('0', '1')
+      .getUserReport("0", "1")
       .subscribe((usersActive) => {
         this.data = usersActive.users;
         this.subscriptionService = this.userReporteService
-          .getUserReport('0', '2')
+          .getUserReport("0", "2")
           .subscribe((response) => {
-
             if (response.users.length) {
               response.users.forEach((element) => {
                 this.data = [...this.data, element];
               });
             }
-
+            console.log("data:", this.data);
             this.source.load(this.data);
           });
       });
@@ -116,14 +115,14 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
   onGenerateReport(): void {
     this.disabledBtn = true;
 
-    this.userReporteService.getUserReport('0', this.statusSelected).subscribe(
+    this.userReporteService.getUserReport("0", this.statusSelected).subscribe(
       (response) => {
         if (response.users.length) {
           this.generatorReport.generateUserReport(response);
         } else {
           this.toast.info(
-            'Información',
-            'No hay registro en el estatus seleccionado'
+            "Información",
+            "No hay registro en el estatus seleccionado"
           );
         }
 

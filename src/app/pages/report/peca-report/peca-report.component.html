@@ -1,0 +1,132 @@
+<nb-card>
+  <nb-card-header> Reporte de actividades del PECA </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12">
+            <p class="font-weight-bold">Configuración del Reporte</p>
+          </div>
+          <!-- <div class="col-12 col-lg-6 form-group">
+            <label class="label">Seleccione año escolar: </label>
+            <select [(ngModel)]="statusSelected" class="form-control">
+              <option *ngFor="let item of status" [value]="item.value">
+                {{ item.label }}
+              </option>
+            </select>
+          </div> -->
+          <div class="col-12 col-lg-6 form-group">
+            <label class="label">Seleccione período académico</label>
+            <select
+              class="form-control form-group"
+              (change)="onChangeSchoolYear($event.target.value)"
+              [(ngModel)]="schoolYear"
+            >
+              <option [value]="null" disabled>- Período académico -</option>
+              <option
+                [value]="schoolYear.id"
+                *ngFor="let schoolYear of schoolYearsOptions"
+              >
+                {{ schoolYear.name }}
+              </option>
+            </select>
+          </div>
+          <div *ngIf="schoolYear" class="col-12 col-lg-6 form-group">
+            <label class="label">Seleccione lapso</label>
+            <ng-multiselect-dropdown
+              [placeholder]="Lapsos"
+              [settings]="dropdownLapseSettings"
+              [data]="dropdownListLapses"
+              [(ngModel)]="selectedLapseItems"
+              (onSelect)="onSelectLapse($event)"
+              (onSelectAll)="onSelectAllLapses($event)"
+            >
+            </ng-multiselect-dropdown>
+            <!-- <select
+              class="form-control form-group"
+              (change)="onChangeLapse($event.target.value)"
+              [(ngModel)]="lapse"
+            >
+              <option [value]="null" disabled>- Lapso académico -</option>
+              <option [value]="lapse.id" *ngFor="let lapse of lapseOptions">
+                {{ lapse.name }}
+              </option>
+            </select> -->
+          </div>
+        </div>
+      </div>
+      <div *ngIf="selectedLapseItems.length" class="col-12 col-lg-6 form-group">
+        <div>
+          <label class="label">Filtrar por:</label>
+          <nb-radio-group
+            [(ngModel)]="filterType"
+            (ngModelChange)="changeType($event)"
+            class="d-flex"
+          >
+            <nb-radio [value]="'1'">Coordinador</nb-radio>
+            <nb-radio [value]="'2'">Escuela </nb-radio>
+            <nb-radio [value]="'3'">Actividades</nb-radio>
+          </nb-radio-group>
+        </div>
+      </div>
+      <!-- Multi-select -->
+      <div *ngIf="selectedLapseItems.length && filterType" class="col-12">
+        <label class="label">Seleccionar:</label>
+        <ng-multiselect-dropdown
+          [placeholder]="multiSelectPlaceholder"
+          [settings]="dropdownSettings"
+          [data]="dropdownList"
+          [(ngModel)]="selectedItems"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+  </nb-card-body>
+  <div class="col-12">
+    <div class="table-responsive">
+      <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+      ></ng2-smart-table>
+    </div>
+  </div>
+  <nb-card-footer class="w-100 text-right">
+    <button
+      (click)="onGenerateReport()"
+      class="col-12 col-lg-auto mr-2 sm:mb-4"
+      nbButton
+      [disabled]="!selectedItems.length"
+      status="success"
+    >
+      <span>Generar reporte </span>
+      <!-- <span *ngIf="disabledBtn">Restableciendo... </span> -->
+    </button>
+    <button
+      (click)="onGenerateReport()"
+      class="col-12 col-lg-auto mr-2 sm:mb-4"
+      nbButton
+      [disabled]="!selectedItems.length"
+      status="success"
+    >
+      <span>Generar reporte PDF </span>
+      <!-- <span *ngIf="disabledBtn">Restableciendo... </span> -->
+    </button>
+    <button
+      (click)="onGenerateReport()"
+      class="col-12 col-lg-auto"
+      nbButton
+      [disabled]="!selectedItems.length"
+      status="success"
+    >
+      <span>Generar repote Excel </span>
+      <!-- <span *ngIf="disabledBtn">Restableciendo... </span> -->
+    </button>
+  </nb-card-footer>
+</nb-card>
+<!-- <nb-radio-group [(ngModel)]="selectedAnnualConvention" class="d-flex">
+        <nb-radio [value]="null">Sin condición</nb-radio>
+        <nb-radio [value]="'1'">Si</nb-radio>
+        <nb-radio [value]="'2'">Sólo los inscritos</nb-radio>
+      </nb-radio-group> -->

@@ -38,7 +38,8 @@
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
               "src/styles.scss",
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "node_modules/nebular-icons/css/nebular-icons.css"
+              "node_modules/nebular-icons/css/nebular-icons.css",
+              "node_modules/ng-multiselect-dropdown/themes/ng-multiselect-dropdown.theme.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -78,7 +79,7 @@
                   "maximumError": "10kb"
                 }
               ],
-              "serviceWorker": true, 
+              "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
             "production": {
@@ -188,9 +189,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {

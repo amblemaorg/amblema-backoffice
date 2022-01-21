@@ -7,14 +7,6 @@
           <div class="col-12">
             <p class="font-weight-bold">Configuración del Reporte</p>
           </div>
-          <!-- <div class="col-12 col-lg-6 form-group">
-            <label class="label">Seleccione año escolar: </label>
-            <select [(ngModel)]="statusSelected" class="form-control">
-              <option *ngFor="let item of status" [value]="item.value">
-                {{ item.label }}
-              </option>
-            </select>
-          </div> -->
           <div class="col-12 col-lg-6 form-group">
             <label class="label">Seleccione período académico</label>
             <select
@@ -34,7 +26,7 @@
           <div *ngIf="schoolYear" class="col-12 col-lg-6 form-group">
             <label class="label">Seleccione lapso</label>
             <ng-multiselect-dropdown
-              [placeholder]="Lapsos"
+              [placeholder]="multiSelectLapsePlaceholder"
               [settings]="dropdownLapseSettings"
               [data]="dropdownListLapses"
               [(ngModel)]="selectedLapseItems"
@@ -42,16 +34,6 @@
               (onSelectAll)="onSelectAllLapses($event)"
             >
             </ng-multiselect-dropdown>
-            <!-- <select
-              class="form-control form-group"
-              (change)="onChangeLapse($event.target.value)"
-              [(ngModel)]="lapse"
-            >
-              <option [value]="null" disabled>- Lapso académico -</option>
-              <option [value]="lapse.id" *ngFor="let lapse of lapseOptions">
-                {{ lapse.name }}
-              </option>
-            </select> -->
           </div>
         </div>
       </div>
@@ -70,7 +52,7 @@
         </div>
       </div>
       <!-- Multi-select -->
-      <div *ngIf="selectedLapseItems.length && filterType" class="col-12">
+      <div *ngIf="selectedLapseItems.length && filterType" class="col-12 mb-4">
         <label class="label">Seleccionar:</label>
         <ng-multiselect-dropdown
           [placeholder]="multiSelectPlaceholder"
@@ -83,8 +65,12 @@
         </ng-multiselect-dropdown>
       </div>
     </div>
+    <button (click)="onGenerateReport()" class="col-12 col-lg-auto mr-2" nbButton [disabled]="!selectedItems.length || !filterType"
+      status="success">
+      <span>Generar reporte </span>
+    </button>
   </nb-card-body>
-  <div class="col-12">
+  <div *ngIf="data.length && filterType" class="col-12">
     <div class="table-responsive">
       <ng2-smart-table
         [settings]="settings"
@@ -93,40 +79,5 @@
     </div>
   </div>
   <nb-card-footer class="w-100 text-right">
-    <button
-      (click)="onGenerateReport()"
-      class="col-12 col-lg-auto mr-2 sm:mb-4"
-      nbButton
-      [disabled]="!selectedItems.length"
-      status="success"
-    >
-      <span>Generar reporte </span>
-      <!-- <span *ngIf="disabledBtn">Restableciendo... </span> -->
-    </button>
-    <button
-      (click)="onGenerateReport()"
-      class="col-12 col-lg-auto mr-2 sm:mb-4"
-      nbButton
-      [disabled]="!selectedItems.length"
-      status="success"
-    >
-      <span>Generar reporte PDF </span>
-      <!-- <span *ngIf="disabledBtn">Restableciendo... </span> -->
-    </button>
-    <button
-      (click)="onGenerateReport()"
-      class="col-12 col-lg-auto"
-      nbButton
-      [disabled]="!selectedItems.length"
-      status="success"
-    >
-      <span>Generar repote Excel </span>
-      <!-- <span *ngIf="disabledBtn">Restableciendo... </span> -->
-    </button>
   </nb-card-footer>
 </nb-card>
-<!-- <nb-radio-group [(ngModel)]="selectedAnnualConvention" class="d-flex">
-        <nb-radio [value]="null">Sin condición</nb-radio>
-        <nb-radio [value]="'1'">Si</nb-radio>
-        <nb-radio [value]="'2'">Sólo los inscritos</nb-radio>
-      </nb-radio-group> -->

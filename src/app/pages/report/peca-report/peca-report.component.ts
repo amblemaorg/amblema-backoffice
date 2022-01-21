@@ -19,6 +19,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   filterType = null;
   filterSelected = "";
   multiSelectPlaceholder = "";
+  multiSelectLapsePlaceholder = "Lapsos"
   dropdownList = [];
   dropdownListLapses = [];
   selectedItems = [];
@@ -251,6 +252,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   }
 
   clearTable() {
+    this.data = []
     const defaultSettings: any = {
       noDataMessage: "No hay registros",
       actions: {

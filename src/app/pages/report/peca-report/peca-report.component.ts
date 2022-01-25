@@ -67,6 +67,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
             return {
               name: record.name,
               id: record.name,
+              back_id: record.id,
             };
           });
           this.schoolYearsOptions = schoolYears;
@@ -153,23 +154,37 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     let body = {};
     const filterName = this.checkFilterName(this.filterType);
     const ids = this.selectedItems.map((item) => item.item_id);
+    const uniqueIds = [...new Set(ids)];
     if (filterName === "Coordinadores") {
-      body = { type_filter: "coordinator", coordinators: [...ids] };
+      body = { type_filter: "coordinator", coordinators: [...uniqueIds] };
     }
     if (filterName === "Escuelas") {
-      body = { type_filter: "school", schools: [...ids] };
+      body = { type_filter: "school", schools: [...uniqueIds] };
     }
     if (filterName === "Actividades") {
       console.log("initia data: ", this.initialFilterData);
-      body = { type_filter: "activity", activities: [...ids] };
+      body = { type_filter: "activity", activities: [...uniqueIds] };
     }
+    const lapses = this.selectedLapseItems.map(
+      (lapseItem) => lapseItem.item_text
+    );
+    const uniqueLapses = [...new Set(lapses)];
+    const schoolYear = this.schoolYearsOptions.find(
+      ({ name }) => name === this.schoolYear
+    );
+
+    body = {
+      ...body,
+      lapses: [...uniqueLapses],
+      schoolYear: schoolYear.back_id,
+    };
     this.subscriptionService = this.pecaReportService
       .getReport(body)
       .subscribe((response) => {
         if (response && response.status >= 201) {
           console.log("response: ", response);
           const { columns, matriz } = response.body;
-          this.numOfColumns = columns.lenght;
+          this.numOfColumns = columns.length;
           const columnNames = columns.map((col) => col.name);
           let columnsData = {};
 
@@ -235,14 +250,17 @@ export class PecaReportComponent implements OnInit, OnDestroy {
           this.settings = Object.assign({}, newSettings);
           this.data = data;
           this.source.load(this.data);
-          this.exportData();
+          // this.exportDataExcel();
+        } else {
+          console.log("error: ", response);
         }
       });
   }
 
   ngOnDestroy(): void {}
 
-  exportData(): void {
+  exportDataPdf(): void {}
+  exportDataExcel(): void {
     const workbookBin = this.makeExcel();
     const octetStream = this.binary2octet(workbookBin);
     saveAs(
@@ -282,20 +300,26 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     };
 
     workbook.SheetNames.push("Data de estudiantes");
-    console.log("columnz: ", this.settings.columns);
+
     const columns_header = Object.keys(this.settings.columns);
     let matrix = [];
     let row_aux = [];
     for (let count = 1, i = 0; count <= this.data.length; count++, i++) {
-      const data = Object.values(this.data[i]);
-      console.log("row: ", i);
+      let data = Object.values(this.data[i]);
       console.log("data: ", data);
+      data = data.map((column) => {
+        if (column === null || column === undefined) {
+          return;
+        }
+        if (typeof column !== "number") {
+          return column;
+        }
+        return `${column}%`;
+      });
       row_aux.push(data);
     }
-
     matrix.push(columns_header);
     row_aux.forEach((student) => matrix.push(student));
-    console.log("matrix: ", matrix);
     const columns = XLSX.utils.aoa_to_sheet(matrix);
     workbook.Sheets["Data de estudiantes"] = columns;
 

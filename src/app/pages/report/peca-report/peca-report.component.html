@@ -65,9 +65,44 @@
         </ng-multiselect-dropdown>
       </div>
     </div>
-    <button (click)="onGenerateReport()" class="col-12 col-lg-auto mr-2" nbButton [disabled]="!selectedItems.length || !filterType"
-      status="success">
+    <button
+      (click)="onGenerateReport()"
+      class="col-12 col-lg-auto mr-2"
+      nbButton
+      [disabled]="
+        !selectedItems.length || !filterType || !selectedLapseItems.length
+      "
+      status="success"
+    >
       <span>Generar reporte </span>
+    </button>
+    <button
+      (click)="exportDataExcel()"
+      class="col-12 col-lg-auto mr-2"
+      nbButton
+      *ngIf="
+        data.length &&
+        selectedItems.length &&
+        filterType &&
+        selectedLapseItems.length
+      "
+      status="success"
+    >
+      <span>Generar reporte Excel</span>
+    </button>
+    <button
+      (click)="exportDataPdf()"
+      class="col-12 col-lg-auto mr-2"
+      nbButton
+      *ngIf="
+        data.length &&
+        selectedItems.length &&
+        filterType &&
+        selectedLapseItems.length
+      "
+      status="success"
+    >
+      <span>Generar reporte PDF </span>
     </button>
   </nb-card-body>
   <div *ngIf="data.length && filterType" class="col-12">
@@ -78,6 +113,5 @@
       ></ng2-smart-table>
     </div>
   </div>
-  <nb-card-footer class="w-100 text-right">
-  </nb-card-footer>
+  <nb-card-footer class="w-100 text-right"> </nb-card-footer>
 </nb-card>

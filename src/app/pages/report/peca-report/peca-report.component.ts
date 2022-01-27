@@ -4,6 +4,7 @@ import { CustomToastrService } from "src/app/services/helper/custom-toastr.servi
 import { PDFReport } from "../pdf-report.service";
 import { DatePipe } from "@angular/common";
 import { PecaReportService } from "src/app/services/report/peca-report.service";
+import { PDFReportPeca } from "./pdf-peca-report.service";
 import { LocalDataSource } from "ng2-smart-table";
 import { DomSanitizer } from "@angular/platform-browser";
 import * as XLSX from "xlsx";
@@ -13,12 +14,13 @@ import { saveAs } from "file-saver";
   selector: "app-peca-report",
   templateUrl: "./peca-report.component.html",
   styleUrls: ["./peca-report.component.scss"],
-  providers: [PDFReport, DatePipe],
+  providers: [PDFReportPeca, DatePipe],
 })
 export class PecaReportComponent implements OnInit, OnDestroy {
   subscriptionService: Subscription;
   // -- 1 = coordinador, 2 = escuela -- 3 = Actividades
   filterType = null;
+  matrix = [];
   filterSelected = "";
   multiSelectPlaceholder = "";
   multiSelectLapsePlaceholder = "Lapsos";
@@ -51,9 +53,9 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   constructor(
     private toast: CustomToastrService,
     private cd: ChangeDetectorRef,
-    private generatorReport: PDFReport,
     private pecaReportService: PecaReportService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private generateReporte?: PDFReportPeca
   ) {}
 
   ngOnInit() {
@@ -249,17 +251,58 @@ export class PecaReportComponent implements OnInit, OnDestroy {
 
           this.settings = Object.assign({}, newSettings);
           this.data = data;
+          this.matrixGeneration();
           this.source.load(this.data);
-          // this.exportDataExcel();
         } else {
           console.log("error: ", response);
         }
       });
   }
 
+  matrixGeneration(): void {
+    const columnsHeader = Object.keys(this.settings.columns).map(
+      (columnHeader) => {
+        if (columnHeader === "activity") {
+          return "Actividades";
+        }
+        return columnHeader;
+      }
+    );
+    let matrix = [];
+    let row_aux = [];
+    for (let count = 1, i = 0; count <= this.data.length; count++, i++) {
+      let data = Object.values(this.data[i]);
+
+      data = data.map((column) => {
+        if (column === null || column === undefined) {
+          return;
+        }
+        if (typeof column !== "number") {
+          return column;
+        }
+        return `${column}%`;
+      });
+      row_aux.push(data);
+    }
+    matrix.push(columnsHeader);
+    row_aux.forEach((student) => matrix.push(student));
+    this.matrix = matrix;
+  }
+
   ngOnDestroy(): void {}
 
-  exportDataPdf(): void {}
+  async exportDataPdf(): Promise<void> {
+    const cleanedMatrix = this.matrix.map((rows, idx) => {
+      const columns = rows.map((cell, colIdx) => {
+        if (cell === undefined || cell === null) {
+          return "";
+        }
+        return cell;
+      });
+      return columns;
+    });
+    return this.generateReporte.generateActivities(cleanedMatrix);
+  }
   exportDataExcel(): void {
     const workbookBin = this.makeExcel();
     const octetStream = this.binary2octet(workbookBin);
@@ -299,29 +342,10 @@ export class PecaReportComponent implements OnInit, OnDestroy {
       CreatedDate: new Date(Date.now()),
     };
 
-    workbook.SheetNames.push("Data de estudiantes");
+    workbook.SheetNames.push("Reporte de actividades");
 
-    const columns_header = Object.keys(this.settings.columns);
-    let matrix = [];
-    let row_aux = [];
-    for (let count = 1, i = 0; count <= this.data.length; count++, i++) {
-      let data = Object.values(this.data[i]);
-      console.log("data: ", data);
-      data = data.map((column) => {
-        if (column === null || column === undefined) {
-          return;
-        }
-        if (typeof column !== "number") {
-          return column;
-        }
-        return `${column}%`;
-      });
-      row_aux.push(data);
-    }
-    matrix.push(columns_header);
-    row_aux.forEach((student) => matrix.push(student));
-    const columns = XLSX.utils.aoa_to_sheet(matrix);
-    workbook.Sheets["Data de estudiantes"] = columns;
+    const columns = XLSX.utils.aoa_to_sheet(this.matrix);
+    workbook.Sheets["Reporte de actividades"] = columns;
 
     /* Exportar workbook como binario para descarga */
     const workbookBinary = XLSX.write(workbook, {

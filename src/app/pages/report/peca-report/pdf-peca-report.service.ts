@@ -74,20 +74,65 @@ export class PDFReportPeca {
         Cancelado: "red",
         Rechazado: "red",
       };
+      const firstMapHeaderCells = {
+        [`Escuela `]: "E.",
+        [`Primaria `]: "P.",
+        [`Integral `]: "I.",
+        [`Bolivariana `]: "B.",
+        [`Educativa `]: "E.",
+        [`Estadal `]: "E.",
+        [`Básica `]: "B.",
+        [`Basica `]: "B.",
+        [`Nacional `]: "N.",
+        [`Colegio `]: "C.",
+        [`Educación `]: "E.",
+        [`Educacion `]: "E.",
+        [`Centro `]: "C.",
+        [`Unidad `]: "U.",
+      };
+      const secondMapHeaderCells = {
+        [`E.B.N.B.`]: "E.B.N.B. ",
+        [`U.E.E.`]: "U.E.E. ",
+        [`U.E.`]: "U.E. ",
+        [`U.E.N.`]: "U.E.N. ",
+        [`E.P.B.`]: "E.P.B. ",
+        [`E.I.B.`]: "E.I.B. ",
+      };
+      const lapses = ["Lapso 1", "Lapso 2", "Lapso 3"];
 
       const body = mockData.map((rows, rowIndex) => {
         const cols = rows.map((cell, columnIndex) => {
+          let text;
+          if (cell.length) {
+            const firstRegEx = new RegExp(
+              Object.keys(firstMapHeaderCells).join("|"),
+              "gi"
+            );
+            text = cell.replace(firstRegEx, (matched) => {
+              return firstMapHeaderCells[matched];
+            });
+            const secondRegEx = new RegExp(
+              Object.keys(secondMapHeaderCells).join("|"),
+              "gi"
+            );
+            text = text.replace(secondRegEx, (matched) => {
+              return secondMapHeaderCells[matched];
+            });
+          } else {
+            text = cell;
+          }
           if (rowIndex === 0 || columnIndex === 0)
             return {
-              text: cell,
+              text: text,
               color: "#fff",
               bold: true,
             };
-          else
+          else {
             return {
-              text: cell,
+              text: text,
               color: "#000",
             };
+          }
         });
         return cols;
       });
@@ -95,7 +140,6 @@ export class PDFReportPeca {
         {
           style: "table",
           table: {
-            pageBreak: "before",
             dontBreakRows: true,
             body,
           },
@@ -111,10 +155,14 @@ export class PDFReportPeca {
 
               // Lapse row
               if (!cellData.length) {
-                return "#fff";
+                return "#81b03e";
               }
               // Row & column headers
               if (rowIndex === 0 || columnIndex === 0) {
+                if (lapses.includes(cellData)) {
+                  console.log("trueee: ", cellData);
+                  return "#81b03e";
+                }
                 return "#2e8aaa";
               }
               // Text info: Aprobado, Pendiente, Rechazado, Cancelado
@@ -122,7 +170,6 @@ export class PDFReportPeca {
                 return colorMap[cellData];
               }
               // Parse Numeric info: 0%, 50%, 65%, 100%...
-              console.log("cell data: ", cellData);
               const data = parseFloat(cellData);
 
               // 0%

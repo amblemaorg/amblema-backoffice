@@ -1,19 +1,21 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
-import { DatePipe } from '@angular/common';
-import { DiagnosticReportService } from 'src/app/services/report/diagnostic-report.service';
-import { PDFReport } from '../pdf-report.service';
-import { Select } from '@ngxs/store';
-import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
-import { SchoolUserState } from 'src/app/store/user/school-user.action';
-import { SchoolUser } from 'src/app/_models/user/school.model';
-import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { Subscription, Observable } from "rxjs";
+import { DatePipe } from "@angular/common";
+import { DiagnosticReportService } from "src/app/services/report/diagnostic-report.service";
+import { PDFReport } from "../pdf-report.service";
+import { Select } from "@ngxs/store";
+import { SchoolYearEnrolledState } from "src/app/store/_enrolled/school-year-enrolled.action";
+import { SchoolUserState } from "src/app/store/user/school-user.action";
+import { SchoolUser } from "src/app/_models/user/school.model";
+import { SchoolYearEnrolled } from "src/app/_models/_enrolled/school-year.model";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
 
 @Component({
-  selector: 'app-diagnostic-report',
-  templateUrl: './diagnostic-report.component.html',
-  styleUrls: ['./diagnostic-report.component.scss'],
+  selector: "app-diagnostic-report",
+  templateUrl: "./diagnostic-report.component.html",
+  styleUrls: ["./diagnostic-report.component.scss"],
   providers: [DatePipe, PDFReport],
 })
 export class DiagnosticReportComponent implements OnInit, OnDestroy {
@@ -30,9 +32,9 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   // -- Setting checks --
   diagnostics = [
-    { label: 'Matemática', value: false },
-    { label: 'Lectura', value: false },
-    { label: 'Lógica', value: false },
+    { label: "Matemática", value: false },
+    { label: "Lectura", value: false },
+    { label: "Lógica", value: false },
   ];
 
   // -- School Year --
@@ -67,7 +69,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
           if (response.sections.length) {
             this.generatorReport.onGenerate(response);
           } else {
-            this.toastr.info('Información', 'No se encontraron registros');
+            this.toastr.info("Información", "No se encontraron registros");
           }
 
           setTimeout(() => {
@@ -76,10 +78,8 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
           }, 3500);
         },
         (err: any) => {
-
-
           if (err.status === 404) {
-            this.toastr.info('Información', 'No se encontraron registros');
+            this.toastr.info("Información", "No se encontraron registros");
           }
 
           this.disabledBtn = false;

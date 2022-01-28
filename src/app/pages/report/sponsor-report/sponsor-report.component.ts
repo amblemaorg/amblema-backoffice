@@ -6,6 +6,8 @@ import { ReadlyStatusConvert, FilterStatus } from "src/app/_helpers/utility";
 import { PDFReport } from "../pdf-report.service";
 import { DatePipe } from "@angular/common";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 @Component({
   selector: "app-sponsor-report",
@@ -100,7 +102,6 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
                 this.data = [...this.data, element];
               });
             }
-            console.log("data:", this.data);
             this.source.load(this.data);
           });
       });
@@ -110,6 +111,107 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
     if (this.subscriptionService) {
       this.subscriptionService.unsubscribe();
     }
+  }
+
+  onGenerateReportExcel(): void {
+    this.disabledBtn = true;
+    const workbookBin = this.makeExcel();
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `Reporte de padrinos.xls`
+    );
+
+    setTimeout(() => {
+      this.disabledBtn = false;
+      this.cd.detectChanges();
+    }, 3500);
+  }
+
+  makeExcel(): void {
+    const mappedKeys = {
+      name: "Nombre de la empresa",
+      companyRif: "RIF",
+      email: "Correo",
+      companyPhone: "Teléfono",
+      addressState: "Estado",
+      addressMunicipality: "Municipio",
+      addressCity: "Ciudad",
+      schools: "Escuela(s) que apadrinan",
+      status: "Estatus",
+    };
+    const keysOfInterest = [
+      "name",
+      "companyRif",
+      "email",
+      "companyPhone",
+      "addressState",
+      "addressMunicipality",
+      "addressCity",
+      "schools",
+      "status",
+    ];
+
+    const data: any[] = this.data.map((record) => {
+      const mappedData = Object.entries(record)
+        .filter((entry) => {
+          if (keysOfInterest.includes(entry[0])) {
+            return entry;
+          }
+        })
+        .map(([key, value]) => {
+          let cellValue;
+          if (key === "schools") {
+            cellValue = value.toString();
+          } else cellValue = value;
+          if (key === "status") {
+            cellValue = this.status.find(
+              (element) => element.value === cellValue
+            ).label;
+          }
+          return [`${mappedKeys[key]}`, cellValue];
+        });
+      const obj = mappedData.reduce(
+        (acc, [key, value]) => ({ ...acc, [key]: value }),
+        <any>{}
+      );
+      return obj;
+    });
+    const reportTitle = [["Reporte de Padrinos"]];
+    const columnHeaders = Object.keys(data[0]);
+    const matrixz = data.filter((rows, idx) => idx !== 0);
+    const values = matrixz.map((record) => {
+      return Object.values(record);
+    });
+    // console.log("matrix: ", matrixz);
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: `"Reporte de Padrinos"`,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+
+    workbook.SheetNames.push("Reporte de Padrinos");
+    const matrix = [reportTitle, columnHeaders, ...values];
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets["Reporte de Padrinos"] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
   }
 
   onGenerateReport(): void {

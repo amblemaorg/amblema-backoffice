@@ -142,7 +142,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
     const octetStream = this.binary2octet(workbookBin);
     saveAs(
       new Blob([octetStream], { type: "application/octet-stream" }),
-      `Reporte de padrinos.xls`
+      `Reporte de coordinadores.xls`
     );
 
     setTimeout(() => {

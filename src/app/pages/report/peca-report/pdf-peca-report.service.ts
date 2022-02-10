@@ -288,6 +288,135 @@ export class PDFReportPeca {
       },
     ]);
 
+    table.addRow([
+      {
+        text: `Cell: 9`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 10`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 11`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 12`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 5`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 6`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 7`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 8`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+    ]);
+
+    table.addRow([
+      {
+        text: `Cell: 17`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 2`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 3`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 4`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 5`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 6`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 7`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 80`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+    ]);
+
+    table.addRow([
+      {
+        text: `Cell: 17`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 2`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 3`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 4`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 5`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 6`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 7`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 80`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+    ]);
+
     const spaceCell = {
       text: "spaceCell",
       color: "#fff",

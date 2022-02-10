@@ -1,9 +1,10 @@
-import { Inject, Injectable } from "@angular/core";
+import { ElementRef, Inject, Injectable } from "@angular/core";
 import { DOCUMENT, DatePipe } from "@angular/common";
 import { IMAGE } from "../img-base-64";
 // import { OlympicsReport } from "src/app/_models/report/math-olympics-report.model";
 const pdfMake = require("pdfmake/build/pdfmake.js");
 const pdfFonts = require("pdfmake/build/vfs_fonts.js");
+const htmlToPdfmake = require("html-to-pdfmake");
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Injectable()
@@ -18,7 +19,7 @@ export class PDFReportPeca {
    * sus respectivas filas
    * @param mockData Matrix (Arrays into Arrays of data)
    */
-  async generateActivities(mockData: any) {
+  async generateActivities(mockData: any, pdfElement?: ElementRef) {
     try {
       // No encuentro efecto
       const colorHeaderRow: any = {
@@ -228,7 +229,14 @@ export class PDFReportPeca {
         },
       ];
 
-      records.push(content);
+      // PDF To Html
+
+      const html = htmlToPdfmake(pdfElement.nativeElement.outerHTML);
+      console.log("pdfElement", pdfElement);
+      // End
+
+      // records.push(content);
+      records.push(html);
 
       finalDocument.content.push(records);
 

@@ -2,11 +2,9 @@ nb-card-body {
   overflow: unset !important;
 }
 
-.pdfContainer {
-  h1 {
-    color: orange;
-  }
-
-  .table-responsive {
+.table {
+  th,
+  td {
+    border: 1px black solid;
   }
 }

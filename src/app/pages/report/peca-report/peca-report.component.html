@@ -116,7 +116,7 @@
   <nb-card-footer class="w-100 text-right"> </nb-card-footer>
 
   <div #pdfElement class="pdfContainer">
-    <h1>Hello world</h1>
+    <h1 style="color: orange">Hello world</h1>
     <p>hello</p>
     <div *ngIf="data.length && filterType" class="col-12">
       <div class="table-responsive">
@@ -126,5 +126,23 @@
         ></ng2-smart-table>
       </div>
     </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Actividad</th>
+          <th>Escuela Primaria Bolivariana Francisco Tovar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lapso 1</td>
+        </tr>
+        <tr>
+          <td>AmbLEncuentro</td>
+          <td>0%</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </nb-card>

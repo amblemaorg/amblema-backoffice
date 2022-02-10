@@ -303,6 +303,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     });
     return this.generateReporte.generateActivities(cleanedMatrix);
   }
+
   exportDataExcel(): void {
     const workbookBin = this.makeExcel();
     const octetStream = this.binary2octet(workbookBin);

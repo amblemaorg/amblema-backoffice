@@ -179,8 +179,8 @@ export class PDFReportPeca {
           style: "table",
           table: {
             dontBreakRows: true,
-            body,
-            // body: bodyResp,
+            // body,
+            body: bodyResp,
           },
           layout: {
             color: function (rowIndex, node, columnIndex) {
@@ -243,42 +243,6 @@ export class PDFReportPeca {
   }
 
   documentResponsive(body) {
-    // let colsResp = [];
-
-    // body.forEach((rows, rowIndex) => {
-    //   let rowsResp = [];
-    //   const eachColumnAdd = 12;
-
-    //   // Agregar una fila extra con celdas vacias
-    //   // para crear un espacio cada 12 filas
-    //   if (rowIndex > 0 && rowIndex % eachColumnAdd === 0) {
-    //     const countCells = rows.length;
-    //     const spaceCell = {
-    //       text: `Row: ${rowIndex}`,
-    //       color: "#000",
-    //       fillColor: "#fff",
-    //     };
-
-    //     // rowsResp.push(Array(countCells).fill(spaceCell));
-    //     colsResp.push(Array(countCells).fill(spaceCell));
-    //   }
-
-    //   // Nunca se deja de guardar las filas originales correspondientes
-    //   // rowsResp.push(rows);
-
-    //   // Se guarda el nuevo grupo de filas con las filas de espaciado adicionales
-    //   // El grupo de filas conforman una columna
-    //   colsResp.push(rows);
-    // });
-
-    // console.log("");
-    // console.log("documentResponsive");
-
-    // console.log("colsResp: ", colsResp);
-    // console.log("");
-
-    // return colsResp;
-
     const table = new Table(body);
 
     table.addRow([
@@ -324,7 +288,25 @@ export class PDFReportPeca {
       },
     ]);
 
-    // this.globalAddWhiteSpaceRow(addSpace.each);
+    const spaceCell = {
+      text: "spaceCell",
+      color: "#fff",
+      fillColor: "#5eba7d",
+    };
+
+    table.addRowEach(
+      12,
+      table.getRowFormat(
+        [
+          {
+            text: "No spaceCell",
+            color: "#fff",
+            fillColor: "#000",
+          },
+        ],
+        spaceCell
+      )
+    );
 
     return table.getMatrix();
   }
@@ -351,7 +333,7 @@ class Table {
    * @memberof Table
    * @returns newRows Cells formatted
    */
-  private equalizeCells(newRows: Cell[], cellFiller?: Cell): any[] {
+  getRowFormat(newRows: Cell[], cellFiller?: Cell): Cell[] {
     const rowsLength = this.body[0].length;
     const newRowsLength = newRows.length;
 
@@ -361,7 +343,7 @@ class Table {
         ? {
             text: "",
             color: "#fff",
-            fillColor: "#337ab7",
+            fillColor: "#fff",
           }
         : cellFiller;
 
@@ -395,54 +377,80 @@ class Table {
    * @return [ Object:Cell ]
    * @memberof Table
    */
-  addRow(newRows: Cell[], cellFiller?: Cell) {
+  addRow(newRows: Cell[], cellFiller?: Cell): any[] {
     // Completamos con celdas las vaciás necesarias para que el pdfMaker no genere error
     // Al detectar que la cantidad de celdas entre esta fila y otras es menor o mayor
-    newRows = this.equalizeCells(newRows, cellFiller);
+    newRows = this.getRowFormat(newRows, cellFiller);
 
     this.body.push(newRows);
 
     return this.body;
   }
 
-  AddWhiteSpaceRow(rows, rowIndex, eachColumnAdd) {
-    if (!(rowIndex > 0 && rowIndex % eachColumnAdd === 0)) {
-      return false;
-    }
+  // addWhiteSpaceRow(rows, rowIndex, eachColumnAdd): Cell[] {
+  //   if (!(rowIndex > 0 && rowIndex % eachColumnAdd === 0)) {
+  //     return [];
+  //   }
 
-    const countCells = rows.length;
-    const spaceCell = {
-      text: `Space row: ${rowIndex}`,
-      color: "#000",
-      fillColor: "#fff",
-    };
+  //   const countCells = rows.length;
+  //   const spaceCell = {
+  //     text: `Space row: ${rowIndex}`,
+  //     color: "#000",
+  //     fillColor: "#fff",
+  //   };
 
-    return Array(countCells).fill(spaceCell);
-  }
+  //   return Array(countCells).fill(spaceCell);
+  // }
 
-  // Agrega la fila vaciá pero realiza un foreach que en casos es innecesario
-  globalAddWhiteSpaceRow(eachColumnAdd = 12) {
-    let bodyResp = []; // columnas (colsResp) -  el body es un array de columnas
+  // getWhiteSpaceRow(): Cell[] {
 
-    this.body.forEach((rows, rowIndex) => {
-      const whiteSpaceRow = this.AddWhiteSpaceRow(
-        rows,
-        rowIndex,
-        eachColumnAdd
-      );
-      if (whiteSpaceRow) {
-        bodyResp.push(whiteSpaceRow);
+  //   const spaceCell = {
+  //     text: '',
+  //     color: "#000",
+  //     fillColor: "#fff",
+  //   };
+
+  //   // How cells array is empty the method will return rowFormat with spaceCell repeated
+  //   return this.getRowFormat([], spaceCell);
+  // }
+
+  addRowEach(eachColumnAdd, newRow: Cell[]) {
+    let bodyFormatted = [];
+
+    this.body.forEach((row, rowIndex) => {
+      if (rowIndex > 0 && rowIndex % eachColumnAdd === 0) {
+        bodyFormatted.push(newRow);
       }
 
-      // Se guarda el nuevo grupo de filas con las filas de espaciado adicionales
-      // El grupo de filas conforman una columna
-      bodyResp.push(rows);
+      bodyFormatted.push(row);
     });
 
-    this.body = bodyResp;
-
-    return bodyResp;
+    this.body = bodyFormatted;
   }
+
+  // // Agrega la fila vaciá pero realiza un foreach que en casos es innecesario
+  // globalAddWhiteSpaceRow(eachColumnAdd = 12) {
+  //   let bodyResp = []; // columnas (colsResp) -  el body es un array de columnas
+
+  //   this.body.forEach((rows, rowIndex) => {
+  //     const whiteSpaceRow = this.addWhiteSpaceRow(
+  //       rows,
+  //       rowIndex,
+  //       eachColumnAdd
+  //     );
+  //     if (whiteSpaceRow.length > 0) {
+  //       bodyResp.push(whiteSpaceRow);
+  //     }
+
+  //     // Se guarda el nuevo grupo de filas con las filas de espaciado adicionales
+  //     // El grupo de filas conforman una columna
+  //     bodyResp.push(rows);
+  //   });
+
+  //   this.body = bodyResp;
+
+  //   return bodyResp;
+  // }
 
   getMatrix() {
     console.log("getMatrix: ", this.body);

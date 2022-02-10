@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
 import { PDFReport } from "../pdf-report.service";
@@ -49,6 +56,8 @@ export class PecaReportComponent implements OnInit, OnDestroy {
 
   source: LocalDataSource = new LocalDataSource();
   data: any = [];
+
+  @ViewChild("pdfElement", { static: false }) pdfElement: ElementRef;
 
   constructor(
     private toast: CustomToastrService,
@@ -301,7 +310,11 @@ export class PecaReportComponent implements OnInit, OnDestroy {
       });
       return columns;
     });
-    return this.generateReporte.generateActivities(cleanedMatrix);
+    // console.log("pdfElement", this.pdfElement);
+    return this.generateReporte.generateActivities(
+      cleanedMatrix,
+      this.pdfElement
+    );
   }
 
   exportDataExcel(): void {

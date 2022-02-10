@@ -114,4 +114,17 @@
     </div>
   </div>
   <nb-card-footer class="w-100 text-right"> </nb-card-footer>
+
+  <div #pdfElement class="pdfContainer">
+    <h1>Hello world</h1>
+    <p>hello</p>
+    <div *ngIf="data.length && filterType" class="col-12">
+      <div class="table-responsive">
+        <ng2-smart-table
+          [settings]="settings"
+          [source]="source"
+        ></ng2-smart-table>
+      </div>
+    </div>
+  </div>
 </nb-card>

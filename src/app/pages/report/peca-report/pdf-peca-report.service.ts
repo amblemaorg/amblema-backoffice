@@ -281,7 +281,7 @@ export class PDFReportPeca {
 
     const table = new Table(body);
 
-    table.addRows([
+    table.addRow([
       {
         text: `Cell: 1`,
         color: "#000",
@@ -302,7 +302,29 @@ export class PDFReportPeca {
         color: "#000",
         fillColor: "#fff",
       },
+      {
+        text: `Cell: 5`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 6`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 7`,
+        color: "#000",
+        fillColor: "#fff",
+      },
+      {
+        text: `Cell: 8`,
+        color: "#000",
+        fillColor: "#fff",
+      },
     ]);
+
+    // this.globalAddWhiteSpaceRow(addSpace.each);
 
     return table.getMatrix();
   }
@@ -311,31 +333,72 @@ export class PDFReportPeca {
 interface Cell {
   text: string;
   color: string;
-  fillColor: string;
+  fillColor?: string;
+  fontSize?: number;
+  bold?: boolean;
 }
 
 class Table {
   constructor(public body = []) {}
 
-  addRows(newRows: Cell[], addSpace = { each: 12, add: false }) {
-    if (addSpace.add) {
-      this.globalAddWhiteSpaceRow(addSpace.each);
-    }
-
-    // Completamos con celdas las vacias necesarias para que el pdfMaker no genere error
-    // Al detectar que la cantidad de celdas entre esta fila y otras es menor
+  /**
+   * @description The PDF Maker package do an error when some rows doesn't have
+   * the same length cells as the first row (Array[0][0].length). So this method is
+   * to equalize between new row's cells length and the original the first row (Array[0][0].length) cells length.
+   * @author Christopher Dallar Document This
+   * @date 10/02/2022
+   * @private
+   * @memberof Table
+   * @returns newRows Cells formatted
+   */
+  private equalizeCells(newRows: Cell[], cellFiller?: Cell): any[] {
     const rowsLength = this.body[0].length;
+    const newRowsLength = newRows.length;
 
-    if (newRows.length !== rowsLength) {
+    // If newRowsLength is fewer than original rowsLength, return cells that fill the rest of rows.length
+    if (newRowsLength < rowsLength) {
+      cellFiller = !cellFiller
+        ? {
+            text: "",
+            color: "#fff",
+            fillColor: "#337ab7",
+          }
+        : cellFiller;
+
       const countCellsToFill = rowsLength - newRows.length;
-      const cellFillers = Array(countCellsToFill).fill({
-        text: `vació`,
-        color: "#000",
-        fillColor: "#fff",
-      });
+      // const cellFillers = Array(countCellsToFill).fill(cellFiller);
+      let cellFillers = [];
+
+      for (let index = 0; index < countCellsToFill; index++) {
+        cellFillers.push(cellFiller);
+      }
 
       newRows.push(...cellFillers);
     }
+
+    // if new rows length is longer to original rows length, delete from newRows array since last position + 1 until the last position of newRows
+    if (newRowsLength > rowsLength) {
+      newRows.splice(rowsLength, newRowsLength - 1);
+    }
+
+    return newRows;
+  }
+
+  /**
+   * @description Return an array with cell objects.
+   * @Memo When pass more than one array of cell object  with the same text
+   * only will printed the text of first cell and the other without it.
+   * @author Christopher Dallar Document This
+   * @date 10/02/2022
+   * @param {Cell[]} newRows
+   * @param {boolean} [addSpace={ each: 12, add: false }]
+   * @return [ Object:Cell ]
+   * @memberof Table
+   */
+  addRow(newRows: Cell[], cellFiller?: Cell) {
+    // Completamos con celdas las vaciás necesarias para que el pdfMaker no genere error
+    // Al detectar que la cantidad de celdas entre esta fila y otras es menor o mayor
+    newRows = this.equalizeCells(newRows, cellFiller);
 
     this.body.push(newRows);
 
@@ -349,7 +412,7 @@ class Table {
 
     const countCells = rows.length;
     const spaceCell = {
-      text: `Row: ${rowIndex}`,
+      text: `Space row: ${rowIndex}`,
       color: "#000",
       fillColor: "#fff",
     };

@@ -1,0 +1,48 @@
+<h1 style="color: orange">Hello world</h1>
+<p>hello</p>
+
+<!-- <table class="table">
+  
+  <thead>
+    <tr>
+      <th>Actividad</th>
+      <th>Escuela Primaria Bolivariana Francisco Tovar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lapso 1</td>
+      <td>Lapso 2</td>
+    </tr>
+    <tr>
+      <td>AmbLEncuentro</td>
+      <td>0%</td>
+    </tr>
+  </tbody>
+</table> -->
+
+<ng-container *ngFor="let th of table.th; index as idxTh">
+  <table class="table" style="margin-top: 100px">
+    <thead>
+      <tr>
+        <ng-container *ngFor="let cell of th">
+          <th>{{ cell.text }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let row of table.tbody[idxTh]">
+        <tr>
+          <ng-container *ngFor="let cell of row">
+            <td>{{ cell.text }}</td>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-container>
+
+<!-- <div class="table-responsive">
+  <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+</div> -->

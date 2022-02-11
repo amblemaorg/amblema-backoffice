@@ -21,19 +21,6 @@ export class PDFReportPeca {
    */
   async generateActivities(mockData: any, pdfElement?: ElementRef) {
     try {
-      // No encuentro efecto
-      const colorHeaderRow: any = {
-        fillColor: "#81b03e",
-        color: "#FFF",
-        bold: true,
-      };
-      // No encuentro efecto
-      const colorHeaderSecondary: any = {
-        fillColor: "#00809a",
-        color: "#FFF",
-        bold: true,
-      };
-
       const documentHeader: any = [
         {
           image: IMAGE,
@@ -77,39 +64,11 @@ export class PDFReportPeca {
        */
       const records: any = [];
 
-      const estados = ["Aprobado", "Pendiente", "Cancelado", "Rechazado"];
-
       const colorMap = {
         Aprobado: "#68BB59",
         Pendiente: "yellow",
         Cancelado: "red",
         Rechazado: "red",
-      };
-
-      const firstMapHeaderCells = {
-        [`Escuela `]: "E.",
-        [`Primaria `]: "P.",
-        [`Integral `]: "I.",
-        [`Bolivariana `]: "B.",
-        [`Educativa `]: "E.",
-        [`Estadal `]: "E.",
-        [`Básica `]: "B.",
-        [`Basica `]: "B.",
-        [`Nacional `]: "N.",
-        [`Colegio `]: "C.",
-        [`Educación `]: "E.",
-        [`Educacion `]: "E.",
-        [`Centro `]: "C.",
-        [`Unidad `]: "U.",
-      };
-
-      const secondMapHeaderCells = {
-        [`E.B.N.B.`]: "E.B.N.B. ",
-        [`U.E.E.`]: "U.E.E. ",
-        [`U.E.`]: "U.E. ",
-        [`U.E.N.`]: "U.E.N. ",
-        [`E.P.B.`]: "E.P.B. ",
-        [`E.I.B.`]: "E.I.B. ",
       };
 
       const lapses = ["Lapso 1", "Lapso 2", "Lapso 3"];
@@ -120,68 +79,14 @@ export class PDFReportPeca {
        * Se modifica el color de texto y peso a los textos de la primera fila y columna a blanco y bold
        * El resto de columnas y filas a negro.
        */
-      const body = mockData.map((rows, rowIndex) => {
-        // Las columnas contienen las filas
-        const cols = rows.map((cell, columnIndex) => {
-          let text;
-
-          if (cell.length) {
-            // Reemplazando por prefijos y agregando espacios en blanco
-
-            // Obtenemos con expresión regular las coincidencias
-            const firstRegEx = new RegExp(
-              Object.keys(firstMapHeaderCells).join("|"),
-              "gi"
-            );
-
-            // Reemplazamos en este caso las palabras por prefijos
-            // Por ejemplo, "Escuela " a "E."
-            text = cell.replace(firstRegEx, (matched) => {
-              return firstMapHeaderCells[matched];
-            });
-
-            // Obtenemos con expresión regular las coincidencias
-            const secondRegEx = new RegExp(
-              Object.keys(secondMapHeaderCells).join("|"),
-              "gi"
-            );
-
-            // Reemplazamos y agregamos el mismo texto pero con un espacio vació al final
-            // Por ejemplo, "E.B.N.B. " a "E.B.N.B. "
-            text = text.replace(secondRegEx, (matched) => {
-              return secondMapHeaderCells[matched];
-            });
-          } else {
-            text = cell;
-          }
-
-          if (rowIndex === 0 || columnIndex === 0) {
-            // Modificamos el color de texto de la primeras filas y columna
-            return {
-              text: text,
-              color: "#fff",
-              bold: true,
-            };
-          }
-
-          return {
-            text: text,
-            color: "#000",
-          };
-        });
-
-        return cols;
-      });
-
-      const bodyResp = this.documentResponsive(body);
+      const body = this.getBodyToPdfMake(mockData);
 
       const content = [
         {
           style: "table",
           table: {
             dontBreakRows: true,
-            // body,
-            body: bodyResp,
+            body,
           },
           layout: {
             color: function (rowIndex, node, columnIndex) {
@@ -230,13 +135,12 @@ export class PDFReportPeca {
       ];
 
       // PDF To Html
-
       const html = htmlToPdfmake(pdfElement.nativeElement.outerHTML);
       console.log("pdfElement", pdfElement);
       // End
 
-      // records.push(content);
-      records.push(html);
+      records.push(content);
+      // records.push(html);
 
       finalDocument.content.push(records);
 
@@ -248,6 +152,157 @@ export class PDFReportPeca {
       console.log("err: ", err);
       throw err;
     }
+  }
+
+  async generatePdfFromHtml(pdfElement) {
+    try {
+      const documentHeader: any = [
+        {
+          image: IMAGE,
+          width: 50,
+          absolutePosition: { x: 30, y: 10 },
+        },
+        {
+          alignment: "center",
+          columns: [
+            {
+              width: "*",
+              text: "Reporte de actividades del PECA",
+              color: "#2e8aaa",
+              alignment: "center",
+              fontSize: 12,
+              bold: true,
+              margin: [0, 0, 10, 20],
+            },
+          ],
+        },
+      ];
+
+      const finalDocument: any = {
+        info: {
+          // Metadata, visible en la propiedades del documento
+          title: "Reporte de actividades del PECA",
+          author: "Binaural C.A",
+          subject: "Reporte de actividades del PECA",
+          keywords: "Reporte, usuarios, coordinador, escuela",
+        },
+        pageSize: "A4",
+        pageOrientation: "landscape",
+        content: [documentHeader],
+        defaultStyle: {
+          fontSize: 12,
+        },
+      };
+
+      /**
+       * Insert the records bo
+       */
+      const records: any = [];
+
+      // PDF To Html
+      const html = htmlToPdfmake(pdfElement.nativeElement.outerHTML);
+      console.log("pdfElement", pdfElement);
+
+      records.push(html);
+
+      finalDocument.content.push(records);
+
+      pdfMake.createPdf(finalDocument).open();
+    } catch (err) {
+      console.log("err: ", err);
+      throw err;
+    }
+  }
+
+  getBodyToPdfMake(mockData: any) {
+    const firstMapHeaderCells = {
+      [`Escuela `]: "E.",
+      [`Primaria `]: "P.",
+      [`Integral `]: "I.",
+      [`Bolivariana `]: "B.",
+      [`Educativa `]: "E.",
+      [`Estadal `]: "E.",
+      [`Básica `]: "B.",
+      [`Basica `]: "B.",
+      [`Nacional `]: "N.",
+      [`Colegio `]: "C.",
+      [`Educación `]: "E.",
+      [`Educacion `]: "E.",
+      [`Centro `]: "C.",
+      [`Unidad `]: "U.",
+    };
+
+    const secondMapHeaderCells = {
+      [`E.B.N.B.`]: "E.B.N.B. ",
+      [`U.E.E.`]: "U.E.E. ",
+      [`U.E.`]: "U.E. ",
+      [`U.E.N.`]: "U.E.N. ",
+      [`E.P.B.`]: "E.P.B. ",
+      [`E.I.B.`]: "E.I.B. ",
+    };
+
+    /**
+     * Reemplazan los textos iniciales por prefijos.
+     * Se agregan espacio vació de separación a los prefijos.
+     * Se modifica el color de texto y peso a los textos de la primera fila y columna a blanco y bold
+     * El resto de columnas y filas a negro.
+     */
+    let body = mockData.map((rows, rowIndex) => {
+      // Las columnas contienen las filas
+      const cols = rows.map((cell, columnIndex) => {
+        let text;
+
+        if (cell.length) {
+          // Reemplazando por prefijos y agregando espacios en blanco
+
+          // Obtenemos con expresión regular las coincidencias
+          const firstRegEx = new RegExp(
+            Object.keys(firstMapHeaderCells).join("|"),
+            "gi"
+          );
+
+          // Reemplazamos en este caso las palabras por prefijos
+          // Por ejemplo, "Escuela " a "E."
+          text = cell.replace(firstRegEx, (matched) => {
+            return firstMapHeaderCells[matched];
+          });
+
+          // Obtenemos con expresión regular las coincidencias
+          const secondRegEx = new RegExp(
+            Object.keys(secondMapHeaderCells).join("|"),
+            "gi"
+          );
+
+          // Reemplazamos y agregamos el mismo texto pero con un espacio vació al final
+          // Por ejemplo, "E.B.N.B. " a "E.B.N.B. "
+          text = text.replace(secondRegEx, (matched) => {
+            return secondMapHeaderCells[matched];
+          });
+        } else {
+          text = cell;
+        }
+
+        if (rowIndex === 0 || columnIndex === 0) {
+          // Modificamos el color de texto de la primeras filas y columna
+          return {
+            text: text,
+            color: "#fff",
+            bold: true,
+          };
+        }
+
+        return {
+          text: text,
+          color: "#000",
+        };
+      });
+
+      return cols;
+    });
+
+    // body = this.documentResponsive(body);
+
+    return body;
   }
 
   documentResponsive(body) {
@@ -384,7 +439,7 @@ export class PDFReportPeca {
 
     table.addRow([
       {
-        text: `Cell: 17`,
+        text: `Cell: 18`,
         color: "#000",
         fillColor: "#fff",
       },

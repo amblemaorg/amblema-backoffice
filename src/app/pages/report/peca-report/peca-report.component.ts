@@ -56,6 +56,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
 
   source: LocalDataSource = new LocalDataSource();
   data: any = [];
+  bodyTable: any = [];
 
   @ViewChild("pdfElement", { static: false }) pdfElement: ElementRef;
 
@@ -296,11 +297,15 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     matrix.push(columnsHeader);
     row_aux.forEach((student) => matrix.push(student));
     this.matrix = matrix;
+
+    //Prepare to export PDF
+    this.prepareBodyToHtmlPdfMake();
   }
 
   ngOnDestroy(): void {}
 
-  async exportDataPdf(): Promise<void> {
+  //Prepare to export PDF
+  private prepareBodyToHtmlPdfMake() {
     const cleanedMatrix = this.matrix.map((rows, idx) => {
       const columns = rows.map((cell, colIdx) => {
         if (cell === undefined || cell === null) {
@@ -310,11 +315,26 @@ export class PecaReportComponent implements OnInit, OnDestroy {
       });
       return columns;
     });
-    // console.log("pdfElement", this.pdfElement);
-    return this.generateReporte.generateActivities(
-      cleanedMatrix,
-      this.pdfElement
-    );
+    this.bodyTable = this.generateReporte.getBodyToPdfMake(cleanedMatrix);
+  }
+
+  async exportDataPdf(): Promise<void> {
+    // const cleanedMatrix = this.matrix.map((rows, idx) => {
+    //   const columns = rows.map((cell, colIdx) => {
+    //     if (cell === undefined || cell === null) {
+    //       return "";
+    //     }
+    //     return cell;
+    //   });
+    //   return columns;
+    // });
+
+    // return this.generateReporte.generateActivities(
+    //   cleanedMatrix,
+    //   this.pdfElement
+    // );
+
+    this.generateReporte.generatePdfFromHtml(this.pdfElement);
   }
 
   exportDataExcel(): void {

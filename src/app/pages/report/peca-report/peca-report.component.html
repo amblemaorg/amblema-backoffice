@@ -116,33 +116,12 @@
   <nb-card-footer class="w-100 text-right"> </nb-card-footer>
 
   <div #pdfElement class="pdfContainer">
-    <h1 style="color: orange">Hello world</h1>
-    <p>hello</p>
-    <div *ngIf="data.length && filterType" class="col-12">
-      <div class="table-responsive">
-        <ng2-smart-table
-          [settings]="settings"
-          [source]="source"
-        ></ng2-smart-table>
-      </div>
-    </div>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Actividad</th>
-          <th>Escuela Primaria Bolivariana Francisco Tovar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Lapso 1</td>
-        </tr>
-        <tr>
-          <td>AmbLEncuentro</td>
-          <td>0%</td>
-        </tr>
-      </tbody>
-    </table>
+    <ng-container *ngIf="bodyTable.length > 0">
+      <app-peca-pdf-report-template
+        [bodyTable]="bodyTable"
+        [settings]="settings"
+        [source]="source"
+      ></app-peca-pdf-report-template>
+    </ng-container>
   </div>
 </nb-card>

@@ -113,7 +113,7 @@ export class PecaPdfReportTemplateComponent implements OnInit {
   paginateThead(thForPage = this.table.thForPage) {
     const firstRow = this.bodyTable[0];
     const firstTh = firstRow[0];
-    const countThead = firstRow.length / thForPage - 1; // 51 / 10 = 5 paginas - 5 arrays
+    const countThead = firstRow.length / thForPage; // 50 / 10 = 5 paginas (Tablas)
 
     let beggingIdx = 0;
     let lastIndxToGet = thForPage;
@@ -137,6 +137,13 @@ export class PecaPdfReportTemplateComponent implements OnInit {
       tableThead.push(partRow);
     }
 
+    if (
+      tableThead[tableThead.length - 1].length === 1 &&
+      tableThead[tableThead.length - 1][0].text === firstTh.text
+    ) {
+      tableThead.pop();
+    }
+
     console.log("paginateThead: ", tableThead);
 
     this.table.th = tableThead;
@@ -147,10 +154,10 @@ export class PecaPdfReportTemplateComponent implements OnInit {
     const countPage = this.table.th.length;
 
     const toAdd = [
-      Array(10).fill({
+      Array(11).fill({
         text: "0% 3 - row 2 - page 2",
       }),
-      Array(10).fill({
+      Array(11).fill({
         text: "0% 3 - row 2 - page 2",
       }),
     ];

@@ -134,13 +134,7 @@ export class PDFReportPeca {
         },
       ];
 
-      // PDF To Html
-      const html = htmlToPdfmake(pdfElement.nativeElement.outerHTML);
-      console.log("pdfElement", pdfElement);
-      // End
-
       records.push(content);
-      // records.push(html);
 
       finalDocument.content.push(records);
 
@@ -192,6 +186,33 @@ export class PDFReportPeca {
         defaultStyle: {
           fontSize: 12,
         },
+        styles: {
+          bg_blue: {
+            width: 200,
+            color: "#fff",
+            background: "#2e8aaa",
+          },
+          "html-th": {
+            color: "#fff",
+            background: "#2e8aaa",
+          },
+          bg_green: {
+            color: "#fff",
+            background: "#81b03e",
+          },
+          bg_white: {
+            background: "#fff",
+          },
+          bg_red: {
+            background: "red",
+          },
+          bg_yellow: {
+            background: "yellow",
+          },
+          bg_green_light: {
+            background: "#68BB59",
+          },
+        },
       };
 
       /**
@@ -201,7 +222,7 @@ export class PDFReportPeca {
 
       // PDF To Html
       const html = htmlToPdfmake(pdfElement.nativeElement.outerHTML);
-      console.log("pdfElement", pdfElement);
+      console.log("html", html);
 
       records.push(html);
 
@@ -523,11 +544,11 @@ class Table {
    * @date 10/02/2022
    * @private
    * @memberof Table
-   * @returns newRows Cells formatted
+   * @returns Array of Cells formatted
    */
-  getRowFormat(newRows: Cell[], cellFiller?: Cell): Cell[] {
+  getRowFormat(newRow: Cell[], cellFiller?: Cell): Cell[] {
     const rowsLength = this.body[0].length;
-    const newRowsLength = newRows.length;
+    const newRowsLength = newRow.length;
 
     // If newRowsLength is fewer than original rowsLength, return cells that fill the rest of rows.length
     if (newRowsLength < rowsLength) {
@@ -539,7 +560,7 @@ class Table {
           }
         : cellFiller;
 
-      const countCellsToFill = rowsLength - newRows.length;
+      const countCellsToFill = rowsLength - newRow.length;
       // const cellFillers = Array(countCellsToFill).fill(cellFiller);
       let cellFillers = [];
 
@@ -547,15 +568,15 @@ class Table {
         cellFillers.push(cellFiller);
       }
 
-      newRows.push(...cellFillers);
+      newRow.push(...cellFillers);
     }
 
     // if new rows length is longer to original rows length, delete from newRows array since last position + 1 until the last position of newRows
     if (newRowsLength > rowsLength) {
-      newRows.splice(rowsLength, newRowsLength - 1);
+      newRow.splice(rowsLength, newRowsLength - 1);
     }
 
-    return newRows;
+    return newRow;
   }
 
   /**
@@ -564,17 +585,17 @@ class Table {
    * only will printed the text of first cell and the other without it.
    * @author Christopher Dallar Document This
    * @date 10/02/2022
-   * @param {Cell[]} newRows
+   * @param {Cell[]} newRow
    * @param {boolean} [addSpace={ each: 12, add: false }]
    * @return [ Object:Cell ]
    * @memberof Table
    */
-  addRow(newRows: Cell[], cellFiller?: Cell): any[] {
+  addRow(newRow: Cell[], cellFiller?: Cell): any[] {
     // Completamos con celdas las vaciás necesarias para que el pdfMaker no genere error
     // Al detectar que la cantidad de celdas entre esta fila y otras es menor o mayor
-    newRows = this.getRowFormat(newRows, cellFiller);
+    newRow = this.getRowFormat(newRow, cellFiller);
 
-    this.body.push(newRows);
+    this.body.push(newRow);
 
     return this.body;
   }

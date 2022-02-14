@@ -115,7 +115,7 @@
   </div>
   <nb-card-footer class="w-100 text-right"> </nb-card-footer>
 
-  <div #pdfElement class="pdfContainer">
+  <div #pdfElement class="pdfContainer" style="display: none">
     <ng-container *ngIf="bodyTable.length > 0">
       <app-peca-pdf-report-template
         [bodyTable]="bodyTable"

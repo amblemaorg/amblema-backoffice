@@ -186,33 +186,6 @@ export class PDFReportPeca {
         defaultStyle: {
           fontSize: 12,
         },
-        styles: {
-          bg_blue: {
-            width: 200,
-            color: "#fff",
-            background: "#2e8aaa",
-          },
-          "html-th": {
-            color: "#fff",
-            background: "#2e8aaa",
-          },
-          bg_green: {
-            color: "#fff",
-            background: "#81b03e",
-          },
-          bg_white: {
-            background: "#fff",
-          },
-          bg_red: {
-            background: "red",
-          },
-          bg_yellow: {
-            background: "yellow",
-          },
-          bg_green_light: {
-            background: "#68BB59",
-          },
-        },
       };
 
       /**

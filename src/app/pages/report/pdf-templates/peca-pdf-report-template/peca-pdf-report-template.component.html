@@ -1,29 +1,33 @@
 <ng-container *ngFor="let th of table.th; index as idxTh">
-  <table class="table" style="margin-top: 100px">
-    <thead style="background: #2e8aaa" background="#2e8aaa">
-      <tr class="bg_blue" style="background: #2e8aaa" background="#2e8aaa">
+  <table class="table" style="margin-top: 50px">
+    <thead>
+      <tr>
         <ng-container *ngFor="let cell of th">
-          <div style="background: yellow">
-            <th>{{ cell.text }}</th>
-          </div>
+          <th [style]="getStyleCell()">
+            {{ cell.text }}
+          </th>
         </ng-container>
       </tr>
     </thead>
 
     <tbody>
       <ng-container *ngFor="let rows of table.tbody[idxTh]; index as idxTbody">
-        <!-- <ng-container *ngFor="let row of rows"> -->
         <tr>
           <ng-container *ngFor="let cell of rows; index as idxCell">
-            <td [ngClass]="{ bg_blue: idxCell === 0 }">{{ cell.text }}</td>
+            <td
+              [style]="
+                getStyleCell('columnBody', {
+                  idxCell: idxCell,
+                  idxTbody: idxTbody,
+                  cell: this.cell
+                })
+              "
+            >
+              {{ cell.text }}
+            </td>
           </ng-container>
         </tr>
-        <!-- </ng-container> -->
       </ng-container>
     </tbody>
   </table>
 </ng-container>
-
-<!-- <div class="table-responsive">
-  <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
-</div> -->

@@ -229,76 +229,56 @@ export class PecaPdfReportTemplateComponent implements OnInit {
     this.table.tbody = tbodyPaginatedFormatted;
   }
 
-  // let tbody = [];
-  // const bodyTable = this.bodyTable;
-  // const countPage = this.table.th.length;
+  getStyleCell(location = "", data) {
+    const primary =
+      "color: white; background-color: #2e8aaa; font-weight: bold;";
+    const secondary =
+      "color: white; background-color: #81b03e; font-weight: bold;";
+    // const warning =
+    //   "color: white; background-color: #ffa400; font-weight: bold;";
+    const warning =
+      "color: #747474; background-color: #ffff00; font-weight: bold;";
+    const success =
+      "color: white; background-color: #95cf43; font-weight: bold;";
+    const danger =
+      "color: white; background-color: #ff7878; font-weight: bold;";
+    const textCenter = "text-align: center; margin: auto;";
 
-  // const testRow = Array(11).fill({
-  //   text: "0% 3 - row 2 - page 2",
-  // });
+    switch (location) {
+      case "":
+        return primary;
 
-  // const toAdd = [
-  //   Array(10).fill({
-  //     text: "0% 3 - row 2 - page 2",
-  //   }), //row
-  //   Array(10).fill({
-  //     text: "0% 3 - row 2 - page 2",
-  //   }), //row
-  // ];
+      case "columnBody":
+        const { idxCell, idxTbody, cell } = data;
 
-  // const toAdd = this.getRowFormat(this.table.th[0], testRow);
+        if (idxTbody === 0) {
+          return secondary;
+        }
 
-  // tbody.push(toAdd);
-  // tbody.push(toAdd);
-  // tbody.push(toAdd);
-  // tbody.push(toAdd);
-  // tbody.push(toAdd);
-  // tbody.push(toAdd);
+        if (idxCell === 0) {
+          return primary;
+        }
 
-  /**
-   * @description The PDF Maker package do an error when some rows doesn't have
-   * the same length cells as the first row (Array[0][0].length). So this method is
-   * to equalize between new row's cells length and the original the first row (Array[0][0].length) cells length.
-   * @author Christopher Dallar Document This
-   * @date 10/02/2022
-   * @private
-   * @memberof Table
-   * @returns newRows Cells formatted
-   */
-  private getRowFormat(
-    firstThRow: any[],
-    newRows: any[],
-    cellFiller?: any
-  ): any[] {
-    const firstThRowLength = firstThRow.length;
-    const newRowsLength = newRows.length;
+        if (cell.text.includes("%")) {
+          const cellTextRange = parseFloat(cell.text);
 
-    // If newRowsLength is fewer than original rowsLength, return cells that fill the rest of rows.length
-    if (newRowsLength < firstThRowLength) {
-      cellFiller = !cellFiller
-        ? {
-            text: "",
-            color: "#fff",
-            fillColor: "#fff",
+          if (cellTextRange === 0) {
+            return danger + textCenter;
           }
-        : cellFiller;
 
-      const countCellsToFill = firstThRowLength - newRows.length;
-      // const cellFillers = Array(countCellsToFill).fill(cellFiller);
-      let cellFillers = [];
+          // 1% - 99%
+          if (cellTextRange > 0 && cellTextRange < 100) {
+            return warning + textCenter;
+          }
+          // 100%
+          if (cellTextRange === 100) {
+            return success + textCenter;
+          }
+        }
 
-      for (let index = 0; index < countCellsToFill; index++) {
-        cellFillers.push(cellFiller);
-      }
-
-      newRows.push(...cellFillers);
+        return "";
+      default:
+        return primary;
     }
-
-    // if new rows length is longer to original rows length, delete from newRows array since last position + 1 until the last position of newRows
-    if (newRowsLength > firstThRowLength) {
-      newRows.splice(firstThRowLength, newRowsLength - 1);
-    }
-
-    return newRows;
   }
 }

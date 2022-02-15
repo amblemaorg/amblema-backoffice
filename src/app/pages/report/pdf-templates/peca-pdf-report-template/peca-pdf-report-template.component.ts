@@ -231,17 +231,15 @@ export class PecaPdfReportTemplateComponent implements OnInit {
 
   getStyleCell(location = "", data) {
     const primary =
-      "color: white; background-color: #2e8aaa; font-weight: bold;";
+      "color: white; background-color: #2e8aaa; font-weight: bold;"; // Blue
     const secondary =
-      "color: white; background-color: #81b03e; font-weight: bold;";
-    // const warning =
-    //   "color: white; background-color: #ffa400; font-weight: bold;";
+      "color: white; background-color: #81b03e; font-weight: bold;"; // Green dark
     const warning =
-      "color: #747474; background-color: #ffff00; font-weight: bold;";
+      "color: #747474; background-color: #ffff00; font-weight: bold;"; // Yellow
     const success =
-      "color: white; background-color: #95cf43; font-weight: bold;";
+      "color: white; background-color: #95cf43; font-weight: bold;"; // Green light
     const danger =
-      "color: white; background-color: #ff7878; font-weight: bold;";
+      "color: white; background-color: #ff7878; font-weight: bold;"; // Red
     const textCenter = "text-align: center; margin: auto;";
 
     switch (location) {
@@ -249,9 +247,11 @@ export class PecaPdfReportTemplateComponent implements OnInit {
         return primary;
 
       case "columnBody":
-        const { idxCell, idxTbody, cell } = data;
+        const { idxCell, row, cell } = data;
+        const firstRow = row[0].text.toLowerCase();
+        const regExp = "(W|^)lapso[ ][0-9](W|$)"; // 'lapso<espacio><cualquier numero>';
 
-        if (idxTbody === 0) {
+        if (firstRow.match(regExp)) {
           return secondary;
         }
 

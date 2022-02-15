@@ -230,6 +230,7 @@ export class PDFReportPeca {
       [`E.B.N.B.`]: "E.B.N.B. ",
       [`U.E.E.`]: "U.E.E. ",
       [`U.E.`]: "U.E. ",
+      [`U.E `]: "U.E. ",
       [`U.E.N.`]: "U.E.N. ",
       [`E.P.B.`]: "E.P.B. ",
       [`E.I.B.`]: "E.I.B. ",

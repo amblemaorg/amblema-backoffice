@@ -307,9 +307,16 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   //Prepare to export PDF
   private prepareBodyToHtmlPdfMake() {
     const cleanedMatrix = this.matrix.map((rows, idx) => {
+      const firstRow = rows[0].toLowerCase();
+      const regExp = "(W|^)lapso[ ][0-9](W|$)"; // 'lapso<espacio><cualquier numero>';
+
       const columns = rows.map((cell, colIdx) => {
-        if (cell === undefined || cell === null) {
+        if (firstRow.match(regExp) && colIdx > 0) {
           return "";
+        }
+
+        if (cell === undefined || cell === null) {
+          return "0%";
         }
         return cell;
       });

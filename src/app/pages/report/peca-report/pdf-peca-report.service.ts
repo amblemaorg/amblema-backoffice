@@ -52,6 +52,15 @@ export class PDFReportPeca {
         defaultStyle: {
           fontSize: 12,
         },
+        footer: function (currentPage, pageCount) {
+          return [
+            {
+              text: currentPage.toString() + " de " + pageCount,
+              alignment: "right",
+              marginRight: 40,
+            },
+          ];
+        },
       };
 
       /**

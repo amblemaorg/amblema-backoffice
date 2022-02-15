@@ -11,14 +11,14 @@
     </thead>
 
     <tbody>
-      <ng-container *ngFor="let rows of table.tbody[idxTh]; index as idxTbody">
+      <ng-container *ngFor="let row of table.tbody[idxTh]; index as idxTbody">
         <tr>
-          <ng-container *ngFor="let cell of rows; index as idxCell">
+          <ng-container *ngFor="let cell of row; index as idxCell">
             <td
               [style]="
                 getStyleCell('columnBody', {
                   idxCell: idxCell,
-                  idxTbody: idxTbody,
+                  row: row,
                   cell: this.cell
                 })
               "

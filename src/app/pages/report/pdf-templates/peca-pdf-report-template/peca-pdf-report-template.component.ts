@@ -13,99 +13,94 @@ export class PecaPdfReportTemplateComponent implements OnInit {
   table = {
     thForPage: 9,
     th: [
-      // 5 pages (11 cells)
-      [
-        {
-          // Cell
-          text: "actividad - page 1",
-        },
-        {
-          text: "Escuela Primaria Bolivariana - page 1",
-        },
-        {
-          text: "Escuela secundaria 2 - page 1",
-        },
-      ],
-      [
-        {
-          text: "actividad - page 2",
-        },
-        {
-          text: "Escuela Primaria Bolivariana - page 2",
-        },
-        {
-          text: "Escuela secundaria 2 - page 2",
-        },
-      ],
+      // [ // 1 pages (3 cells)
+      //   {
+      //     // Cell
+      //     text: "actividad - page 1",
+      //   },
+      //   {
+      //     text: "Escuela Primaria Bolivariana - page 1",
+      //   },
+      //   {
+      //     text: "Escuela secundaria 2 - page 1",
+      //   },
+      // ],
+      // [ // 1 pages (3 cells)
+      //   {
+      //     text: "actividad - page 2",
+      //   },
+      //   {
+      //     text: "Escuela Primaria Bolivariana - page 2",
+      //   },
+      //   {
+      //     text: "Escuela secundaria 2 - page 2",
+      //   },
+      // ],
     ],
     tbody: [
       // Nombres de Actividades y los resultados
-      [
-        // rows Page 1
-
-        [
-          // row 1
-
-          {
-            // Cell
-            text: "Lapso 1 - row 1 - page 1",
-          },
-          {
-            text: "Vacio 2 - row 1 - page 1",
-          },
-          {
-            text: "Vacio 3 - row 1 - page 1",
-          },
-        ],
-        [
-          // row 2
-
-          {
-            text: "Lapso 1 - row 2 - page 1",
-          },
-          {
-            text: "Vacio 2 - row 2 - page 1",
-          },
-          {
-            text: "Vacio 3 - row 2 - page 1",
-          },
-        ],
-      ],
-      [
-        // rows Page 2
-
-        [
-          // row 1
-          {
-            text: "AmbLEncuentro 1 - row 1 - page 2",
-          },
-          {
-            text: "0% 2 - row 1 - page 2",
-          },
-          {
-            text: "0% 3 - row 1 - page 2",
-          },
-        ],
-        [
-          // row 2
-          {
-            text: "AmbLEncuentro 1 - row 2 - page 2",
-          },
-          {
-            text: "0% 2 - row 2 - page 2",
-          },
-          {
-            text: "0% 3 - row 2 - page 2",
-          },
-        ],
-      ],
+      // [
+      //   // rows Page 1
+      //   [
+      //     // row 1
+      //     {
+      //       // Cell
+      //       text: "Lapso 1 - row 1 - page 1",
+      //     },
+      //     {
+      //       text: "Vacio 2 - row 1 - page 1",
+      //     },
+      //     {
+      //       text: "Vacio 3 - row 1 - page 1",
+      //     },
+      //   ],
+      //   [
+      //     // row 2
+      //     {
+      //       text: "Lapso 1 - row 2 - page 1",
+      //     },
+      //     {
+      //       text: "Vacio 2 - row 2 - page 1",
+      //     },
+      //     {
+      //       text: "Vacio 3 - row 2 - page 1",
+      //     },
+      //   ],
+      // ],
+      // [
+      //   // rows Page 2
+      //   [
+      //     // row 1
+      //     {
+      //       text: "AmbLEncuentro 1 - row 1 - page 2",
+      //     },
+      //     {
+      //       text: "0% 2 - row 1 - page 2",
+      //     },
+      //     {
+      //       text: "0% 3 - row 1 - page 2",
+      //     },
+      //   ],
+      //   [
+      //     // row 2
+      //     {
+      //       text: "AmbLEncuentro 1 - row 2 - page 2",
+      //     },
+      //     {
+      //       text: "0% 2 - row 2 - page 2",
+      //     },
+      //     {
+      //       text: "0% 3 - row 2 - page 2",
+      //     },
+      //   ],
+      // ],
     ],
   };
 
   constructor() {}
 
   ngOnInit(): void {
-    console.log("bodyTable Init: ", this.bodyTable);
+    // console.log("bodyTable Init: ", this.bodyTable);
     this.paginateThead();
     this.paginateTbody();
   }
@@ -144,7 +139,7 @@ export class PecaPdfReportTemplateComponent implements OnInit {
       tableThead.pop();
     }
 
-    console.log("paginateThead: ", tableThead);
+    // console.log("paginateThead: ", tableThead);
 
     this.table.th = tableThead;
   }
@@ -189,27 +184,15 @@ export class PecaPdfReportTemplateComponent implements OnInit {
   }
 
   paginateTbody() {
-    // let tbody = [];
     const bodyTable = this.bodyTable;
 
     bodyTable.shift();
 
-    // const tbodyHeads = bodyTable.map((body) => {
-    //   return body[0];
-    // });
-
-    // const tbodyPaginated = this.paginateRow(bodyTable);
-    // console.log("tbodyPaginated: ", tbodyPaginated);
-
     let tbodyPaginated = [];
-
-    // this.paginateRow(bodyTable)
 
     bodyTable.forEach((bodyTableRow) => {
       tbodyPaginated.push(this.paginateRow(bodyTableRow));
     });
-
-    console.log("tbodyPaginated: ", tbodyPaginated);
 
     let tbodyPaginatedFormatted = [];
     const tableThead = this.table.th;
@@ -224,7 +207,7 @@ export class PecaPdfReportTemplateComponent implements OnInit {
       tbodyPaginatedFormatted.push(groupRows);
     }
 
-    console.log("tbodyPaginatedFormatted: ", tbodyPaginatedFormatted);
+    // console.log("tbodyPaginatedFormatted: ", tbodyPaginatedFormatted);
 
     this.table.tbody = tbodyPaginatedFormatted;
   }

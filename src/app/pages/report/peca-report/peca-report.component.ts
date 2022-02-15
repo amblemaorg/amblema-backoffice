@@ -304,7 +304,14 @@ export class PecaReportComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  //Prepare to export PDF
+  /**
+   * @description Clear and format the matrix of data table activities.
+   * Also, set the data that peca-report-template component will use
+   * @author Christopher Dallar Document This
+   * @date 15/02/2022
+   * @private
+   * @memberof PecaReportComponent
+   */
   private prepareBodyToHtmlPdfMake() {
     const cleanedMatrix = this.matrix.map((rows, idx) => {
       const firstRow = rows[0].toLowerCase();
@@ -322,25 +329,11 @@ export class PecaReportComponent implements OnInit, OnDestroy {
       });
       return columns;
     });
+
     this.bodyTable = this.generateReporte.getBodyToPdfMake(cleanedMatrix);
   }
 
   async exportDataPdf(): Promise<void> {
-    // const cleanedMatrix = this.matrix.map((rows, idx) => {
-    //   const columns = rows.map((cell, colIdx) => {
-    //     if (cell === undefined || cell === null) {
-    //       return "";
-    //     }
-    //     return cell;
-    //   });
-    //   return columns;
-    // });
-
-    // return this.generateReporte.generateActivities(
-    //   cleanedMatrix,
-    //   this.pdfElement
-    // );
-
     this.generateReporte.generatePdfFromHtml(this.pdfElement);
   }
 

@@ -18,6 +18,7 @@ export class TextEditorComponent
 {
   @Input() state: boolean | null = false;
   @Input() maxLength: number | null = null;
+  @Input() styles = { "min-height": "250px" };
 
   length = 0;
   value: string;

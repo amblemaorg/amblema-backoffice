@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'themes';
+@import "themes";
 
-@import '~@nebular/theme/styles/globals';
+@import "~@nebular/theme/styles/globals";
 
 @include nb-install() {
   @include nb-theme-global();
-};
+}
 
 body {
   font-family: nb-theme(font-family-primary);
@@ -13,6 +13,6 @@ body {
 }
 
 // Custom theme
-@import './assets/scss/main';
+@import "./assets/scss/main";
 
 @import "~@ng-select/ng-select/themes/default.theme.css";

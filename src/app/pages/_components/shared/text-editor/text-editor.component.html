@@ -2,9 +2,11 @@
   <div *ngIf="show && control">
     <label class="label">{{ label }}</label>
     <quill-editor
+      class="quill-editor--textarea"
       [maxLength]="maxLength ? maxLength : null"
       [placeholder]="placeholder"
       [formControl]="control"
+      [styles]="styles"
     ></quill-editor>
     <small *ngIf="maxLength > 0" class="mt-2 d-block label text-right">
       {{ length }} / {{ maxLength }}</small

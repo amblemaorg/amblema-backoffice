@@ -1,122 +1,184 @@
 <form [formGroup]="form">
-    <div class="row form-group">
-        <div class="col-12">
-            <app-input-custom 
-                [max]="60"
-                [control]="form.get('name')" 
-                [id]="'name-module'" 
-                [label]="'AmbLeTema'"
-                [placeholder]="'AmbLeTema'" [submitted]="submitted">
-            </app-input-custom>
-        </div>
-        <div class="col-12">
-            <app-input-custom 
-                [max]="140"
-                [control]="form.get('title')" 
-                [id]="'title-module'" [label]="'Titulo del módulo'"
-                [placeholder]="'Titulo del módulo'" [submitted]="submitted">
-            </app-input-custom>
-        </div>
-        <div class="col-12">
-            <app-text-area-custom 
-                [max]="2800"
-                [control]="form.get('description')" 
-                [id]="'description-module'"
-                [label]="'Descripción general'" 
-                [placeholder]="'Descripción general'" 
-                [submitted]="submitted">
-            </app-text-area-custom>
-        </div>
-        <div class="col-12 form-group">
-            <label class="label">Timer</label>
-            <input type="text" class="form-control" fullWidth nbInput mask="00:00" placeholder="HH:MM"
-                formControlName="duration">
-        </div>
-        <div class="col-12 form-group">
-            <app-dropdown-priority [control]="form.get('priority')"></app-dropdown-priority>
-        </div>
-        <div class="col-12 form-group">
-            <div class="row">
-                <div class="col">
-                    <app-input-custom 
-                        [id]="'objectives'" 
-                        [label]="'Objetivos'" 
-                        [max]="873"
-                        [control]="form.get('objectives')"
-                        [placeholder]="'Objetivos'" [submitted]="submitted">
-                    </app-input-custom>
-                </div>
-                <div class="col-auto">
-                    <button nbButton status="primary" style="padding-top: 0.6rem; padding-bottom: 0.6rem;" *ngIf="MODE_LIST === ACTION.CREATE"
-                        [attr.disabled]="!form.controls['objectives'].value ? true : null" (click)="addObjective()"
-                        class="btn btn-outline-info m-inline-form">
-                        <nb-icon icon="plus"></nb-icon>
-                    </button>
-
-                    <div class="btn-group m-inline-parcial" role="group" *ngIf="MODE_LIST === ACTION.EDIT">
-                        <button 
-                            style="padding-top: 0.6rem; padding-bottom: 0.6rem;"
-                            outline
-                            nbButton status="info" type="button" class="btn btn-outline-info" (click)="confirmAction()" >
-                            Confirmar
-                        </button>
-                        <button nbButton 
-                            style="padding-top: 0.6rem; padding-bottom: 0.6rem; border-bottom-left-radius: 0; border-top-left-radius: 0;"
-                            outline
-                            status="danger"
-                            type="button" 
-                            class="btn btn-outline-danger" 
-                            (click)="MODE_LIST = ACTION.CREATE; 
-                            form.controls['objectives'].enable();
-                            form.controls['objectives'].reset();">
-                            Cancelar
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-12 form-group">
-            <nb-list>
-                <nb-list-item *ngFor="let item of objectives; let i = index;"
-                    class="d-flex w-100 justify-content-between">
-                    <span>{{ item }}</span>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button nbButton status="info" outline type="button" class="btn btn-outline-info" (click)="onEditObjective(i)">
-                            <nb-icon icon="edit-outline"></nb-icon>
-                        </button>
-                        <button nbButton status="danger" style="border-bottom-left-radius: 0; border-top-left-radius: 0;" outline type="button" class="btn btn-outline-danger" (click)="onDeleteObjective(i)">
-                            <nb-icon icon="trash-2-outline"></nb-icon>
-                        </button>
-                    </div>
-                </nb-list-item>
-            </nb-list>
-        </div>
+  <div class="row form-group">
+    <div class="col-12">
+      <app-input-custom
+        [max]="60"
+        [control]="form.get('name')"
+        [id]="'name-module'"
+        [label]="'AmbLeTema'"
+        [placeholder]="'AmbLeTema'"
+        [submitted]="submitted"
+      >
+      </app-input-custom>
     </div>
-    <div class="row text-center justify-content-center">
-        <div class="col-6 col-lg-auto">
-            <button nbButton 
-                outline
-                status="basic"
-                (click)="this.router.navigate(['pages/content/learning']);"
-                nbButton
-                type="button"
-                class="btn btn-outline-secondary mr-2 col-12 col-lg-auto">
-                <nb-icon icon="arrow-back-outline"></nb-icon>
-                <span class="d-none d-sm-inline">Volver a la tabla</span>
-            </button>
-        </div>
-        <div class="col-6 col-lg-auto">
-            <button nbButton (click)="sendStepOne()"
-                type="button"
-                nbButton
-                status="primary"
-                nbStepperNext
-                [attr.disabled]="form.valid && objectives.length > 0 ? null : true"
-                class="next-button btn-primary btn col-12 col-lg-auto">
-                <span class="d-none d-sm-inline">Siguiente</span>
-                <nb-icon icon="arrow-forward-outline"></nb-icon>
-            </button>
-        </div>
+    <div class="col-12">
+      <app-input-custom
+        [max]="140"
+        [control]="form.get('title')"
+        [id]="'title-module'"
+        [label]="'Titulo del módulo'"
+        [placeholder]="'Titulo del módulo'"
+        [submitted]="submitted"
+      >
+      </app-input-custom>
     </div>
+    <div class="col-12">
+      <app-text-area-custom
+        [max]="2800"
+        [control]="form.get('description')"
+        [id]="'description-module'"
+        [label]="'Descripción general'"
+        [placeholder]="'Descripción general'"
+        [submitted]="submitted"
+      >
+      </app-text-area-custom>
+    </div>
+    <div class="col-12 form-group">
+      <label class="label">Timer</label>
+      <input
+        type="text"
+        class="form-control"
+        fullWidth
+        nbInput
+        mask="00:00"
+        placeholder="HH:MM"
+        formControlName="duration"
+      />
+    </div>
+    <div class="col-12 form-group">
+      <app-dropdown-priority
+        [control]="form.get('priority')"
+      ></app-dropdown-priority>
+    </div>
+    <div class="col-12 form-group">
+      <div class="row">
+        <div class="col">
+          <app-input-custom
+            [id]="'objectives'"
+            [label]="'Objetivos'"
+            [max]="873"
+            [control]="form.get('objectives')"
+            [placeholder]="'Objetivos'"
+            [submitted]="submitted"
+          >
+          </app-input-custom>
+        </div>
+        <div class="col-auto">
+          <button
+            nbButton
+            status="primary"
+            style="padding-top: 0.6rem; padding-bottom: 0.6rem"
+            *ngIf="MODE_LIST === ACTION.CREATE"
+            [attr.disabled]="!form.controls['objectives'].value ? true : null"
+            (click)="addObjective()"
+            class="btn btn-outline-info m-inline-form"
+          >
+            <nb-icon icon="plus"></nb-icon>
+          </button>
+
+          <div
+            class="btn-group m-inline-parcial"
+            role="group"
+            *ngIf="MODE_LIST === ACTION.EDIT"
+          >
+            <button
+              style="padding-top: 0.6rem; padding-bottom: 0.6rem"
+              outline
+              nbButton
+              status="info"
+              type="button"
+              class="btn btn-outline-info"
+              (click)="confirmAction()"
+            >
+              Confirmar
+            </button>
+            <button
+              nbButton
+              style="
+                padding-top: 0.6rem;
+                padding-bottom: 0.6rem;
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+              "
+              outline
+              status="danger"
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="
+                MODE_LIST = ACTION.CREATE;
+                form.controls['objectives'].enable();
+                form.controls['objectives'].reset()
+              "
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 form-group">
+      <nb-list>
+        <nb-list-item
+          *ngFor="let item of objectives; let i = index"
+          class="d-flex w-100 justify-content-between"
+        >
+          <span>{{ item }}</span>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button
+              nbButton
+              status="info"
+              outline
+              type="button"
+              class="btn btn-outline-info"
+              (click)="onEditObjective(i)"
+            >
+              <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+            <button
+              nbButton
+              status="danger"
+              style="border-bottom-left-radius: 0; border-top-left-radius: 0"
+              outline
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="onDeleteObjective(i)"
+            >
+              <nb-icon icon="trash-2-outline"></nb-icon>
+            </button>
+          </div>
+        </nb-list-item>
+      </nb-list>
+    </div>
+  </div>
+  <div class="row text-center justify-content-center">
+    <div class="col-6 col-lg-auto">
+      <button
+        nbButton
+        outline
+        status="basic"
+        (click)="this.router.navigate(['pages/content/learning'])"
+        nbButton
+        type="button"
+        class="btn btn-outline-secondary mr-2 col-12 col-lg-auto"
+      >
+        <nb-icon icon="arrow-back-outline"></nb-icon>
+        <span class="d-none d-sm-inline">Volver a la tabla</span>
+      </button>
+    </div>
+    <div class="col-6 col-lg-auto">
+      <button
+        nbButton
+        (click)="sendStepOne()"
+        type="button"
+        nbButton
+        status="primary"
+        nbStepperNext
+        [attr.disabled]="form.valid && objectives.length > 0 ? null : true"
+        class="next-button btn-primary btn col-12 col-lg-auto"
+      >
+        <span class="d-none d-sm-inline">Siguiente</span>
+        <nb-icon icon="arrow-forward-outline"></nb-icon>
+      </button>
+    </div>
+  </div>
 </form>

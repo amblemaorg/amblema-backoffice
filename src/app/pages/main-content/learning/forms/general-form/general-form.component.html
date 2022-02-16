@@ -23,15 +23,13 @@
       </app-input-custom>
     </div>
     <div class="col-12">
-      <app-text-area-custom
-        [max]="2800"
-        [control]="form.get('description')"
-        [id]="'description-module'"
+      <app-text-editor
+        [maxLength]="2800"
         [label]="'Descripción general'"
         [placeholder]="'Descripción general'"
+        [control]="form.get('description')"
         [submitted]="submitted"
-      >
-      </app-text-area-custom>
+      ></app-text-editor>
     </div>
     <div class="col-12 form-group">
       <label class="label">Timer</label>

@@ -8654,7 +8654,7 @@
   dependencies:
     "tslib" "^2.0.0"
 
-"ngx-quill@^13.2.0":
+"ngx-quill@^13.4.0":
   "integrity" "sha512-A1AluvV8Bg/+P5+hfR5P9U0rrgjhzeSxDze4W/Te7uicEpbJ4e6ZbTmah3j4wivk0vawGGRxVuDH05AACHBi3A=="
   "resolved" "https://registry.npmjs.org/ngx-quill/-/ngx-quill-13.4.0.tgz"
   "version" "13.4.0"
@@ -10570,11 +10570,6 @@
   "integrity" "sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg=="
   "resolved" "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
   "version" "1.2.1"
-
-"rangy@^1.3.0":
-  "integrity" "sha1-t8mnCuoF5djNx0qNTIJz1pcnGQQ="
-  "resolved" "https://registry.npmjs.org/rangy/-/rangy-1.3.0.tgz"
-  "version" "1.3.0"
 
 "raw-body@^2.3.2", "raw-body@2.4.0":
   "integrity" "sha512-4Oz8DUIwdvoa5qMJelxipzi/iJIi40O5cGV1wNYp5hvZP8ZN0T+jiNkL0QepXs+EsQ9XJ8ipEDoiH70ySUJP3Q=="
@@ -12609,13 +12604,6 @@
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
   "resolved" "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"
   "version" "0.2.0"
-
-"textangular@^1.5.16":
-  "integrity" "sha1-xDGc6tXaE1SJbWC+FX6pi2jZuTY="
-  "resolved" "https://registry.npmjs.org/textangular/-/textangular-1.5.16.tgz"
-  "version" "1.5.16"
-  dependencies:
-    "rangy" "^1.3.0"
 
 "tfunk@^4.0.0":
   "integrity" "sha512-eJQ0dGfDIzWNiFNYFVjJ+Ezl/GmwHaFTBTjrtqNPW0S7cuVDBrZrmzUz6VkMeCR4DZFqhd4YtLwsw3i2wYHswQ=="

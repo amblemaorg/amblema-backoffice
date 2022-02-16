@@ -36,6 +36,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
 import { ProgressModule } from "../../_components/shared/progress/progress.module";
 import { SharedModule } from "../../_components/shared/shared.module";
 import { ReactiveValidationComponent } from "../../_components/form-components/reactive-validation/reactive-validation.component";
+import { TextareaEditorModule } from "../../_components/form-components/textarea-editor/textarea-editor.module";
 
 @NgModule({
   declarations: [
@@ -54,6 +55,8 @@ import { ReactiveValidationComponent } from "../../_components/form-components/r
     CommonModule,
     SharedModule,
     LearningRoutingModule,
+    TextareaEditorModule,
+    // nb
     NbCardModule,
     Ng2SmartTableModule,
     NbStepperModule,

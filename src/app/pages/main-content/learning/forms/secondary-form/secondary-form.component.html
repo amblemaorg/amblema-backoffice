@@ -12,21 +12,13 @@
       </app-input-custom>
     </div>
     <div class="col-12">
-      <!-- <app-text-area-custom
-                [max]="4970" 
-                [submitted]="false"
-                [control]="form.get('secondaryDescription')"
-                [id]="'secondary-description'"
-                [label]="'Descripción secundaria'" 
-                [placeholder]="'Descripción secundaria'"
-                ></app-text-area-custom> -->
-      <app-text-editor
+      <app-textarea-editor
         [maxLength]="4970"
         [label]="'Descripción secundaria'"
         [placeholder]="'Descripción secundaria'"
         [control]="form.get('secondaryDescription')"
         [submitted]="false"
-      ></app-text-editor>
+      ></app-textarea-editor>
     </div>
   </div>
 </form>

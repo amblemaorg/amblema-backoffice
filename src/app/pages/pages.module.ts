@@ -112,6 +112,8 @@ import { SharedModule } from "./_components/shared/shared.module";
     DashboardRoutingModule,
     CommonModule,
     SharedModule,
+
+    //Nb
     NbListModule,
     NbPopoverModule,
     HttpClientModule,

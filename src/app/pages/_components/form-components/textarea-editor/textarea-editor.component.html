@@ -2,20 +2,21 @@
   <div *ngIf="show && control">
     <label class="label">{{ label }}</label>
     <quill-editor
+      #quillEditor
       class="quill-editor--textarea"
       [placeholder]="placeholder"
       [formControl]="control"
       [styles]="styles"
-      [(ngModel)]="value"
     ></quill-editor>
     <small *ngIf="maxLength > 0" class="mt-2 d-block label text-right">
-      {{ length }} / {{ maxLength }}</small
+      <span [ngClass]="{ error: length > maxLength }">{{ length }}</span> /
+      {{ maxLength }}</small
     >
 
-    <!-- [maxLength]="maxLength ? maxLength : null" -->
-    <!-- <app-reactive-validation
-      [patternMessage]="patternMsg"
-      [validationErrors]="validationErrors"
-    ></app-reactive-validation> -->
+    <small
+      *ngIf="length > maxLength"
+      class="mt-2 d-block label text-right error"
+      >Superaste el limite de caracteres</small
+    >
   </div>
 </div>

@@ -3,11 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  OnChanges,
-  SimpleChanges,
+  ViewChild,
 } from "@angular/core";
 import { AbstractControl, ValidatorFn, Validators } from "@angular/forms";
-import { RegExpEnum, StringHelper } from "src/app/_helpers/string.helper";
+import { QuillEditorComponent } from "ngx-quill";
+import { StringHelper } from "src/app/_helpers/string.helper";
 import { AbstractReactive } from "../abstract-reactive";
 
 @Component({
@@ -22,61 +22,47 @@ export class TextareaEditorComponent
   @Input() state: boolean | null = false;
   @Input() maxLength: number | null = null;
   @Input() styles = { "min-height": "250px" };
+  @ViewChild("quillEditor") quillEditor: QuillEditorComponent;
 
   length = 0;
   value = "";
-  previousValue = "";
   show = false;
 
   constructor(private cd: ChangeDetectorRef) {
     super();
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if (this.control) {
       this.show = true;
 
-      // this.control.setValidators(Validators.maxLength(10));
-      this.control.setValidators(this.maxLengthValidator(10));
-
       if (this.maxLength > 0) {
+        this.control.setValidators(this.maxLengthValidator(this.maxLength)); // added validator about maxLength custom to quill
         this.control.valueChanges.subscribe((valueChanges) => {
-          if (this.length <= this.maxLength) {
-            this.value = this.control.value ? this.control.value : "";
+          this.value = this.control.value ? this.control.value : "";
+          this.length = StringHelper.replaceHtmlTags(this.value).length; // set length to small counter
+
+          if (this.quillEditor) {
+            // that avoids entering more characters if user has reached the limit
+            this.quillEditor.elementRef.nativeElement.addEventListener(
+              "keypress",
+              (event) => {
+                if (this.length + 1 <= this.maxLength) {
+                  return true;
+                }
+
+                event.preventDefault();
+
+                return false;
+              }
+            );
           }
-
-          this.length = StringHelper.replaceHtmlTags(this.value).length;
-
-          // if (this.length <= this.maxLength) {
-          //   this.control.setValidators;
-          // }
-
-          console.log("this.value", this.value);
-          console.log("this.control.valid", this.control.valid);
         });
       }
     }
   }
 
-  ngAfterContentChecked() {
-    // if (this.control) {
-    //   this.show = true;
-    //   if (this.maxLength > 0) {
-    //     this.value = this.control.value ? this.control.value : "";
-    //     this.length = StringHelper.replaceHtmlTags(this.value).length;
-    //     // if (this.length > this.maxLength) {
-    //     //   // this.value = this.control.value;
-    //     //   if(this.value.match(RegExpEnum.htmlTags)) {
-    //     //   }
-    //     // }
-    //     // console.clear();
-    //     // console.log("this.control", this.control);
-    //     // console.log("this.length", this.length);
-    //     // console.log("this.value", this.control.value);
-    //   }
-    // }
-    // this.cd.detectChanges();
-  }
+  ngAfterContentChecked() {}
 
   private maxLengthValidator(maxLength: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {

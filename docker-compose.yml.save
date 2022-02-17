@@ -3,14 +3,13 @@ version: "3.7"
 services:
   # LOCAL DEV
   run_amblema_backoffice:
-    #image: angular:dev # Dockerfile
-    build: .
-    container_name: amblema-backoffice-dev-qa
+    image: angular:dev # Dockerfile
+    container_name: amblema-backoffice-dev
     command: bash -c "npm install && ng serve --host 0.0.0.0"
     volumes:
-      - "${PWD}:/app"
+      - "$:/app"
     ports:
-      - "10502:4200"
+      - "4200:4200"
     networks:
       - amblema_net
 

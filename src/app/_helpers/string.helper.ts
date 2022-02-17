@@ -18,6 +18,7 @@ export class StringHelper {
    * @memberof StringHelper
    */
   static replaceHtmlTags(string: string, replaceTo = ""): string {
+    string = string ? string : "";
     return string.replace(/(<([^>]+)>)/gi, replaceTo);
   }
 }

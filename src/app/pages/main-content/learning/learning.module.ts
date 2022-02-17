@@ -1,3 +1,4 @@
+import { PipesModule } from "./../../../_pipes/pipes.module";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
@@ -82,6 +83,9 @@ import { TextareaEditorModule } from "../../_components/form-components/textarea
     FormSliderModule,
     FormVideoModule,
     ModalStepperModule,
+
+    //PipeModule
+    PipesModule,
   ],
 })
 export class LearningModule {}

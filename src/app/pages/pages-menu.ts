@@ -196,6 +196,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: "/pages/report/diagnostic-report",
       },
       {
+        title: "Reporte de actividades del PECA",
+        link: "/pages/report/peca-report",
+      },
+      {
         title: "Padrinos",
         link: "/pages/report/sponsor-report",
       },

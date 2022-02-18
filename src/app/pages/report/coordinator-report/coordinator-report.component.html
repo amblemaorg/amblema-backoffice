@@ -1,7 +1,5 @@
 <nb-card>
-  <nb-card-header>
-    Reporte de Coordinadores
-  </nb-card-header>
+  <nb-card-header> Reporte de Coordinadores </nb-card-header>
   <nb-card-body>
     <div class="row">
       <div class="col-12">
@@ -11,8 +9,10 @@
           </div>
           <div class="col-12 form-group">
             <div>
-              <label class="label">Mostrar los coordinadores que terminaron el
-                AmbLemPensum?</label>
+              <label class="label"
+                >Mostrar los coordinadores que terminaron el
+                AmbLemPensum?</label
+              >
               <nb-radio-group [(ngModel)]="selectedAmbLePensum" class="d-flex">
                 <nb-radio [value]="null">Sin condición</nb-radio>
                 <nb-radio [value]="true">Si</nb-radio>
@@ -24,9 +24,9 @@
           <div class="col-12 col-lg-6 form-group">
             <label class="label">Estatus: </label>
             <select [(ngModel)]="statusSelected" class="form-control">
-              <option *ngFor="let item of status" [value]="item.value">{{
-                item.label
-              }}</option>
+              <option *ngFor="let item of status" [value]="item.value">
+                {{ item.label }}
+              </option>
             </select>
           </div>
           <div
@@ -35,12 +35,22 @@
             <button
               [nbSpinner]="disabledBtn"
               [attr.disabled]="!disabledBtn ? null : true"
-              class="col-12 col-lg-auto"
+              class="col-12 col-lg-auto mr-2"
               nbButton
               (click)="onGenerateReport()"
               status="success"
             >
-              Generar reporte<nb-icon icon="download-outline"></nb-icon>
+              Generar reporte PDF <nb-icon icon="download-outline"></nb-icon>
+            </button>
+            <button
+              [nbSpinner]="disabledBtn"
+              [attr.disabled]="!disabledBtn ? null : true"
+              class="col-12 col-lg-auto"
+              nbButton
+              (click)="onGenerateReportExcel()"
+              status="success"
+            >
+              Generar reporte Excel<nb-icon icon="download-outline"></nb-icon>
             </button>
           </div>
         </div>

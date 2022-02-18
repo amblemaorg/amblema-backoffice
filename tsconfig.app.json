@@ -3,7 +3,14 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": ["googlemaps", "node"],
-    "typeRoots": ["../node_modules/@types"]
+    "typeRoots": ["../node_modules/@types"],
+    "paths": {
+      "app/*": ["app/*"],
+      "environment/*": ["environments/*"],
+      "shared/*": ["app/pages/_components/shared/*"],
+      "helpers/*": ["app/_helpers/*"],
+      "tests/*": ["tests/*"]
+    }
   },
   "module": "commonjs",
   "files": ["src/main.ts", "src/polyfills.ts"],

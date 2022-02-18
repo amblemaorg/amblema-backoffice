@@ -4,6 +4,7 @@ services:
   # LOCAL DEV
   run_amblema_backoffice:
     image: angular:dev # Dockerfile
+    build: .
     container_name: amblema-backoffice-dev
     command: bash -c "npm install && ng serve --host 0.0.0.0"
     volumes:

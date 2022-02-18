@@ -1,12 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { SchoolReportRoutingModule } from './school-report-routing.module';
-import { SchoolReportComponent } from './school-report.component';
-import { NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule } from '@nebular/theme';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { SchoolReportRoutingModule } from "./school-report-routing.module";
+import { SchoolReportComponent } from "./school-report.component";
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
+} from "@nebular/theme";
+import { Ng2SmartTableModule } from "ng2-smart-table";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [SchoolReportComponent],
@@ -19,7 +23,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     NbSpinnerModule,
     FormsModule,
-    NbIconModule
-  ]
+    NbIconModule,
+  ],
 })
-export class SchoolReportModule { }
+export class SchoolReportModule {}

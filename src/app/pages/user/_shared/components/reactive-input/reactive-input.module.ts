@@ -1,15 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveValidationComponent } from './reactive-validation/reactive-validation.component';
-import { ReactiveInputComponent } from './inputs/reactive-input/reactive-input.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NbInputModule, NbTooltipModule } from '@nebular/theme';
-
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ReactiveValidationComponent } from "./reactive-validation/reactive-validation.component";
+import { ReactiveInputComponent } from "./inputs/reactive-input/reactive-input.component";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { NbInputModule, NbTooltipModule } from "@nebular/theme";
 
 @NgModule({
-  declarations: [
-    ReactiveInputComponent,
-    ReactiveValidationComponent ],
+  declarations: [ReactiveInputComponent, ReactiveValidationComponent],
   imports: [
     NbInputModule,
     CommonModule,
@@ -17,6 +14,6 @@ import { NbInputModule, NbTooltipModule } from '@nebular/theme';
     ReactiveFormsModule,
     FormsModule,
   ],
-  exports: [ReactiveInputComponent]
+  exports: [ReactiveInputComponent],
 })
-export class ReactiveInputModule { }
+export class ReactiveInputModule {}

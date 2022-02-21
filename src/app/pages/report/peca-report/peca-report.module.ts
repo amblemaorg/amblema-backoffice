@@ -12,9 +12,10 @@ import {
 } from "@nebular/theme";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Ng2SmartTableModule } from "ng2-smart-table";
+import { PecaPdfReportTemplateComponent } from "../pdf-templates/peca-pdf-report-template/peca-pdf-report-template.component";
 
 @NgModule({
-  declarations: [PecaReportComponent],
+  declarations: [PecaReportComponent, PecaPdfReportTemplateComponent],
   imports: [
     CommonModule,
     PecaReportRoutingModule,

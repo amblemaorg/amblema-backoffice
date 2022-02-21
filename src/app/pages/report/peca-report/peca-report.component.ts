@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
 import { PDFReport } from "../pdf-report.service";
@@ -49,6 +56,9 @@ export class PecaReportComponent implements OnInit, OnDestroy {
 
   source: LocalDataSource = new LocalDataSource();
   data: any = [];
+  bodyTable: any = [];
+
+  @ViewChild("pdfElement", { static: false }) pdfElement: ElementRef;
 
   constructor(
     private toast: CustomToastrService,
@@ -287,22 +297,46 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     matrix.push(columnsHeader);
     row_aux.forEach((student) => matrix.push(student));
     this.matrix = matrix;
+
+    //Prepare to export PDF
+    this.prepareBodyToHtmlPdfMake();
   }
 
   ngOnDestroy(): void {}
 
-  async exportDataPdf(): Promise<void> {
+  /**
+   * @description Clear and format the matrix of data table activities.
+   * Also, set the data that peca-report-template component will use
+   * @author Christopher Dallar Document This
+   * @date 15/02/2022
+   * @private
+   * @memberof PecaReportComponent
+   */
+  private prepareBodyToHtmlPdfMake() {
     const cleanedMatrix = this.matrix.map((rows, idx) => {
+      const firstRow = rows[0].toLowerCase();
+      const regExp = "(W|^)lapso[ ][0-9](W|$)"; // 'lapso<espacio><cualquier numero>';
+
       const columns = rows.map((cell, colIdx) => {
-        if (cell === undefined || cell === null) {
+        if (firstRow.match(regExp) && colIdx > 0) {
           return "";
+        }
+
+        if (cell === undefined || cell === null) {
+          return "0%";
         }
         return cell;
       });
       return columns;
     });
-    return this.generateReporte.generateActivities(cleanedMatrix);
+
+    this.bodyTable = this.generateReporte.getBodyToPdfMake(cleanedMatrix);
   }
+
+  async exportDataPdf(): Promise<void> {
+    this.generateReporte.generatePdfFromHtml(this.pdfElement);
+  }
+
   exportDataExcel(): void {
     const workbookBin = this.makeExcel();
     const octetStream = this.binary2octet(workbookBin);

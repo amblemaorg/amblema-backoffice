@@ -1,9 +1,10 @@
-import { Inject, Injectable } from "@angular/core";
+import { ElementRef, Inject, Injectable } from "@angular/core";
 import { DOCUMENT, DatePipe } from "@angular/common";
 import { IMAGE } from "../img-base-64";
 // import { OlympicsReport } from "src/app/_models/report/math-olympics-report.model";
 const pdfMake = require("pdfmake/build/pdfmake.js");
 const pdfFonts = require("pdfmake/build/vfs_fonts.js");
+const htmlToPdfmake = require("html-to-pdfmake");
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Injectable()
@@ -13,19 +14,8 @@ export class PDFReportPeca {
     private datePipe: DatePipe
   ) {}
 
-  async generateActivities(mockData: any) {
+  async generatePdfFromHtml(pdfElement) {
     try {
-      const colorHeaderRow: any = {
-        fillColor: "#81b03e",
-        color: "#FFF",
-        bold: true,
-      };
-      const colorHeaderSecondary: any = {
-        fillColor: "#00809a",
-        color: "#FFF",
-        bold: true,
-      };
-
       const documentHeader: any = [
         {
           image: IMAGE,
@@ -47,8 +37,10 @@ export class PDFReportPeca {
           ],
         },
       ];
+
       const finalDocument: any = {
         info: {
+          // Metadata, visible en la propiedades del documento
           title: "Reporte de actividades del PECA",
           author: "Binaural C.A",
           subject: "Reporte de actividades del PECA",
@@ -60,6 +52,15 @@ export class PDFReportPeca {
         defaultStyle: {
           fontSize: 12,
         },
+        footer: function (currentPage, pageCount) {
+          return [
+            {
+              text: currentPage.toString() + " de " + pageCount,
+              alignment: "right",
+              marginRight: 40,
+            },
+          ];
+        },
       };
 
       /**
@@ -67,128 +68,10 @@ export class PDFReportPeca {
        */
       const records: any = [];
 
-      const estados = ["Aprobado", "Pendiente", "Cancelado", "Rechazado"];
-      const colorMap = {
-        Aprobado: "#68BB59",
-        Pendiente: "yellow",
-        Cancelado: "red",
-        Rechazado: "red",
-      };
-      const firstMapHeaderCells = {
-        [`Escuela `]: "E.",
-        [`Primaria `]: "P.",
-        [`Integral `]: "I.",
-        [`Bolivariana `]: "B.",
-        [`Educativa `]: "E.",
-        [`Estadal `]: "E.",
-        [`Básica `]: "B.",
-        [`Basica `]: "B.",
-        [`Nacional `]: "N.",
-        [`Colegio `]: "C.",
-        [`Educación `]: "E.",
-        [`Educacion `]: "E.",
-        [`Centro `]: "C.",
-        [`Unidad `]: "U.",
-      };
-      const secondMapHeaderCells = {
-        [`E.B.N.B.`]: "E.B.N.B. ",
-        [`U.E.E.`]: "U.E.E. ",
-        [`U.E.`]: "U.E. ",
-        [`U.E.N.`]: "U.E.N. ",
-        [`E.P.B.`]: "E.P.B. ",
-        [`E.I.B.`]: "E.I.B. ",
-      };
-      const lapses = ["Lapso 1", "Lapso 2", "Lapso 3"];
+      // PDF To Html
+      const html = htmlToPdfmake(pdfElement.nativeElement.outerHTML);
 
-      const body = mockData.map((rows, rowIndex) => {
-        const cols = rows.map((cell, columnIndex) => {
-          let text;
-          if (cell.length) {
-            const firstRegEx = new RegExp(
-              Object.keys(firstMapHeaderCells).join("|"),
-              "gi"
-            );
-            text = cell.replace(firstRegEx, (matched) => {
-              return firstMapHeaderCells[matched];
-            });
-            const secondRegEx = new RegExp(
-              Object.keys(secondMapHeaderCells).join("|"),
-              "gi"
-            );
-            text = text.replace(secondRegEx, (matched) => {
-              return secondMapHeaderCells[matched];
-            });
-          } else {
-            text = cell;
-          }
-          if (rowIndex === 0 || columnIndex === 0)
-            return {
-              text: text,
-              color: "#fff",
-              bold: true,
-            };
-          else {
-            return {
-              text: text,
-              color: "#000",
-            };
-          }
-        });
-        return cols;
-      });
-      const content = [
-        {
-          style: "table",
-          table: {
-            dontBreakRows: true,
-            body,
-          },
-          layout: {
-            color: function (rowIndex, node, columnIndex) {
-              if (columnIndex === 0 && rowIndex === 0) {
-                return "#fff";
-              }
-            },
-            fillColor: function (rowIndex, node, columnIndex) {
-              // return rowIndex % 2 === 0 ? "#CCCCCC" : null;
-              const cellData = node.table.body[rowIndex][columnIndex].text;
-
-              // Lapse row
-              if (!cellData.length) {
-                return "#81b03e";
-              }
-              // Row & column headers
-              if (rowIndex === 0 || columnIndex === 0) {
-                if (lapses.includes(cellData)) {
-                  console.log("trueee: ", cellData);
-                  return "#81b03e";
-                }
-                return "#2e8aaa";
-              }
-              // Text info: Aprobado, Pendiente, Rechazado, Cancelado
-              if (!cellData.includes("%")) {
-                return colorMap[cellData];
-              }
-              // Parse Numeric info: 0%, 50%, 65%, 100%...
-              const data = parseFloat(cellData);
-
-              // 0%
-              if (data === 0) {
-                return "red";
-              }
-              // 1% - 99%
-              if (data > 0 && data < 100) {
-                return "yellow";
-              }
-              // 100%
-              if (data === 100) {
-                return "#68BB59";
-              }
-            },
-          },
-        },
-      ];
-      records.push(content);
+      records.push(html);
 
       finalDocument.content.push(records);
 
@@ -197,5 +80,99 @@ export class PDFReportPeca {
       console.log("err: ", err);
       throw err;
     }
+  }
+
+  getBodyToPdfMake(mockData: any) {
+    const firstMapHeaderCells = {
+      [`Escuela `]: "E.",
+      [`Primaria `]: "P.",
+      [`Integral `]: "I.",
+      [`Bolivariana `]: "B.",
+      [`Educativa `]: "E.",
+      [`Educativo `]: "E.",
+      [`Estadal `]: "E.",
+      [`Básica `]: "B.",
+      [`Basica `]: "B.",
+      [`Nacional `]: "N.",
+      [`Colegio `]: "C.",
+      [`Educación `]: "E.",
+      [`Educacion `]: "E.",
+      [`Centro `]: "C.",
+      [`Unidad `]: "U.",
+    };
+
+    const secondMapHeaderCells = {
+      [`E.B.N.B.`]: "E.B.N.B. ",
+      [`U.E.E.`]: "U.E.E. ",
+      [`U.E.`]: "U.E. ",
+      [`U.E `]: "U.E. ",
+      [`U.E.N.`]: "U.E.N. ",
+      [`E.P.B.`]: "E.P.B. ",
+      [`E.I.B.`]: "E.I.B. ",
+    };
+
+    /**
+     * Reemplazan los textos iniciales por prefijos.
+     * Se agregan espacio vació de separación a los prefijos.
+     * Se modifica el color de texto y peso a los textos de la primera fila y columna a blanco y bold
+     * El resto de columnas y filas a negro.
+     */
+    let body = mockData.map((rows, rowIndex) => {
+      // Las columnas contienen las filas
+      const cols = rows.map((cell, columnIndex) => {
+        let text;
+
+        if (cell.length) {
+          // Reemplazando por prefijos y agregando espacios en blanco
+
+          // Obtenemos con expresión regular las coincidencias
+          const firstRegEx = new RegExp(
+            Object.keys(firstMapHeaderCells).join("|"),
+            "gi"
+          );
+
+          // Reemplazamos en este caso las palabras por prefijos
+          // Por ejemplo, "Escuela " a "E."
+          text = cell.replace(firstRegEx, (matched) => {
+            return firstMapHeaderCells[matched];
+          });
+
+          // Obtenemos con expresión regular las coincidencias
+          const secondRegEx = new RegExp(
+            Object.keys(secondMapHeaderCells).join("|"),
+            "gi"
+          );
+
+          // Reemplazamos y agregamos el mismo texto pero con un espacio vació al final
+          // Por ejemplo, "E.B.N.B. " a "E.B.N.B. "
+          text = text.replace(secondRegEx, (matched) => {
+            if (!secondMapHeaderCells[matched]) {
+              return matched;
+            }
+            return secondMapHeaderCells[matched];
+          });
+        } else {
+          text = cell;
+        }
+
+        if (rowIndex === 0 || columnIndex === 0) {
+          // Modificamos el color de texto de la primeras filas y columna
+          return {
+            text: text,
+            color: "#fff",
+            bold: true,
+          };
+        }
+
+        return {
+          text: text,
+          color: "#000",
+        };
+      });
+
+      return cols;
+    });
+
+    return body;
   }
 }

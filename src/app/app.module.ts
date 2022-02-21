@@ -1,3 +1,4 @@
+import { PipesModule } from "./_pipes/pipes.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
@@ -53,6 +54,9 @@ registerLocaleData(localeVe, "es-VE");
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
+
+    // PipesModule
+    PipesModule,
   ],
   entryComponents: [DialogConfirmationComponent],
   providers: [

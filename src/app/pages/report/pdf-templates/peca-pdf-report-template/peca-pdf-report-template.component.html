@@ -1,0 +1,33 @@
+<ng-container *ngFor="let th of table.th; index as idxTh">
+  <table class="table" style="margin-top: 50px">
+    <thead>
+      <tr>
+        <ng-container *ngFor="let cell of th">
+          <th [style]="getStyleCell()">
+            {{ cell.text }}
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let row of table.tbody[idxTh]; index as idxTbody">
+        <tr>
+          <ng-container *ngFor="let cell of row; index as idxCell">
+            <td
+              [style]="
+                getStyleCell('columnBody', {
+                  idxCell: idxCell,
+                  row: row,
+                  cell: this.cell
+                })
+              "
+            >
+              {{ cell.text }}
+            </td>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-container>

@@ -1,0 +1,22 @@
+<div class="text-editor">
+  <div *ngIf="show && control">
+    <label class="label">{{ label }}</label>
+    <quill-editor
+      #quillEditor
+      class="quill-editor--textarea"
+      [placeholder]="placeholder"
+      [formControl]="control"
+      [styles]="styles"
+    ></quill-editor>
+    <small *ngIf="maxLength > 0" class="mt-2 d-block label text-right">
+      <span [ngClass]="{ error: length > maxLength }">{{ length }}</span> /
+      {{ maxLength }}</small
+    >
+
+    <small
+      *ngIf="length > maxLength"
+      class="mt-2 d-block label text-right error"
+      >Superaste el límite de caracteres</small
+    >
+  </div>
+</div>

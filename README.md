@@ -2,6 +2,9 @@
 
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.3.20.
 
+## Correr local  
+1. correr el comando `docker-compose up run_amblema_backoffice`  
+
 ## Despliegue a producción
 
 ### Build docker images

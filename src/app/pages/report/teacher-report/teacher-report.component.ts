@@ -151,6 +151,14 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
           },
         },
       },
+      specialty: {
+        title: "Especialidad",
+        type: "string",
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: FilterPipeSearch,
+      },
       status: {
         title: "Estatus",
         type: "string",
@@ -168,14 +176,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             ],
           },
         },
-      },
-      specialty: {
-        title: "Especialidad",
-        type: "string",
-        valuePrepareFunction: (row: any) => {
-          return row.name;
-        },
-        filterFunction: FilterPipeSearch,
       },
     },
   };

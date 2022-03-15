@@ -48,7 +48,6 @@ export class GeneralFormComponent
 
     // Fill data form, register in stage
     this.subscription = this.data$.subscribe((response) => {
-      console.log("ngOnInit", response);
       if (response !== null) {
         this.form.patchValue(response);
         this.form.controls.objectives.reset(); // <-- Clear Objectives Field
@@ -118,8 +117,6 @@ export class GeneralFormComponent
   sendStepOne() {
     const prepareData: Learning = this.form.value;
     prepareData.objectives = this.objectives;
-    console.log("sendStepOne", prepareData.objectives);
-    console.log("sendStepOne priority", this.form.controls.priority);
     this.store.dispatch(new SetLearningOne(prepareData));
   }
 }

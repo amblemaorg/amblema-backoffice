@@ -21,4 +21,24 @@ export class StringHelper {
     string = string ? string : "";
     return string.replace(/(<([^>]+)>)/gi, replaceTo);
   }
+
+  /**
+   * @description Return string without accents or diacritics (Except ñ)
+   * @author Christopher Dallar Document This
+   * @date 14/03/2022
+   * @static
+   * @param {string} text
+   * @return
+   * @memberof StringHelper
+   */
+  static rmDiacritics(text: string) {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(
+        /([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,
+        "$1"
+      )
+      .normalize();
+  }
 }

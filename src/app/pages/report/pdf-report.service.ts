@@ -54,6 +54,15 @@ export class PDFReport implements OnInit {
       defaultStyle: {
         fontSize: 8,
       },
+      footer: function (currentPage, pageCount) {
+        return [
+          {
+            text: currentPage.toString() + " de " + pageCount,
+            alignment: "right",
+            marginRight: 40,
+          },
+        ];
+      },
     };
 
     const colorHeaderRow: any = {
@@ -93,6 +102,7 @@ export class PDFReport implements OnInit {
 
     // -- Type user --
     if (dataUsers.typeUser === "0") {
+      // Padrino
       const sponsorHeaderRecord: any = [
         { ...colorHeaderRow, text: "N°" },
         { ...colorHeaderRow, text: "Nombre de la empresa" },
@@ -146,6 +156,7 @@ export class PDFReport implements OnInit {
         margin: [0, 0, 0, 30],
       });
     } else if (dataUsers.typeUser === "1") {
+      // Coordinador
       const coordinatorRecords: any = [];
 
       const coordinatorHeaderRecord: any = [
@@ -221,6 +232,7 @@ export class PDFReport implements OnInit {
         margin: [0, 0, 0, 30],
       });
     } else if (dataUsers.typeUser === "2") {
+      // Escuela
       finalReport.defaultStyle.fontSize = 7.4;
 
       const schoolRecords: any = [];
@@ -295,6 +307,7 @@ export class PDFReport implements OnInit {
         margin: [0, 0, 0, 30],
       });
     } else if (dataUsers.typeUser === "3") {
+      // Docente
       const teacherRecords: any = [];
 
       const teacherHeaderRecord: any = [
@@ -310,6 +323,7 @@ export class PDFReport implements OnInit {
         { ...colorHeaderRow, text: "Municipio" },
         { ...colorHeaderRow, text: "Ciudad" },
         { ...colorHeaderRow, text: "Calles / carrerass" },
+        { ...colorHeaderRow, text: "Especialidad" },
         { ...colorHeaderRow, text: "Estatus" },
       ];
 
@@ -334,6 +348,7 @@ export class PDFReport implements OnInit {
           { text: teacher.addressMunicipality },
           { text: teacher.addressCity },
           { text: teacher.address },
+          { text: teacher.specialty.name },
           { text: teacher.status === "1" ? "Activo" : "Inactivo" },
         ]);
       });
@@ -344,17 +359,18 @@ export class PDFReport implements OnInit {
         table: {
           widths: [
             "auto",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
-            "9%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
+            "8.2%",
           ],
           body: teacherRecords,
         },
@@ -911,7 +927,7 @@ export class PDFReport implements OnInit {
 
         // -- Creating table students --
         section.lapse2.students.forEach((student, key) => {
-          // -- Initial data --
+          // -- Initial data --headerDocument
           prepareStudent = [
             { text: key + 1 },
             { text: student.firstName },

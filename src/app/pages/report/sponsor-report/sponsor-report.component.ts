@@ -177,13 +177,45 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       );
       return obj;
     });
+
+    console.log("Data: ", data);
+    console.log("data[0]: ", data[0]);
+    console.log("Object.keys(data[0]): ", Object.keys(data[0]));
+
     const reportTitle = [["Reporte de Padrinos"]];
-    const columnHeaders = Object.keys(data[0]);
+    // let  columnHeaders = Object.keys(data[0]);
+    let columnHeaders = [
+      "Nombre de la empresa",
+      "RIF",
+      "Correo",
+      "Teléfono",
+      "Estado",
+      "Municipio",
+      "Ciudad",
+      "Escuela(s) que apadrinan",
+      "Estatus",
+    ];
+
+    const nonDefaultColumnHeaders = Object.keys(data[0]).filter((key) => {
+      return (
+        columnHeaders.findIndex((columnHeader) => columnHeader === key) === -1
+      );
+    });
+
+    console.log("nonDefaultColumnHeaders", nonDefaultColumnHeaders);
+
+    if (nonDefaultColumnHeaders.length > 0) {
+      columnHeaders.push(...nonDefaultColumnHeaders);
+    }
+    // columnHeaders.push();
+
     const matrixz = data.filter((rows, idx) => idx !== 0);
     const values = matrixz.map((record) => {
       return Object.values(record);
     });
-    // console.log("matrix: ", matrixz);
+    console.log("columnHeaders: ", columnHeaders);
+    console.log("matrixz: ", matrixz);
+    console.log("values: ", values);
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `"Reporte de Padrinos"`,

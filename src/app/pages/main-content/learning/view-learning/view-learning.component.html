@@ -9,7 +9,7 @@
         </p>
         <p>
           <span class="font-weight-bold">Descripción:</span>
-          {{ learning.description | removeHtmlTags }}
+          <span [innerHtml]="learning.description"></span>
         </p>
         <p>
           <span class="font-weight-bold">Duracion:</span> {{ duration }}(HH:MM)
@@ -36,7 +36,7 @@
         </p>
         <p>
           <span class="font-weight-bold">Descripción:</span>
-          {{ learning.secondaryDescription | removeHtmlTags }}
+          <span [innerHtml]="learning.secondaryDescription"></span>
         </p>
         <p>
           <span class="font-weight-bold">Fecha de creación:</span>

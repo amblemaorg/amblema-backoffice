@@ -1,3 +1,4 @@
+import { FilterPipeSearch } from "./../../../_helpers/utility";
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { PDFReport } from "../pdf-report.service";
@@ -150,6 +151,14 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
           },
         },
       },
+      specialty: {
+        title: "Especialidad",
+        type: "string",
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: FilterPipeSearch,
+      },
       status: {
         title: "Estatus",
         type: "string",
@@ -208,6 +217,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
               response.users.forEach((element) => {
                 this.data = [...this.data, element];
               });
+              // console.log("getUserReport this.data", this.data);
             }
 
             this.source.load(this.data);

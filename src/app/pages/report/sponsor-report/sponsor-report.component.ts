@@ -195,12 +195,9 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       "Estatus",
     ];
 
-    const matrixz = data.filter((rows, idx) => idx !== 0);
+    // const matrixz = data.filter((rows, idx) => idx !== 0);
 
-    const values = this.sortedValues(columnHeaders, matrixz);
-
-    // console.log("columnHeaders: ", columnHeaders);
-    // console.log("values: ", values);
+    const values = this.sortedValues(columnHeaders, data);
 
     const workbook = XLSX.utils.book_new();
     workbook.Props = {

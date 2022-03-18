@@ -180,7 +180,8 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
 
     console.log("Data: ", data);
     console.log("data[0]: ", data[0]);
-    console.log("Object.keys(data[0]): ", Object.keys(data[0]));
+    // console.log("Object.keys(data[0]): ", Object.keys(data[0]));
+    // console.log("getOwnPropertyNames(): ", Object.getOwnPropertyNames(data[0]));
 
     const reportTitle = [["Reporte de Padrinos"]];
     // let  columnHeaders = Object.keys(data[0]);
@@ -196,26 +197,28 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       "Estatus",
     ];
 
-    const nonDefaultColumnHeaders = Object.keys(data[0]).filter((key) => {
-      return (
-        columnHeaders.findIndex((columnHeader) => columnHeader === key) === -1
-      );
+    let matrixz = data.filter((rows, idx) => idx !== 0);
+    console.log("matrix1: ", matrixz);
+    matrixz = matrixz.map((matrixzMap) => {
+      return {
+        "Nombre de la empresa": matrixzMap["Nombre de la empresa"],
+        RIF: matrixzMap["RIF"],
+        Correo: matrixzMap["Correo"],
+        Teléfono: matrixzMap["Teléfono"],
+        Estado: matrixzMap["Estado"],
+        Municipio: matrixzMap["Municipio"],
+        Ciudad: matrixzMap["Ciudad"],
+        "Escuela(s) que apadrinan": matrixzMap["Escuela(s) que apadrinan"],
+        Estatus: matrixzMap["Estatus"],
+      };
     });
 
-    console.log("nonDefaultColumnHeaders", nonDefaultColumnHeaders);
-
-    if (nonDefaultColumnHeaders.length > 0) {
-      columnHeaders.push(...nonDefaultColumnHeaders);
-    }
-    // columnHeaders.push();
-
-    const matrixz = data.filter((rows, idx) => idx !== 0);
     const values = matrixz.map((record) => {
       return Object.values(record);
     });
-    console.log("columnHeaders: ", columnHeaders);
-    console.log("matrixz: ", matrixz);
-    console.log("values: ", values);
+    // console.log("columnHeaders: ", columnHeaders);
+    // console.log("matrixz 2: ", matrixz);
+    // console.log("values: ", values);
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `"Reporte de Padrinos"`,

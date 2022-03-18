@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
-import { STATUS } from './convention/status';
-import { Post } from '../_models/web/blog.model';
-import { SliderMedia } from '../_models/learning.model';
-import { DOCUMENT_TYPE } from './convention/document-type';
-import { REQUEST_STATUS } from './convention/request-status';
+import { FilterPipe } from "../_pipes/filter.pipe";
+import { Inject, Injectable } from "@angular/core";
+import { STATUS } from "./convention/status";
+import { Post } from "../_models/web/blog.model";
+import { SliderMedia } from "../_models/learning.model";
+import { DOCUMENT_TYPE } from "./convention/document-type";
+import { REQUEST_STATUS } from "./convention/request-status";
 
 @Injectable()
 export class Utility {
@@ -86,39 +87,39 @@ export class Utility {
   public convertTagsNumberToString(data: any): Post[] {
     data.forEach((value, key) => {
       value.tag =
-        value.tag === '1'
-          ? 'Ambiente'
-          : value.tag === '2'
-          ? 'Lectura'
-          : value.tag === '3'
-          ? 'Matemáticas'
-          : 'Otra';
+        value.tag === "1"
+          ? "Ambiente"
+          : value.tag === "2"
+          ? "Lectura"
+          : value.tag === "3"
+          ? "Matemáticas"
+          : "Otra";
     });
     return data;
   }
 
   public convertTagStringToNumber(post: Post): Post {
     post.tag =
-      post.tag === 'Ambiente'
-        ? '1'
-        : post.tag === 'Lectura'
-        ? '2'
-        : post.tag === 'Matemáticas'
-        ? '3'
-        : '4';
+      post.tag === "Ambiente"
+        ? "1"
+        : post.tag === "Lectura"
+        ? "2"
+        : post.tag === "Matemáticas"
+        ? "3"
+        : "4";
 
     return post;
   }
 
   public convertStatusPostToString(data: any): Post[] {
     data.forEach((value, key) => {
-      value.status = value.status === '1' ? 'Publicado' : 'No publicado';
+      value.status = value.status === "1" ? "Publicado" : "No publicado";
     });
     return data;
   }
 
   public convertStatusPostToNumber(post: Post): Post {
-    post.status = post.status === 'Publicado' ? '1' : '2';
+    post.status = post.status === "Publicado" ? "1" : "2";
 
     return post;
   }
@@ -130,7 +131,7 @@ export class Utility {
 
   public mediaNumberToString(media: SliderMedia[]): SliderMedia[] {
     media.forEach((value, key) => {
-      value.type = value.type === '1' ? 'Imagen' : 'Video';
+      value.type = value.type === "1" ? "Imagen" : "Video";
     });
     return media;
   }
@@ -148,23 +149,33 @@ export const ReadlyStatusConvert = (object?: any[]): any[] => {
 };
 
 export const FilterStatus = (cell?: any, search?: string): boolean => {
-  let value: string = cell === '1' ? 'Activo' : 'Inactivo';
+  let value: string = cell === "1" ? "Activo" : "Inactivo";
 
   value = value.toUpperCase();
 
-  if (value.includes(search.toUpperCase()) || search === '') {
+  if (value.includes(search.toUpperCase()) || search === "") {
     return true;
   } else {
     return false;
   }
 };
 
+export const FilterPipeSearch = (cell?: any, search?: string): boolean => {
+  if (!cell) {
+    return false;
+  }
+  const filterPipe = new FilterPipe();
+  const valueFiltered = filterPipe.transform([cell], search, "name");
+
+  return valueFiltered.length > 0;
+};
+
 export const FilterAmblemPensum = (cell?: any, search?: string): boolean => {
-  let value: string = cell ? 'Completado' : 'No completado';
+  let value: string = cell ? "Completado" : "No completado";
 
   value = value.toUpperCase();
 
-  if (value.includes(search.toUpperCase()) || search === '') {
+  if (value.includes(search.toUpperCase()) || search === "") {
     return true;
   } else {
     return false;
@@ -172,13 +183,13 @@ export const FilterAmblemPensum = (cell?: any, search?: string): boolean => {
 };
 
 export const ReadlyGender = (value: string): string =>
-  value === '1' ? 'Femenino' : 'Masculino';
+  value === "1" ? "Femenino" : "Masculino";
 export const FilterGender = (cell?: any, search?: string): boolean => {
-  let value: string = cell ? 'Femenino' : 'Masculino';
+  let value: string = cell ? "Femenino" : "Masculino";
 
   value = value.toUpperCase();
 
-  if (value.includes(search.toUpperCase()) || search === '') {
+  if (value.includes(search.toUpperCase()) || search === "") {
     return true;
   } else {
     return false;

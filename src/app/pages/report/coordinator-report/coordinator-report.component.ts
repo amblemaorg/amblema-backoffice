@@ -225,9 +225,9 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
     });
     const reportTitle = [["Reporte de coordinadores"]];
     const columnHeaders: string[] = Object.values(mappedKeys);
-    const matrixz = data.filter((rows, idx) => idx !== 0);
+    // const matrixz = data.filter((rows, idx) => idx !== 0);
 
-    const values = this.sortedValues(columnHeaders, matrixz);
+    const values = this.sortedValues(columnHeaders, data);
 
     const workbook = XLSX.utils.book_new();
     workbook.Props = {

@@ -178,10 +178,8 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       return obj;
     });
 
-    console.log("Data: ", data);
-    console.log("data[0]: ", data[0]);
-    // console.log("Object.keys(data[0]): ", Object.keys(data[0]));
-    // console.log("getOwnPropertyNames(): ", Object.getOwnPropertyNames(data[0]));
+    // console.log("Data: ", data);
+    // console.log("data[0]: ", data[0]);
 
     const reportTitle = [["Reporte de Padrinos"]];
     // let  columnHeaders = Object.keys(data[0]);
@@ -197,28 +195,13 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       "Estatus",
     ];
 
-    let matrixz = data.filter((rows, idx) => idx !== 0);
-    console.log("matrix1: ", matrixz);
-    matrixz = matrixz.map((matrixzMap) => {
-      return {
-        "Nombre de la empresa": matrixzMap["Nombre de la empresa"],
-        RIF: matrixzMap["RIF"],
-        Correo: matrixzMap["Correo"],
-        Teléfono: matrixzMap["Teléfono"],
-        Estado: matrixzMap["Estado"],
-        Municipio: matrixzMap["Municipio"],
-        Ciudad: matrixzMap["Ciudad"],
-        "Escuela(s) que apadrinan": matrixzMap["Escuela(s) que apadrinan"],
-        Estatus: matrixzMap["Estatus"],
-      };
-    });
+    const matrixz = data.filter((rows, idx) => idx !== 0);
 
-    const values = matrixz.map((record) => {
-      return Object.values(record);
-    });
+    const values = this.sortedValues(columnHeaders, matrixz);
+
     // console.log("columnHeaders: ", columnHeaders);
-    // console.log("matrixz 2: ", matrixz);
     // console.log("values: ", values);
+
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `"Reporte de Padrinos"`,
@@ -238,6 +221,28 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       bookType: "xls",
     });
     return workbookBinary;
+  }
+
+  private sortedValues(columnHeaders: string[], matrixz: any[]) {
+    const matrixzSorted = [];
+
+    matrixz.forEach((matrixzMap) => {
+      const valuesSorted = {};
+
+      columnHeaders.forEach((columnHeader) => {
+        valuesSorted[columnHeader] = matrixzMap[columnHeader];
+      });
+
+      // console.log("valuesSorted", valuesSorted);
+
+      matrixzSorted.push(valuesSorted);
+    });
+
+    // console.log("matrixzSorted", matrixzSorted);
+
+    return matrixzSorted.map((record) => {
+      return Object.values(record);
+    });
   }
 
   private binary2octet(binary): ArrayBuffer {

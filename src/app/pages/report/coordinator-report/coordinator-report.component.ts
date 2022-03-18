@@ -43,6 +43,12 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         title: "Correo",
         type: "string",
       },
+      cardId: {
+        // Identidad
+        title: "Identidad",
+        type: "string",
+      },
+
       phone: {
         title: "Teléfono Móvil",
         type: "number",
@@ -59,11 +65,15 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         title: "Municipio",
         type: "string",
       },
+      address: {
+        // Calles / carreras
+        title: "Calles / carreras",
+        type: "string",
+      },
       addressHome: {
         title: "Casa / Edificio",
         type: "string",
       },
-
       instructed: {
         title: "AmbLePensum",
         type: "string",
@@ -77,7 +87,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
         type: "string",
       },
       schools: {
-        title: "Escuela(s) que apadrina",
+        title: "Escuelas",
         type: "string",
       },
       status: {
@@ -156,24 +166,28 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
       firstName: "Nombre",
       lastName: "Apellido",
       email: "Correo",
+      cardId: "Identidad", // Identidad
       phone: "Teléfono móvil",
       homePhone: "Teléfono de habitación",
       addressState: "Estado",
       addressMunicipality: "Municipio",
+      address: "Calles / carreras", // address
       addressHome: "Casa / Edificio",
       instructed: "AmblePensum",
       profession: "Profesión",
-      schools: "Escuela(s) que apadrina",
+      schools: "Escuelas",
       status: "Estatus",
     };
     const keysOfInterest = [
       "firstName",
       "lastName",
       "email",
+      "cardId",
       "phone",
       "homePhone",
       "addressState",
       "addressMunicipality",
+      "address",
       "addressHome",
       "instructed",
       "profession",
@@ -210,12 +224,11 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
       return obj;
     });
     const reportTitle = [["Reporte de coordinadores"]];
-    const columnHeaders = Object.keys(data[0]);
+    const columnHeaders: string[] = Object.values(mappedKeys);
     const matrixz = data.filter((rows, idx) => idx !== 0);
-    const values = matrixz.map((record) => {
-      return Object.values(record);
-    });
-    // console.log("matrix: ", matrixz);
+
+    const values = this.sortedValues(columnHeaders, matrixz);
+
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `Reporte de coordinadores`,
@@ -235,6 +248,24 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
       bookType: "xls",
     });
     return workbookBinary;
+  }
+
+  private sortedValues(columnHeaders: string[], matrixz: any[]) {
+    const matrixzSorted = [];
+
+    matrixz.forEach((matrixzMap) => {
+      const valuesSorted = {};
+
+      columnHeaders.forEach((columnHeader) => {
+        valuesSorted[columnHeader] = matrixzMap[columnHeader];
+      });
+
+      matrixzSorted.push(valuesSorted);
+    });
+
+    return matrixzSorted.map((record) => {
+      return Object.values(record);
+    });
   }
 
   private binary2octet(binary): ArrayBuffer {

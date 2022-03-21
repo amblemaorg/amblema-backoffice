@@ -1,21 +1,23 @@
-import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { AbtractStepForm } from '../abstract.step.form';
-import { Store, Select } from '@ngxs/store';
-import { FormControl, Validators } from '@angular/forms';
-import { LearningState, SetLearningOne } from 'src/app/store/learning.action';
-import { Observable, Subscription } from 'rxjs';
-import { Learning } from 'src/app/_models/learning.model';
-import { ACTION } from 'src/app/_helpers/text-content/text-crud';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, OnChanges } from "@angular/core";
+import { AbtractStepForm } from "../abstract.step.form";
+import { Store, Select } from "@ngxs/store";
+import { FormControl, Validators } from "@angular/forms";
+import { LearningState, SetLearningOne } from "src/app/store/learning.action";
+import { Observable, Subscription } from "rxjs";
+import { Learning } from "src/app/_models/learning.model";
+import { ACTION } from "src/app/_helpers/text-content/text-crud";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-general-form',
-  templateUrl: './general-form.component.html',
-  styles: []
+  selector: "app-general-form",
+  templateUrl: "./general-form.component.html",
+  styles: [],
 })
-export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnDestroy, OnChanges {
-
+export class GeneralFormComponent
+  extends AbtractStepForm
+  implements OnInit, OnDestroy, OnChanges
+{
   @Select(LearningState.learning) data$: Observable<Learning>;
   subscription: Subscription;
 
@@ -30,44 +32,42 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   constructor(
     public router: Router,
     private toastr: CustomToastrService,
-    private store: Store) {
+    private store: Store
+  ) {
     super();
   }
 
   ngOnInit(): void {
-
     // Add new controls
-    this.form.addControl('duration', new FormControl('', [Validators.required]));
-    this.form.addControl('objectives', new FormControl(null));
-    this.form.addControl('priority', new FormControl(null));
+    this.form.addControl(
+      "duration",
+      new FormControl("", [Validators.required])
+    );
+    this.form.addControl("objectives", new FormControl(null));
+    this.form.addControl("priority", new FormControl(null));
 
     // Fill data form, register in stage
-    this.subscription = this.data$.subscribe(response => {
-
+    this.subscription = this.data$.subscribe((response) => {
       if (response !== null) {
         this.form.patchValue(response);
-        this.form.controls.objectives.reset(); // <-- Clear form
-        this.form.controls.priority.setValue(null );
+        this.form.controls.objectives.reset(); // <-- Clear Objectives Field
+        // this.form.controls.priority.setValue(null);
         this.objectives = response.objectives as string[]; // <-- To print the list
       }
     });
   }
 
   ngOnDestroy(): void {
-
     if (this.subscription) {
       this.subscription.unsubscribe(); // <-- Free memory
     }
   }
 
   ngOnChanges(): void {
-
     // Fill data form to update the data
-    this.subscription = this.data$.subscribe(response => {
-
+    this.subscription = this.data$.subscribe((response) => {
       if (this.MODE === ACTION.CREATE) {
         if (response !== null) {
-
           this.form.patchValue(response);
         }
       } else {
@@ -81,7 +81,12 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
     if (this.objectives.length < 5) {
       this.objectives.push(this.form.controls.objectives.value);
       this.form.controls.objectives.reset();
-    } else { this.toastr.error('Limite de registro', 'Solo se pueden registrar 5 objectivos'); }
+    } else {
+      this.toastr.error(
+        "Limite de registro",
+        "Solo se pueden registrar 5 objectivos"
+      );
+    }
   }
 
   onEditObjective(index: number): void {
@@ -91,8 +96,11 @@ export class GeneralFormComponent extends AbtractStepForm implements OnInit, OnD
   }
 
   onDeleteObjective(index: number): void {
-    this.objectives = this.objectives.filter( (value, key) => key !== index );
-    this.toastr.deleteRegister('Eliminado', 'Se ha eliminado el objetivo de la lista');
+    this.objectives = this.objectives.filter((value, key) => key !== index);
+    this.toastr.deleteRegister(
+      "Eliminado",
+      "Se ha eliminado el objetivo de la lista"
+    );
   }
 
   confirmAction() {

@@ -9,7 +9,7 @@ export const environment = {
 
   // api: 'http://157.245.131.248:10506/',
   api: "http://157.245.131.248:10506/",
-  web: "http://localhost:22222/",
+  web: "http://157.245.131.248:10512/", // http://localhost:22222/
 };
 
 /*

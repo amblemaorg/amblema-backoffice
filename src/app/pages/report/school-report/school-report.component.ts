@@ -51,8 +51,14 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
         title: "Municipio",
         type: "string",
       },
-      addressHome: {
-        title: "Casa / Edificio",
+      addressCity: {
+        // City
+        title: "Ciudad",
+        type: "string",
+      },
+      address: {
+        // Calles / carreras
+        title: "Calles / carreras",
         type: "string",
       },
       addressZoneType: {
@@ -152,12 +158,13 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
   makeExcel(): void {
     const mappedKeys = {
       name: "Nombre",
-      code: "Apellido",
+      code: "Código",
       email: "Correo",
       phone: "Teléfono",
       addressState: "Estado",
       addressMunicipality: "Municipio",
-      addressHome: "Casa / Edificio",
+      addressCity: "Ciudad", // City
+      address: "Calles / carreras", // Calles / carreras
       addressZoneType: "Zona",
       addressZone: "Dirección de la zona",
       nGrades: "N° de grados",
@@ -173,7 +180,8 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       "phone",
       "addressState",
       "addressMunicipality",
-      "addressHome",
+      "addressCity",
+      "address",
       "addressZoneType",
       "addressZone",
       "nGrades",
@@ -210,12 +218,9 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       return obj;
     });
     const reportTitle = [["Reporte de escuelas"]];
-    const columnHeaders = Object.keys(data[0]);
-    const matrixz = data.filter((rows, idx) => idx !== 0);
-    const values = matrixz.map((record) => {
-      return Object.values(record);
-    });
-    // console.log("matrix: ", matrixz);
+    const columnHeaders: string[] = Object.values(mappedKeys);
+    const values = this.sortedValues(columnHeaders, data);
+
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `Reporte de escuelas`,
@@ -235,6 +240,24 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       bookType: "xls",
     });
     return workbookBinary;
+  }
+
+  private sortedValues(columnHeaders: string[], matrixz: any[]) {
+    const matrixzSorted = [];
+
+    matrixz.forEach((matrixzMap) => {
+      const valuesSorted = {};
+
+      columnHeaders.forEach((columnHeader) => {
+        valuesSorted[columnHeader] = matrixzMap[columnHeader];
+      });
+
+      matrixzSorted.push(valuesSorted);
+    });
+
+    return matrixzSorted.map((record) => {
+      return Object.values(record);
+    });
   }
 
   private binary2octet(binary): ArrayBuffer {

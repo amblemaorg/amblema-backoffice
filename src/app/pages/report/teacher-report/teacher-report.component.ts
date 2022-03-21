@@ -232,7 +232,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   }
 
   onGenerateReportExcel(): void {
-    console.log("this data: ", this.data);
     this.disabledBtn = true;
     const workbookBin = this.makeExcel();
     const octetStream = this.binary2octet(workbookBin);
@@ -259,7 +258,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       addressMunicipality: "Municipio",
       addressCity: "Ciudad",
       address: "Calles / carreras",
-      annualPreparationStatus: "Inscripción de la convención",
+      specialty: "Especialidad",
+      // annualPreparationStatus: "Inscripción de la convención",
       status: "Estatus",
     };
     const keysOfInterest = [
@@ -273,7 +273,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       "addressMunicipality",
       "addressCity",
       "address",
-      "annualPreparationStatus",
+      "specialty",
+      // "annualPreparationStatus",
       "status",
     ];
     const data: any[] = this.data.map((record) => {
@@ -298,16 +299,18 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
           if (key === "gender") {
             cellValue = parseInt(cellValue) === 1 ? "Femenino" : "Masculino";
           }
-          console.log("key: ", key);
-          if (key === "annualPreparationStatus") {
-            console.log("key: ", key);
-            console.log("value: ", value);
-            cellValue =
-              cellValue === "1"
-                ? "Preinscrito"
-                : (cellValue =
-                    cellValue === "2" ? "Inscrito" : "No esta inscrito");
+          if (key === "specialty") {
+            cellValue = cellValue.name;
           }
+
+          // if (key === "annualPreparationStatus") {
+
+          //   cellValue =
+          //     cellValue === "1"
+          //       ? "Preinscrito"
+          //       : (cellValue =
+          //           cellValue === "2" ? "Inscrito" : "No esta inscrito");
+          // }
           return [`${mappedKeys[key]}`, cellValue];
         });
       const obj = mappedData.reduce(
@@ -317,11 +320,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       return obj;
     });
     const reportTitle = [["Reporte de docentes"]];
-    const columnHeaders = Object.keys(data[0]);
-    const matrixz = data.filter((rows, idx) => idx !== 0);
-    const values = matrixz.map((record) => {
-      return Object.values(record);
-    });
+    // const columnHeaders = Object.keys(data[0]);
+    const columnHeaders: string[] = Object.values(mappedKeys);
+    const values = this.sortedValues(columnHeaders, data);
     // console.log("matrix: ", matrixz);
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
@@ -342,6 +343,24 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       bookType: "xls",
     });
     return workbookBinary;
+  }
+
+  private sortedValues(columnHeaders: string[], matrixz: any[]) {
+    const matrixzSorted = [];
+
+    matrixz.forEach((matrixzMap) => {
+      const valuesSorted = {};
+
+      columnHeaders.forEach((columnHeader) => {
+        valuesSorted[columnHeader] = matrixzMap[columnHeader];
+      });
+
+      matrixzSorted.push(valuesSorted);
+    });
+
+    return matrixzSorted.map((record) => {
+      return Object.values(record);
+    });
   }
 
   private binary2octet(binary): ArrayBuffer {

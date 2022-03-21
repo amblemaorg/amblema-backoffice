@@ -177,13 +177,28 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       );
       return obj;
     });
+
+    // console.log("Data: ", data);
+    // console.log("data[0]: ", data[0]);
+
     const reportTitle = [["Reporte de Padrinos"]];
-    const columnHeaders = Object.keys(data[0]);
-    const matrixz = data.filter((rows, idx) => idx !== 0);
-    const values = matrixz.map((record) => {
-      return Object.values(record);
-    });
-    // console.log("matrix: ", matrixz);
+    // let  columnHeaders = Object.keys(data[0]);
+    let columnHeaders = [
+      "Nombre de la empresa",
+      "RIF",
+      "Correo",
+      "Teléfono",
+      "Estado",
+      "Municipio",
+      "Ciudad",
+      "Escuela(s) que apadrinan",
+      "Estatus",
+    ];
+
+    // const matrixz = data.filter((rows, idx) => idx !== 0);
+
+    const values = this.sortedValues(columnHeaders, data);
+
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `"Reporte de Padrinos"`,
@@ -203,6 +218,28 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       bookType: "xls",
     });
     return workbookBinary;
+  }
+
+  private sortedValues(columnHeaders: string[], matrixz: any[]) {
+    const matrixzSorted = [];
+
+    matrixz.forEach((matrixzMap) => {
+      const valuesSorted = {};
+
+      columnHeaders.forEach((columnHeader) => {
+        valuesSorted[columnHeader] = matrixzMap[columnHeader];
+      });
+
+      // console.log("valuesSorted", valuesSorted);
+
+      matrixzSorted.push(valuesSorted);
+    });
+
+    // console.log("matrixzSorted", matrixzSorted);
+
+    return matrixzSorted.map((record) => {
+      return Object.values(record);
+    });
   }
 
   private binary2octet(binary): ArrayBuffer {

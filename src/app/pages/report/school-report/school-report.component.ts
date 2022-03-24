@@ -219,7 +219,17 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
     });
     const reportTitle = [["Reporte de escuelas"]];
     const columnHeaders: string[] = Object.values(mappedKeys);
-    const values = this.sortedValues(columnHeaders, data);
+
+    const status = {
+      "1": "Activo",
+      "2": "Inactivo",
+    };
+
+    const matrixz = data.filter(
+      (rows) => rows["Estatus"] === status[this.statusSelected.toString()]
+    );
+
+    const values = this.sortedValues(columnHeaders, matrixz);
 
     const workbook = XLSX.utils.book_new();
     workbook.Props = {

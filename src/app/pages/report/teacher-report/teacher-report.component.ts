@@ -322,7 +322,17 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     const reportTitle = [["Reporte de docentes"]];
     // const columnHeaders = Object.keys(data[0]);
     const columnHeaders: string[] = Object.values(mappedKeys);
-    const values = this.sortedValues(columnHeaders, data);
+
+    const status = {
+      "1": "Activo",
+      "2": "Inactivo",
+    };
+
+    const matrixz = data.filter(
+      (rows) => rows["Estatus"] === status[this.statusSelected.toString()]
+    );
+
+    const values = this.sortedValues(columnHeaders, matrixz);
     // console.log("matrix: ", matrixz);
     const workbook = XLSX.utils.book_new();
     workbook.Props = {

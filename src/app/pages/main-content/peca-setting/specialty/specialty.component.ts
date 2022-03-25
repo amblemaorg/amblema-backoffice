@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { SpecialtyService } from "src/app/services/specialty.service";
 import { LocalDataSource } from "ng2-smart-table";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
@@ -12,7 +12,7 @@ import { ThrowStmt } from "@angular/compiler";
   templateUrl: "./specialty.component.html",
   styleUrls: ["./specialty.component.scss"],
 })
-export class SpecialtyComponent implements OnInit, OnDestroy {
+export class SpecialtyComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription;
 
   data = new Array<any>();
@@ -67,6 +67,17 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getSpecialities();
   }
+
+  ngAfterViewInit(): void {
+    let input: any = document.querySelector(
+      ".nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th .ng2-smart-filter input"
+    );
+
+    if (input) {
+      input.placeholder = "Buscar especialidad";
+    }
+  }
+
   onSaveConfirm(event) {
     if (event.data.name != event.newData.name) {
       var payload = {
@@ -87,7 +98,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
   }
 
   onAddConfirm(event) {
-    console.log(event);
+    // console.log(event);
     if (event.newData.name != "") {
       var payload = {
         name: event.newData.name,
@@ -117,7 +128,6 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
     }*/
   }
   onDeleteConfirm(event) {
-    console.log("ssss");
     if (window.confirm("¿Esta seguro de eliminar la especialidad?")) {
       this.subscription = this.specialtyService
         .deleteSpecialty(event.data.id)
@@ -136,7 +146,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         this.data = response?.records;
         this.source.load(this.data);
-        console.log(response);
+        // console.log(response);
       });
   }
 }

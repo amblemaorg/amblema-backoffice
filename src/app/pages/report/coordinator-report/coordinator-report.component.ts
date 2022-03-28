@@ -162,6 +162,8 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
   }
 
   makeExcel(): void {
+    // console.log("makeExcel: status", this.statusSelected);
+
     const mappedKeys = {
       firstName: "Nombre",
       lastName: "Apellido",
@@ -225,9 +227,19 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
     });
     const reportTitle = [["Reporte de coordinadores"]];
     const columnHeaders: string[] = Object.values(mappedKeys);
-    // const matrixz = data.filter((rows, idx) => idx !== 0);
 
-    const values = this.sortedValues(columnHeaders, data);
+    const status = {
+      "1": "Activo",
+      "2": "Inactivo",
+    };
+
+    const matrixz = data.filter(
+      (rows) => rows["Estatus"] === status[this.statusSelected.toString()]
+    );
+
+    const values = this.sortedValues(columnHeaders, matrixz);
+
+    // console.log("makeExcel: matrixz", matrixz);
 
     const workbook = XLSX.utils.book_new();
     workbook.Props = {

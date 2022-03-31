@@ -74,7 +74,7 @@
     "ngx-image-compress": "^11.0.3",
     "ngx-mask": "^12.0.0",
     "ngx-owl-carousel-o": "^5.1.1",
-    "ngx-quill": "^14.3.0",
+    "ngx-quill": "^13.2.0",
     "npm": "^6.13.7",
     "pdfkit": "^0.13.0",
     "pdfmake": "^0.2.4",

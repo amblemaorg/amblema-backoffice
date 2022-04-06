@@ -15,7 +15,7 @@
 # docker rmi -f ${REGISTRY}${PROJECT}/app
 
 # !/bin/bash
-export REPOSITORY=push devbinaural/build_amblema-backoffice-app
+export REPOSITORY=devbinaural/build_amblema-backoffice-app
 export USER=devbinaural
 export TOKEN=Garden.86
 

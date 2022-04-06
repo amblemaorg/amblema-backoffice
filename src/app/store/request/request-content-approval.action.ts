@@ -1,9 +1,9 @@
-import { RequestContent } from '../../_models/request/request-content-approval.model';
-import { State, Selector, NgxsOnInit, StateContext, Action } from '@ngxs/store';
-import { InformationRequestService } from 'src/app/services/request/information-request.service';
-import { patch, updateItem, removeItem } from '@ngxs/store/operators';
-import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
-import { Injectable } from '@angular/core';
+import { RequestContent } from "../../_models/request/request-content-approval.model";
+import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
+import { InformationRequestService } from "src/app/services/request/information-request.service";
+import { patch, updateItem, removeItem } from "@ngxs/store/operators";
+import { REQUEST_STATUS } from "src/app/_helpers/convention/request-status";
+import { Injectable } from "@angular/core";
 
 export interface RequestContentModel {
   requestsContent: RequestContent[];
@@ -11,26 +11,26 @@ export interface RequestContentModel {
 }
 
 export class GetRequestsContent {
-  static readonly type = '[RequestContent] Get Request Content';
+  static readonly type = "[RequestContent] Get Request Content";
 }
 
 export class UpdateRequestContent {
-  static readonly type = '[RequestContent] Update Request Content';
-  constructor( public newData: RequestContent ) {}
+  static readonly type = "[RequestContent] Update Request Content";
+  constructor(public newData: RequestContent) {}
 }
 
 export class SelectedRequestContent {
-  static readonly type = '[selectedRequestContent] Selected Request Content';
+  static readonly type = "[selectedRequestContent] Selected Request Content";
   constructor(public payload: any) {}
 }
 
 export class DeleteRequestContent {
-  static readonly type = '[RequestContent] Delete Request Content';
-  constructor( public id: string ) {}
+  static readonly type = "[RequestContent] Delete Request Content";
+  constructor(public id: string) {}
 }
 
 @State<RequestContentModel>({
-  name: 'requestcontent',
+  name: "requestcontent",
   defaults: {
     requestsContent: [],
   },
@@ -38,9 +38,7 @@ export class DeleteRequestContent {
 @Injectable()
 export class RequestContentState implements NgxsOnInit {
   @Selector()
-  static requestsContent(
-    state: RequestContentModel
-  ): RequestContent[] | null {
+  static requestsContent(state: RequestContentModel): RequestContent[] | null {
     return state.requestsContent;
   }
 
@@ -48,7 +46,6 @@ export class RequestContentState implements NgxsOnInit {
   static requestsContentPending(
     state: RequestContentModel
   ): RequestContent[] | null {
-
     const value: any[] = [];
 
     state.requestsContent.forEach((response) => {
@@ -73,25 +70,29 @@ export class RequestContentState implements NgxsOnInit {
 
   @Action(GetRequestsContent)
   getRequestsContent(ctx: StateContext<RequestContentModel>) {
-    this.RequestContentService
-      .getRequestsContent()
-      .subscribe((response) => {
-        ctx.setState({
-          ...ctx.getState(),
-          requestsContent: response,
-        });
+    this.RequestContentService.getRequestsContent().subscribe((response) => {
+      ctx.setState({
+        ...ctx.getState(),
+        requestsContent: response,
       });
+    });
   }
 
   @Action(UpdateRequestContent)
-  UpdateRequestContent(ctx: StateContext<RequestContentModel>, action: UpdateRequestContent) {
-
-    ctx.setState( patch( {
-      ...ctx.getState(),
-      requestsContent: updateItem<RequestContent>( request => request.id === action.newData.id, action.newData ),
-      selectedRequestContent: action.newData
-    }));
-
+  UpdateRequestContent(
+    ctx: StateContext<RequestContentModel>,
+    action: UpdateRequestContent
+  ) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        requestsContent: updateItem<RequestContent>(
+          (request) => request.id === action.newData.id,
+          action.newData
+        ),
+        selectedRequestContent: action.newData,
+      })
+    );
   }
 
   @Action(SelectedRequestContent)
@@ -99,27 +100,32 @@ export class RequestContentState implements NgxsOnInit {
     ctx: StateContext<RequestContentModel>,
     action: SelectedRequestContent
   ) {
-
     let value: any;
 
-    ctx.getState().requestsContent.forEach( response => {
-      if ( response.id === action.payload.id ) {
+    ctx.getState().requestsContent.forEach((response) => {
+      if (response.id === action.payload.id) {
         value = response;
       }
-    } );
+    });
 
     ctx.setState({
       ...ctx.getState(),
-      selectedRequestContent: value ,
+      selectedRequestContent: value,
     });
   }
 
   @Action(DeleteRequestContent)
-  deleteRequestContent(ctx: StateContext<RequestContentModel>, action: DeleteRequestContent) {
-
-    ctx.setState(patch({
-      ...ctx.getState(),
-      requestsContent: removeItem<RequestContent>( item => item.id === action.id )
-    }));
+  deleteRequestContent(
+    ctx: StateContext<RequestContentModel>,
+    action: DeleteRequestContent
+  ) {
+    ctx.setState(
+      patch({
+        ...ctx.getState(),
+        requestsContent: removeItem<RequestContent>(
+          (item) => item.id === action.id
+        ),
+      })
+    );
   }
 }

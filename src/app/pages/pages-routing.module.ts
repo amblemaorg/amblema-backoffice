@@ -1,205 +1,208 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PagesComponent } from './pages.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { PagesComponent } from "./pages.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: PagesComponent,
     children: [
       {
-        path: 'dashboard',
+        path: "dashboard",
         loadChildren: () =>
-          import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+          import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
       },
       {
-        path: 'admin-users',
-                // loadChildren: () =>
-                //   import('./user/roles-and-permits/admin-user/admin-user.module').then(
-                //     (m) => m.AdminUserModule
-                //   ),
-              loadChildren: () =>
-                import(
-                  './user/roles-and-permits/admin-users-layout/admin-users-layout.module'
-                ).then((m) => m.AdminUsersLayoutModule),
-      },
-      {
-        path: 'permissions',
+        path: "admin-users",
         loadChildren: () =>
           import(
-            './user/roles-and-permits/permissions-layout/permissions-layout.module'
+            "./user/roles-and-permits/admin-users-layout/admin-users-layout.module"
+          ).then((m) => m.AdminUsersLayoutModule),
+      },
+      {
+        path: "permissions",
+        loadChildren: () =>
+          import(
+            "./user/roles-and-permits/permissions-layout/permissions-layout.module"
           ).then((m) => m.PermissionsLayoutModule),
       },
       {
-        path: 'coordinators-users',
+        path: "coordinators-users",
         loadChildren: () =>
           import(
-            './user/sign-up/coordinators-users-layout/coordinators-users-layouts.module'
+            "./user/sign-up/coordinators-users-layout/coordinators-users-layouts.module"
           ).then((m) => m.CoordinatorsUsersLayoutsModule),
       },
       {
-        path: 'sponsors-users',
+        path: "sponsors-users",
         loadChildren: () =>
           import(
-            './user/sign-up/sponsors-users-layout/sponsors-users-layout.module'
+            "./user/sign-up/sponsors-users-layout/sponsors-users-layout.module"
           ).then((m) => m.SponsorsUsersLayoutModule),
       },
       {
-        path: 'schools-users',
+        path: "schools-users",
         loadChildren: () =>
           import(
-            './user/sign-up/schools-users-layout/schools-users-layout.module'
+            "./user/sign-up/schools-users-layout/schools-users-layout.module"
           ).then((m) => m.SchoolsUsersLayoutModule),
       },
       {
-        path: 'requests',
+        path: "requests",
         loadChildren: () =>
-          import('./request/request.module').then((m) => m.RequestModule),
+          import("./request/request.module").then((m) => m.RequestModule),
         children: [
           {
-            path: 'creation-requests',
+            path: "creation-requests",
             loadChildren: () =>
               import(
-                './request/creation-requests/creation-requests.module'
+                "./request/creation-requests/creation-requests.module"
               ).then((m) => m.CreationRequestsModule),
           },
           {
-            path: 'project-requests',
+            path: "project-requests",
             loadChildren: () =>
-              import('./request/project-requests/project-requests.module').then(
+              import("./request/project-requests/project-requests.module").then(
                 (m) => m.ProjectRequestsModule
               ),
           },
           {
-            path: 'requests-validate-information',
+            path: "requests-validate-information",
             loadChildren: () =>
               import(
-                './request/requests-validate-information/requests-validate-information.module'
+                "./request/requests-validate-information/requests-validate-information.module"
               ).then((m) => m.RequestsValidateInformationModule),
           },
           {
-            path: 'amblema-confirmation-request',
+            path: "amblema-confirmation-request",
             loadChildren: () =>
               import(
-                './request/amblema-confirmation-request/amblema-confirmation-request.module'
+                "./request/amblema-confirmation-request/amblema-confirmation-request.module"
               ).then((m) => m.AmblemaConfirmationRequestModule),
           },
         ],
       },
       {
-        path: 'content',
+        path: "content",
         loadChildren: () =>
-          import('./main-content/main-content.module').then(
+          import("./main-content/main-content.module").then(
             (m) => m.MainContentModule
           ),
         children: [
           {
-            path: 'web',
+            path: "web",
             loadChildren: () =>
-              import('./main-content/web-content/web-content.module').then(
+              import("./main-content/web-content/web-content.module").then(
                 (m) => m.WebContentModule
               ),
           },
           {
-            path: 'steps',
+            path: "steps",
             loadChildren: () =>
-              import('./main-content/steps/steps.module').then(
+              import("./main-content/steps/steps.module").then(
                 (m) => m.StepsModule
               ),
           },
           {
-            path: 'learning',
+            path: "learning",
             loadChildren: () =>
-              import('./main-content/learning/learning.module').then(
+              import("./main-content/learning/learning.module").then(
                 (m) => m.LearningModule
               ),
           },
           {
-            path: 'peca-setting',
+            path: "peca-setting",
             loadChildren: () =>
-              import('./main-content/peca-setting/peca-setting.module').then(
+              import("./main-content/peca-setting/peca-setting.module").then(
                 (m) => m.PecaSettingModule
               ),
           },
         ],
       },
       {
-        path: 'projects',
+        path: "projects",
         loadChildren: () =>
-          import('./projects/projects.module').then((m) => m.ProjectsModule),
+          import("./projects/projects.module").then((m) => m.ProjectsModule),
       },
       {
-        path: 'report',
+        path: "report",
         loadChildren: () =>
-          import('./report/report.module').then((m) => m.ReportModule),
+          import("./report/report.module").then((m) => m.ReportModule),
         children: [
           {
-            path: 'diagnostic-report',
+            path: "diagnostic-report",
             loadChildren: () =>
               import(
-                './report/diagnostic-report/diagnostic-report.module'
+                "./report/diagnostic-report/diagnostic-report.module"
               ).then((m) => m.DiagnosticReportModule),
           },
           {
-            path: 'sponsor-report',
+            path: "peca-report",
             loadChildren: () =>
-              import('./report/sponsor-report/sponsor-report.module').then(
+              import("./report/peca-report/peca-report.module").then(
+                (m) => m.PecaReportModule
+              ),
+          },
+          {
+            path: "sponsor-report",
+            loadChildren: () =>
+              import("./report/sponsor-report/sponsor-report.module").then(
                 (m) => m.SponsorReportModule
               ),
           },
           {
-            path: 'coordinator-report',
+            path: "coordinator-report",
             loadChildren: () =>
               import(
-                './report/coordinator-report/coordinator-report.module'
+                "./report/coordinator-report/coordinator-report.module"
               ).then((m) => m.CoordinatorReportModule),
           },
           {
-            path: 'school-report',
+            path: "school-report",
             loadChildren: () =>
-              import('./report/school-report/school-report.module').then(
+              import("./report/school-report/school-report.module").then(
                 (m) => m.SchoolReportModule
               ),
           },
           {
-            path: 'teacher-report',
+            path: "teacher-report",
             loadChildren: () =>
-              import('./report/teacher-report/teacher-report.module').then(
+              import("./report/teacher-report/teacher-report.module").then(
                 (m) => m.TeacherReportModule
               ),
           },
           {
-            path: 'math-olympics-report',
+            path: "math-olympics-report",
             loadChildren: () =>
               import(
-                './report/math-olympics-report/math-olympics-report.module'
+                "./report/math-olympics-report/math-olympics-report.module"
               ).then((m) => m.MathOlympicsReportModule),
           },
           {
-            path: 'enrolled-schools-report',
+            path: "enrolled-schools-report",
             loadChildren: () =>
               import(
-                './report/graphics-report/enrolled-schools-report/enrolled-schools-report.module'
+                "./report/graphics-report/enrolled-schools-report/enrolled-schools-report.module"
               ).then((m) => m.EnrolledSchoolsReportModule),
           },
           {
-            path: 'sponsor-status',
+            path: "sponsor-status",
             loadChildren: () =>
               import(
-                './report/graphics-report/sponsor-status/sponsor-status.module'
+                "./report/graphics-report/sponsor-status/sponsor-status.module"
               ).then((m) => m.SponsorStatusModule),
           },
         ],
       },
       // Redirect To
       {
-        path: '',
-        redirectTo: 'dashboard',
+        path: "",
+        redirectTo: "dashboard",
       },
     ],
   },
-  { path: '', redirectTo: '', pathMatch: 'full' },
-  { path: '**', redirectTo: '' },
+  { path: "", redirectTo: "", pathMatch: "full" },
+  { path: "**", redirectTo: "" },
 ];
 
 @NgModule({

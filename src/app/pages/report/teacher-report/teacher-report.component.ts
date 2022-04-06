@@ -1,23 +1,26 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { PDFReport } from '../pdf-report.service';
-import { UserReportService } from 'src/app/services/report/user-report.service';
-import { LocalDataSource } from 'ng2-smart-table';
-import { DatePipe } from '@angular/common';
+import { FilterPipeSearch } from "./../../../_helpers/utility";
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
+import { PDFReport } from "../pdf-report.service";
+import { UserReportService } from "src/app/services/report/user-report.service";
+import { LocalDataSource } from "ng2-smart-table";
+import { DatePipe } from "@angular/common";
 import {
   ReadlyStatusConvert,
   FilterStatus,
   ReadlyGender,
   FilterGender,
-} from 'src/app/_helpers/utility';
-import { TeacherService } from 'src/app/services/user/teacher.service';
-import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { DomSanitizer } from '@angular/platform-browser';
+} from "src/app/_helpers/utility";
+import { TeacherService } from "src/app/services/user/teacher.service";
+import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { DomSanitizer } from "@angular/platform-browser";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 @Component({
-  selector: 'app-teacher-report',
-  templateUrl: './teacher-report.component.html',
-  styleUrls: ['./teacher-report.component.scss'],
+  selector: "app-teacher-report",
+  templateUrl: "./teacher-report.component.html",
+  styleUrls: ["./teacher-report.component.scss"],
   providers: [PDFReport, DatePipe],
 })
 export class TeacherReportComponent implements OnInit, OnDestroy {
@@ -31,9 +34,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         this.cd.detectChanges();
       }
     },
-    noDataMessage: 'No hay registros',
+    noDataMessage: "No hay registros",
     actions: {
-      columnTitle: 'Acciones',
+      columnTitle: "Acciones",
       add: false,
       delete: false,
       edit: true,
@@ -46,117 +49,130 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     },
     columns: {
       firstName: {
-        title: 'Nombre',
-        type: 'string',
+        title: "Nombre",
+        type: "string",
         editable: false,
       },
       lastName: {
-        title: 'Apellido',
-        type: 'string',
+        title: "Apellido",
+        type: "string",
         editable: false,
       },
       cardId: {
-        title: 'Identidad',
-        type: 'number',
+        title: "Identidad",
+        type: "number",
         editable: false,
       },
       gender: {
-        title: 'Genero',
-        type: 'string',
+        title: "Genero",
+        type: "string",
         valuePrepareFunction: (row: any) => {
           return ReadlyGender(row);
         },
         filterFunction: FilterGender,
         editable: false,
         editor: {
-          type: 'list',
+          type: "list",
           config: {
             list: [
-              { value: '1', title: 'Femenino' },
-              { value: '2', title: 'Masculino' },
+              { value: "1", title: "Femenino" },
+              { value: "2", title: "Masculino" },
             ],
           },
         },
       },
       email: {
-        title: 'Correo',
-        type: 'string',
+        title: "Correo",
+        type: "string",
         editable: false,
       },
       phone: {
-        title: 'Teléfono Móvil',
-        type: 'number',
+        title: "Teléfono Móvil",
+        type: "number",
         editable: false,
       },
       addressState: {
-        title: 'Estado',
-        type: 'string',
+        title: "Estado",
+        type: "string",
         editable: false,
       },
       addressMunicipality: {
-        title: 'Municipio',
-        type: 'string',
+        title: "Municipio",
+        type: "string",
         editable: false,
       },
       addressCity: {
-        title: 'Ciudad',
-        type: 'string',
+        title: "Ciudad",
+        type: "string",
         editable: false,
       },
       address: {
-        title: 'Calles / carrerass',
-        type: 'string',
+        title: "Calles / carreras",
+        type: "string",
         editable: false,
       },
       annualPreparationStatus: {
-        title: 'Inscripción de la convención',
-        type: 'html',
+        title: "Inscripción de la convención",
+        type: "html",
         valuePrepareFunction: (row: any) => {
           return this.sanatizer.bypassSecurityTrustHtml(
             `<div><span>${
-              row === '1'
-                ? 'Preinscrito'
-                : row === '2'
-                ? 'Inscrito'
-                : 'No esta inscrito'
+              row === "1"
+                ? "Preinscrito"
+                : row === "2"
+                ? "Inscrito"
+                : "No esta inscrito"
             }</span></div>`
           );
         },
         filterFunction: (cell?: any, search?: string): boolean => {
-          let value: string = cell === '1' ? 'Preinscrito' : cell === '2' ? 'Inscrito' : 'No esta inscrito';
+          let value: string =
+            cell === "1"
+              ? "Preinscrito"
+              : cell === "2"
+              ? "Inscrito"
+              : "No esta inscrito";
 
           value = value.toUpperCase();
 
-          if (value.includes(search.toUpperCase()) || search === '') {
+          if (value.includes(search.toUpperCase()) || search === "") {
             return true;
           } else {
             return false;
           }
         },
         editor: {
-          type: 'list',
+          type: "list",
           config: {
             list: [
-              { value: '1', title: 'Preinscripto' },
-              { value: '2', title: 'Inscrito' },
+              { value: "1", title: "Preinscripto" },
+              { value: "2", title: "Inscrito" },
             ],
           },
         },
       },
+      specialty: {
+        title: "Especialidad",
+        type: "string",
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: FilterPipeSearch,
+      },
       status: {
-        title: 'Estatus',
-        type: 'string',
+        title: "Estatus",
+        type: "string",
         valuePrepareFunction: (row: any) => {
           return ReadlyStatusConvert([{ status: row }])[0].status;
         },
         filterFunction: FilterStatus,
         editable: false,
         editor: {
-          type: 'list',
+          type: "list",
           config: {
             list: [
-              { value: '1', title: 'Activo' },
-              { value: '2', title: 'Inactivo' },
+              { value: "1", title: "Activo" },
+              { value: "2", title: "Inactivo" },
             ],
           },
         },
@@ -165,13 +181,13 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   };
 
   status = [
-    { label: 'Activo', value: '1' },
-    { label: 'Inactivo', value: '2' },
+    { label: "Activo", value: "1" },
+    { label: "Inactivo", value: "2" },
   ];
 
   disabledBtn = false;
 
-  statusSelected = '1';
+  statusSelected = "1";
 
   // -- 1 = preinscrito, 2 = inscrito --
   selectedAnnualConvention = null;
@@ -191,16 +207,17 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.subscriptionService = this.userReporteService
-      .getUserReport('3', '1')
+      .getUserReport("3", "1")
       .subscribe((usersActive) => {
         this.data = usersActive.users;
         this.subscriptionService = this.userReporteService
-          .getUserReport('3', '2')
+          .getUserReport("3", "2")
           .subscribe((response) => {
             if (response.users.length) {
               response.users.forEach((element) => {
                 this.data = [...this.data, element];
               });
+              // console.log("getUserReport this.data", this.data);
             }
 
             this.source.load(this.data);
@@ -214,12 +231,163 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     }
   }
 
+  onGenerateReportExcel(): void {
+    this.disabledBtn = true;
+    const workbookBin = this.makeExcel();
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `Reporte de docentes.xls`
+    );
+
+    setTimeout(() => {
+      this.disabledBtn = false;
+      this.cd.detectChanges();
+    }, 3500);
+  }
+
+  makeExcel(): void {
+    const mappedKeys = {
+      firstName: "Nombre",
+      lastName: "Apellido",
+      cardId: "Identidad",
+      gender: "Género",
+      email: "Correo",
+      phone: "Teléfono móvil",
+      addressState: "Estado",
+      addressMunicipality: "Municipio",
+      addressCity: "Ciudad",
+      address: "Calles / carreras",
+      specialty: "Especialidad",
+      // annualPreparationStatus: "Inscripción de la convención",
+      status: "Estatus",
+    };
+    const keysOfInterest = [
+      "firstName",
+      "lastName",
+      "cardId",
+      "gender",
+      "email",
+      "phone",
+      "addressState",
+      "addressMunicipality",
+      "addressCity",
+      "address",
+      "specialty",
+      // "annualPreparationStatus",
+      "status",
+    ];
+    const data: any[] = this.data.map((record) => {
+      const mappedData = Object.entries(record)
+        .filter((entry) => {
+          if (keysOfInterest.includes(entry[0])) {
+            return entry;
+          }
+        })
+        .map(([key, value]) => {
+          let cellValue;
+          if (key === "schools") {
+            cellValue = value.toString();
+          } else {
+            cellValue = value;
+          }
+          if (key === "status") {
+            cellValue = this.status.find(
+              (element) => element.value === cellValue
+            ).label;
+          }
+          if (key === "gender") {
+            cellValue = parseInt(cellValue) === 1 ? "Femenino" : "Masculino";
+          }
+          if (key === "specialty") {
+            cellValue = cellValue.name;
+          }
+
+          // if (key === "annualPreparationStatus") {
+
+          //   cellValue =
+          //     cellValue === "1"
+          //       ? "Preinscrito"
+          //       : (cellValue =
+          //           cellValue === "2" ? "Inscrito" : "No esta inscrito");
+          // }
+          return [`${mappedKeys[key]}`, cellValue];
+        });
+      const obj = mappedData.reduce(
+        (acc, [key, value]) => ({ ...acc, [key]: value }),
+        <any>{}
+      );
+      return obj;
+    });
+    const reportTitle = [["Reporte de docentes"]];
+    // const columnHeaders = Object.keys(data[0]);
+    const columnHeaders: string[] = Object.values(mappedKeys);
+
+    const status = {
+      "1": "Activo",
+      "2": "Inactivo",
+    };
+
+    const matrixz = data.filter(
+      (rows) => rows["Estatus"] === status[this.statusSelected.toString()]
+    );
+
+    const values = this.sortedValues(columnHeaders, matrixz);
+    // console.log("matrix: ", matrixz);
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: `Reporte de docentes`,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+
+    workbook.SheetNames.push("Reporte de docentes");
+    const matrix = [reportTitle, columnHeaders, ...values];
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets["Reporte de docentes"] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+
+  private sortedValues(columnHeaders: string[], matrixz: any[]) {
+    const matrixzSorted = [];
+
+    matrixz.forEach((matrixzMap) => {
+      const valuesSorted = {};
+
+      columnHeaders.forEach((columnHeader) => {
+        valuesSorted[columnHeader] = matrixzMap[columnHeader];
+      });
+
+      matrixzSorted.push(valuesSorted);
+    });
+
+    return matrixzSorted.map((record) => {
+      return Object.values(record);
+    });
+  }
+
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
+  }
+
   onGenerateReport() {
     this.disabledBtn = true;
 
     this.subscriptionService = this.userReporteService
       .getUserReport(
-        '3',
+        "3",
         this.statusSelected,
         null,
         this.selectedAnnualConvention
@@ -229,10 +397,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
           if (response.users.length) {
             this.generatorReport.generateUserReport(response);
           } else {
-
             this.toast.info(
-              'Información',
-              'No hay registro en el estatus o configuración seleccionada'
+              "Información",
+              "No hay registro en el estatus o configuración seleccionada"
             );
           }
 
@@ -253,8 +420,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           this.toastrService.updateSuccess(
-            'Cambio de estatus',
-            'Se ha cambiado el estatus de inscripción del docente.'
+            "Cambio de estatus",
+            "Se ha cambiado el estatus de inscripción del docente."
           );
         },
         (err) => {}

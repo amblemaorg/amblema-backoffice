@@ -19,6 +19,10 @@
           <span class="font-weight-bold">Fecha de la solicitud: </span>
           <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
         </li>
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Fecha de actualización: </span>
+          <span> {{ (data$ | async)?.updatedAt | date: "dd/MM/yyyy" }}</span>
+        </li>
       </ul>
 
       <ul class="list-unstyled d-inline-block">
@@ -75,6 +79,18 @@
         </li>
       </ul>
     </div>
+    <div class="list-unstyled d-inline-block" *ngIf="(data$ | async)?.comments">
+      <li class="">
+        <p class="font-weight-bold">Comentario de rechazo:</p>
+        <p>
+          {{
+            (data$ | async)?.comments
+              ? (data$ | async)?.comments
+              : "Sin comentario"
+          }}
+        </p>
+      </li>
+    </div>
   </div>
 
   <hr />
@@ -97,11 +113,7 @@
           *ngFor="let item of (data$ | async)?.detail.images"
         >
           <div class="card">
-            <img
-              class="p-1"
-              [src]="item.image"
-              [alt]="item.description"
-            />
+            <img class="p-1" [src]="item.image" [alt]="item.description" />
             <div class="card-body">
               <p class="card-text">{{ item.description }}</p>
             </div>

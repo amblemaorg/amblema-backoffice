@@ -19,6 +19,10 @@
           <span class="font-weight-bold">Fecha de la solicitud: </span>
           <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
         </li>
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Fecha de actualización: </span>
+          <span> {{ (data$ | async)?.updatedAt | date: "dd/MM/yyyy" }}</span>
+        </li>
       </ul>
 
       <ul class="list-unstyled d-inline-block">
@@ -61,6 +65,18 @@
         </li>
       </ul>
     </div>
+    <div class="list-unstyled d-inline-block" *ngIf="(data$ | async)?.comments">
+      <li class="">
+        <p class="font-weight-bold">Comentario de rechazo:</p>
+        <p>
+          {{
+            (data$ | async)?.comments
+              ? (data$ | async)?.comments
+              : "Sin comentario"
+          }}
+        </p>
+      </li>
+    </div>
   </div>
 
   <hr />
@@ -70,82 +86,128 @@
     <p class="text-info font-weight-bold">Información de usuario</p>
 
     <div class="row">
-      <div class="col-12 mb-4">
+      <div
+        class="col-12 mb-4"
+        *ngIf="
+          (data$ | async)?.detail?.coordinator?.image ||
+          (data$ | async)?.detail?.coordinator?.name ||
+          (data$ | async)?.detail?.coordinator?.content
+        "
+      >
         <label class="label">Coordinador</label>
         <div class="media">
           <img
             class="mr-3 img-fluid"
             [src]="(data$ | async)?.detail?.coordinator?.image"
             [alt]="(data$ | async)?.detail?.coordinator?.name"
+            *ngIf="(data$ | async)?.detail?.coordinator?.image"
           />
           <div class="media-body">
-            <p class="mt-0 font-weight-bold">
+            <p
+              class="mt-0 font-weight-bold"
+              *ngIf="(data$ | async)?.detail?.coordinator?.name"
+            >
               {{
                 (data$ | async)?.detail?.coordinator?.name
                   ? (data$ | async)?.detail?.coordinator?.name
                   : "Sin coordinador"
               }}
             </p>
-            {{
-              (data$ | async)?.detail?.coordinator?.content
-                ? (data$ | async)?.detail?.coordinator?.content
-                : "Sin contenido"
-            }}
+            <p *ngIf="(data$ | async)?.detail?.coordinator?.content">
+              {{
+                (data$ | async)?.detail?.coordinator?.content
+                  ? (data$ | async)?.detail?.coordinator?.content
+                  : "Sin contenido"
+              }}
+            </p>
           </div>
         </div>
       </div>
 
-      <div class="col-12 mb-4">
+      <div
+        class="col-12 mb-4"
+        *ngIf="
+          (data$ | async)?.detail?.school?.image ||
+          (data$ | async)?.detail?.school?.name ||
+          (data$ | async)?.detail?.school?.content
+        "
+      >
         <label class="label">Escuela</label>
         <div class="media">
           <img
             class="mr-3 img-fluid"
             [src]="(data$ | async)?.detail?.school?.image"
             [alt]="(data$ | async)?.detail?.school?.name"
+            *ngIf="(data$ | async)?.detail?.school?.image"
           />
           <div class="media-body">
-            <p class="mt-0 font-weight-bold">
+            <p
+              class="mt-0 font-weight-bold"
+              *ngIf="(data$ | async)?.detail?.school?.name"
+            >
               {{
                 (data$ | async)?.detail?.school?.name
                   ? (data$ | async)?.detail?.school?.name
                   : "Sin escuela"
               }}
             </p>
-            {{
-              (data$ | async)?.detail?.school?.content
-                ? (data$ | async)?.detail?.school?.content
-                : "Sin contenido"
-            }}
+            <p *ngIf="(data$ | async)?.detail?.school?.content">
+              {{
+                (data$ | async)?.detail?.school?.content
+                  ? (data$ | async)?.detail?.school?.content
+                  : "Sin contenido"
+              }}
+            </p>
           </div>
         </div>
       </div>
 
-      <div class="col-12 mb-4">
+      <div
+        class="col-12 mb-4"
+        *ngIf="
+          (data$ | async)?.detail?.sponsor?.image ||
+          (data$ | async)?.detail?.sponsor?.name ||
+          (data$ | async)?.detail?.sponsor?.content
+        "
+      >
         <label class="label">Padrino</label>
         <div class="media">
           <img
             class="mr-3 img-fluid"
             [src]="(data$ | async)?.detail?.sponsor?.image"
             [alt]="(data$ | async)?.detail?.sponsor?.name"
+            *ngIf="(data$ | async)?.detail?.sponsor?.image"
           />
           <div class="media-body">
-            <p class="mt-0 font-weight-bold">
+            <p
+              class="mt-0 font-weight-bold"
+              *ngIf="(data$ | async)?.detail?.sponsor?.name"
+            >
               {{
                 (data$ | async)?.detail?.sponsor?.name
                   ? (data$ | async)?.detail?.sponsor?.name
                   : "Sin padrino"
               }}
             </p>
-            {{
-              (data$ | async)?.detail?.sponsor?.content
-                ? (data$ | async)?.detail?.sponsor?.content
-                : "Sin contenido"
-            }}
+            <p *ngIf="(data$ | async)?.detail?.sponsor?.content">
+              {{
+                (data$ | async)?.detail?.sponsor?.content
+                  ? (data$ | async)?.detail?.sponsor?.content
+                  : "Sin contenido"
+              }}
+            </p>
           </div>
         </div>
       </div>
 
-      <div class="col-12 mb-4">
+      <div
+        class="col-12 mb-4"
+        *ngIf="
+          (data$ | async)?.detail?.historicalReview?.image ||
+          (data$ | async)?.detail?.historicalReview?.name ||
+          (data$ | async)?.detail?.historicalReview?.content
+        "
+      >
         <label class="label">Reseña histórica</label>
         <div class="media">
           <img
@@ -163,7 +225,10 @@
             class="text-warning"
             >Sin imagen</span
           >
-          <div class="media-body">
+          <div
+            class="media-body"
+            *ngIf="(data$ | async)?.detail?.historicalReview?.content"
+          >
             {{
               (data$ | async)?.detail?.historicalReview?.content
                 ? (data$ | async)?.detail?.historicalReview?.content
@@ -200,12 +265,22 @@
     <div class="row">
       <!-- Lapse One -->
       <div class="col-12">
-        <p class="text-info font-weight-bold">
+        <p
+          class="text-info font-weight-bold"
+          *ngIf="
+            (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis
+          "
+        >
           Análisis de diagnóstico - lapso 1
         </p>
       </div>
 
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Lectura</p>
         {{ (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
@@ -237,7 +312,10 @@
         </div>
       </div>
 
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
@@ -270,7 +348,10 @@
           ></app-graphic-bar>
         </div>
       </div>
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Lógica</p>
         {{ (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis }}
 
@@ -306,12 +387,22 @@
 
       <!-- Lapse Two -->
       <div class="col-12">
-        <p class="text-info font-weight-bold">
+        <p
+          class="text-info font-weight-bold"
+          *ngIf="
+            (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis
+          "
+        >
           Análisis de diagnóstico - lapso 2
         </p>
       </div>
 
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Lectura</p>
         {{ (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
@@ -343,7 +434,10 @@
         </div>
       </div>
 
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
@@ -376,7 +470,10 @@
           ></app-graphic-bar>
         </div>
       </div>
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Lógica</p>
         {{ (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis }}
 
@@ -412,11 +509,21 @@
       <!-- / End lapse two -->
 
       <div class="col-12">
-        <p class="text-info font-weight-bold">
+        <p
+          class="text-info font-weight-bold"
+          *ngIf="
+            (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis
+          "
+        >
           Análisis de diagnóstico - lapso 3
         </p>
       </div>
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Lectura</p>
         {{ (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
@@ -448,7 +555,10 @@
         </div>
       </div>
 
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Matemáticas</p>
         {{ (data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
@@ -481,7 +591,10 @@
           ></app-graphic-bar>
         </div>
       </div>
-      <div class="col-12 form-group">
+      <div
+        class="col-12 form-group"
+        *ngIf="(data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis"
+      >
         <p class="font-weight-bold">Lógica</p>
         {{ (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis }}
         <div class="table-responsive mt-3">
@@ -516,7 +629,13 @@
     <!-- / End diagnostic -->
 
     <div class="row">
-      <div class="col-xl-4">
+      <div
+        class="col-xl-4"
+        *ngIf="
+          (data$ | async)?.detail?.lapse1?.activities &&
+          (data$ | async)?.detail?.lapse1?.activities.length > 0
+        "
+      >
         <p class="text-info font-weight-bold">Actividades del lapso 1</p>
 
         <div
@@ -539,7 +658,13 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4">
+      <div
+        class="col-xl-4"
+        *ngIf="
+          (data$ | async)?.detail?.lapse2?.activities &&
+          (data$ | async)?.detail?.lapse2?.activities.length > 0
+        "
+      >
         <p class="text-info font-weight-bold">Actividades del lapso 2</p>
 
         <div
@@ -562,7 +687,13 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4">
+      <div
+        class="col-xl-4"
+        *ngIf="
+          (data$ | async)?.detail?.lapse3.activities &&
+          (data$ | async)?.detail?.lapse3?.activities.length > 0
+        "
+      >
         <p class="text-info font-weight-bold">Actividades del lapso 3</p>
 
         <div

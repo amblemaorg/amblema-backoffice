@@ -19,6 +19,10 @@
           <span class="font-weight-bold">Fecha de la solicitud: </span>
           <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
         </li>
+        <li class="d-flex justify-content-between">
+          <span class="font-weight-bold">Fecha de actualización: </span>
+          <span> {{ (data$ | async)?.updatedAt | date: "dd/MM/yyyy" }}</span>
+        </li>
       </ul>
 
       <ul class="list-unstyled d-inline-block">
@@ -83,54 +87,104 @@
   <div>
     <p class="text-info font-weight-bold">Datos de la escuela</p>
     <div id="list-container" class="d-lg-flex">
-      <div class="w-100 mr-4">
+      <div
+        class="w-100 mr-4"
+        *ngIf="
+          (data$ | async)?.detail.principalFirstName ||
+          (data$ | async)?.detail.principalLastName ||
+          (data$ | async)?.detail.principalEmail ||
+          (data$ | async)?.detail.principalPhone
+        "
+      >
         <p class="text-info">Datos del director</p>
         <ul class="list-unstyled d-inline-block">
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.principalFirstName"
+          >
             <span class="font-weight-bold">Nombre:</span>
             <span>{{ (data$ | async)?.detail.principalFirstName }}</span>
           </li>
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.principalLastName"
+          >
             <span class="font-weight-bold">Apellido:</span>
             <span>{{ (data$ | async)?.detail.principalLastName }}</span>
           </li>
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.principalEmail"
+          >
             <span class="font-weight-bold">Correo:</span>
             <span>{{ (data$ | async)?.detail.principalEmail }}</span>
           </li>
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.principalPhone"
+          >
             <span class="font-weight-bold">Teléfono:</span>
             <span>{{ (data$ | async)?.detail.principalPhone }}</span>
           </li>
         </ul>
       </div>
 
-      <div class="w-100 mr-4">
+      <div
+        class="w-100 mr-4"
+        *ngIf="
+          (data$ | async)?.detail.subPrincipalFirstName ||
+          (data$ | async)?.detail.subPrincipalLastName ||
+          (data$ | async)?.detail.subPrincipalEmail ||
+          (data$ | async)?.detail.subPrincipalPhone
+        "
+      >
         <p class="text-info">Datos del sub director</p>
         <ul class="list-unstyled d-inline-block">
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.subPrincipalFirstName"
+          >
             <span class="font-weight-bold">Nombre:</span>
             <span>{{ (data$ | async)?.detail.subPrincipalFirstName }}</span>
           </li>
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.subPrincipalLastName"
+          >
             <span class="font-weight-bold">Apellido:</span>
             <span>{{ (data$ | async)?.detail.subPrincipalLastName }}</span>
           </li>
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.subPrincipalEmail"
+          >
             <span class="font-weight-bold">Correo:</span>
             <span>{{ (data$ | async)?.detail.subPrincipalEmail }}</span>
           </li>
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.subPrincipalPhone"
+          >
             <span class="font-weight-bold">Teléfono:</span>
             <span>{{ (data$ | async)?.detail.subPrincipalPhone }}</span>
           </li>
         </ul>
       </div>
 
-      <div class="w-100">
+      <div
+        class="w-100"
+        *ngIf="
+          (data$ | async)?.detail.facebook ||
+          (data$ | async)?.detail.instagram ||
+          (data$ | async)?.detail.twitter
+        "
+      >
         <p class="text-info">Redes sociales</p>
         <ul class="list-unstyled d-inline-block">
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.facebook"
+          >
             <span class="font-weight-bold">Facebook:</span>
             <span>
               <a [href]="(data$ | async)?.detail.facebook">
@@ -138,7 +192,10 @@
               </a></span
             >
           </li>
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.instagram"
+          >
             <span class="font-weight-bold">Instagram:</span>
             <span>
               <a [href]="(data$ | async)?.detail.instagram">
@@ -147,7 +204,10 @@
             >
           </li>
 
-          <li class="d-flex justify-content-between">
+          <li
+            class="d-flex justify-content-between"
+            *ngIf="(data$ | async)?.detail.twitter"
+          >
             <span class="font-weight-bold">Twitter:</span>
             <span>
               <a [href]="(data$ | async)?.detail.twitter">
@@ -157,13 +217,28 @@
           </li>
         </ul>
       </div>
+      <div
+        class="list-unstyled d-inline-block"
+        *ngIf="(data$ | async)?.comments"
+      >
+        <li class="">
+          <p class="font-weight-bold">Comentario de rechazo:</p>
+          <p>
+            {{
+              (data$ | async)?.comments
+                ? (data$ | async)?.comments
+                : "Sin comentario"
+            }}
+          </p>
+        </li>
+      </div>
     </div>
 
-    <hr>
+    <hr />
     <!-- Sliders -->
     <div>
       <p class="text-info font-weight-bold text-center">Diapositivas</p>
-    
+
       <div class="position-relative">
         <owl-carousel-o [options]="customOptions" *ngIf="show">
           <ng-template
@@ -184,7 +259,6 @@
         </owl-carousel-o>
       </div>
     </div>
-    
   </div>
 
   <div>

@@ -11,7 +11,7 @@ services:
     volumes:
       - "${PWD}:/app"
     ports:
-      - "10502:4200"
+      - $OUT_PORT:4200
     networks:
       - amblema_net
 

@@ -48,3 +48,4 @@ testem.log
 Thumbs.db
 
 core
+.env

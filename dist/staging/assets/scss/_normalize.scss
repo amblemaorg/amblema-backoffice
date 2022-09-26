@@ -1,0 +1,90 @@
+@import './placeholders'; 
+@import './animations';
+@import './variables';
+
+/* Menu */
+
+nb-menu {
+    a {
+        span {
+            /* Break line */
+            &:only-child {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+/* Smart table */
+
+$value: auto;
+ng2-smart-table {
+    td {
+        &:first-child { min-width: 150px; }
+    }
+    .ng2-smart-actions {    
+
+        ng2-st-tbody-custom {
+            position: absolute;
+            top: 0;
+            display: flex;
+            height: 100%;
+            width: 100%;
+            a {
+                &:hover { color: #598bff; }
+            }
+        }
+    }
+}
+
+table-cell-view-mode {
+    div {
+        .content-wrapper {
+            
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            width: 17rem;
+            &:hover {
+                overflow: visible;
+                white-space: normal;     
+            }
+        }
+    }
+}
+
+/* Reset bootstrap button */
+
+button {
+    &:focus {
+        outline: none!important;
+    }
+}
+
+.border, .border-left, .border-right {
+    border-color: $border-primary-color!important;
+}
+
+hr {
+    border-color: $border-primary-color!important;
+}
+
+/* Stepper component */
+
+.step-content { 
+    position: relative;
+    overflow: auto;
+    width: 100%;
+}
+
+/* Nb Tooltip Module */
+
+.cdk-overlay-pane { z-index: 1800!important; }
+.nb-theme-default .cdk-overlay-container { z-index: 1800!important; }
+
+a {
+    outline: none!important;
+    
+  }

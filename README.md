@@ -2,8 +2,9 @@
 
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.3.20.
 
-## Correr local  
-1. correr el comando `docker-compose up run_amblema_backoffice`  
+## Correr local
+
+1. correr el comando `docker-compose up run_amblema_backoffice`
 
 ## Despliegue a producción
 
@@ -15,7 +16,7 @@ Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-
 
 3. Ejecutar el script `build.sh`
 
-  NOTA: El paso 2 se puede reimplementar a través de variables de CI/CD y un pipeline
+NOTA: El paso 2 se puede reimplementar a través de variables de CI/CD y un pipeline
 
 ### Deploy
 
@@ -47,3 +48,14 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+## Packages unable to update
+
+No actualizables
+
+- @ngxs/logger-plugin 3.7.3 => 3.7.4
+- @ngxs/storage-plugin 3.7.3 => 3.7.4
+- @ngxs/store 3.7.3 => 3.7.4
+- ngx-quill@13.4.0
+- chart.js: 2.9.4 => 3.8.0
+- rxjs: 6.6.7 => 7.5.5
+- xlsx: 0.17.5 => 0.18.5

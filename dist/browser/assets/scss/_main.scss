@@ -1,9 +1,12 @@
 @import './variables';
 @import './mixins';
-@import './normalize'; 
+@import './normalize';
 
 // Modules
 
 @import './modules/alerts';
 @import './modules/selects';
 @import './modules/spacing';
+
+// encapsuled components
+@import './encapsuled-components/components';

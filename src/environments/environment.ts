@@ -4,13 +4,9 @@
 
 export const environment = {
   production: false,
-  // api: 'http://157.245.131.248:10506/',
-  // web: 'http://157.245.131.248:10512/',
-
-  // api: 'http://157.245.131.248:10506/',
-  api: "http://157.245.131.248:10506/",
-  web: "http://157.245.131.248:10512/", // http://localhost:22222/
-};
+  api: 'https://amblema.org/api/',
+  web: 'https://amblema.org/',
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

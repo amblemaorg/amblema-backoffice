@@ -72,9 +72,7 @@
   "dataGroups": [
     {
       "name": "cache-first-greeting",
-      "patterns": [
-        "http:\\/\\/157\\.245\\.131\\.248:10506"
-      ],
+      "patterns": ["http:\\/\\/157\\.245\\.131\\.248:10506"],
       "strategy": "performance",
       "maxSize": 10,
       "maxAge": 86400000,
@@ -85,9 +83,7 @@
     },
     {
       "name": "cache-first-greeting",
-      "patterns": [
-        "http:\\/\\/157\\.245\\.131\\.248:10506"
-      ],
+      "patterns": ["http:\\/\\/157\\.245\\.131\\.248:10506"],
       "strategy": "freshness",
       "maxSize": 10,
       "maxAge": 3600000,

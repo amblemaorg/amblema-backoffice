@@ -7,7 +7,7 @@
     "conventional-changelog": "conventional-changelog",
     "version": "ng --version",
     "start": "docker-compose up dev_amblema_backoffice",
-    "build": "ng build --configuration=staging",
+    "build": "ng build",
     "build:prod": "ng build --prod --aot --optimization",
     "build:staging": "ng build --configuration=staging --prod --aot --optimization --output-path=dist/staging",
     "build:support": "ng build --configuration=support --prod --aot --optimization --output-path=dist/support",

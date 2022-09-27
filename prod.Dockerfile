@@ -11,8 +11,8 @@ COPY ./package.json ./
 
 # COPY ./package-lock.json ./
 
-RUN apt update && \
-    apt install -y git openssh-client curl
+#RUN apt update && \
+#    apt install -y git openssh-client curl
 
 RUN npm install
 

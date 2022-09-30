@@ -1,57 +1,21 @@
-# docker-compose up run_amblema_backoffice -> Up Local
-version: "3.7"
-
+# To serve Bundle with nginx
+version: "3.5"
 services:
-  # LOCAL DEV
-  run_amblema_backoffice:
-    #image: angular:dev # Dockerfile
-    build: .
-    container_name: amblema-backoffice-dev-qa
-    command: bash -c "npm install && ng serve --host 0.0.0.0"
-    volumes:
-      - "${PWD}:/app"
+  host-optimized-service:
+    container_name: $CONTAINER_NAME
+    image: devbinaural/nginx-angular:latest
+    restart: always
+    tty: true
+    working_dir: "/home/amblema"
     ports:
-      - $OUT_PORT:4200
-    networks:
-      - amblema_net
+      - $OUT_PORT:80
+    env_file:
+      - .env
 
-  # UNIT TEST
-  test_amblema_backoffice:
-    image: angular:deploy # deploy.Dockerfile
-    container_name: amblema-backoffice-test
-    command: bash -c "npm install && ng test --browsers ChromeHeadless --watch=false"
     volumes:
-      - "${PWD}:/app"
-      - "/app/node_modules"
-    networks:
-      - amblema_net
-
-  # BUILD
-  build_amblema_backoffice:
-    image: angular:deploy # deploy.Dockerfile
-    container_name: amblema-backoffice-build
-    command: bash -c "npm run build:prod && usermod -u 1018 node && chown -R node:node node_modules/ && chown -R node:node dist/"
-    volumes:
-      - "${PWD}:/app"
-      - "/app/node_modules"
-    networks:
-      - amblema_net
-
-  # NGINX
-  nginx_amblema:
-    image: devbinaural/nginx # Docker hub Binaural
-    container_name: nginx-amblema
-    volumes:
-      - "./dist/browser/:/usr/share/nginx/html/Amblema-BackOffice/"
-      - "./server/:/etc/nginx/"
-    ports:
-      - 10502:10502
-    networks:
-      - amblema_net
-
-networks:
-  amblema_net:
-    driver: bridge
-
-volumes:
-  amblema:
+      - ./:/home/amblema
+      - ./vhost-template.conf:/etc/nginx/conf.d/default.conf
+    # command: >
+    #   /bin/bash -c "envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html && exec nginx -g 'daemon off;'"
+    command: >
+      /bin/bash -c "exec nginx -g 'daemon off;'"

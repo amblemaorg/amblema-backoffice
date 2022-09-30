@@ -1,0 +1,13 @@
+#USO-LOCAL - Use command docker-compose -f docker-compose.dev.yml up to set this specific .yml and up the docker-compose
+version: "3.5"
+
+services:
+  run_amblema_backoffice:
+    #image: angular:dev # Dockerfile
+    build: .
+    container_name: amblema-backoffice-dev-qa
+    command: bash -c "npm install && ng serve --host 0.0.0.0"
+    volumes:
+      - "./:/app"
+    ports:
+      - $OUT_PORT:4200

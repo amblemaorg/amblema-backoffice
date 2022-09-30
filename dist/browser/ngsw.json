@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1660764473705,
+  "timestamp": 1664550711729,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -19,8 +19,8 @@
         "/7-es5.86a4b018bfbc7a7f2ef1.js",
         "/favicon.ico",
         "/index.html",
-        "/main-es2015.b3973fcd57588094d68a.js",
-        "/main-es5.b3973fcd57588094d68a.js",
+        "/main-es2015.4cda4c1aaacaefe2cf5b.js",
+        "/main-es5.4cda4c1aaacaefe2cf5b.js",
         "/manifest.webmanifest",
         "/polyfills-es2015.8acfb5ec03dd8da4e57d.js",
         "/polyfills-es5.a1a4d951a15dc6db7188.js",
@@ -72,7 +72,9 @@
   "dataGroups": [
     {
       "name": "cache-first-greeting",
-      "patterns": ["http:\\/\\/157\\.245\\.131\\.248:10506"],
+      "patterns": [
+        "http:\\/\\/157\\.245\\.131\\.248:10506"
+      ],
       "strategy": "performance",
       "maxSize": 10,
       "maxAge": 86400000,
@@ -83,7 +85,9 @@
     },
     {
       "name": "cache-first-greeting",
-      "patterns": ["http:\\/\\/157\\.245\\.131\\.248:10506"],
+      "patterns": [
+        "http:\\/\\/157\\.245\\.131\\.248:10506"
+      ],
       "strategy": "freshness",
       "maxSize": 10,
       "maxAge": 3600000,
@@ -123,9 +127,9 @@
     "/assets/scss/modules/_selects.scss": "51f830aa5716bd962064b7daef887d91934c229f",
     "/assets/scss/modules/_spacing.scss": "f7d10dfbe883f34417e11b4c7c32ce28b6a072be",
     "/favicon.ico": "7fd4782709f442783200c3c59f136e22069ef6ba",
-    "/index.html": "b86bc6435378b4fca7376e6d4ac0a7fc68ce9294",
-    "/main-es2015.b3973fcd57588094d68a.js": "603c926ed812e5a179cff64d4da6bea0b719876d",
-    "/main-es5.b3973fcd57588094d68a.js": "f7ed97c2396399a4309c90eca97687082a99a1aa",
+    "/index.html": "9f1c0c7f05a8e950b485410bf9224e18d2e73abc",
+    "/main-es2015.4cda4c1aaacaefe2cf5b.js": "5360c8515135ea536e6711e01a527bc032219d5d",
+    "/main-es5.4cda4c1aaacaefe2cf5b.js": "9128d5d9d0de463ac81e4116b0ce6a7b87b47f25",
     "/manifest.webmanifest": "954d7bbf99f19f8d8e5a2d8a727466851812e276",
     "/nebular.5c0b043a3fee669cccbf.eot": "290b6c75a0af38b8606a9d2b843e6b4af4dacf31",
     "/nebular.a115dc417c9c6dac2113.svg": "e98dd44dada2a5fa7bcf7afed08c9c6b0eb2092f",

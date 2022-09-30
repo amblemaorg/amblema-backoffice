@@ -3,16 +3,16 @@ FROM devbinaural/angular:8.0.0 AS dev
 
 RUN node -v && npm -v
 
-WORKDIR /app
+WORKDIR /home/amblema
 
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /home/amblema/node_modules/.bin:$PATH
 
 COPY ./package.json ./
 
 # COPY ./package-lock.json ./
 
-#RUN apt update && \
-#    apt install -y git openssh-client curl
+# RUN apt update && \
+#     apt install -y git openssh-client curl
 
 RUN npm install
 
@@ -32,10 +32,10 @@ RUN usermod -u 1018 node && \
 # Production app stage
 FROM devbinaural/nginx AS prod
 
-COPY --from=build /app/dist/browser/ /usr/share/nginx/html/Amblema-BackOffice/
+COPY --from=build /home/amblema/dist/browser/ /usr/share/nginx/html/Amblema-BackOffice/
 
 # SERVER FILES CONFIGURATION
-COPY --from=build /app/server/ /etc/nginx/
+COPY --from=build /home/amblema/server/ /etc/nginx/
 
 EXPOSE 80 10502
 

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://amblema.org/api/',
+  api: 'http://167.71.187.213:10508/',
   web: 'https://amblema.org/',
 }
 

@@ -1,0 +1,76 @@
+Package                              Current     Actualizable           Latest
+@agm/core                              1.1.0          No             3.0.0-beta.0
+@angular-devkit/build-angular      0.1102.19          No                   15.0.0
+@angular/animations                  11.2.14          No                   15.0.0
+@angular/cdk                         11.2.13          No                   15.0.0
+@angular/cli                         11.2.19          No                   15.0.0
+@angular/common                      11.2.14          No                   15.0.0
+@angular/compiler                    11.2.14          No                   15.0.0
+@angular/compiler-cli                11.2.14          No                   15.0.0
+@angular/core                        11.2.14          No                   15.0.0
+@angular/forms                       11.2.14          No                   15.0.0
+@angular/language-service            11.2.14          No                   15.0.0
+@angular/platform-browser            11.2.14          No                   15.0.0
+@angular/platform-browser-dynamic    11.2.14          No                   15.0.0
+@angular/platform-server             11.2.14          No                   15.0.0
+@angular/router                      11.2.14          No                   15.0.0
+@angular/service-worker              11.2.14          No                   15.0.0
+@nebular/auth                          7.0.5          No               9.1.0-rc.6
+@nebular/date-fns                      7.0.5          No               9.1.0-rc.6
+@nebular/eva-icons                     7.0.5          No               9.1.0-rc.6
+@nebular/moment                        7.0.5          No               9.1.0-rc.6
+@nebular/theme                         7.0.5          No               9.1.0-rc.6
+@ng-select/ng-select                   6.1.0          No                   10.0.0
+@schematics/angular                   8.3.29          No                   15.0.0
+@types/jasmine                        3.3.16          No                    4.3.0
+@types/node                          8.10.66          No                  18.11.9
+chart.js                               2.9.4          No                    4.0.1
+codelyzer                              5.2.2          No                    6.0.2
+jasmine-core                           3.4.0          No                    4.5.0
+jasmine-spec-reporter                  4.2.1          No                    7.0.0
+karma-chrome-launcher                  2.2.0          No                    3.1.1
+karma-coverage-istanbul-reporter       2.0.6          No                    3.0.3
+karma-jasmine                          2.0.1          No                    5.1.0
+karma-jasmine-html-reporter            1.7.0          No                    2.0.0
+karma-spec-reporter                   0.0.32          No                   0.0.34
+katex                                 0.15.6          No                   0.16.3
+ng2-charts                             2.4.3          No                    4.0.1
+ngx-bootstrap                          7.1.2          No                    9.0.0
+ngx-image-compress                    11.0.3          No                  13.1.13
+ngx-mask                              12.0.0          No                   14.2.4
+ngx-owl-carousel-o                     5.1.1          No                   14.0.1
+ngx-quill                             13.2.0          No                   20.0.0
+npm                                  6.14.17          No                    9.1.2
+patch-package                          6.4.7          No                    6.5.0
+   
+rxjs                                   6.6.7          No                    7.5.7
+stylelint                            13.13.1          No                  14.15.0
+ts-loader                              5.4.5          No                    9.4.1
+ts-node                                7.0.1          No                   10.9.1
+typescript                             4.0.8          No                    4.9.3
+webpack-cli                           3.3.12          No                    5.0.0
+xlsx                                  0.17.5          No                   0.18.5
+@ngxs/storage-plugin                   3.7.3          No                    3.7.5
+@ngxs/store                            3.7.3          No                    3.7.5
+@ngxs/logger-plugin                    3.7.3          No                    3.7.5
+zone.js                               0.11.6          No                   0.12.0
+@fortawesome/fontawesome-free          6.1.1          No                    6.2.1
+express                               4.18.1          No                   4.18.2
+@types/express                       4.17.13          No                  4.17.14
+tslib                                  2.4.0          No                    2.4.1
+karma                                 6.3.20          No                    6.4.1
+jquery                                 3.6.0          No                    3.6.1
+
+# Actualizado
+html-to-pdfmake                        2.4.4         2.4.9                  2.4.9
+bootstrap                              4.6.1         4.6.2                  5.2.3
+pdfmake                                0.2.5         0.2.6                  0.2.6
+ng-multiselect-dropdown                0.3.7         0.3.9                  0.3.9
+date-fns                              2.28.0         2.29.3                2.29.3
+
+# Por actualizar
+
+# Tip
+
+When you try to update a package and its showing a error message that look weird and not has logic...
+After delete npm cache and docker-compose down -v and delete node-modules and package-lock.json if all of this doesn't work try restart the pc  

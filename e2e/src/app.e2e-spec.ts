@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Amblema-BackOffice app is running!');
+    expect(page.getTitleText()).toEqual('AmbLeMa-BackOffice app is running!');
   });
 
   afterEach(async () => {

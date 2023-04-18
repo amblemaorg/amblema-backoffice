@@ -14,7 +14,7 @@ export class ProjectValidationRequestService {
   constructor(private httpClient: HttpClient) {}
 
   /**
-   * Requests for confirmation of amblema
+   * Requests for confirmation of AmbLeMa
    */
   getRequestsProjectApproval(): Observable<ProjectValidationRequest[]> {
     return this.httpClient

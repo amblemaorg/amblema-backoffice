@@ -245,7 +245,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
     workbook.Props = {
       Title: `Reporte de coordinadores`,
       Subject: "Data",
-      Author: "Amblema",
+      Author: "AmbLeMa",
       CreatedDate: new Date(Date.now()),
     };
 

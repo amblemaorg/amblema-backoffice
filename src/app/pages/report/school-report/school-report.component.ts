@@ -235,7 +235,7 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
     workbook.Props = {
       Title: `Reporte de escuelas`,
       Subject: "Data",
-      Author: "Amblema",
+      Author: "AmbLeMa",
       CreatedDate: new Date(Date.now()),
     };
 

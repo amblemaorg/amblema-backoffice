@@ -372,7 +372,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     workbook.Props = {
       Title: `Reporte de actividades del PECA`,
       Subject: "Data",
-      Author: "Amblema",
+      Author: "AmbLeMa",
       CreatedDate: new Date(Date.now()),
     };
 

@@ -67,7 +67,7 @@ deploying:
     - echo "container does not exist"
     - docker run -it -d --name $CONTAINER_SERVER -p 10502:10502 -v ${PWD}/dist/staging/:/usr/share/nginx/html/Amblema-BackOffice -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
     - echo "container created!"
-    - echo "Staging BackOffice Amblema"
+    - echo "Staging BackOffice AmbLeMa"
     - fi
   only:
     - master
@@ -84,7 +84,7 @@ deploying-support:
     - echo "container does not exist"
     - docker run -it -d --name $CONTAINER_SUPPORT -p 10503:10503 -v ${PWD}/dist/support/:/usr/share/nginx/html/Amblema-BackOffice-Support -v ${PWD}/server/:/etc/nginx/ devbinaural/nginx
     - echo "container created!"
-    - echo "Support BackOffice Amblema"
+    - echo "Support BackOffice AmbLeMa"
     - fi
   only:
     - support

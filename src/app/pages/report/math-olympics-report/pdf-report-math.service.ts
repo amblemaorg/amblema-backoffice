@@ -59,7 +59,7 @@ export class PDFReportMath {
     const finalDocument: any = {
       info: {
         title: "Reporte de olimpíadas de matemáticas",
-        author: "Binaural C.A",
+        author: "Fundación AmbLeMa",
         subject: "Reporte de olimpíadas de matemáticas",
         keywords:
           "Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante",

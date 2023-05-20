@@ -42,7 +42,7 @@ export class PDFReportPeca {
         info: {
           // Metadata, visible en la propiedades del documento
           title: "Reporte de actividades del PECA",
-          author: "Binaural C.A",
+          author: "Fundación AmbLeMa",
           subject: "Reporte de actividades del PECA",
           keywords: "Reporte, usuarios, coordinador, escuela",
         },

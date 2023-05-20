@@ -43,7 +43,7 @@ export class PDFReport implements OnInit {
     const finalReport: any = {
       info: {
         title: "Reporte de usuarios",
-        author: "Binaural C.A",
+        author: "Fundación AmbLeMa",
         subject: "Reporte de usuarios",
         keywords:
           "Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante",
@@ -394,7 +394,7 @@ export class PDFReport implements OnInit {
     const finalReport: any = {
       info: {
         title: "Reporte de diagnósticos",
-        author: "Binaural C.A",
+        author: "Fundación AmbLeMa",
         subject: "Reporte de diagnósticos",
         keywords: "Reporte, diagnósticos, lectura, lógica, matemática",
       },

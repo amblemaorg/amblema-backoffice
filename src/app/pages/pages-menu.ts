@@ -169,7 +169,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             ],
           },
           {
-            title: "Espcialidades de docentes",
+            title: "Especialidades de docentes",
             link: "/pages/content/peca-setting/specialty",
           },
         ],

@@ -210,7 +210,7 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
     workbook.Props = {
       Title: `"Reporte de Padrinos"`,
       Subject: "Data",
-      Author: "Amblema",
+      Author: "AmbLeMa",
       CreatedDate: new Date(Date.now()),
     };
 

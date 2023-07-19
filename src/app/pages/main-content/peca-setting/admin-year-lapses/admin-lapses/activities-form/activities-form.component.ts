@@ -33,7 +33,6 @@ export class ActivitiesFormComponent
 
   ngOnInit(): void {
     console.log('Formulario para crear una actividad generica');
-
     this.form.addControl('hasDate', new FormControl(false));
     this.APPROVAL_TYPE = [
       ...this.APPROVAL_TYPE,
@@ -105,11 +104,13 @@ export class ActivitiesFormComponent
           console.log(response);
 
           if (HttpEventType.Response === response.type) {
-
+            console.log("www");
             this.store.dispatch(
               new AddLapseActivity(response.body, this.lapse)
             );
+            console.log("www2");
             this.resetForm();
+            console.log("www3");
             this.form.controls.hasFile.setValue(false);
             this.form.controls.hasUpload.setValue(false);
             this.form.controls.hasDate.setValue(false);

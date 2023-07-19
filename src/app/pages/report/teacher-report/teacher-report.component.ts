@@ -91,6 +91,11 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         type: "number",
         editable: false,
       },
+      schoolName:{
+        title: "Escuela",
+        type: "string",
+        editable: false,
+      },
       addressState: {
         title: "Estado",
         type: "string",
@@ -254,6 +259,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       gender: "Género",
       email: "Correo",
       phone: "Teléfono móvil",
+      schoolName: "Escuela",
       addressState: "Estado",
       addressMunicipality: "Municipio",
       addressCity: "Ciudad",
@@ -269,6 +275,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       "gender",
       "email",
       "phone",
+      "schoolName",
       "addressState",
       "addressMunicipality",
       "addressCity",

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://167.71.187.213:10508/',
-  web: 'https://amblema.org/',
+  api: 'http://localhost:10505/',
+  web: 'http://localhost:2005/',
 }
 
 /*

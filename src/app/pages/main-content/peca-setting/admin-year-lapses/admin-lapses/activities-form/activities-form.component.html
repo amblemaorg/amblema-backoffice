@@ -248,7 +248,7 @@
                   outline
                   type="button"
                   class="btn btn-outline-danger"
-                  (click)="onDeleteObjective(i)"
+                  (click)="onDeleteObjective2(i)"
                 >
                   <nb-icon icon="trash-2-outline"></nb-icon>
                 </button>
@@ -269,6 +269,15 @@
       ></app-progress>
     </div>
   </form>
+  <button
+    (click)="onClean()"
+    nbButton
+    status="danger"
+    button
+    class="col-6 col-md-auto"
+  >
+    Limpiar
+  </button>
   <button
     [nbSpinner]="showProgress"
     nbSpinnerStatus="success"

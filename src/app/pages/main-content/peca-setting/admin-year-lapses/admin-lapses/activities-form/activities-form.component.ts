@@ -99,18 +99,11 @@ export class ActivitiesFormComponent
       this.lapseActivityService.createActivity(this.lapse, formData).subscribe(
 
         (response: HttpEvent<any>) => {
-
-          console.log('respuesta del registro');
-          console.log(response);
-
           if (HttpEventType.Response === response.type) {
-            console.log("www");
             this.store.dispatch(
               new AddLapseActivity(response.body, this.lapse)
             );
-            console.log("www2");
             this.resetForm();
-            console.log("www3");
             this.form.controls.hasFile.setValue(false);
             this.form.controls.hasUpload.setValue(false);
             this.form.controls.hasDate.setValue(false);
@@ -128,5 +121,14 @@ export class ActivitiesFormComponent
         }
       );
     }
+  }
+  onClean(): void{
+    this.resetForm();
+    this.form.controls.hasFile.setValue(false);
+    this.form.controls.hasUpload.setValue(false);
+    this.form.controls.hasDate.setValue(false);
+    this.form.controls.hasVideo.setValue(false);
+    this.form.controls.hasChecklist.setValue(false);
+            
   }
 }

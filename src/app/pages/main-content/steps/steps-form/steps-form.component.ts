@@ -272,6 +272,13 @@ export class StepsFormComponent implements OnInit, OnDestroy {
       }
     );
   }
+  public onDeleteObjective2(index: number): void {
+    this.checklist = this.checklist.filter((value, key) => key !== index);
+    this.toastr.deleteRegister(
+      'Eliminado',
+      'Se ha eliminado el objetivo de la lista'
+    );
+  }
 
   protected confirmAction() {
     this.checklist = Object.assign([], this.checklist);

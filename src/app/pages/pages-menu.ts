@@ -169,7 +169,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             ],
           },
           {
-            title: "Especialidades de docentes",
+            title: "Grado de instrucción docentes",
             link: "/pages/content/peca-setting/specialty",
           },
         ],

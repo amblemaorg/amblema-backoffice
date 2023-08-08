@@ -157,7 +157,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         },
       },
       specialty: {
-        title: "Especialidad",
+        title: "Grado instrucción",
         type: "string",
         valuePrepareFunction: (row: any) => {
           return row.name;
@@ -264,7 +264,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       addressMunicipality: "Municipio",
       addressCity: "Ciudad",
       address: "Calles / carreras",
-      specialty: "Especialidad",
+      specialty: "Grado instrucción",
       // annualPreparationStatus: "Inscripción de la convención",
       status: "Estatus",
     };

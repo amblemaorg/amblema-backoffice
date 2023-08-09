@@ -164,6 +164,15 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         },
         filterFunction: FilterPipeSearch,
       },
+      work_position: {
+        title: "Cargo",
+        type: "string",
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: FilterPipeSearch,
+      },
+      
       status: {
         title: "Estatus",
         type: "string",
@@ -265,6 +274,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       addressCity: "Ciudad",
       address: "Calles / carreras",
       specialty: "Grado instrucción",
+      workPosition: "Cargo",
       // annualPreparationStatus: "Inscripción de la convención",
       status: "Estatus",
     };
@@ -281,6 +291,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       "addressCity",
       "address",
       "specialty",
+      "workPosition",
       // "annualPreparationStatus",
       "status",
     ];
@@ -307,6 +318,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             cellValue = parseInt(cellValue) === 1 ? "Femenino" : "Masculino";
           }
           if (key === "specialty") {
+            cellValue = cellValue.name;
+          }
+          if (key === "workPosition") {
             cellValue = cellValue.name;
           }
 

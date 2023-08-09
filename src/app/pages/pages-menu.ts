@@ -172,6 +172,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: "Grado de instrucción docentes",
             link: "/pages/content/peca-setting/specialty",
           },
+          {
+            title: "Cargo docentes",
+            link: "/pages/content/peca-setting/work-position",
+          },
         ],
       },
       {

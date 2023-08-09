@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { PDFReport } from "../pdf-report.service";
 import { UserReportService } from "src/app/services/report/user-report.service";
+import { WorkPositionService } from "src/app/services/work-position.service";
 import { LocalDataSource } from "ng2-smart-table";
 import { DatePipe } from "@angular/common";
 import {
@@ -25,7 +26,9 @@ import { saveAs } from "file-saver";
 })
 export class TeacherReportComponent implements OnInit, OnDestroy {
   subscriptionService: Subscription;
-
+  subscriptionWorkPosition: Subscription;
+  workPositionList = new Array<any>();
+  
   isNotInscription = false;
   settings: any = {
     rowClassFunction: (row) => {
@@ -164,7 +167,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         },
         filterFunction: FilterPipeSearch,
       },
-      work_position: {
+      workPosition: {
         title: "Cargo",
         type: "string",
         valuePrepareFunction: (row: any) => {
@@ -203,6 +206,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
 
   statusSelected = "1";
 
+  workPositionSelected = "";
   // -- 1 = preinscrito, 2 = inscrito --
   selectedAnnualConvention = null;
 
@@ -215,6 +219,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     private toast: CustomToastrService,
     private userReporteService: UserReportService,
     private userTeacherService: TeacherService,
+    private workPositionService: WorkPositionService,
     private toastrService: CustomToastrService,
     private sanatizer: DomSanitizer
   ) {}
@@ -237,14 +242,25 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             this.source.load(this.data);
           });
       });
+      this.getworkPositions();
   }
 
   async ngOnDestroy() {
     if (this.subscriptionService) {
       this.subscriptionService.unsubscribe();
     }
+    if(this.subscriptionWorkPosition){
+      this.subscriptionWorkPosition.unsubscribe();
+    }
   }
 
+  getworkPositions() {
+    this.subscriptionWorkPosition = this.workPositionService
+      .getWorkPosition()
+      .subscribe((response) => {
+        this.workPositionList = response?.records;
+      });
+  }
   onGenerateReportExcel(): void {
     this.disabledBtn = true;
     const workbookBin = this.makeExcel();
@@ -411,7 +427,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         "3",
         this.statusSelected,
         null,
-        this.selectedAnnualConvention
+        this.selectedAnnualConvention,
+        this.workPositionSelected
       )
       .subscribe(
         (response) => {

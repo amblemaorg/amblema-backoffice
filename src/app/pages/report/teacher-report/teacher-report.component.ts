@@ -466,4 +466,28 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       );
     event.confirm.resolve(); // <-- Return to previous stock status
   }
+
+  changeData(){
+    this.subscriptionService = this.userReporteService
+      .getUserReport(
+        "3",
+        this.statusSelected,
+        null,
+        this.selectedAnnualConvention,
+        this.workPositionSelected
+      )
+      .subscribe(
+        (response) => {
+          if (response.users.length) {
+            this.data = response.users;
+            this.source.load(this.data);
+          } else {
+            this.toast.info(
+              "Información",
+              "No hay registro en el estatus o configuración seleccionada"
+            );
+          }
+        }
+      );
+  }
 }

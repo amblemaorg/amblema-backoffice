@@ -25,7 +25,7 @@
           </div>
           <div class="col-6 col-lg-6 form-group">
             <label class="label">Cargo: </label>
-            <select [(ngModel)]="workPositionSelected" class="form-control">
+            <select [(ngModel)]="workPositionSelected" class="form-control" (change)="changeData()">
               <option *ngFor="let item of workPositionList" [value]="item.id">
                 {{ item.name }}
               </option>

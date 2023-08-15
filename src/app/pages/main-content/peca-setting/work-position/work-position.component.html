@@ -1,0 +1,19 @@
+<nb-card>
+  <nb-card-header>Configuración de Cargos de docentes</nb-card-header>
+  <nb-card-body>
+    <!-- <app-diagnostic-radio></app-diagnostic-radio> -->
+    <div class="row">
+      <div class="col-12">
+        <div id="special-table" class="table-responsive">
+          <ng2-smart-table
+            (editConfirm)="onSaveConfirm($event)"
+            (createConfirm)="onAddConfirm($event)"
+            (deleteConfirm)="onDeleteConfirm($event)"
+            [source]="source"
+            [settings]="settings"
+          ></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

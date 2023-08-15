@@ -334,6 +334,7 @@ export class PDFReport implements OnInit {
         { ...colorHeaderRow, text: "Ciudad" },
         { ...colorHeaderRow, text: "Calles / carreras" },
         { ...colorHeaderRow, text: "Grado de instrucción" },
+        { ...colorHeaderRow, text: "Cargo" },
         { ...colorHeaderRow, text: "Estatus" },
       ];
 
@@ -360,6 +361,7 @@ export class PDFReport implements OnInit {
           { text: teacher.addressCity },
           { text: teacher.address },
           { text: teacher.specialty.name },
+          { text: teacher.workPosition.name },
           { text: teacher.status === "1" ? "Activo" : "Inactivo" },
         ]);
       });
@@ -373,15 +375,16 @@ export class PDFReport implements OnInit {
             "7.5%",
             "7.5%",
             "7.5%",
-            "6.5%",
+            "6%",
             "8.9%",
             "7.9%",
             "9.2%",
+            "6%",
+            "6%",
+            "6%",
             "7.5%",
             "7.5%",
-            "7.5%",
-            "7.5%",
-            "7.5%",
+            "5%",
             "5%",
           ],
           body: teacherRecords,

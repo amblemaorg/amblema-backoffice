@@ -77,6 +77,18 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
         title: "N° de secciones",
         type: "string",
       },
+      nAdministrativeStaff: {
+        title: "Personal Admin.",
+        type: "string",  
+      },
+      nLaborStaff: {
+        title: "Personal Obrero",
+        type: "string",  
+      },
+      nTeachers:{
+        title: "Personal docente",
+        type: "string",  
+      },
       sponsor: {
         title: "Padrino",
         type: "string",
@@ -169,6 +181,9 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       addressZone: "Dirección de la zona",
       nGrades: "N° de grados",
       nSections: "N° de secciones",
+      nAdministrativeStaff: "Personal Admin.",
+      nLaborStaff: "Personal Obrero",
+      nTeachers: "Personal docente",
       sponsor: "Padrino",
       coordinator: "Coordinador",
       status: "Estatus",
@@ -185,6 +200,9 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       "addressZoneType",
       "addressZone",
       "nGrades",
+      "nAdministrativeStaff",
+      "nLaborStaff",
+      "nTeachers",
       "nSections",
       "sponsor",
       "coordinator",

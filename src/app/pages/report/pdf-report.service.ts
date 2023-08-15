@@ -333,7 +333,7 @@ export class PDFReport implements OnInit {
         { ...colorHeaderRow, text: "Municipio" },
         { ...colorHeaderRow, text: "Ciudad" },
         { ...colorHeaderRow, text: "Calles / carreras" },
-        { ...colorHeaderRow, text: "Especialidad" },
+        { ...colorHeaderRow, text: "Grado de instrucción" },
         { ...colorHeaderRow, text: "Estatus" },
       ];
 

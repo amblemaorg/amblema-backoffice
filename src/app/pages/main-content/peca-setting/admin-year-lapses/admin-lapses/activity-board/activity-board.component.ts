@@ -10,6 +10,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { LapseActivity } from 'src/app/_models/lapse-activities.model';
 import { ButtonDeleteComponent } from '../button-delete/button-delete.component';
+import { ButtonOrderComponent } from '../button-order/button-order.component';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
@@ -80,7 +81,7 @@ export class ActivityBoardComponent extends BaseTable
       name: {
         title: 'Actividad',
         type: 'text',
-      },
+      }
     };
 
     if (new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_YEAR_ENABLE_ACTIVITY)) {
@@ -115,10 +116,22 @@ export class ActivityBoardComponent extends BaseTable
             instance.save.subscribe();
           },
         },
+        ordernar: {
+          width: '40px',
+          title: 'Ordenar',
+          type: 'custom',
+          renderComponent: ButtonOrderComponent,
+          sort: true,
+          filter: false,
+          onComponentInitFunction(instance: any) {
+            instance.save.subscribe();
+          },
+        }  
       };
     }
-  }
 
+  }
+  
   onAction(event: any): void {}
 
   onUpdateState(value: any) {

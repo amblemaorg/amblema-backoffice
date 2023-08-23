@@ -6,10 +6,12 @@ import { Select, Store } from '@ngxs/store';
 import {
   LapseActivityState,
   GetLapActivities,
+  SelectActivity,
 } from 'src/app/store/lapse-activities.action';
 import { Observable, Subscription } from 'rxjs';
-import { LapseActivity } from 'src/app/_models/lapse-activities.model';
+import { Activity, LapseActivity } from 'src/app/_models/lapse-activities.model';
 import { ButtonDeleteComponent } from '../button-delete/button-delete.component';
+import { ButtonOrderComponent } from '../button-order/button-order.component';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 
@@ -21,6 +23,8 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 export class ActivityBoardComponent extends BaseTable
   implements TableActions, OnInit {
   @Select(LapseActivityState.lapses) lapses$: Observable<LapseActivity>;
+  @Select(LapseActivityState.selectedActivity) activity$: Observable<Activity>;
+
   subscription: Subscription;
 
   @Input() lapse: string;
@@ -28,7 +32,7 @@ export class ActivityBoardComponent extends BaseTable
   public canCreate = new AuthService().isAllowed(ALL_ACTIONS.ACTIVITY_CREATE);
 
   data: Array<any>;
-
+  dataEdit: any;
   constructor(private store: Store, public modalService: ModalService) {
     super('form-activity-lapse');
   }
@@ -75,12 +79,27 @@ export class ActivityBoardComponent extends BaseTable
     });
 
     // Setting columns
-    this.settings.actions = false;
+    this.settings.actions = {
+      columnTitle: 'Acciones',
+      add: false,
+      edit: false,
+      //  Fake action
+      delete: true,
+      custom: [
+        { name: 'EDIT', title: `<i class="nb-edit"></i>` },
+      ],
+    }
+    ;
     this.settings.columns = {
       name: {
         title: 'Actividad',
         type: 'text',
       },
+      order: {
+        title: 'Orden',
+        type: 'number',
+      },
+
     };
 
     if (new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_YEAR_ENABLE_ACTIVITY)) {
@@ -115,11 +134,27 @@ export class ActivityBoardComponent extends BaseTable
             instance.save.subscribe();
           },
         },
+        /*ordernar: {
+          width: '40px',
+          title: 'Ordenar',
+          type: 'custom',
+          renderComponent: ButtonOrderComponent,
+          sort: true,
+          filter: false,
+          onComponentInitFunction(instance: any) {
+            instance.save.subscribe();
+          },
+        }*/  
       };
     }
-  }
 
-  onAction(event: any): void {}
+  }
+  
+  onAction(event: any): void {
+    this.dataEdit = event.data;
+    this.store.dispatch(new SelectActivity(event.data));
+    this.modalService.open("modal-edit-activity"+this.lapse);
+  }
 
   onUpdateState(value: any) {
     this.store.dispatch(new GetLapActivities());

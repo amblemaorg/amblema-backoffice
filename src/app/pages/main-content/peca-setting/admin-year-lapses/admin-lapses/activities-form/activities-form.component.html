@@ -35,7 +35,18 @@
         }}</option>
       </select>
     </div>
-
+    <div class="col-12 col-md-6">
+    
+      <!-- Name activity -->
+      <app-input-custom
+        [submitted]="submitted"
+        [control]="form.get('order')"
+        [id]="'order-activity' + lapse"
+        [placeholder]="'Orden de la actividad'"
+        [label]="'Orden de la actividad'"
+      ></app-input-custom>
+    </div>
+  
     <div class="col-12 form-group">
       <hr />
       <label class="label">Elementos de la actividad</label>

@@ -1,0 +1,62 @@
+<!-- Modal steps -->
+<app-modal
+  [size]="'normal'"
+  [ID]="'modal-edit-activity' + lapse"
+  [title]="'Editar actividad'"
+  extra="true"
+>
+  <form content [formGroup]="form" class="row">
+    <div class="col-12 col-md-6">
+    
+      <!-- Name activity -->
+      <app-input-custom
+        [submitted]="submitted"
+        [control]="form.get('name')"
+        [id]="'name-activity' + lapse"
+        [placeholder]="'Nombre de la actividad'"
+        [label]="'Nombre de la actividad'"
+      ></app-input-custom>
+    </div>
+    <div class="col-12 col-md-6">
+    
+      <!-- Name activity -->
+      <app-input-custom
+        [submitted]="submitted"
+        [control]="form.get('order')"
+        [id]="'order-activity' + lapse"
+        [placeholder]="'Orden de la actividad'"
+        [label]="'Orden de la actividad'"
+        [type]="number"
+      ></app-input-custom>
+    </div>
+  
+    
+    <div class="col-12">
+      <app-progress
+        *ngIf="showProgress"
+        (finish)="showProgress = false"
+      ></app-progress>
+    </div>
+  </form>
+  <button
+    (click)="onClean()"
+    nbButton
+    status="danger"
+    button
+    class="col-6 col-md-auto"
+  >
+    Limpiar
+  </button>
+  <button
+    [nbSpinner]="showProgress"
+    nbSpinnerStatus="success"
+    [disabled]="showProgress"
+    (click)="onSubmit()"
+    nbButton
+    status="success"
+    button
+    class="col-6 col-md-auto"
+  >
+    Guardar
+  </button>
+</app-modal>

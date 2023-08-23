@@ -95,6 +95,11 @@ export class ActivityBoardComponent extends BaseTable
         title: 'Actividad',
         type: 'text',
       },
+      order: {
+        title: 'Orden',
+        type: 'number',
+      },
+
     };
 
     if (new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_YEAR_ENABLE_ACTIVITY)) {

@@ -34,6 +34,7 @@ export class ActivitiesFormComponent
   ngOnInit(): void {
     console.log('Formulario para crear una actividad generica');
     this.form.addControl('hasDate', new FormControl(false));
+    this.form.addControl('order', new FormControl(0));
     this.APPROVAL_TYPE = [
       ...this.APPROVAL_TYPE,
       { CODE: '5', VALUE: 'No requiere aprobación' },
@@ -66,7 +67,8 @@ export class ActivitiesFormComponent
       formData.append('hasDate', this.form.controls.hasDate.value);
       formData.append('hasText', this.form.controls.hasText.value);
       formData.append('text', this.form.controls.text.value);
-
+      formData.append('order', this.form.controls.order.value);
+      
       // To send file, to be true
       if (this.form.controls.hasFile.value) {
         formData.append('file', this.form.controls.file.value);
@@ -109,6 +111,7 @@ export class ActivitiesFormComponent
             this.form.controls.hasDate.setValue(false);
             this.form.controls.hasVideo.setValue(false);
             this.form.controls.hasChecklist.setValue(false);
+            this.form.controls.order.setValue(0);
             this.toastr.registerSuccess('Registro', 'Actividad registrada');
           }
         },
@@ -129,6 +132,6 @@ export class ActivitiesFormComponent
     this.form.controls.hasDate.setValue(false);
     this.form.controls.hasVideo.setValue(false);
     this.form.controls.hasChecklist.setValue(false);
-            
+    this.form.controls.order.setValue(0);  
   }
 }

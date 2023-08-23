@@ -5,6 +5,19 @@ export interface Lapse {
     isStandard: string;
     status: string;
     lapse?: string;
+    hasText?: boolean;
+    hasDate?: boolean;
+    hasFile?: boolean;
+    hasVideo?: boolean;
+    hasChecklist?: boolean;
+    hasUpload?: boolean;
+    text?: string;
+    file?: any;
+    video?: Video[];
+    checklist?: CheckList[];
+    approvalType?: string;
+    order?: number;
+    
 }
 
 export interface LapseActivity {
@@ -28,7 +41,10 @@ export interface Activity {
     video?: Video[];
     checklist?: CheckList[];
     approvalType?: string;
+    devName?: string;
+    order?: number;
     status: string;
+    isStandard?: boolean;
 }
 
 export interface Video {

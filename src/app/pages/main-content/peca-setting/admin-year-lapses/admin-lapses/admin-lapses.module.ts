@@ -25,6 +25,7 @@ import { ReactiveDatepickerModule } from 'src/app/pages/_components/form-compone
 import { ButtonDeleteComponent } from './button-delete/button-delete.component';
 import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
 import { ButtonOrderComponent } from './button-order/button-order.component';
+import { ActivitiesFormEditComponent } from './activities-form-edit/activities-form-edit.component';
 
 
 @NgModule({
@@ -33,13 +34,12 @@ import { ButtonOrderComponent } from './button-order/button-order.component';
     ActivityBoardComponent,
     SpecialToggleComponent,
     ActivitiesFormComponent,
+    ActivitiesFormEditComponent,
     ButtonDeleteComponent,
-    ButtonOrderComponent
   ],
   entryComponents: [
     SpecialToggleComponent,
     ButtonDeleteComponent,
-    ButtonOrderComponent,
   ],
   imports: [
     CommonModule,

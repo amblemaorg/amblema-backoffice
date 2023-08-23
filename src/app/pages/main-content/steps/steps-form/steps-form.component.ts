@@ -50,6 +50,7 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     hasChecklist: new FormControl(false),
     checklist: new FormControl(null),
     hasUpload: new FormControl(false),
+    order: new FormControl(null),
   });
 
   public submitted = false;

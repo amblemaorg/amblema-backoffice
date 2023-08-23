@@ -19,10 +19,6 @@
 <app-activities-form 
 [lapse]="lapse"></app-activities-form>
 
-<app-modal
-  [size]="'normal'"
-  [ID]="'modal-edit-activity' + lapse"
-  [title]="'Nueva actividad'"
-  extra="true"
->
-</app-modal>
+<app-activities-form-edit 
+[lapse]="lapse"></app-activities-form-edit>
+

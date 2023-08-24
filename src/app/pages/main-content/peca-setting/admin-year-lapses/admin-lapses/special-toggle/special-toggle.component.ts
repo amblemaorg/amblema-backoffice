@@ -47,6 +47,7 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
       lapse: this.rowData.lapse,
       isStandard: this.rowData.isStandard,
       status: this.control.value ? STATUS.ACTIVE.VALUE : STATUS.INACTIVE.VALUE,
+      order: this.rowData.order
     };
 
     // -- Validation three standar activity = annualConvention, annualPreparation, mathOlympic
@@ -97,6 +98,8 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
       newData.status = this.control.value
         ? STATUS.ACTIVE.VALUE
         : STATUS.INACTIVE.VALUE;
+      newData.order = this.rowData.order;
+      console.log(newData)
       this.store.dispatch(
         new UpdateStatusLapseActivity(newData, newData.lapse)
       );

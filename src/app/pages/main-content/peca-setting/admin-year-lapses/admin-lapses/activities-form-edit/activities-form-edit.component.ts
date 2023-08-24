@@ -82,8 +82,19 @@ export class ActivitiesFormEditComponent
         formData.append('hasVideo', this.form.controls.hasVideo.value);
         formData.append('hasChecklist', this.form.controls.hasChecklist.value);
         formData.append('hasUpload', this.form.controls.hasUpload.value);
-        formData.append('checklist', JSON.stringify(this.oldActivity.checklist));
-        formData.append('text', this.oldActivity.text);
+        if(this.form.controls.hasChecklist.value){
+          formData.append('checklist', JSON.stringify(this.oldActivity.checklist));
+        }
+        if(this.form.controls.hasText.value){
+          formData.append('text', this.oldActivity.text);
+        }
+        if(this.form.controls.hasVideo.value){
+          formData.append('video',JSON.stringify(this.oldActivity.video));
+        }
+        if (this.form.controls.hasFile.value) {
+          formData.append('file', JSON.stringify(this.oldActivity.file));
+        }
+
       }
       /*formData.append('text', this.form.controls.text.value);
       formData.append('file', this.form.controls.file.value);

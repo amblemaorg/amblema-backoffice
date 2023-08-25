@@ -19,6 +19,7 @@ export class UserReportService {
     instructed?: boolean,
     areEnrolled?: string,
     workPosition?: string,
+    state?: string,
   ): Observable<any> {
      this.url_prepare =
       instructed !== null && instructed !== undefined
@@ -28,6 +29,7 @@ export class UserReportService {
         : `${environment.api}${this.USER_REPORT}${typeUser}?status=${status}`;
       
     this.url_prepare = workPosition != "" && workPosition != null && workPosition != undefined ? `${this.url_prepare}&workPosition=${workPosition}` : this.url_prepare
+    this.url_prepare = state != "" && state != null && state != undefined ? `${this.url_prepare}&state=${state}` : this.url_prepare
 
     return this.httpClient.get<any>(this.url_prepare).pipe(map((data: any) => data));
   }

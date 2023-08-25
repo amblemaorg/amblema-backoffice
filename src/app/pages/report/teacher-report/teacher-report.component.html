@@ -31,6 +31,14 @@
               </option>
             </select>
           </div>
+          <div class="col-6 col-lg-6 form-group">
+            <label class="label">Estado: </label>
+            <select [(ngModel)]="stateSelected" class="form-control" (change)="changeData()">
+              <option *ngFor="let item of stateList" [value]="item.id">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
           
           <div class="col-12 col-lg-6 form-group">
             <label class="label">Estatus: </label>

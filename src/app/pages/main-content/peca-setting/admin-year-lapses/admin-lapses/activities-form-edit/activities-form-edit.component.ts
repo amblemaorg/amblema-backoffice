@@ -8,7 +8,8 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { StepsFormComponent } from 'src/app/pages/main-content/steps/steps-form/steps-form.component';
 import { Select, Store } from '@ngxs/store';
 import { LapseActivitiesService } from 'src/app/services/lapse-activities.service';
-import { AddLapseActivity, LapseActivityState, UpdateStatusLapseActivity } from 'src/app/store/lapse-activities.action';
+import { LapseActivityState, UpdateStatusLapseActivity,
+  GetLapActivities } from 'src/app/store/lapse-activities.action';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { Activity } from 'src/app/_models/lapse-activities.model';
 import { Observable } from 'rxjs';
@@ -63,9 +64,6 @@ export class ActivitiesFormEditComponent
     // This is to valid the check list if has a check
     this.submitted = true;
 
-    console.log("dasda");
-    console.log(this.oldActivity.id);
-    console.log(this.form.valid);
     if ((!this.oldActivity.isStandard && this.form.valid) || this.oldActivity.isStandard) {
       this.showProgress = true;
       const formData = new FormData();
@@ -82,8 +80,19 @@ export class ActivitiesFormEditComponent
         formData.append('hasVideo', this.form.controls.hasVideo.value);
         formData.append('hasChecklist', this.form.controls.hasChecklist.value);
         formData.append('hasUpload', this.form.controls.hasUpload.value);
-        formData.append('checklist', JSON.stringify(this.oldActivity.checklist));
-        formData.append('text', this.oldActivity.text);
+        if(this.form.controls.hasChecklist.value){
+          formData.append('checklist', JSON.stringify(this.oldActivity.checklist));
+        }
+        if(this.form.controls.hasText.value){
+          formData.append('text', this.oldActivity.text);
+        }
+        if(this.form.controls.hasVideo.value){
+          formData.append('video',JSON.stringify(this.oldActivity.video));
+        }
+        if (this.form.controls.hasFile.value) {
+          formData.append('file', JSON.stringify(this.oldActivity.file));
+        }
+
       }
       /*formData.append('text', this.form.controls.text.value);
       formData.append('file', this.form.controls.file.value);
@@ -94,8 +103,6 @@ export class ActivitiesFormEditComponent
 
       this.lapseActivityService.updateActivity(this.oldActivity.id,this.lapse, formData).subscribe(
         (response: HttpEvent<any>) => {
-          console.log("dddddddddddddd");
-          console.log(response.type);
           if (HttpEventType.Response === response.type) {
 
             this.toastr.updateSuccess(
@@ -109,6 +116,10 @@ export class ActivitiesFormEditComponent
                 new UpdateStatusLapseActivity(response.body, this.lapse)
               );
               this.progress = 0;
+
+              setTimeout(() => {
+                this.store.dispatch(new GetLapActivities());
+              }, 1000);
               }
         },
         (err: any) => {

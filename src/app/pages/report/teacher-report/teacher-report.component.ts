@@ -18,6 +18,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { StateService } from "src/app/services/state.service";
+import { SchoolUserService } from "src/app/services/user/school-user.service";
 
 @Component({
   selector: "app-teacher-report",
@@ -213,6 +214,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
 
   workPositionSelected = "";
   stateSelected = "";
+  schoolSelected = "";
   // -- 1 = preinscrito, 2 = inscrito --
   selectedAnnualConvention = null;
 
@@ -228,7 +230,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     private workPositionService: WorkPositionService,
     private stateService: StateService,
     private toastrService: CustomToastrService,
-    private sanatizer: DomSanitizer
+    private sanatizer: DomSanitizer,
+    private schoolService: SchoolUserService
   ) {}
 
   async ngOnInit() {
@@ -251,6 +254,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       });
       this.getworkPositions();
       this.getStates();
+      this.getSchools();
   }
 
   async ngOnDestroy() {
@@ -276,6 +280,12 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         this.stateList = response?.records;
       });
   }
+  getSchools() {
+    this.subscriptionState = this.schoolService.getSchoolUsers().subscribe((response) => {
+      this.schoolList = response;
+    });
+  }
+  
   
   onGenerateReportExcel(): void {
     this.disabledBtn = true;
@@ -445,7 +455,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         null,
         this.selectedAnnualConvention,
         this.workPositionSelected,
-        this.stateSelected
+        this.stateSelected,
+        this.schoolSelected,
       )
       .subscribe(
         (response) => {
@@ -493,6 +504,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         this.selectedAnnualConvention,
         this.workPositionSelected,
         this.stateSelected,
+        this.schoolSelected,
       )
       .subscribe(
         (response) => {

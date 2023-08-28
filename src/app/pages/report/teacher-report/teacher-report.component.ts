@@ -271,6 +271,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       .getWorkPosition()
       .subscribe((response) => {
         this.workPositionList = response?.records;
+        this.workPositionList.unshift({"id": "", "name": "Seleccione una opción"});
       });
   }
   getStates() {
@@ -278,11 +279,13 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       .getState()
       .subscribe((response) => {
         this.stateList = response?.records;
+        this.stateList.unshift({"id": "", "name": "Seleccione una opción"});
       });
   }
   getSchools() {
     this.subscriptionState = this.schoolService.getSchoolUsers().subscribe((response) => {
       this.schoolList = response;
+      this.schoolList.unshift({"id": "", "name": "Seleccione una opción"});
     });
   }
   

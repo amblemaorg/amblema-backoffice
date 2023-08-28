@@ -17,6 +17,8 @@ import { CustomToastrService } from "src/app/services/helper/custom-toastr.servi
 import { DomSanitizer } from "@angular/platform-browser";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { StateService } from "src/app/services/state.service";
+import { SchoolUserService } from "src/app/services/user/school-user.service";
 
 @Component({
   selector: "app-teacher-report",
@@ -27,7 +29,11 @@ import { saveAs } from "file-saver";
 export class TeacherReportComponent implements OnInit, OnDestroy {
   subscriptionService: Subscription;
   subscriptionWorkPosition: Subscription;
+  subscriptionState: Subscription;
+  subscriptionSchool: Subscription;
   workPositionList = new Array<any>();
+  stateList = new Array<any>();
+  schoolList = new Array<any>();
   
   isNotInscription = false;
   settings: any = {
@@ -207,6 +213,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   statusSelected = "1";
 
   workPositionSelected = "";
+  stateSelected = "";
+  schoolSelected = "";
   // -- 1 = preinscrito, 2 = inscrito --
   selectedAnnualConvention = null;
 
@@ -220,8 +228,10 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     private userReporteService: UserReportService,
     private userTeacherService: TeacherService,
     private workPositionService: WorkPositionService,
+    private stateService: StateService,
     private toastrService: CustomToastrService,
-    private sanatizer: DomSanitizer
+    private sanatizer: DomSanitizer,
+    private schoolService: SchoolUserService
   ) {}
 
   async ngOnInit() {
@@ -243,6 +253,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
           });
       });
       this.getworkPositions();
+      this.getStates();
+      this.getSchools();
   }
 
   async ngOnDestroy() {
@@ -261,6 +273,20 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         this.workPositionList = response?.records;
       });
   }
+  getStates() {
+    this.subscriptionState = this.stateService
+      .getState()
+      .subscribe((response) => {
+        this.stateList = response?.records;
+      });
+  }
+  getSchools() {
+    this.subscriptionState = this.schoolService.getSchoolUsers().subscribe((response) => {
+      this.schoolList = response;
+    });
+  }
+  
+  
   onGenerateReportExcel(): void {
     this.disabledBtn = true;
     const workbookBin = this.makeExcel();
@@ -428,7 +454,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         this.statusSelected,
         null,
         this.selectedAnnualConvention,
-        this.workPositionSelected
+        this.workPositionSelected,
+        this.stateSelected,
+        this.schoolSelected,
       )
       .subscribe(
         (response) => {
@@ -474,7 +502,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         this.statusSelected,
         null,
         this.selectedAnnualConvention,
-        this.workPositionSelected
+        this.workPositionSelected,
+        this.stateSelected,
+        this.schoolSelected,
       )
       .subscribe(
         (response) => {

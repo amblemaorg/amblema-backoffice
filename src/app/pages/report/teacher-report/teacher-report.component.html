@@ -7,7 +7,7 @@
           <div class="col-12">
             <p class="font-weight-bold">Configuración del Reporte</p>
           </div>
-          <div class="col-12 form-group">
+          <div class="col-6 form-group">
             <div>
               <label class="label"
                 >Mostrar los docentes preinscritos en la convención
@@ -23,7 +23,31 @@
               </nb-radio-group>
             </div>
           </div>
-
+          <div class="col-6 col-lg-6 form-group">
+            <label class="label">Cargo: </label>
+            <select [(ngModel)]="workPositionSelected" class="form-control" (change)="changeData()">
+              <option *ngFor="let item of workPositionList" [value]="item.id">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-6 col-lg-6 form-group">
+            <label class="label">Estado: </label>
+            <select [(ngModel)]="stateSelected" class="form-control" (change)="changeData()">
+              <option *ngFor="let item of stateList" [value]="item.id">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-6 col-lg-6 form-group">
+            <label class="label">Escuela: </label>
+            <select [(ngModel)]="schoolSelected" class="form-control" (change)="changeData()">
+              <option *ngFor="let item of schoolList" [value]="item.id">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+          
           <div class="col-12 col-lg-6 form-group">
             <label class="label">Estatus: </label>
             <select [(ngModel)]="statusSelected" class="form-control">

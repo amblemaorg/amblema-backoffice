@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { PDFReport } from "../pdf-report.service";
 import { UserReportService } from "src/app/services/report/user-report.service";
+import { WorkPositionService } from "src/app/services/work-position.service";
 import { LocalDataSource } from "ng2-smart-table";
 import { DatePipe } from "@angular/common";
 import {
@@ -16,6 +17,8 @@ import { CustomToastrService } from "src/app/services/helper/custom-toastr.servi
 import { DomSanitizer } from "@angular/platform-browser";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { StateService } from "src/app/services/state.service";
+import { SchoolUserService } from "src/app/services/user/school-user.service";
 
 @Component({
   selector: "app-teacher-report",
@@ -25,7 +28,13 @@ import { saveAs } from "file-saver";
 })
 export class TeacherReportComponent implements OnInit, OnDestroy {
   subscriptionService: Subscription;
-
+  subscriptionWorkPosition: Subscription;
+  subscriptionState: Subscription;
+  subscriptionSchool: Subscription;
+  workPositionList = new Array<any>();
+  stateList = new Array<any>();
+  schoolList = new Array<any>();
+  
   isNotInscription = false;
   settings: any = {
     rowClassFunction: (row) => {
@@ -157,13 +166,22 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         },
       },
       specialty: {
-        title: "Especialidad",
+        title: "Grado instrucción",
         type: "string",
         valuePrepareFunction: (row: any) => {
           return row.name;
         },
         filterFunction: FilterPipeSearch,
       },
+      workPosition: {
+        title: "Cargo",
+        type: "string",
+        valuePrepareFunction: (row: any) => {
+          return row.name;
+        },
+        filterFunction: FilterPipeSearch,
+      },
+      
       status: {
         title: "Estatus",
         type: "string",
@@ -194,6 +212,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
 
   statusSelected = "1";
 
+  workPositionSelected = "";
+  stateSelected = "";
+  schoolSelected = "";
   // -- 1 = preinscrito, 2 = inscrito --
   selectedAnnualConvention = null;
 
@@ -206,8 +227,11 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     private toast: CustomToastrService,
     private userReporteService: UserReportService,
     private userTeacherService: TeacherService,
+    private workPositionService: WorkPositionService,
+    private stateService: StateService,
     private toastrService: CustomToastrService,
-    private sanatizer: DomSanitizer
+    private sanatizer: DomSanitizer,
+    private schoolService: SchoolUserService
   ) {}
 
   async ngOnInit() {
@@ -228,14 +252,44 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             this.source.load(this.data);
           });
       });
+      this.getworkPositions();
+      this.getStates();
+      this.getSchools();
   }
 
   async ngOnDestroy() {
     if (this.subscriptionService) {
       this.subscriptionService.unsubscribe();
     }
+    if(this.subscriptionWorkPosition){
+      this.subscriptionWorkPosition.unsubscribe();
+    }
   }
 
+  getworkPositions() {
+    this.subscriptionWorkPosition = this.workPositionService
+      .getWorkPosition()
+      .subscribe((response) => {
+        this.workPositionList = response?.records;
+        this.workPositionList.unshift({"id": "", "name": "Seleccione una opción"});
+      });
+  }
+  getStates() {
+    this.subscriptionState = this.stateService
+      .getState()
+      .subscribe((response) => {
+        this.stateList = response?.records;
+        this.stateList.unshift({"id": "", "name": "Seleccione una opción"});
+      });
+  }
+  getSchools() {
+    this.subscriptionState = this.schoolService.getSchoolUsers().subscribe((response) => {
+      this.schoolList = response;
+      this.schoolList.unshift({"id": "", "name": "Seleccione una opción"});
+    });
+  }
+  
+  
   onGenerateReportExcel(): void {
     this.disabledBtn = true;
     const workbookBin = this.makeExcel();
@@ -264,7 +318,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       addressMunicipality: "Municipio",
       addressCity: "Ciudad",
       address: "Calles / carreras",
-      specialty: "Especialidad",
+      specialty: "Grado instrucción",
+      workPosition: "Cargo",
       // annualPreparationStatus: "Inscripción de la convención",
       status: "Estatus",
     };
@@ -281,6 +336,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       "addressCity",
       "address",
       "specialty",
+      "workPosition",
       // "annualPreparationStatus",
       "status",
     ];
@@ -307,6 +363,9 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
             cellValue = parseInt(cellValue) === 1 ? "Femenino" : "Masculino";
           }
           if (key === "specialty") {
+            cellValue = cellValue.name;
+          }
+          if (key === "workPosition") {
             cellValue = cellValue.name;
           }
 
@@ -397,7 +456,10 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         "3",
         this.statusSelected,
         null,
-        this.selectedAnnualConvention
+        this.selectedAnnualConvention,
+        this.workPositionSelected,
+        this.stateSelected,
+        this.schoolSelected,
       )
       .subscribe(
         (response) => {
@@ -434,5 +496,31 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
         (err) => {}
       );
     event.confirm.resolve(); // <-- Return to previous stock status
+  }
+
+  changeData(){
+    this.subscriptionService = this.userReporteService
+      .getUserReport(
+        "3",
+        this.statusSelected,
+        null,
+        this.selectedAnnualConvention,
+        this.workPositionSelected,
+        this.stateSelected,
+        this.schoolSelected,
+      )
+      .subscribe(
+        (response) => {
+          if (response.users.length) {
+            this.data = response.users;
+            this.source.load(this.data);
+          } else {
+            this.toast.info(
+              "Información",
+              "No hay registro en el estatus o configuración seleccionada"
+            );
+          }
+        }
+      );
   }
 }

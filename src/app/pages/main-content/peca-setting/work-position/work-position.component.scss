@@ -1,0 +1,27 @@
+::ng-deep #special-table {
+  ng2-smart-table {
+    th {
+      &:first-child {
+        width: 200px;
+        min-width: auto !important;
+      }
+    }
+    td {
+      &:first-child {
+        width: 200px;
+        min-width: auto !important;
+      }
+    }
+    .ng2-smart-actions {
+      ng2-st-tbody-custom {
+        position: relative !important;
+        top: initial !important;
+        display: inherit !important;
+      }
+    }
+    .ng2-smart-action-add-add {
+      background-color: #00d68f;
+      border-color: #00d68f;
+    }
+  }
+}

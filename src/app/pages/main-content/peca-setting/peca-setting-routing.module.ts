@@ -27,6 +27,11 @@ const routes: Routes = [
         loadChildren: () =>
           import("./specialty/specialty.module").then((m) => m.SpecialtyModule),
       },
+      {
+        path: "work-position",
+        loadChildren: () =>
+          import("./work-position/work-position.module").then((m) => m.WorkPositionModule),
+      },
 
       {
         path: "coins",

@@ -52,7 +52,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       columns: {
         name: {
-          title: "Especialidad",
+          title: "Grado de instrucción",
           type: "string",
           editable: true,
         },
@@ -88,7 +88,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe((response) => {
           this.toastr.updateSuccess(
             "Actualización",
-            "Especialidad actualizada"
+            "Grado de instrucción actualizado"
           );
           this.getSpecialities();
         });
@@ -106,7 +106,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy, AfterViewInit {
       this.subscription = this.specialtyService
         .saveSpecialty(payload)
         .subscribe((response) => {
-          this.toastr.updateSuccess("Éxito", "Especialidad agregada");
+          this.toastr.updateSuccess("Éxito", "Grado de instrucción agregado");
           this.getSpecialities();
         });
 
@@ -128,11 +128,11 @@ export class SpecialtyComponent implements OnInit, OnDestroy, AfterViewInit {
     }*/
   }
   onDeleteConfirm(event) {
-    if (window.confirm("¿Esta seguro de eliminar la especialidad?")) {
+    if (window.confirm("¿Esta seguro de eliminar el grado de instrucción?")) {
       this.subscription = this.specialtyService
         .deleteSpecialty(event.data.id)
         .subscribe((response) => {
-          this.toastr.updateSuccess("Actualización", "Especialidad eliminada");
+          this.toastr.updateSuccess("Actualización", "Grado de instrucción eliminado");
           this.getSpecialities();
         });
       event.confirm.resolve();

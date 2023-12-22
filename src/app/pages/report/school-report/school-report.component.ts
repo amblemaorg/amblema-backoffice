@@ -89,6 +89,10 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
         title: "Personal docente",
         type: "string",  
       },
+      nStudents:{
+        title: "Matrícula",
+        type: "string",  
+      },
       sponsor: {
         title: "Padrino",
         type: "string",
@@ -184,6 +188,7 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       nAdministrativeStaff: "Personal Admin.",
       nLaborStaff: "Personal Obrero",
       nTeachers: "Personal docente",
+      nStudents: "Matrícula",
       sponsor: "Padrino",
       coordinator: "Coordinador",
       status: "Estatus",
@@ -203,6 +208,7 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       "nAdministrativeStaff",
       "nLaborStaff",
       "nTeachers",
+      "nStudents",
       "nSections",
       "sponsor",
       "coordinator",

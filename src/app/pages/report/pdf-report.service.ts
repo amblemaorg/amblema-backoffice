@@ -408,7 +408,6 @@ export class PDFReport implements OnInit {
    */
 
   async onGenerate(report: DiagnosticReport) {
-    console.log("REPORT: ", report);
     const finalReport: any = {
       info: {
         title: "Reporte de diagnósticos",
@@ -572,7 +571,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
-                  student.wordsPerMinIndex !== undefined
+                  student.wordsPerMinIndex !== undefined && student.wordsPerMinIndex !== null
                     ? student.wordsPerMinIndex.toFixed(2)
                     : "",
               },

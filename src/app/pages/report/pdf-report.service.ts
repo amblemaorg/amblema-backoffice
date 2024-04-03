@@ -588,7 +588,7 @@ export class PDFReport implements OnInit {
                     : "",
               },
               {
-                text: student.multiplicationsPerMinIndex
+                text: student.multiplicationsPerMinIndex !== undefined && student.multiplicationsPerMinIndex != null
                   ? student.multiplicationsPerMinIndex.toFixed(2)
                   : "",
               },
@@ -605,7 +605,7 @@ export class PDFReport implements OnInit {
                     : "",
               },
               {
-                text: student.operationsPerMinIndex
+                text: student.operationsPerMinIndex !== undefined && student.operationsPerMinIndex != null 
                   ? student.operationsPerMinIndex.toFixed(2)
                   : "",
               },
@@ -966,7 +966,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
-                  student.wordsPerMinIndex !== undefined
+                  student.wordsPerMinIndex !== undefined && student.wordsPerMinIndex != null
                     ? student.wordsPerMinIndex.toFixed(2)
                     : "",
               },
@@ -984,7 +984,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
-                  student.multiplicationsPerMinIndex !== undefined
+                  student.multiplicationsPerMinIndex !== undefined && student.multiplicationsPerMinIndex != null
                     ? student.multiplicationsPerMinIndex.toFixed(2)
                     : "",
               },
@@ -1002,7 +1002,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
-                  student.operationsPerMinIndex !== undefined
+                  student.operationsPerMinIndex !== undefined && student.operationsPerMinIndex != null
                     ? student.operationsPerMinIndex.toFixed(2)
                     : "",
               },
@@ -1358,7 +1358,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
-                  student.wordsPerMinIndex !== undefined
+                  student.wordsPerMinIndex !== undefined && student.wordsPerMinIndex != null
                     ? student.wordsPerMinIndex.toFixed(2)
                     : "",
               },
@@ -1370,13 +1370,13 @@ export class PDFReport implements OnInit {
               ...prepareStudent,
               {
                 text:
-                  student.multiplicationsPerMin !== undefined
+                  student.multiplicationsPerMin !== undefined 
                     ? student.multiplicationsPerMin
                     : "",
               },
               {
                 text:
-                  student.multiplicationsPerMinIndex !== undefined
+                  student.multiplicationsPerMinIndex !== undefined && student.multiplicationsPerMinIndex != null
                     ? student.multiplicationsPerMinIndex.toFixed(2)
                     : "",
               },
@@ -1394,7 +1394,7 @@ export class PDFReport implements OnInit {
               },
               {
                 text:
-                  student.operationsPerMinIndex !== undefined
+                  student.operationsPerMinIndex !== undefined && student.operationsPerMinIndex != null
                     ? student.operationsPerMinIndex.toFixed(2)
                     : "",
               },

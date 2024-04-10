@@ -161,7 +161,6 @@ export class StepsFormComponent implements OnInit, OnDestroy {
           }
         },
         (err: any) => {
-          console.log(err);
           this.showProgress = false;
           this.toastr.error(
             'Problemas al registrar',

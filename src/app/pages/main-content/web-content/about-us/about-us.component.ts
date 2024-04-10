@@ -65,7 +65,6 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   // -- CRUD Sliders --
 
   onRegisterSlider(slider: Slider) {
-    console.log(`Este es el slider que se esta cargando ${slider}`);
     this.store.dispatch(new SetSliderWebAbout(slider));
 
   }

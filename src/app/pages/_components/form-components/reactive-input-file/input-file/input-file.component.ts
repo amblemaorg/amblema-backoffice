@@ -99,8 +99,6 @@ export class InputFileComponent
   }
 
   handleUpload(event: any) {
-    console.log();
-
     // Get file
     const file = event[0];
 

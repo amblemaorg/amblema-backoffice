@@ -14,7 +14,6 @@ export class PecaReportService {
   getInitialData(): Observable<any> {
     try {
       const url = `${environment.api}${this.PECA_ACTIVITIES}`;
-      console.log("URL: ", url);
       return this.httpClient.get<any>(url, {
         observe: "events",
       });
@@ -26,7 +25,6 @@ export class PecaReportService {
   getReport(body: any): Observable<any> {
     try {
       const url = `${environment.api}${this.PECA_ACTIVITIES}`;
-      console.log("URL: ", url);
       return this.httpClient.post(url, body, { observe: "events" });
     } catch (err) {
       console.log("ERROR: ", err);

@@ -178,9 +178,6 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
       return obj;
     });
 
-    // console.log("Data: ", data);
-    // console.log("data[0]: ", data[0]);
-
     const reportTitle = [["Reporte de Padrinos"]];
     // let  columnHeaders = Object.keys(data[0]);
     let columnHeaders = [
@@ -237,13 +234,11 @@ export class SponsorReportComponent implements OnInit, OnDestroy {
         valuesSorted[columnHeader] = matrixzMap[columnHeader];
       });
 
-      // console.log("valuesSorted", valuesSorted);
-
+      
       matrixzSorted.push(valuesSorted);
     });
 
-    // console.log("matrixzSorted", matrixzSorted);
-
+    
     return matrixzSorted.map((record) => {
       return Object.values(record);
     });

@@ -162,7 +162,6 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
   }
 
   makeExcel(): void {
-    // console.log("makeExcel: status", this.statusSelected);
 
     const mappedKeys = {
       firstName: "Nombre",
@@ -239,8 +238,7 @@ export class CoordinatorReportComponent implements OnInit, OnDestroy {
 
     const values = this.sortedValues(columnHeaders, matrixz);
 
-    // console.log("makeExcel: matrixz", matrixz);
-
+  
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `Reporte de coordinadores`,

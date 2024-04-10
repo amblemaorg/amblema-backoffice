@@ -32,7 +32,6 @@ export class ActivitiesFormComponent
   }
 
   ngOnInit(): void {
-    console.log('Formulario para crear una actividad generica');
     this.form.addControl('hasDate', new FormControl(false));
     this.form.addControl('order', new FormControl(0));
     this.APPROVAL_TYPE = [

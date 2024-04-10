@@ -84,7 +84,6 @@ export class ActivityFormComponent
           this.formStandard.patchValue(this.data);
 
           if (this.id === this.DEVNAME_STANDARD.MATH_OLYMPIC) {
-            console.log(this.data);
             this.formStandard.controls.date.setValue(
               new Date(this.data.date as string)
             );
@@ -99,7 +98,6 @@ export class ActivityFormComponent
         }
 
         if (this.id === this.DEVNAME_STANDARD.ANNUAL_CONVENTION) {
-          // console.log( this.formStandard.value )
           const value: any = JSON.stringify(this.data.checklist);
 
           this.checklist = JSON.parse(value);
@@ -115,16 +113,10 @@ export class ActivityFormComponent
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
-
-    console.log('Estas ubicado en una actividad generica');
   }
 
   onSubmitGeneric(): void {
     if (this.form.valid) {
-
-      console.log( `esta es la info que se esta enviando`);
-      console.log(this.form.value);
-
 
       this.data = Object.assign({}, this.data);
 
@@ -149,7 +141,6 @@ export class ActivityFormComponent
       if (this.data.hasFile) {
         const isUpload: any = this.data.file;
         if (isUpload.url) {
-          console.log('se mantiene el mismo archivo');
           formData.append('file', JSON.stringify(this.data.file));
         } else {
           formData.append('file', this.data.file);
@@ -183,9 +174,6 @@ export class ActivityFormComponent
         String(this.form.controls.description.value)
       );
 
-      console.log(`Archivo desde el form data`);
-      console.log(formData.get('file'));
-
       this.showProgress = true;
 
       // Update activity
@@ -194,9 +182,6 @@ export class ActivityFormComponent
         .subscribe(
           (response: any) => {
 
-
-            console.log(`respuesta de la peticion:`);
-            console.log(response);
 
             this.toastr.updateSuccess(
               'Actualización',

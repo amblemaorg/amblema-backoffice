@@ -40,7 +40,6 @@ export class ActivitiesFormEditComponent
   }
 
   ngOnInit(): void {
-    console.log('Formulario para editar una actividad generica');
     this.activity$.subscribe((response: any) => {
       this.oldActivity = response;
       this.form.controls.name.setValue(response.name);

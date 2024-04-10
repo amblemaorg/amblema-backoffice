@@ -75,7 +75,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
 
                   let parse = JSON.stringify(value);
                   parse = JSON.parse(parse);
-                  console.log(parse);
+                  
                   this.form.patchValue(parse as any);
 
                   this.options =

@@ -98,7 +98,6 @@ export class WorkPositionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onAddConfirm(event) {
-    // console.log(event);
     if (event.newData.name != "") {
       var payload = {
         name: event.newData.name,
@@ -146,7 +145,6 @@ export class WorkPositionComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((response) => {
         this.data = response?.records;
         this.source.load(this.data);
-        // console.log(response);
       });
   }
 }

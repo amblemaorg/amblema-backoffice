@@ -102,8 +102,6 @@ export class SponsorsComponent implements OnInit, OnDestroy {
       .subscribe((response: any) => {
         this.showProgress = true;
 
-        console.log( response );
-
         this.subscription = this.webSponsorService
           .setContentWebSponsor(response.websponsor)
           .subscribe(

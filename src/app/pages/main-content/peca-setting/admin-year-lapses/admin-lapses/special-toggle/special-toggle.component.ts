@@ -39,8 +39,6 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
   }
 
   onclick() {
-    console.log(this.rowData);
-
     // Prepare the data to update
     const value: any = {
       id: this.rowData.isStandard ? this.rowData.devName : this.rowData.id,
@@ -99,7 +97,6 @@ export class SpecialToggleComponent implements ViewCell, OnInit {
         ? STATUS.ACTIVE.VALUE
         : STATUS.INACTIVE.VALUE;
       newData.order = this.rowData.order;
-      console.log(newData)
       this.store.dispatch(
         new UpdateStatusLapseActivity(newData, newData.lapse)
       );

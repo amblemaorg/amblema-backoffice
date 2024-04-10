@@ -246,7 +246,6 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
               response.users.forEach((element) => {
                 this.data = [...this.data, element];
               });
-              // console.log("getUserReport this.data", this.data);
             }
 
             this.source.load(this.data);
@@ -399,7 +398,7 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
     );
 
     const values = this.sortedValues(columnHeaders, matrixz);
-    // console.log("matrix: ", matrixz);
+    
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `Reporte de docentes`,

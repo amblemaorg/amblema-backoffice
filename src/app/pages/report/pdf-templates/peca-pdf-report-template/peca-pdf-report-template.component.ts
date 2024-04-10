@@ -100,7 +100,6 @@ export class PecaPdfReportTemplateComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    // console.log("bodyTable Init: ", this.bodyTable);
     this.paginateThead();
     this.paginateTbody();
   }
@@ -139,8 +138,7 @@ export class PecaPdfReportTemplateComponent implements OnInit {
       tableThead.pop();
     }
 
-    // console.log("paginateThead: ", tableThead);
-
+    
     this.table.th = tableThead;
   }
 
@@ -178,8 +176,7 @@ export class PecaPdfReportTemplateComponent implements OnInit {
       rowPaginated.pop();
     }
 
-    // console.log("paginateThead: ", rowPaginated);
-
+    
     return rowPaginated;
   }
 
@@ -207,8 +204,7 @@ export class PecaPdfReportTemplateComponent implements OnInit {
       tbodyPaginatedFormatted.push(groupRows);
     }
 
-    // console.log("tbodyPaginatedFormatted: ", tbodyPaginatedFormatted);
-
+    
     this.table.tbody = tbodyPaginatedFormatted;
   }
 

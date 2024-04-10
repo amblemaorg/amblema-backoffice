@@ -174,7 +174,6 @@ export class PecaReportComponent implements OnInit, OnDestroy {
       body = { type_filter: "school", schools: [...uniqueIds] };
     }
     if (filterName === "Actividades") {
-      console.log("initia data: ", this.initialFilterData);
       body = { type_filter: "activity", activities: [...uniqueIds] };
     }
     const lapses = this.selectedLapseItems.map(
@@ -194,7 +193,6 @@ export class PecaReportComponent implements OnInit, OnDestroy {
       .getReport(body)
       .subscribe((response) => {
         if (response && response.status >= 201) {
-          console.log("response: ", response);
           const { columns, matriz } = response.body;
           this.numOfColumns = columns.length;
           const columnNames = columns.map((col) => col.name);
@@ -218,7 +216,6 @@ export class PecaReportComponent implements OnInit, OnDestroy {
                     );
                   }
                   if (data > 0 && data < 100) {
-                    console.log("inside data 1");
                     return (
                       '<p class="bg-warning text-center text-white font-weight-bold">' +
                       `${data}%` +
@@ -429,7 +426,6 @@ export class PecaReportComponent implements OnInit, OnDestroy {
       });
     }
     if (filterName === "Actividades") {
-      console.log("initial data: ", this.initialFilterData);
       const chunk = this.initialFilterData.find(
         (registry) => registry.name === this.schoolYear
       );

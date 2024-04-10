@@ -49,7 +49,6 @@ export class SchoolAdminComponent implements OnInit {
 
       if ( response ) {
         this.timeOut = Date.parse( response.endDate ) < Date.parse( new Date( ).toString() ) ? true : false;
-        console.log( this.timeOut );
       }
 
     });

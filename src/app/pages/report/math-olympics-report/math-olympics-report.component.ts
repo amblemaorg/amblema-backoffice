@@ -69,7 +69,7 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.datesEnd = this.datesInit.filter((value, index) => position < index);
+    this.datesEnd = this.datesInit.filter((value, index) => position <= index);
 
     if (!this.datesEnd.length) { this.dateEndSelected = null; }
   }

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  api: "https://amblema.org/api/",
-  web: "https://amblema.org/",
+  api: 'http://localhost:10505/',
+  web: 'http://localhost:2005/',
 };
 

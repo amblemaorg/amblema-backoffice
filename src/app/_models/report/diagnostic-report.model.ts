@@ -6,6 +6,7 @@ interface DiagnosticReport {
     yearSummaryAvailable: boolean;
     sections: Section[];
     yearSummary: YearSummary;
+    totales: LapseTotal;
   }
 
 interface YearSummary {
@@ -94,3 +95,20 @@ interface Statistics {
     firstTestDate: string;
     lastTestDate: string;
   }
+
+interface LapseTotal {
+  lapse1: DiagnosticsTotales;
+  lapse2: DiagnosticsTotales;
+  lapse3: DiagnosticsTotales;
+}
+interface DiagnosticsTotales {
+  math: {
+    studentsMeta: number;
+  };
+  logic: {
+    studentsMeta: number;
+  };
+  reading: {
+    studentsMeta: number;
+  }
+}

@@ -2203,78 +2203,7 @@ export class PDFReport implements OnInit {
     finalReport.content.push(tableLapseTwo);
     finalReport.content.push(tableLapseThree);
 
-
-    const totalsResults: any = [
-      [{ ...colorRowOne, text: "Estudiantes sobre la meta" }],
-      [{ text: "Lapso 1:" }],
-      [{ text: "Lapso 2" }],
-      [{ text: "Lapso 3" }],
-    ];
-    if(report.totales.lapse1.reading){
-      totalsResults[0].push({
-        ...colorRowOne,
-        text: "Diagnóstico de lectura",
-      });
-      totalsResults[1].push({
-        text: report.totales.lapse1.reading.studentsMeta,
-      });
-
-      totalsResults[2].push({
-        text: report.totales.lapse2.reading.studentsMeta,
-      });
-
-      totalsResults[3].push({
-        text: report.totales.lapse3.reading.studentsMeta,
-      });
-    }   
     
-    if(report.totales.lapse1.math){
-      totalsResults[0].push({
-        ...colorRowOne,
-        text: "Diagnóstico de matemática",
-      });
-      totalsResults[1].push({
-        text: report.totales.lapse1.math.studentsMeta,
-      });
-
-      totalsResults[2].push({
-        text: report.totales.lapse2.math.studentsMeta,
-      });
-
-      totalsResults[3].push({
-        text: report.totales.lapse3.math.studentsMeta,
-      });
-    }
-
-    if(report.totales.lapse1.logic){
-      totalsResults[0].push({
-        ...colorRowOne,
-        text: "Diagnóstico de logica matemática",
-      });
-      totalsResults[1].push({
-        text: report.totales.lapse1.logic.studentsMeta,
-      });
-
-      totalsResults[2].push({
-        text: report.totales.lapse2.logic.studentsMeta,
-      });
-
-      totalsResults[3].push({
-        text: report.totales.lapse3.logic.studentsMeta,
-      });
-    }
-    
-    tableTotales.push({
-      table: {
-        widths: "*",
-        body: totalsResults,
-      },
-      layout: this.borderCustom,
-      margin: [0, 0, 0, 30],
-    });
-    
-    finalReport.content.push(tableTotales);
-
     if (report.yearSummaryAvailable) {
       finalReport.content.push([
         {
@@ -2406,6 +2335,78 @@ export class PDFReport implements OnInit {
         margin: [0, 0, 0, 30],
       });
     }
+
+    const totalsResults: any = [
+      [{ ...colorRowOne, text: "Estudiantes sobre la meta" }],
+      [{ text: "Lapso 1:" }],
+      [{ text: "Lapso 2" }],
+      [{ text: "Lapso 3" }],
+    ];
+    if(report.totales.lapse1.reading){
+      totalsResults[0].push({
+        ...colorRowOne,
+        text: "Diagnóstico de lectura",
+      });
+      totalsResults[1].push({
+        text: report.totales.lapse1.reading.studentsMeta,
+      });
+
+      totalsResults[2].push({
+        text: report.totales.lapse2.reading.studentsMeta,
+      });
+
+      totalsResults[3].push({
+        text: report.totales.lapse3.reading.studentsMeta,
+      });
+    }   
+    
+    if(report.totales.lapse1.math){
+      totalsResults[0].push({
+        ...colorRowOne,
+        text: "Diagnóstico de matemática",
+      });
+      totalsResults[1].push({
+        text: report.totales.lapse1.math.studentsMeta,
+      });
+
+      totalsResults[2].push({
+        text: report.totales.lapse2.math.studentsMeta,
+      });
+
+      totalsResults[3].push({
+        text: report.totales.lapse3.math.studentsMeta,
+      });
+    }
+
+    if(report.totales.lapse1.logic){
+      totalsResults[0].push({
+        ...colorRowOne,
+        text: "Diagnóstico de logica matemática",
+      });
+      totalsResults[1].push({
+        text: report.totales.lapse1.logic.studentsMeta,
+      });
+
+      totalsResults[2].push({
+        text: report.totales.lapse2.logic.studentsMeta,
+      });
+
+      totalsResults[3].push({
+        text: report.totales.lapse3.logic.studentsMeta,
+      });
+    }
+    
+    tableTotales.push({
+      table: {
+        widths: "*",
+        body: totalsResults,
+      },
+      layout: this.borderCustom,
+      margin: [0, 0, 0, 30],
+    });
+    
+    finalReport.content.push(tableTotales);
+    
 
     finalReport.content.unshift(documentSubHeaderData);
     finalReport.content.unshift(titleDocument);

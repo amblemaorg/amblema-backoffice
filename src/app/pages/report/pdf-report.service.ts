@@ -2144,7 +2144,7 @@ export class PDFReport implements OnInit {
                     ? section.lapse2.indexAverage.toFixed(2)
                     : "",
               },
-              { text: section.lapse1.overGoalStudents },
+              { text: section.lapse2.overGoalStudents },
             ];
           }
 
@@ -2163,7 +2163,7 @@ export class PDFReport implements OnInit {
                     ? section.lapse3.indexAverage.toFixed(2)
                     : "",
               },
-              { text: section.lapse1.overGoalStudents },
+              { text: section.lapse3.overGoalStudents },
             ];
           }
 

@@ -2205,6 +2205,7 @@ export class PDFReport implements OnInit {
 
     
     if (report.yearSummaryAvailable) {
+      finalReport.content.push({ text: '', pageBreak: 'after' });
       finalReport.content.push([
         {
           alignment: "center",
@@ -2216,7 +2217,7 @@ export class PDFReport implements OnInit {
               alignment: "center",
               fontSize: 15,
               bold: true,
-              margin: [30, 30],
+              margin: [30, 10, 30, 30],
             },
           ],
         },

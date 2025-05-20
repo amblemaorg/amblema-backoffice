@@ -9,7 +9,7 @@ import { AgmCoreModule } from '@agm/core';
     CommonModule,
     AgmCoreModule.forRoot({
       // apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_xxx',
-       apiKey: 'AIzaSyCwPUm3Rnxmi3klwT1Qg4Z2AK0dBLG_yrs',
+       apiKey: 'AIzaSyDTvLC-NQx9mMn4rpC0yQOjjLUmm3_uowI',
       libraries: ['places'],
       region: 'Venezuela',
       language: 'es'

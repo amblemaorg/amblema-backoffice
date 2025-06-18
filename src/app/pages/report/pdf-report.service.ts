@@ -1692,7 +1692,7 @@ export class PDFReport implements OnInit {
       },
 
       layout: this.borderCustom,
-      margin: [0, 0, 0, 20],
+      margin: [0, 0, 0, 40],
     };
 
     // ==========================================
@@ -1705,7 +1705,7 @@ export class PDFReport implements OnInit {
       },
 
       layout: this.borderCustom,
-      margin: [0, 0, 0, 30],
+      margin: [0, 0, 0, 40],
     };
 
     // ================================
@@ -1718,7 +1718,7 @@ export class PDFReport implements OnInit {
       },
 
       layout: this.borderCustom,
-      margin: [0, 0, 0, 30],
+      margin: [0, 0, 0, 40],
     };
 
     if (report.yearSummaryAvailable) {

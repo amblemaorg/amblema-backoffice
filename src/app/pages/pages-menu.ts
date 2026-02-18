@@ -221,7 +221,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
 
       {
-        title: "Reporte de las olimpíadas de matemáticas ",
+        title: "Reporte de las olimpíadas de matemáticas y lectura",
         link: "/pages/report/math-olympics-report",
       },
       {

@@ -22,11 +22,13 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
   disabledBtn = false;
 
 
+  public olympicsType = 'math';
+
   constructor(
     public cd: ChangeDetectorRef,
     public mathOlympicsReportService: MathOlympicsReportService,
     private generateReporte?: PDFReportMath
-  ) {}
+  ) { }
 
   public ngOnInit() {
     this.subscriptionService = this.mathOlympicsReportService
@@ -47,9 +49,13 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
     this.disabledBtn = true;
 
     this.subscriptionService = this.mathOlympicsReportService
-      .getMathOlympicsReport(this.dateInitSelected, this.dateEndSelected)
+      .getMathOlympicsReport(this.dateInitSelected, this.dateEndSelected, this.olympicsType)
       .subscribe((response) => {
-        this.generateReporte.generateMathOlympics(response);
+        const title = this.olympicsType === 'math'
+          ? "Reporte de las olimpíadas de matemáticas"
+          : "Reporte de las olimpíadas de lectura";
+
+        this.generateReporte.generateMathOlympics(response, title);
 
         setTimeout(() => {
           this.disabledBtn = false;

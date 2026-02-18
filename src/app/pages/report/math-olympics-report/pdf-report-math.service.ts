@@ -22,7 +22,7 @@ export class PDFReportMath {
     private datePipe: DatePipe
   ) { }
 
-  async generateMathOlympics(mockData: OlympicsReport) {
+  async generateMathOlympics(mockData: OlympicsReport, title: string = "Reporte de las olimpíadas de matemáticas") {
     const colorHeaderRow: any = {
       fillColor: "#81b03e",
       color: "#FFF",
@@ -45,7 +45,7 @@ export class PDFReportMath {
         columns: [
           {
             width: "*",
-            text: "Reporte de las olimpíadas de matemáticas",
+            text: title,
             color: "#2e8aaa",
             alignment: "center",
             fontSize: 15,
@@ -58,9 +58,9 @@ export class PDFReportMath {
 
     const finalDocument: any = {
       info: {
-        title: "Reporte de olimpíadas de matemáticas",
+        title: title,
         author: "Fundación AmbLeMa",
-        subject: "Reporte de olimpíadas de matemáticas",
+        subject: title,
         keywords:
           "Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante",
       },

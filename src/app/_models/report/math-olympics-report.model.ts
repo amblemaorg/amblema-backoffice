@@ -9,6 +9,10 @@ interface FinalScore {
     studentsGoldMedal: number;
     studentsSilverMedal: number;
     studentsBronzeMedal: number;
+    classifiedStudentsNational: number;
+    studentsGoldMedalNational: number;
+    studentsSilverMedalNational: number;
+    studentsBronzeMedalNational: number;
 }
 
 interface AllPeriod {
@@ -28,6 +32,10 @@ interface Total {
     totalGoldMedals: number;
     totalSilverMedals: number;
     totalBronzeMedals: number;
+    totalClassifiedNational: number;
+    totalGoldMedalsNational: number;
+    totalSilverMedalsNational: number;
+    totalBronzeMedalsNational: number;
 }
 
 interface Grade {
@@ -42,6 +50,10 @@ interface Section {
     medalsGold: number;
     medalsSilver: number;
     medalsBronze: number;
+    classifiedNational: number;
+    medalsGoldNational: number;
+    medalsSilverNational: number;
+    medalsBronzeNational: number;
 }
 
 interface Meta {

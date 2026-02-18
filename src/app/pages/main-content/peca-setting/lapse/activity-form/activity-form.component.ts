@@ -49,6 +49,7 @@ export class ActivityFormComponent
     ANNUAL_PREPARATION: 'annualpreparation',
     ANNUAL_CONVENTION: 'annualconvention',
     MATH_OLYMPIC: 'matholympic',
+    READING_OLYMPICS: 'readingolympics',
     SPECIAL_SPAN_ACTIVITY: 'speciallapseactivity',
   };
 
@@ -83,7 +84,10 @@ export class ActivityFormComponent
         if (this.formStandard) {
           this.formStandard.patchValue(this.data);
 
-          if (this.id === this.DEVNAME_STANDARD.MATH_OLYMPIC) {
+          if (
+            this.id === this.DEVNAME_STANDARD.MATH_OLYMPIC ||
+            this.id === this.DEVNAME_STANDARD.READING_OLYMPICS
+          ) {
             this.formStandard.controls.date.setValue(
               new Date(this.data.date as string)
             );
@@ -290,7 +294,10 @@ export class ActivityFormComponent
         checklist: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
       });
-    } else if (id === this.DEVNAME_STANDARD.MATH_OLYMPIC) {
+    } else if (
+      id === this.DEVNAME_STANDARD.MATH_OLYMPIC ||
+      id === this.DEVNAME_STANDARD.READING_OLYMPICS
+    ) {
       this.formStandard = new FormGroup({
         date: new FormControl(null, [Validators.required]),
         description: new FormControl(null, [Validators.required]),
@@ -543,6 +550,45 @@ export class ActivityFormComponent
           this.toastr.updateSuccess(
             'Actualización',
             'Olimpíadas matemáticas actualizado'
+          );
+
+          setTimeout(() => {
+            this.showProgress = false;
+          }, 2500);
+        },
+        () => (this.showProgress = false)
+      );
+  }
+
+  onSubmitReadingOlympics() {
+    const prepareData: any = this.formStandard.value;
+
+    prepareData.date = prepareData.date.toISOString();
+
+    const formData = new FormData();
+
+    if (prepareData.file) {
+      formData.append(
+        'file',
+        prepareData.file.url
+          ? JSON.stringify(prepareData.file)
+          : prepareData.file
+      );
+    }
+
+    this.showProgress = true;
+
+    formData.append('description', prepareData.description);
+    formData.append('webDescription', prepareData.webDescription);
+    formData.append('date', prepareData.date);
+
+    this.lapseActivityService
+      .updateActivity(this.id, this.lapse, formData)
+      .subscribe(
+        (response) => {
+          this.toastr.updateSuccess(
+            'Actualización',
+            'Olimpíadas de lectura actualizado'
           );
 
           setTimeout(() => {

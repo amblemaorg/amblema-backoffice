@@ -8,20 +8,19 @@ import { OlympicsReport } from 'src/app/_models/report/math-olympics-report.mode
 @Injectable({
   providedIn: 'root',
 })
-export class MathOlympicsReportService {
+export class ReadingOlympicsReportService {
   private readonly MATH_OLYMPICS_REPORT = `statistics/olympicsreport/`;
   private readonly SCHOOL_YEARS = `schoolyears`;
 
   constructor(private httpClient: HttpClient) { }
 
-  getMathOlympicsReport(
+  getReadingOlympicsReport(
     startPeriodId: string,
-    endPeriodId: string,
-    olympicsType: string = 'math'
+    endPeriodId: string
   ): Observable<OlympicsReport> {
     return this.httpClient
       .get<OlympicsReport>(
-        `${environment.api}${this.MATH_OLYMPICS_REPORT}${startPeriodId}/${endPeriodId}?olympicsType=${olympicsType}`
+        `${environment.api}${this.MATH_OLYMPICS_REPORT}${startPeriodId}/${endPeriodId}?type=reading`
       )
       .pipe(map((data: any) => data));
   }

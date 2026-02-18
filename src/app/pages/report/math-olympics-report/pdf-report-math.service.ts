@@ -20,9 +20,9 @@ export class PDFReportMath {
   constructor(
     @Inject(DOCUMENT) private document: any,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
-  async generateMathOlympics(mockData: OlympicsReport) {
+  async generateMathOlympics(mockData: OlympicsReport, title: string = "Reporte de las olimpíadas de matemáticas") {
     const colorHeaderRow: any = {
       fillColor: "#81b03e",
       color: "#FFF",
@@ -45,7 +45,7 @@ export class PDFReportMath {
         columns: [
           {
             width: "*",
-            text: "Reporte de las olimpíadas de matemáticas",
+            text: title,
             color: "#2e8aaa",
             alignment: "center",
             fontSize: 15,
@@ -58,13 +58,14 @@ export class PDFReportMath {
 
     const finalDocument: any = {
       info: {
-        title: "Reporte de olimpíadas de matemáticas",
+        title: title,
         author: "Fundación AmbLeMa",
-        subject: "Reporte de olimpíadas de matemáticas",
+        subject: title,
         keywords:
           "Reporte, usuarios, padrino, coordinador, docente, escuela, estudiante",
       },
       pageSize: "A4",
+      pageOrientation: "landscape",
       content: [documentHeader],
       defaultStyle: {
         fontSize: 12,
@@ -112,13 +113,30 @@ export class PDFReportMath {
             table: {
               body: [
                 [
-                  { ...colorHeaderRow, text: "Grado" },
-                  { ...colorHeaderRow, text: "Sección" },
-                  { ...colorHeaderRow, text: "Inscritos" },
+                  { ...colorHeaderRow, text: "Grado", rowSpan: 2, alignment: "center" },
+                  { ...colorHeaderRow, text: "Sección", rowSpan: 2, alignment: "center" },
+                  { ...colorHeaderRow, text: "Inscritos", rowSpan: 2, alignment: "center" },
+                  { ...colorHeaderRow, text: "Olimpiadas Regionales", colSpan: 4, alignment: "center" },
+                  {},
+                  {},
+                  {},
+                  { ...colorHeaderRow, text: "Olimpiadas Nacionales", colSpan: 4, alignment: "center" },
+                  {},
+                  {},
+                  {},
+                ],
+                [
+                  {},
+                  {},
+                  {},
                   { ...colorHeaderRow, text: "Clasificados" },
-                  { ...colorHeaderRow, text: "Medalla de oro" },
-                  { ...colorHeaderRow, text: "Medalla de plata" },
-                  { ...colorHeaderRow, text: "Medalla de bronce" },
+                  { ...colorHeaderRow, text: "Oro" },
+                  { ...colorHeaderRow, text: "Plata" },
+                  { ...colorHeaderRow, text: "Bronce" },
+                  { ...colorHeaderRow, text: "Clasificados" },
+                  { ...colorHeaderRow, text: "Oro" },
+                  { ...colorHeaderRow, text: "Plata" },
+                  { ...colorHeaderRow, text: "Bronce" },
                 ],
               ],
             },
@@ -135,10 +153,14 @@ export class PDFReportMath {
                 [
                   { ...colorHeaderSecondary, text: "" },
                   { ...colorHeaderSecondary, text: "Inscritos" },
-                  { ...colorHeaderSecondary, text: "Clasificados" },
-                  { ...colorHeaderSecondary, text: "Medallas de oro" },
-                  { ...colorHeaderSecondary, text: "Medallas de plata" },
-                  { ...colorHeaderSecondary, text: "Medallas de bronce" },
+                  { ...colorHeaderSecondary, text: "Clasificados (Reg)" },
+                  { ...colorHeaderSecondary, text: "Medallas de oro (Reg)" },
+                  { ...colorHeaderSecondary, text: "Medallas de plata (Reg)" },
+                  { ...colorHeaderSecondary, text: "Medallas de bronce (Reg)" },
+                  { ...colorHeaderSecondary, text: "Clasificados (Nac)" },
+                  { ...colorHeaderSecondary, text: "Medallas de oro (Nac)" },
+                  { ...colorHeaderSecondary, text: "Medallas de plata (Nac)" },
+                  { ...colorHeaderSecondary, text: "Medallas de bronce (Nac)" },
                 ],
                 [
                   { ...colorHeaderSecondary, text: "Total:" },
@@ -159,6 +181,22 @@ export class PDFReportMath {
                     ...colorHeaderSecondary,
                     text: school.total.totalBronzeMedals,
                   },
+                  {
+                    ...colorHeaderSecondary,
+                    text: school.total.totalClassifiedNational,
+                  },
+                  {
+                    ...colorHeaderSecondary,
+                    text: school.total.totalGoldMedalsNational,
+                  },
+                  {
+                    ...colorHeaderSecondary,
+                    text: school.total.totalSilverMedalsNational,
+                  },
+                  {
+                    ...colorHeaderSecondary,
+                    text: school.total.totalBronzeMedalsNational,
+                  },
                 ],
               ],
             },
@@ -177,6 +215,10 @@ export class PDFReportMath {
               { text: section.medalsGold },
               { text: section.medalsSilver },
               { text: section.medalsBronze },
+              { text: section.classifiedNational },
+              { text: section.medalsGoldNational },
+              { text: section.medalsSilverNational },
+              { text: section.medalsBronzeNational },
             ]);
           });
         });
@@ -211,24 +253,47 @@ export class PDFReportMath {
             [
               {
                 ...colorHeaderSecondary,
-                text: `Estudiantes clasificados: ${mockData.finalScore.classifiedStudents}`,
+                text: `Estudiantes clasificados (Reg): ${mockData.finalScore.classifiedStudents}`,
               },
             ],
             [
               {
-                text: `Estudiantes con medalla de oro: ${mockData.finalScore.studentsGoldMedal}`,
+                text: `Estudiantes medalla de oro (Reg): ${mockData.finalScore.studentsGoldMedal}`,
               },
             ],
             [
               {
                 ...colorHeaderRow,
-                text: `Estudiantes con medalla de plata: ${mockData.finalScore.studentsSilverMedal}`,
+                text: `Estudiantes medalla de plata (Reg): ${mockData.finalScore.studentsSilverMedal}`,
               },
             ],
             [
               {
                 ...colorHeaderSecondary,
-                text: `Estudiantes con medalla de bronce: ${mockData.finalScore.studentsBronzeMedal}`,
+                text: `Estudiantes medalla de bronce (Reg): ${mockData.finalScore.studentsBronzeMedal}`,
+              },
+            ],
+            [
+              {
+                ...colorHeaderSecondary,
+                text: `Estudiantes clasificados (Nac): ${mockData.finalScore.classifiedStudentsNational}`,
+              },
+            ],
+            [
+              {
+                text: `Estudiantes medalla de oro (Nac): ${mockData.finalScore.studentsGoldMedalNational}`,
+              },
+            ],
+            [
+              {
+                ...colorHeaderRow,
+                text: `Estudiantes medalla de plata (Nac): ${mockData.finalScore.studentsSilverMedalNational}`,
+              },
+            ],
+            [
+              {
+                ...colorHeaderSecondary,
+                text: `Estudiantes medalla de bronce (Nac): ${mockData.finalScore.studentsBronzeMedalNational}`,
               },
             ],
           ],

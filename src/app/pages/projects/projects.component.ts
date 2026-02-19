@@ -17,6 +17,10 @@ import { BsModalService } from "ngx-bootstrap/modal";
 import { ProjectService } from "src/app/services/project.service";
 import { AuthService } from "src/app/services/user/auth.service";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+
+import { CustomServerDataSource } from "./custom-server-data-source";
 
 declare var $: any;
 
@@ -58,13 +62,24 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     public modal: ModalService,
     private modalServicesBs: BsModalService,
     private projectService: ProjectService,
-    private helper: Utility
+    private helper: Utility,
+    private httpClient: HttpClient,
+    private authService: AuthService
   ) {
     super();
+
+    this.source = new CustomServerDataSource(this.httpClient, {
+      endPoint: environment.api + "projects",
+      dataKey: "records",
+      pagerPageKey: "page",
+      pagerLimitKey: "per_page",
+      totalKey: "pagination.total_records",
+      filterFieldKey: "#field#",
+    }, this.authService);
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetProjects());
+    // this.store.dispatch(new GetProjects());
 
     this.MODE = this.ACTION.CREATE;
 
@@ -175,7 +190,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     );
   }
 
-  clear() {}
+  clear() { }
 
   // Events table
   onAction(event: any): void {
@@ -211,6 +226,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
                     (modal.content as DialogConfirmationComponent).hideConfirmationModal();
 
                     this.store.dispatch(new DeleteProject(event.data.id));
+                    this.source.refresh();
                   },
                   (err: any) => {
                     (modal.content as DialogConfirmationComponent).errorDelete(

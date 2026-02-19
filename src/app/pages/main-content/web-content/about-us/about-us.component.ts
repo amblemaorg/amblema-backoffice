@@ -9,7 +9,8 @@ import {
   SetAwardWebAbout,
   UpdateAwardWebAbout,
   DeleteAwardWebAbout,
-  SetWebAbout
+  SetWebAbout,
+  GetWebAbout
 } from 'src/app/store/web-content/web-about.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebAbout, Award } from 'src/app/_models/web/web-about.model';
@@ -45,6 +46,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     private store: Store) { }
 
   ngOnInit() {
+    this.store.dispatch(new GetWebAbout());
     this.subscription = this.data$.subscribe(response => {
       this.sliders = response.aboutUsPage.slider;
       this.awards = response.aboutUsPage.awards;

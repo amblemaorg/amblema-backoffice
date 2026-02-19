@@ -1,6 +1,5 @@
 import {
   State,
-  NgxsOnInit,
   StateContext,
   Action,
   Selector,
@@ -39,13 +38,13 @@ export interface EnvironmentalProjectModel extends EnvironmentalProject {
 
 export class SetNameEnvironmentalProject {
   static readonly type = '[EnvironmentalProject] Set Name EnvironmentalProject';
-  constructor(public name: string, public description: string) {}
+  constructor(public name: string, public description: string) { }
 }
 
 export class SetGeneralObjective {
   static readonly type =
     '[EnvironmentalProject] Set General Objective EnvironmentalProject';
-  constructor(public generalObjective: string) {}
+  constructor(public generalObjective: string) { }
 }
 
 export class GetEnvironmentalProject {
@@ -54,7 +53,7 @@ export class GetEnvironmentalProject {
 
 export class SelectLapse {
   static readonly type = '[EnvironmentalProject] Select A EnvironmentalProject';
-  constructor(public lapse: string) {}
+  constructor(public lapse: string) { }
 }
 
 // -- Action school --
@@ -62,13 +61,13 @@ export class SelectLapse {
 export class AddSchoolLevel {
   static readonly type =
     '[EnvironmentalProject] Add School level EnvironmentalProject';
-  constructor(public schoolLevel: Level, public indexTopic: number) {}
+  constructor(public schoolLevel: Level, public indexTopic: number) { }
 }
 
 export class DeleteSchoolLevel {
   static readonly type =
     '[EnvironmentalProject] Delete School level EnvironmentalProject';
-  constructor(public indexTopic: number, public indexLevel: number) {}
+  constructor(public indexTopic: number, public indexLevel: number) { }
 }
 
 export class UpdateSchoolLevel {
@@ -78,7 +77,7 @@ export class UpdateSchoolLevel {
     public schoolLevel: Level,
     public indexTopic: number,
     public indexLevel: number
-  ) {}
+  ) { }
 }
 
 // -- Action Topic --
@@ -86,19 +85,19 @@ export class UpdateSchoolLevel {
 export class AddTopic {
   static readonly type =
     '[EnvironmentalProject] Add Topic EnvironmentalProject';
-  constructor(public topic: Topic) {}
+  constructor(public topic: Topic) { }
 }
 
 export class DeleteTopic {
   static readonly type =
     '[EnvironmentalProject] Delete Topic EnvironmentalProject';
-  constructor(public indexTopic: number) {}
+  constructor(public indexTopic: number) { }
 }
 
 export class UpdateTopic {
   static readonly type =
     '[EnvironmentalProject] Update Topic EnvironmentalProject';
-  constructor(public topic: Topic, public indexTopic: number) {}
+  constructor(public topic: Topic, public indexTopic: number) { }
 }
 
 // TODO: Add Angular decorator.
@@ -126,7 +125,8 @@ export class UpdateTopic {
   },
 })
 @Injectable()
-export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
+@Injectable()
+export class EnvironmentalProjectState implements OnDestroy {
   subscriptionEnvironmentalProject: Subscription;
 
   referencingLapse = '1';
@@ -178,11 +178,7 @@ export class EnvironmentalProjectState implements NgxsOnInit, OnDestroy {
 
   constructor(
     private environmentalProjectServivce: EnvironmentalProjectService
-  ) {}
-
-  ngxsOnInit(ctx: StateContext<EnvironmentalProjectModel>): void {
-    ctx.dispatch(new GetEnvironmentalProject());
-  }
+  ) { }
 
   ngOnDestroy() {
     if (this.subscriptionEnvironmentalProject) {

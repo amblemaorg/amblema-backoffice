@@ -5,6 +5,7 @@ import {
   SchoolUserState,
   SelectedSchoolUser,
   DeleteSchoolUser,
+  GetSchoolUsers
 } from 'src/app/store/user/school-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { SchoolUser } from 'src/app/_models/user/school.model';
@@ -23,10 +24,10 @@ declare var $: any;
   templateUrl: './schools-users-table.component.html',
 })
 export class SchoolsUsersTableComponent extends BaseTable
-  implements TableActions {
+  implements TableActions, OnInit {
   @Select(SchoolUserState.schoolUsers) data$: Observable<SchoolUser[]>;
 
-  public isCan =  new AuthService().isAllowed( ALL_ACTIONS.SCHOOL_USER_CREATE );
+  public isCan = new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_CREATE);
 
   subscription: Subscription;
 
@@ -77,6 +78,10 @@ export class SchoolsUsersTableComponent extends BaseTable
       !new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_EDIT),
       !new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_DELETE)
     );
+  }
+
+  ngOnInit() {
+    this.store.dispatch(new GetSchoolUsers());
   }
 
   onAction(event: any) {

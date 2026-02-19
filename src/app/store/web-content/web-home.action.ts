@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { WebHome } from '../../_models/web/web-home.model';
 import { WebHomeService } from '../../services/web-content/web-home.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
@@ -64,7 +64,8 @@ export class DeleteTestimonialWebHome {
     }
 })
 @Injectable()
-export class WebHomeState implements NgxsOnInit {
+@Injectable()
+export class WebHomeState {
 
     @Selector()
     static webHome(state: WebHome): WebHome | null {
@@ -74,10 +75,6 @@ export class WebHomeState implements NgxsOnInit {
     constructor(
         private webHomeService: WebHomeService
     ) { }
-
-    ngxsOnInit(ctx: StateContext<WebHome>) {
-        ctx.dispatch(new GetWebHome());
-    }
 
     @Action(GetWebHome)
     getWebHome(ctx: StateContext<WebHome>) {

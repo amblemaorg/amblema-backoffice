@@ -1,5 +1,5 @@
 import { UserCreationRequest } from 'src/app/_models/request/user-creation-request.model';
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
@@ -18,12 +18,12 @@ export class UpdateUserCreationRequest {
   constructor(
     public newRequest: UserCreationRequest,
     public oldRequest: UserCreationRequest
-  ) {}
+  ) { }
 }
 
 export class DeleteUserCreationRequest {
   static readonly type = '[User Creation Request] Delete UserCreationRequest';
-  constructor(public payload: UserCreationRequest) {}
+  constructor(public payload: UserCreationRequest) { }
 }
 
 @State<UserCreationRequestModel>({
@@ -33,7 +33,8 @@ export class DeleteUserCreationRequest {
   },
 })
 @Injectable()
-export class UserCreationRequestState implements NgxsOnInit {
+@Injectable()
+export class UserCreationRequestState {
   @Selector()
   static creationRequests(
     state: UserCreationRequestModel
@@ -56,11 +57,7 @@ export class UserCreationRequestState implements NgxsOnInit {
     return value;
   }
 
-  ngxsOnInit(ctx: StateContext<UserCreationRequestModel>): void {
-    ctx.dispatch(new GetUserCreationRequests());
-  }
-
-  constructor(private userCreationRequestService: UserCreationRequestService) {}
+  constructor(private userCreationRequestService: UserCreationRequestService) { }
 
   @Action(GetUserCreationRequests)
   getUserCreationRequests(ctx: StateContext<UserCreationRequestModel>) {

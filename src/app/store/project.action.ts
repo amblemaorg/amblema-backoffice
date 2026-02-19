@@ -1,5 +1,5 @@
 import { Project } from '../_models/project.model';
-import { State, NgxsOnInit, Selector, StateContext, Action } from '@ngxs/store';
+import { State, Selector, StateContext, Action } from '@ngxs/store';
 import { ProjectService } from '../services/project.service';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
@@ -19,27 +19,27 @@ export class GetProjects {
 
 export class SelectedProject {
     static readonly type = '[Project] Selected Project';
-    constructor( public payload: Project ) {}
+    constructor(public payload: Project) { }
 }
 
 export class AddProject {
     static readonly type = '[Project] Add Project';
-    constructor( public payload: Project ) {}
+    constructor(public payload: Project) { }
 }
 
 export class UpdateProject {
     static readonly type = '[Project] Update Project';
-    constructor( public newProject: Project, public oldProject: Project ) {  }
+    constructor(public newProject: Project, public oldProject: Project) { }
 }
 
 export class DeleteProject {
     static readonly type = '[Project] Delete Project';
-    constructor( public payload: string ) {}
+    constructor(public payload: string) { }
 }
 
 export class ClearProject {
     static readonly type = '[Project] Clear Project';
-    constructor( ) {}
+    constructor() { }
 }
 
 // TODO: Add Angular decorator.
@@ -61,39 +61,36 @@ export class ClearProject {
     }
 })
 @Injectable()
-export class ProjectState implements NgxsOnInit, OnDestroy {
+@Injectable()
+export class ProjectState implements OnDestroy {
     private subscription: Subscription;
 
     @Selector()
-    static project( state: ProjectStateModel ): Project | null {
+    static project(state: ProjectStateModel): Project | null {
         return state.project;
     }
 
     @Selector()
-    static projects( state: ProjectStateModel ): Project[] | null {
+    static projects(state: ProjectStateModel): Project[] | null {
         return state.projects;
     }
 
     constructor(
         private toastr: CustomToastrService,
-        private projectService: ProjectService ) {
+        private projectService: ProjectService) {
 
-    }
-
-    ngxsOnInit(ctx: StateContext<ProjectStateModel>): void {
-        ctx.dispatch(new GetProjects());
     }
 
     ngOnDestroy(): void {
-        if ( this.subscription ) {
+        if (this.subscription) {
             this.subscription.unsubscribe();
         }
     }
 
-    @Action( GetProjects )
+    @Action(GetProjects)
     getProjects(ctx: StateContext<ProjectStateModel>) {
-        this.subscription = this.projectService.getProjects().subscribe( response => {
-            ctx.setState( patch({
+        this.subscription = this.projectService.getProjects().subscribe(response => {
+            ctx.setState(patch({
                 ...ctx.getState(),
                 projects: response
             }));

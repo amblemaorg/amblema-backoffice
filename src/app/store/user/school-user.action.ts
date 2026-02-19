@@ -1,5 +1,5 @@
 import { SchoolUser } from 'src/app/_models/user/school.model';
-import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
@@ -10,12 +10,18 @@ import { Injectable, OnDestroy } from '@angular/core';
 export interface SchoolUserModel {
     schoolUser: SchoolUser;
     schoolUsers: SchoolUser[];
+    schoolUsersCompact: SchoolUser[];
 }
 
 // -- Actions --
 
 export class GetSchoolUsers {
     static readonly type = '[School User] Get School Users';
+    constructor() { }
+}
+
+export class GetSchoolUsersCompact {
+    static readonly type = '[School User] Get School Users Compact';
     constructor() { }
 }
 
@@ -83,17 +89,24 @@ export class SelectedSchoolUser {
             addressZone: '',
             addressZoneType: ''
         },
-        schoolUsers: []
+        schoolUsers: [],
+        schoolUsersCompact: []
     }
 })
 @Injectable()
-export class SchoolUserState implements NgxsOnInit, OnDestroy {
+@Injectable()
+export class SchoolUserState implements OnDestroy {
 
     subscription: Subscription;
 
     @Selector()
     static schoolUsers(state: SchoolUserModel): SchoolUser[] | null {
         return state.schoolUsers;
+    }
+
+    @Selector()
+    static schoolUsersCompact(state: SchoolUserModel): SchoolUser[] | null {
+        return state.schoolUsersCompact;
     }
 
     @Selector()
@@ -106,10 +119,6 @@ export class SchoolUserState implements NgxsOnInit, OnDestroy {
         private toastr: CustomToastrService,
         private schoolUserService: SchoolUserService,
     ) { }
-
-    ngxsOnInit(ctx: StateContext<SchoolUserModel>) {
-        ctx.dispatch(new GetSchoolUsers());
-    }
 
     ngOnDestroy(): void {
         if (this.subscription) {
@@ -125,6 +134,18 @@ export class SchoolUserState implements NgxsOnInit, OnDestroy {
                 ctx.setState(patch({
                     ...ctx.getState(),
                     schoolUsers: response
+                }));
+            }
+        });
+    }
+
+    @Action(GetSchoolUsersCompact)
+    getSchoolUsersCompact(ctx: StateContext<SchoolUserModel>) {
+        this.subscription = this.schoolUserService.getSchoolUsers('id,name').subscribe(response => {
+            if (response) {
+                ctx.setState(patch({
+                    ...ctx.getState(),
+                    schoolUsersCompact: response
                 }));
             }
         });

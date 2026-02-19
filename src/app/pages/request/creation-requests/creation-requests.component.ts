@@ -97,8 +97,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
               row === TYPE_REQUEST.COORDINATOR.ORIGINAL
                 ? TYPE_REQUEST.COORDINATOR.CONVERTION
                 : row === TYPE_REQUEST.SCHOOL.ORIGINAL
-                ? TYPE_REQUEST.SCHOOL.CONVERTION
-                : TYPE_REQUEST.SPONSOR.CONVERTION;
+                  ? TYPE_REQUEST.SCHOOL.CONVERTION
+                  : TYPE_REQUEST.SPONSOR.CONVERTION;
             return value;
           },
           filterFunction(cell?: any, search?: string): boolean {
@@ -106,8 +106,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
               cell === TYPE_REQUEST.COORDINATOR.ORIGINAL
                 ? TYPE_REQUEST.COORDINATOR.CONVERTION
                 : cell === TYPE_REQUEST.SCHOOL.ORIGINAL
-                ? TYPE_REQUEST.SCHOOL.CONVERTION
-                : TYPE_REQUEST.SPONSOR.CONVERTION;
+                  ? TYPE_REQUEST.SCHOOL.CONVERTION
+                  : TYPE_REQUEST.SPONSOR.CONVERTION;
 
             value = value.toUpperCase();
             if (value.includes(search.toUpperCase()) || search === '') {
@@ -144,8 +144,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
               cell === REQUEST_STATUS.PENDING.CODE
                 ? REQUEST_STATUS.PENDING.VALUE
                 : cell === REQUEST_STATUS.ACCEPTED.CODE
-                ? REQUEST_STATUS.ACCEPTED.VALUE
-                : REQUEST_STATUS.REJECTED.VALUE;
+                  ? REQUEST_STATUS.ACCEPTED.VALUE
+                  : REQUEST_STATUS.REJECTED.VALUE;
 
             value = value.toUpperCase();
             if (value.includes(search.toUpperCase()) || search === '') {
@@ -164,6 +164,7 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(new GetUserCreationRequests());
 
     this.router.params.subscribe((value) => {
       if (Object.keys(value).length) {

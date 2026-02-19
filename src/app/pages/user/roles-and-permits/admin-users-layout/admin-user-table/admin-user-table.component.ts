@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../../_helpers/base-table';
 import { Select, Store } from '@ngxs/store';
 import {
   AdminUserState,
   DeleteAdminUser,
   SelectedAdminUser,
+  GetAdminUsers
 } from 'src/app/store/user/admin-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
@@ -23,10 +24,10 @@ declare var $: any;
   templateUrl: './admin-user-table.component.html',
   providers: [BsModalService],
 })
-export class AdminUserTableComponent extends BaseTable implements TableActions {
+export class AdminUserTableComponent extends BaseTable implements TableActions, OnInit {
   @Select(AdminUserState.adminUsers) data$: Observable<AdminUser[]>;
 
-  public itCan = new AuthService().isAllowed( ALL_ACTIONS.ADMIN_CREATE );
+  public itCan = new AuthService().isAllowed(ALL_ACTIONS.ADMIN_CREATE);
 
   subscription: Subscription;
 
@@ -92,6 +93,10 @@ export class AdminUserTableComponent extends BaseTable implements TableActions {
       !new AuthService().isAllowed(ALL_ACTIONS.ADMIN_EDIT),
       !new AuthService().isAllowed(ALL_ACTIONS.ADMIN_DELETE)
     );
+  }
+
+  ngOnInit() {
+    this.store.dispatch(new GetAdminUsers());
   }
 
   onAction(event: any) {

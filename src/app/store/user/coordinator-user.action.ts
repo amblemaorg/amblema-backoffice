@@ -1,5 +1,5 @@
 import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
-import { State, NgxsOnInit, Selector, Action, StateContext } from '@ngxs/store';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
@@ -10,12 +10,18 @@ import { Injectable, OnDestroy } from '@angular/core';
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
     coordinatorUsers: CoordinatorUser[];
+    coordinatorUsersCompact: CoordinatorUser[];
 }
 
 // -- Actions --
 
 export class GetCoordinatorUsers {
     static readonly type = '[Coordinator User] Get Coordinator Users';
+    constructor() { }
+}
+
+export class GetCoordinatorUsersCompact {
+    static readonly type = '[Coordinator User] Get Coordinator Users Compact';
     constructor() { }
 }
 
@@ -65,17 +71,24 @@ export class SelectedCoordinatorUser {
             addressHome: '',
             status: ''
         },
-        coordinatorUsers: []
+        coordinatorUsers: [],
+        coordinatorUsersCompact: []
     }
 })
 @Injectable()
-export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
+@Injectable()
+export class CoordinatorUserState implements OnDestroy {
 
     subscription: Subscription;
 
     @Selector()
     static coordinatorUsers(state: CoordinatorUserModel): CoordinatorUser[] | null {
         return state.coordinatorUsers;
+    }
+
+    @Selector()
+    static coordinatorUsersCompact(state: CoordinatorUserModel): CoordinatorUser[] | null {
+        return state.coordinatorUsersCompact;
     }
 
     @Selector()
@@ -89,12 +102,8 @@ export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
         private coordinatorUserService: CoordinatorUserService
     ) { }
 
-    ngxsOnInit(ctx: StateContext<CoordinatorUserModel>) {
-        ctx.dispatch(new GetCoordinatorUsers());
-    }
-
     ngOnDestroy(): void {
-        if ( this.subscription ) {
+        if (this.subscription) {
             this.subscription.unsubscribe();
         }
     }
@@ -111,6 +120,24 @@ export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
                 }));
             }
 
+        });
+    }
+
+    @Action(GetCoordinatorUsersCompact)
+    getCoordinatorUsersCompact(ctx: StateContext<CoordinatorUserModel>) {
+        this.subscription = this.coordinatorUserService.getCoordinatorUsers('id,firstName,lastName').subscribe(response => {
+            if (response) {
+                response = this.helper.readlyTypeDocument(response);
+                // Map firstName and lastName to name for the selector
+                response.map(user => {
+                    user.name = `${user.firstName} ${user.lastName}`;
+                    return user;
+                });
+                ctx.setState(patch({
+                    ...ctx.getState(),
+                    coordinatorUsersCompact: response
+                }));
+            }
         });
     }
 
@@ -132,14 +159,14 @@ export class CoordinatorUserState implements NgxsOnInit, OnDestroy {
         }));
     }
 
-    @Action( UpdateCoordinatorUser )
-    updateCoordinatorUser( ctx: StateContext<CoordinatorUserModel>, action: UpdateCoordinatorUser ) {
-        ctx.setState( patch({
+    @Action(UpdateCoordinatorUser)
+    updateCoordinatorUser(ctx: StateContext<CoordinatorUserModel>, action: UpdateCoordinatorUser) {
+        ctx.setState(patch({
             ...ctx.getState(),
             coordinatorUsers: updateItem<CoordinatorUser>(
                 coordinatorUser =>
-                coordinatorUser.id === action.oldCoordinatorUser.id, action.newCoordinatorUser )
-        }) );
+                    coordinatorUser.id === action.oldCoordinatorUser.id, action.newCoordinatorUser)
+        }));
     }
 
     @Action(DeleteCoordinatorUser)

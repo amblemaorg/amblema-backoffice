@@ -10,11 +10,11 @@ import {
   NbPopoverDirective,
 } from '@nebular/theme';
 import { Subscription, Observable } from 'rxjs';
-import { Select } from '@ngxs/store';
-import { ProjectRequestState } from 'src/app/store/request/project-requests.action';
-import { UserCreationRequestState } from 'src/app/store/request/user-creation-request.action';
-import { ProjectValidationRequestState } from 'src/app/store/request/project-validation-request.action';
-import { RequestContentState } from 'src/app/store/request/request-content-approval.action';
+import { Select, Store } from '@ngxs/store';
+import { ProjectRequestState, GetProjectRequests } from 'src/app/store/request/project-requests.action';
+import { UserCreationRequestState, GetUserCreationRequests } from 'src/app/store/request/user-creation-request.action';
+import { ProjectValidationRequestState, GetProjectValidationRequest } from 'src/app/store/request/project-validation-request.action';
+import { RequestContentState, GetRequestsContent, GetRequestsContentCompact } from 'src/app/store/request/request-content-approval.action';
 import { Router } from '@angular/router';
 import { NbAuthService, NbTokenService } from '@nebular/auth';
 import { filter, map } from 'rxjs/operators';
@@ -43,17 +43,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: NbAuthService,
     private authServiceCustom: AuthService,
     private tokenService: NbTokenService,
+    private store: Store,
     protected sidebarService?: NbSidebarService
-  ) {}
+  ) { }
 
   ngOnInit() {
+
+    // -- Dispatch Request Actions --
+    this.store.dispatch(new GetProjectRequests());
+    this.store.dispatch(new GetUserCreationRequests());
+    this.store.dispatch(new GetProjectValidationRequest());
+    this.store.dispatch(new GetRequestsContentCompact());
 
     /* To the user menu */
     this.subscription = this.menuService.onItemClick().pipe(
       filter(({ tag }) => tag === 'user-menu'),
       map(({ item: { title } }) => {
 
-        if ( title === 'Cerrar sesión' ) {
+        if (title === 'Cerrar sesión') {
           this.tokenService.clear();
           localStorage.clear();
           sessionStorage.clear();

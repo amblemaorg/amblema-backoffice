@@ -5,6 +5,7 @@ import {
   SponsorUserState,
   DeleteSponsorUser,
   SelectedSponsorUser,
+  GetSponsorUsers
 } from 'src/app/store/user/sponsor-user.action';
 import { Observable } from 'rxjs';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
@@ -24,10 +25,10 @@ declare var $: any;
   templateUrl: './sponsors-users-table.component.html',
 })
 export class SponsorsUsersTableComponent extends BaseTable
-  implements TableActions {
+  implements TableActions, OnInit {
   @Select(SponsorUserState.sponsorUsers) data$: Observable<SponsorUser[]>;
 
-    public isCan =  new AuthService().isAllowed( ALL_ACTIONS.SPONSOR_USER_CREATE );
+  public isCan = new AuthService().isAllowed(ALL_ACTIONS.SPONSOR_USER_CREATE);
 
   constructor(
     private modalServices: ModalService,
@@ -79,6 +80,10 @@ export class SponsorsUsersTableComponent extends BaseTable
       !new AuthService().isAllowed(ALL_ACTIONS.SPONSOR_USER_EDIT),
       !new AuthService().isAllowed(ALL_ACTIONS.SPONSOR_USER_DELETE)
     );
+  }
+
+  ngOnInit() {
+    this.store.dispatch(new GetSponsorUsers());
   }
 
   onAction(event: any): void {

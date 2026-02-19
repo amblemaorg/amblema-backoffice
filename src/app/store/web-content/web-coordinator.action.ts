@@ -1,6 +1,6 @@
 import { WebCoordinator } from '../../_models/web/web-coordinator.model';
 import { Testimonial } from '../../_models/web/testimonial.model';
-import { State, NgxsOnInit, StateContext, Selector, Action } from '@ngxs/store';
+import { State, StateContext, Selector, Action } from '@ngxs/store';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebCoordinatorService } from '../../services/web-content/web-coordinator.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
@@ -14,7 +14,7 @@ export class GetWebCoordinator {
 
 export class SetWebCoordinator {
     static readonly type = '[WebCoordinator] Set Web Coordinator';
-    constructor( public payload: WebCoordinator ) {}
+    constructor(public payload: WebCoordinator) { }
 }
 
 // -- Testimonial class action --
@@ -45,7 +45,8 @@ export class DeleteTestimonialWebCoordinator {
     }
 })
 @Injectable()
-export class WebCoordinatorState implements NgxsOnInit {
+@Injectable()
+export class WebCoordinatorState {
 
     @Selector()
     static webCoordinator(state: WebCoordinator): WebCoordinator | null {
@@ -55,11 +56,7 @@ export class WebCoordinatorState implements NgxsOnInit {
     constructor(
         private toastr: CustomToastrService,
         private webCoordinatorService: WebCoordinatorService
-    ) {}
-
-    ngxsOnInit( ctx: StateContext<WebCoordinator> ) {
-        ctx.dispatch( new GetWebCoordinator() );
-    }
+    ) { }
 
     // -- Web coordinator's actions --
 
@@ -68,13 +65,13 @@ export class WebCoordinatorState implements NgxsOnInit {
         return this.webCoordinatorService.getContentWebCoordinator()
             .subscribe(response => {
                 if (response.coordinatorPage) {
-                    ctx.setState( { coordinatorPage: response.coordinatorPage } );
+                    ctx.setState({ coordinatorPage: response.coordinatorPage });
                 }
             });
     }
 
     @Action(SetWebCoordinator)
-    setWebCoordinator(ctx: StateContext<WebCoordinator>, action: SetWebCoordinator ) {
+    setWebCoordinator(ctx: StateContext<WebCoordinator>, action: SetWebCoordinator) {
 
         ctx.setState({
             ...ctx.getState(),
@@ -97,7 +94,7 @@ export class WebCoordinatorState implements NgxsOnInit {
     @Action(SetTestimonialWebCoordinator)
     setTestimonialWebCoordinator(ctx: StateContext<WebCoordinator>, action: SetTestimonialWebCoordinator) {
         ctx.setState(patch({
-            coordinatorPage : patch({
+            coordinatorPage: patch({
                 testimonials: append([action.payload])
             })
         }));
@@ -106,7 +103,7 @@ export class WebCoordinatorState implements NgxsOnInit {
     @Action(UpdateTestimonialWebCoordinator)
     updateTestimonialWebCoordinator(ctx: StateContext<WebCoordinator>, action: UpdateTestimonialWebCoordinator) {
         ctx.setState(patch({
-            coordinatorPage : patch({
+            coordinatorPage: patch({
                 testimonials: updateItem<Testimonial>(testimonial => testimonial === action.oldTestimonial, action.newTestimonial)
             })
         }));
@@ -115,7 +112,7 @@ export class WebCoordinatorState implements NgxsOnInit {
     @Action(DeleteTestimonialWebCoordinator)
     deleteTestimonialWebCoordinator(ctx: StateContext<WebCoordinator>, action: DeleteTestimonialWebCoordinator) {
         ctx.setState(patch({
-            coordinatorPage : patch({
+            coordinatorPage: patch({
                 testimonials: removeItem<Testimonial>(testimonial => testimonial === action.payload)
             })
         }));

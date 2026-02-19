@@ -1,5 +1,5 @@
 import { Slider } from '../_models/web/slider.model';
-import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
+import { State, StateContext, Action, Selector } from '@ngxs/store';
 import { ActivityStrategyService } from '../services/activity-strategy.service';
 import { Subscription } from 'rxjs';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
@@ -20,25 +20,25 @@ export class GetActivityStrategy {
 export class AddSliderEnviromentToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Add Slider Enviroment To Activity Strategy';
-  constructor(public payload: Slider) {}
+  constructor(public payload: Slider) { }
 }
 
 export class UpdateSliderEnviromentToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Update Slider Enviroment To Activity Strategy';
-  constructor(public newSlider: Slider, public oldSlider: Slider) {}
+  constructor(public newSlider: Slider, public oldSlider: Slider) { }
 }
 
 export class DeleteSliderEnviromentToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Delete Slider Enviroment To Activity Strategy';
-  constructor(public payload: Slider) {}
+  constructor(public payload: Slider) { }
 }
 
 export class AddSliderReadingToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Add Slider Reading To Activity Strategy';
-  constructor( public payload: Slider) {
+  constructor(public payload: Slider) {
 
   }
 }
@@ -46,32 +46,32 @@ export class AddSliderReadingToActivityStrategy {
 export class UpdateSliderReadingToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Update Slider Reading To Activity Strategy';
-  constructor(public newSlider: Slider, public oldSlider: Slider) {}
+  constructor(public newSlider: Slider, public oldSlider: Slider) { }
 }
 
 export class DeleteSliderReadingToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Delete Slider Reading To Activity Strategy';
-  constructor(public payload: Slider) {}
+  constructor(public payload: Slider) { }
 }
 
 export class AddSliderMathToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Add Slider Math To Activity Strategy';
 
-    constructor(public payload: Slider) {}
-  }
+  constructor(public payload: Slider) { }
+}
 
 export class UpdateSliderMathToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Update Slider Math To Activity Strategy';
-  constructor(public newSlider: Slider, public oldSlider: Slider) {}
+  constructor(public newSlider: Slider, public oldSlider: Slider) { }
 }
 
 export class DeleteSliderMathToActivityStrategy {
   static readonly type =
     '[ActivityStrategy] Delete Slider Math To Activity Strategy';
-  constructor(public payload: Slider) {}
+  constructor(public payload: Slider) { }
 }
 
 export class UpdateSliderToActivityStrategy {
@@ -93,7 +93,8 @@ export class DeleteSliderToActivityStrategy {
   },
 })
 @Injectable()
-export class ActivityStrategyState implements NgxsOnInit {
+@Injectable()
+export class ActivityStrategyState {
   subscription: Subscription;
 
   @Selector()
@@ -122,11 +123,7 @@ export class ActivityStrategyState implements NgxsOnInit {
     return state.environmentActivities;
   }
 
-  constructor(private activityStrategyService: ActivityStrategyService) {}
-
-  ngxsOnInit(ctx: StateContext<ModelActivityStrategy>): void {
-    ctx.dispatch(new GetActivityStrategy());
-  }
+  constructor(private activityStrategyService: ActivityStrategyService) { }
 
   @Action(GetActivityStrategy)
   getActivityStrategy(ctx: StateContext<ModelActivityStrategy>) {

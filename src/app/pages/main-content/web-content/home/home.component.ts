@@ -8,7 +8,8 @@ import {
   SetTestimonialWebHome,
   UpdateTestimonialWebHome,
   DeleteTestimonialWebHome,
-  SetWebHome
+  SetWebHome,
+  GetWebHome
 } from 'src/app/store/web-content/web-home.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebHome } from 'src/app/_models/web/web-home.model';
@@ -46,6 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private store: Store) { }
 
   async ngOnInit() {
+    this.store.dispatch(new GetWebHome());
     this.subscription = this.data$.subscribe(response => {
       this.sliders = response.slider; // <-- Get sliders, show on the table
       this.testimonials = response.testimonials; // <-- Get testimonials show on the table

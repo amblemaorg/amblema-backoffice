@@ -5,7 +5,8 @@ import {
   SetTestimonialWebCoordinator,
   UpdateTestimonialWebCoordinator,
   DeleteTestimonialWebCoordinator,
-  SetWebCoordinator
+  SetWebCoordinator,
+  GetWebCoordinator
 } from 'src/app/store/web-content/web-coordinator.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebCoordinator } from 'src/app/_models/web/web-coordinator.model';
@@ -40,6 +41,7 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
     private store: Store) { }
 
   ngOnInit() {
+    this.store.dispatch(new GetWebCoordinator());
 
     for (let index = 0; index < 7; index++) {
       this.steps.push(new FormControl(''));

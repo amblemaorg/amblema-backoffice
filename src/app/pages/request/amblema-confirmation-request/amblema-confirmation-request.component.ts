@@ -5,6 +5,7 @@ import {
   ProjectValidationRequestState,
   DeleteProjectValidationRequest,
   SelectedProjectValidationRequestn,
+  GetProjectValidationRequest
 } from 'src/app/store/request/project-validation-request.action';
 import { Observable, Subscription } from 'rxjs';
 import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
@@ -92,8 +93,8 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
             cell === REQUEST_STATUS.PENDING.CODE
               ? REQUEST_STATUS.PENDING.VALUE
               : cell === REQUEST_STATUS.ACCEPTED.CODE
-              ? REQUEST_STATUS.ACCEPTED.VALUE
-              : REQUEST_STATUS.REJECTED.VALUE;
+                ? REQUEST_STATUS.ACCEPTED.VALUE
+                : REQUEST_STATUS.REJECTED.VALUE;
 
           value = value.toUpperCase();
           if (value.includes(search.toUpperCase()) || search === '') {
@@ -105,10 +106,11 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
       },
     };
 
-    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_DELETE ) ) );
+    this.validateAction(false, !(new AuthService().isAllowed(ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_DELETE)));
   }
 
   ngOnInit() {
+    this.store.dispatch(new GetProjectValidationRequest());
     this.router.params.subscribe((query: any) => {
       if (Object.keys(query).length) {
         this.subscriptionService = this.data$.subscribe((response) => {

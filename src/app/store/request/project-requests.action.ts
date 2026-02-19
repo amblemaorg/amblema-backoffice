@@ -1,6 +1,5 @@
 import {
   State,
-  NgxsOnInit,
   Action,
   StateContext,
   Selector,
@@ -37,12 +36,12 @@ export class UpdateProjectRequests {
   constructor(
     public newProject: ProjectRequest,
     public oldProject: ProjectRequest
-  ) {}
+  ) { }
 }
 
 export class DeleteProjectRequests {
   static readonly type = '[Project] Delete ProjectRequest';
-  constructor(public payload: ProjectRequest) {}
+  constructor(public payload: ProjectRequest) { }
 }
 
 @State<ProjectRequestModel>({
@@ -52,7 +51,8 @@ export class DeleteProjectRequests {
   },
 })
 @Injectable()
-export class ProjectRequestState implements NgxsOnInit {
+@Injectable()
+export class ProjectRequestState {
   @Selector([
     UserCreationRequestState,
     ProjectValidationRequestState,
@@ -63,7 +63,7 @@ export class ProjectRequestState implements NgxsOnInit {
     userCreationRequest: UserCreationRequestModel,
     projectValidationRequest: ProjectValidationRequestModel,
     requestContent: RequestContentModel
- ): any[] {
+  ): any[] {
     const notifications: any = [];
 
     state.projectRequests.forEach((item) => {
@@ -93,29 +93,29 @@ export class ProjectRequestState implements NgxsOnInit {
       }
     });
 
-    requestContent.requestsContent.forEach( item => {
-        if (item.status === '1') {
-            let element: any = item;
-            element = { ...element, notiType: 4 };
-            notifications.push(element);
-          }
-    } );
+    requestContent.requestsContent.forEach(item => {
+      if (item.status === '1') {
+        let element: any = item;
+        element = { ...element, notiType: 4 };
+        notifications.push(element);
+      }
+    });
 
 
-    notifications.sort( ( a: any, b: any ) => {
+    notifications.sort((a: any, b: any) => {
 
 
-            if (((new Date(a.createdAt) as any) < new Date(b.createdAt)) as any) {
-                return -1 * -1;
-            }
+      if (((new Date(a.createdAt) as any) < new Date(b.createdAt)) as any) {
+        return -1 * -1;
+      }
 
-            if (((new Date(a.createdAt) as any) > new Date(b.createdAt)) as any) {
-                return -1;
-            }
+      if (((new Date(a.createdAt) as any) > new Date(b.createdAt)) as any) {
+        return -1;
+      }
 
 
 
-     } );
+    });
 
     return notifications;
   }
@@ -140,11 +140,7 @@ export class ProjectRequestState implements NgxsOnInit {
     return state.projectRequests;
   }
 
-  ngxsOnInit(ctx: StateContext<ProjectRequestModel[]>): void {
-    ctx.dispatch(new GetProjectRequests());
-  }
-
-  constructor(private projectRequestsService: ProjectRequestsService) {}
+  constructor(private projectRequestsService: ProjectRequestsService) { }
 
   @Action(GetProjectRequests)
   getProjectRequests(ctx: StateContext<ProjectRequestModel>) {

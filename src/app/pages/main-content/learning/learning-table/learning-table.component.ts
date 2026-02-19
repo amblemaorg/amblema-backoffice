@@ -7,6 +7,7 @@ import {
   DeleteLearning,
   SelectedLearning,
   ClearLearning,
+  GetLearnings
 } from 'src/app/store/learning.action';
 import { Learning } from 'src/app/_models/learning.model';
 import { DatePipe } from '@angular/common';
@@ -32,7 +33,7 @@ export class LearningTableComponent extends BaseTable
 
   data: Learning;
 
-  public canCreate = new AuthService().isAllowed( ALL_ACTIONS.LEARNING_MODULE_CREATE );
+  public canCreate = new AuthService().isAllowed(ALL_ACTIONS.LEARNING_MODULE_CREATE);
 
   learnings: Learning[];
 
@@ -87,6 +88,7 @@ export class LearningTableComponent extends BaseTable
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new GetLearnings());
     this.subscription = this.learnings$.subscribe((response) => {
       this.learnings = response;
     });

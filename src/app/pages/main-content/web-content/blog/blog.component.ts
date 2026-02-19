@@ -7,6 +7,7 @@ import {
   SetPost,
   UpdatePost,
   DeletePost,
+  GetPosts
 } from 'src/app/store/web-content/blog.action';
 import { Observable, Subscription } from 'rxjs';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -40,9 +41,10 @@ export class BlogComponent implements OnInit, OnDestroy {
     private blogService: BlogService,
     private modalServicesBs: BsModalService,
     private store: Store
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.store.dispatch(new GetPosts());
     this.subscription = this.data$.subscribe((response) => {
       this.posts = response;
     });

@@ -7,6 +7,7 @@ import {
   UpdateTestimonialWebSponsor,
   DeleteTestimonialWebSponsor,
   SetWebSponsor,
+  GetWebSponsor
 } from 'src/app/store/web-content/web-sponsor.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebSponsor } from 'src/app/_models/web/web-sponsor.model';
@@ -38,9 +39,10 @@ export class SponsorsComponent implements OnInit, OnDestroy {
     private webSponsorService: WebSponsorService,
     private toastr: CustomToastrService,
     private store: Store
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.store.dispatch(new GetWebSponsor());
     for (let index = 0; index < 7; index++) {
       this.steps.push(new FormControl(''));
     }
@@ -59,11 +61,11 @@ export class SponsorsComponent implements OnInit, OnDestroy {
         : null;
 
 
-      const allEmpty = JSON.stringify( this.formSponsor.controls.steps.value );
+      const allEmpty = JSON.stringify(this.formSponsor.controls.steps.value);
 
       if (allEmpty === '["","","","","","",""]') {
-          this.formSponsor.patchValue(response.sponsorPage);
-        }
+        this.formSponsor.patchValue(response.sponsorPage);
+      }
 
 
       if (imageBackUp) {

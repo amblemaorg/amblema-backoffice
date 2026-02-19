@@ -16,6 +16,9 @@ import {
   RequestContentState,
   SelectedRequestContent,
   DeleteRequestContent,
+  GetRequestsContent,
+  GetRequestsContentCompact,
+  GetRequestContentById
 } from "src/app/store/request/request-content-approval.action";
 import { RequestContent } from "src/app/_models/request/request-content-approval.model";
 import { TYPE_INFORMATION } from "./_shared/type-information";
@@ -42,8 +45,7 @@ import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 })
 export class RequestsValidateInformationComponent
   extends BaseTable
-  implements OnInit
-{
+  implements OnInit {
   @Select(RequestContentState.requestsContent) data$: Observable<
     RequestContent[]
   >;
@@ -98,16 +100,16 @@ export class RequestsValidateInformationComponent
           return row === USER_TYPE.COORDINATOR.VALUE
             ? USER_TYPE.COORDINATOR.LABEL
             : row === USER_TYPE.SCHOOL.VALUE
-            ? USER_TYPE.SCHOOL.LABEL
-            : USER_TYPE.SPONSOR.LABEL;
+              ? USER_TYPE.SCHOOL.LABEL
+              : USER_TYPE.SPONSOR.LABEL;
         },
         filterFunction(cell?: any, search?: string): boolean {
           let value: string =
             cell === USER_TYPE.COORDINATOR.VALUE
               ? USER_TYPE.COORDINATOR.LABEL
               : cell === USER_TYPE.SCHOOL.VALUE
-              ? USER_TYPE.SCHOOL.LABEL
-              : USER_TYPE.SPONSOR.LABEL;
+                ? USER_TYPE.SCHOOL.LABEL
+                : USER_TYPE.SPONSOR.LABEL;
           value = value.toUpperCase();
           if (value.includes(search.toUpperCase()) || search === "") {
             return true;
@@ -139,40 +141,40 @@ export class RequestsValidateInformationComponent
           return row === TYPE_INFORMATION.STEP.VALUE
             ? TYPE_INFORMATION.STEP.LABEL
             : row === TYPE_INFORMATION.TESTIMONIES.VALUE
-            ? TYPE_INFORMATION.TESTIMONIES.LABEL
-            : row === TYPE_INFORMATION.ACTIVITY.VALUE
-            ? TYPE_INFORMATION.ACTIVITY.LABEL
-            : row === TYPE_INFORMATION.SLIDER.VALUE
-            ? TYPE_INFORMATION.SLIDER.LABEL
-            : row === TYPE_INFORMATION.WORKSHOP.VALUE
-            ? TYPE_INFORMATION.WORKSHOP.LABEL
-            : row === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
-            ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
-            : row === TYPE_INFORMATION.YEARBOOK.VALUE
-            ? TYPE_INFORMATION.YEARBOOK.LABEL
-            : row === TYPE_INFORMATION.SPAN_PLANNING.VALUE
-            ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
-            : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
+              ? TYPE_INFORMATION.TESTIMONIES.LABEL
+              : row === TYPE_INFORMATION.ACTIVITY.VALUE
+                ? TYPE_INFORMATION.ACTIVITY.LABEL
+                : row === TYPE_INFORMATION.SLIDER.VALUE
+                  ? TYPE_INFORMATION.SLIDER.LABEL
+                  : row === TYPE_INFORMATION.WORKSHOP.VALUE
+                    ? TYPE_INFORMATION.WORKSHOP.LABEL
+                    : row === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
+                      ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
+                      : row === TYPE_INFORMATION.YEARBOOK.VALUE
+                        ? TYPE_INFORMATION.YEARBOOK.LABEL
+                        : row === TYPE_INFORMATION.SPAN_PLANNING.VALUE
+                          ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
+                          : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
         },
         filterFunction: (cell?: any, search?: string) => {
           let value: string =
             cell === TYPE_INFORMATION.STEP.VALUE
               ? TYPE_INFORMATION.STEP.LABEL
               : cell === TYPE_INFORMATION.TESTIMONIES.VALUE
-              ? TYPE_INFORMATION.TESTIMONIES.LABEL
-              : cell === TYPE_INFORMATION.ACTIVITY.VALUE
-              ? TYPE_INFORMATION.ACTIVITY.LABEL
-              : cell === TYPE_INFORMATION.SLIDER.VALUE
-              ? TYPE_INFORMATION.SLIDER.LABEL
-              : cell === TYPE_INFORMATION.WORKSHOP.VALUE
-              ? TYPE_INFORMATION.WORKSHOP.LABEL
-              : cell === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
-              ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
-              : cell === TYPE_INFORMATION.YEARBOOK.VALUE
-              ? TYPE_INFORMATION.YEARBOOK.LABEL
-              : cell === TYPE_INFORMATION.SPAN_PLANNING.VALUE
-              ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
-              : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
+                ? TYPE_INFORMATION.TESTIMONIES.LABEL
+                : cell === TYPE_INFORMATION.ACTIVITY.VALUE
+                  ? TYPE_INFORMATION.ACTIVITY.LABEL
+                  : cell === TYPE_INFORMATION.SLIDER.VALUE
+                    ? TYPE_INFORMATION.SLIDER.LABEL
+                    : cell === TYPE_INFORMATION.WORKSHOP.VALUE
+                      ? TYPE_INFORMATION.WORKSHOP.LABEL
+                      : cell === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
+                        ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
+                        : cell === TYPE_INFORMATION.YEARBOOK.VALUE
+                          ? TYPE_INFORMATION.YEARBOOK.LABEL
+                          : cell === TYPE_INFORMATION.SPAN_PLANNING.VALUE
+                            ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
+                            : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
 
           value = value.toUpperCase();
 
@@ -206,10 +208,10 @@ export class RequestsValidateInformationComponent
             cell === REQUEST_STATUS.PENDING.CODE
               ? REQUEST_STATUS.PENDING.VALUE
               : cell === REQUEST_STATUS.ACCEPTED.CODE
-              ? REQUEST_STATUS.ACCEPTED.VALUE
-              : cell === REQUEST_STATUS.REJECTED.CODE
-              ? REQUEST_STATUS.REJECTED.VALUE
-              : REQUEST_STATUS.CANCELLED.VALUE;
+                ? REQUEST_STATUS.ACCEPTED.VALUE
+                : cell === REQUEST_STATUS.REJECTED.CODE
+                  ? REQUEST_STATUS.REJECTED.VALUE
+                  : REQUEST_STATUS.CANCELLED.VALUE;
 
           value = value.toUpperCase();
           if (value.includes(search.toUpperCase()) || search === "") {
@@ -228,13 +230,12 @@ export class RequestsValidateInformationComponent
   }
 
   ngOnInit() {
+    this.store.dispatch(new GetRequestsContentCompact());
     this.router.params.subscribe((query: any) => {
-      if (Object.keys(query).length) {
-        this.data$.subscribe((response) => {
-          this.store.dispatch(new SelectedRequestContent(query));
+      if (Object.keys(query).length && query.id) {
+        this.store.dispatch(new GetRequestContentById(query.id)).subscribe(() => {
+          this.showModalDetails(query.type);
         });
-
-        this.showModalDetails(query.type);
       }
     });
   }
@@ -302,8 +303,16 @@ export class RequestsValidateInformationComponent
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        this.showModalDetails(event.data.type);
-        this.store.dispatch(new SelectedRequestContent(event.data));
+        this.store.dispatch(new GetRequestContentById(event.data.id)).subscribe(() => {
+          this.showModalDetails(event.data.type);
+          // SelectedRequestContent is now set by GetRequestContentById, 
+          // but showModalDetails might need it? 
+          // OLD code: this.store.dispatch(new SelectedRequestContent(event.data));
+          // New code: GetRequestContentById sets selectedRequestContent in state.
+          // However, some modals might rely on passed data? 
+          // Let's check showModalDetails... it just opens modal.
+          // Modals typically select 'selectedRequestContent' from state.
+        });
         break;
       case this.ACTION.DELETE:
         // Call delete modal

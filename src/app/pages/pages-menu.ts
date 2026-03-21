@@ -169,6 +169,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
             ],
           },
           {
+            title: "Histórico de Olimpíadas Recreativas",
+            link: "/pages/content/peca-setting/olympics-history",
+          },
+          {
             title: "Grado de instrucción docentes",
             link: "/pages/content/peca-setting/specialty",
           },

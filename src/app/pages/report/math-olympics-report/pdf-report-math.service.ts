@@ -116,6 +116,7 @@ export class PDFReportMath {
                   { ...colorHeaderRow, text: "Grado", rowSpan: 2, alignment: "center" },
                   { ...colorHeaderRow, text: "Sección", rowSpan: 2, alignment: "center" },
                   { ...colorHeaderRow, text: "Inscritos", rowSpan: 2, alignment: "center" },
+                  { ...colorHeaderRow, text: "Participantes", rowSpan: 2, alignment: "center" },
                   { ...colorHeaderRow, text: "Olimpiadas Regionales", colSpan: 4, alignment: "center" },
                   {},
                   {},
@@ -126,6 +127,7 @@ export class PDFReportMath {
                   {},
                 ],
                 [
+                  {},
                   {},
                   {},
                   {},
@@ -153,6 +155,7 @@ export class PDFReportMath {
                 [
                   { ...colorHeaderSecondary, text: "" },
                   { ...colorHeaderSecondary, text: "Inscritos" },
+                  { ...colorHeaderSecondary, text: "Participantes" },
                   { ...colorHeaderSecondary, text: "Clasificados (Reg)" },
                   { ...colorHeaderSecondary, text: "Medallas de oro (Reg)" },
                   { ...colorHeaderSecondary, text: "Medallas de plata (Reg)" },
@@ -165,6 +168,7 @@ export class PDFReportMath {
                 [
                   { ...colorHeaderSecondary, text: "Total:" },
                   { ...colorHeaderSecondary, text: school.total.totalEnrolled },
+                  { ...colorHeaderSecondary, text: school.total.totalParticipant },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalClassified,
@@ -211,6 +215,7 @@ export class PDFReportMath {
               { text: grade.name, rowSpan: grade.sections.length },
               { text: section.name },
               { text: section.inscribed },
+              { text: section.participant },
               { text: section.classified },
               { text: section.medalsGold },
               { text: section.medalsSilver },
@@ -248,6 +253,12 @@ export class PDFReportMath {
               {
                 ...colorHeaderRow,
                 text: `Estudiantes inscritos: ${mockData.finalScore.enrolledStudents}`,
+              },
+            ],
+            [
+              {
+                ...colorHeaderRow,
+                text: `Estudiantes participantes: ${mockData.finalScore.participantStudents}`,
               },
             ],
             [

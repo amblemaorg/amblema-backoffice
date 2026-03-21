@@ -5,6 +5,7 @@ export interface OlympicsReport {
 
 interface FinalScore {
     enrolledStudents: number;
+    participantStudents: number;
     classifiedStudents: number;
     studentsGoldMedal: number;
     studentsSilverMedal: number;
@@ -28,6 +29,7 @@ interface School {
 
 interface Total {
     totalEnrolled: number;
+    totalParticipant: number;
     totalClassified: number;
     totalGoldMedals: number;
     totalSilverMedals: number;
@@ -40,12 +42,14 @@ interface Total {
 
 interface Grade {
     name: string;
+    totalParticipant: number;
     sections: Section[];
 }
 
 interface Section {
     name: string;
     inscribed: number;
+    participant: number;
     classified: number;
     medalsGold: number;
     medalsSilver: number;

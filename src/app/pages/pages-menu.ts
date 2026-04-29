@@ -169,6 +169,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
             ],
           },
           {
+            title: "Histórico de Olimpíadas Recreativas",
+            link: "/pages/content/peca-setting/olympics-history",
+          },
+          {
             title: "Grado de instrucción docentes",
             link: "/pages/content/peca-setting/specialty",
           },
@@ -221,7 +225,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
 
       {
-        title: "Reporte de las olimpíadas de matemáticas ",
+        title: "Reporte de las olimpíadas de matemáticas y lectura",
         link: "/pages/report/math-olympics-report",
       },
       {

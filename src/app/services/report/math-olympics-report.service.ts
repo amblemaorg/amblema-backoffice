@@ -12,15 +12,16 @@ export class MathOlympicsReportService {
   private readonly MATH_OLYMPICS_REPORT = `statistics/olympicsreport/`;
   private readonly SCHOOL_YEARS = `schoolyears`;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getMathOlympicsReport(
     startPeriodId: string,
-    endPeriodId: string
+    endPeriodId: string,
+    olympicsType: string = 'math'
   ): Observable<OlympicsReport> {
     return this.httpClient
       .get<OlympicsReport>(
-        `${environment.api}${this.MATH_OLYMPICS_REPORT}${startPeriodId}/${endPeriodId}`
+        `${environment.api}${this.MATH_OLYMPICS_REPORT}${startPeriodId}/${endPeriodId}?olympicsType=${olympicsType}`
       )
       .pipe(map((data: any) => data));
   }

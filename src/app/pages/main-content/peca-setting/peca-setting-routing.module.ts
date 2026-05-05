@@ -73,6 +73,13 @@ const routes: Routes = [
             (m) => m.EnvironmentalProjectModule
           ),
       },
+      {
+        path: "olympics-history",
+        loadChildren: () =>
+          import("./olympics-history/olympics-history.module").then(
+            (m) => m.OlympicsHistoryModule
+          ),
+      },
     ],
   },
 ];

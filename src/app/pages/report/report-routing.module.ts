@@ -51,7 +51,7 @@ const routes: Routes = [
         (m) => m.MathOlympicsReportModule
       ),
   },
-
+  
   /**
    * Graphics report module
    */
@@ -76,4 +76,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ReportRoutingModule {}
+export class ReportRoutingModule { }

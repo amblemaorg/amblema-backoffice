@@ -1,55 +1,48 @@
 <nb-card>
   <nb-card-header>
-    Reporte de Olimpíada de Matemática
+    Reporte de Olimpíadas
   </nb-card-header>
   <nb-card-body>
     <div class="row">
       <div class="col-12">
         <h6>Filtro por Rango de Período Académico</h6>
       </div>
+      <div class="col-12 col-md-12 form-group">
+        <label class="label">Tipo de olimpíada</label>
+        <select class="form-control" [(ngModel)]="olympicsType">
+          <option value="math">Matemática</option>
+          <option value="reading">Lectura</option>
+        </select>
+      </div>
       <div class="col-12 col-lg-6">
         <label class="label">Inicio</label>
-        <select
-          class="form-control form-group"
-          (change)="onChangeDateInit($event.target.value)"
-          [(ngModel)]="dateInitSelected"
-        >
+        <select class="form-control form-group" (change)="onChangeDateInit($event.target.value)"
+          [(ngModel)]="dateInitSelected">
           <option [value]="null" disabled>- Inicio Período académico -</option>
           <option [value]="item.id" *ngFor="let item of datesInit">{{
             item.name
-          }}</option>
+            }}</option>
         </select>
       </div>
 
       <div class="col-12 col-lg-6">
         <label class="label">Fin</label>
-        <select
-          [attr.disabled]="!dateInitSelected ? true : null"
-          class="form-control form-group"
-          [(ngModel)]="dateEndSelected"
-        >
+        <select [attr.disabled]="!dateInitSelected ? true : null" class="form-control form-group"
+          [(ngModel)]="dateEndSelected">
           <option [value]="null" disabled>- Fin Período académico -</option>
           <option [value]="item.id" *ngFor="let item of datesEnd">{{
             item.name
-          }}</option>
+            }}</option>
         </select>
       </div>
     </div>
   </nb-card-body>
   <nb-card-footer class="text-right">
-    <button
-      [nbSpinner]="disabledBtn"
-      [attr.disabled]="
+    <button [nbSpinner]="disabledBtn" [attr.disabled]="
         disabledBtn || (!dateInitSelected || !dateEndSelected )  ? true : null
-      "
-      class="col-12 col-lg-auto"
-      nbButton
-      status="success"
-      (click)="onGenerateReport()"
-    >
+      " class="col-12 col-lg-auto" nbButton status="success" (click)="onGenerateReport()">
       <span *ngIf="!disabledBtn">Generar reporte </span>
-      <span *ngIf="disabledBtn">Restableciendo... </span
-      ><nb-icon icon="download-outline"></nb-icon>
+      <span *ngIf="disabledBtn">Restableciendo... </span><nb-icon icon="download-outline"></nb-icon>
     </button>
   </nb-card-footer>
 </nb-card>

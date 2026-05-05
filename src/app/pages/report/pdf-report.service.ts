@@ -2165,6 +2165,7 @@ export class PDFReport implements OnInit {
               },
               { text: section.lapse3.overGoalStudents },
             ];
+            console.log(section.lapse3.overGoalStudents);
           }
 
           prepareDataLogicReasoningResult = [

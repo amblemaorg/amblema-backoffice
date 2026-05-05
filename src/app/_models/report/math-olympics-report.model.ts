@@ -5,10 +5,15 @@ export interface OlympicsReport {
 
 interface FinalScore {
     enrolledStudents: number;
+    participantStudents: number;
     classifiedStudents: number;
     studentsGoldMedal: number;
     studentsSilverMedal: number;
     studentsBronzeMedal: number;
+    classifiedStudentsNational: number;
+    studentsGoldMedalNational: number;
+    studentsSilverMedalNational: number;
+    studentsBronzeMedalNational: number;
 }
 
 interface AllPeriod {
@@ -24,24 +29,35 @@ interface School {
 
 interface Total {
     totalEnrolled: number;
+    totalParticipant: number;
     totalClassified: number;
     totalGoldMedals: number;
     totalSilverMedals: number;
     totalBronzeMedals: number;
+    totalClassifiedNational: number;
+    totalGoldMedalsNational: number;
+    totalSilverMedalsNational: number;
+    totalBronzeMedalsNational: number;
 }
 
 interface Grade {
     name: string;
+    totalParticipant: number;
     sections: Section[];
 }
 
 interface Section {
     name: string;
     inscribed: number;
+    participant: number;
     classified: number;
     medalsGold: number;
     medalsSilver: number;
     medalsBronze: number;
+    classifiedNational: number;
+    medalsGoldNational: number;
+    medalsSilverNational: number;
+    medalsBronzeNational: number;
 }
 
 interface Meta {

@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { PROJECT_PHASE } from 'src/app/_helpers/convention/phase';
+import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { AuthService } from 'src/app/services/user/auth.service';
@@ -25,6 +26,8 @@ export class ProjectDetailsComponent implements OnChanges, OnInit {
   @Select(SchoolYearEnrolledState.schoolYearsEnrolled)
   data$: Observable<SchoolYearEnrolled[]>;
 
+  projectSchoolYears: SchoolYearEnrolled[] = [];
+
   deliveryData: SyncHistoricalData = {};
 
   public url = environment.web;
@@ -44,6 +47,23 @@ export class ProjectDetailsComponent implements OnChanges, OnInit {
       this.data.phase === PROJECT_PHASE.STEPS.CODE
         ? PROJECT_PHASE.STEPS.VALUE
         : PROJECT_PHASE.PECA.VALUE;
+    
+    if (this.data && this.data.schoolYears && this.data.schoolYears.length > 0) {
+      this.projectSchoolYears = this.data.schoolYears.map(sy => sy.schoolYear);
+    } else if (this.data && this.data.phase === PROJECT_PHASE.STEPS.CODE) {
+      this.data$.pipe(take(1)).subscribe(schoolYears => {
+        if (schoolYears) {
+          const activeSchoolYear = schoolYears.find(sy => sy.status === '1');
+          if (activeSchoolYear) {
+            this.projectSchoolYears = [activeSchoolYear];
+          } else {
+            this.projectSchoolYears = [];
+          }
+        }
+      });
+    } else {
+      this.projectSchoolYears = [];
+    }
   }
 
   onNavigate(): void {

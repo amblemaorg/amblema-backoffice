@@ -77,8 +77,8 @@
             <label for="" class="label">Selecciona un periodo escolar</label>
             
             <ng-select
-              *ngIf="data$ | async"
-              [items]="data$ | async"
+              *ngIf="projectSchoolYears.length > 0"
+              [items]="projectSchoolYears"
               bindLabel="name"
               (change)="onSelectedYear()"
               placeholder="Selecciona un periodo escolar"

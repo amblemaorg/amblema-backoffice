@@ -18,7 +18,7 @@ export class SchoolYearService {
 
     return this.httpClient.get<SchoolYear[]>(`${environment.api}${this.SCHOOL_YEARS}`)
     .pipe(
-      map( (data: any) => data.records )
+      map( (data: any) => data.dates )
     );
   }
 }

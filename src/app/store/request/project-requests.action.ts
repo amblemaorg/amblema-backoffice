@@ -8,6 +8,7 @@ import {
 import { ProjectRequest } from 'src/app/_models/request/project-request.model';
 import { ProjectRequestsService } from 'src/app/services/request/project-requests.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { tap } from 'rxjs/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 import {
   UserCreationRequestState,
@@ -148,12 +149,14 @@ export class ProjectRequestState {
 
   @Action(GetProjectRequests)
   getProjectRequests(ctx: StateContext<ProjectRequestModel>) {
-    this.projectRequestsService.getProjectRequests().subscribe((response) => {
-      ctx.setState({
-        ...ctx.getState(),
-        projectRequests: response,
-      });
-    });
+    return this.projectRequestsService.getProjectRequests().pipe(
+      tap((response) => {
+        ctx.setState({
+          ...ctx.getState(),
+          projectRequests: response,
+        });
+      })
+    );
   }
 
   @Action(GetProjectRequestsCompact)

@@ -2,6 +2,7 @@ import { UserCreationRequest } from 'src/app/_models/request/user-creation-reque
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { tap } from 'rxjs/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 import { Inject, Injectable } from '@angular/core';
 
@@ -65,15 +66,16 @@ export class UserCreationRequestState {
 
   @Action(GetUserCreationRequests)
   getUserCreationRequests(ctx: StateContext<UserCreationRequestModel>) {
-
-    this.userCreationRequestService
+    return this.userCreationRequestService
       .getUserCreationRequests()
-      .subscribe((response) => {
-        ctx.setState({
-          ...ctx.getState(),
-          userCreationRequests: response,
-        });
-      });
+      .pipe(
+        tap((response) => {
+          ctx.setState({
+            ...ctx.getState(),
+            userCreationRequests: response,
+          });
+        })
+      );
   }
 
   @Action(GetUserCreationRequestsCompact)

@@ -235,7 +235,10 @@ export class RequestsValidateInformationComponent
     this.router.params.subscribe((query: any) => {
       if (Object.keys(query).length && query.id) {
         this.store.dispatch(new GetRequestContentById(query.id)).subscribe(() => {
-          this.showModalDetails(query.type);
+          const selected = this.store.selectSnapshot(RequestContentState.selectedContentRequest);
+          if (selected && selected.type) {
+            this.showModalDetails(selected.type);
+          }
         });
       }
     });

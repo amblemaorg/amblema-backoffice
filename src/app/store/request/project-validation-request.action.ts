@@ -2,6 +2,7 @@ import { State, StateContext, Action, Selector } from '@ngxs/store';
 import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { tap } from 'rxjs/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 import { Injectable } from '@angular/core';
 
@@ -83,14 +84,16 @@ export class ProjectValidationRequestState {
   getRequestValidateInformation(
     ctx: StateContext<ProjectValidationRequestModel>
   ) {
-    this.requestInformationValidateService
+    return this.requestInformationValidateService
       .getRequestsProjectApproval()
-      .subscribe((response) => {
-        ctx.setState({
-          ...ctx.getState(),
-          projectValidationRequests: response,
-        });
-      });
+      .pipe(
+        tap((response) => {
+          ctx.setState({
+            ...ctx.getState(),
+            projectValidationRequests: response,
+          });
+        })
+      );
   }
 
   @Action(GetProjectValidationRequestCompact)

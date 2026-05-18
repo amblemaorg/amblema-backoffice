@@ -2,6 +2,7 @@ import { RequestContent } from "../../_models/request/request-content-approval.m
 import { State, Selector, StateContext, Action } from "@ngxs/store";
 import { InformationRequestService } from "src/app/services/request/information-request.service";
 import { patch, updateItem, removeItem } from "@ngxs/store/operators";
+import { tap } from 'rxjs/operators';
 import { REQUEST_STATUS } from "src/app/_helpers/convention/request-status";
 import { Injectable } from "@angular/core";
 
@@ -80,12 +81,14 @@ export class RequestContentState {
 
   @Action(GetRequestsContent)
   getRequestsContent(ctx: StateContext<RequestContentModel>) {
-    this.RequestContentService.getRequestsContent().subscribe((response) => {
-      ctx.setState({
-        ...ctx.getState(),
-        requestsContent: response,
-      });
-    });
+    return this.RequestContentService.getRequestsContent().pipe(
+      tap((response) => {
+        ctx.setState({
+          ...ctx.getState(),
+          requestsContent: response,
+        });
+      })
+    );
   }
 
   @Action(GetRequestsContentCompact)
@@ -109,12 +112,14 @@ export class RequestContentState {
 
   @Action(GetRequestContentById)
   getRequestContentById(ctx: StateContext<RequestContentModel>, action: GetRequestContentById) {
-    return this.RequestContentService.getRequestContent(action.id).subscribe((response) => {
-      ctx.setState(patch({
-        ...ctx.getState(),
-        selectedRequestContent: response
-      }));
-    });
+    return this.RequestContentService.getRequestContent(action.id).pipe(
+      tap((response) => {
+        ctx.setState(patch({
+          ...ctx.getState(),
+          selectedRequestContent: response
+        }));
+      })
+    );
   }
 
   @Action(UpdateRequestContent)

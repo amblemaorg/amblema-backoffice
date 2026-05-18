@@ -110,19 +110,20 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
   }
 
   ngOnInit() {
-    this.store.dispatch(new GetProjectValidationRequest());
-    this.router.params.subscribe((query: any) => {
-      if (Object.keys(query).length) {
-        this.subscriptionService = this.data$.subscribe((response) => {
-          this.store.dispatch(
-            new SelectedProjectValidationRequestn(
-              response.find((item) => item.id === query.id)
-            )
-          );
-        });
-
-        this.dialogService.open(InformationDetailsComponent);
-      }
+    this.store.dispatch(new GetProjectValidationRequest()).subscribe(() => {
+      this.router.params.subscribe((query: any) => {
+        if (query && query.id) {
+          const projectValidationRequests = this.store.selectSnapshot(ProjectValidationRequestState.projectValidationRequest);
+          const response = projectValidationRequests.find((item) => item.id === query.id);
+          
+          if (response) {
+            this.store.dispatch(new SelectedProjectValidationRequestn(response));
+            setTimeout(() => {
+              this.dialogService.open(InformationDetailsComponent);
+            }, 1000);
+          }
+        }
+      });
     });
 
     this.subscriptionService = this.data$.subscribe((response) => {

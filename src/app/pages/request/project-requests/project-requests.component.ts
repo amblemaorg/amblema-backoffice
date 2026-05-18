@@ -69,15 +69,20 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetProjectRequests());
-    this.router.params.subscribe((data) => {
-      const response = JSON.parse(data.item ? data.item : {});
-      if (Object.keys(response).length) {
-        this.requestSelected = response;
-        setTimeout(() => {
-          this.modalService.open(this.modal);
-        }, 1000);
-      }
+    this.store.dispatch(new GetProjectRequests()).subscribe(() => {
+      this.router.params.subscribe((data) => {
+        if (data && data.id) {
+          const projectRequests = this.store.selectSnapshot(ProjectRequestState.projectRquests);
+          const response = projectRequests.find(req => req.id === data.id);
+          
+          if (response) {
+            this.requestSelected = response;
+            setTimeout(() => {
+              this.modalService.open(this.modal);
+            }, 1000);
+          }
+        }
+      });
     });
 
     (this.settings.actions = {

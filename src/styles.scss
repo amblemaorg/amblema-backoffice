@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import "themes";
 
 @import "~@nebular/theme/styles/globals";
@@ -8,8 +9,187 @@
 }
 
 body {
-  font-family: nb-theme(font-family-primary);
+  font-family: 'Montserrat', sans-serif !important;
   color: nb-theme(text-basic-color);
+}
+
+nb-layout-header nav,
+nb-layout-header,
+.layout-header,
+header {
+  background-color: #00809a !important;
+}
+
+nb-layout-header nb-icon {
+  color: #ffffff !important;
+}
+
+nb-layout-footer {
+  background-color: #00809a !important;
+  color: #ffffff !important;
+
+  nav {
+    background-color: #00809a !important;
+    color: #ffffff !important;
+  }
+}
+
+nb-sidebar .main-container,
+nb-sidebar .scrollable,
+nb-sidebar {
+  background-color: #00809a !important;
+}
+
+nb-sidebar nb-menu .menu-item a {
+  color: #ffffff !important;
+
+  nb-icon {
+    color: #ffffff !important;
+  }
+}
+
+.nb-context-menu nb-menu .menu-item a,
+.nb-theme-default nb-menu .menu-item a:hover,
+.nb-context-menu .menu-item .menu-title,
+.nb-context-menu .menu-title,
+.nb-context-menu a,
+.nb-context-menu nb-icon {
+  color: #00809a !important;
+}
+
+.menu-sidebar nb-menu .menu-item a:hover,
+nb-sidebar nb-menu .menu-item a.active,
+nb-sidebar nb-menu .menu-item a.active nb-icon {
+  color: #81b03e !important;
+}
+
+nb-layout-column nb-card {
+  min-height: calc(100vh - 14rem);
+}
+
+nb-card nb-card-header,
+nb-card h1,
+nb-card h2,
+nb-card h3,
+nb-card h4,
+nb-card h5,
+nb-card h6 {
+  color: #81b03e !important;
+  font-size: 1.5rem !important;
+}
+
+button,
+.btn,
+nb-button {
+  background-color: #00809a !important;
+  color: #ffffff !important;
+  border-color: #00809a !important;
+
+  &:hover {
+    background-color: #ffffff !important;
+    color: #00809a !important;
+    border-color: #00809a !important;
+  }
+}
+
+button[status="basic"],
+nb-button[status="basic"],
+.btn-outline-secondary,
+.btn-secondary {
+  background-color: #ffffff !important;
+  color: #00809a !important;
+  border-color: #00809a !important;
+
+  &:hover {
+    background-color: #00809a !important;
+    color: #ffffff !important;
+    border-color: #00809a !important;
+  }
+}
+
+.pagination {
+  .page-item {
+    &.active .page-link {
+      background-color: #00809a !important;
+      color: #ffffff !important;
+      border-color: #00809a !important;
+    }
+
+    .page-link {
+      background-color: #ffffff !important;
+      color: #00809a !important;
+      border-color: #00809a !important;
+
+      &:hover {
+        background-color: #00809a !important;
+        color: #ffffff !important;
+      }
+    }
+  }
+}
+
+table,
+th,
+.table,
+.table th {
+  border-color: #00809a !important;
+}
+
+.table td,
+td,
+.table th,
+th {
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: 1px solid #00809a !important;
+  border-right: 1px solid #00809a !important;
+  color: #00809a !important;
+
+  nb-icon {
+    color: #00809a !important;
+
+    svg,
+    path {
+      fill: #00809a !important;
+      stroke: #00809a !important;
+    }
+  }
+}
+
+.table thead th,
+thead th {
+  border-top: 1px solid #00809a !important;
+  border-bottom: 1px solid #00809a !important;
+}
+
+.table tr:last-child td,
+tr:last-child td {
+  border-bottom: 1px solid #00809a !important;
+}
+
+.ng2-smart-actions a.ng2-smart-action,
+.ng2-smart-actions a.ng2-smart-action i,
+.ng2-smart-actions a.ng2-smart-action nb-icon {
+  color: #00809a !important;
+
+  svg,
+  path {
+    fill: #00809a !important;
+    stroke: #00809a !important;
+  }
+}
+
+nb-checkbox.status-primary .custom-checkbox {
+  border-color: #00809a !important;
+}
+
+nb-checkbox.status-primary.checked .custom-checkbox {
+  background-color: #00809a !important;
+  border-color: #00809a !important;
+}
+
+nb-checkbox.status-primary .native-input:enabled:active+.custom-checkbox.checked {
+  background-color: #00809a !important;
 }
 
 // Custom theme

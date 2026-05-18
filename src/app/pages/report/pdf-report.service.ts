@@ -400,7 +400,14 @@ export class PDFReport implements OnInit {
 
     finalReport.content.unshift(headerDocument);
 
-    pdfMake.createPdf(finalReport).download();
+    const dateFormatted = formatDate(new Date(), 'dd-MM-yyyy-HH-mm', 'es-VE');
+    const title = dataUsers.typeUser === "0" ? "Reporte de Padrinos" 
+                : dataUsers.typeUser === "1" ? "Reporte de Coordinadores"
+                : dataUsers.typeUser === "2" ? "Reporte de Escuelas"
+                : "Reporte de Docentes";
+    const fileName = `${title}-${dateFormatted}.pdf`;
+
+    pdfMake.createPdf(finalReport).download(fileName);
   }
 
   /**
@@ -2415,7 +2422,13 @@ export class PDFReport implements OnInit {
 
     // -- Generate document --
     const window = pdfMake.createPdf(finalReport);
-    window.download();
+    
+    const schoolName = report.school ? `_${report.school.replace(/ /g, '_').replace(/\./g, '')}` : '';
+    const schoolYear = report.schoolYear ? `_${report.schoolYear.replace(/\//g, '-')}` : '';
+    const dateFormatted = formatDate(new Date(), 'dd-MM-yyyy-HH-mm', 'es-VE');
+    const fileName = `Reporte-diagnosticos${schoolName}${schoolYear}_${dateFormatted}.pdf`;
+
+    window.download(fileName);
   }
 
   async onGenerateSummaryDiagnostic(report: DiagnosticReport) {}

@@ -5,6 +5,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Injectable, OnDestroy } from '@angular/core';
 
 export interface SchoolUserModel {
@@ -23,6 +24,11 @@ export class GetSchoolUsers {
 export class GetSchoolUsersCompact {
     static readonly type = '[School User] Get School Users Compact';
     constructor() { }
+}
+
+export class GetSchoolUserById {
+    static readonly type = '[School User] Get School User By Id';
+    constructor(public payload: string) { }
 }
 
 export class SetSchoolUser {
@@ -141,14 +147,29 @@ export class SchoolUserState implements OnDestroy {
 
     @Action(GetSchoolUsersCompact)
     getSchoolUsersCompact(ctx: StateContext<SchoolUserModel>) {
-        this.subscription = this.schoolUserService.getSchoolUsers('id,name').subscribe(response => {
+        this.subscription = this.schoolUserService.getSchoolUsers('id,name,code,email,address,status').subscribe(response => {
             if (response) {
                 ctx.setState(patch({
                     ...ctx.getState(),
-                    schoolUsersCompact: response
+                    schoolUsersCompact: response,
+                    schoolUsers: response // Also update schoolUsers for the table
                 }));
             }
         });
+    }
+
+    @Action(GetSchoolUserById)
+    getSchoolUserById(ctx: StateContext<SchoolUserModel>, action: GetSchoolUserById) {
+        return this.schoolUserService.getSchoolUser(action.payload).pipe(
+            tap(response => {
+                if (response) {
+                    ctx.setState(patch({
+                        ...ctx.getState(),
+                        schoolUser: response
+                    }));
+                }
+            })
+        );
     }
 
     @Action(SelectedSchoolUser)

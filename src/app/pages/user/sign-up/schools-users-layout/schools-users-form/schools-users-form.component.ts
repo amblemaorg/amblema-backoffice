@@ -162,32 +162,36 @@ export class SchoolsUsersFormComponent
 
     if (this.MODE === this.ACTION.EDIT) {
       this.subscription = this.user$.subscribe((response) => {
-        this.title = 'Actualizar usuario escuela';
+        if (response && response.id) {
+          this.title = 'Actualizar usuario escuela';
 
-        this.backupOldData = response;
+          this.backupOldData = response;
 
-        this.restar();
-        this.form.patchValue(response);
+          this.restar();
+          this.form.patchValue(response);
 
-        this.idState = this.form.controls.addressState.value;
-        //        this.idMunicipality = this.form.controls.addressMunicipality.value;
+          this.idState = this.form.controls.addressState.value;
+          //        this.idMunicipality = this.form.controls.addressMunicipality.value;
 
-        this.form.controls.addressState.setValue(response.addressState.id);
-        this.form.controls.addressMunicipality.setValue(
-          response.addressMunicipality.id
-        );
+          this.form.controls.addressState.setValue(response.addressState ? response.addressState.id : null);
+          this.form.controls.addressMunicipality.setValue(
+            response.addressMunicipality ? response.addressMunicipality.id : null
+          );
 
-        this.form.controls.role.setValue(response.role.id);
+          this.form.controls.role.setValue(response.role ? response.role.id : null);
 
-        this.form.controls.name.clearValidators();
-        this.form.controls.name.setValidators([Validators.required]);
+          this.form.controls.name.clearValidators();
+          this.form.controls.name.setValidators([Validators.required]);
 
-        this.coordinate.latitude = response.coordinate.latitude;
-        this.coordinate.longitude = response.coordinate.longitude;
+          if (response.coordinate) {
+            this.coordinate.latitude = response.coordinate.latitude;
+            this.coordinate.longitude = response.coordinate.longitude;
+          }
 
-        this.form.get('password').setValue('');
-        this.form.get('password').clearValidators();
-        this.form.get('password').updateValueAndValidity();
+          this.form.get('password').setValue('');
+          this.form.get('password').clearValidators();
+          this.form.get('password').updateValueAndValidity();
+        }
       });
     } else if (this.MODE === this.ACTION.CREATE) {
       if ('geolocation' in navigator) {

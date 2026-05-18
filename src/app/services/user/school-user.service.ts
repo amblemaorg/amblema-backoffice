@@ -28,6 +28,13 @@ export class SchoolUserService {
       );
   }
 
+  getSchoolUser(id: string): Observable<SchoolUser> {
+    return this.httpClient.get<SchoolUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`)
+      .pipe(
+        map((data: any) => data)
+      );
+  }
+
   setSchoolUser(data: SchoolUser): Observable<any> {
     return this.httpClient.post<SchoolUser>(`${environment.api}${this.SCHOOL_USER}`, data, {
       reportProgress: true,

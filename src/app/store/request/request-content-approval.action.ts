@@ -33,6 +33,10 @@ export class SelectedRequestContent {
   constructor(public payload: any) { }
 }
 
+export class ClearSelectedRequestContent {
+  static readonly type = "[RequestContent] Clear Selected Request Content";
+}
+
 export class DeleteRequestContent {
   static readonly type = "[RequestContent] Delete Request Content";
   constructor(public id: string) { }
@@ -147,6 +151,13 @@ export class RequestContentState {
       ...ctx.getState(),
       selectedRequestContent: value,
     });
+  }
+
+  @Action(ClearSelectedRequestContent)
+  clearSelectedRequestContent(ctx: StateContext<RequestContentModel>) {
+    ctx.setState(patch({
+      selectedRequestContent: null
+    }));
   }
 
   @Action(DeleteRequestContent)

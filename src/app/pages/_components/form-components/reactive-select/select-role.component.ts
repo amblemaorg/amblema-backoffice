@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractReactiveSelect } from './abstract-reactive-select';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Validators } from '@angular/forms';
-import { RolesState } from 'src/app/store/role.action';
+import { RolesState, GetRoles } from 'src/app/store/role.action';
 import { Role } from 'src/app/_models/permission.model';
 
 @Component({
@@ -27,8 +27,17 @@ import { Role } from 'src/app/_models/permission.model';
 export class SelectRoleComponent extends AbstractReactiveSelect implements OnInit {
     @Select(RolesState.roles) role$: Observable<Role[]>;
 
+    constructor(private store: Store) {
+        super();
+    }
+
     ngOnInit(): void {
         this.control.setValidators([Validators.required]);
         this.control.setValue(null);
+        
+        const roles = this.store.selectSnapshot(RolesState.roles);
+        if (!roles || roles.length === 0) {
+            this.store.dispatch(new GetRoles());
+        }
     }
 }

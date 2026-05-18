@@ -5,11 +5,17 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  background-color: #00809a !important;
+  color: #fff;
 
   nb-action {
     height: auto;
     display: flex;
     align-content: center;
+
+    ::ng-deep nb-icon {
+      color: #ffffff !important;
+    }
   }
 
   nb-user {
@@ -25,16 +31,19 @@
       @include nb-ltr(padding-right, 1.25rem);
       @include nb-rtl(padding-left, 1.25rem);
       text-decoration: none;
-      color: nb-theme(text-hint-color);
+      color: #fff !important;
+
       nb-icon {
         font-size: 1.75rem;
       }
     }
 
     .logo {
+      color: #81b03e;
+      font-weight: bolder;
       padding: 0 1.25rem;
-      @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
-      @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
+      @include nb-ltr(border-left, 1px solid rgba(255, 255, 255, 0.2));
+      @include nb-rtl(border-right, 1px solid rgba(255, 255, 255, 0.2));
       white-space: nowrap;
       text-decoration: none;
 
@@ -42,25 +51,30 @@
       @include screen($breakpoint-xs) {
         font-size: 1.20rem;
       }
-      
+
       @include screen($breakpoint-sm) {
-        font-size: 1.75rem;
-      }   
+        font-size: 2rem;
+      }
     }
   }
 }
 
 
-::ng-deep .arrow { display: none }
+::ng-deep .arrow {
+  display: none
+}
 
-.max-h{ max-height: 25rem; }
+.max-h {
+  max-height: 25rem;
+}
 
-.notification { 
+.notification {
   cursor: pointer;
+
   &:hover {
     p {
       transition: color ease .1s;
-      color: $color-primary-hover!important;  
+      color: #00809a !important;
     }
   }
 }

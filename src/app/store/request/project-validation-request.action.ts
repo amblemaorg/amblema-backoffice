@@ -15,6 +15,11 @@ export class GetProjectValidationRequest {
     '[ProjectValidationRequest] Get Project Validation Request';
 }
 
+export class GetProjectValidationRequestCompact {
+  static readonly type =
+    '[ProjectValidationRequest] Get Project Validation Request Compact';
+}
+
 export class UpdateProjectValidationRequest {
   static readonly type =
     '[ProjectValidationRequest] Update Project Validation Request';
@@ -80,6 +85,20 @@ export class ProjectValidationRequestState {
   ) {
     this.requestInformationValidateService
       .getRequestsProjectApproval()
+      .subscribe((response) => {
+        ctx.setState({
+          ...ctx.getState(),
+          projectValidationRequests: response,
+        });
+      });
+  }
+
+  @Action(GetProjectValidationRequestCompact)
+  getProjectValidationRequestCompact(
+    ctx: StateContext<ProjectValidationRequestModel>
+  ) {
+    this.requestInformationValidateService
+      .getRequestsProjectApproval('id,code,project,type,user,status,updatedAt,createdAt', '1')
       .subscribe((response) => {
         ctx.setState({
           ...ctx.getState(),

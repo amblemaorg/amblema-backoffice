@@ -18,7 +18,8 @@ import {
   DeleteRequestContent,
   GetRequestsContent,
   GetRequestsContentCompact,
-  GetRequestContentById
+  GetRequestContentById,
+  ClearSelectedRequestContent
 } from "src/app/store/request/request-content-approval.action";
 import { RequestContent } from "src/app/_models/request/request-content-approval.model";
 import { TYPE_INFORMATION } from "./_shared/type-information";
@@ -241,62 +242,70 @@ export class RequestsValidateInformationComponent
   }
 
   private showModalDetails(type: string): void {
+    let modalRef: any;
+
     switch (type) {
       case TYPE_INFORMATION.STEP.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           InformationDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.TESTIMONIES.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           TestimonyDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
 
         break;
       case TYPE_INFORMATION.ACTIVITY.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           ActivityDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.SLIDER.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           SliderDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.WORKSHOP.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           InitialWorkshopDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           SpecialActivityDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.YEARBOOK.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           YearbookDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.SPAN_PLANNING.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           SpanPlanningComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           PhotosSchoolDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
+    }
+
+    if (modalRef) {
+      this.subscription = this.modalService.onHide.subscribe(() => {
+        this.store.dispatch(new ClearSelectedRequestContent());
+      });
     }
   }
 

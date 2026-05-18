@@ -164,24 +164,21 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new GetUserCreationRequests());
-
-    this.router.params.subscribe((value) => {
-      if (Object.keys(value).length) {
-        this.requestSelected = value;
-        this.oldRequest = value;
-
-        this.data$.subscribe((res) => {
-          res.forEach((request) => {
-            if (request.id === this.requestSelected.id) {
-              this.requestSelected = request;
-              setTimeout(() => {
-                this.modalService.open(this.modal);
-              }, 1000);
-            }
-          });
-        });
-      }
+    this.store.dispatch(new GetUserCreationRequests()).subscribe(() => {
+      this.router.params.subscribe((value) => {
+        if (value && value.id) {
+          const userCreationRequests = this.store.selectSnapshot(UserCreationRequestState.creationRequests);
+          const response = userCreationRequests.find(req => req.id === value.id);
+          
+          if (response) {
+            this.requestSelected = response;
+            this.oldRequest = response;
+            setTimeout(() => {
+              this.modalService.open(this.modal);
+            }, 1000);
+          }
+        }
+      });
     });
   }
 

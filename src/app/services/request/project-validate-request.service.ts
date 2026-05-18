@@ -16,11 +16,15 @@ export class ProjectValidationRequestService {
   /**
    * Requests for confirmation of AmbLeMa
    */
-  getRequestsProjectApproval(): Observable<ProjectValidationRequest[]> {
+  getRequestsProjectApproval(only?: string, status?: string): Observable<ProjectValidationRequest[]> {
+    let url = `${environment.api}${this.REQUEST_PROJECT_APPROVAL}`;
+    const params = [];
+    if (only) params.push(`only=${only}`);
+    if (status) params.push(`status=${status}`);
+    if (params.length > 0) url += `?${params.join('&')}`;
+
     return this.httpClient
-      .get<ProjectValidationRequest[]>(
-        `${environment.api}${this.REQUEST_PROJECT_APPROVAL}`
-      )
+      .get<ProjectValidationRequest[]>(url)
       .pipe(map((data: any) => data.records));
   }
 

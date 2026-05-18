@@ -13,6 +13,10 @@ export class GetUserCreationRequests {
   static readonly type = '[User Creation Requests] Get UserCreationRequests';
 }
 
+export class GetUserCreationRequestsCompact {
+  static readonly type = '[User Creation Requests] Get UserCreationRequests Compact';
+}
+
 export class UpdateUserCreationRequest {
   static readonly type = '[User Creation Request] Update UserCreationRequest';
   constructor(
@@ -64,6 +68,19 @@ export class UserCreationRequestState {
 
     this.userCreationRequestService
       .getUserCreationRequests()
+      .subscribe((response) => {
+        ctx.setState({
+          ...ctx.getState(),
+          userCreationRequests: response,
+        });
+      });
+  }
+
+  @Action(GetUserCreationRequestsCompact)
+  getUserCreationRequestsCompact(ctx: StateContext<UserCreationRequestModel>) {
+
+    this.userCreationRequestService
+      .getUserCreationRequests('id,requestCode,projectCode,type,user,status,updatedAt,createdAt', '1')
       .subscribe((response) => {
         ctx.setState({
           ...ctx.getState(),

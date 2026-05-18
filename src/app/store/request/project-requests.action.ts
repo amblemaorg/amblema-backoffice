@@ -31,6 +31,10 @@ export class GetProjectRequests {
   static readonly type = '[GetProjectRequests] Get ProjectRequests';
 }
 
+export class GetProjectRequestsCompact {
+  static readonly type = '[GetProjectRequests] Get ProjectRequests Compact';
+}
+
 export class UpdateProjectRequests {
   static readonly type = '[Project] Update ProjectRequest';
   constructor(
@@ -145,6 +149,16 @@ export class ProjectRequestState {
   @Action(GetProjectRequests)
   getProjectRequests(ctx: StateContext<ProjectRequestModel>) {
     this.projectRequestsService.getProjectRequests().subscribe((response) => {
+      ctx.setState({
+        ...ctx.getState(),
+        projectRequests: response,
+      });
+    });
+  }
+
+  @Action(GetProjectRequestsCompact)
+  getProjectRequestsCompact(ctx: StateContext<ProjectRequestModel>) {
+    this.projectRequestsService.getProjectRequests('id,requestCode,project,type,name,status,updatedAt,createdAt', '1').subscribe((response) => {
       ctx.setState({
         ...ctx.getState(),
         projectRequests: response,

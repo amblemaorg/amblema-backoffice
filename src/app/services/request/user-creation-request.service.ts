@@ -20,8 +20,14 @@ export class UserCreationRequestService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  getUserCreationRequests(): Observable<UserCreationRequest[]> {
-    return this.httpClient.get<UserCreationRequest[]>(`${environment.api}${this.CREATION_REQUESTS}`)
+  getUserCreationRequests(only?: string, status?: string): Observable<UserCreationRequest[]> {
+    let url = `${environment.api}${this.CREATION_REQUESTS}`;
+    const params = [];
+    if (only) params.push(`only=${only}`);
+    if (status) params.push(`status=${status}`);
+    if (params.length > 0) url += `?${params.join('&')}`;
+
+    return this.httpClient.get<UserCreationRequest[]>(url)
       .pipe(
         map((data: any) => data.records)
       );

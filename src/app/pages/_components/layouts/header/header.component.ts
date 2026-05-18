@@ -11,10 +11,10 @@ import {
 } from '@nebular/theme';
 import { Subscription, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import { ProjectRequestState, GetProjectRequests } from 'src/app/store/request/project-requests.action';
-import { UserCreationRequestState, GetUserCreationRequests } from 'src/app/store/request/user-creation-request.action';
-import { ProjectValidationRequestState, GetProjectValidationRequest } from 'src/app/store/request/project-validation-request.action';
-import { RequestContentState, GetRequestsContent, GetRequestsContentCompact } from 'src/app/store/request/request-content-approval.action';
+import { ProjectRequestState, GetProjectRequestsCompact } from 'src/app/store/request/project-requests.action';
+import { UserCreationRequestState, GetUserCreationRequestsCompact } from 'src/app/store/request/user-creation-request.action';
+import { ProjectValidationRequestState, GetProjectValidationRequestCompact } from 'src/app/store/request/project-validation-request.action';
+import { RequestContentState, GetRequestsContentCompact } from 'src/app/store/request/request-content-approval.action';
 import { Router } from '@angular/router';
 import { NbAuthService, NbTokenService } from '@nebular/auth';
 import { filter, map } from 'rxjs/operators';
@@ -50,9 +50,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     // -- Dispatch Request Actions --
-    this.store.dispatch(new GetProjectRequests());
-    this.store.dispatch(new GetUserCreationRequests());
-    this.store.dispatch(new GetProjectValidationRequest());
+    this.store.dispatch(new GetProjectRequestsCompact());
+    this.store.dispatch(new GetUserCreationRequestsCompact());
+    this.store.dispatch(new GetProjectValidationRequestCompact());
     this.store.dispatch(new GetRequestsContentCompact());
 
     /* To the user menu */
@@ -102,18 +102,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     switch (define) {
       // Creation project
       case '1':
-        this.router.navigate(['/pages/requests/project-requests', { item: JSON.stringify(item) }]);
+        this.router.navigate(['/pages/requests/project-requests', { id: item.id }]);
 
         break;
       // Creation user
       case '2':
-        this.router.navigate(['/pages/requests/creation-requests', item]);
+        this.router.navigate(['/pages/requests/creation-requests', { id: item.id }]);
         break;
       // Project validate
       case '3':
         this.router.navigate([
           '/pages/requests/amblema-confirmation-request',
-          item,
+          { id: item.id },
         ]);
 
         break;
@@ -121,7 +121,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       case '4':
         this.router.navigate([
           '/pages/requests/requests-validate-information',
-          item,
+          { id: item.id },
         ]);
 
         break;

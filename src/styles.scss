@@ -192,6 +192,41 @@ nb-checkbox.status-primary .native-input:enabled:active+.custom-checkbox.checked
   background-color: #00809a !important;
 }
 
+// Auth header styling
+nb-auth nb-card-header,
+nb-auth-block nb-card-header,
+nb-layout-column.main-content nb-card-header {
+  background-color: #00809a !important;
+  color: #ffffff !important;
+}
+
+nb-auth nb-card-header a,
+nb-auth nb-card-header nb-icon,
+nb-auth-block nb-card-header a,
+nb-auth-block nb-card-header nb-icon,
+nb-layout-column.main-content nb-card-header a,
+nb-layout-column.main-content nb-card-header nb-icon {
+  color: #ffffff !important;
+}
+
+// Global focus styling for form fields
+input:focus,
+textarea:focus,
+select:focus,
+.form-control:focus,
+.ng-select.ng-select-focused > .ng-select-container,
+nb-input:focus,
+[nbInput]:focus {
+  border-color: #00809a !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 128, 154, 0.25) !important;
+  outline: none !important;
+}
+
+.forgot-password,
+.text-link {
+  color: #00809a !important;
+}
+
 // Custom theme
 @import "./assets/scss/main";
 

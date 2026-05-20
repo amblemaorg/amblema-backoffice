@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
 import {
@@ -129,7 +130,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
           this.subscription = this.store
             .dispatch(new DeleteSchoolLevel(this.indexTopic, this.index))
             .subscribe(() => {
-              this.subscription = this.storable$.subscribe((value) => {
+              this.subscription = this.storable$.pipe(take(1)).subscribe((value) => {
                 this.subscription = this.environmentalProjectService
                   .updateEnvironmentalProject(value)
                   .subscribe((response) => {
@@ -165,7 +166,7 @@ export class LevelsFormComponent implements OnInit, OnDestroy {
           )
         )
         .subscribe(() => {
-          this.subscription = this.storable$.subscribe((value) => {
+          this.subscription = this.storable$.pipe(take(1)).subscribe((value) => {
             this.subscription = this.environmentalProjectService
               .updateEnvironmentalProject(value)
               .subscribe((response) => {});

@@ -11,10 +11,7 @@ import {
 } from '@nebular/theme';
 import { Subscription, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import { ProjectRequestState, GetProjectRequestsCompact } from 'src/app/store/request/project-requests.action';
-import { UserCreationRequestState, GetUserCreationRequestsCompact } from 'src/app/store/request/user-creation-request.action';
-import { ProjectValidationRequestState, GetProjectValidationRequestCompact } from 'src/app/store/request/project-validation-request.action';
-import { RequestContentState, GetRequestsContentCompact } from 'src/app/store/request/request-content-approval.action';
+import { NotificationState, GetPendingNotifications } from 'src/app/store/notification/notification.action';
 import { Router } from '@angular/router';
 import { NbAuthService, NbTokenService } from '@nebular/auth';
 import { filter, map } from 'rxjs/operators';
@@ -27,7 +24,7 @@ import { AuthService } from 'src/app/services/user/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   // All notifications
-  @Select(ProjectRequestState.allRequest) allNotifications$: Observable<any>;
+  @Select(NotificationState.allNotifications) allNotifications$: Observable<any>;
 
   subscription: Subscription;
 
@@ -50,10 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     // -- Dispatch Request Actions --
-    this.store.dispatch(new GetProjectRequestsCompact());
-    this.store.dispatch(new GetUserCreationRequestsCompact());
-    this.store.dispatch(new GetProjectValidationRequestCompact());
-    this.store.dispatch(new GetRequestsContentCompact());
+    this.store.dispatch(new GetPendingNotifications());
 
     /* To the user menu */
     this.subscription = this.menuService.onItemClick().pipe(

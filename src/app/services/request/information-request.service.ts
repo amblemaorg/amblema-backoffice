@@ -16,10 +16,16 @@ export class InformationRequestService {
   /**
    * Request for information type in steps
    */
-  getRequestsContent(only?: string): Observable<RequestContent[]> {
-    const url = only
-      ? `${environment.api}${this.REQUEST_CONTENT_APPROVAL}?only=${only}`
-      : `${environment.api}${this.REQUEST_CONTENT_APPROVAL}`;
+  getRequestsContent(only?: string, limit?: number, skip?: number): Observable<RequestContent[]> {
+    let url = `${environment.api}${this.REQUEST_CONTENT_APPROVAL}`;
+    let params = [];
+    if (only) params.push(`only=${only}`);
+    if (limit !== undefined) params.push(`limit=${limit}`);
+    if (skip !== undefined) params.push(`skip=${skip}`);
+    
+    if (params.length > 0) {
+      url += '?' + params.join('&');
+    }
 
     return this.httpClient
       .get<RequestContent[]>(url)

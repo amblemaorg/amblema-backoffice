@@ -13,6 +13,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { GetSponsorUsers } from 'src/app/store/user/sponsor-user.action';
 
 @Component({
   selector: 'app-sponsor-list',
@@ -90,7 +91,9 @@ export class SponsorListComponent implements OnInit, OnDestroy {
     protected modalService?: BsModalService,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(new GetSponsorUsers());
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {

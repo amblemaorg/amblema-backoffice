@@ -5,6 +5,9 @@ import {
   SchoolUserState,
   SelectedSchoolUser,
   DeleteSchoolUser,
+  GetSchoolUsers,
+  GetSchoolUsersCompact,
+  GetSchoolUserById
 } from 'src/app/store/user/school-user.action';
 import { Observable, Subscription } from 'rxjs';
 import { SchoolUser } from 'src/app/_models/user/school.model';
@@ -23,10 +26,10 @@ declare var $: any;
   templateUrl: './schools-users-table.component.html',
 })
 export class SchoolsUsersTableComponent extends BaseTable
-  implements TableActions {
+  implements TableActions, OnInit {
   @Select(SchoolUserState.schoolUsers) data$: Observable<SchoolUser[]>;
 
-  public isCan =  new AuthService().isAllowed( ALL_ACTIONS.SCHOOL_USER_CREATE );
+  public isCan = new AuthService().isAllowed(ALL_ACTIONS.SCHOOL_USER_CREATE);
 
   subscription: Subscription;
 
@@ -79,19 +82,24 @@ export class SchoolsUsersTableComponent extends BaseTable
     );
   }
 
+  ngOnInit() {
+    this.store.dispatch(new GetSchoolUsersCompact());
+  }
+
   onAction(event: any) {
     switch (event.action) {
       case this.ACTION.VIEW:
         // Call view modal
-        this.store.dispatch(new SelectedSchoolUser(event.data));
-        $('#school-users-view').modal('show');
+        this.store.dispatch(new GetSchoolUserById(event.data.id)).subscribe(() => {
+          $('#school-users-view').modal('show');
+        });
         break;
       case this.ACTION.EDIT:
-        // Change mode purpose
-        this.MODE = this.ACTION.EDIT;
-        $(`#${this.ID_FORM}`).modal('show');
-
-        this.store.dispatch(new SelectedSchoolUser(event.data));
+        this.store.dispatch(new GetSchoolUserById(event.data.id)).subscribe(() => {
+          // Change mode purpose
+          this.MODE = this.ACTION.EDIT;
+          $(`#${this.ID_FORM}`).modal('show');
+        });
         break;
       case this.ACTION.DELETE:
         // Call delete modal

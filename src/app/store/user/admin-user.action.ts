@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { AdminUser } from 'src/app/_models/user/admin-user.model';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { AdminUserService } from 'src/app/services/user/admin-user.service';
@@ -18,27 +18,27 @@ export interface AdminUserModel {
 
 export class GetAdminUsers {
   static readonly type = '[User] Get User';
-  constructor() {}
+  constructor() { }
 }
 
 export class SelectedAdminUser {
   static readonly type = '[User] Selected User';
-  constructor(public paylaod: AdminUser) {}
+  constructor(public paylaod: AdminUser) { }
 }
 
 export class SetAdminUser {
   static readonly type = '[User] Set User';
-  constructor(public payload: AdminUser) {}
+  constructor(public payload: AdminUser) { }
 }
 
 export class UpdateAdminUser {
   static readonly type = '[User] Update User';
-  constructor(public newAdminUser: AdminUser) {}
+  constructor(public newAdminUser: AdminUser) { }
 }
 
 export class DeleteAdminUser {
   static readonly type = '[User] Delete User';
-  constructor(public payload: AdminUser) {}
+  constructor(public payload: AdminUser) { }
 }
 
 // TODO: Add Angular decorator.
@@ -67,7 +67,8 @@ export class DeleteAdminUser {
   },
 })
 @Injectable()
-export class AdminUserState implements NgxsOnInit, OnDestroy {
+@Injectable()
+export class AdminUserState implements OnDestroy {
   subscription: Subscription;
 
   @Selector()
@@ -84,13 +85,7 @@ export class AdminUserState implements NgxsOnInit, OnDestroy {
     private helper: Utility,
     private toastr: CustomToastrService,
     private adminUserService: AdminUserService
-  ) {}
-
-
-
-  ngxsOnInit(ctx: StateContext<AdminUserModel>) {
-    ctx.dispatch(new GetAdminUsers());
-  }
+  ) { }
 
 
   ngOnDestroy(): void {

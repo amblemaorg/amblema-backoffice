@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { GetEnvironmentalProject } from 'src/app/store/environmental-project.action';
 
 @Component({
   selector: 'app-environmental-project',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EnvironmentalProjectComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
+    this.store.dispatch(new GetEnvironmentalProject());
   }
 
 }

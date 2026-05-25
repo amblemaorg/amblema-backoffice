@@ -1,5 +1,5 @@
 
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch } from '@ngxs/store/operators';
 import { STATUS } from 'src/app/_helpers/convention/status';
@@ -17,11 +17,12 @@ export class GetSchoolYearsEnrolled {
 @State<SchoolYearEnrolledModel>({
     name: 'schoolyearenrolled',
     defaults: {
-        schoolYears : []
+        schoolYears: []
     }
 })
 @Injectable()
-export class SchoolYearEnrolledState implements NgxsOnInit {
+@Injectable()
+export class SchoolYearEnrolledState {
 
     @Selector()
     static schoolYearsEnrolled(state: SchoolYearEnrolledModel): SchoolYearEnrolled[] | null {
@@ -33,30 +34,26 @@ export class SchoolYearEnrolledState implements NgxsOnInit {
 
         let schoolYearActive: SchoolYearEnrolled;
 
-        state.schoolYears.forEach( response => {
+        state.schoolYears.forEach(response => {
 
-            if ( response.status === STATUS.ACTIVE.VALUE ) {
+            if (response.status === STATUS.ACTIVE.VALUE) {
                 schoolYearActive = response;
             }
 
-        } );
+        });
         return schoolYearActive;
     }
 
     constructor(
         private enrolledService: EnrolledService
-    ) {}
-
-    ngxsOnInit(ctx: StateContext<SchoolYearEnrolledModel>): void {
-        ctx.dispatch( new GetSchoolYearsEnrolled() );
-    }
+    ) { }
 
 
     @Action(GetSchoolYearsEnrolled)
     getSchoolYearsEnrolled(ctx: StateContext<SchoolYearEnrolledModel>) {
-        this.enrolledService.getSchoolYears().subscribe( response => {
+        this.enrolledService.getSchoolYears().subscribe(response => {
 
-            ctx.setState( patch( {
+            ctx.setState(patch({
                 schoolYears: response
             }));
         });

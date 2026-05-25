@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalService } from 'src/app/services/helper/modal.service';
 import { KIND_STEP } from '../_shared/shared';
-import { Select } from '@ngxs/store';
-import { StepState } from 'src/app/store/step.action';
+import { Select, Store } from '@ngxs/store';
+import { StepState, GetSteps } from 'src/app/store/step.action';
 import { Observable, Subscription } from 'rxjs';
 import { Step } from 'src/app/_models/step.model';
 import { AuthService } from 'src/app/services/user/auth.service';
@@ -23,9 +23,10 @@ export class GeneralsComponent implements OnInit, OnDestroy {
   public canEdit = new AuthService().isAllowed(ALL_ACTIONS.STEP_EDIT);
   public canRemove = new AuthService().isAllowed(ALL_ACTIONS.STEP_DELETE);
 
-  constructor(public modalService: ModalService) {}
+  constructor(public modalService: ModalService, public store: Store) { }
 
   async ngOnInit() {
+    this.store.dispatch(new GetSteps());
     this.steps$.subscribe((response) => {
       console.log(response);
     });

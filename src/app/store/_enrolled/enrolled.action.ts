@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { GeneralEnrolled } from 'src/app/_models/_enrolled/general-enrolled.model';
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch, removeItem, append } from '@ngxs/store/operators';
@@ -11,12 +11,12 @@ export class GetGeneralEnrolled {
 
 export class RemoveEnrolledShool {
   static readonly type = '[GeneralEnrolled] Remove Enrolled Schol';
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class SetEnrolledSchool {
   static readonly type = '[GeneralEnrolled] Set Enrolled School';
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 @State<GeneralEnrolled>({
@@ -27,7 +27,8 @@ export class SetEnrolledSchool {
   },
 })
 @Injectable()
-export class GeneralEnrolledState implements NgxsOnInit {
+@Injectable()
+export class GeneralEnrolledState {
   @Selector()
   static availableSchools(state: GeneralEnrolled): EnrolledSchool[] | null {
     return state.availableSchools;
@@ -38,11 +39,7 @@ export class GeneralEnrolledState implements NgxsOnInit {
     return state.enrolledSchools;
   }
 
-  constructor(private enrolledServices: EnrolledService) {}
-
-  ngxsOnInit(ctx: StateContext<GeneralEnrolled>): void {
-    ctx.dispatch(new GetGeneralEnrolled());
-  }
+  constructor(private enrolledServices: EnrolledService) { }
 
   @Action(GetGeneralEnrolled)
   getGeneralEnrolled(ctx: StateContext<GeneralEnrolled>) {

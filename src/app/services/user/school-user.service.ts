@@ -17,10 +17,21 @@ export class SchoolUserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getSchoolUsers(): Observable<SchoolUser[]> {
-    return this.httpClient.get<SchoolUser[]>(`${environment.api}${this.SCHOOL_USER}`)
+  getSchoolUsers(only?: string): Observable<SchoolUser[]> {
+    const url = only
+      ? `${environment.api}${this.SCHOOL_USER}&only=${only}`
+      : `${environment.api}${this.SCHOOL_USER}`;
+
+    return this.httpClient.get<SchoolUser[]>(url)
       .pipe(
         map((data: any) => data.records)
+      );
+  }
+
+  getSchoolUser(id: string): Observable<SchoolUser> {
+    return this.httpClient.get<SchoolUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`)
+      .pipe(
+        map((data: any) => data)
       );
   }
 

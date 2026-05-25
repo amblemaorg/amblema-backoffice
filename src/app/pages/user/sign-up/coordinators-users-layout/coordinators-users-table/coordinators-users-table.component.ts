@@ -4,6 +4,7 @@ import {
   CoordinatorUserState,
   DeleteCoordinatorUser,
   SelectedCoordinatorUser,
+  GetCoordinatorUsers
 } from 'src/app/store/user/coordinator-user.action';
 import { Select, Store } from '@ngxs/store';
 import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
@@ -83,11 +84,13 @@ export class CoordinatorsUsersTableComponent extends BaseTable
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(new GetCoordinatorUsers());
+  }
 
   onAction(event: any): void {
 
-    
+
 
     switch (event.action) {
 

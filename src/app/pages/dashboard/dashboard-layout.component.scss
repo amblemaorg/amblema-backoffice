@@ -14,3 +14,21 @@ img {
         width: 30rem;
     }   
 }
+
+:host {
+    height: 100%;
+    display: block;
+
+    nb-card {
+        height: 100%;
+        margin: 0;
+
+        nb-card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: inherit;
+        }
+    }
+}

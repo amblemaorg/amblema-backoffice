@@ -12,6 +12,10 @@ import { CustomToastrService } from "src/app/services/helper/custom-toastr.servi
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 
+import { Store } from "@ngxs/store";
+import { GetSchoolYearsEnrolled } from "src/app/store/_enrolled/school-year-enrolled.action";
+import { GetSchoolUsers } from "src/app/store/user/school-user.action";
+
 @Component({
   selector: "app-diagnostic-report",
   templateUrl: "./diagnostic-report.component.html",
@@ -44,10 +48,14 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private generatorReport: PDFReport,
     private diagnosticsReportService: DiagnosticReportService,
-    private toastr: CustomToastrService
+    private toastr: CustomToastrService,
+    private store: Store
   ) {}
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    this.store.dispatch(new GetSchoolUsers());
+    this.store.dispatch(new GetSchoolYearsEnrolled());
+  }
 
   ngOnDestroy(): void {
     if (this.subscriptionService) {

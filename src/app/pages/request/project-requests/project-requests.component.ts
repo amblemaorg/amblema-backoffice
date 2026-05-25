@@ -6,6 +6,7 @@ import {
   ProjectRequestState,
   UpdateProjectRequests,
   DeleteProjectRequests,
+  GetProjectRequests
 } from 'src/app/store/request/project-requests.action';
 import { Observable, Subscription } from 'rxjs';
 import { ProjectRequest } from 'src/app/_models/request/project-request.model';
@@ -68,14 +69,20 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.params.subscribe((data) => {
-      const response = JSON.parse(data.item ? data.item : {});
-      if (Object.keys(response).length) {
-        this.requestSelected = response;
-        setTimeout(() => {
-          this.modalService.open(this.modal);
-        }, 1000);
-      }
+    this.store.dispatch(new GetProjectRequests()).subscribe(() => {
+      this.router.params.subscribe((data) => {
+        if (data && data.id) {
+          const projectRequests = this.store.selectSnapshot(ProjectRequestState.projectRquests);
+          const response = projectRequests.find(req => req.id === data.id);
+          
+          if (response) {
+            this.requestSelected = response;
+            setTimeout(() => {
+              this.modalService.open(this.modal);
+            }, 1000);
+          }
+        }
+      });
     });
 
     (this.settings.actions = {
@@ -103,8 +110,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
               row === TYPE_REQUEST.COORDINATOR.ORIGINAL
                 ? TYPE_REQUEST.COORDINATOR.CONVERTION
                 : row === TYPE_REQUEST.SCHOOL.ORIGINAL
-                ? TYPE_REQUEST.SCHOOL.CONVERTION
-                : TYPE_REQUEST.SPONSOR.CONVERTION;
+                  ? TYPE_REQUEST.SCHOOL.CONVERTION
+                  : TYPE_REQUEST.SPONSOR.CONVERTION;
             return value;
           },
           filterFunction(cell?: any, search?: string): boolean {
@@ -112,8 +119,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
               cell === TYPE_REQUEST.COORDINATOR.ORIGINAL
                 ? TYPE_REQUEST.COORDINATOR.CONVERTION
                 : cell === TYPE_REQUEST.SCHOOL.ORIGINAL
-                ? TYPE_REQUEST.SCHOOL.CONVERTION
-                : TYPE_REQUEST.SPONSOR.CONVERTION;
+                  ? TYPE_REQUEST.SCHOOL.CONVERTION
+                  : TYPE_REQUEST.SPONSOR.CONVERTION;
 
             value = value.toUpperCase();
             if (value.includes(search.toUpperCase()) || search === '') {
@@ -150,8 +157,8 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
               cell === REQUEST_STATUS.PENDING.CODE
                 ? REQUEST_STATUS.PENDING.VALUE
                 : cell === REQUEST_STATUS.ACCEPTED.CODE
-                ? REQUEST_STATUS.ACCEPTED.VALUE
-                : REQUEST_STATUS.REJECTED.VALUE;
+                  ? REQUEST_STATUS.ACCEPTED.VALUE
+                  : REQUEST_STATUS.REJECTED.VALUE;
 
             value = value.toUpperCase();
             if (value.includes(search.toUpperCase()) || search === '') {

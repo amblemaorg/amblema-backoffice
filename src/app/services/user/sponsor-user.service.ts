@@ -15,23 +15,27 @@ export class SponsorUserService {
   private readonly SPONSOR_USER: string = `users?userType=${USER_TYPE.SPONSOR.VALUE}`;
   private readonly USER_TYPE: string = `?userType=${USER_TYPE.SPONSOR.VALUE}`;
 
-  constructor( private httpClient: HttpClient ) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getSponsorUsers(): Observable<SponsorUser[]> {
-    return this.httpClient.get<SponsorUser[]>(`${environment.api}${this.SPONSOR_USER}`)
+  getSponsorUsers(only?: string): Observable<SponsorUser[]> {
+    const url = only
+      ? `${environment.api}${this.SPONSOR_USER}&only=${only}`
+      : `${environment.api}${this.SPONSOR_USER}`;
+
+    return this.httpClient.get<SponsorUser[]>(url)
       .pipe(
         map((data: any) => data.records)
       );
   }
 
-  setSponsorUser( data: SponsorUser ): Observable<any> {
+  setSponsorUser(data: SponsorUser): Observable<any> {
     return this.httpClient.post<SponsorUser>(`${environment.api}${this.SPONSOR_USER}`, data, {
       reportProgress: true,
       observe: 'events'
     });
   }
 
-  updateSponsorUser( id: string, data: SponsorUser ): Observable<any> {
+  updateSponsorUser(id: string, data: SponsorUser): Observable<any> {
     return this.httpClient.put<SponsorUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data, {
       reportProgress: true,
       observe: 'body'

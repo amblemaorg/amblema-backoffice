@@ -17,8 +17,12 @@ export class CoordinatorUserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCoordinatorUsers(): Observable<CoordinatorUser[]> {
-    return this.httpClient.get<CoordinatorUser[]>(`${environment.api}${this.COORDINATOR_USER}`)
+  getCoordinatorUsers(only?: string): Observable<CoordinatorUser[]> {
+    const url = only
+      ? `${environment.api}${this.COORDINATOR_USER}&only=${only}`
+      : `${environment.api}${this.COORDINATOR_USER}`;
+
+    return this.httpClient.get<CoordinatorUser[]>(url)
       .pipe(
         map((data: any) => data.records)
       );
@@ -31,7 +35,7 @@ export class CoordinatorUserService {
     });
   }
 
-  updateCoordinatorUser( id: string, data: CoordinatorUser ): Observable<any> {
+  updateCoordinatorUser(id: string, data: CoordinatorUser): Observable<any> {
     return this.httpClient.put<CoordinatorUser>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`, data, {
       reportProgress: true,
       observe: 'body'

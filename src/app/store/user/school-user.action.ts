@@ -18,7 +18,7 @@ export interface SchoolUserModel {
 
 export class GetSchoolUsers {
     static readonly type = '[School User] Get School Users';
-    constructor() { }
+    constructor(public only?: string) { }
 }
 
 export class GetSchoolUsersCompact {
@@ -133,8 +133,8 @@ export class SchoolUserState implements OnDestroy {
     }
 
     @Action(GetSchoolUsers)
-    getSchoolUsers(ctx: StateContext<SchoolUserModel>) {
-        this.subscription = this.schoolUserService.getSchoolUsers().subscribe(response => {
+    getSchoolUsers(ctx: StateContext<SchoolUserModel>, action: GetSchoolUsers) {
+        this.subscription = this.schoolUserService.getSchoolUsers(action.only).subscribe(response => {
 
             if (response) {
                 ctx.setState(patch({
@@ -147,12 +147,11 @@ export class SchoolUserState implements OnDestroy {
 
     @Action(GetSchoolUsersCompact)
     getSchoolUsersCompact(ctx: StateContext<SchoolUserModel>) {
-        this.subscription = this.schoolUserService.getSchoolUsers('id,name,code,email,address,status').subscribe(response => {
+        this.subscription = this.schoolUserService.getSchoolUsers('id,name').subscribe(response => {
             if (response) {
                 ctx.setState(patch({
                     ...ctx.getState(),
-                    schoolUsersCompact: response,
-                    schoolUsers: response // Also update schoolUsers for the table
+                    schoolUsersCompact: response
                 }));
             }
         });

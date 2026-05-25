@@ -34,6 +34,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   @Select(ProjectState.project) project$: Observable<Project>;
 
   subscription: Subscription;
+  source: CustomServerDataSource;
 
   MODAL = "form-project";
 

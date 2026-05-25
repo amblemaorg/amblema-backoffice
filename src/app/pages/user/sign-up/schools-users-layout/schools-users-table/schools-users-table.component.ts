@@ -83,7 +83,7 @@ export class SchoolsUsersTableComponent extends BaseTable
   }
 
   ngOnInit() {
-    this.store.dispatch(new GetSchoolUsersCompact());
+    this.store.dispatch(new GetSchoolUsers('id,name,code,email,address,status'));
   }
 
   onAction(event: any) {

@@ -20,3 +20,19 @@
     [title]="'Datos del usuario coordinador'">
     <app-coordinators-users-view content></app-coordinators-users-view>
 </app-modal>
+
+<!-- Loading overlay: tabla -->
+<div *ngIf="loadingTable" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando coordinadores...</p>
+  </div>
+</div>
+
+<!-- Loading overlay: ver detalles -->
+<div *ngIf="loadingView" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando coordinador...</p>
+  </div>
+</div>

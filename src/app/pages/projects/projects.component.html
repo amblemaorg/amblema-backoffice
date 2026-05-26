@@ -1,4 +1,4 @@
-<nb-card [nbSpinner]="source.loading" nbSpinnerStatus="primary" nbSpinnerMessage="Cargando...">
+<nb-card>
     <nb-card-header>Proyectos</nb-card-header>
     <nb-card-body>
         <!-- Button Create -->
@@ -15,6 +15,14 @@
         </div>
     </nb-card-body>
 </nb-card>
+
+<!-- Loading overlay: tabla -->
+<div *ngIf="source.loading" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando proyectos...</p>
+  </div>
+</div>
 
 <app-project-form [mode]="MODE" [MODAL]="MODAL"></app-project-form>
 <app-project-details [data]="project$ | async"></app-project-details>

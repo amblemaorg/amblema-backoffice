@@ -17,3 +17,19 @@
     [title]="'Datos del usuario padrino'">
     <app-sponsors-users-view content></app-sponsors-users-view>
 </app-modal>
+
+<!-- Loading overlay: tabla -->
+<div *ngIf="loadingTable" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando padrinos...</p>
+  </div>
+</div>
+
+<!-- Loading overlay: ver detalles -->
+<div *ngIf="loadingView" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando padrino...</p>
+  </div>
+</div>

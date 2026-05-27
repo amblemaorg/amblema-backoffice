@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { BaseTable } from "src/app/_helpers/base-table";
 import { ACTION } from "src/app/_helpers/text-content/text-crud";
 import { Select, Store } from "@ngxs/store";
+import { HttpClient } from "@angular/common/http";
 
 import { Observable, Subscription } from "rxjs";
+import { skip, take } from "rxjs/operators";
 import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
 import { DatePipe } from "@angular/common";
 import { REQUEST_STATUS } from "src/app/_helpers/convention/request-status";
@@ -37,10 +39,8 @@ import { SpanPlanningComponent } from "./span-planning/span-planning.component";
 import { PhotosSchoolDetailsComponent } from "./photos-school-details/photos-school-details.component";
 import { AuthService } from "src/app/services/user/auth.service";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
-import { CustomServerDataSource } from "../../projects/custom-server-data-source";
-import { HttpClient } from "@angular/common/http";
+import { RequestsServerDataSource } from "./requests-server-data-source";
 import { environment } from "src/environments/environment";
-import { DialogConfirmationComponent } from "../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
 
 @Component({
   selector: "app-requests-validate-information",
@@ -50,8 +50,13 @@ import { DialogConfirmationComponent } from "../../_components/shared/dialog/dia
 export class RequestsValidateInformationComponent
   extends BaseTable
   implements OnInit {
-  source: CustomServerDataSource;
+  @Select(RequestContentState.requestsContent) data$: Observable<RequestContent[]>;
+
+  source: RequestsServerDataSource;
+
   subscription: Subscription;
+  loadingTable = false;
+  loadingView = false;
 
   constructor(
     private store: Store,
@@ -63,6 +68,7 @@ export class RequestsValidateInformationComponent
     private serviceInformation: InformationRequestService,
     private helper: Utility,
     private modalService: BsModalService,
+    private cdr: ChangeDetectorRef,
     private httpClient: HttpClient,
     private authService: AuthService
   ) {
@@ -177,6 +183,16 @@ export class RequestsValidateInformationComponent
   }
 
   ngOnInit() {
+    this.source = new RequestsServerDataSource(this.httpClient, {
+      endPoint: environment.api + "requestscontentapproval",
+      dataKey: "records",
+      totalKey: "pagination.total_records",
+      pagerPageKey: "page",
+      pagerLimitKey: "per_page",
+      filterFieldKey: "#field#",
+      paginationMessage: "Mostrando de {from} a {to} de {total} registros",
+    }, this.authService);
+
     this.router.params.subscribe((query: any) => {
       if (Object.keys(query).length && query.id) {
         this.store.dispatch(new GetRequestContentById(query.id)).subscribe(() => {
@@ -260,16 +276,17 @@ export class RequestsValidateInformationComponent
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        this.store.dispatch(new GetRequestContentById(event.data.id)).subscribe(() => {
-          this.showModalDetails(event.data.type);
-          // SelectedRequestContent is now set by GetRequestContentById, 
-          // but showModalDetails might need it? 
-          // OLD code: this.store.dispatch(new SelectedRequestContent(event.data));
-          // New code: GetRequestContentById sets selectedRequestContent in state.
-          // However, some modals might rely on passed data? 
-          // Let's check showModalDetails... it just opens modal.
-          // Modals typically select 'selectedRequestContent' from state.
-        });
+        this.loadingView = true;
+        this.store.dispatch(new GetRequestContentById(event.data.id)).subscribe(
+          () => {
+            this.loadingView = false;
+            this.showModalDetails(event.data.type);
+          },
+          (err) => {
+            this.loadingView = false;
+            console.error('Error al cargar la solicitud', err);
+          }
+        );
         break;
       case this.ACTION.DELETE:
         // Call delete modal

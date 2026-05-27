@@ -27,7 +27,7 @@
       icon="bell-outline"
       badgeStatus="danger"
       [nbPopover]="listNotifications"
-      [badgeText]="(allNotifications$ | async).length"
+      [badgeText]="(allNotifications$ | async)?.length || 0"
     ></nb-action>
     <nb-action
       class="control-item"

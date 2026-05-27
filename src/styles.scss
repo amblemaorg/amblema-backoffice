@@ -231,3 +231,35 @@ nb-input:focus,
 @import "./assets/scss/main";
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+// =============================================================
+// Global Montserrat font — todos los elementos con texto
+// =============================================================
+.nb-theme-default p,
+.nb-theme-default h1,
+.nb-theme-default h2,
+.nb-theme-default h3,
+.nb-theme-default h4,
+.nb-theme-default h5,
+.nb-theme-default h6,
+.nb-theme-default span:not(nb-sidebar span):not(nb-menu span),
+.nb-theme-default a:not(nb-sidebar a):not(nb-menu a),
+.nb-theme-default label,
+.nb-theme-default li:not(nb-sidebar li):not(nb-menu li),
+.nb-theme-default td,
+.nb-theme-default th,
+.nb-theme-default button:not(nb-sidebar button):not(nb-menu button),
+.nb-theme-default input,
+.nb-theme-default textarea,
+.nb-theme-default select,
+.nb-theme-default option,
+.nb-theme-default small,
+.nb-theme-default strong,
+.nb-theme-default b,
+.nb-theme-default em,
+.nb-theme-default caption,
+.nb-theme-default blockquote,
+.nb-theme-default figcaption,
+.nb-theme-default legend {
+  font-family: 'Montserrat', sans-serif !important;
+}

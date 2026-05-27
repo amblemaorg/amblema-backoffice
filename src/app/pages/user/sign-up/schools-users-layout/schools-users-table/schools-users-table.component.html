@@ -15,3 +15,19 @@
 <app-modal [ID]="'school-users-view'" [size]="'lg'" [title]="'Datos del usuario escuela'">
     <app-schools-users-view content></app-schools-users-view>
 </app-modal>
+
+<!-- Loading overlay: tabla -->
+<div *ngIf="loadingTable" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando usuarios...</p>
+  </div>
+</div>
+
+<!-- Loading overlay: ver detalles -->
+<div *ngIf="loadingView" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando usuario...</p>
+  </div>
+</div>

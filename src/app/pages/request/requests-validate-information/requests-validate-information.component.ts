@@ -41,6 +41,7 @@ import { AuthService } from "src/app/services/user/auth.service";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 import { RequestsServerDataSource } from "./requests-server-data-source";
 import { environment } from "src/environments/environment";
+import { DialogConfirmationComponent } from "../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
 
 @Component({
   selector: "app-requests-validate-information",
@@ -74,7 +75,7 @@ export class RequestsValidateInformationComponent
   ) {
     super();
 
-    this.source = new CustomServerDataSource(this.httpClient, {
+    this.source = new RequestsServerDataSource(this.httpClient, {
       endPoint: environment.api + "requestscontentapproval?only=id,code,project,type,user,status,updatedAt",
       dataKey: "records",
       pagerPageKey: "page",

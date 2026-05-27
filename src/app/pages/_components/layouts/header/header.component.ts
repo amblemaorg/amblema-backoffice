@@ -9,16 +9,13 @@ import {
   NbMenuService,
   NbPopoverDirective,
 } from '@nebular/theme';
-import { Subscription, Observable } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
-import { ProjectRequestState, GetProjectRequestsCompact } from 'src/app/store/request/project-requests.action';
-import { UserCreationRequestState, GetUserCreationRequestsCompact } from 'src/app/store/request/user-creation-request.action';
-import { ProjectValidationRequestState, GetProjectValidationRequestCompact } from 'src/app/store/request/project-validation-request.action';
-import { RequestContentState, GetRequestsContentCompact } from 'src/app/store/request/request-content-approval.action';
+import { Subscription, Observable, of } from 'rxjs';
+import { Store } from '@ngxs/store';
 import { Router } from '@angular/router';
 import { NbAuthService, NbTokenService } from '@nebular/auth';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, startWith, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/user/auth.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +24,7 @@ import { AuthService } from 'src/app/services/user/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   // All notifications
-  @Select(ProjectRequestState.allRequest) allNotifications$: Observable<any>;
+  allNotifications$: Observable<any[]> = of([]);
 
   subscription: Subscription;
 
@@ -44,16 +41,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authServiceCustom: AuthService,
     private tokenService: NbTokenService,
     private store: Store,
+    private notificationsService: NotificationsService,
     protected sidebarService?: NbSidebarService
   ) { }
 
   ngOnInit() {
 
-    // -- Dispatch Request Actions --
-    this.store.dispatch(new GetProjectRequestsCompact());
-    this.store.dispatch(new GetUserCreationRequestsCompact());
-    this.store.dispatch(new GetProjectValidationRequestCompact());
-    this.store.dispatch(new GetRequestsContentCompact());
+    // -- Obtener Notificaciones Pendientes --
+    this.allNotifications$ = this.notificationsService.getPendingNotifications().pipe(
+      map(res => res.records),
+      startWith([]),
+      shareReplay(1)
+    );
 
     /* To the user menu */
     this.subscription = this.menuService.onItemClick().pipe(

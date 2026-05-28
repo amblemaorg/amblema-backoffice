@@ -15,6 +15,7 @@ import {
   AddProject,
   ProjectState,
   UpdateProject,
+  GetProjects,
 } from 'src/app/store/project.action';
 
 @Component({
@@ -99,6 +100,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
               'Proyecto registrado correctamente'
             );
             this.store.dispatch(new AddProject(response));
+            this.store.dispatch(new GetProjects()); // Silently refresh from backend
           },
           (err: any) => {
             this.progress = 0;
@@ -148,6 +150,7 @@ export class ProjectFormComponent implements OnChanges, OnInit, OnDestroy {
                 'Actualización de proyecto exitoso'
               );
               this.store.dispatch(new UpdateProject(response, this.oldProject));
+              this.store.dispatch(new GetProjects()); // Silently refresh from backend
               this.progress = 0;
               this.submitted = false;
             },

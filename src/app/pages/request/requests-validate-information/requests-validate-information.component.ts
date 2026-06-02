@@ -39,11 +39,11 @@ import { BsModalService } from "ngx-bootstrap/modal";
 import { InitialWorkshopDetailsComponent } from "./initial-workshop-details/initial-workshop-details.component";
 import { SpanPlanningComponent } from "./span-planning/span-planning.component";
 import { PhotosSchoolDetailsComponent } from "./photos-school-details/photos-school-details.component";
-import { DialogConfirmationComponent } from "../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
 import { AuthService } from "src/app/services/user/auth.service";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 import { RequestsServerDataSource } from "./requests-server-data-source";
 import { environment } from "src/environments/environment";
+import { DialogConfirmationComponent } from "../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
 
 @Component({
   selector: "app-requests-validate-information",
@@ -82,6 +82,15 @@ export class RequestsValidateInformationComponent
   ) {
     super();
 
+    this.source = new RequestsServerDataSource(this.httpClient, {
+      endPoint: environment.api + "requestscontentapproval?only=id,code,project,type,user,status,updatedAt",
+      dataKey: "records",
+      pagerPageKey: "page",
+      pagerLimitKey: "per_page",
+      totalKey: "pagination.total_records",
+      filterFieldKey: "#field#",
+    }, this.authService);
+
     this.settings.actions = {
       columnTitle: "Acciones",
       add: false,
@@ -92,6 +101,11 @@ export class RequestsValidateInformationComponent
         { name: ACTION.VIEW, title: '<i class="far fa-eye fa-sm"></i>' },
         { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' },
       ],
+    };
+
+    this.settings.pager = {
+      display: true,
+      perPage: 20,
     };
 
     this.settings.columns = {
@@ -119,37 +133,12 @@ export class RequestsValidateInformationComponent
             : row === USER_TYPE.SCHOOL.VALUE
               ? USER_TYPE.SCHOOL.LABEL
               : USER_TYPE.SPONSOR.LABEL;
-        },
-        filterFunction(cell?: any, search?: string): boolean {
-          let value: string =
-            cell === USER_TYPE.COORDINATOR.VALUE
-              ? USER_TYPE.COORDINATOR.LABEL
-              : cell === USER_TYPE.SCHOOL.VALUE
-                ? USER_TYPE.SCHOOL.LABEL
-                : USER_TYPE.SPONSOR.LABEL;
-          value = value.toUpperCase();
-          if (value.includes(search.toUpperCase()) || search === "") {
-            return true;
-          } else {
-            return false;
-          }
-        },
+        }
       },
       user: {
         title: "Solicitante",
         type: "string",
         valuePrepareFunction: (row: any) => row.name,
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string = cell.name as string;
-
-          value = value.toUpperCase();
-
-          if (value.includes(search.toUpperCase()) || search === "") {
-            return true;
-          } else {
-            return false;
-          }
-        },
       },
       type: {
         title: "Tipo de información",
@@ -172,35 +161,7 @@ export class RequestsValidateInformationComponent
                         : row === TYPE_INFORMATION.SPAN_PLANNING.VALUE
                           ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
                           : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
-        },
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string =
-            cell === TYPE_INFORMATION.STEP.VALUE
-              ? TYPE_INFORMATION.STEP.LABEL
-              : cell === TYPE_INFORMATION.TESTIMONIES.VALUE
-                ? TYPE_INFORMATION.TESTIMONIES.LABEL
-                : cell === TYPE_INFORMATION.ACTIVITY.VALUE
-                  ? TYPE_INFORMATION.ACTIVITY.LABEL
-                  : cell === TYPE_INFORMATION.SLIDER.VALUE
-                    ? TYPE_INFORMATION.SLIDER.LABEL
-                    : cell === TYPE_INFORMATION.WORKSHOP.VALUE
-                      ? TYPE_INFORMATION.WORKSHOP.LABEL
-                      : cell === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
-                        ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
-                        : cell === TYPE_INFORMATION.YEARBOOK.VALUE
-                          ? TYPE_INFORMATION.YEARBOOK.LABEL
-                          : cell === TYPE_INFORMATION.SPAN_PLANNING.VALUE
-                            ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
-                            : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
-
-          value = value.toUpperCase();
-
-          if (value.includes(search.toUpperCase()) || search === "") {
-            return true;
-          } else {
-            return false;
-          }
-        },
+        }
       },
       updatedAt: {
         //sortDirection: "desc",
@@ -219,24 +180,7 @@ export class RequestsValidateInformationComponent
         type: "text ",
         valuePrepareFunction: (row: any) => {
           return this.helper.readlyRequestStatus(row);
-        },
-        filterFunction(cell?: any, search?: string): boolean {
-          let value: string =
-            cell === REQUEST_STATUS.PENDING.CODE
-              ? REQUEST_STATUS.PENDING.VALUE
-              : cell === REQUEST_STATUS.ACCEPTED.CODE
-                ? REQUEST_STATUS.ACCEPTED.VALUE
-                : cell === REQUEST_STATUS.REJECTED.CODE
-                  ? REQUEST_STATUS.REJECTED.VALUE
-                  : REQUEST_STATUS.CANCELLED.VALUE;
-
-          value = value.toUpperCase();
-          if (value.includes(search.toUpperCase()) || search === "") {
-            return true;
-          } else {
-            return false;
-          }
-        },
+        }
       },
     };
 

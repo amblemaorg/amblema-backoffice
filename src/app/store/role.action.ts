@@ -39,22 +39,22 @@ export class GetRole {
 
 export class SetRole {
   static readonly type = '[Role] Set Role';
-  constructor(public payload: Role) {}
+  constructor(public payload: Role) { }
 }
 
 export class UpdateRole {
   static readonly type = '[Role] Update Role';
-  constructor(public newRole: Role, public oldRole: Role) {}
+  constructor(public newRole: Role, public oldRole: Role) { }
 }
 
 export class DeleteRole {
   static readonly type = '[Role] Delete Role';
-  constructor(public payload: Role) {}
+  constructor(public payload: Role) { }
 }
 
 export class SelectedRole {
   static readonly type = '[Role] Selected Role';
-  constructor(public payload: Role) {}
+  constructor(public payload: Role) { }
 }
 
 /**
@@ -67,12 +67,12 @@ export class GetActions {
 
 export class UpdateActions {
   static readonly type = '[Actions] Update Action';
-  constructor(public entity: Permission, public action: ActionRole) {}
+  constructor(public entity: Permission, public action: ActionRole) { }
 }
 
 export class SaveActionsLoggedUser {
   static readonly type = `[Actions] Save Actions Logged User`;
-  constructor(public actionsLoggedUser: any) {}
+  constructor(public actionsLoggedUser: any) { }
 }
 
 @State<RoleStateModel>({
@@ -91,7 +91,8 @@ export class SaveActionsLoggedUser {
 })
 
 @Injectable()
-export class RolesState implements NgxsOnInit {
+@Injectable()
+export class RolesState {
   @Selector()
   static roles(state: RoleStateModel): Role[] | null {
     return state.roles;
@@ -126,16 +127,7 @@ export class RolesState implements NgxsOnInit {
     private ngZone?: NgZone,
     private authService?: AuthService,
     private permissionsService?: PermissionService
-  ) {}
-
-  // Get all roles
-  ngxsOnInit(ctx: StateContext<RoleStateModel>) {
-    ctx.dispatch(new GetRoles());
-    ctx.dispatch(new GetActions());
-
-    // -- Save Actions logged User
-    ctx.dispatch(new SaveActionsLoggedUser(this.authService.getActionsAdmin()));
-  }
+  ) { }
 
   /**
    * Roles actions

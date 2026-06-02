@@ -21,6 +21,10 @@ export class ProjectService {
       );
   }
 
+  getProject(id: string): Observable<Project> {
+    return this.httpClient.get<Project>(`${environment.api}${this.PROJECT}/${id}`);
+  }
+
   setProject( data: Project ): Observable<Project> {
      return this.httpClient.post<Project>(`${environment.api}${this.PROJECT}`, data);
   }

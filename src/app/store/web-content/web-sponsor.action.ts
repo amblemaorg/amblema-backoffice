@@ -1,5 +1,5 @@
 import { Testimonial } from '../../_models/web/testimonial.model';
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { WebSponsor, SponsorList } from '../../_models/web/web-sponsor.model';
 import {
   append,
@@ -24,14 +24,14 @@ export class GetWebSponsor {
 
 export class SetWebSponsor {
   static readonly type = '[WebSponsor] Set Web Sponsor';
-  constructor(public payload: WebSponsor) {}
+  constructor(public payload: WebSponsor) { }
 }
 
 // -- Testimonial class action --
 
 export class SetTestimonialWebSponsor {
   static readonly type = '[Testimonial] Set Testimonial';
-  constructor(public payload: Testimonial) {}
+  constructor(public payload: Testimonial) { }
 }
 
 export class UpdateTestimonialWebSponsor {
@@ -39,23 +39,23 @@ export class UpdateTestimonialWebSponsor {
   constructor(
     public oldTestimonial: Testimonial,
     public newTestimonial: Testimonial
-  ) {}
+  ) { }
 }
 export class DeleteTestimonialWebSponsor {
   static readonly type = '[Testimonial] Delete Testimonial';
-  constructor(public payload: Testimonial) {}
+  constructor(public payload: Testimonial) { }
 }
 
 // -- Sponsor list --
 
 export class AddSponsor {
   static readonly type = '[SponsorList] Add Sponsor';
-  constructor(public payload: SponsorList) {}
+  constructor(public payload: SponsorList) { }
 }
 
 export class DeleteSponsor {
   static readonly type = '[SponsorList] Delete Sponsor';
-  constructor(public id: string) {}
+  constructor(public id: string) { }
 }
 
 @State<WebSponsor>({
@@ -70,7 +70,8 @@ export class DeleteSponsor {
   },
 })
 @Injectable()
-export class WebSponsorState implements NgxsOnInit {
+@Injectable()
+export class WebSponsorState {
   @Selector()
   static webSponsor(state: WebSponsor): WebSponsor | null {
     return state;
@@ -94,14 +95,14 @@ export class WebSponsorState implements NgxsOnInit {
 
       // Compare ids include the other list
       sponsorUser = userState.sponsorUsers.filter(
-         (name) => !object1Names.includes(name.id) && name.image && name.webSite
-       );
+        (name) => !object1Names.includes(name.id) && name.image && name.webSite
+      );
 
     } else {
       userState.sponsorUsers.forEach((parent) => {
-         if (parent.image && parent.webSite) {
-        sponsorUser.push(parent);
-         }
+        if (parent.image && parent.webSite) {
+          sponsorUser.push(parent);
+        }
       });
     }
 
@@ -114,10 +115,10 @@ export class WebSponsorState implements NgxsOnInit {
     let i = 0;
 
     state.sponsorPage.sponsors.forEach((parent) => {
-       if (parent.image && parent.webSite) {
-      i++;
-      position.push({ id: i, name: i });
-       }
+      if (parent.image && parent.webSite) {
+        i++;
+        position.push({ id: i, name: i });
+      }
     });
 
     if (state.sponsorPage.sponsors.length === 0) {
@@ -133,11 +134,7 @@ export class WebSponsorState implements NgxsOnInit {
   constructor(
     private toastr: CustomToastrService,
     private webSponsorService: WebSponsorService
-  ) {}
-
-  ngxsOnInit(ctx: StateContext<WebSponsor>) {
-    ctx.dispatch(new GetWebSponsor());
-  }
+  ) { }
 
   // -- Web sponsor's actions --
 
@@ -222,21 +219,21 @@ export class WebSponsorState implements NgxsOnInit {
 
     ctx.getState().sponsorPage.sponsors.forEach((element, key) => {
 
-        ctx.setState(
+      ctx.setState(
 
-          patch({
-            ...ctx.getState(),
-            sponsorPage: patch({
-              sponsors: updateItem<SponsorList>(
-                (item) => item.position >= action.payload.position && item.id === element.id,
-                {
-                  ...element,
-                  position: element.position + 1,
-                }
-              ),
-            }),
-          })
-        );
+        patch({
+          ...ctx.getState(),
+          sponsorPage: patch({
+            sponsors: updateItem<SponsorList>(
+              (item) => item.position >= action.payload.position && item.id === element.id,
+              {
+                ...element,
+                position: element.position + 1,
+              }
+            ),
+          }),
+        })
+      );
 
     });
 
@@ -273,7 +270,7 @@ export class WebSponsorState implements NgxsOnInit {
         })
       );
 
-  });
+    });
 
 
     ctx.setState(

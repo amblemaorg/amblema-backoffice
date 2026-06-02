@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { GetSponsorUsers, SponsorUserState } from 'src/app/store/user/sponsor-user.action';
+import { GetSponsorUsersCompact, SponsorUserState } from 'src/app/store/user/sponsor-user.action';
 import { Observable } from 'rxjs';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { FormControl, AbstractControl } from '@angular/forms';
@@ -14,8 +14,8 @@ import { ACTION } from 'src/app/_helpers/text-content/text-crud';
   styleUrls: ['./select-sponsor.component.scss']
 })
 export class SelectSponsorComponent implements OnInit, OnChanges {
-  @Select( SponsorUserState.sponsorUsers ) sponsorUsers$: Observable<SponsorUser[]>;
-  @Select( ProjectState.project ) project$: Observable<Project>;
+  @Select(SponsorUserState.sponsorUsersCompact) sponsorUsers$: Observable<SponsorUser[]>;
+  @Select(ProjectState.project) project$: Observable<Project>;
 
   @Input() control: AbstractControl | null = new FormControl();
   @Input() submitted: boolean;
@@ -26,7 +26,7 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
   constructor(
     private store: Store
   ) {
-    store.dispatch( new GetSponsorUsers() );
+    store.dispatch(new GetSponsorUsersCompact());
   }
 
   ngOnInit(): void {
@@ -37,15 +37,15 @@ export class SelectSponsorComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.selectedSponsor = this.control.value ? this.selectedSponsor : null;
-    if ( this.mode === ACTION.EDIT  ) {
-      this.project$.subscribe( (response: any) => {
+    if (this.mode === ACTION.EDIT) {
+      this.project$.subscribe((response: any) => {
         this.selectedSponsor = response.sponsor.name;
       });
     }
   }
 
-  onSelected( event: any ) {
-    this.control.setValue( event ? event.id : null );
+  onSelected(event: any) {
+    this.control.setValue(event ? event.id : null);
 
     this.selectedSponsor = event ? event.name : null;
   }

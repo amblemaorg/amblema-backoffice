@@ -9,16 +9,13 @@ import {
   NbMenuService,
   NbPopoverDirective,
 } from '@nebular/theme';
-import { Subscription, Observable } from 'rxjs';
-import { Select } from '@ngxs/store';
-import { ProjectRequestState } from 'src/app/store/request/project-requests.action';
-import { UserCreationRequestState } from 'src/app/store/request/user-creation-request.action';
-import { ProjectValidationRequestState } from 'src/app/store/request/project-validation-request.action';
-import { RequestContentState } from 'src/app/store/request/request-content-approval.action';
+import { Subscription, Observable, of } from 'rxjs';
+import { Store } from '@ngxs/store';
 import { Router } from '@angular/router';
 import { NbAuthService, NbTokenService } from '@nebular/auth';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, startWith, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/user/auth.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +24,7 @@ import { AuthService } from 'src/app/services/user/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   // All notifications
-  @Select(ProjectRequestState.allRequest) allNotifications$: Observable<any>;
+  allNotifications$: Observable<any[]> = of([]);
 
   subscription: Subscription;
 
@@ -43,17 +40,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: NbAuthService,
     private authServiceCustom: AuthService,
     private tokenService: NbTokenService,
+    private store: Store,
+    private notificationsService: NotificationsService,
     protected sidebarService?: NbSidebarService
-  ) {}
+  ) { }
 
   ngOnInit() {
+
+    // -- Obtener Notificaciones Pendientes --
+    this.allNotifications$ = this.notificationsService.getPendingNotifications().pipe(
+      map(res => res.records),
+      startWith([]),
+      shareReplay(1)
+    );
 
     /* To the user menu */
     this.subscription = this.menuService.onItemClick().pipe(
       filter(({ tag }) => tag === 'user-menu'),
       map(({ item: { title } }) => {
 
-        if ( title === 'Cerrar sesión' ) {
+        if (title === 'Cerrar sesión') {
           this.tokenService.clear();
           localStorage.clear();
           sessionStorage.clear();
@@ -95,18 +101,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     switch (define) {
       // Creation project
       case '1':
-        this.router.navigate(['/pages/requests/project-requests', { item: JSON.stringify(item) }]);
+        this.router.navigate(['/pages/requests/project-requests', { id: item.id }]);
 
         break;
       // Creation user
       case '2':
-        this.router.navigate(['/pages/requests/creation-requests', item]);
+        this.router.navigate(['/pages/requests/creation-requests', { id: item.id }]);
         break;
       // Project validate
       case '3':
         this.router.navigate([
           '/pages/requests/amblema-confirmation-request',
-          item,
+          { id: item.id },
         ]);
 
         break;
@@ -114,7 +120,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       case '4':
         this.router.navigate([
           '/pages/requests/requests-validate-information',
-          item,
+          { id: item.id },
         ]);
 
         break;

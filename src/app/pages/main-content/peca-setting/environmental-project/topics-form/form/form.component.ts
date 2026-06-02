@@ -138,7 +138,7 @@ export class FormComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.optionsSelected = []; // <-- Clear options selected
 
-        this.subscription = this.storable$.subscribe((value) => {
+        this.subscription = this.storable$.pipe(take(1)).subscribe((value) => {
           this.subscription = this.environmentalProjectService
             .updateEnvironmentalProject(value)
             .subscribe(
@@ -168,7 +168,7 @@ export class FormComponent implements OnInit, OnDestroy {
           this.subscription = this.store
             .dispatch(new DeleteTopic(this.index))
             .subscribe(() => {
-              this.subscription = this.storable$.subscribe((value) => {
+              this.subscription = this.storable$.pipe(take(1)).subscribe((value) => {
 
 
                 this.subscription = this.environmentalProjectService
@@ -211,7 +211,7 @@ export class FormComponent implements OnInit, OnDestroy {
         .finally(() => {
 
 
-          this.subscription = this.storable$.subscribe((value) => {
+          this.subscription = this.storable$.pipe(take(1)).subscribe((value) => {
             this.subscription = this.environmentalProjectService
               .updateEnvironmentalProject(value)
               .subscribe((response: HttpEvent<any>) => {

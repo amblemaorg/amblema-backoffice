@@ -5,6 +5,7 @@ import {
   ProjectValidationRequestState,
   DeleteProjectValidationRequest,
   SelectedProjectValidationRequestn,
+  GetProjectValidationRequest
 } from 'src/app/store/request/project-validation-request.action';
 import { Observable, Subscription } from 'rxjs';
 import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
@@ -92,8 +93,8 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
             cell === REQUEST_STATUS.PENDING.CODE
               ? REQUEST_STATUS.PENDING.VALUE
               : cell === REQUEST_STATUS.ACCEPTED.CODE
-              ? REQUEST_STATUS.ACCEPTED.VALUE
-              : REQUEST_STATUS.REJECTED.VALUE;
+                ? REQUEST_STATUS.ACCEPTED.VALUE
+                : REQUEST_STATUS.REJECTED.VALUE;
 
           value = value.toUpperCase();
           if (value.includes(search.toUpperCase()) || search === '') {
@@ -105,22 +106,24 @@ export class AmblemaConfirmationRequestComponent extends BaseTable
       },
     };
 
-    this.validateAction( false, !( new AuthService().isAllowed( ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_DELETE ) ) );
+    this.validateAction(false, !(new AuthService().isAllowed(ALL_ACTIONS.REQUEST_PROJECT_APPROVAL_DELETE)));
   }
 
   ngOnInit() {
-    this.router.params.subscribe((query: any) => {
-      if (Object.keys(query).length) {
-        this.subscriptionService = this.data$.subscribe((response) => {
-          this.store.dispatch(
-            new SelectedProjectValidationRequestn(
-              response.find((item) => item.id === query.id)
-            )
-          );
-        });
-
-        this.dialogService.open(InformationDetailsComponent);
-      }
+    this.store.dispatch(new GetProjectValidationRequest()).subscribe(() => {
+      this.router.params.subscribe((query: any) => {
+        if (query && query.id) {
+          const projectValidationRequests = this.store.selectSnapshot(ProjectValidationRequestState.projectValidationRequest);
+          const response = projectValidationRequests.find((item) => item.id === query.id);
+          
+          if (response) {
+            this.store.dispatch(new SelectedProjectValidationRequestn(response));
+            setTimeout(() => {
+              this.dialogService.open(InformationDetailsComponent);
+            }, 1000);
+          }
+        }
+      });
     });
 
     this.subscriptionService = this.data$.subscribe((response) => {

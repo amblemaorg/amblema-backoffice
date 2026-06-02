@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { BaseTable, TableActions } from '../../../../../_helpers/base-table';
 import {
   CoordinatorUserState,
   DeleteCoordinatorUser,
   SelectedCoordinatorUser,
+  GetCoordinatorUsers
 } from 'src/app/store/user/coordinator-user.action';
 import { Select, Store } from '@ngxs/store';
 import { CoordinatorUser } from 'src/app/_models/user/coordinator-user.model';
 import { Observable, Subscription } from 'rxjs';
+import { skip, take } from 'rxjs/operators';
 import { Utility } from 'src/app/_helpers/utility';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/dialog/dialog-confirmation/dialog-confirmation.component';
@@ -21,6 +23,25 @@ declare var $: any;
 @Component({
   selector: 'app-coordinators-users-table',
   templateUrl: './coordinators-users-table.component.html',
+  styles: [`
+    .loading-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.45); display: flex; align-items: center;
+      justify-content: center; z-index: 9999;
+    }
+    .loading-box {
+      background: #fff; border-radius: 8px; padding: 32px 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 4px solid #e0e0e0;
+      border-top-color: #3366ff; border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { margin: 0; font-size: 14px; font-weight: 500; color: #2d3748; }
+  `],
 })
 export class CoordinatorsUsersTableComponent extends BaseTable
   implements OnInit, TableActions {
@@ -31,12 +52,15 @@ export class CoordinatorsUsersTableComponent extends BaseTable
   public itCan = new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_CREATE);
 
   subscription: Subscription;
+  loadingTable = false;
+  loadingView = false;
 
   constructor(
     private store: Store,
     private helper: Utility,
     private modalService: BsModalService,
-    private coordinatorUserService: CoordinatorUserService
+    private coordinatorUserService: CoordinatorUserService,
+    private cdr: ChangeDetectorRef
   ) {
     super('form-coordinators');
 
@@ -83,18 +107,29 @@ export class CoordinatorsUsersTableComponent extends BaseTable
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadingTable = true;
+    this.cdr.detectChanges();
+    this.store.dispatch(new GetCoordinatorUsers());
+    this.data$.pipe(skip(1), take(1)).subscribe(
+      () => { this.loadingTable = false; }
+    );
+  }
 
   onAction(event: any): void {
 
-    
+
 
     switch (event.action) {
 
       case this.ACTION.VIEW:
         // Call view modal
-        this.store.dispatch(new SelectedCoordinatorUser(event.data));
-        $('#coordinators-users-view').modal('show');
+        this.loadingView = true;
+        setTimeout(() => {
+          this.store.dispatch(new SelectedCoordinatorUser(event.data));
+          this.loadingView = false;
+          $('#coordinators-users-view').modal('show');
+        }, 0);
         break;
       case this.ACTION.EDIT:
         // Change mode purpose

@@ -17,6 +17,7 @@ import {
 } from 'src/app/store/environmental-project.action';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { EnvironmentalProjectService } from 'src/app/services/environmental-project.service';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
@@ -95,7 +96,7 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
         )
         .subscribe(() => {
           // -- Get all data --
-          this.subscription = this.storable$.subscribe((value) => {
+          this.subscription = this.storable$.pipe(take(1)).subscribe((value) => {
             if (this.submitted) {
               // <-- Must be submitted
 
@@ -127,7 +128,7 @@ export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {
       )
       .subscribe(() => {
         // -- Get all data --
-        this.subscription = this.storable$.subscribe((value) => {
+        this.subscription = this.storable$.pipe(take(1)).subscribe((value) => {
           if (this.submittedObjective) {
             // <-- Must be.submittedObjective
 

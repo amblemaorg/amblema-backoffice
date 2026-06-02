@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Statal, Municipality } from 'src/app/_models/address.model';
 import { AddressService } from 'src/app/services/address.service';
 import { Subscription } from 'rxjs';
@@ -25,22 +25,22 @@ export class GetMunicipalities {
 
 export class SetMunicipality {
   static readonly type = '[GeneralAddress] Set Municipality';
-  constructor(public municipality: Municipality) {}
+  constructor(public municipality: Municipality) { }
 }
 
 export class UpdateMunicipality {
   static readonly type = '[GeneralAddress] Update Municipality';
-  constructor(public municipality: Municipality) {}
+  constructor(public municipality: Municipality) { }
 }
 
 export class DeleteMunicipality {
   static readonly type = '[GeneralAddress] Delete Municipality';
-  constructor(public id: string) {}
+  constructor(public id: string) { }
 }
 
 export class SetStateSelected {
   static readonly type = '[GeneralAddress] Set State Selected';
-  constructor(public idState: string) {}
+  constructor(public idState: string) { }
 }
 
 @State<AddressModel>({
@@ -58,7 +58,8 @@ export class SetStateSelected {
   },
 })
 @Injectable()
-export class AddressState implements NgxsOnInit {
+@Injectable()
+export class AddressState {
   subscriptionService: Subscription;
 
   @Selector()
@@ -76,11 +77,7 @@ export class AddressState implements NgxsOnInit {
     return state.availableMunicipalities;
   }
 
-  constructor(private addressService: AddressService) {}
-
-  ngxsOnInit(ctx: StateContext<AddressModel>): void {
-    ctx.dispatch(new GetStates());
-  }
+  constructor(private addressService: AddressService) { }
 
   @Action(GetStates)
   getStates(ctx: StateContext<AddressModel>, action: GetStates) {

@@ -1,6 +1,6 @@
 import { WebAbout, Award } from '../../_models/web/web-about.model';
 import { Slider } from '../../_models/web/slider.model';
-import { State, StateContext, Selector, Action, NgxsOnInit } from '@ngxs/store';
+import { State, StateContext, Selector, Action } from '@ngxs/store';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { WebAboutService } from '../../services/web-content/web-about.service';
 import { append, patch, updateItem, removeItem } from '@ngxs/store/operators';
@@ -67,7 +67,8 @@ export class DeleteAwardWebAbout {
     }
 })
 @Injectable()
-export class WebAboutState implements NgxsOnInit {
+@Injectable()
+export class WebAboutState {
 
     @Selector()
     static webAbout(state: WebAbout): WebAbout | null {
@@ -80,10 +81,6 @@ export class WebAboutState implements NgxsOnInit {
     ) {
     }
 
-    ngxsOnInit(ctx: StateContext<WebAbout>) {
-        ctx.dispatch(new GetWebAbout());
-    }
-
     // -- Web about's actions --
 
     @Action(GetWebAbout)
@@ -91,7 +88,7 @@ export class WebAboutState implements NgxsOnInit {
         return this.webAboutService.getContentWebAbout()
             .subscribe(response => {
                 if (response.aboutUsPage) {
-                    ctx.setState( { aboutUsPage: response.aboutUsPage } );
+                    ctx.setState({ aboutUsPage: response.aboutUsPage });
                 }
             });
     }
@@ -115,8 +112,8 @@ export class WebAboutState implements NgxsOnInit {
     @Action(SetSliderWebAbout)
     setSliderWebAbout(ctx: StateContext<WebAbout>, action: SetSliderWebAbout) {
         ctx.setState(patch({
-            aboutUsPage : patch({
-                slider : append([action.payload])
+            aboutUsPage: patch({
+                slider: append([action.payload])
             })
         }));
     }
@@ -124,8 +121,8 @@ export class WebAboutState implements NgxsOnInit {
     @Action(UpdateSliderWebAbout)
     updateSliderWebAbout(ctx: StateContext<WebAbout>, action: UpdateSliderWebAbout) {
         ctx.setState(patch({
-            aboutUsPage : patch({
-                slider : updateItem<Slider>(slider => slider === action.oldSlider, action.newSlider)
+            aboutUsPage: patch({
+                slider: updateItem<Slider>(slider => slider === action.oldSlider, action.newSlider)
             })
         }));
     }
@@ -133,7 +130,7 @@ export class WebAboutState implements NgxsOnInit {
     @Action(DeleteSliderWebAbout)
     deleteSliderWebAbout(ctx: StateContext<WebAbout>, action: DeleteSliderWebAbout) {
         ctx.setState(patch({
-            aboutUsPage : patch({
+            aboutUsPage: patch({
                 slider: removeItem<Slider>(slider => slider === action.payload)
             })
         }));
@@ -144,8 +141,8 @@ export class WebAboutState implements NgxsOnInit {
     @Action(SetAwardWebAbout)
     setAwardWebAbout(ctx: StateContext<WebAbout>, action: SetAwardWebAbout) {
         ctx.setState(patch({
-            aboutUsPage : patch({
-                awards : append([action.payload])
+            aboutUsPage: patch({
+                awards: append([action.payload])
             })
         }));
     }
@@ -153,8 +150,8 @@ export class WebAboutState implements NgxsOnInit {
     @Action(UpdateAwardWebAbout)
     updateAwardWebAbout(ctx: StateContext<WebAbout>, action: UpdateAwardWebAbout) {
         ctx.setState(patch({
-            aboutUsPage : patch({
-                awards : updateItem<Award>(award => award === action.oldAward, action.newAward)
+            aboutUsPage: patch({
+                awards: updateItem<Award>(award => award === action.oldAward, action.newAward)
             })
         }));
     }
@@ -162,7 +159,7 @@ export class WebAboutState implements NgxsOnInit {
     @Action(DeleteAwardWebAbout)
     deleteAwardWebAbout(ctx: StateContext<WebAbout>, action: DeleteAwardWebAbout) {
         ctx.setState(patch({
-            aboutUsPage : patch({
+            aboutUsPage: patch({
                 awards: removeItem<Award>(award => award === action.payload)
             })
         }));

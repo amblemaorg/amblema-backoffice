@@ -11,17 +11,25 @@ import { RequestContent } from "src/app/_models/request/request-content-approval
 export class InformationRequestService {
   private readonly REQUEST_CONTENT_APPROVAL = "requestscontentapproval";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   /**
    * Request for information type in steps
    */
-  getRequestsContent(): Observable<RequestContent[]> {
+  getRequestsContent(only?: string): Observable<RequestContent[]> {
+    const url = only
+      ? `${environment.api}${this.REQUEST_CONTENT_APPROVAL}?only=${only}`
+      : `${environment.api}${this.REQUEST_CONTENT_APPROVAL}`;
+
     return this.httpClient
-      .get<RequestContent[]>(
-        `${environment.api}${this.REQUEST_CONTENT_APPROVAL}`
-      )
+      .get<RequestContent[]>(url)
       .pipe(map((data: any) => data.records));
+  }
+
+  getRequestContent(id: string): Observable<RequestContent> {
+    return this.httpClient.get<RequestContent>(
+      `${environment.api}${this.REQUEST_CONTENT_APPROVAL}/${id}`
+    );
   }
 
   updateRequestContentApproval(data: RequestContent): Observable<any> {

@@ -97,8 +97,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
               row === TYPE_REQUEST.COORDINATOR.ORIGINAL
                 ? TYPE_REQUEST.COORDINATOR.CONVERTION
                 : row === TYPE_REQUEST.SCHOOL.ORIGINAL
-                ? TYPE_REQUEST.SCHOOL.CONVERTION
-                : TYPE_REQUEST.SPONSOR.CONVERTION;
+                  ? TYPE_REQUEST.SCHOOL.CONVERTION
+                  : TYPE_REQUEST.SPONSOR.CONVERTION;
             return value;
           },
           filterFunction(cell?: any, search?: string): boolean {
@@ -106,8 +106,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
               cell === TYPE_REQUEST.COORDINATOR.ORIGINAL
                 ? TYPE_REQUEST.COORDINATOR.CONVERTION
                 : cell === TYPE_REQUEST.SCHOOL.ORIGINAL
-                ? TYPE_REQUEST.SCHOOL.CONVERTION
-                : TYPE_REQUEST.SPONSOR.CONVERTION;
+                  ? TYPE_REQUEST.SCHOOL.CONVERTION
+                  : TYPE_REQUEST.SPONSOR.CONVERTION;
 
             value = value.toUpperCase();
             if (value.includes(search.toUpperCase()) || search === '') {
@@ -144,8 +144,8 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
               cell === REQUEST_STATUS.PENDING.CODE
                 ? REQUEST_STATUS.PENDING.VALUE
                 : cell === REQUEST_STATUS.ACCEPTED.CODE
-                ? REQUEST_STATUS.ACCEPTED.VALUE
-                : REQUEST_STATUS.REJECTED.VALUE;
+                  ? REQUEST_STATUS.ACCEPTED.VALUE
+                  : REQUEST_STATUS.REJECTED.VALUE;
 
             value = value.toUpperCase();
             if (value.includes(search.toUpperCase()) || search === '') {
@@ -164,23 +164,21 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit() {
-
-    this.router.params.subscribe((value) => {
-      if (Object.keys(value).length) {
-        this.requestSelected = value;
-        this.oldRequest = value;
-
-        this.data$.subscribe((res) => {
-          res.forEach((request) => {
-            if (request.id === this.requestSelected.id) {
-              this.requestSelected = request;
-              setTimeout(() => {
-                this.modalService.open(this.modal);
-              }, 1000);
-            }
-          });
-        });
-      }
+    this.store.dispatch(new GetUserCreationRequests()).subscribe(() => {
+      this.router.params.subscribe((value) => {
+        if (value && value.id) {
+          const userCreationRequests = this.store.selectSnapshot(UserCreationRequestState.creationRequests);
+          const response = userCreationRequests.find(req => req.id === value.id);
+          
+          if (response) {
+            this.requestSelected = response;
+            this.oldRequest = response;
+            setTimeout(() => {
+              this.modalService.open(this.modal);
+            }, 1000);
+          }
+        }
+      });
     });
   }
 

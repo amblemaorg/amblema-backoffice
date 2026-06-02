@@ -1,7 +1,8 @@
-import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
+import { State, StateContext, Action, Selector } from '@ngxs/store';
 import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { tap } from 'rxjs/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 import { Injectable } from '@angular/core';
 
@@ -15,22 +16,27 @@ export class GetProjectValidationRequest {
     '[ProjectValidationRequest] Get Project Validation Request';
 }
 
+export class GetProjectValidationRequestCompact {
+  static readonly type =
+    '[ProjectValidationRequest] Get Project Validation Request Compact';
+}
+
 export class UpdateProjectValidationRequest {
   static readonly type =
     '[ProjectValidationRequest] Update Project Validation Request';
-  constructor(public newData: ProjectValidationRequest) {}
+  constructor(public newData: ProjectValidationRequest) { }
 }
 
 export class SelectedProjectValidationRequestn {
   static readonly type =
     '[ProjectValidationRequest] Selected Project Validation Request';
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class DeleteProjectValidationRequest {
   static readonly type =
     '[RequestValidateInformation] Delete Project Validation Request';
-  constructor(public id: string) {}
+  constructor(public id: string) { }
 }
 
 @State<ProjectValidationRequestModel>({
@@ -40,7 +46,8 @@ export class DeleteProjectValidationRequest {
   },
 })
 @Injectable()
-export class ProjectValidationRequestState implements NgxsOnInit {
+@Injectable()
+export class ProjectValidationRequestState {
   @Selector()
   static projectValidationRequest(
     state: ProjectValidationRequestModel
@@ -71,18 +78,30 @@ export class ProjectValidationRequestState implements NgxsOnInit {
 
   constructor(
     private requestInformationValidateService: ProjectValidationRequestService
-  ) {}
-
-  ngxsOnInit(ctx: StateContext<ProjectValidationRequestModel>): void {
-    ctx.dispatch(new GetProjectValidationRequest());
-  }
+  ) { }
 
   @Action(GetProjectValidationRequest)
   getRequestValidateInformation(
     ctx: StateContext<ProjectValidationRequestModel>
   ) {
-    this.requestInformationValidateService
+    return this.requestInformationValidateService
       .getRequestsProjectApproval()
+      .pipe(
+        tap((response) => {
+          ctx.setState({
+            ...ctx.getState(),
+            projectValidationRequests: response,
+          });
+        })
+      );
+  }
+
+  @Action(GetProjectValidationRequestCompact)
+  getProjectValidationRequestCompact(
+    ctx: StateContext<ProjectValidationRequestModel>
+  ) {
+    this.requestInformationValidateService
+      .getRequestsProjectApproval('id,code,project,type,user,status,updatedAt,createdAt', '1')
       .subscribe((response) => {
         ctx.setState({
           ...ctx.getState(),
@@ -119,11 +138,11 @@ export class ProjectValidationRequestState implements NgxsOnInit {
     });
   }
 
-   @Action(DeleteProjectValidationRequest)
-   deleteProjectValidationRequest(ctx: StateContext<ProjectValidationRequestModel>, action: DeleteProjectValidationRequest) {
-     ctx.setState(patch({
-       ...ctx.getState(),
-       projectValidationRequests: removeItem<ProjectValidationRequest>( item => item.id === action.id )
-     }));
-   }
+  @Action(DeleteProjectValidationRequest)
+  deleteProjectValidationRequest(ctx: StateContext<ProjectValidationRequestModel>, action: DeleteProjectValidationRequest) {
+    ctx.setState(patch({
+      ...ctx.getState(),
+      projectValidationRequests: removeItem<ProjectValidationRequest>(item => item.id === action.id)
+    }));
+  }
 }

@@ -1,5 +1,5 @@
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
-import { NgxsOnInit, State, Selector, Action, StateContext } from '@ngxs/store';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Utility } from 'src/app/_helpers/utility';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
@@ -9,12 +9,18 @@ import { Injectable } from '@angular/core';
 export interface SponsorUserModel {
     sponsorUser: SponsorUser;
     sponsorUsers: SponsorUser[];
+    sponsorUsersCompact: SponsorUser[];
 }
 
 // -- Actions --
 
 export class GetSponsorUsers {
     static readonly type = '[Sponsor User] Get Sponsor Users';
+    constructor() { }
+}
+
+export class GetSponsorUsersCompact {
+    static readonly type = '[Sponsor User] Get Sponsor Users Compact';
     constructor() { }
 }
 
@@ -65,19 +71,26 @@ export class DeleteSponsorUser {
             webSite: '',
             status: ' '
         },
-        sponsorUsers: []
+        sponsorUsers: [],
+        sponsorUsersCompact: []
     }
 })
 @Injectable()
-export class SponsorUserState implements NgxsOnInit {
+@Injectable()
+export class SponsorUserState {
 
     @Selector()
-    static sponsorUsers( state: SponsorUserModel ): SponsorUser [] | null {
+    static sponsorUsers(state: SponsorUserModel): SponsorUser[] | null {
         return state.sponsorUsers;
     }
 
     @Selector()
-    static sponsorUser( state: SponsorUserModel ): SponsorUser | null {
+    static sponsorUsersCompact(state: SponsorUserModel): SponsorUser[] | null {
+        return state.sponsorUsersCompact;
+    }
+
+    @Selector()
+    static sponsorUser(state: SponsorUserModel): SponsorUser | null {
         return state.sponsorUser;
     }
 
@@ -85,20 +98,16 @@ export class SponsorUserState implements NgxsOnInit {
         private helper: Utility,
         private sponsorUserService: SponsorUserService,
         private toastr: CustomToastrService,
-    ) {}
-
-    ngxsOnInit(ctx: StateContext<SponsorUserModel>) {
-        ctx.dispatch( new GetSponsorUsers() );
-    }
+    ) { }
 
     // -- Sponsor user's actions --
 
-    @Action( GetSponsorUsers )
-    getSponsorUsers( ctx: StateContext<SponsorUserModel>  ) {
-        this.sponsorUserService.getSponsorUsers().subscribe( response => {
-            if ( response ) {
+    @Action(GetSponsorUsers)
+    getSponsorUsers(ctx: StateContext<SponsorUserModel>) {
+        this.sponsorUserService.getSponsorUsers().subscribe(response => {
+            if (response) {
 
-                ctx.setState( patch({
+                ctx.setState(patch({
                     ...ctx.getState(),
                     sponsorUsers: response
                 }));
@@ -106,34 +115,46 @@ export class SponsorUserState implements NgxsOnInit {
         });
     }
 
-    @Action( SelectedSponsorUser )
-    selectedSponsorUser( ctx: StateContext<SponsorUserModel>, action: SelectedSponsorUser ) {
-        ctx.setState( patch({
+    @Action(GetSponsorUsersCompact)
+    getSponsorUsersCompact(ctx: StateContext<SponsorUserModel>) {
+        this.sponsorUserService.getSponsorUsers('id,name').subscribe(response => {
+            if (response) {
+                ctx.setState(patch({
+                    ...ctx.getState(),
+                    sponsorUsersCompact: response
+                }));
+            }
+        });
+    }
+
+    @Action(SelectedSponsorUser)
+    selectedSponsorUser(ctx: StateContext<SponsorUserModel>, action: SelectedSponsorUser) {
+        ctx.setState(patch({
             ...ctx.getState(),
             sponsorUser: action.payload
         }));
     }
 
-    @Action( SetSponsorUser )
-    setSponsorUser( ctx: StateContext<SponsorUserModel>, action: SetSponsorUser ) {
-        ctx.setState( patch({
+    @Action(SetSponsorUser)
+    setSponsorUser(ctx: StateContext<SponsorUserModel>, action: SetSponsorUser) {
+        ctx.setState(patch({
             ...ctx.getState(),
             sponsorUsers: append([action.payload])
         }));
     }
 
-    @Action( UpdateSponsorUser )
-    updateSponsorUser( ctx: StateContext<SponsorUserModel>, action: UpdateSponsorUser ) {
-        ctx.setState( patch({
+    @Action(UpdateSponsorUser)
+    updateSponsorUser(ctx: StateContext<SponsorUserModel>, action: UpdateSponsorUser) {
+        ctx.setState(patch({
             ...ctx.getState(),
             sponsorUsers: updateItem<SponsorUser>(
                 sponsorUser =>
-                sponsorUser.id === action.oldSponsorUser.id, action.newSponsorUser )
+                    sponsorUser.id === action.oldSponsorUser.id, action.newSponsorUser)
         }));
     }
 
-    @Action( DeleteSponsorUser )
-    deleteSponsorUser(ctx: StateContext<SponsorUserModel>, action: DeleteSponsorUser  ) {
+    @Action(DeleteSponsorUser)
+    deleteSponsorUser(ctx: StateContext<SponsorUserModel>, action: DeleteSponsorUser) {
 
         ctx.setState(patch({
             ...ctx.getState(),

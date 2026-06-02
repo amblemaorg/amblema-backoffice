@@ -16,6 +16,12 @@ import { LocalDataSource } from "ng2-smart-table";
 import { DomSanitizer } from "@angular/platform-browser";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { Store, Select } from "@ngxs/store";
+import { SchoolUserState, GetSchoolUsers } from "src/app/store/user/school-user.action";
+import { CoordinatorUserState, GetCoordinatorUsers } from "src/app/store/user/coordinator-user.action";
+import { Observable } from "rxjs";
+import { SchoolUser } from "src/app/_models/user/school.model";
+import { CoordinatorUser } from "src/app/_models/user/coordinator-user.model";
 
 @Component({
   selector: "app-peca-report",
@@ -58,17 +64,32 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   data: any = [];
   bodyTable: any = [];
 
+  @Select(SchoolUserState.schoolUsers) schools$: Observable<SchoolUser[]>;
+  @Select(CoordinatorUserState.coordinatorUsers) coordinators$: Observable<CoordinatorUser[]>;
+
   @ViewChild("pdfElement", { static: false }) pdfElement: ElementRef;
+
+  allSchools: SchoolUser[] = [];
+  allCoordinators: CoordinatorUser[] = [];
 
   constructor(
     private toast: CustomToastrService,
     private cd: ChangeDetectorRef,
     private pecaReportService: PecaReportService,
     private domSanitizer: DomSanitizer,
+    private store: Store,
     private generateReporte?: PDFReportPeca
   ) {}
 
   ngOnInit() {
+    this.store.dispatch(new GetSchoolUsers());
+    this.store.dispatch(new GetCoordinatorUsers());
+
+    this.schools$.subscribe((schools) => (this.allSchools = schools));
+    this.coordinators$.subscribe(
+      (coordinators) => (this.allCoordinators = coordinators)
+    );
+
     this.subscriptionService = this.pecaReportService
       .getInitialData()
       .subscribe((response: any) => {
@@ -410,20 +431,38 @@ export class PecaReportComponent implements OnInit, OnDestroy {
     let options = [];
     const filterName = this.checkFilterName(this.filterType);
     if (filterName === "Coordinadores") {
-      options = chunk.coordinators.map((coordinator) => {
-        return {
-          item_id: coordinator.id,
-          item_text: coordinator.name,
-        };
-      });
+      if (chunk && chunk.coordinators && chunk.coordinators.length > 0) {
+        options = chunk.coordinators.map((coordinator) => {
+          return {
+            item_id: coordinator.id,
+            item_text: coordinator.name,
+          };
+        });
+      } else {
+        options = this.allCoordinators.map((coordinator) => {
+          return {
+            item_id: coordinator.id,
+            item_text: `${coordinator.firstName} ${coordinator.lastName}`,
+          };
+        });
+      }
     }
     if (filterName === "Escuelas") {
-      options = chunk.schools.map((school) => {
-        return {
-          item_id: school.id,
-          item_text: school.name,
-        };
-      });
+      if (chunk && chunk.schools && chunk.schools.length > 0) {
+        options = chunk.schools.map((school) => {
+          return {
+            item_id: school.id,
+            item_text: school.name,
+          };
+        });
+      } else {
+        options = this.allSchools.map((school) => {
+          return {
+            item_id: school.id,
+            item_text: school.name,
+          };
+        });
+      }
     }
     if (filterName === "Actividades") {
       const chunk = this.initialFilterData.find(

@@ -1,7 +1,8 @@
 import { UserCreationRequest } from 'src/app/_models/request/user-creation-request.model';
-import { State, NgxsOnInit, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { UserCreationRequestService } from 'src/app/services/request/user-creation-request.service';
 import { patch, updateItem, removeItem } from '@ngxs/store/operators';
+import { tap } from 'rxjs/operators';
 import { REQUEST_STATUS } from 'src/app/_helpers/convention/request-status';
 import { Inject, Injectable } from '@angular/core';
 
@@ -13,17 +14,21 @@ export class GetUserCreationRequests {
   static readonly type = '[User Creation Requests] Get UserCreationRequests';
 }
 
+export class GetUserCreationRequestsCompact {
+  static readonly type = '[User Creation Requests] Get UserCreationRequests Compact';
+}
+
 export class UpdateUserCreationRequest {
   static readonly type = '[User Creation Request] Update UserCreationRequest';
   constructor(
     public newRequest: UserCreationRequest,
     public oldRequest: UserCreationRequest
-  ) {}
+  ) { }
 }
 
 export class DeleteUserCreationRequest {
   static readonly type = '[User Creation Request] Delete UserCreationRequest';
-  constructor(public payload: UserCreationRequest) {}
+  constructor(public payload: UserCreationRequest) { }
 }
 
 @State<UserCreationRequestModel>({
@@ -33,7 +38,8 @@ export class DeleteUserCreationRequest {
   },
 })
 @Injectable()
-export class UserCreationRequestState implements NgxsOnInit {
+@Injectable()
+export class UserCreationRequestState {
   @Selector()
   static creationRequests(
     state: UserCreationRequestModel
@@ -56,17 +62,27 @@ export class UserCreationRequestState implements NgxsOnInit {
     return value;
   }
 
-  ngxsOnInit(ctx: StateContext<UserCreationRequestModel>): void {
-    ctx.dispatch(new GetUserCreationRequests());
-  }
-
-  constructor(private userCreationRequestService: UserCreationRequestService) {}
+  constructor(private userCreationRequestService: UserCreationRequestService) { }
 
   @Action(GetUserCreationRequests)
   getUserCreationRequests(ctx: StateContext<UserCreationRequestModel>) {
+    return this.userCreationRequestService
+      .getUserCreationRequests()
+      .pipe(
+        tap((response) => {
+          ctx.setState({
+            ...ctx.getState(),
+            userCreationRequests: response,
+          });
+        })
+      );
+  }
+
+  @Action(GetUserCreationRequestsCompact)
+  getUserCreationRequestsCompact(ctx: StateContext<UserCreationRequestModel>) {
 
     this.userCreationRequestService
-      .getUserCreationRequests()
+      .getUserCreationRequests('id,requestCode,projectCode,type,user,status,updatedAt,createdAt', '1')
       .subscribe((response) => {
         ctx.setState({
           ...ctx.getState(),

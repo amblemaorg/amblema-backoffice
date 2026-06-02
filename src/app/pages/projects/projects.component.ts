@@ -58,13 +58,13 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     public modal: ModalService,
     private modalServicesBs: BsModalService,
     private projectService: ProjectService,
-    private helper: Utility
+    private helper: Utility,
+    private authService: AuthService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetProjects());
 
     this.MODE = this.ACTION.CREATE;
 
@@ -175,7 +175,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     );
   }
 
-  clear() {}
+  clear() { }
 
   // Events table
   onAction(event: any): void {
@@ -211,6 +211,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
                     (modal.content as DialogConfirmationComponent).hideConfirmationModal();
 
                     this.store.dispatch(new DeleteProject(event.data.id));
+                    this.store.dispatch(new GetProjects()); // Update store silently from backend
                   },
                   (err: any) => {
                     (modal.content as DialogConfirmationComponent).errorDelete(

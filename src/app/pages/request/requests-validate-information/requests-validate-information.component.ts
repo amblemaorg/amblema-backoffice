@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { BaseTable } from "src/app/_helpers/base-table";
 import { ACTION } from "src/app/_helpers/text-content/text-crud";
-import { Select, Store } from "@ngxs/store";
+import { Select, Store, Actions, ofActionSuccessful } from "@ngxs/store";
+import { HttpClient } from "@angular/common/http";
 
 import { Observable, Subscription } from "rxjs";
+import { skip, take } from "rxjs/operators";
 import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
 import { DatePipe } from "@angular/common";
 import { REQUEST_STATUS } from "src/app/_helpers/convention/request-status";
@@ -12,10 +14,16 @@ import { NbDialogService } from "@nebular/theme";
 import { InformationDetailsComponent } from "./information-details/information-details.component";
 import { InformationRequestService } from "src/app/services/request/information-request.service";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { NotificationsService } from "src/app/services/notifications.service";
 import {
   RequestContentState,
   SelectedRequestContent,
   DeleteRequestContent,
+  GetRequestsContent,
+  GetRequestsContentCompact,
+  GetRequestContentById,
+  ClearSelectedRequestContent,
+  UpdateRequestContent
 } from "src/app/store/request/request-content-approval.action";
 import { RequestContent } from "src/app/_models/request/request-content-approval.model";
 import { TYPE_INFORMATION } from "./_shared/type-information";
@@ -34,6 +42,8 @@ import { PhotosSchoolDetailsComponent } from "./photos-school-details/photos-sch
 import { DialogConfirmationComponent } from "../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
 import { AuthService } from "src/app/services/user/auth.service";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
+import { RequestsServerDataSource } from "./requests-server-data-source";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-requests-validate-information",
@@ -42,13 +52,17 @@ import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 })
 export class RequestsValidateInformationComponent
   extends BaseTable
-  implements OnInit
-{
+  implements OnInit, OnDestroy {
   @Select(RequestContentState.requestsContent) data$: Observable<
     RequestContent[]
   >;
 
+  source: RequestsServerDataSource;
+
   subscription: Subscription;
+  actionSubscription: Subscription;
+  loadingTable = false;
+  loadingView = false;
 
   constructor(
     private store: Store,
@@ -59,7 +73,12 @@ export class RequestsValidateInformationComponent
     private router: ActivatedRoute,
     private serviceInformation: InformationRequestService,
     private helper: Utility,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private cdr: ChangeDetectorRef,
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private actions$: Actions,
+    private notificationsService: NotificationsService
   ) {
     super();
 
@@ -98,16 +117,16 @@ export class RequestsValidateInformationComponent
           return row === USER_TYPE.COORDINATOR.VALUE
             ? USER_TYPE.COORDINATOR.LABEL
             : row === USER_TYPE.SCHOOL.VALUE
-            ? USER_TYPE.SCHOOL.LABEL
-            : USER_TYPE.SPONSOR.LABEL;
+              ? USER_TYPE.SCHOOL.LABEL
+              : USER_TYPE.SPONSOR.LABEL;
         },
         filterFunction(cell?: any, search?: string): boolean {
           let value: string =
             cell === USER_TYPE.COORDINATOR.VALUE
               ? USER_TYPE.COORDINATOR.LABEL
               : cell === USER_TYPE.SCHOOL.VALUE
-              ? USER_TYPE.SCHOOL.LABEL
-              : USER_TYPE.SPONSOR.LABEL;
+                ? USER_TYPE.SCHOOL.LABEL
+                : USER_TYPE.SPONSOR.LABEL;
           value = value.toUpperCase();
           if (value.includes(search.toUpperCase()) || search === "") {
             return true;
@@ -139,40 +158,40 @@ export class RequestsValidateInformationComponent
           return row === TYPE_INFORMATION.STEP.VALUE
             ? TYPE_INFORMATION.STEP.LABEL
             : row === TYPE_INFORMATION.TESTIMONIES.VALUE
-            ? TYPE_INFORMATION.TESTIMONIES.LABEL
-            : row === TYPE_INFORMATION.ACTIVITY.VALUE
-            ? TYPE_INFORMATION.ACTIVITY.LABEL
-            : row === TYPE_INFORMATION.SLIDER.VALUE
-            ? TYPE_INFORMATION.SLIDER.LABEL
-            : row === TYPE_INFORMATION.WORKSHOP.VALUE
-            ? TYPE_INFORMATION.WORKSHOP.LABEL
-            : row === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
-            ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
-            : row === TYPE_INFORMATION.YEARBOOK.VALUE
-            ? TYPE_INFORMATION.YEARBOOK.LABEL
-            : row === TYPE_INFORMATION.SPAN_PLANNING.VALUE
-            ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
-            : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
+              ? TYPE_INFORMATION.TESTIMONIES.LABEL
+              : row === TYPE_INFORMATION.ACTIVITY.VALUE
+                ? TYPE_INFORMATION.ACTIVITY.LABEL
+                : row === TYPE_INFORMATION.SLIDER.VALUE
+                  ? TYPE_INFORMATION.SLIDER.LABEL
+                  : row === TYPE_INFORMATION.WORKSHOP.VALUE
+                    ? TYPE_INFORMATION.WORKSHOP.LABEL
+                    : row === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
+                      ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
+                      : row === TYPE_INFORMATION.YEARBOOK.VALUE
+                        ? TYPE_INFORMATION.YEARBOOK.LABEL
+                        : row === TYPE_INFORMATION.SPAN_PLANNING.VALUE
+                          ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
+                          : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
         },
         filterFunction: (cell?: any, search?: string) => {
           let value: string =
             cell === TYPE_INFORMATION.STEP.VALUE
               ? TYPE_INFORMATION.STEP.LABEL
               : cell === TYPE_INFORMATION.TESTIMONIES.VALUE
-              ? TYPE_INFORMATION.TESTIMONIES.LABEL
-              : cell === TYPE_INFORMATION.ACTIVITY.VALUE
-              ? TYPE_INFORMATION.ACTIVITY.LABEL
-              : cell === TYPE_INFORMATION.SLIDER.VALUE
-              ? TYPE_INFORMATION.SLIDER.LABEL
-              : cell === TYPE_INFORMATION.WORKSHOP.VALUE
-              ? TYPE_INFORMATION.WORKSHOP.LABEL
-              : cell === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
-              ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
-              : cell === TYPE_INFORMATION.YEARBOOK.VALUE
-              ? TYPE_INFORMATION.YEARBOOK.LABEL
-              : cell === TYPE_INFORMATION.SPAN_PLANNING.VALUE
-              ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
-              : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
+                ? TYPE_INFORMATION.TESTIMONIES.LABEL
+                : cell === TYPE_INFORMATION.ACTIVITY.VALUE
+                  ? TYPE_INFORMATION.ACTIVITY.LABEL
+                  : cell === TYPE_INFORMATION.SLIDER.VALUE
+                    ? TYPE_INFORMATION.SLIDER.LABEL
+                    : cell === TYPE_INFORMATION.WORKSHOP.VALUE
+                      ? TYPE_INFORMATION.WORKSHOP.LABEL
+                      : cell === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
+                        ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
+                        : cell === TYPE_INFORMATION.YEARBOOK.VALUE
+                          ? TYPE_INFORMATION.YEARBOOK.LABEL
+                          : cell === TYPE_INFORMATION.SPAN_PLANNING.VALUE
+                            ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
+                            : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
 
           value = value.toUpperCase();
 
@@ -206,10 +225,10 @@ export class RequestsValidateInformationComponent
             cell === REQUEST_STATUS.PENDING.CODE
               ? REQUEST_STATUS.PENDING.VALUE
               : cell === REQUEST_STATUS.ACCEPTED.CODE
-              ? REQUEST_STATUS.ACCEPTED.VALUE
-              : cell === REQUEST_STATUS.REJECTED.CODE
-              ? REQUEST_STATUS.REJECTED.VALUE
-              : REQUEST_STATUS.CANCELLED.VALUE;
+                ? REQUEST_STATUS.ACCEPTED.VALUE
+                : cell === REQUEST_STATUS.REJECTED.CODE
+                  ? REQUEST_STATUS.REJECTED.VALUE
+                  : REQUEST_STATUS.CANCELLED.VALUE;
 
           value = value.toUpperCase();
           if (value.includes(search.toUpperCase()) || search === "") {
@@ -228,82 +247,124 @@ export class RequestsValidateInformationComponent
   }
 
   ngOnInit() {
-    this.router.params.subscribe((query: any) => {
-      if (Object.keys(query).length) {
-        this.data$.subscribe((response) => {
-          this.store.dispatch(new SelectedRequestContent(query));
-        });
+    this.source = new RequestsServerDataSource(this.httpClient, {
+      endPoint: environment.api + "requestscontentapproval",
+      dataKey: "records",
+      totalKey: "pagination.total_records",
+      pagerPageKey: "page",
+      pagerLimitKey: "per_page",
+      filterFieldKey: "#field#",
+      paginationMessage: "Mostrando de {from} a {to} de {total} registros",
+    }, this.authService);
 
-        this.showModalDetails(query.type);
+    this.router.params.subscribe((query: any) => {
+      if (Object.keys(query).length && query.id) {
+        this.store.dispatch(new GetRequestContentById(query.id)).subscribe(() => {
+          const selected = this.store.selectSnapshot(RequestContentState.selectedContentRequest);
+          if (selected && selected.type) {
+            this.showModalDetails(selected.type);
+          }
+        });
       }
+    });
+
+    this.actionSubscription = this.actions$.pipe(ofActionSuccessful(UpdateRequestContent)).subscribe(() => {
+      this.source.refresh();
+      this.notificationsService.updateNotifications();
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    if (this.actionSubscription) {
+      this.actionSubscription.unsubscribe();
+    }
+  }
+
   private showModalDetails(type: string): void {
+    let modalRef: any;
+
     switch (type) {
       case TYPE_INFORMATION.STEP.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           InformationDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.TESTIMONIES.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           TestimonyDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
 
         break;
       case TYPE_INFORMATION.ACTIVITY.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           ActivityDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.SLIDER.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           SliderDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.WORKSHOP.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           InitialWorkshopDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           SpecialActivityDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.YEARBOOK.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           YearbookDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.SPAN_PLANNING.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           SpanPlanningComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
       case TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.VALUE:
-        this.modalService.show(
+        modalRef = this.modalService.show(
           PhotosSchoolDetailsComponent,
           Object.assign({}, { class: "modal-xl modal-dialog-centered" })
         );
         break;
+    }
+
+    if (modalRef) {
+      this.subscription = this.modalService.onHide.subscribe(() => {
+        this.store.dispatch(new ClearSelectedRequestContent());
+      });
     }
   }
 
   onAction(event) {
     switch (event.action) {
       case this.ACTION.VIEW:
-        this.showModalDetails(event.data.type);
-        this.store.dispatch(new SelectedRequestContent(event.data));
+        this.loadingView = true;
+        this.store.dispatch(new GetRequestContentById(event.data.id)).subscribe(
+          () => {
+            this.loadingView = false;
+            this.showModalDetails(event.data.type);
+          },
+          (err) => {
+            this.loadingView = false;
+            console.error('Error al cargar la solicitud', err);
+          }
+        );
         break;
       case this.ACTION.DELETE:
         // Call delete modal
@@ -333,6 +394,7 @@ export class RequestsValidateInformationComponent
                   ).hideConfirmationModal();
 
                   this.store.dispatch(new DeleteRequestContent(event.data.id));
+                  this.source.refresh();
                   this.toast.deleteRegister(
                     "Solicitud eliminada",
                     "Se ha eliminado una solicitud"

@@ -18,9 +18,15 @@ export class ProjectRequestsService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getProjectRequests(): Observable<ProjectRequest[]> {
+  getProjectRequests(only?: string, status?: string): Observable<ProjectRequest[]> {
+    let url = `${environment.api}${this.PROJECT_REQUESTS}`;
+    const params = [];
+    if (only) params.push(`only=${only}`);
+    if (status) params.push(`status=${status}`);
+    if (params.length > 0) url += `?${params.join('&')}`;
+
     return this.httpClient
-      .get<ProjectRequest[]>(`${environment.api}${this.PROJECT_REQUESTS}`)
+      .get<ProjectRequest[]>(url)
       .pipe(map((data: any) => data.records));
   }
 

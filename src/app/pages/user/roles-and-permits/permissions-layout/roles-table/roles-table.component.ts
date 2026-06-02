@@ -9,6 +9,7 @@ import {
   RolesState,
   DeleteRole,
   SelectedRole,
+  GetRoles
 } from 'src/app/store/role.action';
 import { PermissionService } from 'src/app/services/permission.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
@@ -63,7 +64,9 @@ export class RolesTableComponent extends BaseTable
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(new GetRoles());
+  }
 
   onAction(event: any) {
     switch (event.action) {

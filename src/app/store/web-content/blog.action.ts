@@ -1,5 +1,5 @@
 import { Post } from '../../_models/web/blog.model';
-import { NgxsOnInit, StateContext, State, Action, Selector } from '@ngxs/store';
+import { StateContext, State, Action, Selector } from '@ngxs/store';
 import { BlogService } from '../../services/web-content/blog.service';
 import { CustomToastrService } from '../../services/helper/custom-toastr.service';
 import { append, updateItem, removeItem, patch } from '@ngxs/store/operators';
@@ -14,17 +14,17 @@ export class GetPosts {
 
 export class SetPost {
     static readonly type = '[Post] Set Post';
-    constructor( public payload: Post ) { }
+    constructor(public payload: Post) { }
 }
 
 export class UpdatePost {
     static readonly type = '[Post] Update Post';
-    constructor( public oldPost: Post, public newPost: Post ) { }
+    constructor(public oldPost: Post, public newPost: Post) { }
 }
 
 export class DeletePost {
     static readonly type = '[Post] Delete Post';
-    constructor( public payload: Post ) { }
+    constructor(public payload: Post) { }
 }
 
 // -- Posts State --
@@ -34,15 +34,12 @@ export class DeletePost {
     defaults: []
 })
 @Injectable()
-export class PostsState implements NgxsOnInit {
+@Injectable()
+export class PostsState {
 
     @Selector()
-    static posts(state: Post[ ]): Post[] | null {
+    static posts(state: Post[]): Post[] | null {
         return state;
-    }
-
-    ngxsOnInit( ctx: StateContext<Post[]> ) {
-        ctx.dispatch(new GetPosts());
     }
 
     constructor(
@@ -50,7 +47,7 @@ export class PostsState implements NgxsOnInit {
         private toastr: CustomToastrService,
         private blogService: BlogService
 
-    ) {}
+    ) { }
 
     @Action(GetPosts)
     getPosts(ctx: StateContext<Post[]>) {
@@ -58,29 +55,29 @@ export class PostsState implements NgxsOnInit {
             .subscribe(response => {
                 response = this.helper.convertTagsNumberToString(response);
                 response = this.helper.convertStatusPostToString(response);
-                ctx.setState( response );
+                ctx.setState(response);
             });
 
 
     }
 
     @Action(SetPost)
-    setPost( ctx: StateContext<Post[]>, action: SetPost ) {
+    setPost(ctx: StateContext<Post[]>, action: SetPost) {
 
         ctx.setState(append([action.payload]));
     }
 
-    @Action( UpdatePost )
+    @Action(UpdatePost)
     updatePost(ctx: StateContext<Post[]>, action: UpdatePost) {
         ctx.setState(
             updateItem<Post>(post => post.id === action.oldPost.id, action.newPost)
         );
     }
 
-    @Action( DeletePost )
-    deletePost(ctx: StateContext<Post[]>, action: DeletePost ) {
+    @Action(DeletePost)
+    deletePost(ctx: StateContext<Post[]>, action: DeletePost) {
         this.toastr.deleteRegister('Eliminación', 'Post eliminado');
-        ctx.setState(removeItem<Post>( post => post === action.payload ));
+        ctx.setState(removeItem<Post>(post => post === action.payload));
 
     }
 

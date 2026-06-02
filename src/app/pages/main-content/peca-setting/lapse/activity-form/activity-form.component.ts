@@ -185,14 +185,16 @@ export class ActivityFormComponent
         .updateActivity(this.id, this.lapse, formData)
         .subscribe(
           (response: any) => {
-
-
-            this.toastr.updateSuccess(
-              'Actualización',
-              'Actividad actualizada'
-            );
+            if (response.type === HttpEventType.Response) {
+              this.showProgress = false;
+              this.toastr.updateSuccess(
+                'Actualización',
+                'Actividad actualizada'
+              );
+            }
           },
           (err: any) => {
+            this.showProgress = false;
             this.toastr.error(
               'Problemas al registrar',
               'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
@@ -361,12 +363,16 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess(
-            'Actualización',
-            'Taller inicial actualizado'
-          );
+          if (response.type === HttpEventType.Response) {
+            this.showProgress = false;
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Taller inicial actualizado'
+            );
+          }
         },
         (err: any) => {
+          this.showProgress = false;
           this.toastr.error(
             'Problemas al registrar',
             'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
@@ -406,9 +412,13 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess('Actualización', 'AmbLeCoins actualizado');
+          if (response.type === HttpEventType.Response) {
+            this.showProgress = false;
+            this.toastr.updateSuccess('Actualización', 'AmbLeCoins actualizado');
+          }
         },
         (err: any) => {
+          this.showProgress = false;
           this.toastr.error(
             'Problemas al registrar',
             'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
@@ -442,12 +452,16 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess(
-            'Actualización',
-            'Planificación inicial actualizado'
-          );
+          if (response.type === HttpEventType.Response) {
+            this.showProgress = false;
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Planificación inicial actualizado'
+            );
+          }
         },
         (err: any) => {
+          this.showProgress = false;
           this.toastr.error(
             'Problemas al registrar',
             'Las fallas pueden ser la conexión o el nombre del paso esta dúplicado'
@@ -471,14 +485,16 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess(
-            'Actualización',
-            'Preparación anual actualizado'
-          );
+          if (response.type === HttpEventType.Response) {
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Preparación anual actualizado'
+            );
 
-          setTimeout(() => {
-            this.showProgress = false;
-          }, 2000);
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2000);
+          }
         },
         (err: any) => {
           this.showProgress = false;
@@ -508,14 +524,16 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess(
-            'Actualización',
-            'Convención anual actualizado'
-          );
+          if (response.type === HttpEventType.Response) {
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Convención anual actualizado'
+            );
 
-          setTimeout(() => {
-            this.showProgress = false;
-          }, 2000);
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2000);
+          }
         },
         (err) => (this.showProgress = false)
       );
@@ -547,14 +565,16 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess(
-            'Actualización',
-            'Olimpíadas matemáticas actualizado'
-          );
+          if (response.type === HttpEventType.Response) {
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Olimpíadas matemáticas actualizado'
+            );
 
-          setTimeout(() => {
-            this.showProgress = false;
-          }, 2500);
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2500);
+          }
         },
         () => (this.showProgress = false)
       );
@@ -586,14 +606,16 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess(
-            'Actualización',
-            'Olimpíadas de lectura actualizado'
-          );
+          if (response.type === HttpEventType.Response) {
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Olimpíadas de lectura actualizado'
+            );
 
-          setTimeout(() => {
-            this.showProgress = false;
-          }, 2500);
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2500);
+          }
         },
         () => (this.showProgress = false)
       );
@@ -612,14 +634,16 @@ export class ActivityFormComponent
       .updateActivity(this.id, this.lapse, formData)
       .subscribe(
         (response) => {
-          this.toastr.updateSuccess(
-            'Actualización',
-            'Actividad especia de lapso'
-          );
+          if (response.type === HttpEventType.Response) {
+            this.toastr.updateSuccess(
+              'Actualización',
+              'Actividad especia de lapso'
+            );
 
-          setTimeout(() => {
-            this.showProgress = false;
-          }, 2500);
+            setTimeout(() => {
+              this.showProgress = false;
+            }, 2500);
+          }
         },
         () => (this.showProgress = false)
       );

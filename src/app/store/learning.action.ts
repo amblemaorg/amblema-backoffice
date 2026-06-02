@@ -1,4 +1,4 @@
-import { State, NgxsOnInit, StateContext, Action, Selector } from '@ngxs/store';
+import { State, StateContext, Action, Selector } from '@ngxs/store';
 import { Learning, SliderMedia, Quizze } from '../_models/learning.model';
 import { Utility } from '../_helpers/utility';
 import { LearningService } from '../services/learning.service';
@@ -160,7 +160,8 @@ export class DeleteQuizze {
     }
 })
 @Injectable()
-export class LearningState implements NgxsOnInit {
+@Injectable()
+export class LearningState {
 
     @Selector()
     static learning(state: LearningStateModel): Learning | null {
@@ -187,10 +188,6 @@ export class LearningState implements NgxsOnInit {
         private learningService: LearningService,
         private toastr: CustomToastrService
     ) { }
-
-    ngxsOnInit(ctx: StateContext<LearningStateModel>) {
-        ctx.dispatch(new GetLearnings());
-    }
 
     // -- Actions Learning --
 

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777495081611,
+  "timestamp": 1780083195821,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -19,15 +19,15 @@
         "/7-es5.86a4b018bfbc7a7f2ef1.js",
         "/favicon.ico",
         "/index.html",
-        "/main-es2015.073ca20541f3676434e0.js",
-        "/main-es5.073ca20541f3676434e0.js",
+        "/main-es2015.5f725ca092f4ed61ef5f.js",
+        "/main-es5.5f725ca092f4ed61ef5f.js",
         "/manifest.webmanifest",
         "/polyfills-es2015.8acfb5ec03dd8da4e57d.js",
         "/polyfills-es5.a1a4d951a15dc6db7188.js",
         "/runtime-es2015.a977a6b0359f9ee55379.js",
         "/runtime-es5.a977a6b0359f9ee55379.js",
         "/scripts.ed4b38ced712a6ed67b5.js",
-        "/styles.6f5f113e056eac6cdb2d.css"
+        "/styles.5e98103f3472865dbef7.css"
       ],
       "patterns": []
     },
@@ -47,6 +47,7 @@
         "/assets/icons/icon-512x512.png",
         "/assets/icons/icon-72x72.png",
         "/assets/icons/icon-96x96.png",
+        "/assets/img/amblema-logo.png",
         "/assets/img/logo-amblema-base64.json",
         "/assets/img/logo-amblema.png",
         "/assets/scss/_animations.scss",
@@ -113,6 +114,7 @@
     "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
     "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/img/amblema-logo.png": "f79c7637a003dcd4e2e3c55239b93cd96e694aab",
     "/assets/img/logo-amblema-base64.json": "cbedb23cdb79a74fe5856a7a3ae367e2e1cd19dd",
     "/assets/img/logo-amblema.png": "93437c59188ee52177025a5f3d78d4fac5e009b2",
     "/assets/scss/_animations.scss": "7890eeb4aee309680efc333f7072b330dcf3eda5",
@@ -127,9 +129,9 @@
     "/assets/scss/modules/_selects.scss": "51f830aa5716bd962064b7daef887d91934c229f",
     "/assets/scss/modules/_spacing.scss": "f7d10dfbe883f34417e11b4c7c32ce28b6a072be",
     "/favicon.ico": "7fd4782709f442783200c3c59f136e22069ef6ba",
-    "/index.html": "000144b74d12bed3ca1f77a4565f3df9ba1e8dd4",
-    "/main-es2015.073ca20541f3676434e0.js": "f01540dd31d93c4f08bbd1e605af400ab356b30b",
-    "/main-es5.073ca20541f3676434e0.js": "bde084b333d159464f423b48bc39831aba845fbc",
+    "/index.html": "bfa69386f2252141fb6e3584d9a004d77641f6da",
+    "/main-es2015.5f725ca092f4ed61ef5f.js": "8e867550b29938116c04b05474f8d8a25e15e5df",
+    "/main-es5.5f725ca092f4ed61ef5f.js": "90fe72abc5d67c98c26272a48aa43086e554cf0c",
     "/manifest.webmanifest": "d83d50f3abb2151a9d5de22dc409df34ec22b253",
     "/nebular.5c0b043a3fee669cccbf.eot": "290b6c75a0af38b8606a9d2b843e6b4af4dacf31",
     "/nebular.a115dc417c9c6dac2113.svg": "e98dd44dada2a5fa7bcf7afed08c9c6b0eb2092f",
@@ -141,7 +143,7 @@
     "/runtime-es2015.a977a6b0359f9ee55379.js": "5f62ce240705f6f3905c8859e08eb36c87d7c19a",
     "/runtime-es5.a977a6b0359f9ee55379.js": "e75ac9f3de4ed38141bc4bfc75b256d82ff329cb",
     "/scripts.ed4b38ced712a6ed67b5.js": "c085e0a1e2b0760c93ea60423b045582fcc34972",
-    "/styles.6f5f113e056eac6cdb2d.css": "6dc4928b36f0d8006ac38c0c96eb184744672fe1"
+    "/styles.5e98103f3472865dbef7.css": "1963e5da0cbc1983ea4c4be7f48116e5e6c951ac"
   },
   "navigationUrls": [
     {

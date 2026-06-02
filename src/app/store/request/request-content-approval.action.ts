@@ -17,6 +17,7 @@ export class GetRequestsContent {
 
 export class GetRequestsContentCompact {
   static readonly type = "[RequestContent] Get Request Content Compact";
+  constructor(public limit?: number, public skip?: number) {}
 }
 
 export class GetRequestContentById {
@@ -92,20 +93,25 @@ export class RequestContentState {
   }
 
   @Action(GetRequestsContentCompact)
-  getRequestsContentCompact(ctx: StateContext<RequestContentModel>) {
-    // requesting id,code,project,type,user,status,createdAt,updatedAt
-    // Note: Detail is huge, so we avoid it. 
-    // project field might be needed if table filters by project ID? 
-    // Table columns: code, project(id), typeUser, user(name), type, updatedAt, status
-    // User type field is 'typeUser' in model, but backend might send it inside 'user'?
-    // Let's check service logic for 'typeUser'. Service appends 'typeUser' to record.
-    // user field is 'user.name'.
-    // updated fields: id,code,project,type,user,status,updatedAt,createdAt
+  getRequestsContentCompact(ctx: StateContext<RequestContentModel>, action: GetRequestsContentCompact) {
+    const limit = action.limit !== undefined ? action.limit : 50;
+    const skip = action.skip !== undefined ? action.skip : 0;
+    
+    this.RequestContentService.getRequestsContent('id,code,project,type,user,status,updatedAt,createdAt', limit, skip).subscribe((response) => {
+      const state = ctx.getState();
+      
+      let newRequests = response;
+      if (skip > 0) {
+        // Append to existing
+        // Filter out duplicates just in case
+        const existingIds = state.requestsContent.map(r => r.id);
+        const uniqueNew = response.filter(r => !existingIds.includes(r.id));
+        newRequests = [...state.requestsContent, ...uniqueNew];
+      }
 
-    this.RequestContentService.getRequestsContent('id,code,project,type,user,status,updatedAt,createdAt').subscribe((response) => {
       ctx.setState({
-        ...ctx.getState(),
-        requestsContent: response,
+        ...state,
+        requestsContent: newRequests,
       });
     });
   }

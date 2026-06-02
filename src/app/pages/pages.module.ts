@@ -48,6 +48,7 @@ import { UserCreationRequestState } from "../store/request/user-creation-request
 import { RequestContentState } from "../store/request/request-content-approval.action";
 import { ProjectValidationRequestState } from "../store/request/project-validation-request.action";
 import { ProjectRequestState } from "../store/request/project-requests.action";
+import { NotificationState } from "../store/notification/notification.action";
 import { SchoolYearEnrolledState } from "../store/_enrolled/school-year-enrolled.action";
 import { GeneralEnrolledState } from "../store/_enrolled/enrolled.action";
 import { AddressState } from "../store/_address/address.action";
@@ -88,6 +89,7 @@ import { SharedModule } from "./_components/shared/shared.module";
         ProjectRequestState,
         RequestContentState,
         ProjectValidationRequestState,
+        NotificationState,
 
         // --Enrolled --
         SchoolYearEnrolledState,

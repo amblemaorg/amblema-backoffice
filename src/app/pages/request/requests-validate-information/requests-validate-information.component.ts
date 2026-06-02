@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { BaseTable } from "src/app/_helpers/base-table";
 import { ACTION } from "src/app/_helpers/text-content/text-crud";
-import { Select, Store } from "@ngxs/store";
+import { Select, Store, Actions, ofActionSuccessful } from "@ngxs/store";
 import { HttpClient } from "@angular/common/http";
 
 import { Observable, Subscription } from "rxjs";
@@ -14,6 +14,7 @@ import { NbDialogService } from "@nebular/theme";
 import { InformationDetailsComponent } from "./information-details/information-details.component";
 import { InformationRequestService } from "src/app/services/request/information-request.service";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
+import { NotificationsService } from "src/app/services/notifications.service";
 import {
   RequestContentState,
   SelectedRequestContent,
@@ -21,7 +22,8 @@ import {
   GetRequestsContent,
   GetRequestsContentCompact,
   GetRequestContentById,
-  ClearSelectedRequestContent
+  ClearSelectedRequestContent,
+  UpdateRequestContent
 } from "src/app/store/request/request-content-approval.action";
 import { RequestContent } from "src/app/_models/request/request-content-approval.model";
 import { TYPE_INFORMATION } from "./_shared/type-information";
@@ -50,12 +52,15 @@ import { DialogConfirmationComponent } from "../../_components/shared/dialog/dia
 })
 export class RequestsValidateInformationComponent
   extends BaseTable
-  implements OnInit {
-  @Select(RequestContentState.requestsContent) data$: Observable<RequestContent[]>;
+  implements OnInit, OnDestroy {
+  @Select(RequestContentState.requestsContent) data$: Observable<
+    RequestContent[]
+  >;
 
   source: RequestsServerDataSource;
 
   subscription: Subscription;
+  actionSubscription: Subscription;
   loadingTable = false;
   loadingView = false;
 
@@ -71,7 +76,9 @@ export class RequestsValidateInformationComponent
     private modalService: BsModalService,
     private cdr: ChangeDetectorRef,
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private actions$: Actions,
+    private notificationsService: NotificationsService
   ) {
     super();
 
@@ -95,7 +102,7 @@ export class RequestsValidateInformationComponent
         { name: ACTION.DELETE, title: '<i class="nb-trash"></i>' },
       ],
     };
-    
+
     this.settings.pager = {
       display: true,
       perPage: 20,
@@ -204,6 +211,20 @@ export class RequestsValidateInformationComponent
         });
       }
     });
+
+    this.actionSubscription = this.actions$.pipe(ofActionSuccessful(UpdateRequestContent)).subscribe(() => {
+      this.source.refresh();
+      this.notificationsService.updateNotifications();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    if (this.actionSubscription) {
+      this.actionSubscription.unsubscribe();
+    }
   }
 
   private showModalDetails(type: string): void {

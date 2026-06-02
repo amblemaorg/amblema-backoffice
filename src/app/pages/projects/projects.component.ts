@@ -17,42 +17,19 @@ import { BsModalService } from "ngx-bootstrap/modal";
 import { ProjectService } from "src/app/services/project.service";
 import { AuthService } from "src/app/services/user/auth.service";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment";
-
-import { CustomServerDataSource } from "./custom-server-data-source";
 
 declare var $: any;
 
 @Component({
   selector: "app-projects",
   templateUrl: "./projects.component.html",
-  styles: [`
-    .loading-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.45); display: flex; align-items: center;
-      justify-content: center; z-index: 9999;
-    }
-    .loading-box {
-      background: #fff; border-radius: 8px; padding: 32px 40px;
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-    .spinner {
-      width: 40px; height: 40px; border: 4px solid #e0e0e0;
-      border-top-color: #3366ff; border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-text { margin: 0; font-size: 14px; font-weight: 500; color: #2d3748; }
-  `],
+  styles: [],
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
   @Select(ProjectState.projects) projects$: Observable<Project[]>;
   @Select(ProjectState.project) project$: Observable<Project>;
 
   subscription: Subscription;
-  source: CustomServerDataSource;
 
   MODAL = "form-project";
 
@@ -82,23 +59,12 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     private modalServicesBs: BsModalService,
     private projectService: ProjectService,
     private helper: Utility,
-    private httpClient: HttpClient,
     private authService: AuthService
   ) {
     super();
-
-    this.source = new CustomServerDataSource(this.httpClient, {
-      endPoint: environment.api + "projects",
-      dataKey: "records",
-      pagerPageKey: "page",
-      pagerLimitKey: "per_page",
-      totalKey: "pagination.total_records",
-      filterFieldKey: "#field#",
-    }, this.authService);
   }
 
   ngOnInit(): void {
-    // this.store.dispatch(new GetProjects());
 
     this.MODE = this.ACTION.CREATE;
 
@@ -245,7 +211,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
                     (modal.content as DialogConfirmationComponent).hideConfirmationModal();
 
                     this.store.dispatch(new DeleteProject(event.data.id));
-                    this.source.refresh();
+                    this.store.dispatch(new GetProjects()); // Update store silently from backend
                   },
                   (err: any) => {
                     (modal.content as DialogConfirmationComponent).errorDelete(

@@ -38,7 +38,7 @@ export class PDFReportMath {
       {
         image: IMAGE,
         width: 100,
-        absolutePosition: { x: 30, y: 60 },
+        absolutePosition: { x: 30, y: 15 },
       },
       {
         alignment: "center",
@@ -50,7 +50,7 @@ export class PDFReportMath {
             alignment: "center",
             fontSize: 15,
             bold: true,
-            margin: [0, 65],
+            margin: [0, 15, 0, 15],
           },
         ],
       },
@@ -79,7 +79,7 @@ export class PDFReportMath {
 
     mockData.allPeriods.forEach((period) => {
       records.push({
-        margin: [0, 0, 0, 10],
+        margin: [0, 40, 0, 10],
         bold: true,
         fontSize: 14,
         text: `Período académico: ${period.academicPeriod[0]} - ${period.academicPeriod[1]}`,

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
-import { DatePipe } from "@angular/common";
+import { DatePipe, formatDate } from "@angular/common";
 import { DiagnosticReportService } from "src/app/services/report/diagnostic-report.service";
 import { PDFReport } from "../pdf-report.service";
 import { Select } from "@ngxs/store";
@@ -43,6 +43,9 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   // -- School Year --
   selectedSchoolYears;
+
+  // -- Report Type --
+  reportType: string = 'diagnostics';
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -94,5 +97,164 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
           this.cd.detectChanges();
         }
       );
+  }
+
+  onGeneratePinsReport(format: 'pdf' | 'xls') {
+    this.disabledBtn = true;
+
+    this.subscriptionService = this.diagnosticsReportService
+      .getPinsReport(this.selectedSchoolYears.id)
+      .subscribe(
+        (response: any) => {
+          if (response.schools && response.schools.length) {
+            response.schools.sort((a, b) => {
+              const stateA = (a.state || '').toLowerCase();
+              const stateB = (b.state || '').toLowerCase();
+              if (stateA !== stateB) {
+                return stateA.localeCompare(stateB);
+              }
+              const nameA = (a.schoolName || '').toLowerCase();
+              const nameB = (b.schoolName || '').toLowerCase();
+              return nameA.localeCompare(nameB);
+            });
+
+            if (format === 'pdf') {
+              this.generatorReport.generatePinsReport(response);
+            } else if (format === 'xls') {
+              const htmlContent = this.makePinsExcel(response);
+              
+              const parts = response.schoolYear.split("-");
+              const finalYear = parts[parts.length - 1].trim();
+              const pad = (n) => n < 10 ? '0' + n : n;
+              const now = new Date();
+              const dateStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}_${pad(now.getHours())}-${pad(now.getMinutes())}`;
+              const fileName = `Reporte-pines-${finalYear}_${dateStr}.xls`;
+
+              saveAs(
+                new Blob([htmlContent], { type: "application/vnd.ms-excel;charset=utf-8" }),
+                fileName
+              );
+            }
+          } else {
+            this.toastr.info("Información", "No se encontraron escuelas para este período");
+          }
+
+          setTimeout(() => {
+            this.disabledBtn = false;
+            this.cd.detectChanges();
+          }, 1500);
+        },
+        (err: any) => {
+          this.toastr.error("Error", "No se pudo obtener la información para el reporte");
+          this.disabledBtn = false;
+          this.cd.detectChanges();
+        }
+      );
+  }
+
+  makePinsExcel(report: any): string {
+    const reportDate = formatDate(report.date, "dd/MM/yyyy", "es-VE");
+
+    let totalEnrollment = 0;
+    let totalReading = 0;
+    let totalMath = 0;
+    let totalLogic = 0;
+
+    let rowsHtml = "";
+    report.schools.forEach((school: any) => {
+      totalEnrollment += school.enrollment || 0;
+      totalReading += school.readingOverGoal || 0;
+      totalMath += school.mathOverGoal || 0;
+      totalLogic += school.logicOverGoal || 0;
+
+      rowsHtml += `
+        <tr>
+          <td class="cell-text">${school.schoolName}</td>
+          <td class="cell-center">${school.state || ""}</td>
+          <td class="cell-center">${school.enrollment || 0}</td>
+          <td class="cell-center">${school.readingOverGoal}</td>
+          <td class="cell-center">${school.mathOverGoal}</td>
+          <td class="cell-center">${school.logicOverGoal}</td>
+        </tr>
+      `;
+    });
+
+    const totalsHtml = `
+      <tr class="total-row">
+        <td colspan="2" class="cell-text" style="font-weight: bold; background-color: #F5F5F5;">Total general</td>
+        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalEnrollment}</td>
+        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalReading}</td>
+        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalMath}</td>
+        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalLogic}</td>
+      </tr>
+    `;
+
+    const excelTemplate = `
+      <html xmlns:o="urn:schemas-microsoft-excel:office:office" xmlns:x="urn:schemas-microsoft-excel:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+      <meta charset="utf-8">
+      <!--[if gte mso 9]>
+      <xml>
+       <x:ExcelWorkbook>
+        <x:ExcelWorksheets>
+         <x:ExcelWorksheet>
+          <x:Name>Reporte de pines</x:Name>
+          <x:WorksheetOptions>
+           <x:DisplayGridlines/>
+          </x:WorksheetOptions>
+         </x:ExcelWorksheet>
+        </x:ExcelWorksheets>
+       </x:ExcelWorkbook>
+      </xml>
+      <![endif]-->
+      <style>
+        .title { font-size: 16px; font-weight: bold; text-align: center; color: #2e8aaa; }
+        .header-green { background-color: #81b03e; color: #FFFFFF; font-weight: bold; text-align: center; vertical-align: middle; border: 0.5pt solid #CCCCCC; }
+        .header-blue { background-color: #00809a; color: #FFFFFF; font-weight: bold; text-align: center; vertical-align: middle; border: 0.5pt solid #CCCCCC; }
+        .cell-text { text-align: left; border: 0.5pt solid #CCCCCC; }
+        .cell-center { text-align: center; border: 0.5pt solid #CCCCCC; }
+        .total-row td { font-weight: bold; background-color: #F5F5F5; border: 0.5pt solid #CCCCCC; }
+      </style>
+      </head>
+      <body>
+      <table>
+        <tr><td colspan="6" class="title">Reporte de pines</td></tr>
+        <tr>
+          <td style="font-weight: bold;">Período académico:</td>
+          <td>${report.schoolYear}</td>
+          <td style="font-weight: bold;">Fecha:</td>
+          <td>${reportDate}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr><td colspan="6"></td></tr>
+        <tr>
+          <th rowspan="2" class="header-green" style="width: 250px;">Escuela</th>
+          <th rowspan="2" class="header-green" style="width: 150px;">Estado</th>
+          <th rowspan="2" class="header-green" style="width: 100px;">Matrícula</th>
+          <th colspan="3" class="header-blue">Estudiantes sobre la meta</th>
+        </tr>
+        <tr>
+          <th class="header-blue" style="width: 80px;">PPM</th>
+          <th class="header-blue" style="width: 80px;">M2M</th>
+          <th class="header-blue" style="width: 80px;">L60M</th>
+        </tr>
+        ${rowsHtml}
+        ${totalsHtml}
+      </table>
+      </body>
+      </html>
+    `;
+
+    return excelTemplate;
+  }
+
+  binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff;
+    }
+    return buffer;
   }
 }

@@ -1627,7 +1627,41 @@ export class PDFReport implements OnInit {
     let totalMath = 0;
     let totalLogic = 0;
 
-    report.schools.forEach((school: any) => {
+    let currentState = "";
+    let stateEnrollment = 0;
+    let stateReading = 0;
+    let stateMath = 0;
+    let stateLogic = 0;
+
+    const appendStateTotalRow = (stateName: string) => {
+      tableBody.push([
+        { text: `Total ${stateName}`, bold: true, fillColor: "#F9F9F9", alignment: "left", colSpan: 2 },
+        {},
+        { text: stateEnrollment.toString(), bold: true, fillColor: "#F9F9F9", alignment: "center" },
+        { text: stateReading.toString(), bold: true, fillColor: "#F9F9F9", alignment: "center" },
+        { text: stateMath.toString(), bold: true, fillColor: "#F9F9F9", alignment: "center" },
+        { text: stateLogic.toString(), bold: true, fillColor: "#F9F9F9", alignment: "center" }
+      ]);
+    };
+
+    report.schools.forEach((school: any, index: number) => {
+      const schoolState = school.state || "Sin Estado";
+
+      if (currentState !== "" && currentState !== schoolState) {
+        appendStateTotalRow(currentState);
+        stateEnrollment = 0;
+        stateReading = 0;
+        stateMath = 0;
+        stateLogic = 0;
+      }
+
+      currentState = schoolState;
+
+      stateEnrollment += school.enrollment || 0;
+      stateReading += school.readingOverGoal || 0;
+      stateMath += school.mathOverGoal || 0;
+      stateLogic += school.logicOverGoal || 0;
+
       totalEnrollment += school.enrollment || 0;
       totalReading += school.readingOverGoal || 0;
       totalMath += school.mathOverGoal || 0;
@@ -1641,6 +1675,10 @@ export class PDFReport implements OnInit {
         { text: (school.mathOverGoal || 0).toString(), alignment: "center" },
         { text: (school.logicOverGoal || 0).toString(), alignment: "center" }
       ]);
+
+      if (index === report.schools.length - 1) {
+        appendStateTotalRow(currentState);
+      }
     });
 
     // Add totals row

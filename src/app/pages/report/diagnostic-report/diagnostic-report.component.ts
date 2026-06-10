@@ -160,8 +160,44 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
     let totalMath = 0;
     let totalLogic = 0;
 
+    let currentState = "";
+    let stateEnrollment = 0;
+    let stateReading = 0;
+    let stateMath = 0;
+    let stateLogic = 0;
+
     let rowsHtml = "";
-    report.schools.forEach((school: any) => {
+
+    const appendStateTotalRowHtml = (stateName: string) => {
+      rowsHtml += `
+        <tr>
+          <td colspan="2" class="state-bold-left">Total ${stateName}</td>
+          <td class="state-bold-center">${stateEnrollment}</td>
+          <td class="state-bold-center">${stateReading}</td>
+          <td class="state-bold-center">${stateMath}</td>
+          <td class="state-bold-center">${stateLogic}</td>
+        </tr>
+      `;
+    };
+
+    report.schools.forEach((school: any, index: number) => {
+      const schoolState = school.state || "Sin Estado";
+
+      if (currentState !== "" && currentState !== schoolState) {
+        appendStateTotalRowHtml(currentState);
+        stateEnrollment = 0;
+        stateReading = 0;
+        stateMath = 0;
+        stateLogic = 0;
+      }
+
+      currentState = schoolState;
+
+      stateEnrollment += school.enrollment || 0;
+      stateReading += school.readingOverGoal || 0;
+      stateMath += school.mathOverGoal || 0;
+      stateLogic += school.logicOverGoal || 0;
+
       totalEnrollment += school.enrollment || 0;
       totalReading += school.readingOverGoal || 0;
       totalMath += school.mathOverGoal || 0;
@@ -177,15 +213,19 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
           <td class="cell-center">${school.logicOverGoal}</td>
         </tr>
       `;
+
+      if (index === report.schools.length - 1) {
+        appendStateTotalRowHtml(currentState);
+      }
     });
 
     const totalsHtml = `
-      <tr class="total-row">
-        <td colspan="2" class="cell-text" style="font-weight: bold; background-color: #F5F5F5;">Total general</td>
-        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalEnrollment}</td>
-        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalReading}</td>
-        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalMath}</td>
-        <td class="cell-center" style="font-weight: bold; background-color: #F5F5F5;">${totalLogic}</td>
+      <tr>
+        <td colspan="2" class="total-bold-left">Total general</td>
+        <td class="total-bold-center">${totalEnrollment}</td>
+        <td class="total-bold-center">${totalReading}</td>
+        <td class="total-bold-center">${totalMath}</td>
+        <td class="total-bold-center">${totalLogic}</td>
       </tr>
     `;
 
@@ -213,7 +253,10 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
         .header-blue { background-color: #00809a; color: #FFFFFF; font-weight: bold; text-align: center; vertical-align: middle; border: 0.5pt solid #CCCCCC; }
         .cell-text { text-align: left; border: 0.5pt solid #CCCCCC; }
         .cell-center { text-align: center; border: 0.5pt solid #CCCCCC; }
-        .total-row td { font-weight: bold; background-color: #F5F5F5; border: 0.5pt solid #CCCCCC; }
+        .state-bold-left { font-weight: bold; background-color: #F9F9F9; text-align: left; border: 0.5pt solid #CCCCCC; }
+        .state-bold-center { font-weight: bold; background-color: #F9F9F9; text-align: center; border: 0.5pt solid #CCCCCC; }
+        .total-bold-left { font-weight: bold; background-color: #F5F5F5; text-align: left; border: 0.5pt solid #CCCCCC; }
+        .total-bold-center { font-weight: bold; background-color: #F5F5F5; text-align: center; border: 0.5pt solid #CCCCCC; }
       </style>
       </head>
       <body>

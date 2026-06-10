@@ -55,7 +55,7 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
           ? "Reporte de las olimpíadas de matemáticas"
           : "Reporte de las olimpíadas de lectura";
 
-        this.generateReporte.generateMathOlympics(response, title);
+        this.generateReporte.generateMathOlympics(response, title, this.olympicsType);
 
         setTimeout(() => {
           this.disabledBtn = false;

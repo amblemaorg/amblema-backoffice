@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { DOCUMENT, DatePipe } from "@angular/common";
+import { DOCUMENT, DatePipe, formatDate } from "@angular/common";
 import { IMAGE } from "../img-base-64";
 import { OlympicsReport } from "src/app/_models/report/math-olympics-report.model";
 const pdfMake = require("pdfmake/build/pdfmake.js");
@@ -22,7 +22,7 @@ export class PDFReportMath {
     private datePipe: DatePipe
   ) { }
 
-  async generateMathOlympics(mockData: OlympicsReport, title: string = "Reporte de las olimpíadas de matemáticas") {
+  async generateMathOlympics(mockData: OlympicsReport, title: string = "Reporte de las olimpíadas de matemáticas", type: string = "math") {
     const colorHeaderRow: any = {
       fillColor: "#81b03e",
       color: "#FFF",
@@ -149,57 +149,79 @@ export class PDFReportMath {
 
         const tableSchoolsResult: any = [
           {
-            table: {
-              widths: "*",
+            fontSize: 9,
+             table: {
+              widths: ["auto", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*"],
               body: [
                 [
-                  { ...colorHeaderSecondary, text: "" },
-                  { ...colorHeaderSecondary, text: "Inscritos" },
-                  { ...colorHeaderSecondary, text: "Participantes" },
-                  { ...colorHeaderSecondary, text: "Clasificados (Reg)" },
-                  { ...colorHeaderSecondary, text: "Medallas de oro (Reg)" },
-                  { ...colorHeaderSecondary, text: "Medallas de plata (Reg)" },
-                  { ...colorHeaderSecondary, text: "Medallas de bronce (Reg)" },
-                  { ...colorHeaderSecondary, text: "Clasificados (Nac)" },
-                  { ...colorHeaderSecondary, text: "Medallas de oro (Nac)" },
-                  { ...colorHeaderSecondary, text: "Medallas de plata (Nac)" },
-                  { ...colorHeaderSecondary, text: "Medallas de bronce (Nac)" },
+                  { ...colorHeaderSecondary, text: "", rowSpan: 2, alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Fase Preliminar", colSpan: 2, alignment: "center" },
+                  {},
+                  { ...colorHeaderSecondary, text: "Fase regional", colSpan: 4, alignment: "center" },
+                  {},
+                  {},
+                  {},
+                  { ...colorHeaderSecondary, text: "Fase nacional", colSpan: 4, alignment: "center" },
+                  {},
+                  {},
+                  {},
                 ],
                 [
-                  { ...colorHeaderSecondary, text: "Total:" },
-                  { ...colorHeaderSecondary, text: school.total.totalEnrolled },
-                  { ...colorHeaderSecondary, text: school.total.totalParticipant },
+                  {},
+                  { ...colorHeaderSecondary, text: "Inscritos", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Participantes", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Clasificados", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Oro", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Plata", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Bronce", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Clasificados", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Oro", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Plata", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Bronce", alignment: "center" },
+                ],
+                [
+                  { ...colorHeaderSecondary, text: "Total:", alignment: "center" },
+                  { ...colorHeaderSecondary, text: school.total.totalEnrolled, alignment: "center" },
+                  { ...colorHeaderSecondary, text: school.total.totalParticipant, alignment: "center" },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalClassified,
+                    alignment: "center",
                   },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalGoldMedals,
+                    alignment: "center",
                   },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalSilverMedals,
+                    alignment: "center",
                   },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalBronzeMedals,
+                    alignment: "center",
                   },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalClassifiedNational,
+                    alignment: "center",
                   },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalGoldMedalsNational,
+                    alignment: "center",
                   },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalSilverMedalsNational,
+                    alignment: "center",
                   },
                   {
                     ...colorHeaderSecondary,
                     text: school.total.totalBronzeMedalsNational,
+                    alignment: "center",
                   },
                 ],
               ],
@@ -320,6 +342,10 @@ export class PDFReportMath {
 
     finalDocument.content.push(records);
 
-    pdfMake.createPdf(finalDocument).open();
+    const reportType = type === "math" ? "matematica" : "lengua";
+    const dateFormatted = formatDate(new Date(), "dd-MM-yyyy-HH-mm", "es-VE");
+    const fileName = `reporte-${reportType}-${dateFormatted}.pdf`;
+
+    pdfMake.createPdf(finalDocument).download(fileName);
   }
 }

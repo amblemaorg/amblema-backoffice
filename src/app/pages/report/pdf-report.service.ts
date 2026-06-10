@@ -1026,10 +1026,19 @@ export class PDFReport implements OnInit {
 
       if (rawIndex !== null) {
         if (rawIndex >= 100) {
-          cellResult.fillColor = "#81b03e";
-          cellResult.color = "#FFF";
-          cellIndex.fillColor = "#81b03e";
-          cellIndex.color = "#FFF";
+          let greenColor = "#81b03e";
+          let textColor = "#FFF";
+          if (currentLapseKey === 'lapse1') {
+            greenColor = "#c0d89f";
+            textColor = "#000";
+          } else if (currentLapseKey === 'lapse2') {
+            greenColor = "#a1c46e";
+            textColor = "#000";
+          }
+          cellResult.fillColor = greenColor;
+          cellResult.color = textColor;
+          cellIndex.fillColor = greenColor;
+          cellIndex.color = textColor;
         }
       }
 
@@ -1081,7 +1090,7 @@ export class PDFReport implements OnInit {
       const hasMath = (isLapse1Available && section.lapse1.math) || (isLapse2Available && section.lapse2.math) || (isLapse3Available && section.lapse3.math);
       const hasLogic = (isLapse1Available && section.lapse1.logic) || (isLapse2Available && section.lapse2.logic) || (isLapse3Available && section.lapse3.logic);
 
-      const totalCols = 3 + (hasReading ? 6 : 0) + (hasMath ? 6 : 0) + (hasLogic ? 6 : 0);
+      const totalCols = 2 + (hasReading ? 6 : 0) + (hasMath ? 6 : 0) + (hasLogic ? 6 : 0);
 
       let resultWidth = 28;
       let indexWidth = 32;
@@ -1099,7 +1108,7 @@ export class PDFReport implements OnInit {
         indexWidth = 45;
       }
 
-      const widths: any[] = [14, "*", 55];
+      const widths: any[] = [14, "*"];
       if (hasReading) widths.push(resultWidth, indexWidth, resultWidth, indexWidth, resultWidth, indexWidth);
       if (hasMath) widths.push(resultWidth, indexWidth, resultWidth, indexWidth, resultWidth, indexWidth);
       if (hasLogic) widths.push(resultWidth, indexWidth, resultWidth, indexWidth, resultWidth, indexWidth);
@@ -1123,7 +1132,6 @@ export class PDFReport implements OnInit {
       // Row 2: Diagnostics Categories
       const categoriesRow: any[] = [
         { text: "", ...colorRowTwo, alignment: "center" },
-        { text: "", ...colorRowTwo, alignment: "center" },
         { text: "", ...colorRowTwo, alignment: "center" }
       ];
       if (hasReading) {
@@ -1140,16 +1148,15 @@ export class PDFReport implements OnInit {
       // Row 3: Lapses subheaders
       const lapsesRow: any[] = [
         { text: "", ...colorRowTwo, alignment: "center" },
-        { text: "Nombre y Apellido", ...colorRowTwo, alignment: "center" },
-        { text: "Cédula", ...colorRowTwo, alignment: "center" }
+        { text: "Nombre y Apellido", ...colorRowTwo, alignment: "center" }
       ];
       const addLapseSubheaders = () => {
         lapsesRow.push(
-          { text: "1er Lapso", ...colorRowTwo, alignment: "center" },
+          { text: "1er", ...colorRowTwo, alignment: "center" },
           { text: "Índice", ...colorRowTwo, alignment: "center" },
-          { text: "2do Lapso", ...colorRowTwo, alignment: "center" },
+          { text: "2do", ...colorRowTwo, alignment: "center" },
           { text: "Índice", ...colorRowTwo, alignment: "center" },
-          { text: "3er Lapso", ...colorRowTwo, alignment: "center" },
+          { text: "3er", ...colorRowTwo, alignment: "center" },
           { text: "Índice", ...colorRowTwo, alignment: "center" }
         );
       };
@@ -1160,7 +1167,7 @@ export class PDFReport implements OnInit {
 
       // Row 4: Dates Row
       const datesRow: any[] = [
-        { text: "Fecha del diagnóstico", colSpan: 3, bold: true, fillColor: "#F5F5F5" }, {}, {}
+        { text: "Fecha del diagnóstico", colSpan: 2, bold: true, fillColor: "#F5F5F5" }, {}
       ];
       const addLapseDates = (diagnosticType: 'reading' | 'math' | 'logic') => {
         datesRow.push(
@@ -1176,7 +1183,7 @@ export class PDFReport implements OnInit {
 
       // Row 5: Goals Row
       const goalsRow: any[] = [
-        { text: "Meta", colSpan: 3, bold: true, fillColor: "#F5F5F5" }, {}, {}
+        { text: "Meta", colSpan: 2, bold: true, fillColor: "#F5F5F5" }, {}
       ];
       const addLapseGoals = (diagnosticType: 'reading' | 'math' | 'logic') => {
         const getGoalText = (lapse: Lapse) => {
@@ -1238,8 +1245,7 @@ export class PDFReport implements OnInit {
       sortedStudents.forEach((student, key) => {
         const row: any[] = [
           { text: key + 1, alignment: "center" },
-          { text: capitalizeString(`${student.firstName} ${student.lastName}`) },
-          { text: `${student.cardType === "1" ? "V" : "E"}-${student.cardId}` }
+          { text: capitalizeString(`${student.firstName} ${student.lastName}`) }
         ];
 
         if (hasReading) {
@@ -1272,7 +1278,7 @@ export class PDFReport implements OnInit {
 
       summaryMetrics.forEach(metric => {
         const row: any[] = [
-          { text: summaryLabels[metric], colSpan: 3, bold: true, fillColor: "#F5F5F5" }, {}, {}
+          { text: summaryLabels[metric], colSpan: 2, bold: true, fillColor: "#F5F5F5" }, {}
         ];
 
         const addLapseSummary = (diagnosticType: 'reading' | 'math' | 'logic') => {
@@ -1542,4 +1548,134 @@ export class PDFReport implements OnInit {
   }
 
   async onGenerateSummaryDiagnostic(report: DiagnosticReport) { }
+
+  async generatePinsReport(report: any) {
+    const finalReport: any = {
+      info: {
+        title: "Reporte de pines",
+        author: "Fundación AmbLeMa",
+        subject: "Reporte de pines",
+        keywords: "Reporte, pines, lectura, lógica, matemática",
+      },
+      pageSize: "A4",
+      pageOrientation: "portrait",
+      content: [],
+      defaultStyle: {
+        fontSize: 10,
+      },
+    };
+
+    const titleDocument: any = [
+      {
+        image: IMAGE,
+        width: 100,
+        absolutePosition: { x: 30, y: 15 },
+      },
+      {
+        alignment: "center",
+        columns: [
+          {
+            width: "*",
+            text: "Reporte de pines",
+            color: "#2e8aaa",
+            alignment: "center",
+            fontSize: 18,
+            bold: true,
+            margin: [0, 15, 0, 15],
+          },
+        ],
+      },
+    ];
+
+    const documentSubHeaderData: any = {
+      table: {
+        body: [
+          [
+            { text: "Período académico:", bold: true },
+            { text: report.schoolYear },
+            { text: "Fecha:", bold: true },
+            { text: formatDate(report.date, "dd/MM/yyyy", "es-VE") },
+          ],
+        ],
+      },
+      layout: this.borderCustom,
+      margin: [0, 25, 0, 20],
+    };
+
+    const tableHeadersRow1: any[] = [
+      { text: "\nEscuela\n", fillColor: "#81b03e", color: "#FFF", bold: true, alignment: "center", rowSpan: 2 },
+      { text: "\nEstado\n", fillColor: "#81b03e", color: "#FFF", bold: true, alignment: "center", rowSpan: 2 },
+      { text: "\nMatrícula\n", fillColor: "#81b03e", color: "#FFF", bold: true, alignment: "center", rowSpan: 2 },
+      { text: "Estudiantes sobre la meta", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center", colSpan: 3 },
+      {},
+      {}
+    ];
+
+    const tableHeadersRow2: any[] = [
+      {},
+      {},
+      {},
+      { text: "PPM", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center" },
+      { text: "M2M", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center" },
+      { text: "L60M", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center" }
+    ];
+
+    const tableBody: any[][] = [tableHeadersRow1, tableHeadersRow2];
+
+    let totalEnrollment = 0;
+    let totalReading = 0;
+    let totalMath = 0;
+    let totalLogic = 0;
+
+    report.schools.forEach((school: any) => {
+      totalEnrollment += school.enrollment || 0;
+      totalReading += school.readingOverGoal || 0;
+      totalMath += school.mathOverGoal || 0;
+      totalLogic += school.logicOverGoal || 0;
+
+      tableBody.push([
+        { text: school.schoolName, alignment: "left" },
+        { text: school.state || "", alignment: "center" },
+        { text: (school.enrollment || 0).toString(), alignment: "center" },
+        { text: (school.readingOverGoal || 0).toString(), alignment: "center" },
+        { text: (school.mathOverGoal || 0).toString(), alignment: "center" },
+        { text: (school.logicOverGoal || 0).toString(), alignment: "center" }
+      ]);
+    });
+
+    // Add totals row
+    tableBody.push([
+      { text: "Total general", bold: true, fillColor: "#F5F5F5", alignment: "left", colSpan: 2 },
+      {},
+      { text: totalEnrollment.toString(), bold: true, fillColor: "#F5F5F5", alignment: "center" },
+      { text: totalReading.toString(), bold: true, fillColor: "#F5F5F5", alignment: "center" },
+      { text: totalMath.toString(), bold: true, fillColor: "#F5F5F5", alignment: "center" },
+      { text: totalLogic.toString(), bold: true, fillColor: "#F5F5F5", alignment: "center" }
+    ]);
+
+    const tableContent = {
+      table: {
+        widths: ["*", 70, 50, 40, 40, 40],
+        body: tableBody,
+      },
+      layout: this.borderCustom,
+      margin: [0, 0, 0, 30]
+    };
+
+    finalReport.content.push(titleDocument);
+    finalReport.content.push(documentSubHeaderData);
+    finalReport.content.push(tableContent);
+
+    const pdf = pdfMake.createPdf(finalReport);
+    
+    const parts = report.schoolYear.split("-");
+    const finalYear = parts[parts.length - 1].trim();
+    const pad = (n) => n < 10 ? '0' + n : n;
+    const now = new Date();
+    const dateFormatted = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}_${pad(now.getHours())}-${pad(now.getMinutes())}`;
+    const fileName = `Reporte-pines-${finalYear}_${dateFormatted}.pdf`;
+
+    pdf.download(fileName);
+  }
 }
+

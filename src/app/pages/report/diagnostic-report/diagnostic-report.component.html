@@ -10,7 +10,16 @@
             <h6>Configuración del Reporte</h6>
             <hr />
           </div>
-          <div class="col-12 col-lg-6 form-group">
+
+          <div class="col-12 form-group">
+            <label class="label d-block">Tipo de Reporte</label>
+            <nb-radio-group [(ngModel)]="reportType" name="reportType" class="d-flex flex-row">
+              <nb-radio [value]="'diagnostics'" class="mr-4">Reporte de diagnósticos</nb-radio>
+              <nb-radio [value]="'pins'">Reporte de pines</nb-radio>
+            </nb-radio-group>
+          </div>
+
+          <div class="col-12 col-lg-6 form-group" *ngIf="reportType === 'diagnostics'">
             <label class="label">Escuela</label>
             <ng-select
               *ngIf="schools$ | async"
@@ -22,7 +31,7 @@
             </ng-select>
           </div>
 
-          <div class="col-12 col-lg-6 form-group">
+          <div class="col-12 col-lg-6 form-group" *ngIf="reportType === 'diagnostics'">
             <label class="label d-block">Diagnóstico</label>
             <div class="d-inline">
               <nb-checkbox
@@ -51,7 +60,7 @@
       </div>
     </div>
   </nb-card-body>
-  <nb-card-footer class="w-100 text-right">
+  <nb-card-footer class="w-100 text-right" *ngIf="reportType === 'diagnostics'">
     <button
       (click)="onGenerateReport()"
       class="col-12 col-lg-auto"
@@ -70,6 +79,32 @@
       <span *ngIf="!disabledBtn">Generar reporte </span>
       <span *ngIf="disabledBtn">Restableciendo... </span>
       <nb-icon icon="download-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+  <nb-card-footer class="w-100 text-right" *ngIf="reportType === 'pins'">
+    <button
+      (click)="onGeneratePinsReport('pdf')"
+      class="col-12 col-lg-auto mr-lg-3 mb-2 mb-lg-0"
+      [nbSpinner]="disabledBtn"
+      [attr.disabled]="!disabledBtn && selectedSchoolYears ? null : true"
+      nbButton
+      status="danger"
+    >
+      <span *ngIf="!disabledBtn">Exportar a PDF </span>
+      <span *ngIf="disabledBtn">Generando... </span>
+      <nb-icon icon="file-text-outline"></nb-icon>
+    </button>
+    <button
+      (click)="onGeneratePinsReport('xls')"
+      class="col-12 col-lg-auto"
+      [nbSpinner]="disabledBtn"
+      [attr.disabled]="!disabledBtn && selectedSchoolYears ? null : true"
+      nbButton
+      status="success"
+    >
+      <span *ngIf="!disabledBtn">Exportar a Excel </span>
+      <span *ngIf="disabledBtn">Generando... </span>
+      <nb-icon icon="grid-outline"></nb-icon>
     </button>
   </nb-card-footer>
 </nb-card>

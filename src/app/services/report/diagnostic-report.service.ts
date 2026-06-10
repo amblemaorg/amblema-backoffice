@@ -33,4 +33,11 @@ export class DiagnosticReportService {
     });
     return compose;
   }
+
+  getPinsReport(schoolYearId: string) {
+    return this.httpClient.get<any>(`${environment.api}statistics/pinsreport/${schoolYearId}`)
+      .pipe(
+        map((data: any) => data)
+      );
+  }
 }

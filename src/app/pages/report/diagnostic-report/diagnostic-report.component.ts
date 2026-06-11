@@ -128,10 +128,10 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
               const pad = (n) => n < 10 ? '0' + n : n;
               const now = new Date();
               const dateStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}_${pad(now.getHours())}-${pad(now.getMinutes())}`;
-              const fileName = `Reporte-pines-${finalYear}_${dateStr}.xls`;
+              const fileName = `Reporte-pines-${finalYear}_${dateStr}.xlsx`;
 
               saveAs(
-                new Blob([htmlContent], { type: "application/vnd.ms-excel;charset=utf-8" }),
+                new Blob([htmlContent], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8" }),
                 fileName
               );
             }

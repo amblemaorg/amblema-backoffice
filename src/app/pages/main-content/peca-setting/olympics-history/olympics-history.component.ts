@@ -24,7 +24,6 @@ export class OlympicsHistoryComponent implements OnInit {
         regionalGold: [0, [Validators.required, Validators.min(0)]],
         regionalSilver: [0, [Validators.required, Validators.min(0)]],
         regionalBronze: [0, [Validators.required, Validators.min(0)]],
-        nationalClassified: [0, [Validators.required, Validators.min(0)]],
         nationalGold: [0, [Validators.required, Validators.min(0)]],
         nationalSilver: [0, [Validators.required, Validators.min(0)]],
         nationalBronze: [0, [Validators.required, Validators.min(0)]]
@@ -34,7 +33,6 @@ export class OlympicsHistoryComponent implements OnInit {
         regionalGold: [0, [Validators.required, Validators.min(0)]],
         regionalSilver: [0, [Validators.required, Validators.min(0)]],
         regionalBronze: [0, [Validators.required, Validators.min(0)]],
-        nationalClassified: [0, [Validators.required, Validators.min(0)]],
         nationalGold: [0, [Validators.required, Validators.min(0)]],
         nationalSilver: [0, [Validators.required, Validators.min(0)]],
         nationalBronze: [0, [Validators.required, Validators.min(0)]]

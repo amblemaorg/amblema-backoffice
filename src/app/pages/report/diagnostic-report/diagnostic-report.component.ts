@@ -10,7 +10,7 @@ import { SchoolUser } from "src/app/_models/user/school.model";
 import { SchoolYearEnrolled } from "src/app/_models/_enrolled/school-year.model";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
 import { saveAs } from "file-saver";
-import * as XLSX from "xlsx";
+import * as XLSX from "xlsx-js-style";
 
 import { Store } from "@ngxs/store";
 import { GetSchoolYearsEnrolled } from "src/app/store/_enrolled/school-year-enrolled.action";
@@ -123,6 +123,151 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
             } else if (format === 'xls') {
               const htmlContent = this.makePinsExcel(response);
               
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(htmlContent, "text/html");
+              const table = doc.querySelector("table");
+              const workbook = XLSX.utils.table_to_book(table);
+              
+              const sheet = workbook.Sheets[workbook.SheetNames[0]];
+              const range = XLSX.utils.decode_range(sheet['!ref']);
+
+              const thinBorder = {
+                top: { style: "thin", color: { rgb: "CCCCCC" } },
+                bottom: { style: "thin", color: { rgb: "CCCCCC" } },
+                left: { style: "thin", color: { rgb: "CCCCCC" } },
+                right: { style: "thin", color: { rgb: "CCCCCC" } }
+              };
+
+              const titleStyle = {
+                font: { name: "Arial", sz: 16, bold: true, color: { rgb: "2E8AAA" } },
+                alignment: { horizontal: "center", vertical: "center" }
+              };
+
+              const periodLabelStyle = {
+                font: { name: "Arial", sz: 10, bold: true },
+                alignment: { horizontal: "left" }
+              };
+
+              const periodValueStyle = {
+                font: { name: "Arial", sz: 10 },
+                alignment: { horizontal: "left" }
+              };
+
+              const headerGreenStyle = {
+                font: { name: "Arial", sz: 11, bold: true, color: { rgb: "FFFFFF" } },
+                fill: { fgColor: { rgb: "81B03E" } },
+                alignment: { horizontal: "center", vertical: "center" },
+                border: thinBorder
+              };
+
+              const headerBlueStyle = {
+                font: { name: "Arial", sz: 11, bold: true, color: { rgb: "FFFFFF" } },
+                fill: { fgColor: { rgb: "00809A" } },
+                alignment: { horizontal: "center", vertical: "center" },
+                border: thinBorder
+              };
+
+              const stateTotalStyleLeft = {
+                font: { name: "Arial", sz: 11, bold: true },
+                fill: { fgColor: { rgb: "F9F9F9" } },
+                alignment: { horizontal: "left", vertical: "center" },
+                border: thinBorder
+              };
+
+              const stateTotalStyleCenter = {
+                font: { name: "Arial", sz: 11, bold: true },
+                fill: { fgColor: { rgb: "F9F9F9" } },
+                alignment: { horizontal: "center", vertical: "center" },
+                border: thinBorder
+              };
+
+              const generalTotalStyleLeft = {
+                font: { name: "Arial", sz: 11, bold: true },
+                fill: { fgColor: { rgb: "F5F5F5" } },
+                alignment: { horizontal: "left", vertical: "center" },
+                border: thinBorder
+              };
+
+              const generalTotalStyleCenter = {
+                font: { name: "Arial", sz: 11, bold: true },
+                fill: { fgColor: { rgb: "F5F5F5" } },
+                alignment: { horizontal: "center", vertical: "center" },
+                border: thinBorder
+              };
+
+              const dataStyleLeft = {
+                font: { name: "Arial", sz: 10 },
+                alignment: { horizontal: "left", vertical: "center" },
+                border: thinBorder
+              };
+
+              const dataStyleCenter = {
+                font: { name: "Arial", sz: 10 },
+                alignment: { horizontal: "center", vertical: "center" },
+                border: thinBorder
+              };
+
+              for (let R = range.s.r; R <= range.e.r; ++R) {
+                let isStateTotal = false;
+                let isGeneralTotal = false;
+
+                const cellCol0 = sheet[XLSX.utils.encode_cell({ r: R, c: 0 })];
+                const valCol0 = cellCol0 ? String(cellCol0.v) : "";
+                if (valCol0.startsWith("Total ") && R >= 5) {
+                  isStateTotal = true;
+                } else if (valCol0 === "Total general" && R >= 5) {
+                  isGeneralTotal = true;
+                }
+
+                for (let C = range.s.c; C <= range.e.c; ++C) {
+                  const cell_address = XLSX.utils.encode_cell({ r: R, c: C });
+                  let cell = sheet[cell_address];
+                  if (!cell) {
+                    cell = { t: "s", v: "" };
+                    sheet[cell_address] = cell;
+                  }
+
+                  if (R === 0) {
+                    cell.s = titleStyle;
+                  } else if (R === 1) {
+                    if (C === 0 || C === 2) {
+                      cell.s = periodLabelStyle;
+                    } else {
+                      cell.s = periodValueStyle;
+                    }
+                  } else if (R === 3 || R === 4) {
+                    if (C <= 2) {
+                      cell.s = headerGreenStyle;
+                    } else {
+                      cell.s = headerBlueStyle;
+                    }
+                  } else if (R >= 5) {
+                    if (isStateTotal) {
+                      cell.s = (C <= 1) ? stateTotalStyleLeft : stateTotalStyleCenter;
+                    } else if (isGeneralTotal) {
+                      cell.s = (C <= 1) ? generalTotalStyleLeft : generalTotalStyleCenter;
+                    } else {
+                      cell.s = (C === 0) ? dataStyleLeft : dataStyleCenter;
+                    }
+                  }
+                }
+              }
+
+              sheet["!cols"] = [
+                { wch: 30 },
+                { wch: 18 },
+                { wch: 12 },
+                { wch: 10 },
+                { wch: 10 },
+                { wch: 10 }
+              ];
+
+              const workbookBinary = XLSX.write(workbook, {
+                type: "binary",
+                bookType: "xlsx",
+              });
+              const octetStream = this.binary2octet(workbookBinary);
+
               const parts = response.schoolYear.split("-");
               const finalYear = parts[parts.length - 1].trim();
               const pad = (n) => n < 10 ? '0' + n : n;
@@ -131,7 +276,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
               const fileName = `Reporte-pines-${finalYear}_${dateStr}.xlsx`;
 
               saveAs(
-                new Blob([htmlContent], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8" }),
+                new Blob([octetStream], { type: "application/octet-stream" }),
                 fileName
               );
             }

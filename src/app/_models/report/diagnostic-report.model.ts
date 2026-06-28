@@ -70,6 +70,7 @@ interface Lapse {
   }
 
 interface Student {
+    id?: string;
     firstName: string;
     lastName: string;
     cardType: string;

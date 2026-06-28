@@ -1202,6 +1202,7 @@ export class PDFReport implements OnInit {
 
       // Map unique students
       const studentsMap = new Map<string, {
+        id?: string;
         firstName: string;
         lastName: string;
         cardType: string;
@@ -1214,11 +1215,14 @@ export class PDFReport implements OnInit {
       const addStudentsToMap = (lapseStudents: Student[], lapseKey: 'lapse1' | 'lapse2' | 'lapse3') => {
         if (lapseStudents) {
           lapseStudents.forEach(student => {
-            const key = (student.cardId && student.cardType)
-              ? `${student.cardType}-${student.cardId}`
-              : `${student.firstName || ''}-${student.lastName || ''}`;
+            const key = student.id
+              ? student.id
+              : (student.cardId && student.cardType)
+                ? `${student.cardType}-${student.cardId}`
+                : `${student.firstName || ''}-${student.lastName || ''}`;
             if (!studentsMap.has(key)) {
               studentsMap.set(key, {
+                id: student.id || '',
                 firstName: student.firstName || '',
                 lastName: student.lastName || '',
                 cardType: student.cardType || '',
@@ -1705,7 +1709,7 @@ export class PDFReport implements OnInit {
     finalReport.content.push(tableContent);
 
     const pdf = pdfMake.createPdf(finalReport);
-    
+
     const parts = report.schoolYear.split("-");
     const finalYear = parts[parts.length - 1].trim();
     const pad = (n) => n < 10 ? '0' + n : n;

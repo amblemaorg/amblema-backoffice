@@ -131,11 +131,11 @@ export class PDFReportMath {
                   {},
                   {},
                   {},
-                  { ...colorHeaderRow, text: "Clasificados" },
+                  { ...colorHeaderRow, text: "Participantes" },
                   { ...colorHeaderRow, text: "Oro" },
                   { ...colorHeaderRow, text: "Plata" },
                   { ...colorHeaderRow, text: "Bronce" },
-                  { ...colorHeaderRow, text: "Clasificados" },
+                  { ...colorHeaderRow, text: "Participantes" },
                   { ...colorHeaderRow, text: "Oro" },
                   { ...colorHeaderRow, text: "Plata" },
                   { ...colorHeaderRow, text: "Bronce" },
@@ -170,11 +170,11 @@ export class PDFReportMath {
                   {},
                   { ...colorHeaderSecondary, text: "Inscritos", alignment: "center" },
                   { ...colorHeaderSecondary, text: "Participantes", alignment: "center" },
-                  { ...colorHeaderSecondary, text: "Clasificados", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Participantes", alignment: "center" },
                   { ...colorHeaderSecondary, text: "Oro", alignment: "center" },
                   { ...colorHeaderSecondary, text: "Plata", alignment: "center" },
                   { ...colorHeaderSecondary, text: "Bronce", alignment: "center" },
-                  { ...colorHeaderSecondary, text: "Clasificados", alignment: "center" },
+                  { ...colorHeaderSecondary, text: "Participantes", alignment: "center" },
                   { ...colorHeaderSecondary, text: "Oro", alignment: "center" },
                   { ...colorHeaderSecondary, text: "Plata", alignment: "center" },
                   { ...colorHeaderSecondary, text: "Bronce", alignment: "center" },
@@ -286,7 +286,7 @@ export class PDFReportMath {
             [
               {
                 ...colorHeaderSecondary,
-                text: `Estudiantes clasificados (Reg): ${mockData.finalScore.classifiedStudents}`,
+                text: `Estudiantes participantes (Reg): ${mockData.finalScore.classifiedStudents}`,
               },
             ],
             [
@@ -309,7 +309,7 @@ export class PDFReportMath {
             [
               {
                 ...colorHeaderSecondary,
-                text: `Estudiantes clasificados (Nac): ${mockData.finalScore.classifiedStudentsNational}`,
+                text: `Estudiantes participantes (Nac): ${mockData.finalScore.classifiedStudentsNational}`,
               },
             ],
             [

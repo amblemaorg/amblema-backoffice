@@ -106,10 +106,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         icon: "trending-up-outline",
         children: [
           {
-            title: "Generales",
-            link: "/pages/content/steps/generals",
-          },
-          {
             title: "Padrino",
             link: "/pages/content/steps/sponsor",
           },

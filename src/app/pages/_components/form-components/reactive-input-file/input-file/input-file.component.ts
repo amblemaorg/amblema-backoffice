@@ -102,19 +102,9 @@ export class InputFileComponent
     // Get file
     const file = event[0];
 
-    // Instance reader
-    const reader = new FileReader();
-
-    // Get file's size on bytes, convert to Kb
-    const size = event[0].size / 1000;
-
-    if (size <= 1024) {
-      this.control.setValue(event[0] as File);
-      this.nameFile = event[0].name;
-    } else {
-      this.toast.error('Error de peso', 'El archivo debe pesar máximo 1 mb');
-      this.control.setValue(null);
-      this.nameFile = null;
+    if (file) {
+      this.control.setValue(file as File);
+      this.nameFile = file.name;
     }
   }
 }

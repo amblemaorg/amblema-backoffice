@@ -4,7 +4,7 @@
             <div class="col-12 col-lg-auto mb-3 mb-lg-0">
                 Generales
             </div >
-            <div class="col-12 col-lg-auto" *ngIf="canCreate">
+            <div class="col-12 col-lg-auto d-none" *ngIf="canCreate">
 
             <button nbButton status="success" (click)="modalService.open(modal)"
             class="btn btn-success col-12 col-lg-auto">Agregar paso</button>

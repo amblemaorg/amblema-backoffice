@@ -9,6 +9,11 @@ const routes: Routes = [
     component: StepsComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'sponsor',
+        pathMatch: 'full'
+      },
+      {
         path: 'generals',
         loadChildren: () => import('./generals/generals.module').
         then(m => m.GeneralsModule)
@@ -30,7 +35,6 @@ const routes: Routes = [
       }
     ]
   }
-
 ];
 
 @NgModule({

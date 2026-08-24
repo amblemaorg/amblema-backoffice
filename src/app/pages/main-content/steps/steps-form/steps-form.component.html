@@ -56,14 +56,14 @@
                 class="d-block form-group"
                 >Descripción
               </nb-checkbox>
-              <app-text-area-custom
+              <app-textarea-editor
                 *ngIf="form.get('hasText').value"
                 [id]="'description'"
                 [label]="'Descripción'"
                 [submitted]="submitted"
                 [control]="form.get('text')"
                 [placeholder]="'Descripción'"
-              ></app-text-area-custom>
+              ></app-textarea-editor>
 
               <!-- Date -->
               <nb-checkbox

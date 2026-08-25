@@ -8,16 +8,16 @@
     ></app-toggle>
   </div>
   <div class="col-12 col-md">
-    <app-text-area-custom
+    <app-textarea-editor
       *ngIf="data.hasText"
       [submitted]="false"
-      [max]="1183"
+      [maxLength]="1183"
       [control]="form.get('text')"
       [id]="data.id + 'text'"
       [label]="label"
       [placeholder]="data.name"
     >
-    </app-text-area-custom>
+    </app-textarea-editor>
   </div>
   <div class="col-12">
     <app-input-custom

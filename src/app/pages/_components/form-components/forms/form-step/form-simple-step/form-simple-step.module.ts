@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormSimpleStepComponent } from './form-simple-step.component';
 import { ReactiveTextAreaModule } from '../../../reactive-text-area/reactive-text-area.module';
+import { TextareaEditorModule } from '../../../textarea-editor/textarea-editor.module';
 import { NbIconModule, NbButtonModule, NbListModule, NbAlertModule, NbSpinnerModule } from '@nebular/theme';
 import { ToggleModule } from 'src/app/pages/_components/shared/toggle/toggle.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { ProgressModule } from 'src/app/pages/_components/shared/progress/progre
     ReactiveFormsModule,
     FormsModule,
     ReactiveTextAreaModule,
+    TextareaEditorModule,
     ReactiveInputModule,
     NbSpinnerModule,
     ProgressModule,

@@ -181,6 +181,7 @@
             <div *ngIf="requestSelected.hasSchool" class="col-12 form-group">
               <p class="font-weight-bold text-primary mb-0">
                 El padrino tiene escuela
+                <span *ngIf="requestSelected.hasSchoolRegistered" class="badge badge-success ml-2">Escuela Registrada</span>
               </p>
               <hr />
             </div>
@@ -197,6 +198,14 @@
                     <hr />
                     <div class="row">
                       <div class="col-12">
+                        <p
+                          *ngIf="requestSelected.schoolName"
+                          class="d-flex w-100"
+                        >
+                          <span class="pl-0 font-weight-bold col-5"
+                            >Nombre:</span
+                          ><span>{{ requestSelected.schoolName }}</span>
+                        </p>
                         <p
                           *ngIf="requestSelected.schoolPhone"
                           class="d-flex w-100"
@@ -879,6 +888,7 @@
             <div class="col-12 form-group" *ngIf="requestSelected.hasSponsor">
               <p class="font-weight-bold text-primary mb-0">
                 La escuela tiene padrino
+                <span *ngIf="requestSelected.hasSponsorRegistered" class="badge badge-success ml-2">Padrino Registrado</span>
               </p>
               <hr />
             </div>
@@ -910,22 +920,22 @@
                   <hr />
                   <div class="row">
                     <div class="col-12">
-                      <p class="d-flex w-100">
+                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorName">
                         <span class="pl-0 font-weight-bold col-5">Nombre:</span
                         ><span>{{ requestSelected.sponsorName }}</span>
                       </p>
 
-                      <p class="d-flex w-100">
+                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorCompanyPhone">
                         <span class="pl-0 font-weight-bold col-5"
                           >Teléfono:</span
                         ><span>{{ requestSelected.sponsorCompanyPhone }}</span>
                       </p>
 
-                      <p class="d-flex w-100">
+                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorEmail">
                         <span class="pl-0 font-weight-bold col-5">Correo:</span
                         ><span>{{ requestSelected.sponsorEmail }}</span>
                       </p>
-                      <p class="d-flex w-100">
+                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorRif">
                         <span class="pl-0 font-weight-bold col-5"
                           >Documento de identidad:</span
                         ><span>J-{{ requestSelected.sponsorRif }}</span>
@@ -942,18 +952,18 @@
                       </p>
                       <p
                         class="d-flex w-100"
-                        *ngIf="requestSelected.sponsorCompanyType !== '0'"
+                        *ngIf="requestSelected.sponsorCompanyType && requestSelected.sponsorCompanyType !== '0'"
                       >
                         <span class="pl-0 font-weight-bold col-5"
                           >Tipo de empresa:</span
                         ><span>{{
-                          requestSelected.companyType === "1"
+                          requestSelected.sponsorCompanyType === "1"
                             ? "Fabrica"
-                            : requestSelected.companyType === "2"
+                            : requestSelected.sponsorCompanyType === "2"
                             ? "Tienda"
-                            : requestSelected.companyType === "3"
+                            : requestSelected.sponsorCompanyType === "3"
                             ? "Negocio personal"
-                            : requestSelected.companyType === "4"
+                            : requestSelected.sponsorCompanyType === "4"
                             ? "Hacienda"
                             : "Otro"
                         }}</span>

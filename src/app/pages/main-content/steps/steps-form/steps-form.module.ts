@@ -13,6 +13,7 @@ import {
   , NbSpinnerModule } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveTextAreaModule } from 'src/app/pages/_components/form-components/reactive-text-area/reactive-text-area.module';
+import { TextareaEditorModule } from 'src/app/pages/_components/form-components/textarea-editor/textarea-editor.module';
 import { ReactiveDatepickerModule } from 'src/app/pages/_components/form-components/reactive-datepicker/reactive-datepicker.module';
 import { ReactiveInputFileModule } from 'src/app/pages/_components/form-components/reactive-input-file/reactive-input-file.module';
 import { ProgressModule } from 'src/app/pages/_components/shared/progress/progress.module';
@@ -31,6 +32,7 @@ import { ProgressModule } from 'src/app/pages/_components/shared/progress/progre
     NbAlertModule,
     ReactiveFormsModule,
     ReactiveTextAreaModule,
+    TextareaEditorModule,
     ReactiveInputFileModule,
     NbIconModule,
     NbListModule,

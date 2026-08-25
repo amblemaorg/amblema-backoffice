@@ -258,11 +258,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse1')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse1.wordsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse1.wordsPerMinIndex }}</td>
+                <td>{{ item.wordsPerMin != null ? item.wordsPerMin : item.diagnostics?.lapse1?.wordsPerMin }}</td>
+                <td>{{ item.wordsPerMinIndex != null ? item.wordsPerMinIndex : item.diagnostics?.lapse1?.wordsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
@@ -287,12 +287,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse1')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse1.multiplicationsPerMin }}</td>
+                <td>{{ item.multiplicationsPerMin != null ? item.multiplicationsPerMin : item.diagnostics?.lapse1?.multiplicationsPerMin }}</td>
                 <td>
-                  {{ item.diagnostics.lapse1.multiplicationsPerMinIndex }}
+                  {{ item.multiplicationsPerMinIndex != null ? item.multiplicationsPerMinIndex : item.diagnostics?.lapse1?.multiplicationsPerMinIndex }}
                 </td>
               </tr>
             </tbody>
@@ -318,11 +318,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse1')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse1.operationsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse1.operationsPerMinIndex }}</td>
+                <td>{{ item.operationsPerMin != null ? item.operationsPerMin : item.diagnostics?.lapse1?.operationsPerMin }}</td>
+                <td>{{ item.operationsPerMinIndex != null ? item.operationsPerMinIndex : item.diagnostics?.lapse1?.operationsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
@@ -359,11 +359,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse2')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse2.wordsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse2.wordsPerMinIndex }}</td>
+                <td>{{ item.wordsPerMin != null ? item.wordsPerMin : item.diagnostics?.lapse2?.wordsPerMin }}</td>
+                <td>{{ item.wordsPerMinIndex != null ? item.wordsPerMinIndex : item.diagnostics?.lapse2?.wordsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
@@ -388,12 +388,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse2')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse2.multiplicationsPerMin }}</td>
+                <td>{{ item.multiplicationsPerMin != null ? item.multiplicationsPerMin : item.diagnostics?.lapse2?.multiplicationsPerMin }}</td>
                 <td>
-                  {{ item.diagnostics.lapse2.multiplicationsPerMinIndex }}
+                  {{ item.multiplicationsPerMinIndex != null ? item.multiplicationsPerMinIndex : item.diagnostics?.lapse2?.multiplicationsPerMinIndex }}
                 </td>
               </tr>
             </tbody>
@@ -419,11 +419,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse2')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse2.operationsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse2.operationsPerMinIndex }}</td>
+                <td>{{ item.operationsPerMin != null ? item.operationsPerMin : item.diagnostics?.lapse2?.operationsPerMin }}</td>
+                <td>{{ item.operationsPerMinIndex != null ? item.operationsPerMinIndex : item.diagnostics?.lapse2?.operationsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
@@ -438,9 +438,9 @@
 
       <div class="col-12">
         <p class="text-info font-weight-bold" *ngIf="
-            (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis ||
-            (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis ||
-            (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis
+            (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis ||
+            (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis
           ">
           Análisis de diagnóstico - lapso 3
         </p>
@@ -459,11 +459,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse3')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse3.wordsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse3.wordsPerMinIndex }}</td>
+                <td>{{ item.wordsPerMin != null ? item.wordsPerMin : item.diagnostics?.lapse3?.wordsPerMin }}</td>
+                <td>{{ item.wordsPerMinIndex != null ? item.wordsPerMinIndex : item.diagnostics?.lapse3?.wordsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
@@ -488,12 +488,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse3')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse3.multiplicationsPerMin }}</td>
+                <td>{{ item.multiplicationsPerMin != null ? item.multiplicationsPerMin : item.diagnostics?.lapse3?.multiplicationsPerMin }}</td>
                 <td>
-                  {{ item.diagnostics.lapse3.multiplicationsPerMinIndex }}
+                  {{ item.multiplicationsPerMinIndex != null ? item.multiplicationsPerMinIndex : item.diagnostics?.lapse3?.multiplicationsPerMinIndex }}
                 </td>
               </tr>
             </tbody>
@@ -518,11 +518,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of (data$ | async)?.detail?.sections">
+              <tr *ngFor="let item of getLapseSummary((data$ | async)?.detail, 'lapse3')">
                 <th>{{ item.grade }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.diagnostics.lapse3.operationsPerMin }}</td>
-                <td>{{ item.diagnostics.lapse3.operationsPerMinIndex }}</td>
+                <td>{{ item.operationsPerMin != null ? item.operationsPerMin : item.diagnostics?.lapse3?.operationsPerMin }}</td>
+                <td>{{ item.operationsPerMinIndex != null ? item.operationsPerMinIndex : item.diagnostics?.lapse3?.operationsPerMinIndex }}</td>
               </tr>
             </tbody>
           </table>
@@ -575,7 +575,7 @@
         </div>
       </div>
       <div class="col-xl-4" *ngIf="
-          (data$ | async)?.detail?.lapse3.activities &&
+          (data$ | async)?.detail?.lapse3?.activities &&
           (data$ | async)?.detail?.lapse3?.activities.length > 0
         ">
         <p class="text-info font-weight-bold">Actividades del lapso 3</p>

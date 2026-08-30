@@ -45,6 +45,7 @@ export class StepsFormComponent implements OnInit, OnDestroy {
     hasDate: new FormControl(false),
     hasFile: new FormControl(false),
     file: new FormControl(null),
+    file2: new FormControl(null),
     hasVideo: new FormControl(false),
     video: new FormControl(null),
     hasChecklist: new FormControl(false),
@@ -121,7 +122,12 @@ export class StepsFormComponent implements OnInit, OnDestroy {
 
       // To send file, to be true
       if (this.form.controls.hasFile.value) {
-        formData.append('file', this.form.controls.file.value);
+        if (this.form.controls.file.value) {
+          formData.append('file', this.form.controls.file.value);
+        }
+        if (this.form.controls.file2.value) {
+          formData.append('file2', this.form.controls.file2.value);
+        }
       }
 
       // To send video, to be true

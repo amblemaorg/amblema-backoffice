@@ -92,6 +92,13 @@
                 [control]="form.get('file')"
                 *ngIf="form.get('hasFile').value"
               ></app-input-file>
+              <div class="mt-2" *ngIf="form.get('hasFile').value">
+                <label class="label font-weight-bold mb-1 small text-muted">Segundo Archivo (Opcional):</label>
+                <app-input-file
+                  [submitted]="submitted"
+                  [control]="form.get('file2')"
+                ></app-input-file>
+              </div>
             </div>
 
             <div class="col-12 col-lg-6">

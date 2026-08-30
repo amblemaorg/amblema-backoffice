@@ -37,8 +37,9 @@ export class FormSimpleStepComponent
   ) {
     super(stores, toastrService);
 
-    // Add new control status toggle
+    // Add new control status toggle and file2
     this.form.addControl('status', new FormControl(false));
+    this.form.addControl('file2', new FormControl(null));
   }
 
   async ngOnInit() {
@@ -74,10 +75,14 @@ export class FormSimpleStepComponent
       }
 
       if (this.data.hasFile) {
-        const isUpload: any = this.data.file;
-
-        if (isUpload) {
-          this.form.controls.file.setValue(isUpload);
+        const filesList: any[] = this.data.files && this.data.files.length > 0 ? this.data.files : (this.data.file ? [this.data.file] : []);
+        if (filesList.length > 0) {
+          this.form.controls.file.setValue(filesList[0]);
+        }
+        if (filesList.length > 1) {
+          this.form.controls.file2.setValue(filesList[1]);
+        } else if (this.data.file2) {
+          this.form.controls.file2.setValue(this.data.file2);
         }
       }
 
@@ -99,6 +104,7 @@ export class FormSimpleStepComponent
         : STATUS.INACTIVE.VALUE;
       this.data.approvalType = this.form.controls.approvalType.value;
       this.data.file = this.form.controls.file.value;
+      this.data.file2 = this.form.controls.file2.value;
 
       const formData = new FormData();
 
@@ -110,13 +116,23 @@ export class FormSimpleStepComponent
       formData.append('hasText', String(this.data.hasText));
       formData.append('text', this.data.text);
 
-      // To send file, to be true
+      // To send files
       if (this.data.hasFile) {
-        const isUpload: any = this.data.file;
-        if (isUpload.url) {
-          formData.append('file', JSON.stringify(this.data.file));
-        } else {
-          formData.append('file', this.data.file);
+        const isUpload: any = this.form.controls.file.value;
+        if (isUpload) {
+          if (isUpload.url) {
+            formData.append('file', JSON.stringify(isUpload));
+          } else {
+            formData.append('file', isUpload);
+          }
+        }
+        const isUpload2: any = this.form.controls.file2.value;
+        if (isUpload2) {
+          if (isUpload2.url) {
+            formData.append('file2', JSON.stringify(isUpload2));
+          } else {
+            formData.append('file2', isUpload2);
+          }
         }
       }
 

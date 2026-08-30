@@ -1,0 +1,9 @@
+@keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes growWidth {
+    0%   { width: 0px; }
+    100%   { width: 4px; }
+}

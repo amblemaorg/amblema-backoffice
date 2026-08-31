@@ -125,6 +125,8 @@ export class FormSimpleStepComponent
           } else {
             formData.append('file', isUpload);
           }
+        } else {
+          formData.append('file', 'null');
         }
         const isUpload2: any = this.form.controls.file2.value;
         if (isUpload2) {
@@ -133,6 +135,8 @@ export class FormSimpleStepComponent
           } else {
             formData.append('file2', isUpload2);
           }
+        } else {
+          formData.append('file2', 'null');
         }
       }
 

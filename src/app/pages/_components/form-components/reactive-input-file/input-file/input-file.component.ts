@@ -34,9 +34,21 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
         >
       </button>
 
-      <nb-alert outline="info" *ngIf="control.value" class="mt-3">
-        <a *ngIf="url" [href]="url">{{ nameFile }}</a>
-        <span *ngIf="!url">{{ nameFile }}</span>
+      <nb-alert outline="info" *ngIf="control.value" class="mt-3 d-flex align-items-center justify-content-between">
+        <div>
+          <a *ngIf="url" [href]="url" target="_blank">{{ nameFile }}</a>
+          <span *ngIf="!url">{{ nameFile }}</span>
+        </div>
+        <button
+          type="button"
+          nbButton
+          status="danger"
+          size="tiny"
+          class="ml-2"
+          (click)="clearFile()"
+        >
+          <nb-icon icon="trash-2-outline"></nb-icon> Eliminar
+        </button>
       </nb-alert>
 
       <app-reactive-validation
@@ -65,34 +77,39 @@ export class InputFileComponent
 
   ngOnChanges(): void {
     if (this.control) {
-      if (this.control.value !== null) {
+      if (this.control.value) {
         if (
           typeof this.control.value.url === 'string' ||
           this.control.value.url instanceof String
         ) {
           this.url = this.control.value.url;
           this.nameFile = this.control.value.name;
-          this.control.setValidators([Validators.required]);
-          this.control.updateValueAndValidity();
+        } else if (this.control.value.name) {
+          this.url = null;
+          this.nameFile = this.control.value.name;
         } else {
           this.url = null;
-
-          this.control.setValidators([
-            Validators.required,
-            FileValidator.fileExtensions(EXTENSIONS),
-          ]);
-          this.control.updateValueAndValidity();
+          this.nameFile = null;
         }
+      } else {
+        this.url = null;
+        this.nameFile = null;
       }
     }
   }
 
   ngAfterViewInit(): void {
     if (this.control) {
-      this.control.setValidators([
-        Validators.required,
-        FileValidator.fileExtensions(EXTENSIONS),
-      ]);
+      this.cd.detectChanges();
+    }
+  }
+
+  clearFile(): void {
+    if (this.control) {
+      this.control.setValue(null);
+      this.url = null;
+      this.nameFile = null;
+      this.control.setValidators([]);
       this.control.updateValueAndValidity();
       this.cd.detectChanges();
     }

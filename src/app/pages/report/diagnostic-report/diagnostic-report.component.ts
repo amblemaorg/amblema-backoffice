@@ -36,6 +36,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
 
   // -- Setting checks --
   diagnostics = [
+    { label: "Ambiente", value: false },
     { label: "Matemática", value: false },
     { label: "Lectura", value: false },
     { label: "Lógica", value: false },
@@ -66,6 +67,10 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
     }
   }
 
+  hasSelectedDiagnostics(): boolean {
+    return this.diagnostics.some(d => d.value);
+  }
+
   onGenerateReport() {
     this.disabledBtn = true;
 
@@ -77,7 +82,10 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response: any) => {
-          if (response.sections.length) {
+          if (
+            (response.sections && response.sections.length) ||
+            (response.environmental && response.environmental.hasData)
+          ) {
             this.generatorReport.onGenerate(response);
           } else {
             this.toastr.info("Información", "No se encontraron registros");

@@ -282,6 +282,9 @@ export class ProjectRequestsComponent extends BaseTable implements OnInit {
   }
 
   onApprovedRequest(): void {
+    if (this.showProgress) {
+      return;
+    }
     this.showProgress = true;
     this.requestSelected = Object.assign({}, this.requestSelected);
 

@@ -7,6 +7,7 @@ interface DiagnosticReport {
     sections: Section[];
     yearSummary: YearSummary;
     totales: LapseTotal;
+    environmental?: any;
   }
 
 interface YearSummary {

@@ -441,7 +441,7 @@ export class PDFReport implements OnInit {
         title: "Reporte de diagnósticos",
         author: "Fundación AmbLeMa",
         subject: "Reporte de diagnósticos",
-        keywords: "Reporte, diagnósticos, lectura, lógica, matemática",
+        keywords: "Reporte, diagnósticos, lectura, lógica, matemática, ambiente",
       },
       pageSize: "A4",
       pageOrientation: "landscape",
@@ -1536,6 +1536,13 @@ export class PDFReport implements OnInit {
 
     finalReport.content.push(tableTotales);
 
+    const envElements = this.buildEnvironmentalReportElements(report);
+    if (envElements.length > 0) {
+      if (sectionTables.length > 0) {
+        envElements.push({ text: '', pageBreak: 'after' });
+      }
+      finalReport.content.unshift(...envElements);
+    }
 
     finalReport.content.unshift(documentSubHeaderData);
     finalReport.content.unshift(titleDocument);
@@ -1549,6 +1556,273 @@ export class PDFReport implements OnInit {
     const fileName = `Reporte-diagnosticos${schoolName}${schoolYear}_${dateFormatted}.pdf`;
 
     window.download(fileName);
+  }
+
+  buildEnvironmentalReportElements(report: DiagnosticReport): any[] {
+    const elements: any[] = [];
+    if (!report.environmental || !report.environmental.hasData) {
+      return elements;
+    }
+
+    const colorRowOne: any = {
+      fillColor: "#00809a",
+      color: "#FFF",
+      bold: true,
+    };
+    const colorRowTwo: any = {
+      fillColor: "#81b03e",
+      color: "#FFF",
+      bold: true,
+    };
+
+    const formatVal = (val: any, isAverage = false): string => {
+      if (val === null || val === undefined || val === '') return '-';
+      const num = Number(val);
+      if (isNaN(num)) return '-';
+      if (isAverage) {
+        return num.toFixed(2);
+      }
+      return Number.isInteger(num) ? num.toString() : num.toFixed(2);
+    };
+
+    // Header 1: Banner Title
+    const headerRow1: any[] = [
+      {
+        text: "DIAGNÓSTICO AMBIENTAL — ÍNDICE AMBIENTAL AMBLEMA (IAA) — RESULTADOS POR LAPSO",
+        colSpan: 21,
+        ...colorRowOne,
+        alignment: "center",
+        fontSize: 7.5,
+        margin: [0, 2, 0, 2],
+      },
+      ...Array(20).fill({})
+    ];
+
+    // Header 2: Grouped Indicators
+    const headerRow2: any[] = [
+      { text: "Lapso", rowSpan: 2, ...colorRowTwo, alignment: "center", fontSize: 6.8, margin: [0, 6, 0, 0] },
+      { text: "1. Limpieza y cuidado", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "2. Gestión residuos", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "3. Biodiversidad", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "4. Aprovechamiento agua", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "5. Relación comunidad", colSpan: 3, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {},
+      { text: "Total IAA", rowSpan: 2, ...colorRowTwo, alignment: "center", fontSize: 6.8, margin: [0, 6, 0, 0] },
+    ];
+
+    // Header 3: Subcriteria & Averages
+    const headerRow3: any[] = [
+      {},
+      { text: "1.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "1.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "1.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "2.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "2.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "2.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "3.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "3.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "3.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "4.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "4.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "4.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "5.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "5.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      {},
+    ];
+
+    const body: any[] = [headerRow1, headerRow2, headerRow3];
+
+    const lapseLabels: { [key: string]: string } = {
+      '1': '1er Lapso',
+      '2': '2do Lapso',
+      '3': '3er Lapso',
+    };
+
+    const activeSummaries: any[] = [];
+
+    ['1', '2', '3'].forEach(lKey => {
+      const lapseData = report.environmental.lapses ? report.environmental.lapses[lKey] : null;
+      const summary = lapseData ? lapseData.summary : null;
+      const lapseName = (lapseData && lapseData.lapseName) || lapseLabels[lKey] || `Lapso ${lKey}`;
+
+      if (summary && summary.totalIndex !== null && summary.totalIndex !== undefined) {
+        activeSummaries.push(summary);
+        body.push([
+          { text: lapseName, alignment: "center", bold: true, fontSize: 6.5, fillColor: "#F5F5F5" },
+          // 1. Limpieza
+          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.1'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.2'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.3'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+          // 2. Residuos
+          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.1'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.2'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.3'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.wasteManagement ? summary.wasteManagement.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+          // 3. Biodiversidad
+          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.1'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.2'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.3'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+          // 4. Agua
+          { text: formatVal(summary.waterUse ? summary.waterUse['4.1'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.waterUse ? summary.waterUse['4.2'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.waterUse ? summary.waterUse['4.3'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.waterUse ? summary.waterUse.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+          // 5. Comunidad
+          { text: formatVal(summary.communityRelations ? summary.communityRelations['5.1'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.communityRelations ? summary.communityRelations['5.2'] : null, true), alignment: "center", fontSize: 6.5 },
+          { text: formatVal(summary.communityRelations ? summary.communityRelations.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+          // Total IAA
+          { text: formatVal(summary.totalIndex, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#C2DFE3" },
+        ]);
+      }
+    });
+
+    if (activeSummaries.length === 0) {
+      return elements;
+    }
+
+    // Promedio General row (if 2 or more lapses have data)
+    if (activeSummaries.length > 1) {
+      const calcAvg = (getter: (s: any) => number | null) => {
+        const vals = activeSummaries
+          .map(getter)
+          .filter(v => v !== null && v !== undefined && !isNaN(Number(v)))
+          .map(v => Number(v));
+        if (!vals.length) return null;
+        return vals.reduce((a, b) => a + b, 0) / vals.length;
+      };
+
+      body.push([
+        { text: "Promedio General", alignment: "center", bold: true, fontSize: 6.0, fillColor: "#EAEAEA" },
+        // 1. Limpieza
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces['1.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces['1.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces['1.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 2. Residuos
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement['2.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement['2.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement['2.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 3. Biodiversidad
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation['3.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation['3.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation['3.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 4. Agua
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse['4.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse['4.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse['4.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 5. Comunidad
+        { text: formatVal(calcAvg(s => s.communityRelations ? s.communityRelations['5.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.communityRelations ? s.communityRelations['5.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.communityRelations ? s.communityRelations.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // Total IAA
+        { text: formatVal(calcAvg(s => s.totalIndex), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#A4D4DC" },
+      ]);
+    }
+
+    const widths: any[] = [
+      64,
+      28, 28, 28, 31,
+      28, 28, 28, 31,
+      28, 28, 28, 31,
+      28, 28, 28, 31,
+      28, 28, 31,
+      44
+    ];
+
+    const TableEnvironmentalDiagnosis: any = {
+      table: {
+        widths,
+        body,
+      },
+      layout: this.borderCustomWithLessPadding,
+      margin: [0, 0, 0, 8],
+    };
+
+    const environmentalLegendBox: any = {
+      margin: [0, 0, 0, 10],
+      table: {
+        widths: ["33%", "33%", "34%"],
+        body: [
+          [
+            {
+              fillColor: "#00809a",
+              color: "#FFF",
+              bold: true,
+              fontSize: 7.2,
+              text: "LEYENDA DE CRITERIOS AMBIENTALES (PREGUNTAS)",
+              colSpan: 3,
+              alignment: "center",
+              margin: [0, 2, 0, 2]
+            },
+            {},
+            {}
+          ],
+          [
+            {
+              fillColor: "#FAFAFA",
+              fontSize: 5.8,
+              margin: [3, 3, 3, 3],
+              stack: [
+                { text: "1. Limpieza y cuidado de los espacios", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "1.1: ¿Hay ausencia de papeles o basura en zonas de aulas, patios y áreas comunes?", margin: [0, 0, 0, 1] },
+                { text: "1.2: ¿La escuela dispone de papeleras suficientes en las diferentes áreas?", margin: [0, 0, 0, 1] },
+                { text: "1.3: ¿Los estudiantes, docentes y personal hacen uso correcto de las papeleras?", margin: [0, 0, 0, 3] },
+                { text: "2. Gestión y aprovechamiento de los residuos", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 1, 0, 1] },
+                { text: "2.1: ¿Se clasifica la basura en residuos orgánicos e inorgánicos?", margin: [0, 0, 0, 1] },
+                { text: "2.2: ¿Tienen lugares apropiados e identificados para el resguardo de residuos?", margin: [0, 0, 0, 1] },
+                { text: "2.3: ¿Poseen un plan o proyecto activo para aprovechamiento/reciclaje?", margin: [0, 0, 0, 1] },
+              ]
+            },
+            {
+              fillColor: "#FAFAFA",
+              fontSize: 5.8,
+              margin: [3, 3, 3, 3],
+              stack: [
+                { text: "3. Conservación de la biodiversidad", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "3.1: ¿La escuela tiene jardines planificados y bien mantenidos?", margin: [0, 0, 0, 1] },
+                { text: "3.2: ¿Tienen un huerto escolar desarrollado y cuidado por la comunidad?", margin: [0, 0, 0, 1] },
+                { text: "3.3: ¿Existe algún proyecto activo para conocer la biodiversidad vegetal?", margin: [0, 0, 0, 3] },
+                { text: "4. Aprovechamiento del agua", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 1, 0, 1] },
+                { text: "4.1: ¿Se evidencia conciencia sobre el buen uso del agua, evitando malgasto?", margin: [0, 0, 0, 1] },
+                { text: "4.2: ¿Poseen recipientes/tanques aptos para almacenamiento y riego?", margin: [0, 0, 0, 1] },
+                { text: "4.3: ¿Poseen estructura o plan para recolección de agua de lluvia?", margin: [0, 0, 0, 1] },
+              ]
+            },
+            {
+              fillColor: "#FAFAFA",
+              fontSize: 5.8,
+              margin: [3, 3, 3, 3],
+              stack: [
+                { text: "5. Relación con la comunidad", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "5.1: ¿La escuela realiza acciones directas que aportan a la limpieza comunitaria?", margin: [0, 0, 0, 1] },
+                { text: "5.2: ¿Padres y vecinos participan en proyectos ambientales escolares?", margin: [0, 0, 0, 4] },
+                { text: "Escala de Interpretación IAA (0 - 35 pts)", bold: true, color: "#81b03e", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "• Excelente: 31 – 35 pts (Prácticas ambientales consolidadas)", margin: [0, 0, 0, 1] },
+                { text: "• Satisfactorio: 21 – 30 pts (Buen desempeño con oportunidades de mejora)", margin: [0, 0, 0, 1] },
+                { text: "• En Desarrollo: 11 – 20 pts (Iniciativas en fase inicial o parcial)", margin: [0, 0, 0, 1] },
+                { text: "• Inicial: 00 – 10 pts (Requiere plan de acción urgente)", margin: [0, 0, 0, 1] }
+              ]
+            }
+          ]
+        ]
+      },
+      layout: this.borderCustomWithLessPadding
+    };
+
+    elements.push(TableEnvironmentalDiagnosis);
+    elements.push(environmentalLegendBox);
+
+    return elements;
   }
 
   async onGenerateSummaryDiagnostic(report: DiagnosticReport) { }

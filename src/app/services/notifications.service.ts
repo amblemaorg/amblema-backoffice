@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { switchMap, shareReplay } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { switchMap, shareReplay, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,13 +10,26 @@ import { environment } from 'src/environments/environment';
 export class NotificationsService {
 
   private readonly PENDING_NOTIFICATIONS = 'notifications/pending';
-  private update$ = new BehaviorSubject<void>(null);
+  private update$ = new BehaviorSubject<number>(Date.now());
   private pendingNotifications$: Observable<any>;
 
   constructor(private httpClient: HttpClient) {
-    const url = `${environment.api}${this.PENDING_NOTIFICATIONS}`;
     this.pendingNotifications$ = this.update$.asObservable().pipe(
-      switchMap(() => this.httpClient.get<any>(url)),
+      switchMap(() => {
+        const url = `${environment.api}${this.PENDING_NOTIFICATIONS}?_t=${Date.now()}`;
+        return this.httpClient.get<any>(url, {
+          headers: new HttpHeaders({
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+          })
+        }).pipe(
+          catchError(err => {
+            console.error('Error fetching pending notifications', err);
+            return of({ records: [] });
+          })
+        );
+      }),
       shareReplay(1)
     );
   }
@@ -26,6 +39,7 @@ export class NotificationsService {
   }
 
   updateNotifications(): void {
-    this.update$.next(null);
+    this.update$.next(Date.now());
   }
 }
+

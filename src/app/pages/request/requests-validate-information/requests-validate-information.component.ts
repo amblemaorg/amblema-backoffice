@@ -212,7 +212,7 @@ export class RequestsValidateInformationComponent
       }
     });
 
-    this.actionSubscription = this.actions$.pipe(ofActionSuccessful(UpdateRequestContent)).subscribe(() => {
+    this.actionSubscription = this.actions$.pipe(ofActionSuccessful(UpdateRequestContent, DeleteRequestContent)).subscribe(() => {
       this.source.refresh();
       this.notificationsService.updateNotifications();
     });

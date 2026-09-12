@@ -21,17 +21,22 @@ export class DiagnosticReportService {
   }
 
   prepareDiagnosticsString(diagnostics: Array<any>): string {
-
-    let compose: string;
+    const selected: string[] = [];
 
     diagnostics.forEach(diagnostic => {
       if (diagnostic.value) {
-        compose = diagnostic.label === 'Matemática' ? 'math'
-          : diagnostic.label === 'Lectura' ? `${compose ? compose + ',' : ''}reading`
-            : diagnostic.label === 'Lógica' ? `${compose ? compose + ',' : ''}logic` : '';
+        if (diagnostic.label === 'Ambiente') {
+          selected.push('environmental');
+        } else if (diagnostic.label === 'Matemática') {
+          selected.push('math');
+        } else if (diagnostic.label === 'Lectura') {
+          selected.push('reading');
+        } else if (diagnostic.label === 'Lógica') {
+          selected.push('logic');
+        }
       }
     });
-    return compose;
+    return selected.join(',');
   }
 
   getPinsReport(schoolYearId: string) {

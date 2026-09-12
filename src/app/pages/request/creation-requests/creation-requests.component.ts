@@ -293,6 +293,9 @@ export class CreationRequestsComponent extends BaseTable implements OnInit {
   }
 
   onApprovedRequest(): void {
+    if (this.showProgress) {
+      return;
+    }
     this.requestSelected = Object.assign({}, this.requestSelected);
     this.showProgress = true;
 

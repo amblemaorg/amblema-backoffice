@@ -3,6 +3,7 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   NbSidebarService,
@@ -10,12 +11,28 @@ import {
   NbPopoverDirective,
 } from '@nebular/theme';
 import { Subscription, Observable, of } from 'rxjs';
-import { Store } from '@ngxs/store';
+import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
 import { Router } from '@angular/router';
 import { NbAuthService, NbTokenService } from '@nebular/auth';
-import { filter, map, startWith, shareReplay } from 'rxjs/operators';
+import { filter, map, startWith, shareReplay, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import {
+  UpdateRequestContent,
+  DeleteRequestContent,
+} from 'src/app/store/request/request-content-approval.action';
+import {
+  UpdateProjectRequests,
+  DeleteProjectRequests,
+} from 'src/app/store/request/project-requests.action';
+import {
+  UpdateUserCreationRequest,
+  DeleteUserCreationRequest,
+} from 'src/app/store/request/user-creation-request.action';
+import {
+  UpdateProjectValidationRequest,
+  DeleteProjectValidationRequest,
+} from 'src/app/store/request/project-validation-request.action';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // All notifications
   allNotifications$: Observable<any[]> = of([]);
 
-  subscription: Subscription;
+  subscription: Subscription = new Subscription();
 
   items = [{ title: 'Cerrar sesión' }];
 
@@ -42,6 +59,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private tokenService: NbTokenService,
     private store: Store,
     private notificationsService: NotificationsService,
+    private actions$: Actions,
+    private cdr: ChangeDetectorRef,
     protected sidebarService?: NbSidebarService
   ) { }
 
@@ -49,37 +68,60 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     // -- Obtener Notificaciones Pendientes --
     this.allNotifications$ = this.notificationsService.getPendingNotifications().pipe(
-      map(res => res.records),
+      map(res => (res && res.records ? res.records : [])),
       startWith([]),
+      tap(() => {
+        this.cdr.markForCheck();
+      }),
       shareReplay(1)
     );
 
+    // Escuchar cualquier cambio de estatus o eliminación de solicitudes para refrescar notificaciones
+    this.subscription.add(
+      this.actions$
+        .pipe(
+          ofActionSuccessful(
+            UpdateRequestContent,
+            DeleteRequestContent,
+            UpdateProjectRequests,
+            DeleteProjectRequests,
+            UpdateUserCreationRequest,
+            DeleteUserCreationRequest,
+            UpdateProjectValidationRequest,
+            DeleteProjectValidationRequest
+          )
+        )
+        .subscribe(() => {
+          this.notificationsService.updateNotifications();
+        })
+    );
+
     /* To the user menu */
-    this.subscription = this.menuService.onItemClick().pipe(
-      filter(({ tag }) => tag === 'user-menu'),
-      map(({ item: { title } }) => {
-
-        if (title === 'Cerrar sesión') {
-          this.tokenService.clear();
-          localStorage.clear();
-          sessionStorage.clear();
-          this.authServiceCustom.removeTokens();
-          this.router.navigate(['auth/login']);
-        }
-
-      })
-    ).subscribe();
+    this.subscription.add(
+      this.menuService.onItemClick().pipe(
+        filter(({ tag }) => tag === 'user-menu'),
+        map(({ item: { title } }) => {
+          if (title === 'Cerrar sesión') {
+            this.tokenService.clear();
+            localStorage.clear();
+            sessionStorage.clear();
+            this.authServiceCustom.removeTokens();
+            this.router.navigate(['auth/login']);
+          }
+        })
+      ).subscribe()
+    );
 
     /* For the sidebar menu, to void Shaked */
-    this.subscription = this.menuService
-      .onItemSelect()
-      .subscribe((event: { tag: string; item: any }) => {
-        if (window.innerWidth < 1200) {
-          this.sidebarService.compact('menu-sidebar');
-        }
-      });
-
-
+    this.subscription.add(
+      this.menuService
+        .onItemSelect()
+        .subscribe((event: { tag: string; item: any }) => {
+          if (window.innerWidth < 1200) {
+            this.sidebarService.compact('menu-sidebar');
+          }
+        })
+    );
   }
 
   ngOnDestroy(): void {
@@ -87,6 +129,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');

@@ -1643,8 +1643,11 @@ export class PDFReport implements OnInit {
     };
 
     const activeSummaries: any[] = [];
+    const maxLapse = (report as any).targetLapse || (report as any).lapso || 3;
 
-    ['1', '2', '3'].forEach(lKey => {
+    ['1', '2', '3']
+      .filter(lKey => parseInt(lKey) <= Number(maxLapse))
+      .forEach(lKey => {
       const lapseData = report.environmental.lapses ? report.environmental.lapses[lKey] : null;
       const summary = lapseData ? lapseData.summary : null;
       const lapseName = (lapseData && lapseData.lapseName) || lapseLabels[lKey] || `Lapso ${lKey}`;

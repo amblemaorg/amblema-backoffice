@@ -7,7 +7,8 @@ import { AuthService } from 'src/app/services/user/auth.service';
 import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+
+declare var $: any;
 
 @Component({
   selector: 'app-project-details',
@@ -33,7 +34,7 @@ export class ProjectDetailsComponent implements OnChanges, OnInit {
   public url = environment.web;
   public place = `historical`;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
  
   ngOnInit() {
     

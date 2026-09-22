@@ -16,6 +16,7 @@ import { DialogConfirmationComponent } from "../_components/shared/dialog/dialog
 import { BsModalService } from "ngx-bootstrap/modal";
 import { ProjectService } from "src/app/services/project.service";
 import { AuthService } from "src/app/services/user/auth.service";
+import { Router } from "@angular/router";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
 
 declare var $: any;
@@ -23,7 +24,7 @@ declare var $: any;
 @Component({
   selector: "app-projects",
   templateUrl: "./projects.component.html",
-  styles: [],
+  styleUrls: ["./projects.component.scss"],
 })
 export class ProjectsComponent extends BaseTable implements OnInit {
   @Select(ProjectState.projects) projects$: Observable<Project[]>;
@@ -59,7 +60,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     private modalServicesBs: BsModalService,
     private projectService: ProjectService,
     private helper: Utility,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     super();
   }
@@ -173,6 +175,19 @@ export class ProjectsComponent extends BaseTable implements OnInit {
       !new AuthService().isAllowed(ALL_ACTIONS.PROJECT_EDIT),
       !new AuthService().isAllowed(ALL_ACTIONS.PROJECT_DELETE)
     );
+
+    this.settings.actions = {
+      ...this.settings.actions,
+      width: "15%",
+    };
+
+    this.settings.actions.custom = [
+      ...this.settings.actions.custom,
+      {
+        name: 'VIEW_MODULES',
+        title: '<i class="fa fa-book-open text-info" title="Ver módulos"></i>',
+      },
+    ];
   }
 
   clear() { }
@@ -180,6 +195,9 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   // Events table
   onAction(event: any): void {
     switch (event.action) {
+      case 'VIEW_MODULES':
+        this.router.navigate(['/pages/projects/modules', event.data.id]);
+        break;
       case this.ACTION.VIEW:
         this.store.dispatch(new SelectedProject(event.data));
         this.modal.open("view-project");

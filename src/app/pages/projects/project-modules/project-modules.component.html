@@ -1,0 +1,238 @@
+<div class="row" *ngIf="loading">
+  <div class="col-12 text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+    <p class="mt-2 text-muted">Cargando módulos del proyecto...</p>
+  </div>
+</div>
+
+<div class="project-modules-container" *ngIf="!loading && projectData">
+  <!-- Top Bar / Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <button nbButton status="basic" size="small" class="mr-2" (click)="goBack()">
+        <i class="fa fa-arrow-left mr-1 text-amblema-blue"></i> Volver a proyectos
+      </button>
+    </div>
+    <h5 class="mb-0 font-weight-bold text-amblema-green">
+      Módulos de Formación - Proyecto {{ projectData.code }}
+    </h5>
+  </div>
+
+  <!-- Project Details Card -->
+  <nb-card class="mb-3 shadow-sm border-0 project-info-card">
+    <nb-card-header class="bg-light py-2 px-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="font-weight-bold text-dark">
+          <i class="fa fa-info-circle mr-1 text-amblema-blue"></i> Información del Proyecto
+        </span>
+        <span class="badge" [ngClass]="projectData.status === '1' ? 'badge-success' : 'badge-danger'">
+          {{ projectData.status === '1' ? 'Activo' : 'Inactivo' }}
+        </span>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="py-2 px-3">
+      <div class="row info-row align-items-center">
+        <div class="col-12 col-md-4 py-1">
+          <span class="info-label text-muted small font-weight-bold mr-1">ID:</span>
+          <span class="info-value font-weight-bold text-dark">{{ projectData.code }}</span>
+        </div>
+        <div class="col-12 col-md-4 py-1">
+          <span class="info-label text-muted small font-weight-bold mr-1">Coordinador:</span>
+          <span class="info-value text-dark" [title]="projectData.coordinator?.email || ''">
+            {{ projectData.coordinator?.name || 'Sin asignar' }}
+          </span>
+          <small class="text-muted ml-1" *ngIf="projectData.coordinator?.email">
+            ({{ projectData.coordinator.email }})
+          </small>
+        </div>
+        <div class="col-12 col-md-4 py-1">
+          <span class="info-label text-muted small font-weight-bold mr-1">Escuela:</span>
+          <span class="info-value text-dark">{{ projectData.school?.name || 'Sin asignar' }}</span>
+        </div>
+        <div class="col-12 col-md-4 py-1">
+          <span class="info-label text-muted small font-weight-bold mr-1">Padrino:</span>
+          <span class="info-value text-dark">{{ projectData.sponsor?.name || 'Sin asignar' }}</span>
+        </div>
+        <div class="col-12 col-md-4 py-1">
+          <span class="info-label text-muted small font-weight-bold mr-1">Fase:</span>
+          <span class="badge badge-info px-2 py-0">
+            {{ getPhaseName(projectData.phase) }}
+          </span>
+        </div>
+        <div class="col-12 col-md-4 py-1">
+          <span class="info-label text-muted small font-weight-bold mr-1">Capacitado:</span>
+          <span class="badge px-2 py-0" [ngClass]="projectData.coordinator?.instructed ? 'badge-success' : 'badge-warning'">
+            {{ projectData.coordinator?.instructed ? 'Sí' : 'No' }}
+          </span>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <!-- Modules Table Card -->
+  <nb-card class="shadow-sm border-0 modules-table-card">
+    <nb-card-header class="bg-light py-2 px-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="font-weight-bold text-dark">
+          <i class="fa fa-book-open mr-1 text-amblema-blue"></i> Lista de Módulos ({{ modules.length }})
+        </span>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="p-3 p-md-4">
+      <div class="table-responsive rounded border">
+        <table class="table table-hover table-striped mb-0">
+          <thead class="thead-light">
+            <tr>
+              <th style="width: 60px;" class="text-center align-middle">#</th>
+              <th class="align-middle">Módulo</th>
+              <th style="width: 150px;" class="text-center align-middle">Estatus</th>
+              <th style="width: 130px;" class="text-center align-middle">Intentos</th>
+              <th style="width: 110px;" class="text-center align-middle">Puntaje</th>
+              <th style="width: 170px;" class="text-center align-middle">Respuestas Quizz</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mod of modules; let i = index">
+              <td class="text-center font-weight-bold text-muted align-middle">{{ i + 1 }}</td>
+              <td class="align-middle">
+                <div class="font-weight-bold text-dark">{{ mod.name }}</div>
+                <small class="text-muted" *ngIf="mod.title && mod.title !== mod.name">{{ mod.title }}</small>
+              </td>
+              <td class="text-center align-middle">
+                <span class="badge badge-pill px-3 py-1 font-weight-bold" [ngClass]="{
+                  'badge-success': mod.status === '3',
+                  'badge-warning text-dark': mod.status === '2',
+                  'badge-secondary': mod.status === '1'
+                }">
+                  {{ mod.status === '3' ? 'Aprobado' : mod.status === '2' ? 'Reprobado' : 'No iniciado' }}
+                </span>
+              </td>
+              <td class="text-center align-middle">
+                <span class="badge badge-info px-2 py-1 font-weight-bold" *ngIf="mod.totalAttempts > 0">
+                  {{ mod.totalAttempts }} {{ mod.totalAttempts === 1 ? 'intento' : 'intentos' }}
+                </span>
+                <span class="text-muted small" *ngIf="mod.totalAttempts === 0">0 intentos</span>
+              </td>
+              <td class="text-center align-middle">
+                <span class="badge badge-light border font-weight-bold" *ngIf="mod.totalAttempts > 0">
+                  {{ mod.score }} pts
+                </span>
+                <span class="text-muted small" *ngIf="mod.totalAttempts === 0">-</span>
+              </td>
+              <td class="text-center align-middle">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-amblema"
+                  (click)="openQuizModal(mod)"
+                  [disabled]="!mod.totalAttempts || mod.totalAttempts === 0"
+                  [title]="mod.totalAttempts > 0 ? 'Ver respuestas del quizz' : 'Sin respuestas aún'"
+                >
+                  <i class="fa fa-eye mr-1"></i> Ver respuestas
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="modules.length === 0">
+              <td colspan="6" class="text-center py-4 text-muted">
+                No se encontraron módulos de aprendizaje registrados.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<!-- Modal to View Quiz Answers -->
+<app-modal [ID]="MODAL_QUIZ" [title]="'Respuestas del QUIZZ'" [size]="'lg'">
+  <div class="quiz-answers-modal-content" content *ngIf="selectedModule">
+    <!-- Header of Quiz Modal -->
+    <div class="mb-3 border-bottom pb-2">
+      <h6 class="font-weight-bold text-amblema-blue mb-1">
+        {{ selectedModule.name }}
+      </h6>
+      <small class="text-muted" *ngIf="selectedModule.title">{{ selectedModule.title }}</small>
+    </div>
+
+    <!-- Attempt Selector (if multiple attempts) -->
+    <div class="mb-3" *ngIf="selectedModule.attempts && selectedModule.attempts.length > 0">
+      <label class="font-weight-bold small text-muted d-block mb-1">Seleccionar intento:</label>
+      <div class="d-flex flex-wrap align-items-center">
+        <button
+          *ngFor="let att of selectedModule.attempts; let idx = index"
+          type="button"
+          class="btn btn-sm mr-2 mb-2"
+          [ngClass]="selectedAttemptIndex === idx ? 'btn-primary' : 'btn-outline-secondary'"
+          (click)="selectAttempt(idx)"
+        >
+          Intento {{ idx + 1 }}
+          <span class="badge ml-1" [ngClass]="att.status === '1' ? 'badge-success' : 'badge-danger'">
+            {{ att.status === '1' ? 'Aprobado' : 'Reprobado' }}
+          </span>
+        </button>
+      </div>
+      <small class="text-muted" *ngIf="selectedAttempt?.createdAt">
+        Fecha del intento: {{ selectedAttempt.createdAt | date:'dd/MM/yyyy, h:mm a' }}
+      </small>
+    </div>
+
+    <!-- Questions and Answers List -->
+    <div *ngIf="selectedAttempt">
+      <div class="alert alert-info py-2 small mb-3">
+        <i class="fa fa-info-circle mr-1 text-amblema-blue"></i>
+        A continuación se muestran las respuestas seleccionadas por el coordinador en este intento frente a las opciones correctas.
+      </div>
+
+      <div class="quiz-question-card card mb-3" *ngFor="let q of selectedModule.quizzes; let qIndex = index">
+        <div class="card-header py-2 d-flex justify-content-between align-items-center" [ngClass]="isAnswerCorrect(q) ? 'bg-light-success' : 'bg-light-danger'">
+          <span class="font-weight-bold">
+            {{ qIndex + 1 }}. {{ q.question }}
+          </span>
+          <span class="badge" [ngClass]="isAnswerCorrect(q) ? 'badge-success' : 'badge-danger'">
+            {{ isAnswerCorrect(q) ? 'Correcta' : 'Incorrecta' }}
+          </span>
+        </div>
+        <div class="card-body py-2 px-3">
+          <div class="row">
+            <div class="col-12 col-md-6 mb-2" *ngFor="let opt of [
+              { key: 'optionA', label: 'A', text: q.optionA },
+              { key: 'optionB', label: 'B', text: q.optionB },
+              { key: 'optionC', label: 'C', text: q.optionC },
+              { key: 'optionD', label: 'D', text: q.optionD }
+            ]">
+              <div
+                class="p-2 rounded border option-box"
+                [ngClass]="{
+                  'selected-correct': getCoordinatorOption(q.id) === opt.key && q.correctOption === opt.key,
+                  'selected-incorrect': getCoordinatorOption(q.id) === opt.key && q.correctOption !== opt.key,
+                  'is-correct-target': getCoordinatorOption(q.id) !== opt.key && q.correctOption === opt.key,
+                  'neutral-option': getCoordinatorOption(q.id) !== opt.key && q.correctOption !== opt.key
+                }"
+              >
+                <div class="d-flex align-items-start">
+                  <span class="option-label font-weight-bold mr-2">{{ opt.label }})</span>
+                  <span class="flex-grow-1">{{ opt.text }}</span>
+                  <span *ngIf="getCoordinatorOption(q.id) === opt.key && q.correctOption === opt.key" class="badge badge-success ml-2">
+                    <i class="fa fa-check"></i> Marcada (Correcta)
+                  </span>
+                  <span *ngIf="getCoordinatorOption(q.id) === opt.key && q.correctOption !== opt.key" class="badge badge-danger ml-2">
+                    <i class="fa fa-times"></i> Marcada (Incorrecta)
+                  </span>
+                  <span *ngIf="getCoordinatorOption(q.id) !== opt.key && q.correctOption === opt.key" class="badge badge-secondary ml-2">
+                    Opción correcta
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!selectedAttempt" class="text-center py-4 text-muted">
+      No hay intentos registrados para este módulo.
+    </div>
+  </div>
+</app-modal>

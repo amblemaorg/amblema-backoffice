@@ -1,0 +1,170 @@
+$amblema-green: #81b03e;
+$amblema-blue: #00809a;
+
+.text-amblema-green {
+  color: $amblema-green !important;
+}
+
+.text-amblema-blue,
+.icon-amblema-blue {
+  color: $amblema-blue !important;
+}
+
+:host ::ng-deep {
+  .project-info-card {
+    height: auto !important;
+    min-height: 0 !important;
+    margin-bottom: 1rem !important;
+
+    nb-card-header {
+      padding: 0.45rem 1rem !important;
+      min-height: 0 !important;
+      height: auto !important;
+      font-size: 1.05rem !important;
+      border-bottom: 1px solid #edf1f7 !important;
+    }
+
+    nb-card-body {
+      flex: 0 0 auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 0.5rem 1rem !important;
+      overflow: visible !important;
+    }
+
+    .info-label {
+      font-size: 0.82rem;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .info-value {
+      font-size: 0.9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .modules-table-card {
+    height: auto !important;
+    min-height: 0 !important;
+
+    nb-card-header {
+      padding: 0.55rem 1.25rem !important;
+      min-height: 0 !important;
+      height: auto !important;
+      font-size: 1.05rem !important;
+    }
+
+    nb-card-body {
+      flex: 0 0 auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 1.25rem !important;
+      overflow: visible !important;
+    }
+
+    .table-responsive {
+      border: 1px solid #e4e9f2;
+      border-radius: 6px;
+      background-color: #fff;
+    }
+  }
+}
+
+.project-modules-container {
+  padding: 0.5rem 0;
+
+  .table {
+    thead th,
+    th {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      vertical-align: middle !important;
+    }
+
+    td {
+      font-size: 0.92rem;
+      vertical-align: middle !important;
+    }
+  }
+}
+
+.btn-amblema,
+.btn-outline-amblema {
+  background-color: $amblema-blue !important;
+  border: 1px solid $amblema-blue !important;
+  color: #fff !important;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+
+  i {
+    color: #fff !important;
+    transition: color 0.2s ease-in-out;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: #fff !important;
+    border-color: $amblema-blue !important;
+    color: $amblema-blue !important;
+
+    i {
+      color: $amblema-blue !important;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.quiz-answers-modal-content {
+  .bg-light-success {
+    background-color: #e8f5e9 !important;
+    border-bottom: 1px solid #c8e6c9;
+  }
+
+  .bg-light-danger {
+    background-color: #ffebee !important;
+    border-bottom: 1px solid #ffcdd2;
+  }
+
+  .option-box {
+    font-size: 0.88rem;
+    transition: all 0.2s ease;
+
+    &.selected-correct {
+      background-color: #e8f5e9;
+      border-color: #4caf50 !important;
+      color: #1b5e20;
+      font-weight: 500;
+    }
+
+    &.selected-incorrect {
+      background-color: #ffebee;
+      border-color: #f44336 !important;
+      color: #b71c1c;
+      font-weight: 500;
+    }
+
+    &.is-correct-target {
+      background-color: #f1f8e9;
+      border-color: #81c784 !important;
+      border-style: dashed !important;
+      color: #2e7d32;
+    }
+
+    &.neutral-option {
+      background-color: #fafafa;
+      border-color: #e0e0e0 !important;
+      color: #616161;
+    }
+  }
+
+  .option-label {
+    min-width: 20px;
+  }
+}

@@ -1,0 +1,51 @@
+:host ::ng-deep {
+  ng2-smart-table {
+    th.ng2-smart-actions,
+    td.ng2-smart-actions {
+      width: 15% !important;
+      min-width: 160px !important;
+      padding: 0.75rem 1rem !important;
+      text-align: center !important;
+    }
+
+    .ng2-smart-actions {
+      position: relative !important;
+
+      ng2-st-tbody-custom {
+        position: relative !important;
+        top: initial !important;
+        left: initial !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 16px !important;
+        box-sizing: border-box !important;
+        gap: 14px;
+
+        a.ng2-smart-action-custom-custom {
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          margin: 0 !important;
+          font-size: 1.15rem;
+          cursor: pointer;
+
+          i {
+            margin: 0 !important;
+
+            &.fa-book-open {
+              color: #00809a !important;
+            }
+          }
+
+          &:hover {
+            transform: scale(1.2);
+            transition: transform 0.15s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}

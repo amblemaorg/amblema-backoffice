@@ -14,6 +14,7 @@ import { SelectCoordinatorComponent } from './select-coordinator/select-coordina
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { ProjectModulesComponent } from './project-modules/project-modules.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
     SelectSchoolComponent,
     SelectSponsorComponent,
     SelectCoordinatorComponent,
-    ProjectDetailsComponent],
+    ProjectDetailsComponent,
+    ProjectModulesComponent],
   imports: [
     CommonModule,
     NbCardModule,

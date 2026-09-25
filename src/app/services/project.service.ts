@@ -36,4 +36,8 @@ export class ProjectService {
   updateProject( id: string,  data: Project): Observable<Project> {
     return this.httpClient.put<Project>(`${environment.api}${this.PROJECT}/${id}`, data);
   }
+
+  getProjectLearningModules(projectId: string): Observable<any> {
+    return this.httpClient.get<any>(`${environment.api}${this.PROJECT}/${projectId}/learningmodules`);
+  }
 }

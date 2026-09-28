@@ -503,6 +503,9 @@ export class PDFReport implements OnInit {
 
     const TableLogicReasoningDiagnosis: any = {
       table: {
+        headerRows: 3,
+        keepWithHeaderRows: 2,
+        dontBreakRows: true,
         body: [],
         widths: "auto",
       },
@@ -513,6 +516,9 @@ export class PDFReport implements OnInit {
 
     const TableMultiplicationDiagnosis: any = {
       table: {
+        headerRows: 3,
+        keepWithHeaderRows: 2,
+        dontBreakRows: true,
         body: [],
         widths: "auto",
       },
@@ -523,6 +529,9 @@ export class PDFReport implements OnInit {
 
     const TableReadingDiagnosis: any = {
       table: {
+        headerRows: 3,
+        keepWithHeaderRows: 2,
+        dontBreakRows: true,
         body: [],
         widths: "auto",
       },
@@ -1306,6 +1315,9 @@ export class PDFReport implements OnInit {
 
       sectionTables.push({
         table: {
+          headerRows: 5,
+          keepWithHeaderRows: 2,
+          dontBreakRows: true,
           widths,
           body,
         },
@@ -1371,6 +1383,7 @@ export class PDFReport implements OnInit {
       // -- Final result
       finalReport.content.push({
         table: {
+          dontBreakRows: true,
           body: [
             [
               {
@@ -1527,6 +1540,7 @@ export class PDFReport implements OnInit {
 
     tableTotales.push({
       table: {
+        dontBreakRows: true,
         widths: "*",
         body: totalsResults,
       },

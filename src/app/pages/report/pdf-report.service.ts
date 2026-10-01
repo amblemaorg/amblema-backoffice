@@ -690,7 +690,7 @@ export class PDFReport implements OnInit {
           fillColor: "#00809a",
           color: "#FFF",
           bold: true,
-          text: "Diagnóstico de multiplicación",
+          text: "Diagnóstico de matemática",
           alignment: "center",
           colSpan: 13,
         },
@@ -1401,7 +1401,7 @@ export class PDFReport implements OnInit {
             [
               {
                 ...colorRowTwo,
-                text: "Promedio total en el diagnóstico de multiplicación:",
+                text: "Promedio total en el diagnóstico de matemática:",
               },
               {
                 text:
@@ -1480,7 +1480,7 @@ export class PDFReport implements OnInit {
 
     const totalsResults: any = [
       [{ ...colorRowOne, text: "Estudiantes sobre la meta" }],
-      [{ text: "Lapso 1:" }],
+      [{ text: "Lapso 1" }],
       [{ text: "Lapso 2" }],
       [{ text: "Lapso 3" }],
     ];
@@ -1662,43 +1662,43 @@ export class PDFReport implements OnInit {
     ['1', '2', '3']
       .filter(lKey => parseInt(lKey) <= Number(maxLapse))
       .forEach(lKey => {
-      const lapseData = report.environmental.lapses ? report.environmental.lapses[lKey] : null;
-      const summary = lapseData ? lapseData.summary : null;
-      const lapseName = (lapseData && lapseData.lapseName) || lapseLabels[lKey] || `Lapso ${lKey}`;
+        const lapseData = report.environmental.lapses ? report.environmental.lapses[lKey] : null;
+        const summary = lapseData ? lapseData.summary : null;
+        const lapseName = (lapseData && lapseData.lapseName) || lapseLabels[lKey] || `Lapso ${lKey}`;
 
-      if (summary && summary.totalIndex !== null && summary.totalIndex !== undefined) {
-        activeSummaries.push(summary);
-        body.push([
-          { text: lapseName, alignment: "center", bold: true, fontSize: 6.5, fillColor: "#F5F5F5" },
-          // 1. Limpieza
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 2. Residuos
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 3. Biodiversidad
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 4. Agua
-          { text: formatVal(summary.waterUse ? summary.waterUse['4.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.waterUse ? summary.waterUse['4.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.waterUse ? summary.waterUse['4.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.waterUse ? summary.waterUse.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 5. Comunidad
-          { text: formatVal(summary.communityRelations ? summary.communityRelations['5.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.communityRelations ? summary.communityRelations['5.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.communityRelations ? summary.communityRelations.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // Total IAA
-          { text: formatVal(summary.totalIndex, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#C2DFE3" },
-        ]);
-      }
-    });
+        if (summary && summary.totalIndex !== null && summary.totalIndex !== undefined) {
+          activeSummaries.push(summary);
+          body.push([
+            { text: lapseName, alignment: "center", bold: true, fontSize: 6.5, fillColor: "#F5F5F5" },
+            // 1. Limpieza
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 2. Residuos
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 3. Biodiversidad
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 4. Agua
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 5. Comunidad
+            { text: formatVal(summary.communityRelations ? summary.communityRelations['5.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.communityRelations ? summary.communityRelations['5.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.communityRelations ? summary.communityRelations.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // Total IAA
+            { text: formatVal(summary.totalIndex, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#C2DFE3" },
+          ]);
+        }
+      });
 
     if (activeSummaries.length === 0) {
       return elements;

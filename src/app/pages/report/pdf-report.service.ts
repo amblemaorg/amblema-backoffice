@@ -1381,100 +1381,141 @@ export class PDFReport implements OnInit {
       }
 
       // -- Final result
+      const averagesResults: any = [
+        [{ ...colorRowOne, text: "Promedio general" }],
+        [{ text: "Lapso 1" }],
+        [{ text: "Lapso 2" }],
+        [{ text: "Lapso 3" }],
+        [{ text: "Porcentaje de mejora" }],
+      ];
+
+      if (report.yearSummary.reading) {
+        averagesResults[0].push({
+          ...colorRowOne,
+          text: "Diagnóstico de lectura",
+        });
+        averagesResults[1].push({
+          text:
+            report.yearSummary.reading.lapse1ResultAverage !== undefined
+              ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
+              : (report.yearSummary.reading.totalResultAverage !== undefined
+                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
+                : ""),
+        });
+        averagesResults[2].push({
+          text:
+            report.yearSummary.reading.lapse2ResultAverage !== undefined
+              ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
+              : "",
+        });
+        averagesResults[3].push({
+          text:
+            report.yearSummary.reading.lapse3ResultAverage !== undefined
+              ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
+              : (report.yearSummary.reading.totalResultAverage !== undefined
+                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
+                : ""),
+        });
+        averagesResults[4].push({
+          text: `${
+            report.yearSummary.reading.improvementPercentageAverage !== undefined
+              ? report.yearSummary.reading.improvementPercentageAverage.toFixed(2)
+              : 0
+          }%`,
+        });
+      }
+
+      if (report.yearSummary.math) {
+        averagesResults[0].push({
+          ...colorRowOne,
+          text: "Diagnóstico de matemática",
+        });
+        averagesResults[1].push({
+          text:
+            report.yearSummary.math.lapse1ResultAverage !== undefined
+              ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
+              : (report.yearSummary.math.totalResultAverage !== undefined
+                ? report.yearSummary.math.totalResultAverage.toFixed(2)
+                : ""),
+        });
+        averagesResults[2].push({
+          text:
+            report.yearSummary.math.lapse2ResultAverage !== undefined
+              ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
+              : "",
+        });
+        averagesResults[3].push({
+          text:
+            report.yearSummary.math.lapse3ResultAverage !== undefined
+              ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
+              : (report.yearSummary.math.totalResultAverage !== undefined
+                ? report.yearSummary.math.totalResultAverage.toFixed(2)
+                : ""),
+        });
+        averagesResults[4].push({
+          text: `${
+            report.yearSummary.math.improvementPercentageAverage !== undefined
+              ? report.yearSummary.math.improvementPercentageAverage.toFixed(2)
+              : 0
+          }%`,
+        });
+      }
+
+      if (report.yearSummary.logic) {
+        averagesResults[0].push({
+          ...colorRowOne,
+          text: "Diagnóstico de logica matemática",
+        });
+        averagesResults[1].push({
+          text:
+            report.yearSummary.logic.lapse1ResultAverage !== undefined
+              ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
+              : (report.yearSummary.logic.totalResultAverage !== undefined
+                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
+                : ""),
+        });
+        averagesResults[2].push({
+          text:
+            report.yearSummary.logic.lapse2ResultAverage !== undefined
+              ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
+              : "",
+        });
+        averagesResults[3].push({
+          text:
+            report.yearSummary.logic.lapse3ResultAverage !== undefined
+              ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
+              : (report.yearSummary.logic.totalResultAverage !== undefined
+                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
+                : ""),
+        });
+        averagesResults[4].push({
+          text: `${
+            report.yearSummary.logic.improvementPercentageAverage !== undefined
+              ? report.yearSummary.logic.improvementPercentageAverage.toFixed(2)
+              : 0
+          }%`,
+        });
+      }
+
       finalReport.content.push({
-        table: {
-          dontBreakRows: true,
-          body: [
-            [
+        columns: [
+          { width: "*", text: "" },
+          {
+            width: 566,
+            stack: [
               {
-                ...colorRowOne,
-                text: "Promedio total en el diagnóstico de lectura:",
-              },
-              {
-                text:
-                  report.yearSummary.reading &&
-                    report.yearSummary.reading.totalResultAverage !== undefined
-                    ? report.yearSummary.reading.totalResultAverage.toFixed(2)
-                    : "",
-              },
-            ],
-            [
-              {
-                ...colorRowTwo,
-                text: "Promedio total en el diagnóstico de matemática:",
-              },
-              {
-                text:
-                  report.yearSummary.math &&
-                    report.yearSummary.math.totalResultAverage !== undefined
-                    ? report.yearSummary.math.totalResultAverage.toFixed(2)
-                    : "",
+                table: {
+                  dontBreakRows: true,
+                  widths: "*",
+                  body: averagesResults,
+                },
+                layout: this.borderCustom,
+                margin: [0, 0, 0, 30],
               },
             ],
-            [
-              {
-                text: "Promedio total en el diagnóstico de razonamiento lógico matemático:",
-              },
-              {
-                text:
-                  report.yearSummary.logic &&
-                    report.yearSummary.logic.totalResultAverage !== undefined
-                    ? report.yearSummary.logic.totalResultAverage.toFixed(2)
-                    : "",
-              },
-            ],
-            [
-              { ...colorRowOne, text: "Porcentaje de mejora en lectura:" },
-
-              {
-                text: `${report.yearSummary.reading &&
-                  report.yearSummary.reading.improvementPercentageAverage !==
-                  undefined
-                  ? report.yearSummary.reading.improvementPercentageAverage.toFixed(
-                    2
-                  )
-                  : 0
-                  }%`,
-              },
-            ],
-            [
-              {
-                ...colorRowTwo,
-                text: "Porcentaje de mejora en el diagnóstico en multiplicación:",
-              },
-
-              {
-                text: `${report.yearSummary.math &&
-                  report.yearSummary.math.improvementPercentageAverage !==
-                  undefined
-                  ? report.yearSummary.math.improvementPercentageAverage.toFixed(
-                    2
-                  )
-                  : 0
-                  }%`,
-              },
-            ],
-            [
-              {
-                text: "Porcentaje de mejora en razonamiento lógico - matemático:",
-              },
-              {
-                text: `${report.yearSummary.logic &&
-                  report.yearSummary.logic.improvementPercentageAverage !==
-                  undefined
-                  ? report.yearSummary.logic.improvementPercentageAverage.toFixed(
-                    2
-                  )
-                  : 0
-                  }%`,
-              },
-            ],
-          ],
-          widths: "*",
-        },
-
-        layout: this.borderCustom,
-        margin: [0, 0, 0, 30],
+          },
+          { width: "*", text: "" },
+        ],
       });
     }
 
@@ -1539,13 +1580,24 @@ export class PDFReport implements OnInit {
     }
 
     tableTotales.push({
-      table: {
-        dontBreakRows: true,
-        widths: "*",
-        body: totalsResults,
-      },
-      layout: this.borderCustom,
-      margin: [0, 0, 0, 30],
+      columns: [
+        { width: "*", text: "" },
+        {
+          width: 566,
+          stack: [
+            {
+              table: {
+                dontBreakRows: true,
+                widths: "*",
+                body: totalsResults,
+              },
+              layout: this.borderCustom,
+              margin: [0, 0, 0, 30],
+            },
+          ],
+        },
+        { width: "*", text: "" },
+      ],
     });
 
     finalReport.content.push(tableTotales);

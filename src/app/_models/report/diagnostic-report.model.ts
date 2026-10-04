@@ -19,6 +19,13 @@ interface YearSummary {
 interface ReadingYearSummary {
     totalResultAverage: number;
     improvementPercentageAverage: number;
+    improvementIndexPercentageAverage?: number;
+    lapse1ResultAverage?: number;
+    lapse2ResultAverage?: number;
+    lapse3ResultAverage?: number;
+    lapse1IndexAverage?: number;
+    lapse2IndexAverage?: number;
+    lapse3IndexAverage?: number;
     sections: SectionYearSummary[];
   }
 

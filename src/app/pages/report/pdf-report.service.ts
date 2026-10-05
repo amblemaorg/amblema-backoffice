@@ -1382,11 +1382,11 @@ export class PDFReport implements OnInit {
 
       // -- Final result
       const averagesResults: any = [
-        [{ ...colorRowOne, text: "Promedio general" }],
+        [{ ...colorRowOne, text: "Índice promedio general" }],
         [{ text: "Lapso 1" }],
         [{ text: "Lapso 2" }],
         [{ text: "Lapso 3" }],
-        [{ text: "Porcentaje de mejora" }],
+        [{ ...colorRowTwo, text: "Porcentaje de mejora" }],
       ];
 
       if (report.yearSummary.reading) {
@@ -1396,27 +1396,30 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.reading.lapse1ResultAverage !== undefined
-              ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
-              : (report.yearSummary.reading.totalResultAverage !== undefined
-                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
+            report.yearSummary.reading.lapse1IndexAverage !== undefined
+              ? report.yearSummary.reading.lapse1IndexAverage.toFixed(2)
+              : (report.yearSummary.reading.lapse1ResultAverage !== undefined
+                ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.reading.lapse2ResultAverage !== undefined
-              ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
-              : "",
+            report.yearSummary.reading.lapse2IndexAverage !== undefined
+              ? report.yearSummary.reading.lapse2IndexAverage.toFixed(2)
+              : (report.yearSummary.reading.lapse2ResultAverage !== undefined
+                ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
+                : ""),
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.reading.lapse3ResultAverage !== undefined
-              ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
-              : (report.yearSummary.reading.totalResultAverage !== undefined
-                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
+            report.yearSummary.reading.lapse3IndexAverage !== undefined
+              ? report.yearSummary.reading.lapse3IndexAverage.toFixed(2)
+              : (report.yearSummary.reading.lapse3ResultAverage !== undefined
+                ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[4].push({
+          ...colorRowTwo,
           text: `${
             report.yearSummary.reading.improvementPercentageAverage !== undefined
               ? report.yearSummary.reading.improvementPercentageAverage.toFixed(2)
@@ -1432,27 +1435,30 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.math.lapse1ResultAverage !== undefined
-              ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
-              : (report.yearSummary.math.totalResultAverage !== undefined
-                ? report.yearSummary.math.totalResultAverage.toFixed(2)
+            report.yearSummary.math.lapse1IndexAverage !== undefined
+              ? report.yearSummary.math.lapse1IndexAverage.toFixed(2)
+              : (report.yearSummary.math.lapse1ResultAverage !== undefined
+                ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.math.lapse2ResultAverage !== undefined
-              ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
-              : "",
+            report.yearSummary.math.lapse2IndexAverage !== undefined
+              ? report.yearSummary.math.lapse2IndexAverage.toFixed(2)
+              : (report.yearSummary.math.lapse2ResultAverage !== undefined
+                ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
+                : ""),
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.math.lapse3ResultAverage !== undefined
-              ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
-              : (report.yearSummary.math.totalResultAverage !== undefined
-                ? report.yearSummary.math.totalResultAverage.toFixed(2)
+            report.yearSummary.math.lapse3IndexAverage !== undefined
+              ? report.yearSummary.math.lapse3IndexAverage.toFixed(2)
+              : (report.yearSummary.math.lapse3ResultAverage !== undefined
+                ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[4].push({
+          ...colorRowTwo,
           text: `${
             report.yearSummary.math.improvementPercentageAverage !== undefined
               ? report.yearSummary.math.improvementPercentageAverage.toFixed(2)
@@ -1468,27 +1474,30 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.logic.lapse1ResultAverage !== undefined
-              ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
-              : (report.yearSummary.logic.totalResultAverage !== undefined
-                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
+            report.yearSummary.logic.lapse1IndexAverage !== undefined
+              ? report.yearSummary.logic.lapse1IndexAverage.toFixed(2)
+              : (report.yearSummary.logic.lapse1ResultAverage !== undefined
+                ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.logic.lapse2ResultAverage !== undefined
-              ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
-              : "",
+            report.yearSummary.logic.lapse2IndexAverage !== undefined
+              ? report.yearSummary.logic.lapse2IndexAverage.toFixed(2)
+              : (report.yearSummary.logic.lapse2ResultAverage !== undefined
+                ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
+                : ""),
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.logic.lapse3ResultAverage !== undefined
-              ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
-              : (report.yearSummary.logic.totalResultAverage !== undefined
-                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
+            report.yearSummary.logic.lapse3IndexAverage !== undefined
+              ? report.yearSummary.logic.lapse3IndexAverage.toFixed(2)
+              : (report.yearSummary.logic.lapse3ResultAverage !== undefined
+                ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[4].push({
+          ...colorRowTwo,
           text: `${
             report.yearSummary.logic.improvementPercentageAverage !== undefined
               ? report.yearSummary.logic.improvementPercentageAverage.toFixed(2)

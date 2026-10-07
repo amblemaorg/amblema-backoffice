@@ -603,72 +603,35 @@ export class PDFReport implements OnInit {
       allDataReadingResult.push(SecondHeaderReading);
       allDataReadingResult.push(ThirdHeaderReading);
 
+      const getLapseReportCells = (lapseData: any) => [
+        {
+          text:
+            lapseData && lapseData.resultAverage !== undefined && lapseData.resultAverage !== null
+              ? lapseData.resultAverage.toFixed(2)
+              : "-",
+        },
+        {
+          text:
+            lapseData && lapseData.indexAverage !== undefined && lapseData.indexAverage !== null
+              ? lapseData.indexAverage.toFixed(2)
+              : "-",
+        },
+        {
+          text:
+            lapseData && lapseData.overGoalStudents !== undefined && lapseData.overGoalStudents !== null
+              ? lapseData.overGoalStudents
+              : "-",
+        },
+      ];
+
       if (report.yearSummary.reading) {
         report.yearSummary.reading.sections.forEach((sec, key) => {
           prepareDataReadingResult = [
             { text: sec.grade },
             { text: sec.name },
-          ];
-
-          if (sec.lapse1 !== undefined) {
-            prepareDataReadingResult = [
-              ...prepareDataReadingResult,
-              {
-                text:
-                  sec.lapse1.resultAverage !== undefined
-                    ? sec.lapse1.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse1.indexAverage !== undefined
-                    ? sec.lapse1.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse1.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse2 !== undefined) {
-            prepareDataReadingResult = [
-              ...prepareDataReadingResult,
-              {
-                text:
-                  sec.lapse2.resultAverage !== undefined
-                    ? sec.lapse2.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse2.indexAverage !== undefined
-                    ? sec.lapse2.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse2.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse3 !== undefined) {
-            prepareDataReadingResult = [
-              ...prepareDataReadingResult,
-              {
-                text:
-                  sec.lapse3.resultAverage !== undefined
-                    ? sec.lapse3.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse3.indexAverage !== undefined
-                    ? sec.lapse3.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse3.overGoalStudents },
-            ];
-          }
-
-          prepareDataReadingResult = [
-            ...prepareDataReadingResult,
+            ...getLapseReportCells(sec.lapse1),
+            ...getLapseReportCells(sec.lapse2),
+            ...getLapseReportCells(sec.lapse3),
             { text: sec.goal },
             {
               text: `${sec.improvementPercentage !== undefined
@@ -752,67 +715,9 @@ export class PDFReport implements OnInit {
           prepareDataMultiplicationResult = [
             { text: sec.grade },
             { text: sec.name },
-          ];
-
-          if (sec.lapse1 !== undefined) {
-            prepareDataMultiplicationResult = [
-              ...prepareDataMultiplicationResult,
-              {
-                text:
-                  sec.lapse1.resultAverage !== undefined
-                    ? sec.lapse1.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse1.indexAverage !== undefined
-                    ? sec.lapse1.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse1.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse2 !== undefined) {
-            prepareDataMultiplicationResult = [
-              ...prepareDataMultiplicationResult,
-              {
-                text:
-                  sec.lapse2.resultAverage !== undefined
-                    ? sec.lapse2.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse2.indexAverage !== undefined
-                    ? sec.lapse2.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse2.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse3 !== undefined) {
-            prepareDataMultiplicationResult = [
-              ...prepareDataMultiplicationResult,
-              {
-                text:
-                  sec.lapse3.resultAverage !== undefined
-                    ? sec.lapse3.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse3.indexAverage !== undefined
-                    ? sec.lapse3.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse3.overGoalStudents },
-            ];
-          }
-
-          prepareDataMultiplicationResult = [
-            ...prepareDataMultiplicationResult,
+            ...getLapseReportCells(sec.lapse1),
+            ...getLapseReportCells(sec.lapse2),
+            ...getLapseReportCells(sec.lapse3),
             { text: sec.goal },
             {
               text: `${sec.improvementPercentage !== undefined
@@ -896,67 +801,9 @@ export class PDFReport implements OnInit {
           prepareDataLogicReasoningResult = [
             { text: sec.grade },
             { text: sec.name },
-          ];
-
-          if (sec.lapse1 !== undefined) {
-            prepareDataLogicReasoningResult = [
-              ...prepareDataLogicReasoningResult,
-              {
-                text:
-                  sec.lapse1.resultAverage !== undefined
-                    ? sec.lapse1.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse1.indexAverage !== undefined
-                    ? sec.lapse1.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse1.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse2 !== undefined) {
-            prepareDataLogicReasoningResult = [
-              ...prepareDataLogicReasoningResult,
-              {
-                text:
-                  sec.lapse2.resultAverage !== undefined
-                    ? sec.lapse2.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse2.indexAverage !== undefined
-                    ? sec.lapse2.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse2.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse3 !== undefined) {
-            prepareDataLogicReasoningResult = [
-              ...prepareDataLogicReasoningResult,
-              {
-                text:
-                  sec.lapse3.resultAverage !== undefined
-                    ? sec.lapse3.resultAverage.toFixed(2)
-                    : " ",
-              },
-              {
-                text:
-                  sec.lapse3.indexAverage !== undefined
-                    ? sec.lapse3.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse3.overGoalStudents },
-            ];
-          }
-
-          prepareDataLogicReasoningResult = [
-            ...prepareDataLogicReasoningResult,
+            ...getLapseReportCells(sec.lapse1),
+            ...getLapseReportCells(sec.lapse2),
+            ...getLapseReportCells(sec.lapse3),
             { text: sec.goal },
             {
               text: `${sec.improvementPercentage !== undefined
@@ -1004,11 +851,11 @@ export class PDFReport implements OnInit {
     ) => {
       const studentLapse = studentData[currentLapseKey];
       if (!studentLapse) {
-        return [{ text: "" }, { text: "" }];
+        return [{ text: "-", alignment: "center" }, { text: "-", alignment: "center" }];
       }
 
-      let resultVal: any = "";
-      let indexVal: any = "";
+      let resultVal: any = "-";
+      let indexVal: any = "-";
       let rawIndex: number | null = null;
       let rawResult: number | null = null;
 
@@ -1399,27 +1246,21 @@ export class PDFReport implements OnInit {
             report.yearSummary.reading.lapse1ResultAverage !== undefined &&
               report.yearSummary.reading.lapse1ResultAverage !== null
               ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
-              : (report.yearSummary.reading.totalResultAverage !== undefined &&
-                report.yearSummary.reading.totalResultAverage !== null
-                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
-                : ""),
+              : "-",
         });
         averagesResults[2].push({
           text:
             report.yearSummary.reading.lapse2ResultAverage !== undefined &&
               report.yearSummary.reading.lapse2ResultAverage !== null
               ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
-              : "",
+              : "-",
         });
         averagesResults[3].push({
           text:
             report.yearSummary.reading.lapse3ResultAverage !== undefined &&
               report.yearSummary.reading.lapse3ResultAverage !== null
               ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
-              : (report.yearSummary.reading.totalResultAverage !== undefined &&
-                report.yearSummary.reading.totalResultAverage !== null
-                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
-                : ""),
+              : "-",
         });
         averagesResults[4].push({
           ...colorRowTwo,
@@ -1440,27 +1281,21 @@ export class PDFReport implements OnInit {
             report.yearSummary.math.lapse1ResultAverage !== undefined &&
               report.yearSummary.math.lapse1ResultAverage !== null
               ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
-              : (report.yearSummary.math.totalResultAverage !== undefined &&
-                report.yearSummary.math.totalResultAverage !== null
-                ? report.yearSummary.math.totalResultAverage.toFixed(2)
-                : ""),
+              : "-",
         });
         averagesResults[2].push({
           text:
             report.yearSummary.math.lapse2ResultAverage !== undefined &&
               report.yearSummary.math.lapse2ResultAverage !== null
               ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
-              : "",
+              : "-",
         });
         averagesResults[3].push({
           text:
             report.yearSummary.math.lapse3ResultAverage !== undefined &&
               report.yearSummary.math.lapse3ResultAverage !== null
               ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
-              : (report.yearSummary.math.totalResultAverage !== undefined &&
-                report.yearSummary.math.totalResultAverage !== null
-                ? report.yearSummary.math.totalResultAverage.toFixed(2)
-                : ""),
+              : "-",
         });
         averagesResults[4].push({
           ...colorRowTwo,
@@ -1481,27 +1316,21 @@ export class PDFReport implements OnInit {
             report.yearSummary.logic.lapse1ResultAverage !== undefined &&
               report.yearSummary.logic.lapse1ResultAverage !== null
               ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
-              : (report.yearSummary.logic.totalResultAverage !== undefined &&
-                report.yearSummary.logic.totalResultAverage !== null
-                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
-                : ""),
+              : "-",
         });
         averagesResults[2].push({
           text:
             report.yearSummary.logic.lapse2ResultAverage !== undefined &&
               report.yearSummary.logic.lapse2ResultAverage !== null
               ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
-              : "",
+              : "-",
         });
         averagesResults[3].push({
           text:
             report.yearSummary.logic.lapse3ResultAverage !== undefined &&
               report.yearSummary.logic.lapse3ResultAverage !== null
               ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
-              : (report.yearSummary.logic.totalResultAverage !== undefined &&
-                report.yearSummary.logic.totalResultAverage !== null
-                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
-                : ""),
+              : "-",
         });
         averagesResults[4].push({
           ...colorRowTwo,
@@ -1552,15 +1381,21 @@ export class PDFReport implements OnInit {
         text: "Diagnóstico de lectura",
       });
       totalsResults[1].push({
-        text: report.totales.lapse1.reading.studentsMeta,
+        text: report.totales.lapse1.reading.studentsMeta !== undefined && report.totales.lapse1.reading.studentsMeta !== null
+          ? report.totales.lapse1.reading.studentsMeta
+          : "-",
       });
 
       totalsResults[2].push({
-        text: report.totales.lapse2.reading.studentsMeta,
+        text: report.totales.lapse2.reading.studentsMeta !== undefined && report.totales.lapse2.reading.studentsMeta !== null
+          ? report.totales.lapse2.reading.studentsMeta
+          : "-",
       });
 
       totalsResults[3].push({
-        text: report.totales.lapse3.reading.studentsMeta,
+        text: report.totales.lapse3.reading.studentsMeta !== undefined && report.totales.lapse3.reading.studentsMeta !== null
+          ? report.totales.lapse3.reading.studentsMeta
+          : "-",
       });
     }
 
@@ -1570,15 +1405,21 @@ export class PDFReport implements OnInit {
         text: "Diagnóstico de matemática",
       });
       totalsResults[1].push({
-        text: report.totales.lapse1.math.studentsMeta,
+        text: report.totales.lapse1.math.studentsMeta !== undefined && report.totales.lapse1.math.studentsMeta !== null
+          ? report.totales.lapse1.math.studentsMeta
+          : "-",
       });
 
       totalsResults[2].push({
-        text: report.totales.lapse2.math.studentsMeta,
+        text: report.totales.lapse2.math.studentsMeta !== undefined && report.totales.lapse2.math.studentsMeta !== null
+          ? report.totales.lapse2.math.studentsMeta
+          : "-",
       });
 
       totalsResults[3].push({
-        text: report.totales.lapse3.math.studentsMeta,
+        text: report.totales.lapse3.math.studentsMeta !== undefined && report.totales.lapse3.math.studentsMeta !== null
+          ? report.totales.lapse3.math.studentsMeta
+          : "-",
       });
     }
 
@@ -1588,15 +1429,21 @@ export class PDFReport implements OnInit {
         text: "Diagnóstico de logica matemática",
       });
       totalsResults[1].push({
-        text: report.totales.lapse1.logic.studentsMeta,
+        text: report.totales.lapse1.logic.studentsMeta !== undefined && report.totales.lapse1.logic.studentsMeta !== null
+          ? report.totales.lapse1.logic.studentsMeta
+          : "-",
       });
 
       totalsResults[2].push({
-        text: report.totales.lapse2.logic.studentsMeta,
+        text: report.totales.lapse2.logic.studentsMeta !== undefined && report.totales.lapse2.logic.studentsMeta !== null
+          ? report.totales.lapse2.logic.studentsMeta
+          : "-",
       });
 
       totalsResults[3].push({
-        text: report.totales.lapse3.logic.studentsMeta,
+        text: report.totales.lapse3.logic.studentsMeta !== undefined && report.totales.lapse3.logic.studentsMeta !== null
+          ? report.totales.lapse3.logic.studentsMeta
+          : "-",
       });
     }
 

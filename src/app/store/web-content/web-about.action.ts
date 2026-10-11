@@ -62,6 +62,7 @@ export class DeleteAwardWebAbout {
             environmentText: '',
             readingText: '',
             mathText: '',
+            aulaActivaText: '',
             awards: []
         }
     }

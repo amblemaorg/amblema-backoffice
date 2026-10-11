@@ -37,7 +37,8 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     aboutUsText: new FormControl(''),
     environmentText: new FormControl(''),
     readingText: new FormControl(''),
-    mathText: new FormControl('')
+    mathText: new FormControl(''),
+    aulaActivaText: new FormControl('')
   });
 
   constructor(
@@ -55,6 +56,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
       this.form.controls.environmentText.setValue(this.form.controls.environmentText.value ? this.form.controls.environmentText.value : response.aboutUsPage.environmentText);
       this.form.controls.readingText.setValue(this.form.controls.readingText.value ? this.form.controls.readingText.value : response.aboutUsPage.readingText);
       this.form.controls.mathText.setValue(this.form.controls.mathText.value ? this.form.controls.mathText.value : response.aboutUsPage.mathText);
+      this.form.controls.aulaActivaText.setValue(this.form.controls.aulaActivaText.value ? this.form.controls.aulaActivaText.value : (response.aboutUsPage.aulaActivaText || ''));
     });
   }
 

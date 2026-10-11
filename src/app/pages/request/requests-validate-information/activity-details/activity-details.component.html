@@ -155,7 +155,7 @@
           class="d-flex justify-content-between"
         >
           <span class="font-weight-bold"> Texto: </span>
-          <span> {{ (data$ | async)?.detail.text }}</span>
+          <span [innerHTML]="(data$ | async)?.detail.text"></span>
         </li>
         <li
           *ngIf="!(data$ | async)?.detail.hasText"

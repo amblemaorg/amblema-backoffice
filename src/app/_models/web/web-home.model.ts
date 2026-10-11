@@ -7,6 +7,7 @@ export interface WebHome {
     environmentText: string;
     readingText: string;
     mathText: string;
+    aulaActivaText?: string;
     testimonials: Testimonial[];
 }
 

@@ -114,9 +114,7 @@
               <h6 class="card-title">
                 {{ item.firstName }} {{ item.lastName }}
               </h6>
-              <p class="card-text">
-                {{ item.description }}
-              </p>
+              <div class="card-text" [innerHTML]="item.description"></div>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">{{ item.position }}</li>

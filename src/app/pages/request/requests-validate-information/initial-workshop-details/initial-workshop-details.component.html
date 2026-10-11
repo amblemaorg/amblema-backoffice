@@ -101,10 +101,10 @@
       <span class="font-weight-bold">Lapso: </span>
       {{ (data$ | async)?.detail.lapse }}
     </p>
-    <p>
+    <div>
       <span class="font-weight-bold">Descripción: </span>
-      {{ (data$ | async)?.detail.description }}
-    </p>
+      <div [innerHTML]="(data$ | async)?.detail.description"></div>
+    </div>
 
     <div class="position-relative" *ngIf="show">
       <owl-carousel-o [options]="customOptions">

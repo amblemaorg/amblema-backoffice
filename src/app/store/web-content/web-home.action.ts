@@ -60,6 +60,7 @@ export class DeleteTestimonialWebHome {
         environmentText: '',
         readingText: '',
         mathText: '',
+        aulaActivaText: '',
         testimonials: []
     }
 })

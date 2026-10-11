@@ -5,7 +5,7 @@
         <p class="font-weight-bold text-info">Datos primarios</p>
         <hr />
         <p>
-          <span class="font-weight-bold">Titulo:</span> {{ learning.title }}
+          <span class="font-weight-bold">Título:</span> {{ learning.title }}
         </p>
         <p>
           <span class="font-weight-bold">Descripción:</span>
@@ -22,7 +22,7 @@
         <p *ngIf="!learning.priority">
           <span class="font-weight-bold">Posición:</span> Ultima posición
         </p>
-        <p><span class="font-weight-bold">Objectivos:</span></p>
+        <p><span class="font-weight-bold">Objetivos:</span></p>
         <ul>
           <li *ngFor="let item of learning.objectives">{{ item }}</li>
         </ul>
@@ -31,7 +31,7 @@
         <p class="font-weight-bold text-info">Datos secundario</p>
         <hr />
         <p>
-          <span class="font-weight-bold">Titulo secundario:</span>
+          <span class="font-weight-bold">Título secundario:</span>
           {{ learning.secondaryTitle }}
         </p>
         <p>

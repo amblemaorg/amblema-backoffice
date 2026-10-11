@@ -10,6 +10,7 @@ export class ContentTextComponent implements OnInit {
   @Input() enviroment?: number;
   @Input() reading?: number;
   @Input() math?: number;
+  @Input() aulaActiva?: number;
 
   @Input() data: any = {}; // <-- To update
   @Input() form: FormGroup;

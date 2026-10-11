@@ -100,13 +100,10 @@
               : "Sin coordinador"
               }}
             </p>
-            <p *ngIf="(data$ | async)?.detail?.coordinator?.content">
-              {{
-              (data$ | async)?.detail?.coordinator?.content
-              ? (data$ | async)?.detail?.coordinator?.content
-              : "Sin contenido"
-              }}
-            </p>
+            <div *ngIf="(data$ | async)?.detail?.coordinator?.content"
+                 class="rich-text-content"
+                 [innerHTML]="(data$ | async)?.detail?.coordinator?.content">
+            </div>
           </div>
         </div>
       </div>
@@ -128,13 +125,10 @@
               : "Sin escuela"
               }}
             </p>
-            <p *ngIf="(data$ | async)?.detail?.school?.content">
-              {{
-              (data$ | async)?.detail?.school?.content
-              ? (data$ | async)?.detail?.school?.content
-              : "Sin contenido"
-              }}
-            </p>
+            <div *ngIf="(data$ | async)?.detail?.school?.content"
+                 class="rich-text-content"
+                 [innerHTML]="(data$ | async)?.detail?.school?.content">
+            </div>
           </div>
         </div>
       </div>
@@ -156,13 +150,10 @@
               : "Sin padrino"
               }}
             </p>
-            <p *ngIf="(data$ | async)?.detail?.sponsor?.content">
-              {{
-              (data$ | async)?.detail?.sponsor?.content
-              ? (data$ | async)?.detail?.sponsor?.content
-              : "Sin contenido"
-              }}
-            </p>
+            <div *ngIf="(data$ | async)?.detail?.sponsor?.content"
+                 class="rich-text-content"
+                 [innerHTML]="(data$ | async)?.detail?.sponsor?.content">
+            </div>
           </div>
         </div>
       </div>
@@ -181,12 +172,8 @@
                 : 'Sin text alternativo'
             " />
           <span *ngIf="!(data$ | async)?.detail?.historicalReview?.image" class="text-warning">Sin imagen</span>
-          <div class="media-body" *ngIf="(data$ | async)?.detail?.historicalReview?.content">
-            {{
-            (data$ | async)?.detail?.historicalReview?.content
-            ? (data$ | async)?.detail?.historicalReview?.content
-            : "Sin reseña"
-            }}
+          <div class="media-body rich-text-content" *ngIf="(data$ | async)?.detail?.historicalReview?.content"
+               [innerHTML]="(data$ | async)?.detail?.historicalReview?.content">
           </div>
         </div>
       </div>
@@ -246,7 +233,7 @@
 
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis">
         <p class="font-weight-bold">Lectura</p>
-        {{ (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis"></div>
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -275,7 +262,7 @@
 
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis">
         <p class="font-weight-bold">Matemáticas</p>
-        {{ (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis"></div>
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -305,7 +292,7 @@
       </div>
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis">
         <p class="font-weight-bold">Lógica</p>
-        {{ (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis"></div>
 
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
@@ -347,7 +334,7 @@
 
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis">
         <p class="font-weight-bold">Lectura</p>
-        {{ (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis"></div>
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -376,7 +363,7 @@
 
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis">
         <p class="font-weight-bold">Matemáticas</p>
-        {{ (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis"></div>
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -406,7 +393,7 @@
       </div>
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis">
         <p class="font-weight-bold">Lógica</p>
-        {{ (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis"></div>
 
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
@@ -447,7 +434,7 @@
       </div>
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis">
         <p class="font-weight-bold">Lectura</p>
-        {{ (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis"></div>
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -476,7 +463,7 @@
 
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis">
         <p class="font-weight-bold">Matemáticas</p>
-        {{ (data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis"></div>
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -506,7 +493,7 @@
       </div>
       <div class="col-12 form-group" *ngIf="(data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis">
         <p class="font-weight-bold">Lógica</p>
-        {{ (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis }}
+        <div class="rich-text-content" [innerHTML]="(data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis"></div>
         <div class="table-responsive mt-3">
           <table class="table table-bordered">
             <thead>
@@ -545,7 +532,7 @@
         <div class="media mb-3" *ngFor="let item of (data$ | async)?.detail?.lapse1?.activities">
           <div class="media-body">
             <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
-            {{ item.description }}
+            <div class="rich-text-content" [innerHTML]="item.description"></div>
             <div class="media mt-2">
               <div class="media-body">
                 <img *ngFor="let item of item?.images" class="mr-3 mb-3" [src]="item"
@@ -564,7 +551,7 @@
         <div class="media mb-3" *ngFor="let item of (data$ | async)?.detail?.lapse2?.activities">
           <div class="media-body">
             <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
-            {{ item.description }}
+            <div class="rich-text-content" [innerHTML]="item.description"></div>
             <div class="media mt-2">
               <div class="media-body">
                 <img *ngFor="let item of item?.images" class="mr-3 mb-3" [src]="item"
@@ -583,7 +570,7 @@
         <div class="media mb-3" *ngFor="let item of (data$ | async)?.detail?.lapse3?.activities">
           <div class="media-body">
             <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
-            {{ item.description }}
+            <div class="rich-text-content" [innerHTML]="item.description"></div>
             <div class="media mt-2">
               <div class="media-body">
                 <img *ngFor="let item of item?.images" class="mr-3 mb-3" [src]="item"

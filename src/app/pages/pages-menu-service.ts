@@ -231,6 +231,16 @@ export class MenuSetUp {
       ALL_ACTIONS.SCHOOL_YEAR_VIEW
     );
 
+    // -- Amblemario (orden de contenido); se busca por titulo para no depender de su posicion
+    const yearbookOrderOption = this.menu[4].children[2].children.find(
+      (option) => option.title === 'Amblemario'
+    );
+    if (yearbookOrderOption) {
+      yearbookOrderOption.hidden = !new AuthService().isAllowed(
+        ALL_ACTIONS.ACTIVITY_VIEW
+      );
+    }
+
     /** / End config PECA */
 
     /** Pensum */

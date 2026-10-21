@@ -10,6 +10,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, filter, take, switchMap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
+import { NbTokenService } from '@nebular/auth';
 import { AuthService } from '../services/user/auth.service';
 import { environment } from 'src/environments/environment';
 
@@ -20,7 +21,11 @@ export class AuthJWTInterceptor implements HttpInterceptor {
     null
   );
 
-  constructor(public authService: AuthService, private route: Router) { }
+  constructor(
+    public authService: AuthService,
+    private route: Router,
+    private tokenService: NbTokenService
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -41,12 +46,26 @@ export class AuthJWTInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
+          // -- Refresh token rejected (expired or user deleted): end session --
+          if (url === 'auth/refresh') {
+            this.forceLogout();
+            return throwError(error);
+          }
           return this.handle401Error(request, next);
         } else {
           return throwError(error);
         }
       })
     );
+  }
+
+  // -- Same cleanup as "Cerrar sesión" in the header --
+  private forceLogout() {
+    this.tokenService.clear();
+    localStorage.clear();
+    sessionStorage.clear();
+    this.authService.removeTokens();
+    this.route.navigate(['auth/login']);
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
@@ -70,6 +89,10 @@ export class AuthJWTInterceptor implements HttpInterceptor {
           this.refreshTokenSubject.next(token.access_token);
 
           return next.handle(this.addToken(request, token.access_token));
+        }),
+        catchError((error) => {
+          this.isRefreshing = false;
+          return throwError(error);
         })
       );
     } else {

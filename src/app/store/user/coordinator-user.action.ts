@@ -6,6 +6,7 @@ import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.s
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { Subscription } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
+import { SortHelper } from '../../_helpers/sort.helper';
 
 export interface CoordinatorUserModel {
     coordinatorUser: CoordinatorUser;
@@ -135,7 +136,7 @@ export class CoordinatorUserState implements OnDestroy {
                 });
                 ctx.setState(patch({
                     ...ctx.getState(),
-                    coordinatorUsersCompact: response
+                    coordinatorUsersCompact: SortHelper.byName(response) // selector options
                 }));
             }
         });

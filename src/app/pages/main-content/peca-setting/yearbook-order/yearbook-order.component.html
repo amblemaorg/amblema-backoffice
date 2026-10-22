@@ -8,39 +8,46 @@
 
     <nb-accordion multi>
       <nb-accordion-item *ngFor="let lapse of lapses; let first = first" [expanded]="first">
-        <nb-accordion-item-header>Lapso {{ lapse }}</nb-accordion-item-header>
+        <nb-accordion-item-header>
+          <div class="lapse-header">
+            <span>Lapso {{ lapse }}</span>
+            <span class="lapse-count">
+              {{ items[lapse].length }} {{ items[lapse].length === 1 ? 'elemento' : 'elementos' }}
+            </span>
+          </div>
+        </nb-accordion-item-header>
         <nb-accordion-item-body>
           <div class="table-responsive">
-            <table class="table table-sm table-striped mb-3">
+            <table class="table table-striped table-hover yearbook-order-table">
               <thead>
                 <tr>
-                  <th style="width: 120px">Orden</th>
+                  <th class="col-order">Orden</th>
                   <th>Contenido</th>
-                  <th style="width: 120px">Tipo</th>
+                  <th class="col-type">Tipo</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of items[lapse]">
-                  <td>
-                    <input nbInput fieldSize="small" type="number" min="0" step="1"
+                  <td class="col-order">
+                    <input nbInput fieldSize="small" type="number" min="0" step="1" class="order-input"
                       [(ngModel)]="item.order" [disabled]="!canEdit || saving[lapse]">
                   </td>
-                  <td class="align-middle">{{ item.name }}</td>
-                  <td class="align-middle">
-                    <span class="badge" [ngClass]="item.type === 'graphic' ? 'badge-info' : 'badge-success'">
+                  <td class="item-name">{{ item.name }}</td>
+                  <td class="col-type">
+                    <span class="badge type-badge" [ngClass]="item.type === 'graphic' ? 'badge-info' : 'badge-success'">
                       {{ item.type === 'graphic' ? 'Gráfico' : 'Actividad' }}
                     </span>
                   </td>
                 </tr>
-                <tr *ngIf="!items[lapse].length">
-                  <td colspan="3" class="text-center">Sin contenido para este lapso</td>
+                <tr *ngIf="!items[lapse].length" class="empty-row">
+                  <td colspan="3">Sin contenido para este lapso</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="d-flex justify-content-end" *ngIf="canEdit">
-            <button nbButton status="basic" class="mr-2" [disabled]="saving[lapse]" (click)="reset(lapse)">
+          <div class="table-actions" *ngIf="canEdit">
+            <button nbButton status="basic" [disabled]="saving[lapse]" (click)="reset(lapse)">
               Restablecer orden por defecto
             </button>
             <button nbButton status="success" [disabled]="saving[lapse] || !isValid(lapse)" (click)="save(lapse)">

@@ -15,6 +15,7 @@ import {
 } from '../user/sponsor-user.action';
 import { SponsorUser } from 'src/app/_models/user/sponsor-user.model';
 import { Injectable } from '@angular/core';
+import { SortHelper } from '../../_helpers/sort.helper';
 
 // -- Web Sponsor class action --
 
@@ -106,7 +107,7 @@ export class WebSponsorState {
       });
     }
 
-    return sponsorUser;
+    return SortHelper.byName(sponsorUser);
   }
 
   @Selector()

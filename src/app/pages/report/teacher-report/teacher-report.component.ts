@@ -19,6 +19,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { StateService } from "src/app/services/state.service";
 import { SchoolUserService } from "src/app/services/user/school-user.service";
+import { SortHelper } from "src/app/_helpers/sort.helper";
 
 @Component({
   selector: "app-teacher-report",
@@ -282,8 +283,8 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       });
   }
   getSchools() {
-    this.subscriptionState = this.schoolService.getSchoolUsers().subscribe((response) => {
-      this.schoolList = response;
+    this.subscriptionState = this.schoolService.getSchoolUsers('id,name').subscribe((response) => {
+      this.schoolList = SortHelper.byName(response);
       this.schoolList.unshift({"id": "", "name": "Seleccione una opción"});
     });
   }

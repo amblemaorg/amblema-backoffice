@@ -1,5 +1,5 @@
 import { Project } from '../_models/project.model';
-import { State, Selector, StateContext, Action, NgxsOnInit } from '@ngxs/store';
+import { State, Selector, StateContext, Action } from '@ngxs/store';
 import { ProjectService } from '../services/project.service';
 import { CustomToastrService } from '../services/helper/custom-toastr.service';
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
@@ -61,7 +61,7 @@ export class ClearProject {
     }
 })
 @Injectable()
-export class ProjectState implements NgxsOnInit, OnDestroy {
+export class ProjectState implements OnDestroy {
     private subscription: Subscription;
 
     @Selector()
@@ -78,10 +78,6 @@ export class ProjectState implements NgxsOnInit, OnDestroy {
         private toastr: CustomToastrService,
         private projectService: ProjectService) {
 
-    }
-
-    ngxsOnInit(ctx: StateContext<ProjectStateModel>): void {
-        ctx.dispatch(new GetProjects());
     }
 
     ngOnDestroy(): void {

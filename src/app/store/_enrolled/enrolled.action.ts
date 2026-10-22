@@ -4,6 +4,7 @@ import { EnrolledService } from 'src/app/services/enrolled.service';
 import { patch, removeItem, append } from '@ngxs/store/operators';
 import { EnrolledSchool } from 'src/app/_models/_enrolled/enrolled-school.model';
 import { Injectable } from '@angular/core';
+import { SortHelper } from '../../_helpers/sort.helper';
 
 export class GetGeneralEnrolled {
   static readonly type = '[GeneralEnrolled] Get General Enrolled';
@@ -31,7 +32,8 @@ export class SetEnrolledSchool {
 export class GeneralEnrolledState {
   @Selector()
   static availableSchools(state: GeneralEnrolled): EnrolledSchool[] | null {
-    return state.availableSchools;
+    // Sorted here: append/removeItem below change the order when (un)enrolling
+    return state.availableSchools && SortHelper.byName(state.availableSchools);
   }
 
   @Selector()

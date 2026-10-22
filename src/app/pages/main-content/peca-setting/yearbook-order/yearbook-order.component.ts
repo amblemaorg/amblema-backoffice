@@ -7,7 +7,7 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 @Component({
   selector: 'app-yearbook-order',
   templateUrl: './yearbook-order.component.html',
-  styles: []
+  styleUrls: ['./yearbook-order.component.scss']
 })
 export class YearbookOrderComponent implements OnInit {
 

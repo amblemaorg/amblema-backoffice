@@ -5,6 +5,7 @@ import { CustomToastrService } from 'src/app/services/helper/custom-toastr.servi
 import { patch, append, removeItem, updateItem } from '@ngxs/store/operators';
 import { SponsorUserService } from 'src/app/services/user/sponsor-user.service';
 import { Injectable } from '@angular/core';
+import { SortHelper } from '../../_helpers/sort.helper';
 
 export interface SponsorUserModel {
     sponsorUser: SponsorUser;
@@ -121,7 +122,7 @@ export class SponsorUserState {
             if (response) {
                 ctx.setState(patch({
                     ...ctx.getState(),
-                    sponsorUsersCompact: response
+                    sponsorUsersCompact: SortHelper.byName(response) // selector options
                 }));
             }
         });

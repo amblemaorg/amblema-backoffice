@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { DatePipe, formatDate } from "@angular/common";
 import { DiagnosticReportService } from "src/app/services/report/diagnostic-report.service";
 import { PDFReport } from "../pdf-report.service";
@@ -14,7 +15,8 @@ import * as XLSX from "xlsx-js-style";
 
 import { Store } from "@ngxs/store";
 import { GetSchoolYearsEnrolled } from "src/app/store/_enrolled/school-year-enrolled.action";
-import { GetSchoolUsers } from "src/app/store/user/school-user.action";
+import { GetSchoolUsersCompact } from "src/app/store/user/school-user.action";
+import { SortHelper } from "src/app/_helpers/sort.helper";
 
 @Component({
   selector: "app-diagnostic-report",
@@ -24,9 +26,12 @@ import { GetSchoolUsers } from "src/app/store/user/school-user.action";
 })
 export class DiagnosticReportComponent implements OnInit, OnDestroy {
   @Select(SchoolYearEnrolledState.schoolYearsEnrolled)
+  private schoolYears$: Observable<SchoolYearEnrolled[]>;
+  @Select(SchoolUserState.schoolUsersCompact)
+  schools$: Observable<SchoolUser[]>; // already sorted by name in the store
+
+  // Selector options: newest school year first
   data$: Observable<SchoolYearEnrolled[]>;
-  @Select(SchoolUserState.schoolUsers)
-  schools$: Observable<SchoolUser[]>;
 
   disabledBtn = false;
   subscriptionService: Subscription;
@@ -57,7 +62,10 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    this.store.dispatch(new GetSchoolUsers());
+    this.data$ = this.schoolYears$.pipe(
+      map((schoolYears) => schoolYears && SortHelper.schoolYearsDesc(schoolYears))
+    );
+    this.store.dispatch(new GetSchoolUsersCompact()); // only id/name are used
     this.store.dispatch(new GetSchoolYearsEnrolled());
   }
 

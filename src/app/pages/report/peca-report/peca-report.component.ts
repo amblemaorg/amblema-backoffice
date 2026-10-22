@@ -17,11 +17,12 @@ import { DomSanitizer } from "@angular/platform-browser";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { Store, Select } from "@ngxs/store";
-import { SchoolUserState, GetSchoolUsers } from "src/app/store/user/school-user.action";
-import { CoordinatorUserState, GetCoordinatorUsers } from "src/app/store/user/coordinator-user.action";
+import { SchoolUserState, GetSchoolUsersCompact } from "src/app/store/user/school-user.action";
+import { CoordinatorUserState, GetCoordinatorUsersCompact } from "src/app/store/user/coordinator-user.action";
 import { Observable } from "rxjs";
 import { SchoolUser } from "src/app/_models/user/school.model";
 import { CoordinatorUser } from "src/app/_models/user/coordinator-user.model";
+import { SortHelper } from "src/app/_helpers/sort.helper";
 
 @Component({
   selector: "app-peca-report",
@@ -64,8 +65,8 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   data: any = [];
   bodyTable: any = [];
 
-  @Select(SchoolUserState.schoolUsers) schools$: Observable<SchoolUser[]>;
-  @Select(CoordinatorUserState.coordinatorUsers) coordinators$: Observable<CoordinatorUser[]>;
+  @Select(SchoolUserState.schoolUsersCompact) schools$: Observable<SchoolUser[]>;
+  @Select(CoordinatorUserState.coordinatorUsersCompact) coordinators$: Observable<CoordinatorUser[]>;
 
   @ViewChild("pdfElement", { static: false }) pdfElement: ElementRef;
 
@@ -82,8 +83,9 @@ export class PecaReportComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(new GetSchoolUsers());
-    this.store.dispatch(new GetCoordinatorUsers());
+    // Filters only need id/name (schools) and id/firstName/lastName (coordinators)
+    this.store.dispatch(new GetSchoolUsersCompact());
+    this.store.dispatch(new GetCoordinatorUsersCompact());
 
     this.schools$.subscribe((schools) => (this.allSchools = schools));
     this.coordinators$.subscribe(
@@ -103,7 +105,7 @@ export class PecaReportComponent implements OnInit, OnDestroy {
               back_id: record.id,
             };
           });
-          this.schoolYearsOptions = schoolYears;
+          this.schoolYearsOptions = SortHelper.schoolYearsDesc(schoolYears);
         }
       });
 
@@ -463,6 +465,9 @@ export class PecaReportComponent implements OnInit, OnDestroy {
           };
         });
       }
+    }
+    if (filterName === "Coordinadores" || filterName === "Escuelas") {
+      options = SortHelper.byText(options, (option) => option.item_text);
     }
     if (filterName === "Actividades") {
       const chunk = this.initialFilterData.find(

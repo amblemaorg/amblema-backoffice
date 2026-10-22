@@ -11,7 +11,6 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
 import { SetCoordinatorUser, CoordinatorUserState, UpdateCoordinatorUser } from 'src/app/store/user/coordinator-user.action';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { NORMAL_TEXT_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { Observable, Subscription } from 'rxjs';
 import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
@@ -116,7 +115,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     // New data no required
     this.form.addControl('image', new FormControl(null));
     this.form.addControl('isReferred', new FormControl(false, []));
-    this.form.addControl('profession', new FormControl(null, [Validators.pattern(NORMAL_TEXT_PATTERN)]));
+    // Free text: backend accepts any string and data from the public form includes dots/commas (e.g. "Lic. ...")
+    this.form.addControl('profession', new FormControl(null));
     this.form.addControl('referredName', new FormControl(null, []));
   }
 

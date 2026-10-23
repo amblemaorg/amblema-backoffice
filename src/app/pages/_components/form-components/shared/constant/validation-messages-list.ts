@@ -6,6 +6,8 @@ export const MESSAGES = {
 
     NAME_MESSAGE : 'Nombre inválido. Debes agregar solo letras en este campo',
     LAST_NAME_MESSAGE : 'Apellido inválido. Debes agregar solo letras en este campo',
+    NAME_SLASH_MESSAGE : 'Nombre inválido. Debes agregar solo letras o / en este campo',
+    LAST_NAME_SLASH_MESSAGE : 'Apellido inválido. Debes agregar solo letras o / en este campo',
     DOCUMENT_MESSAGE : 'Cédula inválida, ingresa una cédula correcta',
     RIF_MESSAGE : 'RIF inválido, ingresa un RIF correcto',
     PASSPORT_MESSAGE : 'Pasaporte inválido, ingresa un pasaporte correcto',

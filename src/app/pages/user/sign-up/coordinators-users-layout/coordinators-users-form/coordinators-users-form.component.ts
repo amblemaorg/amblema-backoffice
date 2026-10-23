@@ -11,7 +11,6 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store, Select } from '@ngxs/store';
 import { SetCoordinatorUser, CoordinatorUserState, UpdateCoordinatorUser } from 'src/app/store/user/coordinator-user.action';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { NORMAL_TEXT_PATTERN } from 'src/app/pages/_components/form-components/shared/constant/validation-patterns-list';
 import { Observable, Subscription } from 'rxjs';
 import { Role, DEVNAME_ROLE } from 'src/app/_models/permission.model';
 import { RolesState } from 'src/app/store/role.action';
@@ -61,9 +60,13 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
         this.form.patchValue(response);
 
 
-        const parseDate = this.backupOldData.birthdate.toString();
+        // bsDatepicker parses strings with dateInputFormat ('DD MMM YYYY'), so an ISO string gets
+        // misread (e.g. 1977-01-30 -> 19 ene 1997). Pass a Date; backend sends naive UTC, so force 'Z'.
+        const rawDate = this.backupOldData.birthdate ? this.backupOldData.birthdate.toString() : '';
+        const hasOffset = /([zZ]|[+-]\d{2}:?\d{2})$/.test(rawDate);
+        const parseDate = rawDate ? new Date(hasOffset ? rawDate : `${rawDate}Z`) : null;
 
-        this.form.controls.birthdate.setValue(parseDate);
+        this.form.controls.birthdate.setValue(parseDate && !isNaN(parseDate.getTime()) ? parseDate : null);
 
         this.idState = this.form.controls.addressState.value;
         // this.idMunicipality = this.form.controls.addressMunicipality.value;
@@ -116,7 +119,8 @@ export class CoordinatorsUsersFormComponent extends DetailsForm implements OnIni
     // New data no required
     this.form.addControl('image', new FormControl(null));
     this.form.addControl('isReferred', new FormControl(false, []));
-    this.form.addControl('profession', new FormControl(null, [Validators.pattern(NORMAL_TEXT_PATTERN)]));
+    // Free text: backend accepts any string and data from the public form includes dots/commas (e.g. "Lic. ...")
+    this.form.addControl('profession', new FormControl(null));
     this.form.addControl('referredName', new FormControl(null, []));
   }
 

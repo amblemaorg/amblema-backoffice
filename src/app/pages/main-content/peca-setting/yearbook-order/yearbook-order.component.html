@@ -1,0 +1,54 @@
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">
+  <nb-card-header>AmbLeMario: orden del contenido de los lapsos</nb-card-header>
+  <nb-card-body>
+    <nb-alert status="info">
+      Define en qué orden se muestran las actividades y los gráficos de cada lapso en el AmbLeMario
+      (vista web y PDF). Este orden no afecta al menú del PECA. Los números menores se muestran primero.
+    </nb-alert>
+
+    <nb-accordion multi>
+      <nb-accordion-item *ngFor="let lapse of lapses; let first = first" [expanded]="first">
+        <nb-accordion-item-header>Lapso {{ lapse }}</nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="table-responsive">
+            <table class="table table-sm table-striped mb-3">
+              <thead>
+                <tr>
+                  <th style="width: 120px">Orden</th>
+                  <th>Contenido</th>
+                  <th style="width: 120px">Tipo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of items[lapse]">
+                  <td>
+                    <input nbInput fieldSize="small" type="number" min="0" step="1"
+                      [(ngModel)]="item.order" [disabled]="!canEdit || saving[lapse]">
+                  </td>
+                  <td class="align-middle">{{ item.name }}</td>
+                  <td class="align-middle">
+                    <span class="badge" [ngClass]="item.type === 'graphic' ? 'badge-info' : 'badge-success'">
+                      {{ item.type === 'graphic' ? 'Gráfico' : 'Actividad' }}
+                    </span>
+                  </td>
+                </tr>
+                <tr *ngIf="!items[lapse].length">
+                  <td colspan="3" class="text-center">Sin contenido para este lapso</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="d-flex justify-content-end" *ngIf="canEdit">
+            <button nbButton status="basic" class="mr-2" [disabled]="saving[lapse]" (click)="reset(lapse)">
+              Restablecer orden por defecto
+            </button>
+            <button nbButton status="success" [disabled]="saving[lapse] || !isValid(lapse)" (click)="save(lapse)">
+              {{ saving[lapse] ? 'Guardando...' : 'Guardar orden' }}
+            </button>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </nb-card-body>
+</nb-card>

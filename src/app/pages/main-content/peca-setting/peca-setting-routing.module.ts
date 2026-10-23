@@ -80,6 +80,13 @@ const routes: Routes = [
             (m) => m.OlympicsHistoryModule
           ),
       },
+      {
+        path: "yearbook-order",
+        loadChildren: () =>
+          import("./yearbook-order/yearbook-order.module").then(
+            (m) => m.YearbookOrderModule
+          ),
+      },
     ],
   },
 ];

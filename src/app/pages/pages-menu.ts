@@ -176,6 +176,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: "Cargo docentes",
             link: "/pages/content/peca-setting/work-position",
           },
+          {
+            title: "Amblemario",
+            link: "/pages/content/peca-setting/yearbook-order",
+          },
         ],
       },
       {

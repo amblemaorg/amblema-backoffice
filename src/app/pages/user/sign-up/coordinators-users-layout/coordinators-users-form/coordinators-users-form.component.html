@@ -23,6 +23,7 @@
           <div class="col-12 col-lg-6">
             <app-input-name
               [control]="form.get('firstName')"
+              [allowSlash]="true"
               [submitted]="submitted"
             >
             </app-input-name>
@@ -30,6 +31,7 @@
           <div class="col-12 col-lg-6">
             <app-input-last-name
               [control]="form.get('lastName')"
+              [allowSlash]="true"
               [submitted]="submitted"
             >
             </app-input-last-name>

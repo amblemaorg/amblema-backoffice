@@ -1,6 +1,6 @@
 import { FilterPipeSearch } from "./../../../_helpers/utility";
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
+import { forkJoin, Subscription } from "rxjs";
 import { PDFReport } from "../pdf-report.service";
 import { UserReportService } from "src/app/services/report/user-report.service";
 import { WorkPositionService } from "src/app/services/work-position.service";
@@ -236,22 +236,14 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    this.subscriptionService = this.userReporteService
-      .getUserReport("3", "1")
-      .subscribe((usersActive) => {
-        this.data = usersActive.users;
-        this.subscriptionService = this.userReporteService
-          .getUserReport("3", "2")
-          .subscribe((response) => {
-            if (response.users.length) {
-              response.users.forEach((element) => {
-                this.data = [...this.data, element];
-              });
-            }
-
-            this.source.load(this.data);
-          });
-      });
+    // Active and inactive teachers requested in parallel
+    this.subscriptionService = forkJoin([
+      this.userReporteService.getUserReport("3", "1"),
+      this.userReporteService.getUserReport("3", "2"),
+    ]).subscribe(([usersActive, usersInactive]) => {
+      this.data = [...usersActive.users, ...usersInactive.users];
+      this.source.load(this.data);
+    });
       this.getworkPositions();
       this.getStates();
       this.getSchools();
@@ -511,10 +503,10 @@ export class TeacherReportComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response) => {
-          if (response.users.length) {
-            this.data = response.users;
-            this.source.load(this.data);
-          } else {
+          // Always replaced: an empty result must not leave the previous filter's rows
+          this.data = response.users;
+          this.source.load(this.data);
+          if (!response.users.length) {
             this.toast.info(
               "Información",
               "No hay registro en el estatus o configuración seleccionada"

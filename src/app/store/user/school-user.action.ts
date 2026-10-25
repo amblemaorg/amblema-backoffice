@@ -7,6 +7,7 @@ import { patch, append, updateItem, removeItem } from '@ngxs/store/operators';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable, OnDestroy } from '@angular/core';
+import { SortHelper } from '../../_helpers/sort.helper';
 
 export interface SchoolUserModel {
     schoolUser: SchoolUser;
@@ -151,7 +152,7 @@ export class SchoolUserState implements OnDestroy {
             if (response) {
                 ctx.setState(patch({
                     ...ctx.getState(),
-                    schoolUsersCompact: response
+                    schoolUsersCompact: SortHelper.byName(response) // selector options
                 }));
             }
         });

@@ -1,33 +1,25 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { BaseTable } from "src/app/_helpers/base-table";
 import { ACTION } from "src/app/_helpers/text-content/text-crud";
-import { Select, Store, Actions, ofActionSuccessful } from "@ngxs/store";
+import { Store, Actions, ofActionSuccessful } from "@ngxs/store";
 import { HttpClient } from "@angular/common/http";
 
-import { Observable, Subscription } from "rxjs";
-import { skip, take } from "rxjs/operators";
-import { sortDate } from "../../main-content/learning/learning-table/learning-table.component";
+import { Subscription } from "rxjs";
+import { take } from "rxjs/operators";
 import { DatePipe } from "@angular/common";
-import { REQUEST_STATUS } from "src/app/_helpers/convention/request-status";
 import { Utility } from "src/app/_helpers/utility";
-import { NbDialogService } from "@nebular/theme";
 import { InformationDetailsComponent } from "./information-details/information-details.component";
 import { InformationRequestService } from "src/app/services/request/information-request.service";
 import { CustomToastrService } from "src/app/services/helper/custom-toastr.service";
 import { NotificationsService } from "src/app/services/notifications.service";
 import {
   RequestContentState,
-  SelectedRequestContent,
   DeleteRequestContent,
-  GetRequestsContent,
-  GetRequestsContentCompact,
   GetRequestContentById,
   ClearSelectedRequestContent,
   UpdateRequestContent
 } from "src/app/store/request/request-content-approval.action";
-import { RequestContent } from "src/app/_models/request/request-content-approval.model";
 import { TYPE_INFORMATION } from "./_shared/type-information";
-import { ModalService } from "src/app/services/helper/modal.service";
 import { ActivityDetailsComponent } from "./activity-details/activity-details.component";
 import { SliderDetailsComponent } from "./slider-details/slider-details.component";
 import { USER_TYPE } from "src/app/_helpers/convention/user-type";
@@ -45,6 +37,27 @@ import { RequestsServerDataSource } from "./requests-server-data-source";
 import { environment } from "src/environments/environment";
 import { DialogConfirmationComponent } from "../../_components/shared/dialog/dialog-confirmation/dialog-confirmation.component";
 
+// Detail modal for each type of information
+const DETAIL_COMPONENTS: { [type: string]: any } = {
+  [TYPE_INFORMATION.STEP.VALUE]: InformationDetailsComponent,
+  [TYPE_INFORMATION.TESTIMONIES.VALUE]: TestimonyDetailsComponent,
+  [TYPE_INFORMATION.ACTIVITY.VALUE]: ActivityDetailsComponent,
+  [TYPE_INFORMATION.SLIDER.VALUE]: SliderDetailsComponent,
+  [TYPE_INFORMATION.WORKSHOP.VALUE]: InitialWorkshopDetailsComponent,
+  [TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE]: SpecialActivityDetailsComponent,
+  [TYPE_INFORMATION.YEARBOOK.VALUE]: YearbookDetailsComponent,
+  [TYPE_INFORMATION.SPAN_PLANNING.VALUE]: SpanPlanningComponent,
+  [TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.VALUE]: PhotosSchoolDetailsComponent,
+};
+
+const TYPE_OPTIONS = Object.values(TYPE_INFORMATION).map((t) => ({ value: t.VALUE, title: t.LABEL }));
+const USER_TYPE_OPTIONS = Object.values(USER_TYPE).map((t) => ({ value: t.VALUE, title: t.LABEL }));
+
+const labelOf = (options: { value: string; title: string }[], value: string): string => {
+  const option = options.find((o) => o.value === value);
+  return option ? option.title : "";
+};
+
 @Component({
   selector: "app-requests-validate-information",
   templateUrl: "./requests-validate-information.component.html",
@@ -53,43 +66,29 @@ import { DialogConfirmationComponent } from "../../_components/shared/dialog/dia
 export class RequestsValidateInformationComponent
   extends BaseTable
   implements OnInit, OnDestroy {
-  @Select(RequestContentState.requestsContent) data$: Observable<
-    RequestContent[]
-  >;
-
   source: RequestsServerDataSource;
 
   subscription: Subscription;
   actionSubscription: Subscription;
-  loadingTable = false;
   loadingView = false;
+
+  get loadingTable(): boolean {
+    return !!(this.source && this.source.loading);
+  }
 
   constructor(
     private store: Store,
-    private modalServicesBs: BsModalService,
-    private dialogService: NbDialogService,
     private toast: CustomToastrService,
-    private modal: ModalService,
     private router: ActivatedRoute,
     private serviceInformation: InformationRequestService,
     private helper: Utility,
     private modalService: BsModalService,
-    private cdr: ChangeDetectorRef,
     private httpClient: HttpClient,
     private authService: AuthService,
     private actions$: Actions,
     private notificationsService: NotificationsService
   ) {
     super();
-
-    this.source = new RequestsServerDataSource(this.httpClient, {
-      endPoint: environment.api + "requestscontentapproval?only=id,code,project,type,user,status,updatedAt",
-      dataKey: "records",
-      pagerPageKey: "page",
-      pagerLimitKey: "per_page",
-      totalKey: "pagination.total_records",
-      filterFieldKey: "#field#",
-    }, this.authService);
 
     this.settings.actions = {
       columnTitle: "Acciones",
@@ -116,58 +115,37 @@ export class RequestsValidateInformationComponent
       project: {
         title: "ID del proyecto",
         type: "string",
-        valuePrepareFunction: (row: any) => row.code,
-        filterFunction: (cell?: any, search?: string) => {
-          const value: string = cell.code;
-          return value.includes(search.toUpperCase()) || search === ""
-            ? true
-            : false;
-        },
+        valuePrepareFunction: (row: any) => (row ? row.code : ""),
       },
       typeUser: {
         title: "Tipo de solicitante",
         type: "text",
-        valuePrepareFunction: (row: any) => {
-          return row === USER_TYPE.COORDINATOR.VALUE
-            ? USER_TYPE.COORDINATOR.LABEL
-            : row === USER_TYPE.SCHOOL.VALUE
-              ? USER_TYPE.SCHOOL.LABEL
-              : USER_TYPE.SPONSOR.LABEL;
-        }
+        sort: false,
+        valuePrepareFunction: (row: any) => labelOf(USER_TYPE_OPTIONS, row),
+        filter: {
+          type: "list",
+          config: { selectText: "Todos", list: USER_TYPE_OPTIONS },
+        },
       },
       user: {
         title: "Solicitante",
         type: "string",
-        valuePrepareFunction: (row: any) => row.name,
+        sort: false,
+        valuePrepareFunction: (row: any) => (row ? row.name : ""),
       },
       type: {
         title: "Tipo de información",
         type: "text",
-        valuePrepareFunction: (row: any) => {
-          return row === TYPE_INFORMATION.STEP.VALUE
-            ? TYPE_INFORMATION.STEP.LABEL
-            : row === TYPE_INFORMATION.TESTIMONIES.VALUE
-              ? TYPE_INFORMATION.TESTIMONIES.LABEL
-              : row === TYPE_INFORMATION.ACTIVITY.VALUE
-                ? TYPE_INFORMATION.ACTIVITY.LABEL
-                : row === TYPE_INFORMATION.SLIDER.VALUE
-                  ? TYPE_INFORMATION.SLIDER.LABEL
-                  : row === TYPE_INFORMATION.WORKSHOP.VALUE
-                    ? TYPE_INFORMATION.WORKSHOP.LABEL
-                    : row === TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE
-                      ? TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.LABEL
-                      : row === TYPE_INFORMATION.YEARBOOK.VALUE
-                        ? TYPE_INFORMATION.YEARBOOK.LABEL
-                        : row === TYPE_INFORMATION.SPAN_PLANNING.VALUE
-                          ? TYPE_INFORMATION.SPAN_PLANNING.LABEL
-                          : TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.LABEL;
-        }
+        valuePrepareFunction: (row: any) => labelOf(TYPE_OPTIONS, row),
+        filter: {
+          type: "list",
+          config: { selectText: "Todos", list: TYPE_OPTIONS },
+        },
       },
       updatedAt: {
-        //sortDirection: "desc",
         title: "Fecha",
         type: "string",
-        //compareFunction: sortDate,
+        filter: false,
         valuePrepareFunction: (lastLoginTime: any) => {
           return new DatePipe("es-VE").transform(
             lastLoginTime,
@@ -228,71 +206,19 @@ export class RequestsValidateInformationComponent
   }
 
   private showModalDetails(type: string): void {
-    let modalRef: any;
-
-    switch (type) {
-      case TYPE_INFORMATION.STEP.VALUE:
-        modalRef = this.modalService.show(
-          InformationDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
-      case TYPE_INFORMATION.TESTIMONIES.VALUE:
-        modalRef = this.modalService.show(
-          TestimonyDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-
-        break;
-      case TYPE_INFORMATION.ACTIVITY.VALUE:
-        modalRef = this.modalService.show(
-          ActivityDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
-      case TYPE_INFORMATION.SLIDER.VALUE:
-        modalRef = this.modalService.show(
-          SliderDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
-      case TYPE_INFORMATION.WORKSHOP.VALUE:
-        modalRef = this.modalService.show(
-          InitialWorkshopDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
-      case TYPE_INFORMATION.SPECIAL_SPAN_ACTIVITY.VALUE:
-        modalRef = this.modalService.show(
-          SpecialActivityDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
-      case TYPE_INFORMATION.YEARBOOK.VALUE:
-        modalRef = this.modalService.show(
-          YearbookDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
-      case TYPE_INFORMATION.SPAN_PLANNING.VALUE:
-        modalRef = this.modalService.show(
-          SpanPlanningComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
-      case TYPE_INFORMATION.PICTURES_SCHOOL_ACTIVTIES.VALUE:
-        modalRef = this.modalService.show(
-          PhotosSchoolDetailsComponent,
-          Object.assign({}, { class: "modal-xl modal-dialog-centered" })
-        );
-        break;
+    const component = DETAIL_COMPONENTS[type];
+    if (!component) {
+      return;
     }
 
-    if (modalRef) {
-      this.subscription = this.modalService.onHide.subscribe(() => {
-        this.store.dispatch(new ClearSelectedRequestContent());
-      });
-    }
+    this.modalService.show(
+      component,
+      Object.assign({}, { class: "modal-xl modal-dialog-centered" })
+    );
+
+    this.modalService.onHide.pipe(take(1)).subscribe(() => {
+      this.store.dispatch(new ClearSelectedRequestContent());
+    });
   }
 
   onAction(event) {
@@ -314,7 +240,7 @@ export class RequestsValidateInformationComponent
         // Call delete modal
         // -- Instance delete
 
-        const modal = this.modalServicesBs.show(
+        const modal = this.modalService.show(
           DialogConfirmationComponent,
           Object.assign({}, { class: "modal-dialog-centered" })
         );
@@ -325,6 +251,9 @@ export class RequestsValidateInformationComponent
           "¿Desea eliminar la solictud seleccionada?"
         );
 
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
         this.subscription = (
           modal.content as DialogConfirmationComponent
         ).onClose.subscribe((result) => {
@@ -337,8 +266,8 @@ export class RequestsValidateInformationComponent
                     modal.content as DialogConfirmationComponent
                   ).hideConfirmationModal();
 
+                  // The table refresh is triggered by actionSubscription
                   this.store.dispatch(new DeleteRequestContent(event.data.id));
-                  this.source.refresh();
                   this.toast.deleteRegister(
                     "Solicitud eliminada",
                     "Se ha eliminado una solicitud"

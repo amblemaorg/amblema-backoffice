@@ -18,7 +18,13 @@ import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
 @Component({
   selector: 'app-activity-board',
   templateUrl: './activity-board.component.html',
-  styles: [],
+  // The global smart table style (_normalize.scss) lays the action icons out
+  // in a flex row aligned left: the single edit icon is centered here only
+  styles: [`
+    :host ::ng-deep ng2-smart-table .ng2-smart-actions ng2-st-tbody-custom {
+      justify-content: center;
+    }
+  `],
 })
 export class ActivityBoardComponent extends BaseTable
   implements TableActions, OnInit {

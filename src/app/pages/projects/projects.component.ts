@@ -67,6 +67,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   }
 
   ngOnInit(): void {
+    // Projects are loaded here and not at app startup: only this page uses the full list
+    this.store.dispatch(new GetProjects());
 
     this.MODE = this.ACTION.CREATE;
 

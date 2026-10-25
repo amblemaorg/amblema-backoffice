@@ -3,6 +3,7 @@ import { PDFReportMath } from './pdf-report-math.service';
 import { DatePipe } from '@angular/common';
 import { MathOlympicsReportService } from 'src/app/services/report/math-olympics-report.service';
 import { Subscription } from 'rxjs';
+import { SortHelper } from 'src/app/_helpers/sort.helper';
 
 @Component({
   selector: 'app-math-olympics-report',
@@ -34,8 +35,9 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
     this.subscriptionService = this.mathOlympicsReportService
       .getSchoolYears()
       .subscribe((response) => {
-        this.datesInit = response;
-        this.datesEnd = response;
+        // Newest first; also used by the enrolled schools and sponsor status graphics
+        this.datesInit = SortHelper.schoolYearsDesc(response);
+        this.datesEnd = this.datesInit;
       });
   }
 
@@ -75,7 +77,8 @@ export class MathOlympicsReportComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.datesEnd = this.datesInit.filter((value, index) => position <= index);
+    // datesInit is newest first: end options are the start year and later ones
+    this.datesEnd = this.datesInit.filter((value, index) => index <= position);
 
     if (!this.datesEnd.length) { this.dateEndSelected = null; }
   }

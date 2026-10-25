@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/user/auth.service';
 import { SchoolYearEnrolledState } from 'src/app/store/_enrolled/school-year-enrolled.action';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 import { environment } from 'src/environments/environment';
+import { SortHelper } from 'src/app/_helpers/sort.helper';
 
 declare var $: any;
 
@@ -50,7 +51,7 @@ export class ProjectDetailsComponent implements OnChanges, OnInit {
         : PROJECT_PHASE.PECA.VALUE;
     
     if (this.data && this.data.schoolYears && this.data.schoolYears.length > 0) {
-      this.projectSchoolYears = this.data.schoolYears.map(sy => sy.schoolYear);
+      this.projectSchoolYears = SortHelper.schoolYearsDesc(this.data.schoolYears.map(sy => sy.schoolYear));
     } else if (this.data && this.data.phase === PROJECT_PHASE.STEPS.CODE) {
       this.data$.pipe(take(1)).subscribe(schoolYears => {
         if (schoolYears) {

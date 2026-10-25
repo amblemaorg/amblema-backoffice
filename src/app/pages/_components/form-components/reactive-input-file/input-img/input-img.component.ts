@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { NgxImageCompressService } from 'ngx-image-compress';
+import { ImageHelper } from 'src/app/_helpers/image.helper';
 
 @Component({
   selector: 'app-input-img',
@@ -55,7 +55,6 @@ export class InputImgComponent implements OnInit {
   private pictureBase64 = '';
 
   constructor(
-    private compress: NgxImageCompressService,
     private toast: CustomToastrService
   ) {}
 
@@ -103,20 +102,17 @@ export class InputImgComponent implements OnInit {
     return file.type.match(this.pattern) ? true : false;
   }
 
-  convertLoad(event) {
+  async convertLoad(event) {
     // Get target
     const reader = event.target;
-    // Instance a object of type image
-    const img = new Image();
 
-    // Save on the source
-    img.src = reader.result;
-
-    img.onload = () => {
-      // String base 64
-      this.pictureBase64 = reader.result;
-      this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form
-      return true;
-    };
+    // String base 64, compressed before reaching the form
+    const compressed = await ImageHelper.compressDataUrl(reader.result);
+    if (!compressed) {
+      this.toast.error('Error de archivo', 'Carga una image valida');
+      return;
+    }
+    this.pictureBase64 = compressed;
+    this.control.setValue(this.pictureBase64 as string); // <-- This for your submit form
   }
 }

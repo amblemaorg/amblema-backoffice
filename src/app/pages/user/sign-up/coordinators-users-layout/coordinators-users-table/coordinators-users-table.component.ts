@@ -16,9 +16,12 @@ import { DialogConfirmationComponent } from 'src/app/pages/_components/shared/di
 import { CoordinatorUserService } from 'src/app/services/user/coordinator-user.service';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
+import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 
 // JQuery call
 declare var $: any;
+
+const RESEND_PASSWORD = 'RESEND_PASSWORD';
 
 @Component({
   selector: 'app-coordinators-users-table',
@@ -41,6 +44,8 @@ declare var $: any;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { margin: 0; font-size: 14px; font-weight: 500; color: #2d3748; }
+    /* 150px global min-width (_normalize.scss) + 30px for the resend password button */
+    :host ::ng-deep ng2-smart-table td.ng2-smart-actions { min-width: 180px; }
   `],
 })
 export class CoordinatorsUsersTableComponent extends BaseTable
@@ -60,7 +65,8 @@ export class CoordinatorsUsersTableComponent extends BaseTable
     private helper: Utility,
     private modalService: BsModalService,
     private coordinatorUserService: CoordinatorUserService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toast: CustomToastrService
   ) {
     super('form-coordinators');
 
@@ -105,6 +111,14 @@ export class CoordinatorsUsersTableComponent extends BaseTable
       !new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_EDIT),
       !new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_DELETE)
     );
+
+    // Right of the delete button
+    if (new AuthService().isAllowed(ALL_ACTIONS.COORDINATOR_USER_EDIT)) {
+      this.settings.actions.custom = [
+        ...this.settings.actions.custom,
+        { name: RESEND_PASSWORD, title: '<i class="nb-locked" title="Reenviar contraseña"></i>' },
+      ];
+    }
   }
 
   ngOnInit(): void {
@@ -172,6 +186,48 @@ export class CoordinatorsUsersTableComponent extends BaseTable
           }
         );
         break;
+      case RESEND_PASSWORD:
+        this.resendPassword(event.data);
+        break;
     }
+  }
+
+  // The password is stored hashed: a new one is generated and sent in the registration email
+  private resendPassword(coordinator: CoordinatorUser): void {
+    const modal = this.modalService.show(
+      DialogConfirmationComponent,
+      Object.assign({}, { class: 'modal-dialog-centered' })
+    );
+    const dialog = modal.content as DialogConfirmationComponent;
+    dialog.showConfirmationModal(
+      `Reenviar contraseña: ${[coordinator.firstName, coordinator.lastName].filter(Boolean).join(' ')}`,
+      `¿Desea reenviar el correo de acceso a ${coordinator.email}?`,
+      'Se generará una nueva contraseña y la actual dejará de funcionar.',
+      true
+    );
+
+    let sending = false;
+    dialog.onClose.subscribe((result) => {
+      if (result !== true || sending) {
+        return;
+      }
+      sending = true;
+      this.coordinatorUserService.resendPasswordEmail(coordinator.id).subscribe(
+        () => {
+          this.toast.registerSuccess(
+            'Contraseña reenviada',
+            `Se envió una nueva contraseña a ${coordinator.email}.`
+          );
+          dialog.hideConfirmationModal();
+        },
+        () => {
+          this.toast.error(
+            'Error',
+            'No se pudo reenviar la contraseña. Intente nuevamente.'
+          );
+          dialog.hideConfirmationModal();
+        }
+      );
+    });
   }
 }

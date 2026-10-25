@@ -10,7 +10,6 @@ import { Observable, Subscription } from 'rxjs';
 import { ProjectValidationRequestService } from 'src/app/services/request/project-validate-request.service';
 import { ProjectValidationRequest } from 'src/app/_models/request/project-validate-request.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { GetProjects } from 'src/app/store/project.action';
 import { GetGeneralEnrolled } from 'src/app/store/_enrolled/enrolled.action';
 import { AuthService } from 'src/app/services/user/auth.service';
 import { ALL_ACTIONS } from 'src/app/store/_shader/all-actions';
@@ -81,8 +80,6 @@ export class InformationDetailsComponent implements OnInit, OnDestroy {
             );
           }
 
-          // -- Update table proyects, phase of proyect
-          this.store.dispatch(new GetProjects());
           // -- Update school year school, to add
           this.store.dispatch(new GetGeneralEnrolled());
 

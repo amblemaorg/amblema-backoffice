@@ -45,4 +45,9 @@ export class CoordinatorUserService {
   deleteCoordinatorUser(id: string): Observable<string> {
     return this.httpClient.delete<string>(`${environment.api}${this.USER}/${id}${this.USER_TYPE}`);
   }
+
+  // Generates a new password and sends it in the registration email
+  resendPasswordEmail(id: string): Observable<any> {
+    return this.httpClient.post(`${environment.api}resend/email/coordinator/${id}`, {});
+  }
 }

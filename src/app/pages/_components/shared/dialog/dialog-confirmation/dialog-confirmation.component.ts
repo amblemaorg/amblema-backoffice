@@ -14,6 +14,8 @@ export class DialogConfirmationComponent implements OnInit {
   public info: string;
   public body: string;
   public title: string;
+  // Non-destructive confirmations: centered, bold and black question instead of red
+  public neutral = false;
   public onClose: Subject<boolean>;
   public ERROR_CODE = 419;
 
@@ -29,11 +31,13 @@ export class DialogConfirmationComponent implements OnInit {
   public showConfirmationModal(
     title: string,
     body: string,
-    info?: string
+    info?: string,
+    neutral = false
   ): void {
     this.title = title;
     this.body = body;
     this.info = info;
+    this.neutral = neutral;
     this.active = true;
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
 import { UserReportService } from "src/app/services/report/user-report.service";
-import { Subscription } from "rxjs";
+import { forkJoin, Subscription } from "rxjs";
 import { ReadlyStatusConvert, FilterStatus } from "src/app/_helpers/utility";
 import { PDFReport } from "../pdf-report.service";
 import { DatePipe } from "@angular/common";
@@ -132,22 +132,14 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    this.subscriptionService = this.userReporteService
-      .getUserReport("2", "1")
-      .subscribe((usersActive) => {
-        this.data = usersActive.users;
-
-        this.subscriptionService = this.userReporteService
-          .getUserReport("2", "2")
-          .subscribe((response) => {
-            if (response.users.length) {
-              response.users.forEach((element) => {
-                this.data = [...this.data, element];
-              });
-            }
-            this.source.load(this.data);
-          });
-      });
+    // Active and inactive schools requested in parallel
+    this.subscriptionService = forkJoin([
+      this.userReporteService.getUserReport("2", "1"),
+      this.userReporteService.getUserReport("2", "2"),
+    ]).subscribe(([usersActive, usersInactive]) => {
+      this.data = [...usersActive.users, ...usersInactive.users];
+      this.source.load(this.data);
+    });
   }
 
   async ngOnDestroy() {

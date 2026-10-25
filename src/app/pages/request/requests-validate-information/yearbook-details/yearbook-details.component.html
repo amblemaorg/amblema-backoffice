@@ -4,33 +4,33 @@
 <div class="modal-body" *ngIf="data$ | async">
   <!-- General info -->
   <div id="container-general-info">
-    <p class="text-info font-weight-bold">Informacion general</p>
+    <p class="request-section-title">Informacion general</p>
     <div id="list-container" class="d-lg-flex">
       <ul class="list-unstyled d-inline-block">
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold"> Código de la solicitud: </span>
           <span> {{ (data$ | async)?.code }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold"> Solicitante: </span>
           <span> {{ (data$ | async)?.user.name }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Fecha de la solicitud: </span>
           <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Fecha de actualización: </span>
           <span> {{ (data$ | async)?.updatedAt | date: "dd/MM/yyyy" }}</span>
         </li>
       </ul>
 
       <ul class="list-unstyled d-inline-block">
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Codigo del proyecto: </span>
           <span> {{ (data$ | async)?.project.code }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Coordinador: </span>
           <span>
             {{
@@ -39,7 +39,7 @@
             : "Sin coordinador"
             }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Escuela: </span>
           <span>
             {{
@@ -51,7 +51,7 @@
       </ul>
 
       <ul class="list-unstyled d-inline-block">
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Padrino: </span>
           <span>
             {{
@@ -80,7 +80,7 @@
 
   <!-- Info user -->
   <div id="container-user-historical-preview">
-    <p class="text-info font-weight-bold">Información de usuario</p>
+    <p class="request-section-title">Información de usuario</p>
 
     <div class="row">
       <div class="col-12 mb-4" *ngIf="
@@ -222,7 +222,7 @@
     <div class="row">
       <!-- Lapse One -->
       <div class="col-12">
-        <p class="text-info font-weight-bold" *ngIf="
+        <p class="lapse-title" *ngIf="
             (data$ | async)?.detail?.lapse1?.readingDiagnosticAnalysis ||
             (data$ | async)?.detail?.lapse1?.mathDiagnosticAnalysis ||
             (data$ | async)?.detail?.lapse1?.logicDiagnosticAnalysis
@@ -323,7 +323,7 @@
 
       <!-- Lapse Two -->
       <div class="col-12">
-        <p class="text-info font-weight-bold" *ngIf="
+        <p class="lapse-title" *ngIf="
             (data$ | async)?.detail?.lapse2?.readingDiagnosticAnalysis ||
             (data$ | async)?.detail?.lapse2?.mathDiagnosticAnalysis ||
             (data$ | async)?.detail?.lapse2?.logicDiagnosticAnalysis
@@ -424,7 +424,7 @@
       <!-- / End lapse two -->
 
       <div class="col-12">
-        <p class="text-info font-weight-bold" *ngIf="
+        <p class="lapse-title" *ngIf="
             (data$ | async)?.detail?.lapse3?.readingDiagnosticAnalysis ||
             (data$ | async)?.detail?.lapse3?.mathDiagnosticAnalysis ||
             (data$ | async)?.detail?.lapse3?.logicDiagnosticAnalysis
@@ -523,15 +523,15 @@
     <!-- / End diagnostic -->
 
     <div class="row">
-      <div class="col-xl-4" *ngIf="
+      <div class="col-12 mb-4" *ngIf="
           (data$ | async)?.detail?.lapse1?.activities &&
           (data$ | async)?.detail?.lapse1?.activities.length > 0
         ">
-        <p class="text-info font-weight-bold">Actividades del lapso 1</p>
+        <p class="lapse-title">Actividades del lapso 1</p>
 
         <div class="media mb-3" *ngFor="let item of (data$ | async)?.detail?.lapse1?.activities">
           <div class="media-body">
-            <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
+            <p class="activity-name">{{ item.name }}</p>
             <div class="rich-text-content" [innerHTML]="item.description"></div>
             <div class="media mt-2">
               <div class="media-body">
@@ -542,15 +542,15 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4" *ngIf="
+      <div class="col-12 mb-4" *ngIf="
           (data$ | async)?.detail?.lapse2?.activities &&
           (data$ | async)?.detail?.lapse2?.activities.length > 0
         ">
-        <p class="text-info font-weight-bold">Actividades del lapso 2</p>
+        <p class="lapse-title">Actividades del lapso 2</p>
 
         <div class="media mb-3" *ngFor="let item of (data$ | async)?.detail?.lapse2?.activities">
           <div class="media-body">
-            <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
+            <p class="activity-name">{{ item.name }}</p>
             <div class="rich-text-content" [innerHTML]="item.description"></div>
             <div class="media mt-2">
               <div class="media-body">
@@ -561,15 +561,15 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4" *ngIf="
+      <div class="col-12 mb-4" *ngIf="
           (data$ | async)?.detail?.lapse3?.activities &&
           (data$ | async)?.detail?.lapse3?.activities.length > 0
         ">
-        <p class="text-info font-weight-bold">Actividades del lapso 3</p>
+        <p class="lapse-title">Actividades del lapso 3</p>
 
         <div class="media mb-3" *ngFor="let item of (data$ | async)?.detail?.lapse3?.activities">
           <div class="media-body">
-            <p class="mt-0 font-weight-bold mb-1">{{ item.name }}</p>
+            <p class="activity-name">{{ item.name }}</p>
             <div class="rich-text-content" [innerHTML]="item.description"></div>
             <div class="media mt-2">
               <div class="media-body">

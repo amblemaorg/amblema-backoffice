@@ -43,3 +43,51 @@ ul {
     }
   }
 }
+// Información general: label arriba del valor
+#container-general-info #list-container li {
+  span {
+    display: block;
+    margin-right: 0;
+    text-align: left;
+  }
+  span + * {
+    text-align: left;
+    word-break: break-word;
+  }
+}
+
+// Información del paso: label arriba del valor
+#container-step-info li {
+  span {
+    display: block;
+    margin-right: 0;
+    text-align: left;
+  }
+  span + * {
+    display: block;
+    text-align: left;
+    word-break: break-word;
+  }
+}
+
+// El HTML llega por [innerHTML]: sin ::ng-deep el encapsulamiento emulado no aplica estos estilos
+:host ::ng-deep .rich-text-content {
+  word-break: break-word;
+  p {
+    margin: 0 0 15px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  // Quill guarda las líneas en blanco como <p><br></p>; el margen ya separa los párrafos
+  p:has(> br:only-child) {
+    display: none;
+  }
+  a {
+    color: #17a2b8;
+    text-decoration: underline;
+  }
+  ul, ol {
+    padding-left: 1.5rem;
+  }
+}

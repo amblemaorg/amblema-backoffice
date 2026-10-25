@@ -23,38 +23,39 @@
       <div class="col-12">
         <!-- General data of the request -->
         <div class="row">
-          <div class="col-12 col-lg-6 form-group">
-            <p class="font-weight-bold text-info mb-0">General</p>
-            <hr />
-            <p *ngIf="requestSelected.requestCode" class="d-flex w-100">
-              <span class="pl-0 font-weight-bold col-5"
-                >N° de la solicitud:</span
-              >
-              {{ requestSelected.requestCode }}
-            </p>
-            <p *ngIf="requestSelected.name" class="d-flex w-100">
-              <span class="pl-0 font-weight-bold col-5">Nombre:</span>
-              {{ requestSelected.name }}
-            </p>
-            <p *ngIf="requestSelected.email" class="d-flex w-100">
-              <span class="pl-0 font-weight-bold col-5"
-                >Correo electrónico:</span
-              >
-              {{ requestSelected.email }}
-            </p>
-
-            <p *ngIf="requestSelected.email" class="d-flex w-100">
-              <span class="pl-0 font-weight-bold col-5"
-                >Fecha de la solicitud:</span
-              >
-              {{ requestSelected.createdAt | date: "dd/MM/yyyy" }}
-            </p>
-            <p *ngIf="requestSelected.email" class="d-flex w-100">
-              <span class="pl-0 font-weight-bold col-5"
-                >Fecha de actualización:</span
-              >
-              {{ requestSelected.updatedAt | date: "dd/MM/yyyy" }}
-            </p>
+          <div class="col-12 form-group">
+            <p class="request-section-title">General</p>
+            <div class="request-fields">
+              <p *ngIf="requestSelected.requestCode" class="request-field">
+                <span class="request-field-label"
+                  >N° de la solicitud:</span
+                >
+                {{ requestSelected.requestCode }}
+              </p>
+              <p *ngIf="requestSelected.name" class="request-field">
+                <span class="request-field-label">Nombre:</span>
+                {{ requestSelected.name }}
+              </p>
+              <p *ngIf="requestSelected.email" class="request-field">
+                <span class="request-field-label"
+                  >Correo electrónico:</span
+                >
+                {{ requestSelected.email }}
+              </p>
+  
+              <p *ngIf="requestSelected.email" class="request-field">
+                <span class="request-field-label"
+                  >Fecha de la solicitud:</span
+                >
+                {{ requestSelected.createdAt | date: "dd/MM/yyyy" }}
+              </p>
+              <p *ngIf="requestSelected.email" class="request-field">
+                <span class="request-field-label"
+                  >Fecha de actualización:</span
+                >
+                {{ requestSelected.updatedAt | date: "dd/MM/yyyy" }}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -63,41 +64,40 @@
         <!-- ============================================= -->
         <div *ngIf="requestSelected.type === type.SPONSOR.ORIGINAL">
           <div class="row">
-            <div class="col-12 col-lg-6">
-              <p class="font-weight-bold text-info mb-0">Datos de la empresa</p>
-              <hr />
+            <div class="col-12 form-group">
+              <p class="request-section-title">Datos de la empresa</p>
               <div class="row">
-                <div class="col-12">
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Nombre:</span
+                <div class="col-12 request-fields">
+                  <p class="request-field">
+                    <span class="request-field-label">Nombre:</span
                     ><span>{{ requestSelected.name }}</span>
                   </p>
 
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Teléfono:</span
+                  <p class="request-field">
+                    <span class="request-field-label">Teléfono:</span
                     ><span>{{ requestSelected.companyPhone }}</span>
                   </p>
 
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Correo:</span
+                  <p class="request-field">
+                    <span class="request-field-label">Correo:</span
                     ><span>{{ requestSelected.email }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5"
+                  <p class="request-field">
+                    <span class="request-field-label"
                       >Documento de identidad:</span
                     ><span>J-{{ requestSelected.rif }}</span>
                   </p>
-                  <p class="d-flex w-100" *ngIf="requestSelected.webSite">
-                    <span class="pl-0 font-weight-bold col-5">Sitio web:</span
+                  <p class="request-field" *ngIf="requestSelected.webSite">
+                    <span class="request-field-label">Sitio web:</span
                     ><a [href]="requestSelected.webSite">{{
                       requestSelected.webSite
                     }}</a>
                   </p>
                   <p
-                    class="d-flex w-100"
+                    class="request-field"
                     *ngIf="requestSelected.companyType !== '0'"
                   >
-                    <span class="pl-0 font-weight-bold col-5"
+                    <span class="request-field-label"
                       >Tipo de empresa:</span
                     ><span>{{
                       requestSelected.companyType === "1"
@@ -114,9 +114,9 @@
 
                   <p
                     *ngIf="requestSelected.companyType === '0'"
-                    class="d-flex w-100"
+                    class="request-field"
                   >
-                    <span class="pl-0 font-weight-bold col-5"
+                    <span class="request-field-label"
                       >Otro tipo de empresa:</span
                     ><span>{{ requestSelected.companyOtherType }}</span>
                   </p>
@@ -124,53 +124,51 @@
               </div>
             </div>
 
-            <div class="col-12 col-lg-6">
-              <p class="font-weight-bold text-info mb-0">
+            <div class="col-12 form-group">
+              <p class="request-section-title">
                 Datos de la persona de contacto
               </p>
-              <hr />
               <div class="row">
-                <div class="col-12">
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Nombre:</span>
+                <div class="col-12 request-fields">
+                  <p class="request-field">
+                    <span class="request-field-label">Nombre:</span>
                     <span>{{ requestSelected.contactFirstName }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Apellido:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Apellido:</span>
                     <span>{{ requestSelected.contactLastName }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Teléfono:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Teléfono:</span>
                     <span>{{ requestSelected.contactPhone }}</span>
                   </p>
 
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Correo:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Correo:</span>
                     <span>{{ requestSelected.contactEmail }}</span>
                   </p>
                 </div>
               </div>
             </div>
 
-            <div class="col-12 col-lg-6">
-              <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
-              <hr />
+            <div class="col-12 form-group">
+              <p class="request-section-title">Datos de dirección</p>
               <div class="row">
-                <div class="col-12">
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                <div class="col-12 request-fields">
+                  <p class="request-field">
+                    <span class="request-field-label">Estado:</span>
                     <span>{{ requestSelected.addressState.name }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Municipio:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Municipio:</span>
                     <span>{{ requestSelected.addressMunicipality.name }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Dirección:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Dirección:</span>
                     <span>{{ requestSelected.address }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Ciudad:</span>
                     <span>{{ requestSelected.addressCity }}</span>
                   </p>
                 </div>
@@ -179,54 +177,53 @@
 
             <!-- Sponsor has School -->
             <div *ngIf="requestSelected.hasSchool" class="col-12 form-group">
-              <p class="font-weight-bold text-primary mb-0">
-                El padrino tiene escuela
+              <p class="request-field">
+                <span class="request-field-label">¿El padrino tiene escuela?</span>
+                Sí
                 <span *ngIf="requestSelected.hasSchoolRegistered" class="badge badge-success ml-2">Escuela Registrada</span>
               </p>
-              <hr />
             </div>
 
             <!-- Sponsor has School -->
             <div *ngIf="requestSelected.hasSchool" class="col-12 form-group">
               <div class="row">
                 <!-- Normal data -->
-                <div class="col-12 col-lg-6 form-group">
+                <div class="col-12 form-group">
                   <div>
-                    <p class="font-weight-bold text-info mb-0">
+                    <p class="request-section-title">
                       Datos de la escuela
                     </p>
-                    <hr />
                     <div class="row">
-                      <div class="col-12">
+                      <div class="col-12 request-fields">
                         <p
                           *ngIf="requestSelected.schoolName"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Nombre:</span
                           ><span>{{ requestSelected.schoolName }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolPhone"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Teléfono:</span
                           ><span>{{ requestSelected.schoolPhone }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolCode"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Código del plantel:</span
                           ><span>{{ requestSelected.schoolCode }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolType"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Tipo de escuela:</span
                           >
                           <span *ngIf="requestSelected.schoolType === '3'"
@@ -246,19 +243,18 @@
                 </div>
 
                 <!-- address -->
-                <div class="col-12 col-lg-6 form-group">
+                <div class="col-12 form-group">
                   <div>
-                    <p class="font-weight-bold text-info mb-0">
+                    <p class="request-subtitle">
                       Datos de dirección
                     </p>
-                    <hr />
                     <div class="row">
-                      <div class="col-12">
+                      <div class="col-12 request-fields">
                         <p
                           *ngIf="requestSelected.schoolAddressState.name"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 col-5 font-weight-bold"
+                          <span class="request-field-label"
                             >Estado:</span
                           >
                           <span>{{
@@ -267,9 +263,9 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolAddressMunicipality.name"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 col-5 font-weight-bold"
+                          <span class="request-field-label"
                             >Municipio:</span
                           >
                           <span>{{
@@ -278,18 +274,18 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolAddress"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 col-5 font-weight-bold"
+                          <span class="request-field-label"
                             >Dirección:</span
                           >
                           <span>{{ requestSelected.schoolAddress }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolAddressCity"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 col-5 font-weight-bold"
+                          <span class="request-field-label"
                             >Ciudad:</span
                           >
                           <span>{{ requestSelected.schoolAddressCity }}</span>
@@ -300,19 +296,18 @@
                 </div>
 
                 <!-- Principal data -->
-                <div class="col-12 col-lg-6 form-group">
+                <div class="col-12 form-group">
                   <div>
-                    <p class="font-weight-bold text-info mb-0">
+                    <p class="request-subtitle">
                       Datos del director
                     </p>
-                    <hr />
                     <div class="row">
-                      <div class="col-12">
+                      <div class="col-12 request-fields">
                         <p
                           *ngIf="requestSelected.schoolPrincipalFirstName"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Nombre:</span
                           ><span>{{
                             requestSelected.schoolPrincipalFirstName
@@ -320,9 +315,9 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolPrincipalLastName"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Apellido:</span
                           ><span>{{
                             requestSelected.schoolPrincipalLastName
@@ -330,9 +325,9 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolPrincipalEmail"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Correo:</span
                           ><span>{{
                             requestSelected.schoolPrincipalEmail
@@ -340,9 +335,9 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolPrincipalPhone"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Teléfono:</span
                           ><span>{{
                             requestSelected.schoolPrincipalPhone
@@ -355,7 +350,7 @@
 
                 <!-- Sub Principal Data -->
                 <div
-                  class="col-12 col-lg-6 form-group"
+                  class="col-12 form-group"
                   *ngIf="
                     requestSelected.schoolSubPrincipalFirstName ||
                     requestSelected.schoolSubPrincipalLastName ||
@@ -364,17 +359,16 @@
                   "
                 >
                   <div>
-                    <p class="font-weight-bold text-info mb-0">
+                    <p class="request-subtitle">
                       Datos del subdirector
                     </p>
-                    <hr />
                     <div class="row">
-                      <div class="col-12">
+                      <div class="col-12 request-fields">
                         <p
                           *ngIf="requestSelected.schoolSubPrincipalFirstName"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Nombre:</span
                           ><span>{{
                             requestSelected.schoolSubPrincipalFirstName
@@ -382,9 +376,9 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolSubPrincipalLastName"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Apellido:</span
                           ><span>{{
                             requestSelected.schoolSubPrincipalLastName
@@ -392,9 +386,9 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolSubPrincipalEmail"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Correo:</span
                           ><span>{{
                             requestSelected.schoolSubPrincipalEmail
@@ -402,9 +396,9 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolSubPrincipalPhone"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Teléfono:</span
                           ><span>{{
                             requestSelected.schoolSubPrincipalPhone
@@ -417,7 +411,7 @@
 
                 <!-- Additional data -->
                 <div
-                  class="col-12 col-lg-6 form-group"
+                  class="col-12 form-group"
                   *ngIf="
                     requestSelected.schoolShift ||
                     requestSelected.schoolNTeachers ||
@@ -429,25 +423,24 @@
                   "
                 >
                   <div>
-                    <p class="font-weight-bold text-info mb-0">
+                    <p class="request-subtitle">
                       Datos adicionales
                     </p>
-                    <hr />
                     <div class="row">
-                      <div class="col-12">
+                      <div class="col-12 request-fields">
                         <p
                           *ngIf="requestSelected.schoolNTeachers"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Cantidad de docentes:</span
                           ><span>{{ requestSelected.schoolNTeachers }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolNAdministrativeStaff"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Cantidad de personal administrativo:</span
                           ><span>{{
                             requestSelected.schoolNAdministrativeStaff
@@ -455,41 +448,41 @@
                         </p>
                         <p
                           *ngIf="requestSelected.schoolNLaborStaff"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Cantidad de personal obrero:</span
                           ><span>{{ requestSelected.schoolNLaborStaff }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolNStudents"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Cantidad de estudiantes:</span
                           ><span>{{ requestSelected.schoolNStudents }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolNGrades"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Cantidad de grados:</span
                           ><span>{{ requestSelected.schoolNGrades }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolNSections"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Cantidad de secciones:</span
                           ><span>{{ requestSelected.schoolNSections }}</span>
                         </p>
                         <p
                           *ngIf="requestSelected.schoolShift"
-                          class="d-flex w-100"
+                          class="request-field"
                         >
-                          <span class="pl-0 font-weight-bold col-5"
+                          <span class="request-field-label"
                             >Turno de clases:</span
                           >
                           <span *ngIf="requestSelected.schoolShift === '1'"
@@ -516,34 +509,33 @@
         <!-- ============================================= -->
         <div *ngIf="requestSelected.type === type.COORDINATOR.ORIGINAL">
           <div class="row">
-            <div class="col-12 col-lg-6 form-group">
-              <p class="font-weight-bold text-info mb-0">Datos personales</p>
-              <hr />
+            <div class="col-12 form-group">
+              <p class="request-section-title">Datos personales</p>
               <div class="row">
-                <div class="col-12">
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Nombre:</span
+                <div class="col-12 request-fields">
+                  <p class="request-field">
+                    <span class="request-field-label">Nombre:</span
                     ><span>{{ requestSelected.firstName }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Apellido:</span
+                  <p class="request-field">
+                    <span class="request-field-label">Apellido:</span
                     ><span>{{ requestSelected.lastName }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Teléfono:</span
+                  <p class="request-field">
+                    <span class="request-field-label">Teléfono:</span
                     ><span>{{ requestSelected.phone }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5"
+                  <p class="request-field">
+                    <span class="request-field-label"
                       >Teléfono de habitación:</span
                     ><span>{{ requestSelected.homePhone }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Correo:</span
+                  <p class="request-field">
+                    <span class="request-field-label">Correo:</span
                     ><span>{{ requestSelected.email }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5"
+                  <p class="request-field">
+                    <span class="request-field-label"
                       >Documento de identidad:</span
                     ><span
                       >{{
@@ -555,55 +547,54 @@
                       }}-{{ requestSelected.cardId }}</span
                     >
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5"
+                  <p class="request-field">
+                    <span class="request-field-label"
                       >Fecha de nacimiento:</span
                     ><span>{{
                       requestSelected.birthdate | date: "dd/MM/yyyy"
                     }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 font-weight-bold col-5">Genero:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Genero:</span>
                     <span *ngIf="requestSelected.gender === '1'">Femenino</span>
                     <span *ngIf="requestSelected.gender === '2'"
                       >Masculino</span
                     >
                   </p>
-                  <p *ngIf="requestSelected.profession" class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Profesión:</span>
+                  <p *ngIf="requestSelected.profession" class="request-field">
+                    <span class="request-field-label">Profesión:</span>
                     <span>{{ requestSelected.profession }}</span>
                   </p>
-                  <p *ngIf="requestSelected.isReferred" class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Referidor:</span>
+                  <p *ngIf="requestSelected.isReferred" class="request-field">
+                    <span class="request-field-label">Referidor:</span>
                     <span>{{ requestSelected.referredName }}</span>
                   </p>
                 </div>
               </div>
             </div>
 
-            <div class="col-12 col-lg-6 form-group">
-              <p class="font-weight-bold text-info mb-0">Datos de dirección</p>
-              <hr />
+            <div class="col-12 form-group">
+              <p class="request-section-title">Datos de dirección</p>
               <div class="row">
-                <div class="col-12">
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                <div class="col-12 request-fields">
+                  <p class="request-field">
+                    <span class="request-field-label">Estado:</span>
                     <span>{{ requestSelected.addressState.name }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Municipio:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Municipio:</span>
                     <span>{{ requestSelected.addressMunicipality.name }}</span>
                   </p>
-                  <p class="d-flex w-100" *ngIf="requestSelected.address">
-                    <span class="pl-0 col-5 font-weight-bold">Dirección:</span>
+                  <p class="request-field" *ngIf="requestSelected.address">
+                    <span class="request-field-label">Dirección:</span>
                     <span>{{ requestSelected.address }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                  <p class="request-field">
+                    <span class="request-field-label">Ciudad:</span>
                     <span>{{ requestSelected.addressCity }}</span>
                   </p>
-                  <p class="d-flex w-100">
-                    <span class="pl-0 col-5 font-weight-bold"
+                  <p class="request-field">
+                    <span class="request-field-label"
                       >Casa / Edificio:</span
                     >
                     <span>{{ requestSelected.addressHome }}</span>
@@ -620,25 +611,24 @@
         <div *ngIf="requestSelected.type === type.SCHOOL.ORIGINAL">
           <div class="row">
             <!-- Normal data -->
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 form-group">
               <div>
-                <p class="font-weight-bold text-info mb-0">
+                <p class="request-section-title">
                   Datos de la escuela
                 </p>
-                <hr />
                 <div class="row">
-                  <div class="col-12">
-                    <p *ngIf="requestSelected.phone" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5">Teléfono:</span
+                  <div class="col-12 request-fields">
+                    <p *ngIf="requestSelected.phone" class="request-field">
+                      <span class="request-field-label">Teléfono:</span
                       ><span>{{ requestSelected.phone }}</span>
                     </p>
-                    <p *ngIf="requestSelected.code" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                    <p *ngIf="requestSelected.code" class="request-field">
+                      <span class="request-field-label"
                         >Código del plantel:</span
                       ><span>{{ requestSelected.code }}</span>
                     </p>
-                    <p *ngIf="requestSelected.schoolType" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                    <p *ngIf="requestSelected.schoolType" class="request-field">
+                      <span class="request-field-label"
                         >Tipo de escuela:</span
                       >
                       <span *ngIf="requestSelected.schoolType === '3'"
@@ -658,48 +648,47 @@
             </div>
 
             <!-- address -->
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 form-group">
               <div>
-                <p class="font-weight-bold text-info mb-0">
+                <p class="request-subtitle">
                   Datos de dirección
                 </p>
-                <hr />
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 request-fields">
                     <p
                       *ngIf="requestSelected.addressState.name"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                      <span class="request-field-label">Estado:</span>
                       <span>{{ requestSelected.addressState.name }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.addressMunicipality.name"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 col-5 font-weight-bold"
+                      <span class="request-field-label"
                         >Municipio:</span
                       >
                       <span>{{
                         requestSelected.addressMunicipality.name
                       }}</span>
                     </p>
-                    <p *ngIf="requestSelected.address" class="d-flex w-100">
-                      <span class="pl-0 col-5 font-weight-bold"
+                    <p *ngIf="requestSelected.address" class="request-field">
+                      <span class="request-field-label"
                         >Dirección:</span
                       >
                       <span>{{ requestSelected.address }}</span>
                     </p>
-                    <p *ngIf="requestSelected.addressCity" class="d-flex w-100">
-                      <span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                    <p *ngIf="requestSelected.addressCity" class="request-field">
+                      <span class="request-field-label">Ciudad:</span>
                       <span>{{ requestSelected.addressCity }}</span>
                     </p>
 
                     <p
                       *ngIf="requestSelected.addressZoneType"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 col-5 font-weight-bold"
+                      <span class="request-field-label"
                         >Tipo de zona:</span
                       >
                       <span>{{
@@ -711,8 +700,8 @@
                       }}</span>
                     </p>
 
-                    <p *ngIf="requestSelected.addressZone" class="d-flex w-100">
-                      <span class="pl-0 col-5 font-weight-bold"
+                    <p *ngIf="requestSelected.addressZone" class="request-field">
+                      <span class="request-field-label"
                         >Dirección de la zona:</span
                       >
                       <span>{{ requestSelected.addressZone }}</span>
@@ -723,40 +712,39 @@
             </div>
 
             <!-- Principal data -->
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 form-group">
               <div>
-                <p class="font-weight-bold text-info mb-0">
+                <p class="request-subtitle">
                   Datos del director
                 </p>
-                <hr />
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 request-fields">
                     <p
                       *ngIf="requestSelected.principalFirstName"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Nombre:</span
+                      <span class="request-field-label">Nombre:</span
                       ><span>{{ requestSelected.principalFirstName }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.principalLastName"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Apellido:</span
+                      <span class="request-field-label">Apellido:</span
                       ><span>{{ requestSelected.principalLastName }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.principalEmail"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Correo:</span
+                      <span class="request-field-label">Correo:</span
                       ><span>{{ requestSelected.principalEmail }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.principalPhone"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Teléfono:</span
+                      <span class="request-field-label">Teléfono:</span
                       ><span>{{ requestSelected.principalPhone }}</span>
                     </p>
                   </div>
@@ -766,7 +754,7 @@
 
             <!-- Sub Principal Data -->
             <div
-              class="col-12 col-lg-6 form-group"
+              class="col-12 form-group"
               *ngIf="
                 requestSelected.subPrincipalFirstName ||
                 requestSelected.subPrincipalLastName ||
@@ -775,38 +763,37 @@
               "
             >
               <div>
-                <p class="font-weight-bold text-info mb-0">
+                <p class="request-subtitle">
                   Datos del subdirector
                 </p>
-                <hr />
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 request-fields">
                     <p
                       *ngIf="requestSelected.subPrincipalFirstName"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Nombre:</span
+                      <span class="request-field-label">Nombre:</span
                       ><span>{{ requestSelected.subPrincipalFirstName }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.subPrincipalLastName"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Apellido:</span
+                      <span class="request-field-label">Apellido:</span
                       ><span>{{ requestSelected.subPrincipalLastName }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.subPrincipalEmail"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Correo:</span
+                      <span class="request-field-label">Correo:</span
                       ><span>{{ requestSelected.subPrincipalEmail }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.subPrincipalPhone"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5">Teléfono:</span
+                      <span class="request-field-label">Teléfono:</span
                       ><span>{{ requestSelected.subPrincipalPhone }}</span>
                     </p>
                   </div>
@@ -816,7 +803,7 @@
 
             <!-- Additional data -->
             <div
-              class="col-12 col-lg-6 form-group"
+              class="col-12 form-group"
               *ngIf="
                 requestSelected.schoolShift ||
                 requestSelected.nTeachers ||
@@ -828,45 +815,44 @@
               "
             >
               <div>
-                <p class="font-weight-bold text-info mb-0">Datos adicionales</p>
-                <hr />
+                <p class="request-subtitle">Datos adicionales</p>
                 <div class="row">
-                  <div class="col-12">
-                    <p *ngIf="requestSelected.nTeachers" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                  <div class="col-12 request-fields">
+                    <p *ngIf="requestSelected.nTeachers" class="request-field">
+                      <span class="request-field-label"
                         >Cantidad de docentes:</span
                       ><span>{{ requestSelected.nTeachers }}</span>
                     </p>
                     <p
                       *ngIf="requestSelected.nAdministrativeStaff"
-                      class="d-flex w-100"
+                      class="request-field"
                     >
-                      <span class="pl-0 font-weight-bold col-5"
+                      <span class="request-field-label"
                         >Cantidad de personal administrativo:</span
                       ><span>{{ requestSelected.nAdministrativeStaff }}</span>
                     </p>
-                    <p *ngIf="requestSelected.nLaborStaff" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                    <p *ngIf="requestSelected.nLaborStaff" class="request-field">
+                      <span class="request-field-label"
                         >Cantidad de personal obrero:</span
                       ><span>{{ requestSelected.nLaborStaff }}</span>
                     </p>
-                    <p *ngIf="requestSelected.nStudents" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                    <p *ngIf="requestSelected.nStudents" class="request-field">
+                      <span class="request-field-label"
                         >Cantidad de estudiantes:</span
                       ><span>{{ requestSelected.nStudents }}</span>
                     </p>
-                    <p *ngIf="requestSelected.nGrades" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                    <p *ngIf="requestSelected.nGrades" class="request-field">
+                      <span class="request-field-label"
                         >Cantidad de grados:</span
                       ><span>{{ requestSelected.nGrades }}</span>
                     </p>
-                    <p *ngIf="requestSelected.nSections" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                    <p *ngIf="requestSelected.nSections" class="request-field">
+                      <span class="request-field-label"
                         >Cantidad de secciones:</span
                       ><span>{{ requestSelected.nSections }}</span>
                     </p>
-                    <p *ngIf="requestSelected.schoolShift" class="d-flex w-100">
-                      <span class="pl-0 font-weight-bold col-5"
+                    <p *ngIf="requestSelected.schoolShift" class="request-field">
+                      <span class="request-field-label"
                         >Turno de clases:</span
                       >
                       <span *ngIf="requestSelected.schoolShift === '1'"
@@ -884,19 +870,9 @@
               </div>
             </div>
 
-            <!-- Has sponsor -->
-            <div class="col-12 form-group" *ngIf="requestSelected.hasSponsor">
-              <p class="font-weight-bold text-primary mb-0">
-                La escuela tiene padrino
-                <span *ngIf="requestSelected.hasSponsorRegistered" class="badge badge-success ml-2">Padrino Registrado</span>
-              </p>
-              <hr />
-            </div>
-
             <!-- Maps -->
             <div class="col-12 form-group" *ngIf="requestSelected.coordinate">
-              <hr />
-              <label class="label">Ubicación de la escuela</label>
+              <p class="request-section-title">Ubicación de la escuela</p>
               <div class="wrapper-agm-map">
                 <agm-map
                   [latitude]="requestSelected.coordinate.latitude"
@@ -911,50 +887,58 @@
               </div>
             </div>
 
+            <!-- Has sponsor -->
+            <div class="col-12 form-group" *ngIf="requestSelected.hasSponsor">
+              <p class="request-field">
+                <span class="request-field-label">¿La escuela tiene padrino?</span>
+                Sí
+                <span *ngIf="requestSelected.hasSponsorRegistered" class="badge badge-success ml-2">Padrino Registrado</span>
+              </p>
+            </div>
+
             <div *ngIf="requestSelected.hasSponsor" class="col-12 form-group">
               <div class="row">
-                <div class="col-12 col-lg-6 form-group">
-                  <p class="font-weight-bold text-info mb-0">
+                <div class="col-12 form-group">
+                  <p class="request-section-title">
                     Datos de la empresa
                   </p>
-                  <hr />
                   <div class="row">
-                    <div class="col-12">
-                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorName">
-                        <span class="pl-0 font-weight-bold col-5">Nombre:</span
+                    <div class="col-12 request-fields">
+                      <p class="request-field" *ngIf="requestSelected.sponsorName">
+                        <span class="request-field-label">Nombre:</span
                         ><span>{{ requestSelected.sponsorName }}</span>
                       </p>
 
-                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorCompanyPhone">
-                        <span class="pl-0 font-weight-bold col-5"
+                      <p class="request-field" *ngIf="requestSelected.sponsorCompanyPhone">
+                        <span class="request-field-label"
                           >Teléfono:</span
                         ><span>{{ requestSelected.sponsorCompanyPhone }}</span>
                       </p>
 
-                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorEmail">
-                        <span class="pl-0 font-weight-bold col-5">Correo:</span
+                      <p class="request-field" *ngIf="requestSelected.sponsorEmail">
+                        <span class="request-field-label">Correo:</span
                         ><span>{{ requestSelected.sponsorEmail }}</span>
                       </p>
-                      <p class="d-flex w-100" *ngIf="requestSelected.sponsorRif">
-                        <span class="pl-0 font-weight-bold col-5"
+                      <p class="request-field" *ngIf="requestSelected.sponsorRif">
+                        <span class="request-field-label"
                           >Documento de identidad:</span
                         ><span>J-{{ requestSelected.sponsorRif }}</span>
                       </p>
                       <p
-                        class="d-flex w-100"
+                        class="request-field"
                         *ngIf="requestSelected.sponsorwebSite"
                       >
-                        <span class="pl-0 font-weight-bold col-5"
+                        <span class="request-field-label"
                           >Sitio web:</span
                         ><a [href]="requestSelected.sponsorwebSite">{{
                           requestSelected.sponsorWebSite
                         }}</a>
                       </p>
                       <p
-                        class="d-flex w-100"
+                        class="request-field"
                         *ngIf="requestSelected.sponsorCompanyType && requestSelected.sponsorCompanyType !== '0'"
                       >
-                        <span class="pl-0 font-weight-bold col-5"
+                        <span class="request-field-label"
                           >Tipo de empresa:</span
                         ><span>{{
                           requestSelected.sponsorCompanyType === "1"
@@ -971,9 +955,9 @@
 
                       <p
                         *ngIf="requestSelected.sponsorCompanyType === '0'"
-                        class="d-flex w-100"
+                        class="request-field"
                       >
-                        <span class="pl-0 font-weight-bold col-5"
+                        <span class="request-field-label"
                           >Otro tipo de empresa:</span
                         ><span>{{
                           requestSelected.sponsorCompanyOtherType
@@ -983,63 +967,61 @@
                   </div>
                 </div>
 
-                <div class="col-12 col-lg-6 form-group">
-                  <p class="font-weight-bold text-info mb-0">
+                <div class="col-12 form-group">
+                  <p class="request-subtitle">
                     Datos de la persona de contacto
                   </p>
-                  <hr />
                   <div class="row">
-                    <div class="col-12">
-                      <p class="d-flex w-100">
-                        <span class="pl-0 col-5 font-weight-bold">Nombre:</span>
+                    <div class="col-12 request-fields">
+                      <p class="request-field">
+                        <span class="request-field-label">Nombre:</span>
                         <span>{{
                           requestSelected.sponsorContactFirstName
                         }}</span>
                       </p>
-                      <p class="d-flex w-100">
-                        <span class="pl-0 col-5 font-weight-bold"
+                      <p class="request-field">
+                        <span class="request-field-label"
                           >Apellido:</span
                         >
                         <span>{{
                           requestSelected.sponsorContactLastName
                         }}</span>
                       </p>
-                      <p class="d-flex w-100">
-                        <span class="pl-0 col-5 font-weight-bold"
+                      <p class="request-field">
+                        <span class="request-field-label"
                           >Teléfono:</span
                         >
                         <span>{{ requestSelected.sponsorContactPhone }}</span>
                       </p>
 
-                      <p class="d-flex w-100">
-                        <span class="pl-0 col-5 font-weight-bold">Correo:</span>
+                      <p class="request-field">
+                        <span class="request-field-label">Correo:</span>
                         <span>{{ requestSelected.sponsorContactEmail }}</span>
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-12 col-lg-6 form-group">
-                  <p class="font-weight-bold text-info mb-0">
+                <div class="col-12 form-group">
+                  <p class="request-subtitle">
                     Datos de dirección
                   </p>
-                  <hr />
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 request-fields">
                       <p
                         *ngIf="requestSelected.sponsorAddressState"
-                        class="d-flex w-100"
+                        class="request-field"
                       >
-                        <span class="pl-0 col-5 font-weight-bold">Estado:</span>
+                        <span class="request-field-label">Estado:</span>
                         <span>{{
                           requestSelected.sponsorAddressState.name
                         }}</span>
                       </p>
                       <p
                         *ngIf="requestSelected.sponsorAddressMunicipality"
-                        class="d-flex w-100"
+                        class="request-field"
                       >
-                        <span class="pl-0 col-5 font-weight-bold"
+                        <span class="request-field-label"
                           >Municipio:</span
                         >
                         <span>{{
@@ -1048,18 +1030,18 @@
                       </p>
                       <p
                         *ngIf="requestSelected.sponsoraddress"
-                        class="d-flex w-100"
+                        class="request-field"
                       >
-                        <span class="pl-0 col-5 font-weight-bold"
+                        <span class="request-field-label"
                           >Dirección:</span
                         >
                         <span>{{ requestSelected.sponsoraddress }}</span>
                       </p>
                       <p
                         *ngIf="requestSelected.sponsorAddressCity"
-                        class="d-flex w-100"
+                        class="request-field"
                       >
-                        <span class="pl-0 col-5 font-weight-bold">Ciudad:</span>
+                        <span class="request-field-label">Ciudad:</span>
                         <span>{{ requestSelected.sponsorAddressCity }}</span>
                       </p>
                     </div>

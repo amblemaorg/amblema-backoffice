@@ -39,7 +39,14 @@ export class PostsState {
 
     @Selector()
     static posts(state: Post[]): Post[] | null {
-        return state;
+        if (!state) {
+            return state;
+        }
+        // Más recientes primero; sin fecha (recién creado) se considera el más nuevo.
+        // Copia para no mutar el estado.
+        const time = (post: Post) =>
+            post.createdAt ? new Date(post.createdAt).getTime() : Number.MAX_SAFE_INTEGER;
+        return [...state].sort((a, b) => time(b) - time(a));
     }
 
     constructor(

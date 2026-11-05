@@ -104,6 +104,7 @@ export class WebAboutState {
                 environmentText: action.payload.aboutUsPage.environmentText,
                 readingText: action.payload.aboutUsPage.readingText,
                 mathText: action.payload.aboutUsPage.mathText,
+                aulaActivaText: action.payload.aboutUsPage.aulaActivaText || '',
             }
         });
     }

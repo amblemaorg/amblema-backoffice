@@ -35,6 +35,23 @@ export class DeleteSliderWebAbout {
     constructor(public payload: Slider) { }
 }
 
+// -- Aula Activa gallery's class actions (tipos propios: no reutilizar los de [Slider]) --
+
+export class SetAulaActivaImageWebAbout {
+    static readonly type = '[WebAbout] Set Aula Activa Image';
+    constructor(public payload: Slider) { }
+}
+
+export class UpdateAulaActivaImageWebAbout {
+    static readonly type = '[WebAbout] Update Aula Activa Image';
+    constructor(public oldImage: Slider, public newImage: Slider) { }
+}
+
+export class DeleteAulaActivaImageWebAbout {
+    static readonly type = '[WebAbout] Delete Aula Activa Image';
+    constructor(public payload: Slider) { }
+}
+
 // -- Award's class actions --
 
 export class SetAwardWebAbout {
@@ -63,6 +80,7 @@ export class DeleteAwardWebAbout {
             readingText: '',
             mathText: '',
             aulaActivaText: '',
+            aulaActivaGallery: [],
             awards: []
         }
     }
@@ -89,7 +107,10 @@ export class WebAboutState {
         return this.webAboutService.getContentWebAbout()
             .subscribe(response => {
                 if (response.aboutUsPage) {
-                    ctx.setState({ aboutUsPage: response.aboutUsPage });
+                    // El backend devuelve description null si no se envió; al guardar no acepta null
+                    const aulaActivaGallery = (response.aboutUsPage.aulaActivaGallery || [])
+                        .map(image => ({ ...image, description: image.description || '' }));
+                    ctx.setState({ aboutUsPage: { ...response.aboutUsPage, aulaActivaGallery } });
                 }
             });
     }
@@ -134,6 +155,35 @@ export class WebAboutState {
         ctx.setState(patch({
             aboutUsPage: patch({
                 slider: removeItem<Slider>(slider => slider === action.payload)
+            })
+        }));
+    }
+
+    // -- Aula Activa gallery's actions --
+
+    @Action(SetAulaActivaImageWebAbout)
+    setAulaActivaImageWebAbout(ctx: StateContext<WebAbout>, action: SetAulaActivaImageWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage: patch({
+                aulaActivaGallery: append([action.payload])
+            })
+        }));
+    }
+
+    @Action(UpdateAulaActivaImageWebAbout)
+    updateAulaActivaImageWebAbout(ctx: StateContext<WebAbout>, action: UpdateAulaActivaImageWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage: patch({
+                aulaActivaGallery: updateItem<Slider>(image => image === action.oldImage, action.newImage)
+            })
+        }));
+    }
+
+    @Action(DeleteAulaActivaImageWebAbout)
+    deleteAulaActivaImageWebAbout(ctx: StateContext<WebAbout>, action: DeleteAulaActivaImageWebAbout) {
+        ctx.setState(patch({
+            aboutUsPage: patch({
+                aulaActivaGallery: removeItem<Slider>(image => image === action.payload)
             })
         }));
     }

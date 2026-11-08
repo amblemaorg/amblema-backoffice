@@ -10,7 +10,10 @@ import {
   UpdateAwardWebAbout,
   DeleteAwardWebAbout,
   SetWebAbout,
-  GetWebAbout
+  GetWebAbout,
+  SetAulaActivaImageWebAbout,
+  UpdateAulaActivaImageWebAbout,
+  DeleteAulaActivaImageWebAbout
 } from 'src/app/store/web-content/web-about.action';
 import { Observable, Subscription } from 'rxjs';
 import { WebAbout, Award } from 'src/app/_models/web/web-about.model';
@@ -30,6 +33,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   showProgress = false;
+  readonly aulaActivaGalleryMax = 10; // Debe coincidir con AULA_ACTIVA_GALLERY_MAX del backend
   sliders: Slider[];
   awards: Award[];
 
@@ -79,6 +83,20 @@ export class AboutUsComponent implements OnInit, OnDestroy {
 
   onDeleteSlider(slider: Slider) {
     this.store.dispatch(new DeleteSliderWebAbout(slider));
+  }
+
+  // -- CRUD Aula Activa gallery --
+
+  onRegisterAulaActivaImage(image: Slider) {
+    this.store.dispatch(new SetAulaActivaImageWebAbout(image));
+  }
+
+  onEditAulaActivaImage(image: any[]) {
+    this.store.dispatch(new UpdateAulaActivaImageWebAbout(image[0], image[1]));
+  }
+
+  onDeleteAulaActivaImage(image: Slider) {
+    this.store.dispatch(new DeleteAulaActivaImageWebAbout(image));
   }
 
   // -- CRUD Awards --

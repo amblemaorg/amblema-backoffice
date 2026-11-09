@@ -45,6 +45,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "coevaluation-report",
+    loadChildren: () =>
+      import("./coevaluation-report/coevaluation-report.module").then(
+        (m) => m.CoevaluationReportModule
+      ),
+  },
+  {
     path: "math-olympics-report",
     loadChildren: () =>
       import("./math-olympics-report/math-olympics-report.module").then(

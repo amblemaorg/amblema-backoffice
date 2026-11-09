@@ -1,0 +1,225 @@
+<nb-card>
+  <nb-card-header>Reporte de coevaluación docentes HQS</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <h6>Filtros</h6>
+        <hr />
+      </div>
+      <div class="col-12 col-lg-4 form-group">
+        <label class="label">Período académico *</label>
+        <ng-select
+          [items]="schoolYearOptions$ | async"
+          bindLabel="name"
+          placeholder="Seleccionar el período escolar"
+          [(ngModel)]="selectedSchoolYear"
+        ></ng-select>
+      </div>
+      <div class="col-12 col-lg-4 form-group">
+        <label class="label">Escuela</label>
+        <ng-select
+          [items]="schools$ | async"
+          bindLabel="name"
+          placeholder="Todas las escuelas"
+          [(ngModel)]="selectedSchool"
+        ></ng-select>
+      </div>
+      <div class="col-12 col-lg-4 form-group">
+        <label class="label">Nivel alcanzado</label>
+        <ng-select
+          [items]="levelOptions"
+          bindLabel="label"
+          bindValue="code"
+          placeholder="Todos los niveles"
+          [(ngModel)]="selectedLevel"
+        ></ng-select>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="w-100 text-right">
+    <button
+      nbButton
+      status="primary"
+      class="col-12 col-lg-auto mb-2 mb-lg-0 mr-lg-3"
+      [nbSpinner]="loading"
+      [disabled]="!selectedSchoolYear || loading"
+      (click)="onSearch()"
+    >
+      <span>{{ loading ? 'Consultando...' : 'Consultar' }}</span>
+      <nb-icon icon="search-outline"></nb-icon>
+    </button>
+    <button
+      nbButton
+      status="danger"
+      class="col-12 col-lg-auto mb-2 mb-lg-0 mr-lg-3"
+      [disabled]="!hasData(report) || exporting"
+      (click)="onExport('pdf')"
+    >
+      <span>Exportar a PDF</span>
+      <nb-icon icon="file-text-outline"></nb-icon>
+    </button>
+    <button
+      nbButton
+      status="success"
+      class="col-12 col-lg-auto"
+      [disabled]="!hasData(report) || exporting"
+      (click)="onExport('xlsx')"
+    >
+      <span>Exportar a Excel</span>
+      <nb-icon icon="grid-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>
+
+<nb-card *ngIf="hasData(report)">
+  <nb-card-body>
+    <p class="text-muted mb-3">
+      {{ report.schoolYear.name }} · {{ filtersLabel() }}
+    </p>
+    <nb-tabset>
+      <!-- ============================== POR ESCUELA ============================== -->
+      <nb-tab tabTitle="Por escuela">
+        <div class="school-block" *ngFor="let school of report.bySchool">
+          <div class="school-header">
+            <div>
+              <h6 class="mb-1">{{ school.name }} <small class="text-muted">({{ school.code }})</small></h6>
+              <div class="text-muted small">Coordinador: {{ school.coordinator || '—' }}</div>
+            </div>
+            <div class="school-index">
+              <div class="small text-muted">Índice Docentes HQS</div>
+              <div class="index-value">{{ school.index !== null ? formatNumber(school.index) + ' %' : '—' }}</div>
+              <span class="level-badge" [ngClass]="levelClass(school.indexLevel)" *ngIf="school.indexLevelLabel">
+                {{ school.indexLevelLabel }}
+              </span>
+            </div>
+          </div>
+
+          <div class="counts small">
+            <span>Docentes: <b>{{ school.nTeachers }}</b></span>
+            <span>Completadas: <b>{{ school.nCompleted }}</b></span>
+            <span *ngFor="let lvl of report.instrument.levels">
+              {{ lvl.label }}: <b>{{ school.levelCounts[lvl.code] }}</b>
+            </span>
+            <span>Pendiente docente: <b>{{ school.statusCounts.pending_teacher }}</b></span>
+            <span>Pendiente coordinador: <b>{{ school.statusCounts.pending_coordinator }}</b></span>
+            <span>Sin iniciar: <b>{{ school.statusCounts.not_started }}</b></span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-sm report-table">
+              <thead>
+                <tr>
+                  <th>Docente</th>
+                  <th>Cédula</th>
+                  <th>Grado / Sección</th>
+                  <th>Estatus</th>
+                  <th class="text-center">Puntaje / 75</th>
+                  <th class="text-center">%</th>
+                  <th>Nivel</th>
+                  <th class="text-center">Ítems</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let row of school.teachers">
+                  <tr>
+                    <td>{{ fullName(row) }}</td>
+                    <td>{{ cardLabel(row) }}</td>
+                    <td>{{ row.sections || '—' }}</td>
+                    <td><span class="status" [ngClass]="statusClass(row.status)">{{ row.statusLabel }}</span></td>
+                    <td class="text-center">{{ formatNumber(row.totalScore) }}</td>
+                    <td class="text-center">{{ formatNumber(row.percentage) }}</td>
+                    <td>
+                      <span class="level-badge" [ngClass]="levelClass(row.level)" *ngIf="row.levelLabel">{{ row.levelLabel }}</span>
+                      <span *ngIf="!row.levelLabel">—</span>
+                    </td>
+                    <td class="text-center">
+                      <button
+                        nbButton
+                        ghost
+                        size="tiny"
+                        status="primary"
+                        *ngIf="row.status !== 'not_started'"
+                        (click)="toggle(school.pecaId, row)"
+                        [attr.aria-expanded]="!!expanded[rowKey(school.pecaId, row)]"
+                      >
+                        <nb-icon [icon]="expanded[rowKey(school.pecaId, row)] ? 'chevron-up-outline' : 'chevron-down-outline'"></nb-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="expanded[rowKey(school.pecaId, row)]" class="items-row">
+                    <td colspan="8">
+                      <table class="table table-sm items-table mb-0">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Ítem</th>
+                            <th class="text-center">Docente</th>
+                            <th class="text-center">Coordinador</th>
+                            <th class="text-center">Promedio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of row.items">
+                            <td>{{ item.number }}</td>
+                            <td>{{ itemTitle(item.number) }}</td>
+                            <td class="text-center">{{ formatNumber(item.teacher) }}</td>
+                            <td class="text-center">{{ formatNumber(item.coordinator) }}</td>
+                            <td class="text-center">{{ formatNumber(item.average) }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-tab>
+
+      <!-- ============================== POR NIVEL ============================== -->
+      <nb-tab tabTitle="Por nivel">
+        <p class="small text-muted">Solo coevaluaciones completadas (docente y coordinador).</p>
+        <div class="level-block" *ngFor="let group of report.byLevel">
+          <h6 class="level-title">
+            <span class="level-badge" [ngClass]="levelClass(group.code)">{{ group.label }}</span>
+            <span class="text-muted small ml-2">{{ group.count }} docente(s)</span>
+          </h6>
+          <div class="table-responsive" *ngIf="group.count > 0; else emptyLevel">
+            <table class="table table-sm report-table">
+              <thead>
+                <tr>
+                  <th>Docente</th>
+                  <th>Cédula</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Grado / Sección</th>
+                  <th>Escuela</th>
+                  <th>Coordinador</th>
+                  <th class="text-center">Puntaje / 75</th>
+                  <th class="text-center">%</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of group.teachers">
+                  <td>{{ fullName(row) }}</td>
+                  <td>{{ cardLabel(row) }}</td>
+                  <td>{{ row.email || '—' }}</td>
+                  <td>{{ row.phone || '—' }}</td>
+                  <td>{{ row.sections || '—' }}</td>
+                  <td>{{ row.school?.name }} <small class="text-muted">({{ row.school?.code }})</small></td>
+                  <td>{{ row.coordinator || '—' }}</td>
+                  <td class="text-center">{{ formatNumber(row.totalScore) }}</td>
+                  <td class="text-center">{{ formatNumber(row.percentage) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #emptyLevel>
+            <p class="small text-muted">Sin docentes en este nivel.</p>
+          </ng-template>
+        </div>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,87 @@
+.school-block,
+.level-block {
+  margin-top: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e4e9f2;
+}
+
+.school-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.school-index {
+  text-align: right;
+
+  .index-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2e8aaa;
+  }
+}
+
+.counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.report-table th {
+  background: #81b03e;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.items-row > td {
+  background: #f7f9fc;
+}
+
+.items-table th {
+  background: #00809a;
+  color: #fff;
+}
+
+.level-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: #8f9bb3;
+  white-space: nowrap;
+
+  &.level-excellence {
+    background: #00722e;
+  }
+  &.level-commitment {
+    background: #2e8aaa;
+  }
+  &.level-progress {
+    background: #c48a00;
+  }
+  &.level-beginning {
+    background: #b23b3b;
+  }
+}
+
+.status {
+  font-size: 0.8rem;
+  white-space: nowrap;
+
+  &.status-completed {
+    color: #00722e;
+    font-weight: 600;
+  }
+  &.status-pending-teacher,
+  &.status-pending-coordinator {
+    color: #c48a00;
+  }
+  &.status-not-started {
+    color: #8f9bb3;
+  }
+}

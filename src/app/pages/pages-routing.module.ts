@@ -179,6 +179,13 @@ const routes: Routes = [
               ).then((m) => m.MathOlympicsReportModule),
           },
           {
+            path: "coevaluation-report",
+            loadChildren: () =>
+              import(
+                "./report/coevaluation-report/coevaluation-report.module"
+              ).then((m) => m.CoevaluationReportModule),
+          },
+          {
             path: "enrolled-schools-report",
             loadChildren: () =>
               import(

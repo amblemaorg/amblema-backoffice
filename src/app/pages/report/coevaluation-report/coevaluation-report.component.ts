@@ -49,6 +49,7 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
   report: CoevaluationReport | null = null;
   loading = false;
   exporting = false;
+  exportingFormat: 'pdf' | 'xlsx' | null = null;
   // Filas con los 15 ítems desplegados, por clave "pecaId:teacherId"
   expanded: { [key: string]: boolean } = {};
 
@@ -76,7 +77,7 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    if (!this.selectedSchoolYear || this.loading) {
+    if (!this.selectedSchoolYear || this.loading || this.exporting) {
       return;
     }
     this.loading = true;
@@ -110,22 +111,29 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
     return !!report && report.bySchool.length > 0;
   }
 
-  onExport(format: 'pdf' | 'xlsx'): void {
+  /** Bloquea ambos botones hasta que el archivo se generó y se entregó al navegador (evita doble clic). */
+  async onExport(format: 'pdf' | 'xlsx'): Promise<void> {
     if (!this.hasData(this.report) || this.exporting) {
       return;
     }
     this.exporting = true;
+    this.exportingFormat = format;
     try {
       const filters = this.filtersLabel();
       if (format === 'pdf') {
-        this.exporter.toPdf(this.report, filters);
+        await this.exporter.toPdf(this.report, filters);
       } else {
-        this.exporter.toExcel(this.report, filters);
+        await this.exporter.toExcel(this.report, filters);
       }
     } catch (e) {
       this.toastr.error('Error', 'No se pudo generar el archivo');
     } finally {
-      this.exporting = false;
+      // Se libera con un pequeño margen: los clics que el navegador encoló mientras
+      // generaba el archivo se procesan antes y chocan con el bloqueo (no hay doble descarga).
+      setTimeout(() => {
+        this.exporting = false;
+        this.exportingFormat = null;
+      }, 800);
     }
   }
 
@@ -172,6 +180,15 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
 
   statusClass(status: CoevaluationStatus): string {
     return `status-${status.replace(/_/g, '-')}`;
+  }
+
+  /** "Docente HQS con Excelencia" -> "Excelencia"; "Docente HQS en Avance" -> "En avance". */
+  shortLevel(label: string | null): string {
+    if (!label) {
+      return '';
+    }
+    const short = label.replace(/^Docente HQS\s+/i, '').replace(/^con\s+/i, '').trim();
+    return short.charAt(0).toUpperCase() + short.slice(1).toLowerCase();
   }
 
   levelClass(level: CoevaluationLevelCode | null): string {

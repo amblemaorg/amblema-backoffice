@@ -1,87 +1,456 @@
-.school-block,
-.level-block {
-  margin-top: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e4e9f2;
-}
+// Estética del backoffice: azul AmbLeMa, verde en títulos, Montserrat.
+// Paleta de niveles igual a la del PECA (sin rojo).
+$blue: #00809a;
+$blue-soft: #eef6f8;
+$green: #81b03e;
+$green-dark: #00722e;
+$amber: #a87600;
+$slate: #6b7c85;
+$text: #1a2138;
+$muted: #8f9bb3;
+$border: #e4e9f2;
 
-.school-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.school-index {
-  text-align: right;
-
-  .index-value {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #2e8aaa;
+// ------------------------------------------------------------ filtros
+.filters {
+  .form-group {
+    margin-bottom: 1rem;
   }
 }
 
-.counts {
+// ------------------------------------------------------------ barra de resultados
+.results-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
-  margin: 0.75rem 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0 1rem;
+  background: $blue-soft;
+  border-left: 4px solid $blue;
+  border-radius: 0.25rem;
+
+  .results-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .results-year {
+    font-weight: 700;
+    color: $blue;
+  }
+
+  .results-filters {
+    font-size: 0.85rem;
+    color: $text;
+  }
+
+  .results-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }
 
-.report-table th {
-  background: #81b03e;
-  color: #fff;
-  white-space: nowrap;
+// Pestañas: Nebular usa su primario por defecto (#3366ff); se lleva al azul del backoffice.
+:host ::ng-deep nb-tabset {
+  .tab .tab-link {
+    color: $muted !important;
+  }
+
+  .tab:hover .tab-link,
+  .tab.active .tab-link {
+    color: $blue !important;
+  }
+
+  .tab.active .tab-link::before {
+    background-color: $blue !important;
+  }
+
+  .tab:hover .tab-link::before {
+    background-color: rgba(0, 128, 154, 0.35) !important;
+  }
 }
 
-.items-row > td {
+.tab-note {
+  font-size: 0.85rem;
+  color: $muted;
+  margin: 1rem 0 0;
+}
+
+// ------------------------------------------------------------ panel (escuela / nivel)
+.panel {
+  border: 1px solid $border;
+  border-radius: 0.5rem;
+  margin-top: 1.25rem;
+  overflow: hidden;
+}
+
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: $blue-soft;
+  border-bottom: 1px solid $border;
+}
+
+.panel-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  min-width: 0;
+}
+
+.school-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: $blue;
+}
+
+.school-coordinator {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: $text;
+}
+
+.school-index {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  .index-label {
+    font-size: 0.75rem;
+    color: $muted;
+  }
+
+  .index-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $blue;
+
+    &.is-empty {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $muted;
+    }
+  }
+}
+
+.panel-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid $border;
+  font-size: 0.78rem;
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
   background: #f7f9fc;
+  border: 1px solid $border;
+  color: $text;
+  white-space: nowrap;
+
+  b {
+    font-weight: 700;
+  }
+
+  &.is-completed b {
+    color: $green-dark;
+  }
+  &.is-pending b {
+    color: $amber;
+  }
+  &.is-muted b {
+    color: $slate;
+  }
 }
 
-.items-table th {
-  background: #00809a;
-  color: #fff;
+.stat-sep {
+  width: 1px;
+  height: 1.1rem;
+  background: $border;
+  margin: 0 0.25rem;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: $muted;
+}
+
+.level-count {
+  font-size: 0.85rem;
+  color: $text;
+}
+
+.panel-empty {
+  font-size: 0.85rem;
+  color: $muted;
+  margin: 0;
+  padding: 0.85rem 1rem;
+}
+
+// ------------------------------------------------------------ tablas
+// styles.scss pinta todos los th en azul con bordes laterales (!important);
+// aquí se sobrescribe con mayor especificidad para una tabla limpia.
+.coev-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  color: $text;
+
+  thead th {
+    background: #fff;
+    color: $blue !important;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.6rem 0.75rem;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 2px solid $blue !important;
+  }
+
+  // El texto azul de las celdas es la convención del backoffice (styles.scss);
+  // solo se quitan los bordes verticales para una lectura por filas.
+  tbody td {
+    padding: 0.55rem 0.75rem;
+    vertical-align: middle;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid $border !important;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  tbody tr:nth-child(even):not(.items-row) td {
+    background: #fafbfd;
+  }
+
+  tbody tr:not(.items-row):hover td {
+    background: $blue-soft;
+  }
+
+  tbody tr.is-open td {
+    background: $blue-soft;
+  }
+
+  .num {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .name {
+    font-weight: 600;
+  }
+
+  // Celdas apiladas (pestaña Por nivel): dato principal + secundario debajo.
+  .name-cell,
+  .contact-cell,
+  .school-cell {
+    span {
+      display: block;
+    }
+
+    .sub {
+      font-size: 0.75rem;
+      margin-top: 0.1rem;
+    }
+  }
+
+  .name-cell {
+    min-width: 200px;
+  }
+
+  .contact-cell {
+    white-space: nowrap;
+  }
+
+  .school-cell {
+    min-width: 180px;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .strong {
+    font-weight: 700;
+  }
+
+  .strong {
+    color: #01474e !important;
+  }
+
+  .empty,
+  .muted {
+    color: $muted !important;
+  }
+}
+
+// Detalle de los 15 ítems
+.items-row > td {
+  background: #f7f9fc !important;
+  padding: 0.5rem 0.75rem 0.85rem !important;
+}
+
+.items-panel {
+  background: #fff;
+  border: 1px solid $border;
+  border-left: 4px solid $blue;
+  border-radius: 0.35rem;
+  overflow: hidden;
+}
+
+.items-table {
+  font-size: 0.8rem;
+
+  thead th {
+    background: #f7f9fc;
+    border-bottom-width: 1px !important;
+  }
+
+  tbody td {
+    padding: 0.4rem 0.75rem;
+  }
+}
+
+// Botón de desplegar: styles.scss pinta todo `button` (fondo azul !important).
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent !important;
+  border: 1px solid $border !important;
+  color: $blue !important;
+  cursor: pointer;
+
+  nb-icon {
+    color: $blue !important;
+    font-size: 1rem;
+  }
+
+  // Abierto/hover: fondo suave y borde azul (el ícono queda azul por la regla global).
+  &:hover,
+  &[aria-expanded='true'] {
+    background: $blue-soft !important;
+    border-color: $blue !important;
+  }
+}
+
+// ------------------------------------------------------------ estatus y nivel
+.status-pill {
+  display: inline-block;
+  padding: 0.12rem 0.55rem;
+  border-radius: 1rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: #f0f2f5;
+  color: $slate;
+
+  &.status-completed {
+    background: #e6f3ea;
+    color: $green-dark;
+  }
+  &.status-pending-teacher,
+  &.status-pending-coordinator {
+    background: #fbf3e0;
+    color: $amber;
+  }
+  &.status-not-started {
+    background: #f0f2f5;
+    color: $slate;
+  }
 }
 
 .level-badge {
   display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.74rem;
+  font-weight: 700;
   color: #fff;
-  background: #8f9bb3;
+  background: $slate;
   white-space: nowrap;
+}
 
-  &.level-excellence {
-    background: #00722e;
+.level-excellence {
+  &.level-badge,
+  &.dot {
+    background: $green-dark;
   }
-  &.level-commitment {
-    background: #2e8aaa;
+}
+.level-commitment {
+  &.level-badge,
+  &.dot {
+    background: $green;
   }
-  &.level-progress {
-    background: #c48a00;
+}
+.level-progress {
+  &.level-badge,
+  &.dot {
+    background: $amber;
   }
-  &.level-beginning {
-    background: #b23b3b;
+}
+.level-beginning {
+  &.level-badge,
+  &.dot {
+    background: $slate;
   }
 }
 
-.status {
-  font-size: 0.8rem;
-  white-space: nowrap;
+.level-head {
+  border-left: 4px solid $slate;
 
-  &.status-completed {
-    color: #00722e;
-    font-weight: 600;
+  &.level-excellence {
+    border-left-color: $green-dark;
   }
-  &.status-pending-teacher,
-  &.status-pending-coordinator {
-    color: #c48a00;
+  &.level-commitment {
+    border-left-color: $green;
   }
-  &.status-not-started {
-    color: #8f9bb3;
+  &.level-progress {
+    border-left-color: $amber;
+  }
+}
+
+// ------------------------------------------------------------ responsive
+@media (max-width: 575px) {
+  .results-bar .results-actions {
+    width: 100%;
+
+    button {
+      flex: 1;
+    }
+  }
+
+  .school-index {
+    width: 100%;
+    justify-content: space-between;
   }
 }

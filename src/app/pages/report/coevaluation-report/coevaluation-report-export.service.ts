@@ -73,7 +73,28 @@ export class CoevaluationReportExport {
 
   // -------------------------------------------------------------------- PDF
 
-  toPdf(report: CoevaluationReport, filters: string): void {
+  /**
+   * Genera y descarga el PDF. Resuelve cuando pdfmake terminó de generar y entregar el archivo,
+   * para que el botón quede bloqueado durante todo el proceso.
+   */
+  toPdf(report: CoevaluationReport, filters: string): Promise<void> {
+    return this.withTimeout(
+      new Promise<void>((resolve, reject) => {
+        // Se difiere un ciclo: pdfmake bloquea el hilo y la UI debe pintar antes el botón bloqueado.
+        setTimeout(() => {
+          try {
+            pdfMake
+              .createPdf(this.pdfDefinition(report, filters))
+              .download(this.fileName(report, 'pdf'), () => resolve());
+          } catch (e) {
+            reject(e);
+          }
+        }, 50);
+      })
+    );
+  }
+
+  private pdfDefinition(report: CoevaluationReport, filters: string): any {
     const content: any[] = [
       { image: IMAGE, width: 90, absolutePosition: { x: 30, y: 15 } },
       {
@@ -82,7 +103,8 @@ export class CoevaluationReportExport {
         alignment: 'center',
         fontSize: 16,
         bold: true,
-        margin: [0, 10, 0, 10],
+        // Margen superior para que el logo (absoluto, ~75 pt de alto) no tape la tabla de datos.
+        margin: [0, 35, 0, 10],
       },
       {
         table: {
@@ -129,7 +151,7 @@ export class CoevaluationReportExport {
               row.email || '',
               row.phone || '',
               row.sections || '',
-              row.school ? `${row.school.name} (${row.school.code})` : '',
+              row.school ? row.school.name : '',
               { text: this.num(row.totalScore), alignment: 'center' },
               { text: this.num(row.percentage), alignment: 'center' },
             ]),
@@ -142,7 +164,7 @@ export class CoevaluationReportExport {
     content.push(this.sectionTitle('Detalle por escuela (promedio acordado por ítem)', true));
     report.bySchool.forEach((school) => content.push(...this.pdfSchoolDetail(school)));
 
-    const doc = {
+    return {
       info: {
         title: 'Reporte de coevaluación docentes HQS',
         author: 'Fundación AmbLeMa',
@@ -160,7 +182,23 @@ export class CoevaluationReportExport {
         margin: [0, 5, 25, 0],
       }),
     };
-    pdfMake.createPdf(doc).download(this.fileName(report, 'pdf'));
+  }
+
+  /** pdfmake no avisa si falla en segundo plano: se libera el botón tras un tiempo prudente. */
+  private withTimeout(promise: Promise<void>, ms: number = 120000): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('Tiempo de espera agotado al generar el archivo')), ms);
+      promise.then(
+        () => {
+          clearTimeout(timer);
+          resolve();
+        },
+        (e) => {
+          clearTimeout(timer);
+          reject(e);
+        }
+      );
+    });
   }
 
   private sectionTitle(text: string, pageBreak: boolean = false): any {
@@ -179,11 +217,10 @@ export class CoevaluationReportExport {
     return {
       table: {
         headerRows: 1,
-        widths: ['*', 'auto', '*', 'auto', 'auto', 'auto', 'auto', ...levels.map(() => 'auto')],
+        widths: ['*', '*', 'auto', 'auto', 'auto', 'auto', ...levels.map(() => 'auto')],
         body: [
           this.header([
             'Escuela',
-            'Código',
             'Coordinador',
             'Docentes',
             'Completadas',
@@ -193,7 +230,6 @@ export class CoevaluationReportExport {
           ]),
           ...report.bySchool.map((s) => [
             s.name,
-            s.code,
             s.coordinator || '',
             { text: `${s.nTeachers}`, alignment: 'center' },
             { text: `${s.nCompleted}`, alignment: 'center' },
@@ -211,7 +247,7 @@ export class CoevaluationReportExport {
     const itemNumbers = Array.from({ length: 15 }, (_, i) => i + 1);
     return [
       {
-        text: `${school.name} (${school.code}) · Coordinador: ${school.coordinator || '—'} · Índice: ${
+        text: `${school.name} · Coordinador: ${school.coordinator || '—'} · Índice: ${
           school.index !== null ? this.num(school.index) + ' %' : '—'
         }`,
         bold: true,
@@ -242,7 +278,21 @@ export class CoevaluationReportExport {
 
   // ------------------------------------------------------------------ Excel
 
-  toExcel(report: CoevaluationReport, filters: string): void {
+  /** Genera y descarga el Excel; se difiere un ciclo para que la UI muestre el bloqueo antes del trabajo pesado. */
+  toExcel(report: CoevaluationReport, filters: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          this.buildExcel(report, filters);
+          resolve();
+        } catch (e) {
+          reject(e);
+        }
+      }, 50);
+    });
+  }
+
+  private buildExcel(report: CoevaluationReport, filters: string): void {
     const workbook = XLSX.utils.book_new();
     const intro: any[][] = [
       ['Reporte de coevaluación docentes HQS'],
@@ -257,7 +307,6 @@ export class CoevaluationReportExport {
       ...intro,
       [
         'Escuela',
-        'Código',
         'Coordinador',
         'Docentes',
         'Completadas',
@@ -270,7 +319,6 @@ export class CoevaluationReportExport {
       ],
       ...report.bySchool.map((s) => [
         s.name,
-        s.code,
         s.coordinator || '',
         s.nTeachers,
         s.nCompleted,
@@ -295,7 +343,6 @@ export class CoevaluationReportExport {
         'Teléfono',
         'Grado / Sección',
         'Escuela',
-        'Código escuela',
         'Coordinador',
         'Puntaje (75)',
         '%',
@@ -311,7 +358,6 @@ export class CoevaluationReportExport {
           row.phone || '',
           row.sections || '',
           row.school ? row.school.name : '',
-          row.school ? row.school.code : '',
           row.coordinator || '',
           row.totalScore,
           row.percentage,
@@ -326,7 +372,6 @@ export class CoevaluationReportExport {
       ...intro,
       [
         'Escuela',
-        'Código escuela',
         'Docente',
         'Cédula',
         'Grado / Sección',
@@ -347,7 +392,6 @@ export class CoevaluationReportExport {
       school.teachers.forEach((row) =>
         detail.push([
           school.name,
-          school.code,
           this.fullName(row),
           this.card(row),
           row.sections || '',
@@ -368,24 +412,26 @@ export class CoevaluationReportExport {
   private appendSheet(workbook: any, name: string, rows: any[][], headerRow: number): void {
     const sheet = XLSX.utils.aoa_to_sheet(rows);
     const range = XLSX.utils.decode_range(sheet['!ref']);
-    const border = { style: 'thin', color: { rgb: 'CCCCCC' } };
+    // Sin forzar Arial: con Arial + negrita, LibreOffice (y equipos sin Arial Bold) muestra
+    // el texto en blanco/invisible. Colores en ARGB (8 dígitos).
+    const border = { style: 'thin', color: { rgb: 'FFCCCCCC' } };
 
     const title = sheet[XLSX.utils.encode_cell({ r: 0, c: 0 })];
     if (title) {
-      title.s = { font: { name: 'Arial', sz: 14, bold: true, color: { rgb: '2E8AAA' } } };
+      title.s = { font: { sz: 14, bold: true, color: { rgb: 'FF2E8AAA' } } };
     }
     for (let r = 1; r < headerRow - 1; r++) {
       const label = sheet[XLSX.utils.encode_cell({ r, c: 0 })];
       if (label) {
-        label.s = { font: { name: 'Arial', bold: true } };
+        label.s = { font: { bold: true } };
       }
     }
     for (let c = range.s.c; c <= range.e.c; c++) {
       const cell = sheet[XLSX.utils.encode_cell({ r: headerRow, c })];
       if (cell) {
         cell.s = {
-          font: { name: 'Arial', bold: true, color: { rgb: 'FFFFFF' } },
-          fill: { fgColor: { rgb: '81B03E' } },
+          font: { bold: true, color: { rgb: 'FFFFFFFF' } },
+          fill: { patternType: 'solid', fgColor: { rgb: 'FF81B03E' } },
           alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
           border: { top: border, bottom: border, left: border, right: border },
         };

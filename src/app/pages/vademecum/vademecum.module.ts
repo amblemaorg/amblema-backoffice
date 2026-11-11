@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
   NbButtonModule,
   NbCardModule,
+  NbIconModule,
   NbInputModule,
   NbProgressBarModule,
 } from '@nebular/theme';
@@ -18,6 +19,7 @@ import { SheetLoaderComponent } from './loader/sheet-loader.component';
     FormsModule,
     NbButtonModule,
     NbCardModule,
+    NbIconModule,
     NbInputModule,
     NbProgressBarModule,
     NgSelectModule,

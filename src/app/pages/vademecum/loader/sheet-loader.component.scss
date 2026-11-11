@@ -48,6 +48,103 @@ select.form-control {
   vertical-align: middle;
 }
 
+// --- Zona para elegir o soltar el compendio ---
+$brand: #00809a;
+$brand-soft: rgba(0, 128, 154, 0.06);
+
+.dropzone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.25rem 0 0.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 2px dashed #b9c5d6;
+  border-radius: 0.75rem;
+  background: #f7f9fc;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+
+  &:hover,
+  &:focus-within,
+  &.dragging {
+    border-color: $brand;
+    background: $brand-soft;
+  }
+
+  &.dragging {
+    box-shadow: 0 0 0 0.2rem rgba(0, 128, 154, 0.2);
+  }
+
+  &.loaded {
+    border-style: solid;
+    border-color: #8fc31f;
+    background: #fbfdf7;
+  }
+
+  &.invalid {
+    border-color: #ff3d71;
+    background: #fff7f9;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &:hover {
+      border-color: #b9c5d6;
+      background: #f7f9fc;
+    }
+  }
+}
+
+// El input queda oculto pero accesible: lo abre el clic en la etiqueta y el teclado
+.file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dz-icon {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.6rem;
+  border-radius: 50%;
+  background: #ffffff;
+  color: $brand;
+  font-size: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  .loaded & {
+    color: #6f9a1a;
+  }
+}
+
+.dz-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+
+  strong {
+    color: #222b45;
+    font-size: 0.95rem;
+  }
+
+  small {
+    color: #8f9bb3;
+  }
+}
+
+.dz-file {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .reading {
   margin: 1rem 0;
 

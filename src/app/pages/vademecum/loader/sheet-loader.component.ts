@@ -61,7 +61,10 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
   seriesId: string | null = null;
 
   fileName: string | null = null;
+  fileSize: number | null = null;
   fileError: string | null = null;
+  /** Hay un archivo arrastrado sobre la zona de carga. */
+  dragging = false;
   reading = false;
   readProgress = 0;
 
@@ -74,6 +77,8 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
   checks = new Map<number, string[]>();
 
   private compendium: OpenedCompendium | null = null;
+  /** Cambia en cada reset: una lectura reemplazada (otro compendio, salir) se detiene sola. */
+  private readToken = 0;
   /** PDF ya armado de cada ficha (Ver PDF y Subir no lo arman dos veces). */
   private built = new Map<number, { pages: string; blob: Blob }>();
   private subscriptions = new Subscription();
@@ -149,17 +154,57 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
 
   // --- Leer el compendio en el navegador ---
 
-  async onFileChange(event: Event): Promise<void> {
+  get canDropFile(): boolean {
+    return this.canChooseFile && !this.batchRunning;
+  }
+
+  get fileSizeLabel(): string {
+    return this.fileSize === null ? '' : `${(this.fileSize / (1024 * 1024)).toFixed(1)} MB`;
+  }
+
+  onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files && input.files.length ? input.files[0] : null;
-    input.value = '';
-    if (!file) {
-      return;
+    input.value = ''; // permite volver a elegir el mismo archivo
+    if (file) {
+      this.openFile(file);
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault(); // sin esto el navegador abre el PDF en la pestaña al soltarlo
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = this.canDropFile ? 'copy' : 'none';
+    }
+    this.dragging = this.canDropFile;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    const zone = event.currentTarget as HTMLElement;
+    if (!event.relatedTarget || !zone.contains(event.relatedTarget as Node)) {
+      this.dragging = false;
+    }
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.dragging = false;
+    const files = event.dataTransfer && event.dataTransfer.files;
+    if (this.canDropFile && files && files.length) {
+      this.openFile(files[0]);
+    }
+  }
+
+  async openFile(file: File): Promise<void> {
+    if (this.reading || !this.canDropFile) {
+      return; // el campo está bloqueado mientras lee; esto cubre dos eventos seguidos
     }
     if (this.pendingCount && !confirm('Hay fichas sin subir. ¿Descartarlas y abrir otro compendio?')) {
       return;
     }
     this.reset();
+    const token = this.readToken;
+    const stale = () => token !== this.readToken;
     if (!(file.type === 'application/pdf' || /\.pdf$/i.test(file.name))) {
       this.fileError = 'El archivo debe ser un PDF.';
       return;
@@ -169,9 +214,15 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
       return;
     }
     this.fileName = file.name;
+    this.fileSize = file.size;
     this.reading = true;
     try {
-      this.compendium = await this.pdfService.open(file);
+      const compendium = await this.pdfService.open(file);
+      if (stale()) {
+        compendium.close();
+        return;
+      }
+      this.compendium = compendium;
       const headerName = this.typeOf(this.sheetTypeId).headerName;
       const total = this.compendium.pageCount;
       this.pages = Array.from({ length: total }, (_, index) => ({
@@ -181,7 +232,11 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
       }));
       // Primero los encabezados (rápido) para proponer las fichas; luego las miniaturas
       for (let index = 0; index < total; index++) {
-        this.pages[index].header = detectHeader(await this.compendium.topLines(index), headerName);
+        const lines = await compendium.topLines(index);
+        if (stale()) {
+          return;
+        }
+        this.pages[index].header = detectHeader(lines, headerName);
         this.readProgress = Math.round((50 * (index + 1)) / total);
       }
       this.drafts = proposeSheets(this.pages.map((page) => page.header)).map((sheet) =>
@@ -192,24 +247,37 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
       const worker = async () => {
         while (next < total) {
           const index = next++;
-          this.pages[index].thumbnail = await this.compendium.thumbnail(index);
+          const thumbnail = await compendium.thumbnail(index);
+          if (stale()) {
+            return;
+          }
+          this.pages[index].thumbnail = thumbnail;
           done++;
           this.readProgress = 50 + Math.round((50 * done) / total);
         }
       };
       await Promise.all(Array.from({ length: Math.min(THUMBNAIL_CONCURRENCY, total) }, worker));
+      if (stale()) {
+        return;
+      }
       // Encabezados y miniaturas listos: pdf.js ya no hace falta (libera su copia del PDF)
-      this.compendium.releaseReader();
+      compendium.releaseReader();
     } catch (error) {
+      if (stale()) {
+        return; // la cerró un reset (otro compendio o salir de la pantalla): no es un error
+      }
       this.fileError =
         error instanceof InvalidPdfError ? error.message : 'No se pudo leer el PDF en el navegador.';
       this.reset(false);
     } finally {
-      this.reading = false;
+      if (token === this.readToken || !this.compendium) {
+        this.reading = false;
+      }
     }
   }
 
   private reset(clearError = true): void {
+    this.readToken++;
     if (this.compendium) {
       this.compendium.close();
       this.compendium = null;
@@ -223,6 +291,7 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     if (clearError) {
       this.fileError = null;
       this.fileName = null;
+      this.fileSize = null;
     }
   }
 

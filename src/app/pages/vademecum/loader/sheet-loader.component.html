@@ -26,13 +26,29 @@
           </option>
         </select>
       </label>
-      <label class="field file">
-        <span>Compendio en PDF (máx. {{ maxCompendiumMb }} MB)</span>
-        <input type="file" accept="application/pdf,.pdf" class="form-control-file"
-               [disabled]="!canChooseFile || batchRunning" (change)="onFileChange($event)" />
-        <small *ngIf="!sheetTypeId" class="text-hint">Primero elija el tipo.</small>
-      </label>
     </div>
+
+    <label class="dropzone" [class.disabled]="!canDropFile" [class.dragging]="dragging"
+           [class.loaded]="fileName && !fileError" [class.invalid]="fileError"
+           (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+      <input type="file" accept="application/pdf,.pdf" class="file-input"
+             [disabled]="!canDropFile" (change)="onFileChange($event)" />
+      <nb-icon class="dz-icon" [icon]="fileName && !fileError ? 'file-text-outline' : 'cloud-upload-outline'"></nb-icon>
+      <span class="dz-text">
+        <ng-container *ngIf="!fileName || fileError; else chosen">
+          <strong>{{ dragging ? 'Suelte el PDF aquí' : 'Arrastre el compendio en PDF o haga clic para elegirlo' }}</strong>
+          <small>
+            {{ !sheetTypeId ? 'Primero elija el tipo de ficha.' :
+               (seriesOf(sheetTypeId).length && !seriesId ? 'Primero elija la serie.' :
+               'Se lee en este navegador · máximo ' + maxCompendiumMb + ' MB') }}
+          </small>
+        </ng-container>
+        <ng-template #chosen>
+          <strong class="dz-file">{{ fileName }}</strong>
+          <small>{{ fileSizeLabel }}<span *ngIf="canDropFile"> · clic o arrastre otro para cambiarlo</span></small>
+        </ng-template>
+      </span>
+    </label>
     <small *ngIf="fileError" class="text-danger d-block">{{ fileError }}</small>
 
     <div *ngIf="reading" class="reading" aria-live="polite">

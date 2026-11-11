@@ -1,5 +1,4 @@
 /** Fichas en la administración de Vademécum (/vademecum/admin/sheets, API-12). */
-import { Pagination } from './upload.model';
 
 export type SheetStatus = 'draft' | 'published' | 'unpublished';
 
@@ -17,9 +16,14 @@ export interface AdminSheet {
   pageCount: number | null;
   sizeBytes: number | null;
   fileStatus: 'ready' | null;
-  uploadId: string | null;
-  sourcePages: number[];
   publishedAt: string | null;
+}
+
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  total: number;
+  pages: number;
 }
 
 export interface AdminSheetList {

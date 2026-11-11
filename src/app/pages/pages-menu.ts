@@ -244,8 +244,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: "book-open-outline",
     children: [
       {
-        title: "Cargas de fichas",
-        link: "/pages/vademecum/uploads",
+        title: "Cargar fichas",
+        link: "/pages/vademecum/load",
       },
     ],
   },

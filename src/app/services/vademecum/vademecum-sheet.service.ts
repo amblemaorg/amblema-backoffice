@@ -13,9 +13,28 @@ export class VademecumSheetService {
 
   constructor(private http: HttpClient) {}
 
-  listByUpload(uploadId: string): Observable<AdminSheetList> {
-    const params = new HttpParams().set('uploadId', uploadId).set('pageSize', '100');
+  /** Fichas de un tipo y serie (para avisar números repetidos antes de subir). */
+  listByType(sheetTypeId: string, seriesId: string | null, page = 1): Observable<AdminSheetList> {
+    let params = new HttpParams()
+      .set('sheetTypeId', sheetTypeId)
+      .set('page', String(page))
+      .set('pageSize', '100');
+    if (seriesId) {
+      params = params.set('seriesId', seriesId);
+    }
     return this.http.get<AdminSheetList>(this.url, { params });
+  }
+
+  /**
+   * Crea la ficha con el PDF que separó el navegador (POST /vademecum/admin/sheets).
+   * `publish`: la publica al crearla; la API exige descripción y grados (113).
+   */
+  create(pdf: Blob, fileName: string, data: SheetInput, publish: boolean): Observable<AdminSheet> {
+    const form = new FormData();
+    form.append('file', pdf, fileName);
+    form.append('data', JSON.stringify(data));
+    form.append('publish', publish ? 'true' : 'false');
+    return this.http.post<AdminSheet>(this.url, form);
   }
 
   update(id: string, data: SheetInput): Observable<AdminSheet> {

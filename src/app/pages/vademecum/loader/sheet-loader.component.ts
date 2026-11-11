@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Area, GRADE_OPTIONS, SheetInput } from 'src/app/_models/vademecum/sheet.model';
@@ -26,6 +26,11 @@ import {
 
 /** Límite mostrado al usuario; la API valida el real por ficha (VADEMECUM_MAX_UPLOAD_MB). */
 const MAX_COMPENDIUM_MB = 200;
+/**
+ * Miniaturas que se dibujan a la vez. pdf.js trabaja en un solo hilo: con 2 a la vez solo se
+ * ganó ~8 % de tiempo y sube el pico de memoria (decodifica imágenes de hasta 3570×4622 px).
+ */
+const THUMBNAIL_CONCURRENCY = 1;
 
 interface PageInfo {
   index: number;
@@ -46,7 +51,7 @@ interface PageInfo {
   templateUrl: './sheet-loader.component.html',
   styleUrls: ['./sheet-loader.component.scss'],
 })
-export class SheetLoaderComponent implements OnInit, OnDestroy {
+export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
   readonly gradeOptions = GRADE_OPTIONS;
   readonly maxCompendiumMb = MAX_COMPENDIUM_MB;
 
@@ -65,8 +70,12 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
   discarded: number[] = [];
   existingNumbers = new Set<number>();
   batchRunning = false;
+  /** Avisos de cada ficha pendiente; se recalculan una vez por ciclo de cambios (ngDoCheck). */
+  checks = new Map<number, string[]>();
 
   private compendium: OpenedCompendium | null = null;
+  /** PDF ya armado de cada ficha (Ver PDF y Subir no lo arman dos veces). */
+  private built = new Map<number, { pages: string; blob: Blob }>();
   private subscriptions = new Subscription();
 
   constructor(
@@ -178,10 +187,19 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
       this.drafts = proposeSheets(this.pages.map((page) => page.header)).map((sheet) =>
         newDraft(sheet.pages, sheet.number, sheet.title, this.defaults),
       );
-      for (let index = 0; index < total; index++) {
-        this.pages[index].thumbnail = await this.compendium.thumbnail(index);
-        this.readProgress = 50 + Math.round((50 * (index + 1)) / total);
-      }
+      let next = 0;
+      let done = 0;
+      const worker = async () => {
+        while (next < total) {
+          const index = next++;
+          this.pages[index].thumbnail = await this.compendium.thumbnail(index);
+          done++;
+          this.readProgress = 50 + Math.round((50 * done) / total);
+        }
+      };
+      await Promise.all(Array.from({ length: Math.min(THUMBNAIL_CONCURRENCY, total) }, worker));
+      // Encabezados y miniaturas listos: pdf.js ya no hace falta (libera su copia del PDF)
+      this.compendium.releaseReader();
     } catch (error) {
       this.fileError =
         error instanceof InvalidPdfError ? error.message : 'No se pudo leer el PDF en el navegador.';
@@ -199,6 +217,8 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
     this.pages = [];
     this.drafts = [];
     this.discarded = [];
+    this.built.clear();
+    this.checks.clear();
     this.readProgress = 0;
     if (clearError) {
       this.fileError = null;
@@ -286,6 +306,32 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
     return type ? `${type.codePrefix}${series ? series.code : ''}-${draft.number || '?'}` : '—';
   }
 
+  /** Recalcula los avisos de las fichas pendientes una sola vez por ciclo de cambios. */
+  ngDoCheck(): void {
+    if (!this.drafts.length) {
+      return;
+    }
+    const counts = new Map<string, number>();
+    this.drafts.forEach((draft) => {
+      const key = this.numberKey(draft);
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+    this.repeatedKeys = new Set([...counts].filter(([, count]) => count > 1).map(([key]) => key));
+    const checks = new Map<number, string[]>();
+    this.drafts.forEach((draft) => {
+      if (draft.state === 'pending') {
+        checks.set(draft.key, this.problems(draft));
+      }
+    });
+    this.checks = checks;
+  }
+
+  private repeatedKeys = new Set<string>();
+
+  private numberKey(draft: SheetDraft): string {
+    return `${draft.sheetTypeId}|${draft.seriesId}|${draft.number}`;
+  }
+
   /** Lo que la API rechazaría (o 113 al publicar), para avisar antes de subir. */
   problems(draft: SheetDraft, publish = false): string[] {
     const problems: string[] = [];
@@ -314,13 +360,7 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
   }
 
   private repeated(draft: SheetDraft): boolean {
-    return this.drafts.some(
-      (other) =>
-        other !== draft &&
-        other.number === draft.number &&
-        other.sheetTypeId === draft.sheetTypeId &&
-        other.seriesId === draft.seriesId,
-    );
+    return this.repeatedKeys.has(this.numberKey(draft));
   }
 
   private alreadyExists(draft: SheetDraft): boolean {
@@ -349,7 +389,7 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
   async preview(draft: SheetDraft): Promise<void> {
     const tab = window.open('', '_blank');
     try {
-      const blob = await this.compendium.extract(draft.pages);
+      const blob = await this.build(draft);
       const url = URL.createObjectURL(blob);
       if (tab) {
         tab.location.href = url;
@@ -381,8 +421,7 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
       sheetTypeId: draft.sheetTypeId,
       seriesId: draft.seriesId || null,
     };
-    return this.compendium
-      .extract(draft.pages)
+    return this.build(draft)
       .then(
         (pdf) =>
           new Promise<boolean>((resolve) => {
@@ -393,6 +432,8 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
                   draft.code = sheet.code;
                   draft.published = sheet.status === 'published';
                   this.existingNumbers.add(sheet.number);
+                  this.built.delete(draft.key);
+                  this.releaseWriterIfIdle();
                   resolve(true);
                 },
                 (error: HttpErrorResponse) => {
@@ -411,6 +452,26 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
       });
   }
 
+  /** PDF de la ficha; se reutiliza mientras sus páginas no cambien. */
+  private async build(draft: SheetDraft): Promise<Blob> {
+    const pages = draft.pages.join(',');
+    const cached = this.built.get(draft.key);
+    if (cached && cached.pages === pages) {
+      return cached.blob;
+    }
+    const blob = await this.compendium.extract(draft.pages);
+    this.built.set(draft.key, { pages, blob });
+    return blob;
+  }
+
+  /** Sin fichas por subir, pdf-lib (el compendio en memoria) se libera. */
+  private releaseWriterIfIdle(): void {
+    if (this.compendium && !this.pendingCount && !this.batchRunning) {
+      this.compendium.releaseWriter();
+      this.built.clear();
+    }
+  }
+
   /** Sube una por una las fichas pendientes; las que tienen problemas quedan marcadas. */
   async uploadAll(publish: boolean): Promise<void> {
     if (this.batchRunning) {
@@ -425,6 +486,7 @@ export class SheetLoaderComponent implements OnInit, OnDestroy {
       }
     }
     this.batchRunning = false;
+    this.releaseWriterIfIdle();
     const failed = queue.length - ok;
     if (ok) {
       this.toastr.registerSuccess('Fichas subidas', `${ok} de ${queue.length}`);

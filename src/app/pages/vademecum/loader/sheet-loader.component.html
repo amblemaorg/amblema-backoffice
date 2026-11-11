@@ -150,8 +150,8 @@
 
         <div class="draft-foot">
           <small *ngIf="draft.message" class="text-danger">{{ draft.message }}</small>
-          <small *ngIf="!draft.message && draft.state === 'pending' && problems(draft).length" class="text-warning">
-            {{ problems(draft).join(' ') }}
+          <small *ngIf="!draft.message && checks.get(draft.key)?.length" class="text-warning">
+            {{ checks.get(draft.key).join(' ') }}
           </small>
           <span class="spacer"></span>
           <ng-container *ngIf="draft.state === 'pending' || draft.state === 'error'">

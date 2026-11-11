@@ -1,4 +1,4 @@
-<app-vademecum-upload-form (uploaded)="load(1)"></app-vademecum-upload-form>
+<app-vademecum-upload-form (uploaded)="openUpload($event)"></app-vademecum-upload-form>
 
 <nb-card>
   <nb-card-header>Vademécum · Cargas de fichas</nb-card-header>
@@ -20,9 +20,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let upload of uploads">
+          <tr *ngFor="let upload of uploads" class="row-link" (click)="openUpload(upload)">
             <td>
-              <div class="file-name">{{ upload.originalFileName }}</div>
+              <a class="file-name" [routerLink]="['/pages/vademecum/uploads', upload.id]"
+                 (click)="$event.stopPropagation()">{{ upload.originalFileName }}</a>
               <small class="text-hint">{{ sizeInMb(upload.originalSizeBytes) }} MB</small>
             </td>
             <td>
@@ -38,6 +39,7 @@
                 [status]="statusLabels[upload.status].color"
                 position="center"
               ></nb-badge>
+              <small *ngIf="isBusy(upload)" class="text-hint d-block">{{ upload.progress }} %</small>
             </td>
             <td>{{ upload.sheetCount }}</td>
             <td>

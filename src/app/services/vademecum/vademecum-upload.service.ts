@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
+import { SKIP_LOADING_HEADER } from 'src/app/_intercepts/loading-interceptor';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
@@ -26,8 +27,25 @@ export class VademecumUploadService {
     return this.http.get<UploadList>(this.url, { params });
   }
 
-  get(id: string): Observable<UploadDetail> {
-    return this.http.get<UploadDetail>(`${this.url}/${id}`);
+  /** `silent`: sin pantalla de carga (consulta periódica del avance, BO-03). */
+  get(id: string, silent = false): Observable<UploadDetail> {
+    const headers = silent ? new HttpHeaders({ [SKIP_LOADING_HEADER]: '1' }) : undefined;
+    return this.http.get<UploadDetail>(`${this.url}/${id}`, { headers });
+  }
+
+  listSilently(page = 1, pageSize = 20): Observable<UploadList> {
+    const params = new HttpParams().set('page', String(page)).set('pageSize', String(pageSize));
+    const headers = new HttpHeaders({ [SKIP_LOADING_HEADER]: '1' });
+    return this.http.get<UploadList>(this.url, { params, headers });
+  }
+
+  /** Vuelve a leer el compendio original (en `review` o `error`). */
+  reprocess(id: string): Observable<UploadSummary> {
+    return this.http.post<UploadSummary>(`${this.url}/${id}/reprocess`, {});
+  }
+
+  remove(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
   }
 
   /** Sube el compendio (BO-02); emite los eventos para mostrar el avance de la subida. */

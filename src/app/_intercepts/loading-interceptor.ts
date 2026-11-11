@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { LoadingService } from '../services/helper/loading.service';
 
+/** Encabezado interno: la petición no muestra la pantalla de carga global. */
+export const SKIP_LOADING_HEADER = 'X-Skip-Loading';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -16,6 +19,12 @@ export class LoadingInterceptorService {
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler, event: HttpEvent<any>): Observable<HttpEvent<any>> {
+
+        // Consultas en segundo plano (p. ej. el avance de una carga de Vademécum cada 3 s):
+        // sin pantalla de carga. El encabezado se quita antes de enviar la petición.
+        if (request.headers.has(SKIP_LOADING_HEADER)) {
+            return next.handle(request.clone({ headers: request.headers.delete(SKIP_LOADING_HEADER) }));
+        }
 
         if (this.activeRequests === 0) {
             this.loadingScreenService.startLoading();

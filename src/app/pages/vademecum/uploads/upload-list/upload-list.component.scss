@@ -2,7 +2,12 @@
   margin: 1rem 0;
 }
 
+.row-link {
+  cursor: pointer;
+}
+
 .file-name {
+  display: block;
   font-weight: 600;
   word-break: break-word;
 }

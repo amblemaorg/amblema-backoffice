@@ -106,7 +106,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
             this.uploading = false;
             this.toastr.registerSuccess(
               'Compendio recibido',
-              'Se está procesando; puede seguir el avance en la lista.',
+              'Se está procesando en el servidor.',
             );
             this.reset(fileInput);
             this.uploaded.emit(event.body);

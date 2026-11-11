@@ -81,3 +81,6 @@ export const UPLOAD_STATUS_LABELS: { [status in UploadStatus]: { label: string; 
   done: { label: 'Fichas generadas', color: 'success' },
   error: { label: 'Error', color: 'danger' },
 };
+
+/** Estados en los que la API está trabajando: el backoffice consulta el avance. */
+export const UPLOAD_BUSY_STATUSES: UploadStatus[] = ['uploaded', 'processing', 'generating'];

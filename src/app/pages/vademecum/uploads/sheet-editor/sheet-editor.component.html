@@ -1,0 +1,96 @@
+<div class="sheet-editor">
+  <div class="toolbar">
+    <h6>Datos de las fichas ({{ sheets.length }})</h6>
+    <button nbButton status="success" size="small" [disabled]="publishing || !draftIds.length" (click)="publishAll()">
+      Publicar las {{ draftIds.length }} sin publicar
+    </button>
+  </div>
+  <p class="text-hint">
+    Número y título vienen del encabezado del compendio. Para publicar hacen falta descripción,
+    al menos un grado y el archivo.
+  </p>
+
+  <form
+    *ngFor="let sheet of sheets; let i = index; trackBy: trackSheet"
+    class="sheet"
+    [formGroup]="formAt(i)"
+    (ngSubmit)="save(i)"
+  >
+    <div class="sheet-head">
+      <span class="type-dot" [style.background]="sheet.sheetType?.color"></span>
+      <strong>{{ sheet.code }}</strong>
+      <nb-badge
+        class="status"
+        [text]="statusLabels[sheet.status].label"
+        [status]="statusLabels[sheet.status].color"
+        position="center"
+      ></nb-badge>
+      <span class="text-hint">
+        Págs. {{ sheet.sourcePages[0] + 1 }}<span *ngIf="sheet.sourcePages.length > 1">–{{ sheet.sourcePages[sheet.sourcePages.length - 1] + 1 }}</span>
+        · {{ sheet.pageCount }} pág.
+      </span>
+      <button type="button" nbButton ghost size="tiny" status="primary" (click)="viewPdf(sheet)">Ver PDF</button>
+    </div>
+
+    <div class="grid">
+      <label class="field small">
+        <span>N.º</span>
+        <input nbInput fieldSize="small" type="number" min="1" max="999" formControlName="number" />
+      </label>
+      <label class="field wide">
+        <span>Título</span>
+        <input nbInput fieldSize="small" fullWidth type="text" maxlength="150" formControlName="title" />
+      </label>
+      <label class="field">
+        <span>Tipo</span>
+        <nb-select size="small" fullWidth formControlName="sheetTypeId">
+          <nb-option *ngFor="let type of sheetTypes" [value]="type.id">{{ type.name }}</nb-option>
+        </nb-select>
+      </label>
+      <label class="field" *ngIf="seriesFor(i).length">
+        <span>Serie</span>
+        <nb-select size="small" fullWidth formControlName="seriesId" placeholder="Seleccione">
+          <nb-option *ngFor="let series of seriesFor(i)" [value]="series.id">{{ series.name }}</nb-option>
+        </nb-select>
+      </label>
+      <label class="field">
+        <span>Categoría (áreas)</span>
+        <nb-select size="small" fullWidth multiple formControlName="areaIds" placeholder="Sin área">
+          <nb-option *ngFor="let area of areas" [value]="area.id">{{ area.name }}</nb-option>
+        </nb-select>
+      </label>
+      <label class="field">
+        <span>Grados</span>
+        <nb-select
+          size="small"
+          fullWidth
+          multiple
+          formControlName="grades"
+          placeholder="Sin grado"
+          (selectedChange)="onGradesChange(i, $event)"
+        >
+          <nb-option *ngFor="let grade of gradeOptions" [value]="grade.value">{{ grade.label }}</nb-option>
+        </nb-select>
+      </label>
+      <label class="field full">
+        <span>Descripción</span>
+        <textarea nbInput fullWidth rows="2" maxlength="2000" formControlName="description"></textarea>
+      </label>
+    </div>
+
+    <nb-alert *ngIf="errors[sheet.id]?.length" status="warning" class="message">
+      <div *ngFor="let message of errors[sheet.id]">{{ message }}</div>
+    </nb-alert>
+
+    <div class="actions">
+      <button nbButton outline size="small" status="primary" type="submit"
+              [disabled]="savingId === sheet.id || formAt(i).pristine">
+        Guardar
+      </button>
+      <button *ngIf="sheet.status !== 'published'" nbButton size="small" status="success" type="button"
+              [disabled]="savingId === sheet.id" (click)="publish(i)">
+        Publicar
+      </button>
+    </div>
+  </form>
+</div>

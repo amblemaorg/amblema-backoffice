@@ -79,12 +79,11 @@
       (changed)="load()"
     ></app-vademecum-cut-review>
 
-    <div *ngIf="upload.status === 'done'" class="sheets">
-      <h6>Fichas generadas en borrador ({{ upload.sheets.length }})</h6>
-      <ul>
-        <li *ngFor="let sheet of upload.sheets"><strong>{{ sheet.code }}</strong> {{ sheet.title }}</li>
-      </ul>
-    </div>
+    <app-vademecum-sheet-editor
+      *ngIf="upload.status === 'done' && upload.sheets.length"
+      class="sheets"
+      [uploadId]="upload.id"
+    ></app-vademecum-sheet-editor>
 
     <div class="actions">
       <button *ngIf="canReprocess" nbButton outline status="primary" size="small"

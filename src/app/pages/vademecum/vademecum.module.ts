@@ -16,6 +16,7 @@ import { UploadListComponent } from './uploads/upload-list/upload-list.component
 import { UploadFormComponent } from './uploads/upload-form/upload-form.component';
 import { UploadDetailComponent } from './uploads/upload-detail/upload-detail.component';
 import { CutReviewComponent } from './uploads/cut-review/cut-review.component';
+import { SheetEditorComponent } from './uploads/sheet-editor/sheet-editor.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CutReviewComponent } from './uploads/cut-review/cut-review.component';
     UploadFormComponent,
     UploadDetailComponent,
     CutReviewComponent,
+    SheetEditorComponent,
   ],
   imports: [
     CommonModule,

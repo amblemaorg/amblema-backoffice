@@ -66,20 +66,48 @@
           <strong>{{ drafts.length }}</strong> fichas · {{ doneCount }} subidas
           <span *ngIf="discarded.length"> · {{ discarded.length }} páginas descartadas</span>
         </div>
-        <div class="batch">
+        <div class="batch" *ngIf="pendingCount; else allDone">
           <button nbButton outline status="primary" size="small"
-                  [disabled]="batchRunning || reading || !pendingCount" (click)="uploadAll(false)">
+                  [disabled]="batchRunning || reading" (click)="uploadAll(false)">
             Subir {{ pendingCount }} como borrador
           </button>
           <button nbButton status="success" size="small"
-                  [disabled]="batchRunning || reading || !pendingCount" (click)="uploadAll(true)">
+                  [disabled]="batchRunning || reading" (click)="uploadAll(true)">
             Subir y publicar {{ pendingCount }}
           </button>
         </div>
+        <ng-template #allDone>
+          <span class="all-done">
+            ✓ Todas las fichas están subidas · {{ publishedCount }} publicadas
+            <span *ngIf="doneCount - publishedCount"> · {{ doneCount - publishedCount }} en borrador</span>
+          </span>
+        </ng-template>
       </div>
 
-      <section *ngFor="let draft of drafts; let i = index; trackBy: trackDraft" class="draft"
-               [class.done]="draft.state === 'done'" [class.failed]="draft.state === 'error'">
+      <ng-container *ngFor="let draft of drafts; let i = index; trackBy: trackDraft">
+      <!-- Ficha ya subida: una línea compacta -->
+      <section *ngIf="draft.state === 'done'; else editable" class="uploaded" [class.is-draft]="!draft.published">
+        <img *ngIf="thumbnailOf(draft.pages[0]) as src" class="uploaded-thumb" [src]="src"
+             [alt]="'Miniatura de ' + draft.code" />
+        <div class="uploaded-info">
+          <div class="uploaded-title">
+            <strong class="code">{{ draft.code }}</strong>
+            <span class="uploaded-name">{{ draft.title }}</span>
+          </div>
+          <small class="text-hint">
+            {{ titleOfType(draft.sheetTypeId) }} · {{ draft.pages.length }} {{ draft.pages.length === 1 ? 'página' : 'páginas' }}
+            · Grados: {{ gradeLabels(draft.grades) || '—' }}
+            <span *ngIf="draft.areaIds.length"> · {{ areaLabels(draft.areaIds) }}</span>
+          </small>
+        </div>
+        <span class="state" [class.done]="draft.published" [class.draft-state]="!draft.published">
+          {{ draft.published ? 'Publicada' : 'Borrador' }}
+        </span>
+        <button nbButton ghost size="tiny" status="primary" (click)="viewUploaded(draft)">Ver PDF</button>
+      </section>
+
+      <ng-template #editable>
+      <section class="draft" [class.failed]="draft.state === 'error'">
         <div class="draft-head">
           <strong class="code">{{ draft.code || codeOf(draft) }}</strong>
           <span class="badge-state" [ngSwitch]="draft.state">
@@ -90,7 +118,7 @@
           </span>
           <span class="text-hint">{{ draft.pages.length }} {{ draft.pages.length === 1 ? 'página' : 'páginas' }}</span>
           <span class="spacer"></span>
-          <button *ngIf="i > 0" nbButton ghost size="tiny" status="primary" [disabled]="locked(draft) || locked(drafts[i - 1])"
+          <button *ngIf="i > 0 && !locked(draft) && !locked(drafts[i - 1])" nbButton ghost size="tiny" status="primary"
                   title="Unir con la ficha anterior (conserva sus datos)" (click)="merge(i)">⟵ Unir con la anterior</button>
           <button nbButton ghost size="tiny" status="primary" [disabled]="draft.state === 'uploading'" (click)="preview(draft)">Ver PDF</button>
         </div>
@@ -184,6 +212,8 @@
           </ng-container>
         </div>
       </section>
+      </ng-template>
+      </ng-container>
 
       <!-- Páginas descartadas -->
       <section *ngIf="discarded.length" class="discarded">

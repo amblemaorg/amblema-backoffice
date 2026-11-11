@@ -21,6 +21,8 @@ export interface SheetDraft {
   /** Código y estado con que quedó en la API. */
   code: string | null;
   published: boolean;
+  /** Id de la ficha creada en la API (para ver su PDF ya optimizado). */
+  sheetId: string | null;
 }
 
 export interface DraftDefaults {
@@ -51,6 +53,7 @@ export function newDraft(
     message: null,
     code: null,
     published: false,
+    sheetId: null,
   };
 }
 

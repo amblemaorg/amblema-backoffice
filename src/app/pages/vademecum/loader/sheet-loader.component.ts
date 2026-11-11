@@ -457,6 +457,51 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     return this.drafts.filter((draft) => draft.state === 'done').length;
   }
 
+  get publishedCount(): number {
+    return this.drafts.filter((draft) => draft.state === 'done' && draft.published).length;
+  }
+
+  titleOfType(sheetTypeId: string | null): string {
+    const type = this.typeOf(sheetTypeId);
+    return type ? type.name : '';
+  }
+
+  gradeLabels(grades: string[]): string {
+    return this.gradeOptions
+      .filter((option) => grades.includes(option.value))
+      .map((option) => option.label)
+      .join(', ');
+  }
+
+  areaLabels(areaIds: string[]): string {
+    return this.areas
+      .filter((area) => areaIds.includes(area.id))
+      .map((area) => area.name)
+      .join(', ');
+  }
+
+  /** PDF ya optimizado que guardó el servidor (no el armado en el navegador). */
+  viewUploaded(draft: SheetDraft): void {
+    const tab = window.open('', '_blank');
+    this.subscriptions.add(
+      this.sheetService.file(draft.sheetId).subscribe(
+        (blob) => {
+          const url = URL.createObjectURL(blob);
+          if (tab) {
+            tab.location.href = url;
+          }
+          setTimeout(() => URL.revokeObjectURL(url), 60000);
+        },
+        () => {
+          if (tab) {
+            tab.close();
+          }
+          this.toastr.error('Error', 'No se pudo abrir el PDF de la ficha.');
+        },
+      ),
+    );
+  }
+
   async preview(draft: SheetDraft): Promise<void> {
     const tab = window.open('', '_blank');
     try {
@@ -501,6 +546,7 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
                 (sheet) => {
                   draft.state = 'done';
                   draft.code = sheet.code;
+                  draft.sheetId = sheet.id;
                   draft.published = sheet.status === 'published';
                   this.existingNumbers.add(sheet.number);
                   this.built.delete(draft.key);

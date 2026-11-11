@@ -73,6 +73,12 @@
       {{ upload.proposedCuts.length }} fichas. Revise los cortes antes de generar las fichas.
     </nb-alert>
 
+    <app-vademecum-cut-review
+      *ngIf="upload.status === 'review'"
+      [upload]="upload"
+      (changed)="load()"
+    ></app-vademecum-cut-review>
+
     <div *ngIf="upload.status === 'done'" class="sheets">
       <h6>Fichas generadas en borrador ({{ upload.sheets.length }})</h6>
       <ul>

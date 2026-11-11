@@ -4,6 +4,7 @@ import { SKIP_LOADING_HEADER } from 'src/app/_intercepts/loading-interceptor';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
+  UploadCut,
   UploadDetail,
   UploadList,
   UploadStatus,
@@ -37,6 +38,25 @@ export class VademecumUploadService {
     const params = new HttpParams().set('page', String(page)).set('pageSize', String(pageSize));
     const headers = new HttpHeaders({ [SKIP_LOADING_HEADER]: '1' });
     return this.http.get<UploadList>(this.url, { params, headers });
+  }
+
+  /** Miniatura de una página (requiere token): se pide como blob y en silencio. */
+  pageThumbnail(path: string): Observable<Blob> {
+    const headers = new HttpHeaders({ [SKIP_LOADING_HEADER]: '1' });
+    return this.http.get(`${environment.api}${path.replace(/^\//, '')}`, {
+      headers,
+      responseType: 'blob',
+    });
+  }
+
+  /** Guarda los cortes confirmados (API-11; solo en `review`). */
+  saveCuts(id: string, cuts: UploadCut[]): Observable<UploadDetail> {
+    return this.http.put<UploadDetail>(`${this.url}/${id}/cuts`, { cuts });
+  }
+
+  /** Genera las fichas en borrador a partir de los cortes confirmados (API-11). */
+  generate(id: string): Observable<UploadSummary> {
+    return this.http.post<UploadSummary>(`${this.url}/${id}/generate`, {});
   }
 
   /** Vuelve a leer el compendio original (en `review` o `error`). */

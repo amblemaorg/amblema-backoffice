@@ -1,0 +1,116 @@
+<div class="cut-review">
+  <div class="toolbar">
+    <div>
+      <strong>{{ sheetCount }} fichas</strong> en {{ upload.pageCount }} páginas.
+      <span class="text-hint">
+        Una con la anterior, separe entre páginas o quite las páginas que no son ficha.
+      </span>
+    </div>
+    <button nbButton ghost size="small" status="basic" [disabled]="saving" (click)="reset()">
+      Volver a lo propuesto
+    </button>
+  </div>
+
+  <div class="cuts">
+    <section
+      *ngFor="let cut of cuts; let i = index; trackBy: trackCut"
+      class="cut"
+      [class.excluded]="cut.excluded"
+    >
+      <div class="cut-header">
+        <ng-container *ngIf="!cut.excluded; else excludedHeader">
+          <label class="field number">
+            <span>N.º</span>
+            <input
+              nbInput
+              fieldSize="small"
+              type="number"
+              min="1"
+              [value]="cut.number || ''"
+              [placeholder]="numberOf(cut) || '?'"
+              (change)="setNumber(cut, $event.target.value)"
+              [disabled]="saving"
+            />
+          </label>
+          <label class="field title">
+            <span>Título</span>
+            <input
+              nbInput
+              fieldSize="small"
+              fullWidth
+              type="text"
+              maxlength="150"
+              [value]="cut.title || ''"
+              [placeholder]="titleOf(cut) || 'Escriba el título'"
+              (change)="setTitle(cut, $event.target.value)"
+              [disabled]="saving"
+            />
+          </label>
+        </ng-container>
+        <ng-template #excludedHeader>
+          <span class="excluded-label">No es ficha (se descarta)</span>
+        </ng-template>
+        <button
+          *ngIf="i > 0"
+          nbButton
+          ghost
+          size="tiny"
+          status="primary"
+          class="merge"
+          title="Unir con la ficha anterior (conserva su número y título)"
+          [disabled]="saving"
+          (click)="merge(i)"
+        >
+          ⟵ Unir con la anterior
+        </button>
+      </div>
+
+      <div class="pages">
+        <ng-container *ngFor="let page of cut.pages; let p = index">
+          <button
+            *ngIf="p > 0"
+            type="button"
+            class="split"
+            title="Separar aquí: la página siguiente empieza otra ficha"
+            [disabled]="saving"
+            (click)="split(i, p)"
+          >
+            ✂
+          </button>
+          <figure class="page">
+            <div class="thumb">
+              <img *ngIf="thumbnails.get(page) as src; else noThumb" [src]="src" [alt]="'Página ' + (page + 1)" />
+              <ng-template #noThumb><div class="placeholder">Pág. {{ page + 1 }}</div></ng-template>
+            </div>
+            <figcaption>
+              <span class="page-number">Pág. {{ page + 1 }}</span>
+              <span class="header-text" [title]="headerOf(page)">{{ headerOf(page) }}</span>
+              <button
+                type="button"
+                class="toggle"
+                [disabled]="saving"
+                (click)="toggle(i, page)"
+              >
+                {{ cut.excluded && cut.pages.length === 1 ? 'Volver a incluir' : 'Quitar página' }}
+              </button>
+            </figcaption>
+          </figure>
+        </ng-container>
+      </div>
+    </section>
+  </div>
+
+  <nb-alert *ngIf="problems.length" status="warning" class="message">
+    <div *ngFor="let problem of problems">{{ problem }}</div>
+  </nb-alert>
+  <nb-alert *ngIf="serverError" status="danger" class="message">{{ serverError }}</nb-alert>
+
+  <div class="actions">
+    <button nbButton outline status="primary" [disabled]="saving || problems.length > 0" (click)="save(false)">
+      Guardar cortes
+    </button>
+    <button nbButton status="primary" [disabled]="saving || problems.length > 0" (click)="save(true)">
+      Guardar y generar {{ sheetCount }} fichas
+    </button>
+  </div>
+</div>

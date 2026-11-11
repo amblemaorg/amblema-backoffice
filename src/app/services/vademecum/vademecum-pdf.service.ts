@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as pdfjs from 'pdfjs-dist/legacy/build/pdf';
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument, PDFName } from 'pdf-lib';
 
 /** Worker de pdf.js copiado como asset en angular.json (build legacy, compatible con webpack 4). */
 pdfjs.GlobalWorkerOptions.workerSrc = 'assets/pdfjs/pdf.worker.min.js';
@@ -9,6 +9,13 @@ pdfjs.GlobalWorkerOptions.workerSrc = 'assets/pdfjs/pdf.worker.min.js';
 const HEADER_REGION = 0.3;
 const THUMBNAIL_WIDTH = 240;
 const THUMBNAIL_QUALITY = 0.72;
+/**
+ * Claves de página que no se imprimen ni se ven y que pdf-lib copiaría con cada ficha.
+ * Los compendios vienen de Illustrator: /PieceInfo guarda el archivo editable completo
+ * (medido: 15 MB en Ingenio 3.º-4.º, 33 MB en Lectura troquel) y cada ficha lo arrastraba.
+ * /Thumb es una miniatura interna del PDF.
+ */
+const DISCARDED_PAGE_KEYS = ['PieceInfo', 'Thumb'];
 
 export class InvalidPdfError extends Error {}
 
@@ -58,7 +65,15 @@ export class VademecumPdfService {
       throw new InvalidPdfError('El PDF no tiene páginas.');
     }
     let source: Promise<PDFDocument> | null = null;
-    const loadSource = () => (source = source || PDFDocument.load(bytes, { ignoreEncryption: true }));
+    const loadSource = () =>
+      (source =
+        source ||
+        PDFDocument.load(bytes, { ignoreEncryption: true }).then((original) => {
+          original.getPages().forEach((page) =>
+            DISCARDED_PAGE_KEYS.forEach((key) => page.node.delete(PDFName.of(key))),
+          );
+          return original;
+        }));
 
     return {
       pageCount: document.numPages,

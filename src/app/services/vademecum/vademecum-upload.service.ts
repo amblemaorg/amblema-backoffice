@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { UploadDetail, UploadList, UploadStatus } from 'src/app/_models/vademecum/upload.model';
+import {
+  UploadDetail,
+  UploadList,
+  UploadStatus,
+  UploadSummary,
+} from 'src/app/_models/vademecum/upload.model';
 
 /** Cargas de compendios: /vademecum/admin/uploads (API-07 a API-11). */
 @Injectable({
@@ -23,5 +28,19 @@ export class VademecumUploadService {
 
   get(id: string): Observable<UploadDetail> {
     return this.http.get<UploadDetail>(`${this.url}/${id}`);
+  }
+
+  /** Sube el compendio (BO-02); emite los eventos para mostrar el avance de la subida. */
+  create(file: File, sheetTypeId: string, seriesId?: string): Observable<HttpEvent<UploadSummary>> {
+    const form = new FormData();
+    form.append('file', file, file.name);
+    form.append('sheetTypeId', sheetTypeId);
+    if (seriesId) {
+      form.append('seriesId', seriesId);
+    }
+    return this.http.post<UploadSummary>(this.url, form, {
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 }

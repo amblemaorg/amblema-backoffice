@@ -7,12 +7,14 @@ import {
   NbCardModule,
   NbIconModule,
   NbProgressBarModule,
+  NbSelectModule,
 } from '@nebular/theme';
 import { VademecumRoutingModule } from './vademecum-routing.module';
 import { UploadListComponent } from './uploads/upload-list/upload-list.component';
+import { UploadFormComponent } from './uploads/upload-form/upload-form.component';
 
 @NgModule({
-  declarations: [UploadListComponent],
+  declarations: [UploadListComponent, UploadFormComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,6 +24,7 @@ import { UploadListComponent } from './uploads/upload-list/upload-list.component
     NbCardModule,
     NbIconModule,
     NbProgressBarModule,
+    NbSelectModule,
     VademecumRoutingModule,
   ],
 })

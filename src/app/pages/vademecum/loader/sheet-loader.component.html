@@ -129,25 +129,22 @@
                 <option *ngFor="let series of seriesOf(draft.sheetTypeId)" [ngValue]="series.id">{{ series.name }}</option>
               </select>
             </label>
-            <div class="field wide">
+            <label class="field">
               <span>Categoría (áreas)</span>
-              <div class="checks">
-                <nb-checkbox *ngFor="let area of areas" [checked]="draft.areaIds.includes(area.id)"
-                             [disabled]="locked(draft)" (checkedChange)="toggleArea(draft, area.id, $event)">
-                  {{ area.name }}
-                </nb-checkbox>
-                <small *ngIf="!areas.length" class="text-hint">No hay áreas activas.</small>
-              </div>
-            </div>
-            <div class="field wide">
+              <ng-select class="multi" [items]="areas" bindLabel="name" bindValue="id" [multiple]="true"
+                         [closeOnSelect]="false" [searchable]="false" [readonly]="locked(draft)"
+                         placeholder="Sin área" notFoundText="No hay áreas activas"
+                         [(ngModel)]="draft.areaIds">
+              </ng-select>
+            </label>
+            <label class="field">
               <span>Grados</span>
-              <div class="checks">
-                <nb-checkbox *ngFor="let grade of gradeOptions" [checked]="draft.grades.includes(grade.value)"
-                             [disabled]="locked(draft)" (checkedChange)="toggleGrade(draft, grade.value, $event)">
-                  {{ grade.label }}
-                </nb-checkbox>
-              </div>
-            </div>
+              <ng-select class="multi" [items]="gradeOptions" bindLabel="label" bindValue="value" [multiple]="true"
+                         [closeOnSelect]="false" [searchable]="false" [readonly]="locked(draft)"
+                         placeholder="Sin grado"
+                         [ngModel]="draft.grades" (ngModelChange)="onGradesChange(draft, $event)">
+              </ng-select>
+            </label>
             <label class="field full">
               <span>Descripción</span>
               <textarea nbInput fullWidth rows="2" maxlength="2000" [(ngModel)]="draft.description"></textarea>

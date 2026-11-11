@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import {
   NbButtonModule,
   NbCardModule,
-  NbCheckboxModule,
   NbInputModule,
   NbProgressBarModule,
 } from '@nebular/theme';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { VademecumRoutingModule } from './vademecum-routing.module';
 import { SheetLoaderComponent } from './loader/sheet-loader.component';
 
@@ -18,9 +18,9 @@ import { SheetLoaderComponent } from './loader/sheet-loader.component';
     FormsModule,
     NbButtonModule,
     NbCardModule,
-    NbCheckboxModule,
     NbInputModule,
     NbProgressBarModule,
+    NgSelectModule,
     VademecumRoutingModule,
   ],
 })

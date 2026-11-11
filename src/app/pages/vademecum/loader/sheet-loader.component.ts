@@ -290,20 +290,15 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     draft.seriesId = null;
   }
 
-  toggleArea(draft: SheetDraft, areaId: string, checked: boolean): void {
-    draft.areaIds = checked
-      ? [...draft.areaIds.filter((id) => id !== areaId), areaId]
-      : draft.areaIds.filter((id) => id !== areaId);
-  }
-
-  /** "Todos" excluye los grados sueltos y al revés. */
-  toggleGrade(draft: SheetDraft, grade: string, checked: boolean): void {
-    if (!checked) {
-      draft.grades = draft.grades.filter((item) => item !== grade);
-    } else if (grade === 'all') {
+  /** "Todos" excluye los grados sueltos y al revés (gana lo último que se marcó). */
+  onGradesChange(draft: SheetDraft, grades: string[]): void {
+    const selected = grades || [];
+    if (selected.includes('all') && !draft.grades.includes('all')) {
       draft.grades = ['all'];
+    } else if (selected.length > 1 && selected.includes('all')) {
+      draft.grades = selected.filter((grade) => grade !== 'all').sort();
     } else {
-      draft.grades = [...draft.grades.filter((item) => item !== 'all' && item !== grade), grade].sort();
+      draft.grades = [...selected].sort();
     }
   }
 

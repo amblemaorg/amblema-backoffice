@@ -119,4 +119,6 @@ export const ALL_ACTIONS = {
   COORDINATOR_PAGE_EDIT: 'coordinator_page_edit',
   SCHOOL_PAGE_EDIT: 'school_page_edit',
   BLOG_PAGE_EDIT: 'blog_page_edit',
+  // Vademécum (BO-01): una sola acción para todo el módulo
+  VADEMECUM_ADMIN: 'vademecum_admin',
 };

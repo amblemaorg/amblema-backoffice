@@ -293,5 +293,11 @@ export class MenuSetUp {
     this.menu[6].children[7].hidden = !new AuthService().isAllowed(
       ALL_ACTIONS.REPORT_SPONSOR_ACTIVES_VIEW
     );
+
+    // -- Vademécum (BO-01): se busca por título para no depender de la posición --
+    const vademecum = this.menu.find((item) => item.title === 'Vademécum');
+    if (vademecum) {
+      vademecum.hidden = !new AuthService().isAllowed(ALL_ACTIONS.VADEMECUM_ADMIN);
+    }
   }
 }

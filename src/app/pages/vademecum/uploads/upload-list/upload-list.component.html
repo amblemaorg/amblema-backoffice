@@ -1,0 +1,58 @@
+<nb-card>
+  <nb-card-header>Vademécum · Cargas de fichas</nb-card-header>
+  <nb-card-body>
+    <p *ngIf="loaded && !uploads.length" class="empty">
+      Todavía no hay compendios cargados.
+    </p>
+
+    <div *ngIf="uploads.length" class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Compendio</th>
+            <th>Tipo</th>
+            <th>Páginas</th>
+            <th>Estado</th>
+            <th>Fichas</th>
+            <th>Cargado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let upload of uploads">
+            <td>
+              <div class="file-name">{{ upload.originalFileName }}</div>
+              <small class="text-hint">{{ sizeInMb(upload.originalSizeBytes) }} MB</small>
+            </td>
+            <td>
+              <span class="type-dot" [style.background]="upload.sheetType?.color"></span>
+              {{ upload.sheetType?.name }}
+              <small *ngIf="upload.series" class="text-hint d-block">{{ upload.series.name }}</small>
+            </td>
+            <td>{{ upload.pageCount !== null ? upload.pageCount : '—' }}</td>
+            <td>
+              <nb-badge
+                class="status"
+                [text]="statusLabels[upload.status].label"
+                [status]="statusLabels[upload.status].color"
+                position="center"
+              ></nb-badge>
+            </td>
+            <td>{{ upload.sheetCount }}</td>
+            <td>
+              {{ upload.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+              <small class="text-hint d-block">{{ upload.createdBy?.name }}</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="pagination.pages > 1" class="pager">
+      <button nbButton size="small" ghost [disabled]="pagination.page <= 1"
+              (click)="load(pagination.page - 1)">Anterior</button>
+      <span>Página {{ pagination.page }} de {{ pagination.pages }}</span>
+      <button nbButton size="small" ghost [disabled]="pagination.page >= pagination.pages"
+              (click)="load(pagination.page + 1)">Siguiente</button>
+    </div>
+  </nb-card-body>
+</nb-card>

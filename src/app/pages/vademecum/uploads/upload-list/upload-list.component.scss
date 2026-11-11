@@ -1,0 +1,28 @@
+.empty {
+  margin: 1rem 0;
+}
+
+.file-name {
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.type-dot {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.status {
+  position: static;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

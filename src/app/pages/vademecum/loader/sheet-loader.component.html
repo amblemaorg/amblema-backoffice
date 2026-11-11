@@ -10,21 +10,21 @@
     <div class="source">
       <label class="field">
         <span>Tipo de ficha del compendio</span>
-        <nb-select [(selected)]="sheetTypeId" (selectedChange)="onTypeChange()" placeholder="Seleccione"
-                   [disabled]="reading || batchRunning" fullWidth>
-          <nb-option *ngFor="let type of sheetTypes" [value]="type.id">
-            <span class="type-dot" [style.background]="type.color"></span>{{ type.name }} ({{ type.codePrefix }})
-          </nb-option>
-        </nb-select>
+        <select class="form-control" [(ngModel)]="sheetTypeId" (ngModelChange)="onTypeChange()"
+                [disabled]="reading || batchRunning">
+          <option [ngValue]="null" disabled>Seleccione</option>
+          <option *ngFor="let type of sheetTypes" [ngValue]="type.id">{{ type.name }} ({{ type.codePrefix }})</option>
+        </select>
       </label>
       <label class="field" *ngIf="seriesOf(sheetTypeId).length">
         <span>Serie (segmentación por grados)</span>
-        <nb-select [(selected)]="seriesId" (selectedChange)="loadExistingNumbers()" placeholder="Seleccione"
-                   [disabled]="reading || batchRunning" fullWidth>
-          <nb-option *ngFor="let series of seriesOf(sheetTypeId)" [value]="series.id">
+        <select class="form-control" [(ngModel)]="seriesId" (ngModelChange)="loadExistingNumbers()"
+                [disabled]="reading || batchRunning">
+          <option [ngValue]="null" disabled>Seleccione</option>
+          <option *ngFor="let series of seriesOf(sheetTypeId)" [ngValue]="series.id">
             {{ series.name }} · {{ typeOf(sheetTypeId)?.codePrefix }}{{ series.code }}
-          </nb-option>
-        </nb-select>
+          </option>
+        </select>
       </label>
       <label class="field file">
         <span>Compendio en PDF (máx. {{ maxCompendiumMb }} MB)</span>
@@ -117,30 +117,37 @@
             </label>
             <label class="field">
               <span>Tipo</span>
-              <nb-select size="small" fullWidth [(selected)]="draft.sheetTypeId" (selectedChange)="onDraftTypeChange(draft)"
-                         [disabled]="locked(draft)">
-                <nb-option *ngFor="let type of sheetTypes" [value]="type.id">{{ type.name }}</nb-option>
-              </nb-select>
+              <select class="form-control form-control-sm" [(ngModel)]="draft.sheetTypeId"
+                      (ngModelChange)="onDraftTypeChange(draft)">
+                <option *ngFor="let type of sheetTypes" [ngValue]="type.id">{{ type.name }}</option>
+              </select>
             </label>
             <label class="field" *ngIf="seriesOf(draft.sheetTypeId).length">
               <span>Serie</span>
-              <nb-select size="small" fullWidth [(selected)]="draft.seriesId" placeholder="Seleccione" [disabled]="locked(draft)">
-                <nb-option *ngFor="let series of seriesOf(draft.sheetTypeId)" [value]="series.id">{{ series.name }}</nb-option>
-              </nb-select>
+              <select class="form-control form-control-sm" [(ngModel)]="draft.seriesId">
+                <option [ngValue]="null" disabled>Seleccione</option>
+                <option *ngFor="let series of seriesOf(draft.sheetTypeId)" [ngValue]="series.id">{{ series.name }}</option>
+              </select>
             </label>
-            <label class="field">
+            <div class="field wide">
               <span>Categoría (áreas)</span>
-              <nb-select size="small" fullWidth multiple [(selected)]="draft.areaIds" placeholder="Sin área" [disabled]="locked(draft)">
-                <nb-option *ngFor="let area of areas" [value]="area.id">{{ area.name }}</nb-option>
-              </nb-select>
-            </label>
-            <label class="field">
+              <div class="checks">
+                <nb-checkbox *ngFor="let area of areas" [checked]="draft.areaIds.includes(area.id)"
+                             [disabled]="locked(draft)" (checkedChange)="toggleArea(draft, area.id, $event)">
+                  {{ area.name }}
+                </nb-checkbox>
+                <small *ngIf="!areas.length" class="text-hint">No hay áreas activas.</small>
+              </div>
+            </div>
+            <div class="field wide">
               <span>Grados</span>
-              <nb-select size="small" fullWidth multiple [selected]="draft.grades" (selectedChange)="onGradesChange(draft, $event)"
-                         placeholder="Sin grado" [disabled]="locked(draft)">
-                <nb-option *ngFor="let grade of gradeOptions" [value]="grade.value">{{ grade.label }}</nb-option>
-              </nb-select>
-            </label>
+              <div class="checks">
+                <nb-checkbox *ngFor="let grade of gradeOptions" [checked]="draft.grades.includes(grade.value)"
+                             [disabled]="locked(draft)" (checkedChange)="toggleGrade(draft, grade.value, $event)">
+                  {{ grade.label }}
+                </nb-checkbox>
+              </div>
+            </div>
             <label class="field full">
               <span>Descripción</span>
               <textarea nbInput fullWidth rows="2" maxlength="2000" [(ngModel)]="draft.description"></textarea>

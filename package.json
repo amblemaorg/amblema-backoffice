@@ -78,6 +78,8 @@
     "ngx-owl-carousel-o": "^5.1.1",
     "ngx-quill": "^13.2.0",
     "npm": "^6.14.17",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "2.10.377",
     "pdfkit": "^0.13.0",
     "pdfmake": "^0.2.6",
     "pdfmake-wrapper": "^2.1.3",

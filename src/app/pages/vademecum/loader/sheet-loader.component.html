@@ -1,0 +1,240 @@
+<nb-card class="loader">
+  <nb-card-header>Vademécum · Cargar fichas</nb-card-header>
+  <nb-card-body>
+    <p class="text-hint intro">
+      El compendio se lee en este navegador y no se envía completo: aquí revisa cada ficha y
+      solo se sube el PDF de cada una. El servidor lo optimiza y genera sus imágenes.
+    </p>
+
+    <!-- 1. Tipo, serie y compendio -->
+    <div class="source">
+      <label class="field">
+        <span>Tipo de ficha del compendio</span>
+        <select class="form-control" [(ngModel)]="sheetTypeId" (ngModelChange)="onTypeChange()"
+                [disabled]="reading || batchRunning">
+          <option [ngValue]="null" disabled>Seleccione</option>
+          <option *ngFor="let type of sheetTypes" [ngValue]="type.id">{{ type.name }} ({{ type.codePrefix }})</option>
+        </select>
+      </label>
+      <label class="field" *ngIf="seriesOf(sheetTypeId).length">
+        <span>Serie (segmentación por grados)</span>
+        <select class="form-control" [(ngModel)]="seriesId" (ngModelChange)="loadExistingNumbers()"
+                [disabled]="reading || batchRunning">
+          <option [ngValue]="null" disabled>Seleccione</option>
+          <option *ngFor="let series of seriesOf(sheetTypeId)" [ngValue]="series.id">
+            {{ series.name }} · {{ typeOf(sheetTypeId)?.codePrefix }}{{ series.code }}
+          </option>
+        </select>
+      </label>
+    </div>
+
+    <label class="dropzone" [class.disabled]="!canDropFile" [class.dragging]="dragging"
+           [class.loaded]="fileName && !fileError" [class.invalid]="fileError"
+           (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+      <input type="file" accept="application/pdf,.pdf" class="file-input"
+             [disabled]="!canDropFile" (change)="onFileChange($event)" />
+      <nb-icon class="dz-icon" [icon]="fileName && !fileError ? 'file-text-outline' : 'cloud-upload-outline'"></nb-icon>
+      <span class="dz-text">
+        <ng-container *ngIf="!fileName || fileError; else chosen">
+          <strong>{{ dragging ? 'Suelte el PDF aquí' : 'Arrastre el compendio en PDF o haga clic para elegirlo' }}</strong>
+          <small>
+            {{ !sheetTypeId ? 'Primero elija el tipo de ficha.' :
+               (seriesOf(sheetTypeId).length && !seriesId ? 'Primero elija la serie.' :
+               'Se lee en este navegador · máximo ' + maxCompendiumMb + ' MB') }}
+          </small>
+        </ng-container>
+        <ng-template #chosen>
+          <strong class="dz-file">{{ fileName }}</strong>
+          <small>{{ fileSizeLabel }}<span *ngIf="canDropFile"> · clic o arrastre otro para cambiarlo</span></small>
+        </ng-template>
+      </span>
+    </label>
+    <small *ngIf="fileError" class="text-danger d-block">{{ fileError }}</small>
+
+    <div *ngIf="reading" class="reading" aria-live="polite">
+      <nb-progress-bar [value]="readProgress" status="info" [displayValue]="true"></nb-progress-bar>
+      <small class="text-hint">
+        {{ readProgress < 50 ? 'Leyendo los encabezados…' : 'Generando las miniaturas…' }}
+      </small>
+    </div>
+
+    <!-- 2. Fichas propuestas -->
+    <ng-container *ngIf="drafts.length">
+      <div class="summary">
+        <div>
+          <strong>{{ fileName }}</strong> · {{ pages.length }} páginas ·
+          <strong>{{ drafts.length }}</strong> fichas · {{ doneCount }} subidas
+          <span *ngIf="discarded.length"> · {{ discarded.length }} páginas descartadas</span>
+        </div>
+        <div class="batch" *ngIf="pendingCount; else allDone">
+          <button nbButton outline status="primary" size="small"
+                  [disabled]="batchRunning || reading" (click)="uploadAll(false)">
+            Subir {{ pendingCount }} como borrador
+          </button>
+          <button nbButton status="success" size="small"
+                  [disabled]="batchRunning || reading" (click)="uploadAll(true)">
+            Subir y publicar {{ pendingCount }}
+          </button>
+        </div>
+        <ng-template #allDone>
+          <span class="all-done">
+            ✓ Todas las fichas están subidas · {{ publishedCount }} publicadas
+            <span *ngIf="doneCount - publishedCount"> · {{ doneCount - publishedCount }} en borrador</span>
+          </span>
+        </ng-template>
+      </div>
+
+      <ng-container *ngFor="let draft of drafts; let i = index; trackBy: trackDraft">
+      <!-- Ficha ya subida: una línea compacta -->
+      <section *ngIf="draft.state === 'done'; else editable" class="uploaded" [class.is-draft]="!draft.published">
+        <img *ngIf="thumbnailOf(draft.pages[0]) as src" class="uploaded-thumb" [src]="src"
+             [alt]="'Miniatura de ' + draft.code" />
+        <div class="uploaded-info">
+          <div class="uploaded-title">
+            <strong class="code">{{ draft.code }}</strong>
+            <span class="uploaded-name">{{ draft.title }}</span>
+          </div>
+          <small class="text-hint">
+            {{ titleOfType(draft.sheetTypeId) }} · {{ draft.pages.length }} {{ draft.pages.length === 1 ? 'página' : 'páginas' }}
+            · Grados: {{ gradeLabels(draft.grades) || '—' }}
+            <span *ngIf="draft.areaIds.length"> · {{ areaLabels(draft.areaIds) }}</span>
+          </small>
+        </div>
+        <span class="state" [class.done]="draft.published" [class.draft-state]="!draft.published">
+          {{ draft.published ? 'Publicada' : 'Borrador' }}
+        </span>
+        <button nbButton ghost size="tiny" status="primary" (click)="viewUploaded(draft)">Ver PDF</button>
+      </section>
+
+      <ng-template #editable>
+      <section class="draft" [class.failed]="draft.state === 'error'">
+        <div class="draft-head">
+          <strong class="code">{{ draft.code || codeOf(draft) }}</strong>
+          <span class="badge-state" [ngSwitch]="draft.state">
+            <span *ngSwitchCase="'pending'" class="state pending">Sin subir</span>
+            <span *ngSwitchCase="'uploading'" class="state uploading">Subiendo…</span>
+            <span *ngSwitchCase="'done'" class="state done">{{ draft.published ? 'Publicada' : 'Subida en borrador' }}</span>
+            <span *ngSwitchCase="'error'" class="state error">Revisar</span>
+          </span>
+          <span class="text-hint">{{ draft.pages.length }} {{ draft.pages.length === 1 ? 'página' : 'páginas' }}</span>
+          <span class="spacer"></span>
+          <button *ngIf="i > 0 && !locked(draft) && !locked(drafts[i - 1])" nbButton ghost size="tiny" status="primary"
+                  title="Unir con la ficha anterior (conserva sus datos)" (click)="merge(i)">⟵ Unir con la anterior</button>
+          <button nbButton ghost size="tiny" status="primary" [disabled]="draft.state === 'uploading'" (click)="preview(draft)">Ver PDF</button>
+        </div>
+
+        <div class="draft-body">
+          <!-- Páginas -->
+          <div class="pages">
+            <ng-container *ngFor="let page of draft.pages; let p = index">
+              <button *ngIf="p > 0" type="button" class="split" [disabled]="locked(draft)"
+                      title="Separar aquí: desde esta página empieza otra ficha" (click)="split(i, p)">✂</button>
+              <figure class="sheet-page">
+                <div class="thumb">
+                  <img *ngIf="thumbnailOf(page) as src; else noThumb" [src]="src" [alt]="'Página ' + (page + 1)" />
+                  <ng-template #noThumb><div class="placeholder">Pág. {{ page + 1 }}</div></ng-template>
+                </div>
+                <figcaption>
+                  <span class="page-number">Pág. {{ page + 1 }}</span>
+                  <span class="header-text" [title]="headerOf(page)">{{ headerOf(page) }}</span>
+                  <span class="page-actions" *ngIf="!locked(draft)">
+                    <button type="button" title="Mover a la izquierda" [disabled]="p === 0" (click)="movePage(draft, p, -1)">‹</button>
+                    <button type="button" title="Mover a la derecha" [disabled]="p === draft.pages.length - 1" (click)="movePage(draft, p, 1)">›</button>
+                    <button type="button" title="Pasar a la ficha anterior" [disabled]="i === 0 || locked(drafts[i - 1])" (click)="sendPage(i, p, -1)">⤒</button>
+                    <button type="button" title="Pasar a la ficha siguiente" [disabled]="i === drafts.length - 1 || locked(drafts[i + 1])" (click)="sendPage(i, p, 1)">⤓</button>
+                    <button type="button" class="remove" title="Quitar: no es parte de una ficha" (click)="discard(i, p)">✕</button>
+                  </span>
+                </figcaption>
+              </figure>
+            </ng-container>
+          </div>
+
+          <!-- Datos -->
+          <fieldset class="data" [disabled]="locked(draft)">
+            <label class="field small">
+              <span>N.º</span>
+              <input nbInput fieldSize="small" type="number" min="1" max="999" [(ngModel)]="draft.number" />
+            </label>
+            <label class="field wide">
+              <span>Título</span>
+              <input nbInput fieldSize="small" fullWidth type="text" maxlength="150" [(ngModel)]="draft.title" />
+            </label>
+            <label class="field">
+              <span>Tipo</span>
+              <select class="form-control form-control-sm" [(ngModel)]="draft.sheetTypeId"
+                      (ngModelChange)="onDraftTypeChange(draft)">
+                <option *ngFor="let type of sheetTypes" [ngValue]="type.id">{{ type.name }}</option>
+              </select>
+            </label>
+            <label class="field" *ngIf="seriesOf(draft.sheetTypeId).length">
+              <span>Serie</span>
+              <select class="form-control form-control-sm" [(ngModel)]="draft.seriesId">
+                <option [ngValue]="null" disabled>Seleccione</option>
+                <option *ngFor="let series of seriesOf(draft.sheetTypeId)" [ngValue]="series.id">{{ series.name }}</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Categoría (áreas)</span>
+              <ng-select class="multi" [items]="areas" bindLabel="name" bindValue="id" [multiple]="true"
+                         [closeOnSelect]="false" [searchable]="false" [readonly]="locked(draft)"
+                         placeholder="Sin área" notFoundText="No hay áreas activas"
+                         [(ngModel)]="draft.areaIds">
+              </ng-select>
+            </label>
+            <label class="field">
+              <span>Grados</span>
+              <ng-select class="multi" [items]="gradeOptions" bindLabel="label" bindValue="value" [multiple]="true"
+                         [closeOnSelect]="false" [searchable]="false" [readonly]="locked(draft)"
+                         placeholder="Sin grado"
+                         [ngModel]="draft.grades" (ngModelChange)="onGradesChange(draft, $event)">
+              </ng-select>
+            </label>
+            <label class="field full">
+              <span>Descripción</span>
+              <textarea nbInput fullWidth rows="2" maxlength="2000" [(ngModel)]="draft.description"></textarea>
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="draft-foot">
+          <small *ngIf="draft.message" class="text-danger">{{ draft.message }}</small>
+          <small *ngIf="!draft.message && checks.get(draft.key)?.length" class="text-warning">
+            {{ checks.get(draft.key).join(' ') }}
+          </small>
+          <span class="spacer"></span>
+          <ng-container *ngIf="draft.state === 'pending' || draft.state === 'error'">
+            <button nbButton outline size="small" status="primary" [disabled]="batchRunning" (click)="upload(draft, false)">
+              Subir como borrador
+            </button>
+            <button nbButton size="small" status="success" [disabled]="batchRunning" (click)="upload(draft, true)">
+              Subir y publicar
+            </button>
+          </ng-container>
+        </div>
+      </section>
+      </ng-template>
+      </ng-container>
+
+      <!-- Páginas descartadas -->
+      <section *ngIf="discarded.length" class="discarded">
+        <h6>Páginas descartadas (no se suben)</h6>
+        <div class="pages">
+          <figure *ngFor="let page of discarded" class="sheet-page">
+            <div class="thumb">
+              <img *ngIf="thumbnailOf(page) as src; else noThumbDiscarded" [src]="src" [alt]="'Página ' + (page + 1)" />
+              <ng-template #noThumbDiscarded><div class="placeholder">Pág. {{ page + 1 }}</div></ng-template>
+            </div>
+            <figcaption>
+              <span class="page-number">Pág. {{ page + 1 }}</span>
+              <select class="restore" [disabled]="batchRunning" (change)="restore(page, $event.target.value === 'new' ? 'new' : +$event.target.value)">
+                <option value="" selected disabled>Recuperar…</option>
+                <option value="new">Como ficha nueva</option>
+                <option *ngFor="let draft of openableDrafts(page)" [value]="draft.key">Agregar a {{ codeOf(draft) }}</option>
+              </select>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </ng-container>
+  </nb-card-body>
+</nb-card>

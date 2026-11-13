@@ -238,4 +238,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  {
+    // Vademécum (BO-01); se oculta sin la acción VADEMECUM_ADMIN (pages-menu-service)
+    title: "Vademécum",
+    icon: "book-open-outline",
+    children: [
+      {
+        title: "Cargar fichas",
+        link: "/pages/vademecum/load",
+      },
+    ],
+  },
 ];

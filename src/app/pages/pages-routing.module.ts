@@ -1,12 +1,20 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { PagesComponent } from "./pages.component";
+import { VademecumGuard } from "../_guards/vademecum.guard";
 
 const routes: Routes = [
   {
     path: "",
     component: PagesComponent,
     children: [
+      {
+        // Vademécum (BO-01): solo con la acción VADEMECUM_ADMIN
+        path: "vademecum",
+        canActivate: [VademecumGuard],
+        loadChildren: () =>
+          import("./vademecum/vademecum.module").then((m) => m.VademecumModule),
+      },
       {
         path: "dashboard",
         loadChildren: () =>

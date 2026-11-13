@@ -1,3 +1,163 @@
 nb-card-body {
   overflow: unset !important;
 }
+
+// -- Vista del reporte en pantalla --
+$report-border: #e4e9f2;
+$report-header-bg: #f7f9fc;
+
+.report-view {
+  padding-bottom: 1rem;
+}
+
+.report-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8125rem;
+  color: #8f9bb3;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 3px;
+  border: 1px solid $report-border;
+}
+
+// Encabezado y columna de actividad fijos al desplazar
+.report-scroll {
+  max-height: 70vh;
+  overflow: auto;
+  border: 1px solid $report-border;
+  border-radius: 4px;
+}
+
+.report-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8125rem;
+
+  th,
+  td {
+    padding: 0.4rem 0.5rem;
+    border-right: 1px solid $report-border;
+    border-bottom: 1px solid $report-border;
+    white-space: nowrap;
+  }
+
+  td {
+    min-width: 4.5rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: $report-header-bg;
+    color: #222b45;
+    font-weight: 700;
+    vertical-align: bottom;
+  }
+
+  .col-activity {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    min-width: 14rem;
+    max-width: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #fff;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  thead .col-activity,
+  tfoot .col-activity {
+    z-index: 3;
+    background: $report-header-bg;
+  }
+
+  // Nombres de escuela largos: hasta 3 líneas, el nombre completo en el tooltip
+  .col-peca {
+    min-width: 6.5rem;
+    max-width: 8rem;
+    white-space: normal;
+  }
+
+  .col-peca-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .col-average {
+    border-left: 2px solid $report-border;
+  }
+
+  .lapse-row th {
+    background: #eaf6f8;
+    color: #17a2b8;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  // El nombre del lapso queda visible aunque se desplace la tabla a la derecha
+  .lapse-name {
+    position: sticky;
+    left: 0.5rem;
+  }
+
+  tfoot th,
+  tfoot td {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    border-top: 2px solid $report-border;
+  }
+
+  tfoot th {
+    z-index: 3;
+  }
+
+  tfoot td.col-average {
+    background: $report-header-bg;
+  }
+}
+
+// Colores suaves por avance (pantalla). Excel y PDF mantienen los suyos.
+.cell-done {
+  background: #e3f4d7;
+  color: #3d7a12;
+}
+
+.cell-partial {
+  background: #fff4cc;
+  color: #8a6d00;
+}
+
+.cell-zero {
+  background: #fde2e2;
+  color: #b42318;
+}
+
+.cell-na {
+  background: #f7f9fc;
+  color: #c5cee0;
+  font-weight: 400;
+}

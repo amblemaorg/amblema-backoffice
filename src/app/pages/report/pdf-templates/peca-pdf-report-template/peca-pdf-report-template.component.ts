@@ -227,10 +227,8 @@ export class PecaPdfReportTemplateComponent implements OnInit {
 
       case "columnBody":
         const { idxCell, row, cell } = data;
-        const firstRow = row[0].text.toLowerCase();
-        const regExp = "(W|^)lapso[ ][0-9](W|$)"; // 'lapso<espacio><cualquier numero>';
-
-        if (firstRow.match(regExp)) {
+        // Fila de encabezado de lapso: "Lapso N"
+        if (/^lapso \d+$/i.test(`${row[0].text}`.trim())) {
           return secondary;
         }
 

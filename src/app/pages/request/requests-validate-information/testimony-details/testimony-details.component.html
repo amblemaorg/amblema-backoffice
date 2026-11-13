@@ -4,33 +4,33 @@
 <div class="modal-body">
   <!-- General info Request -->
   <div id="container-general-info">
-    <p class="text-info font-weight-bold">Información general</p>
+    <p class="request-section-title">Información general</p>
     <div id="list-container" class="d-lg-flex">
       <ul class="list-unstyled d-inline-block">
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold"> Código de la solicitud: </span>
           <span> {{ (data$ | async)?.code }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold"> Solicitante: </span>
           <span> {{ (data$ | async)?.user.name }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Fecha de la solicitud: </span>
           <span> {{ (data$ | async)?.createdAt | date: "dd/MM/yyyy" }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Fecha de actualización: </span>
           <span> {{ (data$ | async)?.updatedAt | date: "dd/MM/yyyy" }}</span>
         </li>
       </ul>
 
       <ul class="list-unstyled d-inline-block">
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Codigo del proyecto: </span>
           <span> {{ (data$ | async)?.project.code }}</span>
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Coordinador: </span>
           <span>
             {{
@@ -40,7 +40,7 @@
             }}</span
           >
         </li>
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Escuela: </span>
           <span>
             {{
@@ -53,7 +53,7 @@
       </ul>
 
       <ul class="list-unstyled d-inline-block">
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Padrino: </span>
           <span>
             {{
@@ -65,7 +65,7 @@
         </li>
 
         <!-- Tag -->
-        <li class="d-flex justify-content-between">
+        <li>
           <span class="font-weight-bold">Etiqueta</span>
           <span>{{
             (data$ | async)?.detail.stepTag === "1"
@@ -96,7 +96,7 @@
 
   <!-- Testimony -->
   <div>
-    <p class="text-info font-weight-bold">Testimonio</p>
+    <p class="request-section-title">Testimonio</p>
 
     <div class="position-relative" *ngIf="show">
       <owl-carousel-o [options]="customOptions">

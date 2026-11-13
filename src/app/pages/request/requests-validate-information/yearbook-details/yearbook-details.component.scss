@@ -18,21 +18,13 @@
     &:last-child {
       margin-bottom: 0rem;
     }
+    // Label arriba del valor
     span {
-      margin-right: 1rem;
+      display: block;
       text-align: left;
     }
     span + * {
-      @media (min-width: 0px) {
-          //display: block;
-        //text-align: left;
-        text-align: right;
-      
-      }
-      @media (min-width: 768px) {
-        text-align: right;
-      }
-      margin-right: 0;
+      word-break: break-word;
     }
   }
 }
@@ -58,13 +50,18 @@ img {
   border-bottom-width: 1px;
 }
 
-.rich-text-content {
+// El HTML llega por [innerHTML]: sin ::ng-deep el encapsulamiento emulado no aplica estos estilos
+:host ::ng-deep .rich-text-content {
   word-break: break-word;
   p {
-    margin-bottom: 0.5rem;
+    margin: 0 0 15px;
     &:last-child {
       margin-bottom: 0;
     }
+  }
+  // Quill guarda las líneas en blanco como <p><br></p>; el margen ya separa los párrafos
+  p:has(> br:only-child) {
+    display: none;
   }
   a {
     color: #17a2b8;
@@ -73,4 +70,22 @@ img {
   ul, ol {
     padding-left: 1.5rem;
   }
+}
+
+.activity-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222b45;
+  margin: 0 0 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-left: 3px solid #a6dde6;
+  border-radius: 0 4px 4px 0;
+  background-color: #f7f9fc;
+}
+
+.lapse-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #17a2b8;
+  margin: 0.25rem 0 0.75rem;
 }

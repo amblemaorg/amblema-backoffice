@@ -3,6 +3,7 @@ import { BaseTable } from 'src/app/_helpers/base-table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Slider } from 'src/app/_models/web/slider.model';
+import { IMAGE_MAX_SIDE } from 'src/app/_helpers/image.helper';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { DialogConfirmationComponent } from '../../../shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { Subscription } from 'rxjs';
@@ -16,6 +17,13 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy {
 
   @Input() public sliders: Slider[];
+  // Configuración opcional; los valores por defecto conservan el comportamiento original
+  @Input() public title = 'Diapositiva';
+  @Input() public maxItems = 6;
+  @Input() public descriptionRequired = true;
+  @Input() public descriptionMax = 56;
+  @Input() public inputId = 'input-slider';
+  @Input() public imageMaxSide = IMAGE_MAX_SIDE;
   @Output() protected register = new EventEmitter<Slider>();
   @Output() protected edit = new EventEmitter<Slider[]>();
   @Output() protected delete = new EventEmitter<Slider>();
@@ -63,7 +71,9 @@ export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       image: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required, Validators.maxLength(56)])
+      description: new FormControl('', this.descriptionRequired
+        ? [Validators.required, Validators.maxLength(this.descriptionMax)]
+        : [Validators.maxLength(this.descriptionMax)])
     });
   }
 
@@ -116,17 +126,22 @@ export class FormSliderComponent extends BaseTable implements OnInit, OnDestroy 
     }
   }
 
+  // form.reset() deja la descripción en null y el backend no acepta null en un campo de texto
+  private formValue(): Slider {
+    return { ...this.form.value, description: this.form.value.description || '' };
+  }
+
   onSubmit() {
     if (this.MODE === this.ACTION.CREATE) {
-      if ( this.sliders.length < 6 ) {
-        this.register.emit(this.form.value);
+      if ( (this.sliders || []).length < this.maxItems ) {
+        this.register.emit(this.formValue());
         this.form.reset();
         this.form.controls.image.setValue(null);
       } else {
-        this.taostr.error('Limite', 'Solo se puede realizar 6 registro');
+        this.taostr.error('Limite', `Solo se puede realizar ${this.maxItems} registro`);
       }
     } else {
-      this.edit.emit([this.oldSlider, this.form.value]);
+      this.edit.emit([this.oldSlider, this.formValue()]);
       this.form.reset();
       this.MODE = this.ACTION.CREATE;
 

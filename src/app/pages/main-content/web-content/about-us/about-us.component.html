@@ -27,6 +27,28 @@
             </app-content-text>
           </div>
 
+          <!-- Aula Activa AmbLeMa gallery -->
+          <div class="col-12 form-group">
+            <hr />
+            <p class="font-weight-bold mb-1">Galería Aula Activa AmbLeMa</p>
+            <p class="text-muted small">
+              Se muestra una foto por vez en la sección Aula Activa AmbLeMa de Nosotros.
+              Sin fotos, se muestra el ícono. Máximo {{ aulaActivaGalleryMax }} fotos; se reducen a 1280 px antes de subir.
+            </p>
+            <app-form-slider
+              (delete)="onDeleteAulaActivaImage($event)"
+              (edit)="onEditAulaActivaImage($event)"
+              (register)="onRegisterAulaActivaImage($event)"
+              [sliders]="(data$ | async)?.aboutUsPage.aulaActivaGallery"
+              [title]="'Foto'"
+              [maxItems]="aulaActivaGalleryMax"
+              [descriptionRequired]="false"
+              [descriptionMax]="54"
+              [inputId]="'input-aula-activa-gallery'"
+              [imageMaxSide]="1280"
+            ></app-form-slider>
+          </div>
+
           <!-- Form awards -->
           <div class="col-12">
             <hr />

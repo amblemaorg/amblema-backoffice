@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { ImageHelper } from 'src/app/_helpers/image.helper';
+import { ImageHelper, IMAGE_MAX_SIDE } from 'src/app/_helpers/image.helper';
 
 @Component({
   selector: 'app-input-img',
@@ -45,6 +45,8 @@ export class InputImgComponent implements OnInit {
   @Input() align: string | null = 'center';
   @Input() url: string | null = null;
   @Input() id: string | null = String(Math.random());
+  // Lado mayor máximo tras la compresión; por defecto el general (1920 px)
+  @Input() maxSide: number = IMAGE_MAX_SIDE;
 
   // To validate the file
   readonly pattern = /image-*/;
@@ -107,7 +109,7 @@ export class InputImgComponent implements OnInit {
     const reader = event.target;
 
     // String base 64, compressed before reaching the form
-    const compressed = await ImageHelper.compressDataUrl(reader.result);
+    const compressed = await ImageHelper.compressDataUrl(reader.result, this.maxSide);
     if (!compressed) {
       this.toast.error('Error de archivo', 'Carga una image valida');
       return;

@@ -43,3 +43,59 @@ ul {
     }
   }
 }
+
+// Información general: label arriba del valor
+#container-general-info #list-container li {
+  span {
+    display: block;
+    margin-right: 0;
+    text-align: left;
+  }
+  span + * {
+    text-align: left;
+    word-break: break-word;
+  }
+}
+
+// Datos de la escuela: label arriba del valor
+#container-school-info li {
+  span {
+    display: block;
+    margin-right: 0;
+    text-align: left;
+  }
+  span + * {
+    text-align: left;
+    word-break: break-word;
+  }
+}
+
+// Datos de la escuela: cada subtítulo (director, sub director, redes…) en su propia fila,
+// con sus campos uno al lado del otro
+#container-school-info {
+  .school-subsection {
+    margin-bottom: 1.5rem;
+
+    // Subtítulo (Datos del director, sub director, redes…): mismo nivel que "Actividades del lapso"
+    > p:first-child {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #17a2b8;
+      margin: 0 0 0.75rem;
+    }
+  }
+
+  ul.school-subsection-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    width: 100%;
+    margin: 0;
+
+    li {
+      flex: 0 1 14rem;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+  }
+}

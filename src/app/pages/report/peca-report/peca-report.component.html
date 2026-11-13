@@ -30,8 +30,10 @@
               [settings]="dropdownLapseSettings"
               [data]="dropdownListLapses"
               [(ngModel)]="selectedLapseItems"
-              (onSelect)="onSelectLapse($event)"
-              (onSelectAll)="onSelectAllLapses($event)"
+              (onSelect)="onLapsesChange()"
+              (onDeSelect)="onLapsesChange()"
+              (onSelectAll)="onLapsesChange()"
+              (onDeSelectAll)="onLapsesChange()"
             >
             </ng-multiselect-dropdown>
           </div>
@@ -59,8 +61,6 @@
           [settings]="dropdownSettings"
           [data]="dropdownList"
           [(ngModel)]="selectedItems"
-          (onSelect)="onItemSelect($event)"
-          (onSelectAll)="onSelectAll($event)"
         >
         </ng-multiselect-dropdown>
       </div>
@@ -70,11 +70,11 @@
       class="col-12 col-lg-auto mr-2"
       nbButton
       [disabled]="
-        !selectedItems.length || !filterType || !selectedLapseItems.length
+        loadingReport || !selectedItems.length || !filterType || !selectedLapseItems.length
       "
       status="success"
     >
-      <span>Generar reporte </span>
+      <span>{{ loadingReport ? "Generando..." : "Generar reporte" }}</span>
     </button>
     <button
       (click)="exportDataExcel()"
@@ -105,12 +105,53 @@
       <span>Generar reporte PDF </span>
     </button>
   </nb-card-body>
-  <div *ngIf="data.length && filterType" class="col-12">
-    <div class="table-responsive">
-      <ng2-smart-table
-        [settings]="settings"
-        [source]="source"
-      ></ng2-smart-table>
+  <!-- Vista en pantalla: actividades en filas, PECA en columnas (Excel y PDF salen de "matrix") -->
+  <div *ngIf="data.length && filterType" class="col-12 report-view">
+    <div class="report-legend">
+      <span><i class="legend-dot cell-done"></i>100%</span>
+      <span><i class="legend-dot cell-partial"></i>En progreso</span>
+      <span><i class="legend-dot cell-zero"></i>0%</span>
+      <span><i class="legend-dot cell-na"></i>No aplica</span>
+    </div>
+
+    <div class="report-scroll">
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th class="col-activity">Actividad</th>
+            <th *ngFor="let column of reportColumns" class="col-peca" [title]="column.name">
+              <span class="col-peca-name">{{ column.name }}</span>
+            </th>
+            <th class="col-average">Promedio</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let group of reportGroups">
+          <tr *ngIf="group.title" class="lapse-row">
+            <th [attr.colspan]="reportColumns.length + 2">
+              <span class="lapse-name">{{ group.title }}</span>
+            </th>
+          </tr>
+          <tr *ngFor="let row of group.rows">
+            <th class="col-activity" [title]="row.activity">{{ row.activity }}</th>
+            <td *ngFor="let value of row.values; let idx = index" [ngClass]="percentClass(value)"
+              [title]="reportColumns[idx].name">
+              {{ value === null ? "—" : value + "%" }}
+            </td>
+            <td class="col-average" [ngClass]="percentClass(row.average)">
+              {{ row.average === null ? "—" : row.average + "%" }}
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th class="col-activity">Promedio</th>
+            <td *ngFor="let value of columnAverages" [ngClass]="percentClass(value)">
+              {{ value === null ? "—" : value + "%" }}
+            </td>
+            <td class="col-average"></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
   <nb-card-footer class="w-100 text-right"> </nb-card-footer>

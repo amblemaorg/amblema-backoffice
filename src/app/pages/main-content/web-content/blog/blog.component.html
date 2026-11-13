@@ -1,13 +1,11 @@
 <div class="row">
     <div class="col-12">
-        <nb-card>
+        <nb-card class="card-auto-height mb-3">
             <nb-card-header>Blog</nb-card-header>
             <nb-card-body>
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col-12 col-lg-6">
-
-
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 mb-lg-0">
                             <input 
                                 [(ngModel)]="query"
                                 autocomplete="off"
@@ -33,31 +31,34 @@
     </div>
 </div>
 
-<div class="columm-post">
-    <div class="card-post" *ngFor="let item of pageOfItems | search: query">
-        <app-blog-card 
-            (edit)="onEditPost($event)"
-            (delete)="onDeletePost($event)"
-            [data]="item"></app-blog-card>
+<!-- El filtro se aplica a todos los posts antes de paginar; el paginador vuelve a la página 1 al cambiar la búsqueda -->
+<ng-container *ngIf="(data$ | async | search: query) as filteredPosts">
+    <div class="columm-post">
+        <div class="card-post" *ngFor="let item of pageOfItems">
+            <app-blog-card 
+                (edit)="onEditPost($event)"
+                (delete)="onDeletePost($event)"
+                [data]="item"></app-blog-card>
+        </div>
     </div>
-</div>
 
-<nb-card *ngIf="(posts.length <= 0) || ((data$ | async | search: query).length === 0)">
-    <nb-card-body class="fadeIn">
-        <nb-alert status="warning" class="mb-0">No hay registro de posts.</nb-alert>
-    </nb-card-body>
-</nb-card>
+    <nb-card class="card-auto-height" *ngIf="filteredPosts.length === 0">
+        <nb-card-body class="fadeIn">
+            <nb-alert status="warning" class="mb-0">No hay registro de posts.</nb-alert>
+        </nb-card-body>
+    </nb-card>
 
-<nb-card [ngClass]="{'d-none': posts.length <= 10}">
-    <nb-card-body class="d-flex justify-content-center">
-        <app-paginator 
-            [initialPage]="1"
-            [maxPages]="5"
-            [pageSize]="10"
-            [items]="data$ | async"
-            (changePage)="onChangePage($event)"></app-paginator>
-    </nb-card-body>
-</nb-card>
+    <nb-card class="card-auto-height" [ngClass]="{'d-none': filteredPosts.length <= 10}">
+        <nb-card-body class="d-flex justify-content-center">
+            <app-paginator 
+                [initialPage]="1"
+                [maxPages]="5"
+                [pageSize]="10"
+                [items]="filteredPosts"
+                (changePage)="onChangePage($event)"></app-paginator>
+        </nb-card-body>
+    </nb-card>
+</ng-container>
 
 <app-blog-form 
     (edit)="onEditPostForm($event)"

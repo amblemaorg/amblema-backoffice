@@ -35,30 +35,8 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
         title: "Código",
         type: "number",
       },
-      email: {
-        title: "Correo",
-        type: "number",
-      },
-      phone: {
-        title: "Teléfono",
-        type: "string",
-      },
       addressState: {
         title: "Estado",
-        type: "string",
-      },
-      addressMunicipality: {
-        title: "Municipio",
-        type: "string",
-      },
-      addressCity: {
-        // City
-        title: "Ciudad",
-        type: "string",
-      },
-      address: {
-        // Calles / carreras
-        title: "Calles / carreras",
         type: "string",
       },
       addressZoneType: {
@@ -68,6 +46,10 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       addressZone: {
         title: "Dirección de la zona",
         type: "string",
+      },
+      nStudents:{
+        title: "Matrícula",
+        type: "string",  
       },
       nGrades: {
         title: "N° de grados",
@@ -87,10 +69,6 @@ export class SchoolReportComponent implements OnInit, OnDestroy {
       },
       nTeachers:{
         title: "Personal docente",
-        type: "string",  
-      },
-      nStudents:{
-        title: "Matrícula",
         type: "string",  
       },
       sponsor: {

@@ -1,0 +1,183 @@
+// Estética del backoffice: azul AmbLeMa (igual que el reporte de coevaluación).
+$blue: #00809a;
+$blue-soft: #eef6f8;
+$text: #1a2138;
+$muted: #8f9bb3;
+$border: #e4e9f2;
+
+// ------------------------------------------------------------ filtros
+.filters {
+  .form-group {
+    margin-bottom: 1rem;
+  }
+}
+
+// ------------------------------------------------------------ barra de resultados
+.results-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0 1rem;
+  background: $blue-soft;
+  border-left: 4px solid $blue;
+  border-radius: 0.25rem;
+
+  .results-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .results-year {
+    font-weight: 700;
+    color: $blue;
+  }
+
+  .results-filters {
+    font-size: 0.85rem;
+    color: $text;
+  }
+
+  // Reservado para los botones de exportación (a la derecha).
+  .results-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+// ------------------------------------------------------------ conteos
+.counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.count-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #222b45;
+  white-space: nowrap;
+}
+
+// ------------------------------------------------------------ premios
+.award-gold {
+  background: #d4af37;
+  color: #222b45;
+}
+
+.award-silver {
+  background: #a8a9ad;
+  color: #222b45;
+}
+
+.award-bronze {
+  background: #cd7f32;
+  color: #222b45;
+}
+
+.award-none,
+.award-incomplete {
+  background: #e4e9f2;
+  color: #222b45;
+}
+
+.award-badge {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.missing {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: $muted;
+}
+
+// ------------------------------------------------------------ tabla
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid $border;
+  border-radius: 0.5rem;
+}
+
+.hqs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  color: $text;
+
+  thead th {
+    background: #fff;
+    color: $blue !important;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.6rem 0.75rem;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 2px solid $blue !important;
+  }
+
+  tbody td {
+    padding: 0.55rem 0.75rem;
+    vertical-align: middle;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid $border !important;
+    background: #fff;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  tbody tr:hover td {
+    background: $blue-soft;
+  }
+
+  .num {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .final {
+    font-weight: 700;
+  }
+
+  .name {
+    font-weight: 600;
+  }
+
+  // Columna Escuela fija al hacer scroll horizontal.
+  .sticky-col {
+    position: sticky;
+    left: 0;
+    background: #fff;
+    z-index: 1;
+  }
+}
+
+.table-note {
+  font-size: 0.8rem;
+  color: $muted;
+  margin: 0.75rem 0 0;
+}

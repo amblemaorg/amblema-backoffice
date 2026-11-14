@@ -1,0 +1,124 @@
+<!-- Una sola tarjeta (como el reporte de coevaluación): styles.scss da min-height de pantalla a cada nb-card. -->
+<nb-card class="hqs-report">
+  <nb-card-header>Reporte de premios Escuela HQS</nb-card-header>
+  <nb-card-body>
+    <!-- Filtros -->
+    <div class="row filters">
+      <div class="col-12 col-md-6 col-xl-4 form-group">
+        <label class="label">Período académico *</label>
+        <ng-select
+          [items]="schoolYearOptions$ | async"
+          bindLabel="name"
+          placeholder="Seleccionar el período escolar"
+          [(ngModel)]="selectedSchoolYear"
+        ></ng-select>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 form-group">
+        <label class="label">Escuela</label>
+        <ng-select
+          [items]="schools$ | async"
+          bindLabel="name"
+          placeholder="Todas las escuelas"
+          [(ngModel)]="selectedSchool"
+        ></ng-select>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 form-group d-flex align-items-end">
+        <button
+          nbButton
+          status="primary"
+          class="w-100"
+          [nbSpinner]="loading"
+          [disabled]="!selectedSchoolYear || loading || exporting"
+          (click)="onSearch()"
+        >
+          <span>{{ loading ? 'Consultando...' : 'Consultar' }}</span>
+          <nb-icon icon="search-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="hasData(report)">
+      <!-- Barra de resultados -->
+      <div class="results-bar">
+        <div class="results-summary">
+          <span class="results-year">{{ report.schoolYear.name }}</span>
+          <span class="results-filters">{{ filtersLabel() }}</span>
+        </div>
+        <div class="results-actions">
+          <button
+            nbButton
+            size="small"
+            [nbSpinner]="exportingFormat === 'pdf'"
+            [disabled]="exporting || loading"
+            (click)="onExport('pdf')"
+          >
+            <span>{{ exportingFormat === 'pdf' ? 'Generando PDF...' : 'Exportar a PDF' }}</span>
+            <nb-icon icon="file-text-outline"></nb-icon>
+          </button>
+          <button
+            nbButton
+            size="small"
+            [nbSpinner]="exportingFormat === 'xlsx'"
+            [disabled]="exporting || loading"
+            (click)="onExport('xlsx')"
+          >
+            <span>{{ exportingFormat === 'xlsx' ? 'Generando Excel...' : 'Exportar a Excel' }}</span>
+            <nb-icon icon="grid-outline"></nb-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Conteos -->
+      <div class="counts">
+        <span class="count-chip award-gold">ORO <b>{{ report.counts.gold }}</b></span>
+        <span class="count-chip award-silver">PLATA <b>{{ report.counts.silver }}</b></span>
+        <span class="count-chip award-bronze">BRONCE <b>{{ report.counts.bronze }}</b></span>
+        <span class="count-chip award-none">Sin premio <b>{{ report.counts.none }}</b></span>
+        <span class="count-chip award-incomplete">Incompletos <b>{{ report.counts.incomplete }}</b></span>
+      </div>
+
+      <!-- Tabla -->
+      <div class="table-scroll">
+        <table class="hqs-table">
+          <thead>
+            <tr>
+              <th class="sticky-col">Escuela</th>
+              <th>Coord.</th>
+              <th class="num">IAA</th>
+              <th class="num">PPM</th>
+              <th class="num">M2M</th>
+              <th class="num">60LM</th>
+              <th class="num">Índice Integral</th>
+              <th class="num">Índice Docentes HQS</th>
+              <th class="num">Promedio</th>
+              <th>Premio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let school of report.schools">
+              <td class="sticky-col name">{{ school.name }}</td>
+              <td>{{ school.coordinator || '—' }}</td>
+              <td class="num">{{ formatNumber(school.components.iaa) }}</td>
+              <td class="num">{{ formatNumber(school.components.wordsPerMin) }}</td>
+              <td class="num">{{ formatNumber(school.components.multiplicationsPerMin) }}</td>
+              <td class="num">{{ formatNumber(school.components.operationsPerMin) }}</td>
+              <td class="num">{{ formatNumber(school.integralIndex) }}</td>
+              <td class="num">{{ formatNumber(school.teacherIndex) }}</td>
+              <td class="num final">{{ formatNumber(school.finalIndex) }}</td>
+              <td>
+                <span class="award-badge" [ngClass]="awardClass(school)">{{ awardText(school) }}</span>
+                <span *ngIf="school.status === 'incomplete'" class="missing">
+                  falta: {{ school.missingLabels.join(', ') }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">
+        Índice Integral = promedio de IAA, PPM, M2M y 60LM del lapso 3 (máximo 100 cada uno; IAA
+        convertido de 35 puntos a %). Premio: Oro ≥ 80, Plata ≥ 60, Bronce ≥ 40.
+      </p>
+    </ng-container>
+  </nb-card-body>
+</nb-card>

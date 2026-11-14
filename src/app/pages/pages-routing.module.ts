@@ -186,6 +186,13 @@ const routes: Routes = [
               ).then((m) => m.CoevaluationReportModule),
           },
           {
+            path: "hqs-award-report",
+            loadChildren: () =>
+              import(
+                "./report/hqs-award-report/hqs-award-report.module"
+              ).then((m) => m.HqsAwardReportModule),
+          },
+          {
             path: "enrolled-schools-report",
             loadChildren: () =>
               import(

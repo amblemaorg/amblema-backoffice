@@ -52,6 +52,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "hqs-award-report",
+    loadChildren: () =>
+      import("./hqs-award-report/hqs-award-report.module").then(
+        (m) => m.HqsAwardReportModule
+      ),
+  },
+  {
     path: "math-olympics-report",
     loadChildren: () =>
       import("./math-olympics-report/math-olympics-report.module").then(

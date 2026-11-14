@@ -15,6 +15,8 @@ const pdfFonts = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const GREEN = '#81b03e';
+const PDF_FONT_SIZE = 8; // defaultStyle.fontSize del PDF
+const LINE_HEIGHT_FACTOR = 1.17; // Roboto
 const BLUE = '#00809a';
 const TITLE = '#2e8aaa';
 
@@ -61,14 +63,27 @@ export class CoevaluationReportExport {
     return `Reporte-coevaluacion-${year}_${date}.${ext}`;
   }
 
-  private header(texts: string[], color: string = GREEN): any[] {
-    return texts.map((text) => ({
-      text,
-      bold: true,
-      color: '#FFF',
-      fillColor: color,
-      alignment: 'center',
-    }));
+  /**
+   * Cabecera con el texto centrado también en vertical. pdfmake 0.2 no tiene alineación
+   * vertical en celdas: se compensa con margen arriba y abajo según los saltos de línea
+   * (\n) de cada título frente al título más alto de la fila. Por eso los títulos largos
+   * llevan el salto explícito y no dependen del ajuste automático de pdfmake.
+   */
+  private header(texts: string[], color: string = GREEN, fontSize: number = PDF_FONT_SIZE): any[] {
+    const lineHeight = fontSize * LINE_HEIGHT_FACTOR;
+    const lineCount = (text: string) => text.split('\n').length;
+    const maxLines = Math.max(...texts.map(lineCount));
+    return texts.map((text) => {
+      const margin = ((maxLines - lineCount(text)) * lineHeight) / 2;
+      return {
+        text,
+        bold: true,
+        color: '#FFF',
+        fillColor: color,
+        alignment: 'center',
+        margin: [0, margin, 0, margin],
+      };
+    });
   }
 
   // -------------------------------------------------------------------- PDF
@@ -144,7 +159,7 @@ export class CoevaluationReportExport {
           headerRows: 1,
           widths: ['*', 'auto', '*', 'auto', 'auto', '*', 'auto', 'auto'],
           body: [
-            this.header(['Docente', 'Cédula', 'Correo', 'Teléfono', 'Grado / Sección', 'Escuela', 'Puntaje', '%']),
+            this.header(['Docente', 'Cédula', 'Correo', 'Teléfono', 'Grado /\nSección', 'Escuela', 'Puntaje', '%']),
             ...group.teachers.map((row) => [
               this.fullName(row),
               this.card(row),
@@ -226,7 +241,7 @@ export class CoevaluationReportExport {
             'Completadas',
             'Índice %',
             'Nivel',
-            ...levels.map((l) => l.label.replace('Docente HQS ', '')),
+            ...levels.map((l) => l.label.replace('Docente HQS ', '').replace(' ', '\n')),
           ]),
           ...report.bySchool.map((s) => [
             s.name,
@@ -259,7 +274,7 @@ export class CoevaluationReportExport {
           headerRows: 1,
           widths: ['*', 'auto', ...itemNumbers.map(() => 14), 'auto', 'auto', 'auto'],
           body: [
-            this.header(['Docente', 'Estatus', ...itemNumbers.map((n) => `${n}`), 'Total', '%', 'Nivel']),
+            this.header(['Docente', 'Estatus', ...itemNumbers.map((n) => `${n}`), 'Total', '%', 'Nivel'], GREEN, 7),
             ...school.teachers.map((row) => [
               `${this.fullName(row)}${row.sections ? '\n' + row.sections : ''}`,
               row.statusLabel,
@@ -418,7 +433,7 @@ export class CoevaluationReportExport {
 
     const title = sheet[XLSX.utils.encode_cell({ r: 0, c: 0 })];
     if (title) {
-      title.s = { font: { sz: 14, bold: true, color: { rgb: 'FF2E8AAA' } } };
+      title.s = { font: { sz: 14, bold: true } };
     }
     for (let r = 1; r < headerRow - 1; r++) {
       const label = sheet[XLSX.utils.encode_cell({ r, c: 0 })];
@@ -430,8 +445,10 @@ export class CoevaluationReportExport {
       const cell = sheet[XLSX.utils.encode_cell({ r: headerRow, c })];
       if (cell) {
         cell.s = {
-          font: { bold: true, color: { rgb: 'FFFFFFFF' } },
-          fill: { patternType: 'solid', fgColor: { rgb: 'FF81B03E' } },
+          // Verde claro con letra negra: si el programa ignora el relleno (p. ej. OpenOffice con
+          // xlsx-js-style, que escribe un <bgColor/> vacío) el texto sigue legible sobre blanco.
+          font: { bold: true, color: { rgb: 'FF000000' } },
+          fill: { patternType: 'solid', fgColor: { rgb: 'FFDDEBC4' } },
           alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
           border: { top: border, bottom: border, left: border, right: border },
         };

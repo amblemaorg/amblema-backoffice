@@ -1,0 +1,11 @@
+<span *ngIf="!status" title="Sin PECA del año escolar en curso">—</span>
+<div *ngIf="status" class="custom-control custom-switch">
+    <input
+        type="checkbox"
+        class="custom-control-input"
+        [checked]="status.yearbookDownloadEnabled"
+        [disabled]="saving || !canEdit"
+        (change)="onChange($event)"
+        [id]="'yb-dl-' + rowData.id">
+    <label style="padding-top: 2px;" class="custom-control-label" [for]="'yb-dl-' + rowData.id">{{ status.yearbookDownloadEnabled ? 'Habilitada' : 'Deshabilitada' }}</label>
+</div>

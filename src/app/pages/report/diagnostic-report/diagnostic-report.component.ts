@@ -441,7 +441,7 @@ export class DiagnosticReportComponent implements OnInit, OnDestroy {
         <tr>
           <th class="header-blue" style="width: 80px;">PPM</th>
           <th class="header-blue" style="width: 80px;">M2M</th>
-          <th class="header-blue" style="width: 80px;">L60M</th>
+          <th class="header-blue" style="width: 80px;">60LM</th>
         </tr>
         ${rowsHtml}
         ${totalsHtml}

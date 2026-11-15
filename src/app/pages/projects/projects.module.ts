@@ -15,6 +15,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectModulesComponent } from './project-modules/project-modules.component';
+import { YearbookDownloadToggleComponent } from './yearbook-download-toggle/yearbook-download-toggle.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ProjectModulesComponent } from './project-modules/project-modules.compo
     SelectSponsorComponent,
     SelectCoordinatorComponent,
     ProjectDetailsComponent,
-    ProjectModulesComponent],
+    ProjectModulesComponent,
+    YearbookDownloadToggleComponent],
   imports: [
     CommonModule,
     NbCardModule,

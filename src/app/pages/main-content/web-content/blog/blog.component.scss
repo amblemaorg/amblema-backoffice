@@ -40,3 +40,7 @@ input {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
+// Anula el min-height global de nb-card (styles.scss): buscador, aviso y paginador ocupan solo su contenido
+nb-card.card-auto-height {
+    min-height: 0;
+}

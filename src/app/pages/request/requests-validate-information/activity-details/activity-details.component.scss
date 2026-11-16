@@ -44,3 +44,15 @@ ul {
     }
   }
   
+// Información general: label arriba del valor
+#container-general-info #list-container li {
+  span {
+    display: block;
+    margin-right: 0;
+    text-align: left;
+  }
+  span + * {
+    text-align: left;
+    word-break: break-word;
+  }
+}

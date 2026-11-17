@@ -1,0 +1,39 @@
+<nb-card>
+  <nb-card-header>Moderación de comentarios</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12 col-md-6 form-group">
+        <label class="label">Estado:</label>
+        <nb-radio-group [(ngModel)]="status" class="d-flex" (valueChange)="onStatusChange($event)">
+          <nb-radio *ngFor="let item of statuses" [value]="item.status">{{ statusLabel(item) }}</nb-radio>
+        </nb-radio-group>
+      </div>
+      <div class="col-12 col-md-6 form-group">
+        <label class="label">Ficha:</label>
+        <ng-select [items]="sheets" bindValue="id" [(ngModel)]="sheetId" [loading]="loadingSheets"
+          [searchFn]="serverSearch" [clearable]="true" placeholder="Todas las fichas" notFoundText="Sin fichas"
+          (search)="onSheetSearch($event)" (change)="onSheetChange()">
+          <ng-template ng-label-tmp let-item="item">{{ sheetLabel(item) }}</ng-template>
+          <ng-template ng-option-tmp let-item="item">{{ sheetLabel(item) }}</ng-template>
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="confirm-inline mb-3" *ngIf="confirming">
+      <strong>¿Ocultar este comentario publicado?</strong>
+      <div>
+        {{ confirming.sheet ? confirming.sheet.code + ' · ' + confirming.sheet.title : '' }} ·
+        {{ teacherName(confirming) }}. Dejará de mostrarse a los docentes. Las estrellas se conservan y podrá
+        aprobarse de nuevo.
+      </div>
+      <div class="actions">
+        <button nbButton size="small" status="basic" [disabled]="submitting" (click)="cancelHide()">Cancelar</button>
+        <button nbButton size="small" status="danger" [disabled]="submitting" (click)="confirmHide()">Confirmar</button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <ng2-smart-table [source]="source" [settings]="settings" (custom)="onAction($event)"></ng2-smart-table>
+    </div>
+  </nb-card-body>
+</nb-card>

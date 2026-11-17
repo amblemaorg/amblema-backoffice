@@ -42,6 +42,21 @@ export interface SheetInput {
   seriesId?: string | null;
 }
 
+export interface SheetListFilters {
+  status: SheetStatus | null;
+  sheetTypeId: string | null;
+  seriesId: string | null;
+  q: string;
+}
+
+/** Errores de la API: {"<campo>": [{"status": "<código>", "msg": "..."}]}. */
+export type ApiErrors = { [field: string]: { status: string; msg: string }[] };
+
+export interface PublishManyResult {
+  published: string[];
+  failed: { sheetId: string; errors: ApiErrors }[];
+}
+
 export interface Area {
   id: string;
   name: string;

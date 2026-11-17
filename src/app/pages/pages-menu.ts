@@ -247,6 +247,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: "Cargar fichas",
         link: "/pages/vademecum/load",
       },
+      {
+        title: "Fichas",
+        link: "/pages/vademecum/sheets",
+      },
+      {
+        title: "Tipos, áreas y textos",
+        link: "/pages/vademecum/catalog-settings",
+      },
+      {
+        title: "Solicitudes de acceso",
+        link: "/pages/vademecum/access-requests",
+      },
+      {
+        title: "Moderación de comentarios",
+        link: "/pages/vademecum/moderation",
+      },
+      {
+        title: "Indicadores",
+        link: "/pages/vademecum/indicators",
+      },
     ],
   },
 ];

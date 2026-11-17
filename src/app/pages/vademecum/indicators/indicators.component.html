@@ -1,0 +1,167 @@
+<nb-card class="filters">
+  <nb-card-header>Indicadores de Vademécum</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-4 form-group">
+        <label class="label">Año escolar:</label>
+        <select class="form-control" [(ngModel)]="filters.schoolYearId" (change)="onFilterChange()">
+          <option [ngValue]="null">Año vigente</option>
+          <option *ngFor="let year of schoolYears" [ngValue]="year.id">{{ year.name }}</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4 form-group">
+        <label class="label">Región:</label>
+        <select class="form-control" [(ngModel)]="filters.stateId" (change)="onStateChange()">
+          <option [ngValue]="null">Todas</option>
+          <option *ngFor="let state of states" [ngValue]="state.id">{{ state.name }}</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4 form-group">
+        <label class="label">Escuela:</label>
+        <select class="form-control" [(ngModel)]="filters.schoolId" (change)="onFilterChange()">
+          <option [ngValue]="null">Todas</option>
+          <option *ngFor="let school of schools" [ngValue]="school.id">{{ school.name }}</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4 form-group">
+        <label class="label">Tipo de ficha:</label>
+        <select class="form-control" [(ngModel)]="filters.sheetTypeId" (change)="onFilterChange()">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let type of sheetTypes" [ngValue]="type.id">{{ type.name }}</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4 form-group">
+        <label class="label">Origen:</label>
+        <nb-radio-group [(ngModel)]="filters.origin" class="d-flex" (valueChange)="onOriginChange($event)">
+          <nb-radio [value]="null">Todos</nb-radio>
+          <nb-radio value="enrollment">Matrícula</nb-radio>
+          <nb-radio value="external">Externos</nb-radio>
+        </nb-radio-group>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4 form-group d-flex align-items-end">
+        <button nbButton status="basic" [disabled]="!hasFilters" (click)="clearFilters()">Limpiar</button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="summaryFailed">
+  <nb-card-body class="empty-state">No se pudieron cargar los indicadores. Ajuste los filtros o intente de nuevo.</nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="noCurrentYear && !summaryFailed">
+  <nb-card-body class="empty-state">No hay año escolar vigente. Elija un año escolar en el filtro.</nb-card-body>
+</nb-card>
+
+<ng-container *ngIf="summary && !summaryFailed">
+  <nb-card [nbSpinner]="loadingSummary" *ngIf="!noCurrentYear">
+    <nb-card-body>
+      <div class="row">
+        <div class="col-6 col-lg-3 total-card">
+          <div class="value">{{ summary.totals.downloads }}</div>
+          <div class="label">Descargas</div>
+          <small>sin redescargas</small>
+        </div>
+        <div class="col-6 col-lg-3 total-card">
+          <div class="value">{{ summary.totals.activeTeachers }}</div>
+          <div class="label">Docentes activos</div>
+        </div>
+        <div class="col-6 col-lg-3 total-card">
+          <div class="value">{{ summary.totals.activeSchools }}</div>
+          <div class="label">Escuelas activas</div>
+        </div>
+        <div class="col-6 col-lg-3 total-card">
+          <div class="value">{{ summary.totals.externalTeachers }}</div>
+          <div class="label">Docentes externos</div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <div class="empty-state" *ngIf="!noCurrentYear && !hasDownloads && !loadingSummary">
+    Sin descargas para estos filtros
+  </div>
+
+  <ng-container *ngIf="hasDownloads">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <nb-card>
+          <nb-card-header>Descargas por tipo de ficha</nb-card-header>
+          <nb-card-body class="chart-box">
+            <canvas baseChart chartType="bar" [datasets]="typeChartData" [labels]="typeChartLabels"
+              [colors]="typeChartColors" [options]="typeChartOptions" [legend]="false"></canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-12 col-lg-4">
+        <nb-card>
+          <nb-card-header>Matrícula vs Externos</nb-card-header>
+          <nb-card-body class="chart-box">
+            <canvas baseChart chartType="pie" [data]="originChartData" [labels]="originChartLabels"
+              [colors]="originChartColors" [options]="originChartOptions" [legend]="true"></canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-xl-4">
+        <nb-card>
+          <nb-card-header>Fichas más descargadas</nb-card-header>
+          <nb-card-body>
+            <div class="table-responsive">
+              <ng2-smart-table [source]="sheetsSource" [settings]="sheetsSettings"></ng2-smart-table>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-12 col-xl-4">
+        <nb-card>
+          <nb-card-header>Docentes que más descargan</nb-card-header>
+          <nb-card-body>
+            <div class="table-responsive">
+              <ng2-smart-table [source]="teachersRankSource" [settings]="teachersRankSettings"></ng2-smart-table>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-12 col-xl-4">
+        <nb-card>
+          <nb-card-header>Escuelas</nb-card-header>
+          <nb-card-body>
+            <div class="table-responsive">
+              <ng2-smart-table [source]="schoolsSource" [settings]="schoolsSettings"></ng2-smart-table>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </ng-container>
+
+  <nb-card *ngIf="!noCurrentYear">
+    <nb-card-header>Docentes</nb-card-header>
+    <nb-card-body>
+      <div class="form-group">
+        <label class="label">Buscar:</label>
+        <input nbInput fullWidth placeholder="Buscar por nombre o correo" [(ngModel)]="teacherQuery"
+          (ngModelChange)="onTeacherSearch()" />
+      </div>
+      <div class="table-responsive">
+        <ng2-smart-table [source]="teachersSource" [settings]="teachersSettings"
+          (custom)="onTeacherAction($event)"></ng2-smart-table>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card *ngIf="selectedTeacher && downloadsSource">
+    <nb-card-header class="d-flex justify-content-between">
+      <span>Descargas de {{ teacherName(selectedTeacher.account) }}</span>
+      <button nbButton size="tiny" (click)="closeTeacher()">Cerrar</button>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="table-responsive">
+        <ng2-smart-table [source]="downloadsSource" [settings]="downloadsSettings"></ng2-smart-table>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-container>

@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AdminSheet, AdminSheetList, SheetInput } from 'src/app/_models/vademecum/sheet.model';
+import {
+  AdminSheet,
+  AdminSheetList,
+  PublishManyResult,
+  SheetInput,
+  SheetListFilters,
+} from 'src/app/_models/vademecum/sheet.model';
 
 /** Fichas de Vademécum en la administración (API-12). */
 @Injectable({
@@ -37,6 +43,34 @@ export class VademecumSheetService {
     return this.http.post<AdminSheet>(this.url, form);
   }
 
+  /** Listado con filtros (todos los estados si `status` va vacío). */
+  list(filters: SheetListFilters, page = 1, pageSize = 20): Observable<AdminSheetList> {
+    let params = new HttpParams().set('page', String(page)).set('pageSize', String(pageSize));
+    if (filters.status) {
+      params = params.set('status', filters.status);
+    }
+    if (filters.sheetTypeId) {
+      params = params.set('sheetTypeId', filters.sheetTypeId);
+    }
+    if (filters.seriesId) {
+      params = params.set('seriesId', filters.seriesId);
+    }
+    const q = (filters.q || '').trim();
+    if (q) {
+      params = params.set('q', q);
+    }
+    return this.http.get<AdminSheetList>(this.url, { params });
+  }
+
+  unpublish(id: string): Observable<AdminSheet> {
+    return this.http.post<AdminSheet>(`${this.url}/${id}/unpublish`, {});
+  }
+
+  /** Borrado lógico: las descargas registradas se conservan. */
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
+  }
+
   update(id: string, data: SheetInput): Observable<AdminSheet> {
     return this.http.put<AdminSheet>(`${this.url}/${id}`, data);
   }
@@ -45,8 +79,8 @@ export class VademecumSheetService {
     return this.http.post<AdminSheet>(`${this.url}/${id}/publish`, {});
   }
 
-  publishMany(sheetIds: string[]): Observable<{ published: string[]; failed: { sheetId: string; errors: any }[] }> {
-    return this.http.post<{ published: string[]; failed: { sheetId: string; errors: any }[] }>(
+  publishMany(sheetIds: string[]): Observable<PublishManyResult> {
+    return this.http.post<PublishManyResult>(
       `${this.url}/publish`,
       { sheetIds },
     );

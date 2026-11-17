@@ -1,0 +1,77 @@
+<nb-card>
+  <nb-card-header>Solicitudes de acceso a Vademécum</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12 form-group">
+        <label class="label">Estado:</label>
+        <nb-radio-group [(ngModel)]="status" class="d-flex" (valueChange)="onStatusChange()">
+          <nb-radio value="pending">Pendientes</nb-radio>
+          <nb-radio value="approved">Aprobadas</nb-radio>
+          <nb-radio value="rejected">Rechazadas</nb-radio>
+        </nb-radio-group>
+      </div>
+      <div class="col-12 col-md-6 form-group">
+        <label class="label">Buscar:</label>
+        <input nbInput fullWidth placeholder="Nombre, correo o cédula" [(ngModel)]="query" (ngModelChange)="onSearch()" />
+      </div>
+      <div class="col-12 col-md-6 form-group">
+        <label class="label">Año escolar:</label>
+        <select class="form-control" [(ngModel)]="requestsYearId" (change)="onFilterChange()">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let year of schoolYears" [ngValue]="year.id">{{ year.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="confirm-panel" *ngIf="pending && pending.kind !== 'revoke'">
+      <strong>{{ pendingTitle }}</strong>
+      <p class="mb-2 mt-2" *ngIf="pending.kind === 'approve'">Se creará o activará la cuenta y se enviará un correo.</p>
+      <ng-container *ngIf="pending.kind === 'reject'">
+        <label class="label mt-2">Motivo del rechazo (obligatorio, se enviará por correo)</label>
+        <textarea nbInput fullWidth rows="3" [maxlength]="maxReasonLength" [(ngModel)]="rejectReason"
+          [disabled]="submitting"></textarea>
+        <small class="counter">{{ rejectReason.length }} / {{ maxReasonLength }}</small>
+      </ng-container>
+      <div class="actions">
+        <button nbButton size="small" status="basic" [disabled]="submitting" (click)="cancelAction()">Cancelar</button>
+        <button nbButton size="small" [status]="pending.kind === 'approve' ? 'success' : 'danger'"
+          [disabled]="submitting || (pending.kind === 'reject' && !reasonValid)" (click)="confirmAction()">
+          {{ pending.kind === 'approve' ? 'Confirmar aprobación' : 'Confirmar rechazo' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <ng2-smart-table *ngIf="requestsSource" [source]="requestsSource" [settings]="requestsSettings"
+        (custom)="onRequestAction($event)"></ng2-smart-table>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>Autorizaciones del año</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12 col-md-6 form-group">
+        <label class="label">Año escolar:</label>
+        <select class="form-control" [(ngModel)]="authYearId" (change)="onAuthYearChange()">
+          <option [ngValue]="null">Año vigente</option>
+          <option *ngFor="let year of schoolYears" [ngValue]="year.id">{{ year.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="confirm-panel" *ngIf="pending && pending.kind === 'revoke'">
+      <strong>{{ pendingTitle }}</strong>
+      <p class="mb-2 mt-2">El docente perderá el acceso a Vademécum para este año escolar.</p>
+      <div class="actions">
+        <button nbButton size="small" status="basic" [disabled]="submitting" (click)="cancelAction()">Cancelar</button>
+        <button nbButton size="small" status="danger" [disabled]="submitting" (click)="confirmAction()">Confirmar revocación</button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <ng2-smart-table [source]="authSource" [settings]="authSettings" (custom)="onAuthAction($event)"></ng2-smart-table>
+    </div>
+  </nb-card-body>
+</nb-card>

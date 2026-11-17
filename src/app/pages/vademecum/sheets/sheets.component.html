@@ -1,0 +1,104 @@
+<nb-card>
+  <nb-card-header>Fichas de Vademécum</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12 form-group">
+        <label class="label">Estado:</label>
+        <nb-radio-group [(ngModel)]="status" class="d-flex" (valueChange)="applyFilters()">
+          <nb-radio [value]="null">Todas</nb-radio>
+          <nb-radio value="draft">Borrador</nb-radio>
+          <nb-radio value="published">Publicada</nb-radio>
+          <nb-radio value="unpublished">Despublicada</nb-radio>
+        </nb-radio-group>
+      </div>
+      <div class="col-12 col-md-4 form-group">
+        <label class="label">Buscar:</label>
+        <input nbInput fullWidth placeholder="Código o título" [(ngModel)]="query" (ngModelChange)="onSearch()" />
+      </div>
+      <div class="col-12 col-md-4 form-group">
+        <label class="label">Tipo:</label>
+        <select class="form-control" [(ngModel)]="sheetTypeId" (change)="onTypeChange()">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let type of types" [ngValue]="type.id">{{ type.name }}</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-4 form-group">
+        <label class="label">Serie:</label>
+        <select class="form-control" [(ngModel)]="seriesId" [disabled]="!sheetTypeId || seriesOptions.length === 0"
+          (change)="applyFilters()">
+          <option [ngValue]="null">Todas</option>
+          <option *ngFor="let serie of seriesOptions" [ngValue]="serie.id">{{ serie.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Confirmación en línea: despublicar / borrar -->
+    <div class="panel" [class.danger]="pending.kind === 'delete'" *ngIf="pending">
+      <ng-container *ngIf="pending.kind === 'unpublish'">
+        <strong>Despublicar {{ pending.sheet.code }}</strong>
+        <p class="mt-2 mb-0">La ficha dejará de verse en el catálogo para los docentes. Podrá publicarla de nuevo.</p>
+      </ng-container>
+      <ng-container *ngIf="pending.kind === 'delete'">
+        <strong>Borrar {{ pending.sheet.code }} · {{ pending.sheet.title }}</strong>
+        <p class="mt-2 mb-0">La ficha dejará de aparecer en el listado y en el catálogo. Las descargas registradas se conservan.</p>
+      </ng-container>
+      <div class="actions">
+        <button nbButton size="small" status="basic" [disabled]="submitting" (click)="cancelAction()">Cancelar</button>
+        <button nbButton size="small" [status]="pending.kind === 'delete' ? 'danger' : 'warning'" [disabled]="submitting"
+          (click)="confirmAction()">{{ pending.kind === 'delete' ? 'Confirmar borrado' : 'Confirmar despublicación' }}</button>
+      </div>
+    </div>
+
+    <!-- Panel de edición -->
+    <div class="panel edit" *ngIf="editing">
+      <strong>Editar {{ editing.code }}</strong>
+      <div class="form-group mt-2">
+        <label>Título</label>
+        <input nbInput fullWidth [(ngModel)]="form.title" [disabled]="submitting" maxlength="200" />
+      </div>
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea nbInput fullWidth rows="3" [(ngModel)]="form.description" [disabled]="submitting"></textarea>
+        <small class="field-error" *ngIf="fieldErrors.description">{{ fieldErrors.description }}</small>
+      </div>
+      <div class="form-group">
+        <label>Grados</label>
+        <div class="grades">
+          <nb-checkbox *ngFor="let grade of gradeOptions" [checked]="hasGrade(grade.value)" [disabled]="submitting"
+            (checkedChange)="toggleGrade(grade.value, $event)">{{ grade.label }}</nb-checkbox>
+        </div>
+        <small class="field-error" *ngIf="fieldErrors.grades">{{ fieldErrors.grades }}</small>
+      </div>
+      <div class="form-group">
+        <label>Áreas</label>
+        <ng-select [items]="areas" bindLabel="name" bindValue="id" [multiple]="true" [(ngModel)]="form.areaIds"
+          [disabled]="submitting" placeholder="Seleccione áreas" notFoundText="Sin áreas"></ng-select>
+        <small class="field-error" *ngIf="fieldErrors.file">{{ fieldErrors.file }}</small>
+      </div>
+      <small class="field-error" *ngIf="formError">{{ formError }}</small>
+      <div class="actions">
+        <button nbButton size="small" status="basic" [disabled]="submitting" (click)="cancelEdit()">Cancelar</button>
+        <button nbButton size="small" status="primary" [disabled]="submitting || !formValid" (click)="saveEdit()">Guardar</button>
+      </div>
+    </div>
+
+    <!-- Resultado del lote -->
+    <div class="panel batch-failures" *ngIf="batchFailures.length > 0">
+      <strong>No se publicaron {{ batchFailures.length }} ficha(s):</strong>
+      <ul class="mt-2 mb-2">
+        <li *ngFor="let f of batchFailures">{{ f.sheet }}: {{ f.reason }}</li>
+      </ul>
+      <button nbButton size="tiny" status="basic" (click)="dismissBatchFailures()">Cerrar</button>
+    </div>
+
+    <div class="batch-bar">
+      <button nbButton size="small" status="success" [disabled]="submitting || selected.length === 0"
+        (click)="publishSelected()">Publicar seleccionadas ({{ selected.length }})</button>
+    </div>
+
+    <div class="table-responsive">
+      <ng2-smart-table [source]="source" [settings]="settings" (custom)="onAction($event)"
+        (userRowSelect)="onRowSelect($event)"></ng2-smart-table>
+    </div>
+  </nb-card-body>
+</nb-card>

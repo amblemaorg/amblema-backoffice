@@ -1,0 +1,14 @@
+.form-group { margin-bottom: 0.75rem; }
+.panel { border: 1px solid #ffa100; border-radius: 0.25rem; padding: 1rem; margin-bottom: 1rem; }
+.panel.edit { border-color: #3366ff; }
+.panel.danger { border-color: #ff3d71; }
+.panel .actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.grades { display: flex; flex-wrap: wrap; gap: 1rem; }
+.field-error { color: #ff3d71; display: block; margin-top: 0.25rem; }
+:host ::ng-deep .status-pill { padding: 0.1rem 0.5rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+:host ::ng-deep .status-success { background: #d5f5e3; color: #00995a; }
+:host ::ng-deep .status-warning { background: #fff3cd; color: #b36b00; }
+:host ::ng-deep .status-basic { background: #edf1f7; color: #4b5873; }
+.batch-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.batch-failures { margin-bottom: 1rem; }
+.batch-failures li { margin-bottom: 0.25rem; }

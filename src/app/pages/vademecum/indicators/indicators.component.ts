@@ -21,6 +21,7 @@ import { SchoolUserService } from 'src/app/services/user/school-user.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { TABLE_ICONS, VademecumServerSource, VademecumTableSources, vademecumTableSettings } from '../_shared/vademecum-table';
 import { VademecumIndicatorsService } from 'src/app/services/vademecum/vademecum-indicators.service';
+import { VademecumIndicatorsExportService } from 'src/app/services/vademecum/vademecum-indicators-export.service';
 import { VademecumTaxonomyService } from 'src/app/services/vademecum/vademecum-taxonomy.service';
 
 /** Escapa texto del usuario antes de usarlo en columnas `type: 'html'`. */
@@ -118,6 +119,7 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
   teachersSource: VademecumServerSource;
   readonly teachersSettings: any;
   teacherQuery = '';
+  exporting: 'xlsx' | 'pdf' | null = null;
 
   // Detalle de docente
   selectedTeacher: IndicatorTeacher | null = null;
@@ -126,6 +128,7 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
 
   constructor(
     private indicators: VademecumIndicatorsService,
+    private exporter: VademecumIndicatorsExportService,
     private tableSources: VademecumTableSources,
     private taxonomy: VademecumTaxonomyService,
     private schoolYearService: SchoolYearService,
@@ -224,6 +227,56 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
 
   onTeacherSearch(): void {
     this.search$.next();
+  }
+
+  /** Exporta el listado de docentes con los filtros activos (BO-11). */
+  exportTeachers(format: 'xlsx' | 'pdf'): void {
+    if (this.exporting) {
+      return;
+    }
+    this.exporting = format;
+    this.indicators.exportTeachers(this.filters, this.teacherQuery).pipe(takeUntil(this.destroy$)).subscribe(
+      (data) => {
+        if (!data.records.length) {
+          this.toastr.error('Sin datos', 'No hay docentes para exportar con estos filtros.');
+        } else if (format === 'xlsx') {
+          this.exporter.toExcel(data, this.filtersLabel());
+        } else {
+          this.exporter.toPdf(data, this.filtersLabel());
+        }
+        this.exporting = null;
+      },
+      (error) => {
+        // La API responde 400 en `general` si hay más de 5000 filas.
+        const detail = error?.error?.general?.[0]?.msg;
+        this.toastr.error('Error', detail || 'No se pudo generar la exportación.');
+        this.exporting = null;
+      },
+    );
+  }
+
+  /** Texto de los filtros activos para el encabezado del archivo (el año va aparte). */
+  private filtersLabel(): string {
+    const parts: string[] = [];
+    const state = this.states.find((item) => item.id === this.filters.stateId);
+    const school = this.schools.find((item) => item.id === this.filters.schoolId);
+    const type = this.sheetTypes.find((item) => item.id === this.filters.sheetTypeId);
+    if (state) {
+      parts.push(`Región: ${state.name}`);
+    }
+    if (school) {
+      parts.push(`Escuela: ${school.name}`);
+    }
+    if (type) {
+      parts.push(`Tipo de ficha: ${type.name}`);
+    }
+    if (this.filters.origin) {
+      parts.push(`Origen: ${this.filters.origin === 'external' ? 'Externos' : 'Matrícula'}`);
+    }
+    if (this.teacherQuery.trim()) {
+      parts.push(`Búsqueda: ${this.teacherQuery.trim()}`);
+    }
+    return parts.join(' · ');
   }
 
   onOriginChange(origin: IndicatorFilters['origin']): void {

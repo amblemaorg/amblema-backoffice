@@ -101,3 +101,24 @@ export interface IndicatorTeacherDownloadList {
   records: IndicatorTeacherDownload[];
   pagination: Pagination;
 }
+
+/** Fila plana de `indicators/teachers/export` (API-18). */
+export interface IndicatorTeacherExportRecord {
+  firstName: string;
+  lastName: string;
+  email: string;
+  origin: IndicatorOrigin;
+  originLabel: string;
+  schools: string;
+  schoolCodes: string;
+  states: string;
+  downloads: number;
+  lastDownloadAt: string | null;
+}
+
+export interface IndicatorTeacherExport {
+  schoolYear: IndicatorSchoolYear | null;
+  generatedAt: string;
+  total: number;
+  records: IndicatorTeacherExportRecord[];
+}

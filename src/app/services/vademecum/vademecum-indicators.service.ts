@@ -6,6 +6,7 @@ import {
   IndicatorFilters,
   IndicatorsSummary,
   IndicatorTeacherDownloadList,
+  IndicatorTeacherExport,
   IndicatorTeacherList,
 } from 'src/app/_models/vademecum/indicators.model';
 
@@ -29,6 +30,15 @@ export class VademecumIndicatorsService {
       params = params.set('q', q.trim());
     }
     return this.http.get<IndicatorTeacherList>(`${this.url}/teachers`, { params });
+  }
+
+  /** Todas las filas del listado de docentes con los filtros actuales (máximo 5000; si hay más, 400). */
+  exportTeachers(filters: IndicatorFilters, q: string): Observable<IndicatorTeacherExport> {
+    let params = this.filterParams(filters);
+    if (q.trim()) {
+      params = params.set('q', q.trim());
+    }
+    return this.http.get<IndicatorTeacherExport>(`${this.url}/teachers/export`, { params });
   }
 
   teacherDownloads(

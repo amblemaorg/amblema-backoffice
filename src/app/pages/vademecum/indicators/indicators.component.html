@@ -139,7 +139,15 @@
   </ng-container>
 
   <nb-card *ngIf="!noCurrentYear">
-    <nb-card-header>Docentes</nb-card-header>
+    <nb-card-header class="d-flex justify-content-between align-items-center">
+      <span>Docentes</span>
+      <span>
+        <button nbButton size="small" status="primary" class="mr-2" [disabled]="!!exporting"
+          [nbSpinner]="exporting === 'xlsx'" (click)="exportTeachers('xlsx')">Exportar a Excel</button>
+        <button nbButton size="small" status="primary" [disabled]="!!exporting"
+          [nbSpinner]="exporting === 'pdf'" (click)="exportTeachers('pdf')">Exportar a PDF</button>
+      </span>
+    </nb-card-header>
     <nb-card-body>
       <div class="form-group">
         <label class="label">Buscar:</label>

@@ -50,6 +50,15 @@ $border: #e4e9f2;
   }
 }
 
+// ------------------------------------------------------------ contenido a exportar
+.export-scope {
+  margin-bottom: 1rem;
+
+  nb-radio-group {
+    gap: 0.5rem 1.5rem;
+  }
+}
+
 // ------------------------------------------------------------ conteos
 .counts {
   display: flex;

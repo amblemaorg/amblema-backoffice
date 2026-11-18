@@ -4,7 +4,11 @@ import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx-js-style';
 
 import { IMAGE } from '../img-base-64';
-import { HqsAwardReport, HqsAwardSchool } from 'src/app/_models/report/hqs-award-report.model';
+import {
+  HqsAwardReport,
+  HqsAwardSchool,
+  HqsExportScope,
+} from 'src/app/_models/report/hqs-award-report.model';
 
 const pdfMake = require('pdfmake/build/pdfmake.js');
 const pdfFonts = require('pdfmake/build/vfs_fonts.js');
@@ -26,6 +30,25 @@ const AWARD_COLORS: { [key: string]: string } = {
   none: '#e4e9f2',
   incomplete: '#e4e9f2',
 };
+
+const NO_STATE = 'Sin estado';
+const STATE_BAND = '#0b4a5e'; // azul oscuro del título de cada estado
+const REPORT_TITLES: { [key in HqsExportScope]: string } = {
+  filters: 'Reporte de premios Escuela HQS',
+  general: 'Reporte general de premios Escuela HQS',
+  byState: 'Reporte de premios Escuela HQS por estado',
+};
+const FILE_PREFIXES: { [key in HqsExportScope]: string } = {
+  filters: 'Reporte-premios-HQS',
+  general: 'Reporte-general-premios-HQS',
+  byState: 'Reporte-premios-HQS-por-estado',
+};
+
+interface StateGroup {
+  name: string;
+  schools: HqsAwardSchool[];
+  counts: { [key: string]: number };
+}
 
 @Injectable()
 export class HqsAwardReportExport {
@@ -49,14 +72,74 @@ export class HqsAwardReportExport {
     return AWARD_COLORS[school.award ? school.award : school.status];
   }
 
-  private fileName(report: HqsAwardReport, ext: string): string {
+  /** Título de sección, como en el reporte de coevaluación (14 pt, azul oscuro). */
+  private sectionTitle(text: string): any {
+    return { text, fontSize: 14, bold: true, color: STATE_BAND, margin: [0, 5, 0, 8] };
+  }
+
+  /**
+   * Título de un estado: franja oscura con letra blanca, como primera fila de la tabla de ese estado.
+   * Al ser fila de cabecera (headerRows: 2) se repite en cada hoja si la tabla continúa.
+   */
+  private stateBand(text: string, columns: number): any[] {
+    const band = {
+      text,
+      colSpan: columns,
+      bold: true,
+      fontSize: 12,
+      color: '#FFF',
+      fillColor: STATE_BAND,
+      margin: [4, 3, 0, 3],
+    };
+    return [band, ...Array.from({ length: columns - 1 }, () => ({}))];
+  }
+
+  /** Escuelas agrupadas por estado (orden alfabético; "Sin estado" al final) con su conteo por nivel. */
+  private groupByState(report: HqsAwardReport): StateGroup[] {
+    const groups: { [name: string]: StateGroup } = {};
+    report.schools.forEach((school) => {
+      const name = school.state ? school.state.name : NO_STATE;
+      if (!groups[name]) {
+        groups[name] = {
+          name,
+          schools: [],
+          counts: { gold: 0, silver: 0, bronze: 0, none: 0, incomplete: 0 },
+        };
+      }
+      groups[name].schools.push(school);
+      groups[name].counts[school.award ? school.award : school.status] += 1;
+    });
+    return Object.keys(groups)
+      .map((name) => groups[name])
+      .sort((a, b) => {
+        if (a.name === NO_STATE || b.name === NO_STATE) {
+          return a.name === NO_STATE ? 1 : -1;
+        }
+        return a.name.localeCompare(b.name, 'es');
+      });
+  }
+
+  private awardCell(s: HqsAwardSchool): any {
+    return s.status === 'incomplete'
+      ? {
+          text: [
+            { text: s.awardLabel, bold: true },
+            { text: `\nfalta: ${s.missingLabels.join(', ')}`, bold: false, fontSize: 7 },
+          ],
+          alignment: 'center',
+          fillColor: this.awardColor(s),
+        }
+      : { text: s.awardLabel, alignment: 'center', bold: true, fillColor: this.awardColor(s) };
+  }
+
+  private fileName(report: HqsAwardReport, ext: string, scope: HqsExportScope = 'filters'): string {
     const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
     const now = new Date();
     const date = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}_${pad(
       now.getHours()
     )}-${pad(now.getMinutes())}`;
     const year = (report.schoolYear.name || '').replace(/[^0-9A-Za-z-]+/g, '');
-    return `Reporte-premios-HQS-${year}_${date}.${ext}`;
+    return `${FILE_PREFIXES[scope]}-${year}_${date}.${ext}`;
   }
 
   /**
@@ -101,15 +184,15 @@ export class HqsAwardReportExport {
   // -------------------------------------------------------------------- PDF
 
   /** Genera y descarga el PDF. Resuelve cuando pdfmake entregó el archivo. */
-  toPdf(report: HqsAwardReport, filters: string): Promise<void> {
+  toPdf(report: HqsAwardReport, filters: string, scope: HqsExportScope = 'filters'): Promise<void> {
     return this.withTimeout(
       new Promise<void>((resolve, reject) => {
         // Se difiere un ciclo: pdfmake bloquea el hilo y la UI debe pintar antes el botón bloqueado.
         setTimeout(() => {
           try {
             pdfMake
-              .createPdf(this.pdfDefinition(report, filters))
-              .download(this.fileName(report, 'pdf'), () => resolve());
+              .createPdf(this.pdfDefinition(report, filters, scope))
+              .download(this.fileName(report, 'pdf', scope), () => resolve());
           } catch (e) {
             reject(e);
           }
@@ -118,12 +201,12 @@ export class HqsAwardReportExport {
     );
   }
 
-  private pdfDefinition(report: HqsAwardReport, filters: string): any {
+  private pdfDefinition(report: HqsAwardReport, filters: string, scope: HqsExportScope): any {
     const c = report.counts;
     const content: any[] = [
       { image: IMAGE, width: 90, absolutePosition: { x: 30, y: 15 } },
       {
-        text: 'Reporte de premios Escuela HQS',
+        text: REPORT_TITLES[scope],
         color: TITLE,
         alignment: 'center',
         fontSize: 16,
@@ -162,56 +245,13 @@ export class HqsAwardReportExport {
         layout: this.tableLayout,
         margin: [0, 0, 0, 10],
       },
-      {
-        table: {
-          headerRows: 1,
-          widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-          body: [
-            this.header([
-              'Escuela',
-              'Coord.',
-              'IAA',
-              'PPM',
-              'M2M',
-              '60LM',
-              'Índice\nIntegral',
-              'Índice\nDocentes HQS',
-              'Promedio',
-              'Premio',
-              'AmbLeMario',
-            ]),
-            ...report.schools.map((s) => [
-              s.name,
-              s.coordinator || '—',
-              { text: this.num(s.components.iaa), alignment: 'center' },
-              { text: this.num(s.components.wordsPerMin), alignment: 'center' },
-              { text: this.num(s.components.multiplicationsPerMin), alignment: 'center' },
-              { text: this.num(s.components.operationsPerMin), alignment: 'center' },
-              { text: this.num(s.integralIndex), alignment: 'center' },
-              { text: this.num(s.teacherIndex), alignment: 'center' },
-              { text: this.num(s.finalIndex), alignment: 'center', bold: true },
-              s.status === 'incomplete'
-                ? {
-                    text: [
-                      { text: s.awardLabel, bold: true },
-                      { text: `\nfalta: ${s.missingLabels.join(', ')}`, bold: false, fontSize: 7 },
-                    ],
-                    alignment: 'center',
-                    fillColor: this.awardColor(s),
-                  }
-                : { text: s.awardLabel, alignment: 'center', bold: true, fillColor: this.awardColor(s) },
-              { text: s.yearbookDownloadEnabled ? 'Sí' : '', alignment: 'center' },
-            ]),
-          ],
-        },
-        layout: this.tableLayout,
-      },
-      { text: NOTE, fontSize: 7, italics: true, margin: [0, 8, 0, 0] },
+      ...(scope === 'byState' ? this.stateTables(report) : [this.flatTable(report)]),
+      { text: NOTE, fontSize: 8, italics: true, margin: [0, 8, 0, 0] },
     ];
 
     return {
       info: {
-        title: 'Reporte de premios Escuela HQS',
+        title: REPORT_TITLES[scope],
         author: 'Fundación AmbLeMa',
         subject: 'Premios Escuela HQS',
       },
@@ -229,14 +269,107 @@ export class HqsAwardReportExport {
     };
   }
 
+  /** Tabla plana: una fila por escuela con todos los índices. */
+  private flatTable(report: HqsAwardReport): any {
+    return {
+      table: {
+        headerRows: 1,
+        widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+        body: [
+          this.header([
+            'Escuela',
+            'Coord.',
+            'IAA',
+            'PPM',
+            'M2M',
+            '60LM',
+            'Índice\nIntegral',
+            'Índice\nDocentes HQS',
+            'Promedio',
+            'Premio',
+            'AmbLeMario',
+          ]),
+          ...report.schools.map((s) => [
+            s.name,
+            s.coordinator || '—',
+            { text: this.num(s.components.iaa), alignment: 'center' },
+            { text: this.num(s.components.wordsPerMin), alignment: 'center' },
+            { text: this.num(s.components.multiplicationsPerMin), alignment: 'center' },
+            { text: this.num(s.components.operationsPerMin), alignment: 'center' },
+            { text: this.num(s.integralIndex), alignment: 'center' },
+            { text: this.num(s.teacherIndex), alignment: 'center' },
+            { text: this.num(s.finalIndex), alignment: 'center', bold: true },
+            this.awardCell(s),
+            { text: s.yearbookDownloadEnabled ? 'Sí' : '', alignment: 'center' },
+          ]),
+        ],
+      },
+      layout: this.tableLayout,
+    };
+  }
+
+  /** Por estado: resumen de niveles por estado y, luego, la lista de escuelas de cada estado con su nivel. */
+  private stateTables(report: HqsAwardReport): any[] {
+    const groups = this.groupByState(report);
+    const total = (key: string) => groups.reduce((sum, g) => sum + g.counts[key], 0);
+    const keys = ['gold', 'silver', 'bronze', 'none', 'incomplete'];
+    const center = (n: number, bold: boolean = false) => ({ text: `${n}`, alignment: 'center', bold });
+    const summary = {
+      table: {
+        headerRows: 1,
+        widths: ['*', 50, 50, 50, 60, 80, 50],
+        body: [
+          this.header(['Estado', 'ORO', 'PLATA', 'BRONCE', 'Sin premio', 'Datos incompletos', 'Total']),
+          ...groups.map((g) => [
+            g.name,
+            ...keys.map((k) => center(g.counts[k])),
+            center(g.schools.length, true),
+          ]),
+          [
+            { text: 'Total', bold: true },
+            ...keys.map((k) => center(total(k), true)),
+            center(report.schools.length, true),
+          ],
+        ],
+      },
+      layout: this.tableLayout,
+      margin: [0, 0, 0, 6],
+    };
+    const perState = groups.map((g) => ({
+      table: {
+        headerRows: 2,
+        dontBreakRows: true,
+        widths: ['*', 140, 55, 70, 55, 150],
+        body: [
+          this.stateBand(
+            `${g.name} (${g.schools.length} ${g.schools.length === 1 ? 'escuela' : 'escuelas'})`,
+            6
+          ),
+          this.header(['Escuela', 'Coord.', 'Índice\nIntegral', 'Índice\nDocentes HQS', 'Promedio', 'Premio']),
+          ...g.schools.map((s) => [
+            s.name,
+            s.coordinator || '—',
+            { text: this.num(s.integralIndex), alignment: 'center' },
+            { text: this.num(s.teacherIndex), alignment: 'center' },
+            { text: this.num(s.finalIndex), alignment: 'center', bold: true },
+            this.awardCell(s),
+          ]),
+        ],
+      },
+      layout: this.tableLayout,
+      margin: [0, 14, 0, 0],
+    }));
+    return [this.sectionTitle('Resumen por estado'), summary, ...perState];
+  }
+
   // ------------------------------------------------------------------ Excel
 
   /** Genera y descarga el Excel; se difiere un ciclo para que la UI muestre el bloqueo antes del trabajo pesado. */
-  toExcel(report: HqsAwardReport, filters: string): Promise<void> {
+  toExcel(report: HqsAwardReport, filters: string, scope: HqsExportScope = 'filters'): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
         try {
-          this.buildExcel(report, filters);
+          this.buildExcel(report, filters, scope);
           resolve();
         } catch (e) {
           reject(e);
@@ -245,10 +378,10 @@ export class HqsAwardReportExport {
     });
   }
 
-  private buildExcel(report: HqsAwardReport, filters: string): void {
+  private buildExcel(report: HqsAwardReport, filters: string, scope: HqsExportScope): void {
     const workbook = XLSX.utils.book_new();
     const intro: any[][] = [
-      ['Reporte de premios Escuela HQS'],
+      [REPORT_TITLES[scope]],
       ['Período académico', report.schoolYear.name],
       ['Filtros', filters],
       [],
@@ -286,13 +419,60 @@ export class HqsAwardReportExport {
         s.yearbookDownloadEnabled ? 'Sí' : '',
       ]),
     ];
-    this.appendSheet(workbook, 'Premios', rows, intro.length);
+    if (scope === 'byState') {
+      this.appendStateSheets(workbook, report, intro);
+    } else {
+      this.appendSheet(workbook, 'Premios', rows, intro.length);
+    }
 
     const output = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
-    saveAs(new Blob([output], { type: 'application/octet-stream' }), this.fileName(report, 'xlsx'));
+    saveAs(new Blob([output], { type: 'application/octet-stream' }), this.fileName(report, 'xlsx', scope));
   }
 
-  private appendSheet(workbook: any, name: string, rows: any[][], headerRow: number): void {
+  /** Hojas del reporte por estado: "Resumen" (conteo por nivel) y "Por estado" (escuela y nivel). */
+  private appendStateSheets(workbook: any, report: HqsAwardReport, intro: any[][]): void {
+    const groups = this.groupByState(report);
+    const keys = ['gold', 'silver', 'bronze', 'none', 'incomplete'];
+    const summary: any[][] = [
+      ...intro,
+      ['Estado', 'ORO', 'PLATA', 'BRONCE', 'Sin premio', 'Datos incompletos', 'Total'],
+      ...groups.map((g) => [g.name, ...keys.map((k) => g.counts[k]), g.schools.length]),
+      [
+        'Total',
+        ...keys.map((k) => groups.reduce((sum, g) => sum + g.counts[k], 0)),
+        report.schools.length,
+      ],
+    ];
+    this.appendSheet(workbook, 'Resumen', summary, intro.length, [30, 10, 10, 10, 12, 18, 10]);
+
+    const rows: any[][] = [
+      ...intro,
+      ['Estado', 'Escuela', 'Coordinador', 'Índice Integral', 'Índice Docentes HQS', 'Promedio', 'Premio', 'Falta'],
+    ];
+    groups.forEach((g) =>
+      g.schools.forEach((s) =>
+        rows.push([
+          g.name,
+          s.name,
+          s.coordinator || '',
+          s.integralIndex,
+          s.teacherIndex,
+          s.finalIndex,
+          s.awardLabel,
+          s.missingLabels.join(', '),
+        ])
+      )
+    );
+    this.appendSheet(workbook, 'Por estado', rows, intro.length, [24, 36, 28, 16, 20, 12, 30, 26]);
+  }
+
+  private appendSheet(
+    workbook: any,
+    name: string,
+    rows: any[][],
+    headerRow: number,
+    widths?: number[]
+  ): void {
     const sheet = XLSX.utils.aoa_to_sheet(rows);
     const range = XLSX.utils.decode_range(sheet['!ref']);
     // Sin forzar Arial: con Arial + negrita, LibreOffice muestra el texto en blanco/invisible.
@@ -324,7 +504,7 @@ export class HqsAwardReportExport {
     }
     // "Falta" (penúltima columna) ancho 36; "AmbLeMario" (última) ancho 14.
     sheet['!cols'] = Array.from({ length: range.e.c + 1 }, (_, c) => ({
-      wch: c < 2 ? 30 : c === range.e.c - 1 ? 36 : c === range.e.c ? 14 : 16,
+      wch: widths ? widths[c] : c < 2 ? 30 : c === range.e.c - 1 ? 36 : c === range.e.c ? 14 : 16,
     }));
     XLSX.utils.book_append_sheet(workbook, sheet, name);
   }

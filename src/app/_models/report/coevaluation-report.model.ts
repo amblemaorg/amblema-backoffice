@@ -1,5 +1,8 @@
-// Contrato de GET statistics/coevaluationsreport/<schoolYearId>?schoolId=&level=
+// Contrato de GET statistics/coevaluationsreport/<schoolYearId>?schoolId=&level=&stateId=
 // (amblema---backend: TeacherCoevaluationService.report)
+
+/** Qué se exporta: lo filtrado en pantalla, todas las escuelas, o todas agrupadas por estado. */
+export type CoevaluationExportScope = 'filters' | 'general' | 'byState';
 
 export type CoevaluationLevelCode =
   | 'excellence'
@@ -51,6 +54,7 @@ export interface CoevaluationSchoolInfo {
   code: string;
   pecaId: string;
   coordinator: string | null;
+  state: { id: string; name: string } | null;
 }
 
 export interface CoevaluationTeacherRow {
@@ -87,11 +91,14 @@ export interface CoevaluationSchoolSummary extends CoevaluationSchoolInfo {
   teachers: CoevaluationTeacherRow[];
 }
 
+/** Docente en la vista por nivel: sin los 15 ítems (solo van en bySchool) y con su escuela. */
+export type CoevaluationLevelTeacherRow = Omit<CoevaluationTeacherRow, 'items'>;
+
 export interface CoevaluationLevelGroup {
   code: CoevaluationLevelCode;
   label: string;
   count: number;
-  teachers: CoevaluationTeacherRow[];
+  teachers: CoevaluationLevelTeacherRow[];
 }
 
 export interface CoevaluationReport {

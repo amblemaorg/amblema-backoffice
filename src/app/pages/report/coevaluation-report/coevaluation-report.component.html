@@ -87,6 +87,16 @@
         </div>
       </div>
 
+      <!-- Qué se exporta -->
+      <div class="export-scope">
+        <label class="label">Contenido a exportar</label>
+        <nb-radio-group [(ngModel)]="exportScope" class="d-flex flex-wrap" [disabled]="exporting">
+          <nb-radio value="filters">Según los filtros seleccionados</nb-radio>
+          <nb-radio value="general">General (todas las escuelas)</nb-radio>
+          <nb-radio value="byState">Por estado</nb-radio>
+        </nb-radio-group>
+      </div>
+
       <nb-tabset>
         <!-- ============================== POR ESCUELA ============================== -->
         <nb-tab tabTitle="Por escuela">

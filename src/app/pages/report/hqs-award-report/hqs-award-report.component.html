@@ -77,6 +77,16 @@
         </div>
       </div>
 
+      <!-- Qué se exporta -->
+      <div class="export-scope">
+        <label class="label">Contenido a exportar</label>
+        <nb-radio-group [(ngModel)]="exportScope" class="d-flex flex-wrap" [disabled]="exporting">
+          <nb-radio value="filters">Según los filtros seleccionados</nb-radio>
+          <nb-radio value="general">General (todas las escuelas)</nb-radio>
+          <nb-radio value="byState">Por estado</nb-radio>
+        </nb-radio-group>
+      </div>
+
       <!-- Conteos -->
       <div class="counts">
         <span class="count-chip award-gold">ORO <b>{{ report.counts.gold }}</b></span>

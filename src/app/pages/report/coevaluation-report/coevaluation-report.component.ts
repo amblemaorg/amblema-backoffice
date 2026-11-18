@@ -18,7 +18,9 @@ import { SortHelper } from 'src/app/_helpers/sort.helper';
 import {
   CoevaluationReport,
   CoevaluationLevelCode,
+  CoevaluationExportScope,
   CoevaluationTeacherRow,
+  CoevaluationLevelTeacherRow,
   CoevaluationStatus,
 } from 'src/app/_models/report/coevaluation-report.model';
 import { CoevaluationReportExport } from './coevaluation-report-export.service';
@@ -53,6 +55,7 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
   report: CoevaluationReport | null = null;
   loading = false;
   exporting = false;
+  exportScope: CoevaluationExportScope = 'filters';
   exportingFormat: 'pdf' | 'xlsx' | null = null;
   // Filas con los 15 ítems desplegados, por clave "pecaId:teacherId"
   expanded: { [key: string]: boolean } = {};
@@ -132,12 +135,23 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
     }
     this.exporting = true;
     this.exportingFormat = format;
+    const scope = this.exportScope;
     try {
-      const filters = this.filtersLabel();
+      let data = this.report;
+      let filters = this.filtersLabel();
+      if (scope !== 'filters') {
+        // General y por estado ignoran los filtros: se consulta el año completo.
+        data = await this.reportService.getReport(this.report.schoolYear.id).toPromise();
+        filters = 'Todos los estados · Todas las escuelas · Todos los niveles';
+        if (!this.hasData(data)) {
+          this.toastr.info('Información', 'No hay coevaluaciones para exportar');
+          return;
+        }
+      }
       if (format === 'pdf') {
-        await this.exporter.toPdf(this.report, filters);
+        await this.exporter.toPdf(data, filters, scope);
       } else {
-        await this.exporter.toExcel(this.report, filters);
+        await this.exporter.toExcel(data, filters, scope);
       }
     } catch (e) {
       this.toastr.error('Error', 'No se pudo generar el archivo');
@@ -174,11 +188,11 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
     return item ? item.title : `Ítem ${num}`;
   }
 
-  fullName(row: CoevaluationTeacherRow): string {
+  fullName(row: CoevaluationLevelTeacherRow): string {
     return `${row.firstName || ''} ${row.lastName || ''}`.trim();
   }
 
-  cardLabel(row: CoevaluationTeacherRow): string {
+  cardLabel(row: CoevaluationLevelTeacherRow): string {
     if (!row.cardId) {
       return '';
     }

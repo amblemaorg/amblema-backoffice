@@ -6,7 +6,8 @@ import * as XLSX from 'xlsx-js-style';
 import { IMAGE } from '../img-base-64';
 import {
   CoevaluationReport,
-  CoevaluationTeacherRow,
+  CoevaluationExportScope,
+  CoevaluationLevelTeacherRow,
   CoevaluationSchoolSummary,
 } from 'src/app/_models/report/coevaluation-report.model';
 
@@ -17,8 +18,31 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 const GREEN = '#81b03e';
 const PDF_FONT_SIZE = 8; // defaultStyle.fontSize del PDF
 const LINE_HEIGHT_FACTOR = 1.17; // Roboto
-const BLUE = '#00809a';
+const SUBTITLE_SIZE = 11; // subtítulos (escuela, nivel): entre el texto (8) y los títulos de sección (14)
 const TITLE = '#2e8aaa';
+
+const NO_STATE = 'Sin estado';
+const STATE_BAND = '#0b4a5e'; // azul oscuro del título de cada estado
+const NO_LEVEL = 'none'; // escuela sin índice (ninguna coevaluación completa)
+const REPORT_TITLES: { [key in CoevaluationExportScope]: string } = {
+  filters: 'Reporte de coevaluación docentes HQS',
+  general: 'Reporte general de coevaluación docentes HQS',
+  byState: 'Reporte de coevaluación docentes HQS por estado',
+};
+const FILE_PREFIXES: { [key in CoevaluationExportScope]: string } = {
+  filters: 'Reporte-coevaluacion',
+  general: 'Reporte-general-coevaluacion',
+  byState: 'Reporte-coevaluacion-por-estado',
+};
+
+interface StateGroup {
+  name: string;
+  schools: CoevaluationSchoolSummary[];
+  nTeachers: number;
+  nCompleted: number;
+  // Escuelas por nivel de su índice (más "none" para las que no tienen índice)
+  schoolLevels: { [code: string]: number };
+}
 
 @Injectable()
 export class CoevaluationReportExport {
@@ -38,11 +62,11 @@ export class CoevaluationReportExport {
     return Number.isInteger(value) ? `${value}` : value.toFixed(2).replace(/\.?0+$/, '');
   }
 
-  private fullName(row: CoevaluationTeacherRow): string {
+  private fullName(row: CoevaluationLevelTeacherRow): string {
     return `${row.firstName || ''} ${row.lastName || ''}`.trim();
   }
 
-  private card(row: CoevaluationTeacherRow): string {
+  private card(row: CoevaluationLevelTeacherRow): string {
     if (!row.cardId) {
       return '';
     }
@@ -53,14 +77,62 @@ export class CoevaluationReportExport {
     return arrays.reduce((acc, list) => acc.concat(list), [] as T[]);
   }
 
-  private fileName(report: CoevaluationReport, ext: string): string {
+  /**
+   * Título de un estado: franja oscura con letra blanca, como primera fila de la tabla de ese estado.
+   * Al ser fila de cabecera (headerRows: 2) se repite en cada hoja si la tabla continúa.
+   */
+  private stateBand(text: string, columns: number): any[] {
+    const band = {
+      text,
+      colSpan: columns,
+      bold: true,
+      fontSize: 12,
+      color: '#FFF',
+      fillColor: STATE_BAND,
+      margin: [4, 3, 0, 3],
+    };
+    return [band, ...Array.from({ length: columns - 1 }, () => ({}))];
+  }
+
+  /** Escuelas agrupadas por estado (orden alfabético; "Sin estado" al final) con sus totales. */
+  private groupByState(report: CoevaluationReport): StateGroup[] {
+    const groups: { [name: string]: StateGroup } = {};
+    report.bySchool.forEach((school) => {
+      const name = school.state ? school.state.name : NO_STATE;
+      if (!groups[name]) {
+        const schoolLevels: { [code: string]: number } = { [NO_LEVEL]: 0 };
+        report.instrument.levels.forEach((l) => (schoolLevels[l.code] = 0));
+        groups[name] = { name, schools: [], nTeachers: 0, nCompleted: 0, schoolLevels };
+      }
+      const group = groups[name];
+      group.schools.push(school);
+      group.nTeachers += school.nTeachers;
+      group.nCompleted += school.nCompleted;
+      group.schoolLevels[school.indexLevel ? school.indexLevel : NO_LEVEL] += 1;
+    });
+    return Object.keys(groups)
+      .map((name) => groups[name])
+      .sort((a, b) => {
+        if (a.name === NO_STATE || b.name === NO_STATE) {
+          return a.name === NO_STATE ? 1 : -1;
+        }
+        return a.name.localeCompare(b.name, 'es');
+      });
+  }
+
+  /** "Docente HQS con Excelencia" -> "con Excelencia" */
+  private shortLevel(label: string): string {
+    return label.replace('Docente HQS ', '');
+  }
+
+  private fileName(report: CoevaluationReport, ext: string, scope: CoevaluationExportScope = 'filters'): string {
     const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
     const now = new Date();
     const date = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}_${pad(
       now.getHours()
     )}-${pad(now.getMinutes())}`;
     const year = (report.schoolYear.name || '').replace(/[^0-9A-Za-z-]+/g, '');
-    return `Reporte-coevaluacion-${year}_${date}.${ext}`;
+    return `${FILE_PREFIXES[scope]}-${year}_${date}.${ext}`;
   }
 
   /**
@@ -92,15 +164,19 @@ export class CoevaluationReportExport {
    * Genera y descarga el PDF. Resuelve cuando pdfmake terminó de generar y entregar el archivo,
    * para que el botón quede bloqueado durante todo el proceso.
    */
-  toPdf(report: CoevaluationReport, filters: string): Promise<void> {
+  toPdf(
+    report: CoevaluationReport,
+    filters: string,
+    scope: CoevaluationExportScope = 'filters'
+  ): Promise<void> {
     return this.withTimeout(
       new Promise<void>((resolve, reject) => {
         // Se difiere un ciclo: pdfmake bloquea el hilo y la UI debe pintar antes el botón bloqueado.
         setTimeout(() => {
           try {
             pdfMake
-              .createPdf(this.pdfDefinition(report, filters))
-              .download(this.fileName(report, 'pdf'), () => resolve());
+              .createPdf(this.pdfDefinition(report, filters, scope))
+              .download(this.fileName(report, 'pdf', scope), () => resolve());
           } catch (e) {
             reject(e);
           }
@@ -109,11 +185,11 @@ export class CoevaluationReportExport {
     );
   }
 
-  private pdfDefinition(report: CoevaluationReport, filters: string): any {
+  private pdfDefinition(report: CoevaluationReport, filters: string, scope: CoevaluationExportScope): any {
     const content: any[] = [
       { image: IMAGE, width: 90, absolutePosition: { x: 30, y: 15 } },
       {
-        text: 'Reporte de coevaluación docentes HQS',
+        text: REPORT_TITLES[scope],
         color: TITLE,
         alignment: 'center',
         fontSize: 16,
@@ -139,6 +215,31 @@ export class CoevaluationReportExport {
       },
     ];
 
+    content.push(...(scope === 'byState' ? this.pdfStateSections(report) : this.pdfSections(report)));
+
+    return {
+      info: {
+        title: REPORT_TITLES[scope],
+        author: 'Fundación AmbLeMa',
+        subject: 'Coevaluación docentes HQS',
+      },
+      pageSize: 'A4',
+      pageOrientation: 'landscape',
+      pageMargins: [25, 30, 25, 30],
+      content,
+      defaultStyle: { fontSize: 8 },
+      footer: (current: number, total: number) => ({
+        text: `${current} / ${total}`,
+        alignment: 'right',
+        fontSize: 7,
+        margin: [0, 5, 25, 0],
+      }),
+    };
+  }
+
+  /** Secciones del reporte por escuela (también el general): resumen, docentes por nivel y detalle. */
+  private pdfSections(report: CoevaluationReport): any[] {
+    const content: any[] = [];
     content.push(this.sectionTitle('Resumen por escuela'));
     content.push(this.pdfSummary(report));
 
@@ -147,11 +248,12 @@ export class CoevaluationReportExport {
       content.push({
         text: `${group.label} (${group.count})`,
         bold: true,
-        color: BLUE,
-        margin: [0, 8, 0, 4],
+        fontSize: SUBTITLE_SIZE,
+        color: STATE_BAND,
+        margin: [0, 12, 0, 5],
       });
       if (!group.count) {
-        content.push({ text: 'Sin docentes en este nivel.', italics: true, fontSize: 8 });
+        content.push({ text: 'Sin docentes en este nivel.', italics: true, fontSize: 9 });
         return;
       }
       content.push({
@@ -178,25 +280,79 @@ export class CoevaluationReportExport {
 
     content.push(this.sectionTitle('Detalle por escuela (promedio acordado por ítem)', true));
     report.bySchool.forEach((school) => content.push(...this.pdfSchoolDetail(school)));
+    return content;
+  }
 
-    return {
-      info: {
-        title: 'Reporte de coevaluación docentes HQS',
-        author: 'Fundación AmbLeMa',
-        subject: 'Coevaluación docentes HQS',
+  /** Por estado: resumen de escuelas por nivel en cada estado y, luego, las escuelas de cada estado con su nivel. */
+  private pdfStateSections(report: CoevaluationReport): any[] {
+    const groups = this.groupByState(report);
+    const levels = report.instrument.levels;
+    const center = (n: number, bold: boolean = false) => ({ text: `${n}`, alignment: 'center', bold });
+    const sum = (pick: (g: StateGroup) => number) => groups.reduce((acc, g) => acc + pick(g), 0);
+    const content: any[] = [
+      this.sectionTitle('Resumen por estado'),
+      {
+        table: {
+          headerRows: 1,
+          widths: ['*', 'auto', 'auto', 'auto', ...levels.map(() => 'auto'), 'auto'],
+          body: [
+            this.header([
+              'Estado',
+              'Escuelas',
+              'Docentes',
+              'Completadas',
+              ...levels.map((l) => this.shortLevel(l.label).replace(' ', '\n')),
+              'Sin\níndice',
+            ]),
+            ...groups.map((g) => [
+              g.name,
+              center(g.schools.length, true),
+              center(g.nTeachers),
+              center(g.nCompleted),
+              ...levels.map((l) => center(g.schoolLevels[l.code])),
+              center(g.schoolLevels[NO_LEVEL]),
+            ]),
+            [
+              { text: 'Total', bold: true },
+              center(sum((g) => g.schools.length), true),
+              center(sum((g) => g.nTeachers), true),
+              center(sum((g) => g.nCompleted), true),
+              ...levels.map((l) => center(sum((g) => g.schoolLevels[l.code]), true)),
+              center(sum((g) => g.schoolLevels[NO_LEVEL]), true),
+            ],
+          ],
+        },
+        layout: this.tableLayout,
       },
-      pageSize: 'A4',
-      pageOrientation: 'landscape',
-      pageMargins: [25, 30, 25, 30],
-      content,
-      defaultStyle: { fontSize: 8 },
-      footer: (current: number, total: number) => ({
-        text: `${current} / ${total}`,
-        alignment: 'right',
-        fontSize: 7,
-        margin: [0, 5, 25, 0],
-      }),
-    };
+      { text: 'Las columnas de nivel cuentan escuelas según el nivel de su índice.', fontSize: 8, italics: true, margin: [0, 4, 0, 0] },
+    ];
+    groups.forEach((g) => {
+      content.push({
+        table: {
+          headerRows: 2,
+          dontBreakRows: true,
+          widths: ['*', 140, 50, 60, 50, 140],
+          body: [
+            this.stateBand(
+              `${g.name} (${g.schools.length} ${g.schools.length === 1 ? 'escuela' : 'escuelas'})`,
+              6
+            ),
+            this.header(['Escuela', 'Coordinador', 'Docentes', 'Completadas', 'Índice %', 'Nivel']),
+            ...g.schools.map((s) => [
+              s.name,
+              s.coordinator || '—',
+              center(s.nTeachers),
+              center(s.nCompleted),
+              { text: this.num(s.index), alignment: 'center', bold: true },
+              s.indexLevelLabel || '—',
+            ]),
+          ],
+        },
+        layout: this.tableLayout,
+        margin: [0, 14, 0, 0],
+      });
+    });
+    return content;
   }
 
   /** pdfmake no avisa si falla en segundo plano: se libera el botón tras un tiempo prudente. */
@@ -219,9 +375,9 @@ export class CoevaluationReportExport {
   private sectionTitle(text: string, pageBreak: boolean = false): any {
     return {
       text,
-      fontSize: 12,
+      fontSize: 14,
       bold: true,
-      color: TITLE,
+      color: STATE_BAND,
       margin: [0, 5, 0, 8],
       pageBreak: pageBreak ? 'before' : undefined,
     };
@@ -266,8 +422,9 @@ export class CoevaluationReportExport {
           school.index !== null ? this.num(school.index) + ' %' : '—'
         }`,
         bold: true,
-        color: BLUE,
-        margin: [0, 10, 0, 4],
+        fontSize: SUBTITLE_SIZE,
+        color: STATE_BAND,
+        margin: [0, 14, 0, 5],
       },
       {
         table: {
@@ -294,11 +451,15 @@ export class CoevaluationReportExport {
   // ------------------------------------------------------------------ Excel
 
   /** Genera y descarga el Excel; se difiere un ciclo para que la UI muestre el bloqueo antes del trabajo pesado. */
-  toExcel(report: CoevaluationReport, filters: string): Promise<void> {
+  toExcel(
+    report: CoevaluationReport,
+    filters: string,
+    scope: CoevaluationExportScope = 'filters'
+  ): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
         try {
-          this.buildExcel(report, filters);
+          this.buildExcel(report, filters, scope);
           resolve();
         } catch (e) {
           reject(e);
@@ -307,15 +468,27 @@ export class CoevaluationReportExport {
     });
   }
 
-  private buildExcel(report: CoevaluationReport, filters: string): void {
+  private buildExcel(report: CoevaluationReport, filters: string, scope: CoevaluationExportScope): void {
     const workbook = XLSX.utils.book_new();
     const intro: any[][] = [
-      ['Reporte de coevaluación docentes HQS'],
+      [REPORT_TITLES[scope]],
       ['Período académico', report.schoolYear.name],
       ['Filtros', filters],
       [],
     ];
 
+    if (scope === 'byState') {
+      this.appendStateSheets(workbook, report, intro);
+    } else {
+      this.appendSheets(workbook, report, intro);
+    }
+
+    const output = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
+    saveAs(new Blob([output], { type: 'application/octet-stream' }), this.fileName(report, 'xlsx', scope));
+  }
+
+  /** Hojas del reporte por escuela (también el general): resumen, docentes por nivel y detalle por ítem. */
+  private appendSheets(workbook: any, report: CoevaluationReport, intro: any[][]): void {
     // Hoja 1: resumen por escuela
     const levels = report.instrument.levels;
     const summary: any[][] = [
@@ -419,12 +592,83 @@ export class CoevaluationReportExport {
       )
     );
     this.appendSheet(workbook, 'Detalle por ítem', detail, intro.length);
-
-    const output = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
-    saveAs(new Blob([output], { type: 'application/octet-stream' }), this.fileName(report, 'xlsx'));
   }
 
-  private appendSheet(workbook: any, name: string, rows: any[][], headerRow: number): void {
+  /** Hojas del reporte por estado: "Resumen" (escuelas por nivel) y "Por estado" (escuela y nivel). */
+  private appendStateSheets(workbook: any, report: CoevaluationReport, intro: any[][]): void {
+    const groups = this.groupByState(report);
+    const levels = report.instrument.levels;
+    const sum = (pick: (g: StateGroup) => number) => groups.reduce((acc, g) => acc + pick(g), 0);
+    const summary: any[][] = [
+      ...intro,
+      [
+        'Estado',
+        'Escuelas',
+        'Docentes',
+        'Completadas',
+        ...levels.map((l) => `Escuelas ${this.shortLevel(l.label)}`),
+        'Escuelas sin índice',
+      ],
+      ...groups.map((g) => [
+        g.name,
+        g.schools.length,
+        g.nTeachers,
+        g.nCompleted,
+        ...levels.map((l) => g.schoolLevels[l.code]),
+        g.schoolLevels[NO_LEVEL],
+      ]),
+      [
+        'Total',
+        sum((g) => g.schools.length),
+        sum((g) => g.nTeachers),
+        sum((g) => g.nCompleted),
+        ...levels.map((l) => sum((g) => g.schoolLevels[l.code])),
+        sum((g) => g.schoolLevels[NO_LEVEL]),
+      ],
+    ];
+    this.appendSheet(workbook, 'Resumen', summary, intro.length, [
+      30, 10, 10, 13, ...levels.map(() => 22), 18,
+    ]);
+
+    const rows: any[][] = [
+      ...intro,
+      [
+        'Estado',
+        'Escuela',
+        'Coordinador',
+        'Docentes',
+        'Completadas',
+        'Índice Docentes HQS (%)',
+        'Nivel de la escuela',
+        ...levels.map((l) => `Docentes ${this.shortLevel(l.label)}`),
+      ],
+    ];
+    groups.forEach((g) =>
+      g.schools.forEach((s) =>
+        rows.push([
+          g.name,
+          s.name,
+          s.coordinator || '',
+          s.nTeachers,
+          s.nCompleted,
+          s.index,
+          s.indexLevelLabel || '',
+          ...levels.map((l) => s.levelCounts[l.code]),
+        ])
+      )
+    );
+    this.appendSheet(workbook, 'Por estado', rows, intro.length, [
+      24, 36, 28, 10, 13, 20, 28, ...levels.map(() => 22),
+    ]);
+  }
+
+  private appendSheet(
+    workbook: any,
+    name: string,
+    rows: any[][],
+    headerRow: number,
+    widths?: number[]
+  ): void {
     const sheet = XLSX.utils.aoa_to_sheet(rows);
     const range = XLSX.utils.decode_range(sheet['!ref']);
     // Sin forzar Arial: con Arial + negrita, LibreOffice (y equipos sin Arial Bold) muestra
@@ -454,7 +698,9 @@ export class CoevaluationReportExport {
         };
       }
     }
-    sheet['!cols'] = Array.from({ length: range.e.c + 1 }, (_, c) => ({ wch: c < 3 ? 30 : 16 }));
+    sheet['!cols'] = Array.from({ length: range.e.c + 1 }, (_, c) => ({
+      wch: widths ? widths[c] : c < 3 ? 30 : 16,
+    }));
     XLSX.utils.book_append_sheet(workbook, sheet, name);
   }
 }

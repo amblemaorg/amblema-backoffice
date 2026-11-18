@@ -1,3 +1,6 @@
+/** Qué se exporta: lo filtrado en pantalla, todas las escuelas, o todas agrupadas por estado. */
+export type HqsExportScope = 'filters' | 'general' | 'byState';
+
 export type HqsAwardCode = 'gold' | 'silver' | 'bronze';
 export type HqsAwardStatus = 'awarded' | 'none' | 'incomplete';
 export type HqsComponentKey =
@@ -29,6 +32,7 @@ export interface HqsAwardSchool {
   award: HqsAwardCode | null;
   awardLabel: string;
   yearbookDownloadEnabled: boolean;
+  state: { id: string; name: string } | null;
 }
 
 export interface HqsAwardReport {

@@ -5,6 +5,7 @@ import {
   NbCardModule,
   NbButtonModule,
   NbIconModule,
+  NbRadioModule,
   NbSpinnerModule,
   NbTabsetModule,
 } from '@nebular/theme';
@@ -21,6 +22,7 @@ import { CoevaluationReportComponent } from './coevaluation-report.component';
     NbCardModule,
     NbButtonModule,
     NbIconModule,
+    NbRadioModule,
     NbSpinnerModule,
     NbTabsetModule,
     NgSelectModule,

@@ -5,6 +5,7 @@ import {
   NbCardModule,
   NbButtonModule,
   NbIconModule,
+  NbRadioModule,
   NbSpinnerModule,
 } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -20,6 +21,7 @@ import { HqsAwardReportComponent } from './hqs-award-report.component';
     NbCardModule,
     NbButtonModule,
     NbIconModule,
+    NbRadioModule,
     NbSpinnerModule,
     NgSelectModule,
     HqsAwardReportRoutingModule,

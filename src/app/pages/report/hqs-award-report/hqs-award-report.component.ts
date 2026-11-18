@@ -18,6 +18,7 @@ import { SortHelper } from 'src/app/_helpers/sort.helper';
 import {
   HqsAwardReport,
   HqsAwardSchool,
+  HqsExportScope,
 } from 'src/app/_models/report/hqs-award-report.model';
 import { HqsAwardReportExport } from './hqs-award-report-export.service';
 
@@ -43,6 +44,7 @@ export class HqsAwardReportComponent implements OnInit, OnDestroy {
   report: HqsAwardReport | null = null;
   loading = false;
   exporting = false;
+  exportScope: HqsExportScope = 'filters';
   exportingFormat: 'pdf' | 'xlsx' | null = null;
 
   private subscription: Subscription;
@@ -140,12 +142,23 @@ export class HqsAwardReportComponent implements OnInit, OnDestroy {
     }
     this.exporting = true;
     this.exportingFormat = format;
+    const scope = this.exportScope;
     try {
-      const filters = this.filtersLabel();
+      let data = this.report;
+      let filters = this.filtersLabel();
+      if (scope !== 'filters') {
+        // General y por estado ignoran los filtros: se consulta el año completo.
+        data = await this.reportService.getReport(this.report.schoolYear.id).toPromise();
+        filters = 'Todos los estados · Todas las escuelas';
+        if (!this.hasData(data)) {
+          this.toastr.info('Información', 'No hay escuelas para exportar');
+          return;
+        }
+      }
       if (format === 'pdf') {
-        await this.exporter.toPdf(this.report, filters);
+        await this.exporter.toPdf(data, filters, scope);
       } else {
-        await this.exporter.toExcel(this.report, filters);
+        await this.exporter.toExcel(data, filters, scope);
       }
     } catch (e) {
       this.toastr.error('Error', 'No se pudo generar el archivo');

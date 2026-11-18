@@ -12,6 +12,8 @@ import {
 import { SchoolUserState, GetSchoolUsersCompact } from 'src/app/store/user/school-user.action';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 import { SchoolUser } from 'src/app/_models/user/school.model';
+import { State } from 'src/app/_models/state.model';
+import { StateService } from 'src/app/services/state.service';
 import { SortHelper } from 'src/app/_helpers/sort.helper';
 import {
   HqsAwardReport,
@@ -35,6 +37,8 @@ export class HqsAwardReportComponent implements OnInit, OnDestroy {
 
   selectedSchoolYear: SchoolYearEnrolled | null = null;
   selectedSchool: SchoolUser | null = null;
+  selectedState: State | null = null;
+  states: State[] = [];
 
   report: HqsAwardReport | null = null;
   loading = false;
@@ -42,10 +46,12 @@ export class HqsAwardReportComponent implements OnInit, OnDestroy {
   exportingFormat: 'pdf' | 'xlsx' | null = null;
 
   private subscription: Subscription;
+  private statesSubscription: Subscription;
 
   constructor(
     private store: Store,
     private reportService: HqsAwardReportService,
+    private stateService: StateService,
     private exporter: HqsAwardReportExport,
     private toastr: CustomToastrService
   ) {}
@@ -56,11 +62,18 @@ export class HqsAwardReportComponent implements OnInit, OnDestroy {
     );
     this.store.dispatch(new GetSchoolUsersCompact());
     this.store.dispatch(new GetSchoolYearsEnrolled());
+    this.statesSubscription = this.stateService.getState().subscribe(
+      (response) => (this.states = response.records || []),
+      () => this.toastr.error('Error', 'No se pudieron cargar los estados')
+    );
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.statesSubscription) {
+      this.statesSubscription.unsubscribe();
     }
   }
 
@@ -74,7 +87,11 @@ export class HqsAwardReportComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
     this.subscription = this.reportService
-      .getReport(this.selectedSchoolYear.id, this.selectedSchool ? this.selectedSchool.id : null)
+      .getReport(
+        this.selectedSchoolYear.id,
+        this.selectedSchool ? this.selectedSchool.id : null,
+        this.selectedState ? this.selectedState.id : null
+      )
       .subscribe(
         (report) => {
           this.loading = false;
@@ -95,7 +112,11 @@ export class HqsAwardReportComponent implements OnInit, OnDestroy {
   }
 
   filtersLabel(): string {
-    return this.selectedSchool ? `Escuela: ${this.selectedSchool.name}` : 'Todas las escuelas';
+    const parts = [
+      this.selectedState ? `Estado: ${this.selectedState.name}` : 'Todos los estados',
+      this.selectedSchool ? `Escuela: ${this.selectedSchool.name}` : 'Todas las escuelas',
+    ];
+    return parts.join(' · ');
   }
 
   formatNumber(value: number | null, decimals: number = 2): string {

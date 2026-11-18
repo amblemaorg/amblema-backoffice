@@ -12,6 +12,8 @@ import {
 import { SchoolUserState, GetSchoolUsersCompact } from 'src/app/store/user/school-user.action';
 import { SchoolYearEnrolled } from 'src/app/_models/_enrolled/school-year.model';
 import { SchoolUser } from 'src/app/_models/user/school.model';
+import { State } from 'src/app/_models/state.model';
+import { StateService } from 'src/app/services/state.service';
 import { SortHelper } from 'src/app/_helpers/sort.helper';
 import {
   CoevaluationReport,
@@ -44,6 +46,8 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
 
   selectedSchoolYear: SchoolYearEnrolled | null = null;
   selectedSchool: SchoolUser | null = null;
+  selectedState: State | null = null;
+  states: State[] = [];
   selectedLevel: CoevaluationLevelCode | null = null;
 
   report: CoevaluationReport | null = null;
@@ -54,10 +58,12 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
   expanded: { [key: string]: boolean } = {};
 
   private subscription: Subscription;
+  private statesSubscription: Subscription;
 
   constructor(
     private store: Store,
     private reportService: CoevaluationReportService,
+    private stateService: StateService,
     private exporter: CoevaluationReportExport,
     private toastr: CustomToastrService
   ) {}
@@ -68,11 +74,18 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
     );
     this.store.dispatch(new GetSchoolUsersCompact());
     this.store.dispatch(new GetSchoolYearsEnrolled());
+    this.statesSubscription = this.stateService.getState().subscribe(
+      (response) => (this.states = response.records || []),
+      () => this.toastr.error('Error', 'No se pudieron cargar los estados')
+    );
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.statesSubscription) {
+      this.statesSubscription.unsubscribe();
     }
   }
 
@@ -90,7 +103,8 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
       .getReport(
         this.selectedSchoolYear.id,
         this.selectedSchool ? this.selectedSchool.id : null,
-        this.selectedLevel
+        this.selectedLevel,
+        this.selectedState ? this.selectedState.id : null
       )
       .subscribe(
         (report) => {
@@ -139,6 +153,7 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
 
   filtersLabel(): string {
     const parts: string[] = [];
+    parts.push(this.selectedState ? `Estado: ${this.selectedState.name}` : 'Todos los estados');
     parts.push(this.selectedSchool ? `Escuela: ${this.selectedSchool.name}` : 'Todas las escuelas');
     const level = this.levelOptions.find((l) => l.code === this.selectedLevel);
     parts.push(level ? `Nivel: ${level.label}` : 'Todos los niveles');

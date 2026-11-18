@@ -18,7 +18,8 @@ export class CoevaluationReportService {
   getReport(
     schoolYearId: string,
     schoolId?: string | null,
-    level?: CoevaluationLevelCode | null
+    level?: CoevaluationLevelCode | null,
+    stateId?: string | null
   ): Observable<CoevaluationReport> {
     let params = new HttpParams();
     if (schoolId) {
@@ -26,6 +27,9 @@ export class CoevaluationReportService {
     }
     if (level) {
       params = params.set('level', level);
+    }
+    if (stateId) {
+      params = params.set('stateId', stateId);
     }
     return this.httpClient.get<CoevaluationReport>(
       `${environment.api}${this.COEVALUATION_REPORT}/${schoolYearId}`,

@@ -4,7 +4,7 @@
   <nb-card-body>
     <!-- Filtros -->
     <div class="row filters">
-      <div class="col-12 col-md-6 col-xl-4 form-group">
+      <div class="col-12 col-md-6 col-xl-3 form-group">
         <label class="label">Período académico *</label>
         <ng-select
           [items]="schoolYearOptions$ | async"
@@ -13,7 +13,16 @@
           [(ngModel)]="selectedSchoolYear"
         ></ng-select>
       </div>
-      <div class="col-12 col-md-6 col-xl-4 form-group">
+      <div class="col-12 col-md-6 col-xl-3 form-group">
+        <label class="label">Estado</label>
+        <ng-select
+          [items]="states"
+          bindLabel="name"
+          placeholder="Todos los estados"
+          [(ngModel)]="selectedState"
+        ></ng-select>
+      </div>
+      <div class="col-12 col-md-6 col-xl-3 form-group">
         <label class="label">Escuela</label>
         <ng-select
           [items]="schools$ | async"
@@ -22,7 +31,7 @@
           [(ngModel)]="selectedSchool"
         ></ng-select>
       </div>
-      <div class="col-12 col-md-6 col-xl-4 form-group d-flex align-items-end">
+      <div class="col-12 col-md-6 col-xl-3 form-group d-flex align-items-end">
         <button
           nbButton
           status="primary"

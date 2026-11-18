@@ -12,10 +12,17 @@ export class HqsAwardReportService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getReport(schoolYearId: string, schoolId?: string | null): Observable<HqsAwardReport> {
+  getReport(
+    schoolYearId: string,
+    schoolId?: string | null,
+    stateId?: string | null
+  ): Observable<HqsAwardReport> {
     let params = new HttpParams();
     if (schoolId) {
       params = params.set('schoolId', schoolId);
+    }
+    if (stateId) {
+      params = params.set('stateId', stateId);
     }
     return this.httpClient.get<HqsAwardReport>(
       `${environment.api}${this.HQS_AWARD_REPORT}/${schoolYearId}`,

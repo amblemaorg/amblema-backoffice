@@ -28,6 +28,7 @@ export interface HqsAwardSchool {
   status: HqsAwardStatus;
   award: HqsAwardCode | null;
   awardLabel: string;
+  yearbookDownloadEnabled: boolean;
 }
 
 export interface HqsAwardReport {

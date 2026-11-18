@@ -16,7 +16,8 @@ const LINE_HEIGHT_FACTOR = 1.17; // Roboto
 const TITLE = '#2e8aaa';
 const NOTE =
   'Índice Integral = promedio de IAA, PPM, M2M y 60LM del lapso 3 (máximo 100 cada uno; IAA ' +
-  'convertido de 35 puntos a %). Premio: Oro ≥ 80, Plata ≥ 60, Bronce ≥ 40.';
+  'convertido de 35 puntos a %). Premio: Oro si Índice Integral ≥ 80 e Índice Docentes HQS ≥ 80; ' +
+  'Plata si ambos ≥ 60; Bronce si ambos ≥ 40. Promedio: solo informativo.';
 // Mismos colores que las insignias de la pantalla
 const AWARD_COLORS: { [key: string]: string } = {
   gold: '#d4af37',
@@ -164,7 +165,7 @@ export class HqsAwardReportExport {
       {
         table: {
           headerRows: 1,
-          widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+          widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
           body: [
             this.header([
               'Escuela',
@@ -177,6 +178,7 @@ export class HqsAwardReportExport {
               'Índice\nDocentes HQS',
               'Promedio',
               'Premio',
+              'AmbLeMario',
             ]),
             ...report.schools.map((s) => [
               s.name,
@@ -198,6 +200,7 @@ export class HqsAwardReportExport {
                     fillColor: this.awardColor(s),
                   }
                 : { text: s.awardLabel, alignment: 'center', bold: true, fillColor: this.awardColor(s) },
+              { text: s.yearbookDownloadEnabled ? 'Sí' : '', alignment: 'center' },
             ]),
           ],
         },
@@ -265,6 +268,7 @@ export class HqsAwardReportExport {
         'Promedio',
         'Premio',
         'Falta',
+        'AmbLeMario',
       ],
       ...report.schools.map((s) => [
         s.name,
@@ -279,6 +283,7 @@ export class HqsAwardReportExport {
         s.finalIndex,
         s.awardLabel,
         s.missingLabels.join(', '),
+        s.yearbookDownloadEnabled ? 'Sí' : '',
       ]),
     ];
     this.appendSheet(workbook, 'Premios', rows, intro.length);
@@ -317,8 +322,9 @@ export class HqsAwardReportExport {
         };
       }
     }
+    // "Falta" (penúltima columna) ancho 36; "AmbLeMario" (última) ancho 14.
     sheet['!cols'] = Array.from({ length: range.e.c + 1 }, (_, c) => ({
-      wch: c < 2 ? 30 : c === range.e.c ? 36 : 16,
+      wch: c < 2 ? 30 : c === range.e.c - 1 ? 36 : c === range.e.c ? 14 : 16,
     }));
     XLSX.utils.book_append_sheet(workbook, sheet, name);
   }

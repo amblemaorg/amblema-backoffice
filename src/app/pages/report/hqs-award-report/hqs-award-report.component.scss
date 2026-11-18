@@ -159,6 +159,15 @@ $border: #e4e9f2;
     white-space: nowrap;
   }
 
+  .center {
+    text-align: center;
+    white-space: nowrap;
+
+    nb-icon {
+      color: #81b03e;
+    }
+  }
+
   .final {
     font-weight: 700;
   }

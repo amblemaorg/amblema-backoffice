@@ -92,6 +92,7 @@
               <th class="num">Índice Docentes HQS</th>
               <th class="num">Promedio</th>
               <th>Premio</th>
+              <th class="center">AmbLeMario</th>
             </tr>
           </thead>
           <tbody>
@@ -111,13 +112,22 @@
                   falta: {{ school.missingLabels.join(', ') }}
                 </span>
               </td>
+              <td class="center">
+                <nb-icon
+                  *ngIf="school.yearbookDownloadEnabled"
+                  icon="checkmark-outline"
+                  status="success"
+                  title="Descarga habilitada"
+                ></nb-icon>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
       <p class="table-note">
         Índice Integral = promedio de IAA, PPM, M2M y 60LM del lapso 3 (máximo 100 cada uno; IAA
-        convertido de 35 puntos a %). Premio: Oro ≥ 80, Plata ≥ 60, Bronce ≥ 40.
+        convertido de 35 puntos a %). Premio: Oro si Índice Integral ≥ 80 e Índice Docentes HQS ≥
+        80; Plata si ambos ≥ 60; Bronce si ambos ≥ 40. Promedio: solo informativo.
       </p>
     </ng-container>
   </nb-card-body>

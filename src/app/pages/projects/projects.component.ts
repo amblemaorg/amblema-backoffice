@@ -18,6 +18,8 @@ import { ProjectService } from "src/app/services/project.service";
 import { AuthService } from "src/app/services/user/auth.service";
 import { Router } from "@angular/router";
 import { ALL_ACTIONS } from "src/app/store/_shader/all-actions";
+import { YearbookDownloadService } from "src/app/services/yearbook-download.service";
+import { YearbookDownloadToggleComponent } from "./yearbook-download-toggle/yearbook-download-toggle.component";
 
 declare var $: any;
 
@@ -61,7 +63,8 @@ export class ProjectsComponent extends BaseTable implements OnInit {
     private projectService: ProjectService,
     private helper: Utility,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private yearbookDownloadService: YearbookDownloadService
   ) {
     super();
   }
@@ -69,6 +72,7 @@ export class ProjectsComponent extends BaseTable implements OnInit {
   ngOnInit(): void {
     // Projects are loaded here and not at app startup: only this page uses the full list
     this.store.dispatch(new GetProjects());
+    this.yearbookDownloadService.loadActive();
 
     this.MODE = this.ACTION.CREATE;
 
@@ -170,6 +174,13 @@ export class ProjectsComponent extends BaseTable implements OnInit {
         type: "string",
         valuePrepareFunction: this.valuePrepareFunction,
         filterFunction: this.filterFunction,
+      },
+      yearbookDownload: {
+        title: "Descarga AmbLeMario",
+        type: "custom",
+        renderComponent: YearbookDownloadToggleComponent,
+        filter: false,
+        sort: false,
       },
     };
 

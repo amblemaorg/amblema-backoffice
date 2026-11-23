@@ -30,9 +30,77 @@
   }
 }
 
-// ng-select con el aspecto de un campo (como los select del backoffice) y de texto normal
-.multi {
+// Listas con casillas (ng-multiselect-dropdown): heredan la letra del contenedor y `.field` tiene
+// letra de etiqueta (0.75rem, 600). Se fija la de Reportes PECA (texto de nb-card: 0.9375rem, 400)
+.checks {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
+  line-height: 1.25rem;
+
+  // Misma altura con o sin opciones elegidas: las etiquetas van en una sola línea,
+  // sin el margen inferior de la librería, y se recortan con "…" si no caben.
+  // !important: los estilos encapsulados de la librería son más específicos.
+  ::ng-deep .multiselect-dropdown .dropdown-btn {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    padding-right: 2.25rem !important;
+    white-space: nowrap !important;
+
+    > span:first-child:not(.selected-item-container) {
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .selected-item-container {
+      flex: 0 1 auto !important;
+      min-width: 0 !important;
+      float: none !important;
+      max-width: none !important;
+
+      // Solo la primera se recorta; las demás (1.º, 2.º…) se ven enteras
+      & + .selected-item-container {
+        flex-shrink: 0 !important;
+      }
+    }
+
+    .selected-item {
+      display: flex !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 4px 0 0 !important;
+      float: none !important;
+      border-width: 0 !important;
+      line-height: inherit !important;
+
+      &[hidden] {
+        display: none !important;
+      }
+
+      span {
+        min-width: 0 !important;
+        white-space: nowrap !important;
+      }
+    }
+
+    // "+N" y la flecha, siempre a la derecha
+    > span:last-child {
+      flex: 0 0 auto !important;
+      margin-left: auto !important;
+    }
+  }
+}
+
+// En las filas de cada ficha, al tamaño de sus campos pequeños (form-control-sm)
+.checks.small {
+  font-size: 0.875rem;
+
+  ::ng-deep .multiselect-dropdown .dropdown-btn {
+    padding: 4px 8px;
+  }
 }
 
 select.form-control {
@@ -168,6 +236,45 @@ $brand-soft: rgba(0, 128, 154, 0.06);
   border: 1px solid #e4e9f2;
   border-radius: 0.5rem;
   background: #f7f9fc;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: -0.5rem 0 0.75rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.6875rem;
+
+  kbd {
+    display: inline-block;
+    min-width: 1rem;
+    margin-right: 0.15rem;
+    padding: 0 0.2rem;
+    // Mismo color que los botones del backoffice (regla global de styles.scss).
+    border: 1px solid #00809a;
+    border-radius: 0.2rem;
+    background: #00809a;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.6875rem;
+    text-align: center;
+    box-shadow: none;
+  }
+}
+
+.numbering {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  flex-basis: 100%;
+  font-size: 0.8125rem;
+
+  input {
+    max-width: 6rem;
+  }
 }
 
 .batch,
@@ -382,11 +489,6 @@ figcaption {
       border-color: #ff3d71;
       color: #ff3d71;
     }
-
-    &:disabled {
-      cursor: default;
-      opacity: 0.4;
-    }
   }
 }
 
@@ -400,11 +502,6 @@ figcaption {
   background: #fff;
   font-size: 0.95rem;
   cursor: pointer;
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.4;
-  }
 }
 
 .discarded {

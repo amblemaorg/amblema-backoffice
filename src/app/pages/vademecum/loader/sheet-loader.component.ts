@@ -1,17 +1,28 @@
 import { Component, DoCheck, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { Area, GRADE_OPTIONS, SheetInput } from 'src/app/_models/vademecum/sheet.model';
-import { SheetSeries, SheetType } from 'src/app/_models/vademecum/sheet-type.model';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { AREA_CHECK_SETTINGS, CHECK_SETTINGS, CheckOption, checkedIds, sameIds } from '../_shared/vademecum-checks';
+import { Area, areaAppliesTo, GRADE_OPTIONS, SheetInput } from 'src/app/_models/vademecum/sheet.model';
+import { SheetType } from 'src/app/_models/vademecum/sheet-type.model';
 import {
   InvalidPdfError,
   OpenedCompendium,
+  PageLine,
   VademecumPdfService,
 } from 'src/app/services/vademecum/vademecum-pdf.service';
 import { VademecumSheetService } from 'src/app/services/vademecum/vademecum-sheet.service';
 import { VademecumTaxonomyService } from 'src/app/services/vademecum/vademecum-taxonomy.service';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
-import { DetectedHeader, detectHeader, proposeSheets } from './header-detection';
+import {
+  DetectedHeader,
+  detectEcotemaPage,
+  detectHeader,
+  isEcotemaHeader,
+  proposeEcotemaSheets,
+  proposeSheets,
+} from './header-detection';
+import { describeSheet, isStoryPage } from './description-extraction';
 import {
   DraftDefaults,
   SheetDraft,
@@ -23,6 +34,18 @@ import {
   sendPage,
   split,
 } from './sheet-draft';
+
+/** "Todos" excluye los grados sueltos y al revés (gana lo último que se marcó). */
+function normalizeGrades(previous: string[], grades: string[]): string[] {
+  const selected = grades || [];
+  if (selected.includes('all') && !previous.includes('all')) {
+    return ['all'];
+  }
+  if (selected.length > 1 && selected.includes('all')) {
+    return selected.filter((grade) => grade !== 'all').sort();
+  }
+  return [...selected].sort();
+}
 
 /** Límite mostrado al usuario; la API valida el real por ficha (VADEMECUM_MAX_UPLOAD_MB). */
 const MAX_COMPENDIUM_MB = 200;
@@ -53,12 +76,25 @@ interface PageInfo {
 })
 export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
   readonly gradeOptions = GRADE_OPTIONS;
+  readonly gradeChecks: CheckOption[] = GRADE_OPTIONS.map((option) => ({ id: option.value, text: option.label }));
+  readonly gradeSettings: IDropdownSettings = CHECK_SETTINGS;
+  readonly areaSettings: IDropdownSettings = AREA_CHECK_SETTINGS;
+  /** Áreas que ofrece cada tipo de ficha (una ficha solo acepta las de su tipo, código 121). */
+  private areaChecksByType = new Map<string, CheckOption[]>();
+  /**
+   * Selección que se pasa a cada lista, por dueño (ficha o compendio) y campo. Se reutiliza el
+   * mismo arreglo mientras no cambien los ids: la lista vuelve a emitir al recibir un valor nuevo.
+   */
+  private checked = new WeakMap<object, { [field: string]: CheckOption[] }>();
   readonly maxCompendiumMb = MAX_COMPENDIUM_MB;
 
   sheetTypes: SheetType[] = [];
   areas: Area[] = [];
   sheetTypeId: string | null = null;
-  seriesId: string | null = null;
+  /** Grados que reciben todas las fichas del compendio; luego se cambian en cada una. */
+  compendiumGrades: string[] = [];
+  /** Desde qué número se numeran las fichas que quedaron sin número (juegos de Ambiente). */
+  numberFrom: number | null = null;
 
   fileName: string | null = null;
   fileSize: number | null = null;
@@ -99,51 +135,56 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     );
     this.subscriptions.add(
       this.taxonomyService.areas().subscribe(
-        (areas) => (this.areas = areas.filter((area) => area.status === '1')),
+        (areas) => {
+          this.areas = areas.filter((area) => area.status === '1');
+          this.areaChecksByType.clear();
+        },
         () => this.toastr.error('Error', 'No se pudieron cargar las áreas.'),
       ),
     );
   }
 
-  // --- Tipo y serie del compendio ---
+  // --- Tipo y grados del compendio ---
 
   typeOf(sheetTypeId: string | null): SheetType | undefined {
     return this.sheetTypes.find((type) => type.id === sheetTypeId);
   }
 
-  seriesOf(sheetTypeId: string | null): SheetSeries[] {
-    const type = this.typeOf(sheetTypeId);
-    return type ? type.series : [];
-  }
-
   onTypeChange(): void {
-    this.seriesId = null;
     this.loadExistingNumbers();
   }
 
+  /** Los grados del compendio pasan a todas las fichas sin subir. */
+  onCompendiumGradesChange(value: (CheckOption | string)[]): void {
+    const grades = normalizeGrades(this.compendiumGrades, checkedIds(value));
+    if (sameIds(this.gradeChecks.filter((option) => grades.includes(option.id)), this.compendiumGrades)) {
+      return; // la lista reemite el valor que se le acaba de dar
+    }
+    this.compendiumGrades = grades;
+    this.drafts
+      .filter((draft) => !isLocked(draft))
+      .forEach((draft) => (draft.grades = [...this.compendiumGrades]));
+  }
+
   get canChooseFile(): boolean {
-    return !!this.sheetTypeId && (!this.seriesOf(this.sheetTypeId).length || !!this.seriesId) && !this.reading;
+    return !!this.sheetTypeId && !this.reading;
   }
 
   private get defaults(): DraftDefaults {
-    const series = this.seriesOf(this.sheetTypeId).find((item) => item.id === this.seriesId);
-    return { sheetTypeId: this.sheetTypeId, seriesId: this.seriesId, grades: series ? series.grades : [] };
+    return { sheetTypeId: this.sheetTypeId, grades: this.compendiumGrades };
   }
 
-  /** Números ya usados en la API para el tipo y serie elegidos (aviso antes de subir). */
+  /** Números ya usados en la API para el tipo elegido (aviso antes de subir). */
   loadExistingNumbers(): void {
     this.existingNumbers = new Set();
-    if (!this.sheetTypeId || (this.seriesOf(this.sheetTypeId).length && !this.seriesId)) {
+    if (!this.sheetTypeId) {
       return;
     }
     const typeId = this.sheetTypeId;
-    const seriesId = this.seriesId;
     const fetchPage = (page: number) =>
       this.subscriptions.add(
-        this.sheetService.listByType(typeId, seriesId, page).subscribe((list) => {
-          list.records
-            .filter((sheet) => !seriesId || (sheet.series && sheet.series.id === seriesId))
-            .forEach((sheet) => this.existingNumbers.add(sheet.number));
+        this.sheetService.listByType(typeId, page).subscribe((list) => {
+          list.records.forEach((sheet) => this.existingNumbers.add(sheet.number));
           if (page < list.pagination.pages) {
             fetchPage(page + 1);
           }
@@ -224,6 +265,7 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
       }
       this.compendium = compendium;
       const headerName = this.typeOf(this.sheetTypeId).headerName;
+      const byEcotema = isEcotemaHeader(headerName);
       const total = this.compendium.pageCount;
       this.pages = Array.from({ length: total }, (_, index) => ({
         index,
@@ -236,12 +278,18 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
         if (stale()) {
           return;
         }
-        this.pages[index].header = detectHeader(lines, headerName);
+        this.pages[index].header = byEcotema ? detectEcotemaPage(lines) : detectHeader(lines, headerName);
         this.readProgress = Math.round((50 * (index + 1)) / total);
       }
-      this.drafts = proposeSheets(this.pages.map((page) => page.header)).map((sheet) =>
+      const headers = this.pages.map((page) => page.header);
+      this.drafts = (byEcotema ? proposeEcotemaSheets(headers) : proposeSheets(headers)).map((sheet) =>
         newDraft(sheet.pages, sheet.number, sheet.title, this.defaults),
       );
+      this.numberFrom = this.firstFreeNumber;
+      await this.describeDrafts(compendium, headerName, stale);
+      if (stale()) {
+        return;
+      }
       let next = 0;
       let done = 0;
       const worker = async () => {
@@ -276,6 +324,26 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     }
   }
 
+  /** Descripción propuesta de cada ficha (Objetivo, Competencia o primer párrafo); editable. */
+  private async describeDrafts(compendium: OpenedCompendium, headerName: string, stale: () => boolean): Promise<void> {
+    for (const draft of this.drafts) {
+      const pages: PageLine[][] = [];
+      for (const page of draft.pages) {
+        const lines = await compendium.pageLines(page);
+        if (stale()) {
+          return;
+        }
+        pages.push(lines);
+        if (!isStoryPage(lines)) {
+          break; // el cuento de un ecotema no describe la ficha: se busca la página siguiente
+        }
+      }
+      if (!draft.description) {
+        draft.description = describeSheet(pages, [headerName, draft.title]);
+      }
+    }
+  }
+
   private reset(clearError = true): void {
     this.readToken++;
     if (this.compendium) {
@@ -287,6 +355,7 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     this.discarded = [];
     this.built.clear();
     this.checks.clear();
+    this.numberFrom = null;
     this.readProgress = 0;
     if (clearError) {
       this.fileError = null;
@@ -355,26 +424,81 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
 
   // --- Datos de la ficha ---
 
-  onDraftTypeChange(draft: SheetDraft): void {
-    draft.seriesId = null;
+  onGradesChange(draft: SheetDraft, value: (CheckOption | string)[]): void {
+    draft.grades = normalizeGrades(draft.grades, checkedIds(value));
   }
 
-  /** "Todos" excluye los grados sueltos y al revés (gana lo último que se marcó). */
-  onGradesChange(draft: SheetDraft, grades: string[]): void {
-    const selected = grades || [];
-    if (selected.includes('all') && !draft.grades.includes('all')) {
-      draft.grades = ['all'];
-    } else if (selected.length > 1 && selected.includes('all')) {
-      draft.grades = selected.filter((grade) => grade !== 'all').sort();
-    } else {
-      draft.grades = [...selected].sort();
+  onAreasChange(draft: SheetDraft, value: (CheckOption | string)[]): void {
+    draft.areaIds = checkedIds(value);
+  }
+
+  /** Opciones de área para un tipo; el mismo arreglo para cada tipo (la lista no se reinicia). */
+  areaChecksFor(sheetTypeId: string | null): CheckOption[] {
+    const key = sheetTypeId || '';
+    if (!this.areaChecksByType.has(key)) {
+      this.areaChecksByType.set(
+        key,
+        this.areas
+          .filter((area) => areaAppliesTo(area, sheetTypeId))
+          .map((area) => ({ id: area.id, text: area.name })),
+      );
     }
+    return this.areaChecksByType.get(key);
+  }
+
+  /** Al cambiar el tipo de una ficha se quitan las áreas que no son de ese tipo. */
+  onDraftTypeChange(draft: SheetDraft): void {
+    const allowed = this.areaChecksFor(draft.sheetTypeId).map((option) => option.id);
+    draft.areaIds = draft.areaIds.filter((id) => allowed.includes(id));
+  }
+
+  /** Opciones marcadas de una lista con casillas; el mismo arreglo mientras no cambien los ids. */
+  checkedOf(owner: object, field: string, ids: string[], options: CheckOption[]): CheckOption[] {
+    const entry = this.checked.get(owner) || {};
+    const cached = entry[field];
+    if (!cached || !sameIds(cached, ids)) {
+      entry[field] = options.filter((option) => ids.includes(option.id));
+      this.checked.set(owner, entry);
+    }
+    return entry[field];
   }
 
   codeOf(draft: SheetDraft): string {
     const type = this.typeOf(draft.sheetTypeId);
-    const series = this.seriesOf(draft.sheetTypeId).find((item) => item.id === draft.seriesId);
-    return type ? `${type.codePrefix}${series ? series.code : ''}-${draft.number || '?'}` : '—';
+    return type ? `${type.codePrefix}-${draft.number || '?'}` : '—';
+  }
+
+  /** Fichas sin subir que todavía no tienen número (en Ambiente, los juegos). */
+  get unnumberedDrafts(): SheetDraft[] {
+    return this.drafts.filter((draft) => !isLocked(draft) && !draft.number);
+  }
+
+  /** Siguiente número libre del tipo: después del mayor ya usado en la API o en esta carga. */
+  get firstFreeNumber(): number {
+    const used = [...this.existingNumbers, ...this.drafts.map((draft) => Number(draft.number) || 0)];
+    return used.reduce((max, number) => Math.max(max, number), 0) + 1;
+  }
+
+  /** Numera en orden las fichas sin número, desde `numberFrom`, saltando los ya usados. */
+  numberMissing(): void {
+    let next = Math.floor(Number(this.numberFrom));
+    if (!next || next < 1) {
+      return;
+    }
+    const taken = new Set<number>([
+      ...this.existingNumbers,
+      ...this.drafts.filter((draft) => draft.number).map((draft) => Number(draft.number)),
+    ]);
+    for (const draft of this.unnumberedDrafts) {
+      while (taken.has(next)) {
+        next++;
+      }
+      if (next > 999) {
+        break;
+      }
+      draft.number = next;
+      taken.add(next);
+    }
   }
 
   /** Recalcula los avisos de las fichas pendientes una sola vez por ciclo de cambios. */
@@ -400,7 +524,7 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
   private repeatedKeys = new Set<string>();
 
   private numberKey(draft: SheetDraft): string {
-    return `${draft.sheetTypeId}|${draft.seriesId}|${draft.number}`;
+    return `${draft.sheetTypeId}|${draft.number}`;
   }
 
   /** Lo que la API rechazaría (o 113 al publicar), para avisar antes de subir. */
@@ -418,8 +542,6 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     }
     if (!draft.sheetTypeId) {
       problems.push('Falta el tipo.');
-    } else if (this.seriesOf(draft.sheetTypeId).length && !draft.seriesId) {
-      problems.push('Falta la serie.');
     }
     if (publish && !draft.description.trim()) {
       problems.push('Para publicar falta la descripción.');
@@ -438,7 +560,6 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     return (
       draft.state !== 'done' &&
       draft.sheetTypeId === this.sheetTypeId &&
-      draft.seriesId === this.seriesId &&
       this.existingNumbers.has(draft.number)
     );
   }
@@ -535,7 +656,6 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
       grades: draft.grades,
       areaIds: draft.areaIds,
       sheetTypeId: draft.sheetTypeId,
-      seriesId: draft.seriesId || null,
     };
     return this.build(draft)
       .then(
@@ -618,16 +738,16 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     const body = error.error || {};
     const status = (field: string) => body[field] && body[field][0] && body[field][0].status;
     if (error.status === 409 || status('number') === '112') {
-      return 'Ya existe una ficha con ese tipo, serie y número.';
+      return 'Ya existe una ficha con ese tipo y número.';
     }
     if (status('file') === '115') {
       return 'El PDF de la ficha no es válido o supera el tamaño permitido.';
     }
+    if (status('areaIds') === '121') {
+      return 'Alguna categoría (área) no corresponde al tipo de ficha.';
+    }
     if (status('description') === '113' || status('grades') === '113') {
       return 'Para publicar faltan la descripción o los grados.';
-    }
-    if (body.seriesId) {
-      return 'Elija una serie válida para el tipo.';
     }
     if (error.status === 403) {
       return 'Su rol no tiene permiso para Vademécum.';

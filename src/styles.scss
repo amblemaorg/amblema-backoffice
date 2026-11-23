@@ -107,6 +107,28 @@ nb-button[status="basic"],
   }
 }
 
+// Botones deshabilitados o aún sin uso: gris en todo el backoffice.
+// Va después de las reglas anteriores y con selectores más específicos para ganarles,
+// también en hover (sin esto, la regla global los deja en #00809a).
+button:disabled,
+button:disabled:hover,
+.btn:disabled,
+.btn:disabled:hover,
+.btn.disabled,
+.btn.disabled:hover,
+.btn-disabled,
+.btn-disabled:hover,
+[nbButton][aria-disabled="true"],
+[nbButton][aria-disabled="true"]:hover,
+.pagination .page-item.disabled .page-link,
+.pagination .page-item.disabled .page-link:hover {
+  background-color: #edf1f7 !important;
+  color: #8f9bb3 !important;
+  border-color: #e4e9f2 !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+}
+
 .pagination {
   .page-item {
     &.active .page-link {

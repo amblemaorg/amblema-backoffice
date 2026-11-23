@@ -13,7 +13,6 @@ export interface SheetDraft {
   title: string;
   description: string;
   sheetTypeId: string | null;
-  seriesId: string | null;
   areaIds: string[];
   grades: string[];
   state: DraftState;
@@ -27,7 +26,6 @@ export interface SheetDraft {
 
 export interface DraftDefaults {
   sheetTypeId: string | null;
-  seriesId: string | null;
   grades: string[];
 }
 
@@ -46,7 +44,6 @@ export function newDraft(
     title: title || '',
     description: '',
     sheetTypeId: defaults.sheetTypeId,
-    seriesId: defaults.seriesId,
     areaIds: [],
     grades: [...defaults.grades],
     state: 'pending',

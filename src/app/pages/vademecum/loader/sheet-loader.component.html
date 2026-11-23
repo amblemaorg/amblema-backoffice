@@ -6,7 +6,7 @@
       solo se sube el PDF de cada una. El servidor lo optimiza y genera sus imágenes.
     </p>
 
-    <!-- 1. Tipo, serie y compendio -->
+    <!-- 1. Tipo, grados y compendio -->
     <div class="source">
       <label class="field">
         <span>Tipo de ficha del compendio</span>
@@ -16,16 +16,14 @@
           <option *ngFor="let type of sheetTypes" [ngValue]="type.id">{{ type.name }} ({{ type.codePrefix }})</option>
         </select>
       </label>
-      <label class="field" *ngIf="seriesOf(sheetTypeId).length">
-        <span>Serie (segmentación por grados)</span>
-        <select class="form-control" [(ngModel)]="seriesId" (ngModelChange)="loadExistingNumbers()"
-                [disabled]="reading || batchRunning">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let series of seriesOf(sheetTypeId)" [ngValue]="series.id">
-            {{ series.name }} · {{ typeOf(sheetTypeId)?.codePrefix }}{{ series.code }}
-          </option>
-        </select>
-      </label>
+      <div class="field">
+        <span>Grados del compendio (opcional)</span>
+        <ng-multiselect-dropdown class="checks" [placeholder]="'Se eligen en cada ficha'" [settings]="gradeSettings"
+                                 [data]="gradeChecks" [disabled]="reading || batchRunning"
+                                 [ngModel]="checkedOf(this, 'grades', compendiumGrades, gradeChecks)"
+                                 (ngModelChange)="onCompendiumGradesChange($event)">
+        </ng-multiselect-dropdown>
+      </div>
     </div>
 
     <label class="dropzone" [class.disabled]="!canDropFile" [class.dragging]="dragging"
@@ -39,8 +37,7 @@
           <strong>{{ dragging ? 'Suelte el PDF aquí' : 'Arrastre el compendio en PDF o haga clic para elegirlo' }}</strong>
           <small>
             {{ !sheetTypeId ? 'Primero elija el tipo de ficha.' :
-               (seriesOf(sheetTypeId).length && !seriesId ? 'Primero elija la serie.' :
-               'Se lee en este navegador · máximo ' + maxCompendiumMb + ' MB') }}
+               'Se lee en este navegador · máximo ' + maxCompendiumMb + ' MB' }}
           </small>
         </ng-container>
         <ng-template #chosen>
@@ -76,6 +73,14 @@
             Subir y publicar {{ pendingCount }}
           </button>
         </div>
+        <div class="numbering" *ngIf="unnumberedDrafts.length">
+          <span>{{ unnumberedDrafts.length }} fichas sin número (en Ambiente, los juegos). Numerar desde</span>
+          <input nbInput fieldSize="small" type="number" min="1" max="999" [(ngModel)]="numberFrom"
+                 [disabled]="batchRunning" />
+          <button nbButton ghost size="small" status="primary" [disabled]="batchRunning || !numberFrom"
+                  (click)="numberMissing()">Numerar</button>
+          <small class="text-hint">Quite antes las páginas que no son fichas. Reserve los números de los ecotemas que falten por cargar.</small>
+        </div>
         <ng-template #allDone>
           <span class="all-done">
             ✓ Todas las fichas están subidas · {{ publishedCount }} publicadas
@@ -83,6 +88,15 @@
           </span>
         </ng-template>
       </div>
+
+      <!-- Leyenda de los botones de página -->
+      <ul class="legend text-hint" *ngIf="pendingCount" aria-label="Qué hace cada botón">
+        <li><kbd>✂</kbd> Separar: desde esa página empieza otra ficha</li>
+        <li><kbd>‹</kbd><kbd>›</kbd> Mover la página dentro de la ficha</li>
+        <li><kbd>⤒</kbd><kbd>⤓</kbd> Pasarla a la ficha anterior / siguiente</li>
+        <li><kbd>✕</kbd> Quitar: no es parte de una ficha</li>
+        <li><kbd>⟵</kbd> Unir con la ficha anterior</li>
+      </ul>
 
       <ng-container *ngFor="let draft of drafts; let i = index; trackBy: trackDraft">
       <!-- Ficha ya subida: una línea compacta -->
@@ -166,29 +180,22 @@
                 <option *ngFor="let type of sheetTypes" [ngValue]="type.id">{{ type.name }}</option>
               </select>
             </label>
-            <label class="field" *ngIf="seriesOf(draft.sheetTypeId).length">
-              <span>Serie</span>
-              <select class="form-control form-control-sm" [(ngModel)]="draft.seriesId">
-                <option [ngValue]="null" disabled>Seleccione</option>
-                <option *ngFor="let series of seriesOf(draft.sheetTypeId)" [ngValue]="series.id">{{ series.name }}</option>
-              </select>
-            </label>
-            <label class="field">
+            <div class="field wide">
               <span>Categoría (áreas)</span>
-              <ng-select class="multi" [items]="areas" bindLabel="name" bindValue="id" [multiple]="true"
-                         [closeOnSelect]="false" [searchable]="false" [readonly]="locked(draft)"
-                         placeholder="Sin área" notFoundText="No hay áreas activas"
-                         [(ngModel)]="draft.areaIds">
-              </ng-select>
-            </label>
-            <label class="field">
+              <ng-multiselect-dropdown class="checks small" [placeholder]="'Sin área'" [settings]="areaSettings"
+                                       [data]="areaChecksFor(draft.sheetTypeId)" [disabled]="locked(draft)"
+                                       [ngModel]="checkedOf(draft, 'areaIds', draft.areaIds, areaChecksFor(draft.sheetTypeId))"
+                                       (ngModelChange)="onAreasChange(draft, $event)">
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="field wide">
               <span>Grados</span>
-              <ng-select class="multi" [items]="gradeOptions" bindLabel="label" bindValue="value" [multiple]="true"
-                         [closeOnSelect]="false" [searchable]="false" [readonly]="locked(draft)"
-                         placeholder="Sin grado"
-                         [ngModel]="draft.grades" (ngModelChange)="onGradesChange(draft, $event)">
-              </ng-select>
-            </label>
+              <ng-multiselect-dropdown class="checks small" [placeholder]="'Sin grado'" [settings]="gradeSettings"
+                                       [data]="gradeChecks" [disabled]="locked(draft)"
+                                       [ngModel]="checkedOf(draft, 'grades', draft.grades, gradeChecks)"
+                                       (ngModelChange)="onGradesChange(draft, $event)">
+              </ng-multiselect-dropdown>
+            </div>
             <label class="field full">
               <span>Descripción</span>
               <textarea nbInput fullWidth rows="2" maxlength="2000" [(ngModel)]="draft.description"></textarea>

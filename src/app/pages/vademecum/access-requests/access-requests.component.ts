@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { debounceTime, finalize, takeUntil } from 'rxjs/operators';
 import { SortHelper } from 'src/app/_helpers/sort.helper';
@@ -20,11 +21,7 @@ import {
   VademecumServerSource,
   VademecumTableSources,
 } from '../_shared/vademecum-table';
-
-type PendingAction =
-  | { kind: 'approve'; request: AccessRequest }
-  | { kind: 'reject'; request: AccessRequest }
-  | { kind: 'revoke'; authorization: Authorization };
+import { Confirmation, confirmAction, hideModal, showModal } from '../_shared/vademecum-dialogs';
 
 const ALREADY_REVIEWED_CODE = '118';
 const MAX_REASON_LENGTH = 500;
@@ -49,6 +46,7 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   private readonly search$ = new Subject<void>();
 
+  readonly rejectFormId = 'vademecum-reject-form';
   readonly maxReasonLength = MAX_REASON_LENGTH;
 
   schoolYears: SchoolYearEnrolled[] = [];
@@ -89,7 +87,7 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
         valuePrepareFunction: (_: any, row: Authorization) => fmtDate(row.approvedAt),
       },
       state: {
-        title: 'Estado',
+        title: 'Estatus',
         type: 'html',
         valuePrepareFunction: (_: any, row: Authorization) =>
           row.revokedAt
@@ -101,8 +99,8 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
     true,
   );
 
-  // Confirmación en línea (aprobar / rechazar / revocar)
-  pending: PendingAction | null = null;
+  // Rechazo con motivo (en ventana)
+  rejecting: AccessRequest | null = null;
   rejectReason = '';
   submitting = false;
 
@@ -111,6 +109,7 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
     private schoolYearService: SchoolYearService,
     private toastr: CustomToastrService,
     private tableSources: VademecumTableSources,
+    private modals: BsModalService,
   ) {
     this.authSource = this.tableSources.create('authorizations', {});
   }
@@ -135,6 +134,7 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    hideModal(this.rejectFormId);
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -148,24 +148,9 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
     return reason.length > 0 && reason.length <= MAX_REASON_LENGTH;
   }
 
-  get pendingTitle(): string {
-    if (!this.pending) {
-      return '';
-    }
-    switch (this.pending.kind) {
-      case 'approve':
-        return `Aprobar a ${this.fullName(this.pending.request)}`;
-      case 'reject':
-        return `Rechazar a ${this.fullName(this.pending.request)}`;
-      default:
-        return `Revocar acceso de ${this.accountName(this.pending.authorization)}`;
-    }
-  }
-
   // --- Solicitudes ---
 
   onStatusChange(): void {
-    this.cancelAction();
     this.requestsSettings = this.buildRequestsSettings(this.status);
     this.reloadRequests();
   }
@@ -179,13 +164,15 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
   }
 
   onRequestAction(event: { action: string; data: AccessRequest }): void {
-    if (!this.isPendingTab) {
+    if (!this.isPendingTab || this.submitting) {
       return;
     }
     if (event.action === 'approve') {
-      this.startAction({ kind: 'approve', request: event.data });
+      this.askApprove(event.data);
     } else if (event.action === 'reject') {
-      this.startAction({ kind: 'reject', request: event.data });
+      this.rejecting = event.data;
+      this.rejectReason = '';
+      showModal(this.rejectFormId);
     }
   }
 
@@ -203,60 +190,82 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
       this.toastr.info('Aviso', 'Esta autorización ya fue revocada.');
       return;
     }
-    this.startAction({ kind: 'revoke', authorization: event.data });
+    this.askRevoke(event.data);
   }
 
   // --- Acciones ---
 
-  cancelAction(): void {
-    if (this.submitting) {
-      return;
-    }
-    this.pending = null;
-    this.rejectReason = '';
+  private askApprove(request: AccessRequest): void {
+    const confirmation = confirmAction(
+      this.modals,
+      'Aprobar solicitud',
+      `¿Desea aprobar a ${this.fullName(request)}?`,
+      'Se creará o activará la cuenta y se enviará un correo.',
+      true,
+    );
+    confirmation.confirmed$.subscribe(() => {
+      this.submitting = true;
+      this.access
+        .approve(request.id)
+        .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
+        .subscribe(
+          () => {
+            confirmation.close();
+            this.afterReview('Solicitud aprobada. Se creó o activó la cuenta y se envió un correo.', true);
+          },
+          (err: HttpErrorResponse) => this.onReviewError(err, 'No se pudo aprobar la solicitud.', confirmation),
+        );
+    });
   }
 
-  confirmAction(): void {
-    const action = this.pending;
-    if (!action || this.submitting) {
-      return;
-    }
-    if (action.kind === 'reject' && !this.reasonValid) {
+  confirmReject(): void {
+    const request = this.rejecting;
+    if (!request || this.submitting || !this.reasonValid) {
       return;
     }
     this.submitting = true;
-    switch (action.kind) {
-      case 'approve':
-        this.access
-          .approve(action.request.id)
-          .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
-          .subscribe(
-            () => this.afterReview('Solicitud aprobada. Se creó o activó la cuenta y se envió un correo.', true),
-            (err: HttpErrorResponse) => this.onReviewError(err, 'No se pudo aprobar la solicitud.'),
-          );
-        break;
-      case 'reject':
-        this.access
-          .reject(action.request.id, this.rejectReason.trim())
-          .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
-          .subscribe(
-            () => this.afterReview('Solicitud rechazada. Se envió el motivo por correo.', false),
-            (err: HttpErrorResponse) => this.onReviewError(err, 'No se pudo rechazar la solicitud.'),
-          );
-        break;
-      default:
-        this.access
-          .revoke(action.authorization.id)
-          .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
-          .subscribe(
-            () => {
-              this.closeAction();
-              this.toastr.registerSuccess('Listo', 'Autorización revocada.');
-              this.authSource.refresh();
-            },
-            () => this.toastr.error('Error', 'No se pudo revocar la autorización.'),
-          );
+    this.access
+      .reject(request.id, this.rejectReason.trim())
+      .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          this.closeReject();
+          this.afterReview('Solicitud rechazada. Se envió el motivo por correo.', false);
+        },
+        (err: HttpErrorResponse) => {
+          this.closeReject();
+          this.onReviewError(err, 'No se pudo rechazar la solicitud.');
+        },
+      );
+  }
+
+  private askRevoke(authorization: Authorization): void {
+    if (this.submitting) {
+      return;
     }
+    const confirmation = confirmAction(
+      this.modals,
+      'Revocar acceso',
+      `¿Desea revocar el acceso de ${this.accountName(authorization)}?`,
+      'El docente perderá el acceso a Vademécum para este año escolar.',
+    );
+    confirmation.confirmed$.subscribe(() => {
+      this.submitting = true;
+      this.access
+        .revoke(authorization.id)
+        .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
+        .subscribe(
+          () => {
+            confirmation.close();
+            this.toastr.registerSuccess('Listo', 'Autorización revocada.');
+            this.authSource.refresh();
+          },
+          () => {
+            confirmation.close();
+            this.toastr.error('Error', 'No se pudo revocar la autorización.');
+          },
+        );
+    });
   }
 
   // --- Presentación ---
@@ -275,22 +284,14 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
 
   // --- Privados ---
 
-  private startAction(action: PendingAction): void {
-    if (this.submitting) {
-      return;
-    }
-    this.pending = action;
+  private closeReject(): void {
+    hideModal(this.rejectFormId);
+    this.rejecting = null;
     this.rejectReason = '';
   }
 
-  private closeAction(): void {
-    this.pending = null;
-    this.rejectReason = '';
-  }
-
-  /** Éxito de aprobar/rechazar: aviso, cierre del panel y recarga (la página se ajusta si queda vacía). */
+  /** Éxito de aprobar/rechazar: aviso y recarga (la página se ajusta si queda vacía). */
   private afterReview(message: string, approved: boolean): void {
-    this.closeAction();
     this.toastr.registerSuccess('Listo', message);
     this.refreshKeepingPage(this.requestsSource);
     if (approved) {
@@ -298,8 +299,10 @@ export class AccessRequestsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onReviewError(err: HttpErrorResponse, fallback: string): void {
-    this.closeAction();
+  private onReviewError(err: HttpErrorResponse, fallback: string, confirmation?: Confirmation): void {
+    if (confirmation) {
+      confirmation.close();
+    }
     if (this.hasErrorCode(err, ALREADY_REVIEWED_CODE)) {
       this.toastr.info('Aviso', 'La solicitud ya fue revisada por otra persona. Se actualizó la lista.');
       this.reloadRequests();

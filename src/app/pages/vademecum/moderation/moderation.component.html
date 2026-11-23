@@ -19,19 +19,6 @@
       </div>
     </div>
 
-    <div class="confirm-inline mb-3" *ngIf="confirming">
-      <strong>¿Ocultar este comentario publicado?</strong>
-      <div>
-        {{ confirming.sheet ? confirming.sheet.code + ' · ' + confirming.sheet.title : '' }} ·
-        {{ teacherName(confirming) }}. Dejará de mostrarse a los docentes. Las estrellas se conservan y podrá
-        aprobarse de nuevo.
-      </div>
-      <div class="actions">
-        <button nbButton size="small" status="basic" [disabled]="submitting" (click)="cancelHide()">Cancelar</button>
-        <button nbButton size="small" status="danger" [disabled]="submitting" (click)="confirmHide()">Confirmar</button>
-      </div>
-    </div>
-
     <div class="table-responsive">
       <ng2-smart-table [source]="source" [settings]="settings" (custom)="onAction($event)"></ng2-smart-table>
     </div>

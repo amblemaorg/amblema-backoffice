@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { debounceTime, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { AdminRating, CommentStatus } from 'src/app/_models/vademecum/moderation.model';
 import { AdminSheet } from 'src/app/_models/vademecum/sheet.model';
 import { TABLE_ICONS, TableIconAction, VademecumServerSource, VademecumTableSources, vademecumTableSettings } from '../_shared/vademecum-table';
+import { confirmAction } from '../_shared/vademecum-dialogs';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
 import { VademecumModerationService } from 'src/app/services/vademecum/vademecum-moderation.service';
 import { VademecumSheetService } from 'src/app/services/vademecum/vademecum-sheet.service';
@@ -47,8 +49,6 @@ export class ModerationComponent implements OnInit, OnDestroy {
   settings: any;
   pendingTotal: number | null = null;
 
-  /** Comentario cuya acción espera confirmación (solo al ocultar un publicado). */
-  confirming: AdminRating | null = null;
   submitting = false;
 
   constructor(
@@ -56,6 +56,7 @@ export class ModerationComponent implements OnInit, OnDestroy {
     private sheetService: VademecumSheetService,
     private toastr: CustomToastrService,
     private tableSources: VademecumTableSources,
+    private modals: BsModalService,
     @Inject(LOCALE_ID) private locale: string,
   ) {
     this.settings = this.buildSettings();
@@ -70,7 +71,7 @@ export class ModerationComponent implements OnInit, OnDestroy {
         debounceTime(300),
         switchMap((q) => {
           this.loadingSheets = true;
-          return this.sheetService.list({ status: null, sheetTypeId: null, seriesId: null, q }, 1, 20);
+          return this.sheetService.list({ status: null, sheetTypeId: null, q }, 1, 20);
         }),
         takeUntil(this.destroy$),
       )
@@ -102,7 +103,6 @@ export class ModerationComponent implements OnInit, OnDestroy {
       return;
     }
     this.status = status;
-    this.confirming = null;
     this.settings = this.buildSettings();
     this.reloadList();
   }
@@ -112,7 +112,6 @@ export class ModerationComponent implements OnInit, OnDestroy {
   }
 
   onSheetChange(): void {
-    this.confirming = null;
     this.reloadList();
   }
 
@@ -146,20 +145,18 @@ export class ModerationComponent implements OnInit, OnDestroy {
     this.run(rating, 'hide', 'Comentario rechazado (oculto).', 'No se pudo rechazar el comentario.');
   }
 
+  /** Ocultar un comentario publicado pide confirmación. */
   askHide(rating: AdminRating): void {
-    this.confirming = rating;
-  }
-
-  cancelHide(): void {
-    if (!this.submitting) {
-      this.confirming = null;
-    }
-  }
-
-  confirmHide(): void {
-    if (this.confirming) {
-      this.run(this.confirming, 'hide', 'Comentario oculto.', 'No se pudo ocultar el comentario.');
-    }
+    const sheet = rating.sheet ? `${rating.sheet.code} · ${rating.sheet.title} · ` : '';
+    const confirmation = confirmAction(
+      this.modals,
+      'Ocultar comentario',
+      '¿Desea ocultar este comentario publicado?',
+      `${sheet}${this.teacherName(rating)}. Dejará de mostrarse a los docentes. Las estrellas se conservan y podrá aprobarse de nuevo.`,
+    );
+    confirmation.confirmed$.subscribe(() =>
+      this.run(rating, 'hide', 'Comentario oculto.', 'No se pudo ocultar el comentario.', () => confirmation.close()),
+    );
   }
 
   // --- Presentación ---
@@ -225,18 +222,24 @@ export class ModerationComponent implements OnInit, OnDestroy {
     let actions: TableIconAction[] = [];
     if (this.status === 'pending') {
       actions = [
-        { name: 'approve', title: TABLE_ICONS.approve },
-        { name: 'reject', title: TABLE_ICONS.reject },
+        { name: 'approve', title: `<span title="Aprobar">${TABLE_ICONS.approve}</span>` },
+        { name: 'reject', title: `<span title="Rechazar">${TABLE_ICONS.reject}</span>` },
       ];
     } else if (this.status === 'approved') {
-      actions = [{ name: 'hide', title: TABLE_ICONS.hide }];
+      actions = [{ name: 'hide', title: `<span title="Ocultar">${TABLE_ICONS.hide}</span>` }];
     } else {
-      actions = [{ name: 'approve', title: TABLE_ICONS.approve }];
+      actions = [{ name: 'approve', title: `<span title="Aprobar">${TABLE_ICONS.approve}</span>` }];
     }
     return vademecumTableSettings(columns, actions, true);
   }
 
-  private run(rating: AdminRating, action: 'approve' | 'hide', okMessage: string, failMessage: string): void {
+  private run(
+    rating: AdminRating,
+    action: 'approve' | 'hide',
+    okMessage: string,
+    failMessage: string,
+    done: () => void = () => undefined,
+  ): void {
     if (this.submitting) {
       return;
     }
@@ -247,13 +250,13 @@ export class ModerationComponent implements OnInit, OnDestroy {
         : this.moderation.hide(rating.id, rating.updatedAt);
     request$.pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$)).subscribe(
       () => {
-        this.confirming = null;
+        done();
         this.toastr.registerSuccess('Listo', okMessage);
         this.source.refresh();
         this.refreshPendingTotal();
       },
       (err: HttpErrorResponse) => {
-        this.confirming = null;
+        done();
         if (this.hasErrorCode(err, COMMENT_CHANGED_CODE)) {
           this.toastr.info('Aviso', 'El docente cambió este comentario; revísalo de nuevo.');
           this.source.refresh();

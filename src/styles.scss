@@ -263,3 +263,81 @@ nb-input:focus,
 .nb-theme-default legend {
   font-family: 'Montserrat', sans-serif !important;
 }
+// =============================================================
+// Títulos de sección del modal de validación de información
+// (el modal de ngx-bootstrap se monta en <body>, fuera de los componentes)
+// =============================================================
+// Título + acento a la izquierda + línea fina que completa el ancho.
+// Prefijo .nb-theme-default: Nebular (cargado después) fija `.nb-theme-default p` con tamaño y peso propios
+.nb-theme-default .request-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 1.3;
+  color: #222b45;
+  margin: 0.5rem 0 1.25rem;
+
+  &::before {
+    content: '';
+    flex-shrink: 0;
+    width: 4px;
+    height: 1.3em;
+    border-radius: 2px;
+    background-color: #17a2b8;
+  }
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: #e4e9f2;
+  }
+
+  // Variante centrada: línea fina a ambos lados
+  &.text-center::before {
+    flex: 1;
+    width: auto;
+    height: 1px;
+    border-radius: 0;
+    background-color: #e4e9f2;
+  }
+}
+
+// =============================================================
+// Datos en modales de detalle: label arriba del valor, subtítulos
+// y campos en columnas. Prefijo .nb-theme-default por la regla `p` de Nebular.
+// =============================================================
+.nb-theme-default {
+  .request-field {
+    margin-bottom: 1rem;
+    word-break: break-word;
+  }
+
+  .request-field-label {
+    display: block;
+    font-weight: 700;
+  }
+
+  // Subtítulo dentro de una sección: mismo nivel que "Actividades del lapso"
+  .request-subtitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #17a2b8;
+    margin: 0 0 0.75rem;
+  }
+
+  // Campos uno al lado del otro, pasan a la línea siguiente si no caben
+  .request-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+
+    .request-field {
+      flex: 0 1 14rem;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+  }
+}

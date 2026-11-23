@@ -1,0 +1,15 @@
+// Primera columna (Nombre) fija al hacer scroll horizontal
+:host ::ng-deep ng2-smart-table table {
+  tr > th:first-child,
+  tr > td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: #fff;
+    box-shadow: inset -1px 0 0 #edf1f7;
+  }
+
+  thead tr > th:first-child {
+    z-index: 2;
+  }
+}

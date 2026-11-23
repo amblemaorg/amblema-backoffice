@@ -1,0 +1,11 @@
+/* styles.scss da a cada nb-card min-height: calc(100vh - 14rem) (páginas de una sola tarjeta).
+   Esta pantalla tiene varias: cada tarjeta mide lo que su contenido */
+nb-card { min-height: auto; }
+.filters .form-group { margin-bottom: 0.75rem; }
+.total-card { text-align: center; }
+.total-card .value { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.total-card .label { color: #8f9bb3; }
+.total-card small { display: block; color: #8f9bb3; }
+.empty-state { text-align: center; padding: 2rem 1rem; color: #8f9bb3; }
+.chart-box { min-height: 220px; }
+:host ::ng-deep .redownload { color: #ffa100; font-weight: 600; }

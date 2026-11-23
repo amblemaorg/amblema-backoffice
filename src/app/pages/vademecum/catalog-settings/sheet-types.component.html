@@ -1,0 +1,74 @@
+<!-- Registrar -->
+<div class="mb-3">
+  <button nbButton status="success" class="col-12 col-md-auto" [disabled]="submitting" (click)="startCreate()">
+    Registrar
+  </button>
+</div>
+
+<!-- Tabla -->
+<div [nbSpinner]="loading">
+  <div class="empty-state" *ngIf="failed && !loading">No se pudo cargar el listado. Intente de nuevo.</div>
+  <div class="table-responsive">
+    <ng2-smart-table [source]="source" [settings]="settings" (custom)="onAction($event)"></ng2-smart-table>
+  </div>
+</div>
+
+<!-- Formulario -->
+<app-modal [ID]="formId" [size]="'normal'" [title]="form?.id ? 'Actualizar tipo de ficha' : 'Registrar tipo de ficha'"
+  extra="true">
+  <form *ngIf="form" content (ngSubmit)="save()">
+    <fieldset [disabled]="submitting">
+      <div class="row">
+        <div class="col-12 col-md-6 form-group">
+          <label class="label">Nombre</label>
+          <input nbInput fullWidth maxlength="60" name="name" [(ngModel)]="form.name" />
+        </div>
+        <div class="col-12 col-md-6 form-group">
+          <label class="label">Texto con que empieza el encabezado del PDF</label>
+          <input nbInput fullWidth maxlength="60" name="headerName" [(ngModel)]="form.headerName" />
+          <small class="hint">Para Ambiente: «Ecotema» (cada ecotema y cada juego quedan como fichas aparte).</small>
+        </div>
+        <div class="col-6 col-md-3 form-group">
+          <label class="label">Prefijo (máx. 4)</label>
+          <input nbInput fullWidth maxlength="4" name="codePrefix" [(ngModel)]="form.codePrefix" />
+        </div>
+        <div class="col-6 col-md-3 form-group">
+          <label class="label">Color</label>
+          <div class="color-row">
+            <input type="color" class="color-picker" name="colorPicker" [(ngModel)]="form.color" />
+            <input nbInput fullWidth maxlength="7" placeholder="#RRGGBB" name="color" [(ngModel)]="form.color"
+              [status]="colorValid ? 'basic' : 'danger'" />
+          </div>
+        </div>
+        <div class="col-6 col-md-3 form-group">
+          <label class="label">Orden</label>
+          <input nbInput fullWidth type="number" step="1" name="sort" [(ngModel)]="form.sort" />
+        </div>
+        <div class="col-6 col-md-3 form-group">
+          <label class="label">Estatus</label>
+          <select class="form-control" name="status" [(ngModel)]="form.status">
+            <option [ngValue]="activeStatus">Activo</option>
+            <option [ngValue]="inactiveStatus">Inactivo</option>
+          </select>
+        </div>
+        <div class="col-12 form-group">
+          <label class="label">Título de la sección (opcional)</label>
+          <input nbInput fullWidth maxlength="150" name="sectionTitle" [(ngModel)]="form.sectionTitle" />
+        </div>
+        <div class="col-12 form-group">
+          <label class="label">Texto de la sección (opcional)</label>
+          <textarea nbInput fullWidth rows="3" maxlength="5000" name="sectionText" [(ngModel)]="form.sectionText"></textarea>
+          <small class="counter">{{ form.sectionText.length }} / 5000</small>
+        </div>
+      </div>
+    </fieldset>
+    <ul class="errors" *ngIf="formErrors.length > 0">
+      <li *ngFor="let error of formErrors">{{ error }}</li>
+    </ul>
+  </form>
+
+  <button nbButton button type="button" class="col-6 col-md-auto" [status]="form?.id ? 'primary' : 'success'"
+    [disabled]="submitting || formErrors.length > 0" (click)="save()">
+    {{ submitting ? 'Guardando...' : (form?.id ? 'Editar' : 'Guardar') }}
+  </button>
+</app-modal>

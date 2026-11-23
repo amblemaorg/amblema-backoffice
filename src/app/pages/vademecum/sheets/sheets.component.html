@@ -1,0 +1,100 @@
+<nb-card>
+  <nb-card-header>Fichas de Vademécum</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12 form-group">
+        <label class="label">Estado:</label>
+        <nb-radio-group [(ngModel)]="status" class="d-flex" (valueChange)="applyFilters()">
+          <nb-radio [value]="null">Todas</nb-radio>
+          <nb-radio value="draft">Borrador</nb-radio>
+          <nb-radio value="published">Publicada</nb-radio>
+          <nb-radio value="unpublished">Despublicada</nb-radio>
+        </nb-radio-group>
+      </div>
+      <div class="col-12 col-md-6 form-group">
+        <label class="label">Buscar:</label>
+        <input nbInput fullWidth placeholder="Código o título" [(ngModel)]="query" (ngModelChange)="onSearch()" />
+      </div>
+      <div class="col-12 col-md-6 form-group">
+        <label class="label">Tipo:</label>
+        <select class="form-control" [(ngModel)]="sheetTypeId" (change)="applyFilters()">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let type of types" [ngValue]="type.id">{{ type.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <ng2-smart-table [source]="source" [settings]="settings" (custom)="onAction($event)"></ng2-smart-table>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<!-- Edición -->
+<app-modal [ID]="formId" [size]="'normal'" [title]="editing ? 'Actualizar ficha ' + editing.code : 'Actualizar ficha'"
+  extra="true">
+  <form *ngIf="editing" content (ngSubmit)="saveEdit()">
+    <div class="form-group">
+      <div class="pages-header">
+        <label class="label">Páginas</label>
+        <button nbButton ghost size="tiny" status="primary" type="button"
+          [disabled]="submitting || pagesState === 'none'" (click)="viewPdf(editing)">Ver PDF</button>
+      </div>
+      <div class="page-thumbs">
+        <figure *ngFor="let url of pageThumbnails; let p = index" class="page-thumb" title="Ver PDF"
+          (click)="viewPdf(editing)">
+          <img [src]="url" [alt]="'Página ' + (p + 1) + ' de ' + editing.code" />
+          <figcaption>Pág. {{ p + 1 }}</figcaption>
+        </figure>
+        <span *ngIf="hiddenPages" class="hint">y {{ hiddenPages }} más</span>
+        <span *ngIf="pagesState === 'loading'" class="hint">Cargando páginas…</span>
+        <span *ngIf="pagesState === 'error'" class="field-error">No se pudieron mostrar las páginas.</span>
+        <span *ngIf="pagesState === 'none'" class="hint">La ficha no tiene PDF.</span>
+      </div>
+    </div>
+    <fieldset [disabled]="submitting">
+      <div class="form-group">
+        <label class="label">Título</label>
+        <input nbInput fullWidth name="title" [(ngModel)]="form.title" maxlength="200" />
+      </div>
+      <div class="form-group">
+        <label class="label">Descripción</label>
+        <textarea nbInput fullWidth rows="3" name="description" [(ngModel)]="form.description"></textarea>
+        <small class="field-error" *ngIf="fieldErrors.description">{{ fieldErrors.description }}</small>
+      </div>
+      <div class="form-group">
+        <label class="label">Grados</label>
+        <div class="grades">
+          <nb-checkbox *ngFor="let grade of gradeOptions" [checked]="hasGrade(grade.value)"
+            (checkedChange)="toggleGrade(grade.value, $event)">{{ grade.label }}</nb-checkbox>
+        </div>
+        <small class="field-error" *ngIf="fieldErrors.grades">{{ fieldErrors.grades }}</small>
+      </div>
+      <div class="form-group">
+        <label class="label">Áreas</label>
+        <ng-multiselect-dropdown class="checks" name="areaIds" [placeholder]="'Seleccione áreas'"
+          [settings]="areaSettings" [data]="areaChecks" [(ngModel)]="checkedAreas"></ng-multiselect-dropdown>
+        <small class="field-error" *ngIf="fieldErrors.areaIds">{{ fieldErrors.areaIds }}</small>
+      </div>
+      <div class="form-group">
+        <label class="label">Estatus</label>
+        <select class="form-control" name="status" [(ngModel)]="form.status">
+          <option *ngFor="let option of statusOptions" [ngValue]="option">{{ statusLabels[option].label }}</option>
+        </select>
+        <small class="hint" *ngIf="form.status === 'published' && editing.status !== 'published'">
+          Para publicar hacen falta la descripción, al menos un grado y el PDF.
+        </small>
+        <small class="hint" *ngIf="form.status === 'unpublished' && editing.status === 'published'">
+          Dejará de verse en el catálogo para los docentes. Podrá publicarla de nuevo.
+        </small>
+        <small class="field-error" *ngIf="fieldErrors.file">{{ fieldErrors.file }}</small>
+      </div>
+    </fieldset>
+    <small class="field-error" *ngIf="formError">{{ formError }}</small>
+  </form>
+
+  <button nbButton button type="button" status="primary" class="col-6 col-md-auto"
+    [disabled]="submitting || !formValid" (click)="saveEdit()">
+    {{ submitting ? 'Guardando...' : 'Editar' }}
+  </button>
+</app-modal>

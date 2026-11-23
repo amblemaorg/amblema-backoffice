@@ -1,0 +1,53 @@
+<!-- Registrar -->
+<div class="mb-3">
+  <button nbButton status="success" class="col-12 col-md-auto" [disabled]="submitting" (click)="startCreate()">
+    Registrar
+  </button>
+</div>
+
+<!-- Tabla -->
+<div [nbSpinner]="loading">
+  <div class="empty-state" *ngIf="failed && !loading">No se pudo cargar el listado. Intente de nuevo.</div>
+  <div class="table-responsive">
+    <ng2-smart-table [source]="source" [settings]="settings" (custom)="onAction($event)"></ng2-smart-table>
+  </div>
+</div>
+
+<!-- Formulario -->
+<app-modal [ID]="formId" [size]="'normal'" [title]="form?.id ? 'Actualizar área' : 'Registrar área'" extra="true">
+  <form *ngIf="form" content (ngSubmit)="save()">
+    <fieldset [disabled]="submitting">
+      <div class="row">
+        <div class="col-12 col-md-6 form-group">
+          <label class="label">Nombre</label>
+          <input nbInput fullWidth maxlength="80" name="name" [(ngModel)]="form.name" />
+          <small class="text-danger" *ngIf="nameError">{{ nameError }}</small>
+        </div>
+        <div class="col-6 col-md-3 form-group">
+          <label class="label">Orden</label>
+          <input nbInput fullWidth type="number" step="1" name="sort" [(ngModel)]="form.sort" />
+        </div>
+        <div class="col-6 col-md-3 form-group">
+          <label class="label">Estatus</label>
+          <select class="form-control" name="status" [(ngModel)]="form.status">
+            <option [ngValue]="activeStatus">Activo</option>
+            <option [ngValue]="inactiveStatus">Inactivo</option>
+          </select>
+        </div>
+        <div class="col-12 form-group">
+          <label class="label">Tipos de ficha</label>
+          <ng-multiselect-dropdown class="checks" name="sheetTypes" [placeholder]="'Seleccione los tipos'"
+            [settings]="typeSettings" [data]="typeChecks" [disabled]="submitting"
+            [(ngModel)]="form.sheetTypes"></ng-multiselect-dropdown>
+          <small class="hint">Solo las fichas de estos tipos podrán tener esta área.</small>
+          <small class="text-danger d-block" *ngIf="typesError">{{ typesError }}</small>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <button nbButton button type="button" class="col-6 col-md-auto" [status]="form?.id ? 'primary' : 'success'"
+    [disabled]="submitting || !formValid" (click)="save()">
+    {{ submitting ? 'Guardando...' : (form?.id ? 'Editar' : 'Guardar') }}
+  </button>
+</app-modal>

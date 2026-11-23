@@ -1,0 +1,27 @@
+<div [nbSpinner]="loading">
+  <div class="empty-state" *ngIf="failed && !loading">No se pudo cargar el listado. Intente de nuevo.</div>
+
+  <div class="table-responsive">
+    <ng2-smart-table [source]="source" [settings]="settings" (custom)="onAction($event)"></ng2-smart-table>
+  </div>
+
+  <div class="form-panel" *ngIf="selectedKey">
+    <h6>Editar texto: {{ keyLabel(selectedKey) }}</h6>
+    <div class="form-group">
+      <label>Título</label>
+      <input nbInput fullWidth [maxlength]="maxTitle" [disabled]="submitting" [(ngModel)]="title" />
+    </div>
+    <div class="form-group">
+      <label>Texto</label>
+      <quill-editor [(ngModel)]="body" [modules]="editorModules" [formats]="editorFormats" [readOnly]="submitting"
+        placeholder="Escriba el texto de la sección" [styles]="{ minHeight: '200px' }"></quill-editor>
+      <small class="counter">{{ (body || '').length }} / {{ maxBody }}</small>
+      <small class="hint">Se permiten negrita, cursiva, subrayado, títulos, listas, citas y enlaces http(s) o de correo. Lo demás se descarta al guardar.</small>
+    </div>
+    <ul class="errors" *ngIf="errors.length > 0"><li *ngFor="let error of errors">{{ error }}</li></ul>
+    <div class="actions">
+      <button nbButton size="small" status="basic" [disabled]="submitting" (click)="cancel()">Cerrar</button>
+      <button nbButton size="small" status="primary" [disabled]="submitting || errors.length > 0" (click)="save()">Guardar</button>
+    </div>
+  </div>
+</div>

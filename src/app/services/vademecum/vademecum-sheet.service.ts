@@ -19,15 +19,12 @@ export class VademecumSheetService {
 
   constructor(private http: HttpClient) {}
 
-  /** Fichas de un tipo y serie (para avisar números repetidos antes de subir). */
-  listByType(sheetTypeId: string, seriesId: string | null, page = 1): Observable<AdminSheetList> {
-    let params = new HttpParams()
+  /** Fichas de un tipo (para avisar números repetidos antes de subir). */
+  listByType(sheetTypeId: string, page = 1): Observable<AdminSheetList> {
+    const params = new HttpParams()
       .set('sheetTypeId', sheetTypeId)
       .set('page', String(page))
       .set('pageSize', '100');
-    if (seriesId) {
-      params = params.set('seriesId', seriesId);
-    }
     return this.http.get<AdminSheetList>(this.url, { params });
   }
 
@@ -51,9 +48,6 @@ export class VademecumSheetService {
     }
     if (filters.sheetTypeId) {
       params = params.set('sheetTypeId', filters.sheetTypeId);
-    }
-    if (filters.seriesId) {
-      params = params.set('seriesId', filters.seriesId);
     }
     const q = (filters.q || '').trim();
     if (q) {

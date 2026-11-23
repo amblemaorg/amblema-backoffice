@@ -9,7 +9,6 @@ export interface AdminSheet {
   title: string;
   description: string | null;
   sheetType: { id: string; name: string; codePrefix: string; color: string } | null;
-  series: { id: string; name: string; code: string } | null;
   grades: string[];
   areas: { id: string; name: string }[];
   status: SheetStatus;
@@ -39,13 +38,11 @@ export interface SheetInput {
   grades?: string[];
   areaIds?: string[];
   sheetTypeId?: string;
-  seriesId?: string | null;
 }
 
 export interface SheetListFilters {
   status: SheetStatus | null;
   sheetTypeId: string | null;
-  seriesId: string | null;
   q: string;
 }
 
@@ -62,6 +59,13 @@ export interface Area {
   name: string;
   sort: number;
   status: string;
+  /** Tipos de ficha a los que aplica el área. */
+  sheetTypes: { id: string; name: string }[];
+}
+
+/** El área sirve para ese tipo de ficha. */
+export function areaAppliesTo(area: Area, sheetTypeId: string | null): boolean {
+  return !!sheetTypeId && (area.sheetTypes || []).some((type) => type.id === sheetTypeId);
 }
 
 /** Grados como en Section.grade, más "Todos" (GES-02). */

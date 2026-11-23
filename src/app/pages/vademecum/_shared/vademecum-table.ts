@@ -28,6 +28,11 @@ export const TABLE_ICONS = {
   pdf: '<i class="far fa-file-pdf fa-sm"></i>',
 };
 
+/** Acción con un ícono de TABLE_ICONS y el nombre que aparece al pasar el ratón. */
+export function iconAction(name: string, icon: keyof typeof TABLE_ICONS, label: string): TableIconAction {
+  return { name, title: `<span title="${label}">${TABLE_ICONS[icon]}</span>` };
+}
+
 export const TABLE_PAGE_SIZE = 10;
 
 /**
@@ -48,10 +53,14 @@ export function vademecumTableSettings(
     noDataMessage: 'No hay registros',
     mode: 'external',
     hideSubHeader: serverSide,
+    // Sin `position`: a la izquierda, como BaseTable y el resto del backoffice.
+    // `delete: true` es el mismo truco de BaseTable ("Fake column cuz a bug"): ng2-smart-table
+    // 1.7.2 no cuenta las acciones `custom` en el colspan de "No hay registros" y a esa fila le
+    // faltaba la columna "Acciones". El botón de borrar nativo queda sin contenido.
     actions: actions.length
-      ? { columnTitle: 'Acciones', add: false, edit: false, delete: false, custom: actions,
-          position: 'right' }
+      ? { columnTitle: 'Acciones', add: false, edit: false, delete: true, custom: actions }
       : false,
+    delete: { deleteButtonContent: '', confirmDelete: true },
     pager: { display: true, perPage: TABLE_PAGE_SIZE },
     columns: prepared,
   };

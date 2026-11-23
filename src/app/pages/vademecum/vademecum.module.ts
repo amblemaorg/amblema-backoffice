@@ -16,7 +16,9 @@ import {
 import { ChartsModule } from 'ng2-charts';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { QuillModule } from 'ngx-quill';
+import { ModalModule as FormModalModule } from '../_components/shared/modal/modal-forms/modal.module';
 import { VademecumRoutingModule } from './vademecum-routing.module';
 import { SheetLoaderComponent } from './loader/sheet-loader.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
@@ -54,9 +56,11 @@ import { ModerationComponent } from './moderation/moderation.component';
     NbSpinnerModule,
     NbTabsetModule,
     NgSelectModule,
+    NgMultiSelectDropDownModule.forRoot(),
     ChartsModule,
     Ng2SmartTableModule,
     QuillModule.forRoot(),
+    FormModalModule,
     VademecumRoutingModule,
   ],
 })

@@ -1,14 +1,47 @@
 .form-group { margin-bottom: 0.75rem; }
-.panel { border: 1px solid #ffa100; border-radius: 0.25rem; padding: 1rem; margin-bottom: 1rem; }
-.panel.edit { border-color: #3366ff; }
-.panel.danger { border-color: #ff3d71; }
-.panel .actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
 .grades { display: flex; flex-wrap: wrap; gap: 1rem; }
+.hint { display: block; margin-top: 0.25rem; color: #8f9bb3; }
 .field-error { color: #ff3d71; display: block; margin-top: 0.25rem; }
-:host ::ng-deep .status-pill { padding: 0.1rem 0.5rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
-:host ::ng-deep .status-success { background: #d5f5e3; color: #00995a; }
-:host ::ng-deep .status-warning { background: #fff3cd; color: #b36b00; }
-:host ::ng-deep .status-basic { background: #edf1f7; color: #4b5873; }
-.batch-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
-.batch-failures { margin-bottom: 1rem; }
-.batch-failures li { margin-bottom: 0.25rem; }
+.checks {
+  /* Misma letra que la lista "Seleccione lapso" de Reportes PECA (texto de nb-card) */
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+/* Miniaturas de las páginas en "Actualizar ficha" */
+.page-thumbs {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  min-height: 2rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+.pages-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.page-thumb {
+  flex: 0 0 7.5rem;
+  margin: 0;
+  text-align: center;
+  cursor: pointer;
+
+  img {
+    display: block;
+    width: 100%;
+    border: 1px solid #e4e9f2;
+    border-radius: 0.25rem;
+    background: #fff;
+  }
+
+  figcaption {
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    color: #8f9bb3;
+  }
+}

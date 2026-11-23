@@ -8,6 +8,7 @@ import {
   PDFObject,
   PDFRef,
   PDFStream,
+  ParseSpeeds,
 } from 'pdf-lib';
 
 /** Worker de pdf.js copiado como asset en angular.json (build legacy, compatible con webpack 4). */
@@ -27,6 +28,13 @@ const DISCARDED_PAGE_KEYS = ['PieceInfo', 'Thumb'];
 
 export class InvalidPdfError extends Error {}
 
+/** Línea de texto de una página: `top` es el borde superior (y PDF, crece hacia arriba). */
+export interface PageLine {
+  text: string;
+  top: number;
+  size: number;
+}
+
 /**
  * Compendio abierto en el navegador: nunca se envía al servidor (BO-04 rehecho).
  *
@@ -40,6 +48,8 @@ export interface OpenedCompendium {
   thumbnail(index: number): Promise<string>;
   /** Líneas de texto del tercio superior, de arriba abajo. Requiere el lector. */
   topLines(index: number): Promise<string[]>;
+  /** Todas las líneas de la página con su posición y tamaño (descripción). Requiere el lector. */
+  pageLines(index: number): Promise<PageLine[]>;
   /** Libera pdf.js (el documento y su worker); después solo se puede separar. */
   releaseReader(): void;
   /** PDF nuevo solo con esas páginas, en ese orden. */
@@ -103,7 +113,8 @@ function dropUnreachable(document: PDFDocument): number {
   providedIn: 'root',
 })
 export class VademecumPdfService {
-  async open(file: File): Promise<OpenedCompendium> {
+  /** Abre un PDF elegido por el usuario o descargado del servidor (Blob). */
+  async open(file: Blob): Promise<OpenedCompendium> {
     let reader: any;
     try {
       // pdf.js transfiere el buffer a su worker: no queda una copia en la página
@@ -126,7 +137,11 @@ export class VademecumPdfService {
         writer ||
         file
           .arrayBuffer()
-          .then((buffer) => PDFDocument.load(buffer, { ignoreEncryption: true }))
+          // Sin pausas: "Ver PDF" abre otra pestaña y Chrome frena los setTimeout de esta
+          // (en segundo plano), así que la carga por tandas de 100 objetos tardaba minutos.
+          .then((buffer) =>
+            PDFDocument.load(buffer, { ignoreEncryption: true, parseSpeed: ParseSpeeds.Fastest }),
+          )
           .then((original) => {
             original.getPages().forEach((page) =>
               DISCARDED_PAGE_KEYS.forEach((key) => page.node.delete(PDFName.of(key))),
@@ -144,7 +159,9 @@ export class VademecumPdfService {
     return {
       pageCount: reader.numPages,
       thumbnail: (index) => this.thumbnail(requireReader(), index),
-      topLines: (index) => this.topLines(requireReader(), index),
+      topLines: (index) =>
+        this.readLines(requireReader(), index, HEADER_REGION).then((lines) => lines.map((line) => line.text)),
+      pageLines: (index) => this.readLines(requireReader(), index, 1),
       releaseReader: () => {
         if (reader) {
           reader.destroy();
@@ -187,16 +204,20 @@ export class VademecumPdfService {
     return url;
   }
 
-  private async topLines(document: any, index: number): Promise<string[]> {
+  /** Líneas que empiezan en la franja superior `region` de la página (1 = toda). */
+  private async readLines(document: any, index: number, region: number): Promise<PageLine[]> {
     const page = await document.getPage(index + 1);
     const { height } = page.getViewport({ scale: 1 });
     const content = await page.getTextContent();
     // Coordenadas PDF: y crece hacia arriba. Tercio superior = y alta.
     // Orden por borde superior, como PyMuPDF: el nombre del tipo usa letra más grande y su
     // línea base queda más abajo que la del número aunque esté visualmente arriba
-    const limit = height * (1 - HEADER_REGION);
+    const limit = height * (1 - region);
+    // Fuera de la página (Illustrator deja texto de otras mesas de trabajo, p. ej. el cuento
+    // por encima del borde en Ambiente): no se imprime y no cuenta
+    const visible = (item: TextItem) => item.transform[5] >= 0 && item.transform[5] <= height;
     const items = (content.items as TextItem[])
-      .filter((item) => item.str && item.str.trim() && topOf(item) >= limit)
+      .filter((item) => item.str && item.str.trim() && visible(item) && topOf(item) >= limit)
       .sort((a, b) => topOf(b) - topOf(a) || a.transform[4] - b.transform[4]);
 
     // Una línea = piezas a la misma altura (±2 pt). Se agrega un espacio solo si hay hueco
@@ -218,6 +239,7 @@ export class VademecumPdfService {
       const sorted = line.items.sort((a, b) => a.transform[4] - b.transform[4]);
       let text = '';
       let end: number | null = null;
+      let size = 0;
       for (const item of sorted) {
         const x = item.transform[4];
         const fontSize = Math.abs(item.transform[0]) || 10;
@@ -226,8 +248,9 @@ export class VademecumPdfService {
         }
         text += item.str;
         end = x + item.width;
+        size = Math.max(size, fontSize);
       }
-      return text;
+      return { text, top: line.top, size };
     });
   }
 }

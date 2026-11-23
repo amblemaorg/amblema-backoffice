@@ -1,10 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { debounceTime, finalize, takeUntil } from 'rxjs/operators';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { Observable, Subject } from 'rxjs';
+import { concatMap, debounceTime, finalize, takeUntil } from 'rxjs/operators';
 import {
   AdminSheet,
+  areaAppliesTo,
   ApiErrors,
   Area,
   GRADE_OPTIONS,
@@ -14,12 +16,16 @@ import {
 } from 'src/app/_models/vademecum/sheet.model';
 import { SheetType } from 'src/app/_models/vademecum/sheet-type.model';
 import { CustomToastrService } from 'src/app/services/helper/custom-toastr.service';
+import { OpenedCompendium, VademecumPdfService } from 'src/app/services/vademecum/vademecum-pdf.service';
 import { VademecumSheetService } from 'src/app/services/vademecum/vademecum-sheet.service';
 import { VademecumTaxonomyService } from 'src/app/services/vademecum/vademecum-taxonomy.service';
-import { TABLE_ICONS, VademecumServerSource, VademecumTableSources, vademecumTableSettings } from '../_shared/vademecum-table';
+import { AREA_CHECK_SETTINGS, CheckOption, checkedIds } from '../_shared/vademecum-checks';
+import { iconAction, VademecumServerSource, VademecumTableSources, vademecumTableSettings } from '../_shared/vademecum-table';
+import { confirmAction, hideModal, showModal } from '../_shared/vademecum-dialogs';
 
 const DUPLICATED_CODE = '112';
 const PUBLISH_REQUIREMENTS_CODE = '113';
+const AREA_TYPE_CODE = '121';
 
 /** Mensajes en español por campo para los errores 112/113 (y genérico). */
 const FIELD_LABELS: { [field: string]: string } = {
@@ -29,14 +35,15 @@ const FIELD_LABELS: { [field: string]: string } = {
   number: 'el número',
 };
 
+/** Páginas que se dibujan en la ventana de edición (las fichas suelen tener 1–4). */
+const MAX_PREVIEW_PAGES = 6;
+
 interface EditForm {
   title: string;
   description: string;
   grades: string[];
-  areaIds: string[];
+  status: SheetStatus;
 }
-
-type PendingAction = { kind: 'unpublish' | 'delete'; sheet: AdminSheet };
 
 /** Vademécum › Fichas (BO-06): filtrar, editar, publicar, despublicar y borrar fichas. */
 @Component({
@@ -48,61 +55,65 @@ export class SheetsComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   private readonly search$ = new Subject<void>();
 
+  readonly formId = 'vademecum-sheet-form';
   readonly gradeOptions = GRADE_OPTIONS;
   readonly statusLabels = SHEET_STATUS_LABELS;
   types: SheetType[] = [];
   areas: Area[] = [];
+  readonly areaSettings = AREA_CHECK_SETTINGS;
+  /** Áreas que ofrece la ventana de edición: solo las del tipo de la ficha. */
+  areaChecks: CheckOption[] = [];
+  /** Áreas marcadas en la ventana de edición (la lista trabaja con objetos {id, text}). */
+  checkedAreas: CheckOption[] = [];
 
   // Filtros
   status: SheetStatus | null = null;
   sheetTypeId: string | null = null;
-  seriesId: string | null = null;
   query = '';
 
   // Tabla (paginada en el servidor)
   source: VademecumServerSource;
   settings: any;
 
-  // Selección múltiple (filas de la página actual)
-  selected: AdminSheet[] = [];
-  batchFailures: { sheet: string; reason: string }[] = [];
-
-  // Acción puntual en curso / confirmación en línea
+  // Acción puntual en curso
   submitting = false;
-  pending: PendingAction | null = null;
 
-  // Edición en panel
+  // Edición en ventana
   editing: AdminSheet | null = null;
-  form: EditForm = { title: '', description: '', grades: [], areaIds: [] };
+  form: EditForm = { title: '', description: '', grades: [], status: 'draft' };
   fieldErrors: { [field: string]: string } = {};
   formError = '';
+  /** Miniaturas (data URL) de las páginas de la ficha en edición, para reconocerla. */
+  pageThumbnails: string[] = [];
+  pagesState: 'loading' | 'ready' | 'error' | 'none' = 'none';
+  /** PDF ya descargado para las miniaturas: "Ver PDF" lo reusa sin pedirlo de nuevo. */
+  private editingPdf: Blob | null = null;
+  /** Cambia al abrir otra ficha o al salir: descarta miniaturas de una carga anterior. */
+  private pagesToken = 0;
 
   constructor(
     private tableSources: VademecumTableSources,
     private sheetService: VademecumSheetService,
     private taxonomy: VademecumTaxonomyService,
     private toastr: CustomToastrService,
+    private modals: BsModalService,
+    private pdfService: VademecumPdfService,
   ) {
     this.source = this.tableSources.create('sheets', this.filters());
-    this.settings = {
-      ...vademecumTableSettings(
+    this.settings = vademecumTableSettings(
         {
           code: { title: 'Código' },
           title: { title: 'Título' },
           type: {
-            title: 'Tipo / serie',
-            valuePrepareFunction: (_: any, s: AdminSheet) =>
-              (s.sheetType ? s.sheetType.name : '—') + (s.series ? ' / ' + s.series.name : ''),
+            title: 'Tipo',
+            valuePrepareFunction: (_: any, s: AdminSheet) => (s.sheetType ? s.sheetType.name : '—'),
           },
           grades: { title: 'Grados', valuePrepareFunction: (_: any, s: AdminSheet) => this.gradesText(s) },
           areas: { title: 'Áreas', valuePrepareFunction: (_: any, s: AdminSheet) => this.areasText(s) },
           status: {
-            title: 'Estado',
-            type: 'html',
-            valuePrepareFunction: (_: any, s: AdminSheet) => {
-              const st = this.statusLabels[s.status];
-              return `<span class="status-pill status-${st.color}">${st.label}</span>`;
-            },
+            title: 'Estatus',
+            valuePrepareFunction: (_: any, s: AdminSheet) =>
+              this.statusLabels[s.status] ? this.statusLabels[s.status].label : s.status,
           },
           publishedAt: {
             title: 'Publicada',
@@ -111,21 +122,17 @@ export class SheetsComponent implements OnInit, OnDestroy {
           },
         },
         [
-          { name: 'pdf', title: TABLE_ICONS.pdf },
-          { name: 'edit', title: TABLE_ICONS.edit },
-          { name: 'publish', title: TABLE_ICONS.publish },
-          { name: 'unpublish', title: TABLE_ICONS.unpublish },
-          { name: 'delete', title: TABLE_ICONS.delete },
+          // Mismo trío que BaseTable: ver (aquí, el PDF), editar y eliminar
+          iconAction('pdf', 'view', 'Ver PDF'),
+          iconAction('edit', 'edit', 'Editar'),
+          iconAction('delete', 'delete', 'Eliminar'),
         ],
         true,
-      ),
-      selectMode: 'multi',
-    };
+      );
   }
 
   ngOnInit(): void {
     this.search$.pipe(debounceTime(350), takeUntil(this.destroy$)).subscribe(() => this.applyFilters());
-    this.source.onChanged().pipe(takeUntil(this.destroy$)).subscribe(() => (this.selected = []));
     this.source.loadError$.pipe(takeUntil(this.destroy$)).subscribe(
       () => this.toastr.error('Error', 'No se pudieron cargar las fichas.'));
     this.taxonomy.sheetTypes().pipe(takeUntil(this.destroy$)).subscribe(
@@ -139,28 +146,20 @@ export class SheetsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.pagesToken++;
+    hideModal(this.formId);
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  get seriesOptions(): SheetType['series'] {
-    const type = this.types.find((t) => t.id === this.sheetTypeId);
-    return type ? type.series : [];
   }
 
   // --- Listado ---
 
   private filters(): { [key: string]: any } {
-    return { status: this.status, sheetTypeId: this.sheetTypeId, seriesId: this.seriesId, q: this.query.trim() };
+    return { status: this.status, sheetTypeId: this.sheetTypeId, q: this.query.trim() };
   }
 
   applyFilters(): void {
     this.source.setFilters(this.filters());
-  }
-
-  onTypeChange(): void {
-    this.seriesId = null;
-    this.applyFilters();
   }
 
   onSearch(): void {
@@ -169,12 +168,6 @@ export class SheetsComponent implements OnInit, OnDestroy {
 
   private reload(): void {
     this.source.refresh();
-  }
-
-  // --- Selección ---
-
-  onRowSelect(event: { selected: AdminSheet[] }): void {
-    this.selected = event.selected || [];
   }
 
   onAction(event: { action: string; data: AdminSheet }): void {
@@ -190,67 +183,19 @@ export class SheetsComponent implements OnInit, OnDestroy {
       case 'edit':
         this.edit(sheet);
         break;
-      case 'publish':
-        if (sheet.status === 'published') {
-          this.toastr.info('Aviso', `La ficha ${sheet.code} ya está publicada.`);
-          return;
-        }
-        this.publish(sheet);
-        break;
-      case 'unpublish':
-        if (sheet.status !== 'published') {
-          this.toastr.info('Aviso', `La ficha ${sheet.code} no está publicada.`);
-          return;
-        }
-        this.askUnpublish(sheet);
-        break;
       case 'delete':
         this.askDelete(sheet);
         break;
     }
   }
 
-  publishSelected(): void {
-    const rows = this.selected.filter((s) => s.status !== 'published');
-    if (this.submitting || rows.length === 0) {
-      if (!this.submitting && this.selected.length > 0) {
-        this.toastr.info('Aviso', 'Las fichas seleccionadas ya están publicadas.');
-      }
-      return;
-    }
-    const ids = rows.map((s) => s.id);
-    const labels: { [id: string]: string } = {};
-    rows.forEach((s) => (labels[s.id] = `${s.code} · ${s.title}`));
-    this.submitting = true;
-    this.batchFailures = [];
-    this.sheetService
-      .publishMany(ids)
-      .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
-      .subscribe(
-        (result) => {
-          this.batchFailures = result.failed.map((f) => ({
-            sheet: labels[f.sheetId] || f.sheetId,
-            reason: this.describeErrors(f.errors),
-          }));
-          if (result.published.length > 0) {
-            this.toastr.registerSuccess('Listo', `${result.published.length} ficha(s) publicada(s).`);
-          }
-          if (result.failed.length > 0) {
-            this.toastr.error('Aviso', `${result.failed.length} ficha(s) no se pudieron publicar. Vea el detalle abajo.`);
-          }
-          this.reload();
-        },
-        () => this.toastr.error('Error', 'No se pudo publicar la selección.'),
-      );
-  }
-
-  dismissBatchFailures(): void {
-    this.batchFailures = [];
-  }
-
   // --- Acciones por fila ---
 
   viewPdf(sheet: AdminSheet): void {
+    if (this.editing && this.editing.id === sheet.id && this.editingPdf) {
+      this.openPdf(this.editingPdf);
+      return;
+    }
     if (this.submitting) {
       return;
     }
@@ -259,87 +204,48 @@ export class SheetsComponent implements OnInit, OnDestroy {
       .file(sheet.id)
       .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
       .subscribe(
-        (blob) => {
-          const url = URL.createObjectURL(blob);
-          const win = window.open(url, '_blank');
-          if (!win) {
-            this.toastr.info('Aviso', 'El navegador bloqueó la pestaña nueva. Permita las ventanas emergentes.');
-          }
-          // Se libera tras darle tiempo a la pestaña de cargar el Blob
-          setTimeout(() => URL.revokeObjectURL(url), 60000);
-        },
+        (blob) => this.openPdf(blob),
         () => this.toastr.error('Error', 'No se pudo abrir el PDF de la ficha.'),
       );
   }
 
-  publish(sheet: AdminSheet): void {
-    if (this.submitting) {
-      return;
+  private openPdf(blob: Blob): void {
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, '_blank');
+    if (!win) {
+      this.toastr.info('Aviso', 'El navegador bloqueó la pestaña nueva. Permita las ventanas emergentes.');
     }
-    this.submitting = true;
-    this.sheetService
-      .publish(sheet.id)
-      .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
-      .subscribe(
-        () => {
-          this.toastr.registerSuccess('Listo', `Ficha ${sheet.code} publicada.`);
-          this.reload();
-        },
-        (err: HttpErrorResponse) => {
-          const errors = this.errorsOf(err);
-          this.toastr.error(
-            'Error',
-            errors ? `No se pudo publicar ${sheet.code}: ${this.describeErrors(errors)}` : 'No se pudo publicar la ficha.',
-          );
-        },
-      );
-  }
-
-  askUnpublish(sheet: AdminSheet): void {
-    this.startAction({ kind: 'unpublish', sheet });
+    // Se libera tras darle tiempo a la pestaña de cargar el Blob
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
   askDelete(sheet: AdminSheet): void {
-    this.startAction({ kind: 'delete', sheet });
-  }
-
-  cancelAction(): void {
-    if (!this.submitting) {
-      this.pending = null;
-    }
-  }
-
-  confirmAction(): void {
-    const action = this.pending;
-    if (!action || this.submitting) {
+    if (this.submitting) {
       return;
     }
-    this.submitting = true;
-    if (action.kind === 'unpublish') {
+    const confirmation = confirmAction(
+      this.modals,
+      'Eliminar ficha',
+      `¿Desea eliminar la ficha ${sheet.code} · ${sheet.title}?`,
+      'Dejará de aparecer en el listado y en el catálogo. Las descargas registradas se conservan.',
+    );
+    confirmation.confirmed$.subscribe(() => {
+      this.submitting = true;
       this.sheetService
-        .unpublish(action.sheet.id)
+        .delete(sheet.id)
         .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
         .subscribe(
           () => {
-            this.pending = null;
-            this.toastr.registerSuccess('Listo', `Ficha ${action.sheet.code} despublicada.`);
+            confirmation.close();
+            this.toastr.deleteRegister('Listo', `Ficha ${sheet.code} eliminada.`);
             this.reload();
           },
-          () => this.toastr.error('Error', 'No se pudo despublicar la ficha.'),
+          () => {
+            confirmation.close();
+            this.toastr.error('Error', 'No se pudo eliminar la ficha.');
+          },
         );
-      return;
-    }
-    this.sheetService
-      .delete(action.sheet.id)
-      .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
-      .subscribe(
-        () => {
-          this.pending = null;
-          this.toastr.deleteRegister('Listo', `Ficha ${action.sheet.code} borrada.`);
-          this.reload();
-        },
-        () => this.toastr.error('Error', 'No se pudo borrar la ficha.'),
-      );
+    });
   }
 
   // --- Edición ---
@@ -348,22 +254,76 @@ export class SheetsComponent implements OnInit, OnDestroy {
     if (this.submitting) {
       return;
     }
-    this.pending = null;
     this.editing = sheet;
     this.form = {
       title: sheet.title,
       description: sheet.description || '',
       grades: [...sheet.grades],
-      areaIds: sheet.areas.map((a) => a.id),
+      status: sheet.status,
     };
+    const typeId = sheet.sheetType ? sheet.sheetType.id : null;
+    this.areaChecks = this.areas
+      .filter((area) => areaAppliesTo(area, typeId))
+      .map((area) => ({ id: area.id, text: area.name }));
+    // Las áreas inactivas de la ficha no están en la lista, pero se conservan al guardar
+    this.checkedAreas = sheet.areas.map((area) => ({ id: area.id, text: area.name }));
     this.fieldErrors = {};
     this.formError = '';
+    this.loadPages(sheet);
+    showModal(this.formId);
   }
 
-  cancelEdit(): void {
-    if (!this.submitting) {
-      this.editing = null;
+  /** Extra de páginas que no se dibujan. */
+  get hiddenPages(): number {
+    const total = this.editing && this.editing.pageCount ? this.editing.pageCount : 0;
+    return this.pagesState === 'ready' ? Math.max(0, total - this.pageThumbnails.length) : 0;
+  }
+
+  /**
+   * Dibuja las primeras páginas del PDF de la ficha con pdf.js, como en Cargar fichas. Usa el
+   * PDF de administración (sirve también para borradores y no cuenta como descarga).
+   */
+  private loadPages(sheet: AdminSheet): void {
+    const token = ++this.pagesToken;
+    this.pageThumbnails = [];
+    this.editingPdf = null;
+    if (sheet.fileStatus !== 'ready') {
+      this.pagesState = 'none';
+      return;
     }
+    this.pagesState = 'loading';
+    const failed = () => {
+      if (token === this.pagesToken) {
+        this.pagesState = 'error';
+      }
+    };
+    this.sheetService
+      .file(sheet.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(async (blob) => {
+        if (token === this.pagesToken) {
+          this.editingPdf = blob;
+        }
+        let pdf: OpenedCompendium | null = null;
+        try {
+          pdf = await this.pdfService.open(blob);
+          const count = Math.min(pdf.pageCount, MAX_PREVIEW_PAGES);
+          for (let index = 0; index < count; index++) {
+            const url = await pdf.thumbnail(index);
+            if (token !== this.pagesToken) {
+              return;
+            }
+            this.pageThumbnails = [...this.pageThumbnails, url];
+          }
+          this.pagesState = 'ready';
+        } catch (error) {
+          failed();
+        } finally {
+          if (pdf) {
+            pdf.close();
+          }
+        }
+      }, failed);
   }
 
   hasGrade(value: string): boolean {
@@ -389,22 +349,49 @@ export class SheetsComponent implements OnInit, OnDestroy {
       title: this.form.title.trim(),
       description: this.form.description.trim() || null,
       grades: this.form.grades,
-      areaIds: this.form.areaIds,
+      areaIds: checkedIds(this.checkedAreas),
     };
+    const target = this.form.status;
+    const update$ = this.sheetService.update(sheet.id, data);
+    // Publicar después de guardar (la API exige descripción y grados ya guardados); despublicar
+    // antes, para que quitar la descripción de una ficha que deja de estar publicada no dé 113
+    let request$: Observable<unknown> = update$;
+    if (target === 'published' && sheet.status !== 'published') {
+      request$ = update$.pipe(concatMap(() => this.sheetService.publish(sheet.id)));
+    } else if (target === 'unpublished' && sheet.status === 'published') {
+      request$ = this.sheetService.unpublish(sheet.id).pipe(concatMap(() => update$));
+    }
     this.submitting = true;
     this.fieldErrors = {};
     this.formError = '';
-    this.sheetService
-      .update(sheet.id, data)
-      .pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$))
-      .subscribe(
-        () => {
-          this.editing = null;
-          this.toastr.updateSuccess('Listo', `Ficha ${sheet.code} actualizada.`);
-          this.reload();
-        },
-        (err: HttpErrorResponse) => this.onSaveError(err),
-      );
+    request$.pipe(finalize(() => (this.submitting = false)), takeUntil(this.destroy$)).subscribe(
+      () => {
+        hideModal(this.formId);
+        this.editing = null;
+        this.toastr.updateSuccess('Listo', `Ficha ${sheet.code} actualizada${this.statusChangeText(sheet, target)}.`);
+        this.reload();
+      },
+      (err: HttpErrorResponse) => {
+        // Los datos pudieron guardarse aunque falle publicar: la tabla debe mostrarlos
+        this.reload();
+        this.onSaveError(err);
+      },
+    );
+  }
+
+  /** Estatus que puede elegir: una ficha publicada no vuelve a borrador. */
+  get statusOptions(): SheetStatus[] {
+    if (!this.editing) {
+      return [];
+    }
+    return this.editing.status === 'draft' ? ['draft', 'published'] : ['published', 'unpublished'];
+  }
+
+  private statusChangeText(sheet: AdminSheet, target: SheetStatus): string {
+    if (target === sheet.status) {
+      return '';
+    }
+    return target === 'published' ? ' y publicada' : ' y despublicada';
   }
 
   // --- Presentación ---
@@ -424,14 +411,6 @@ export class SheetsComponent implements OnInit, OnDestroy {
 
   // --- Privados ---
 
-  private startAction(action: PendingAction): void {
-    if (this.submitting) {
-      return;
-    }
-    this.editing = null;
-    this.pending = action;
-  }
-
   private errorsOf(err: HttpErrorResponse): ApiErrors | null {
     const body: unknown = err && err.error;
     return body && typeof body === 'object' ? (body as ApiErrors) : null;
@@ -449,7 +428,10 @@ export class SheetsComponent implements OnInit, OnDestroy {
       (Array.isArray(errors[field]) ? errors[field] : []).forEach((item) => {
         const code = String(item.status);
         if (code === DUPLICATED_CODE) {
-          this.formError = 'Ya existe una ficha con ese tipo, serie y número.';
+          this.formError = 'Ya existe una ficha con ese tipo y número.';
+          known = true;
+        } else if (code === AREA_TYPE_CODE) {
+          this.fieldErrors.areaIds = 'Alguna área no corresponde al tipo de la ficha.';
           known = true;
         } else if (code === PUBLISH_REQUIREMENTS_CODE) {
           this.fieldErrors[field] = `Una ficha publicada necesita ${FIELD_LABELS[field] || field}.`;
@@ -461,23 +443,5 @@ export class SheetsComponent implements OnInit, OnDestroy {
       this.formError = 'No se pudo guardar la ficha. Revise los datos.';
     }
     this.toastr.error('Error', 'No se guardaron los cambios. Revise el formulario.');
-  }
-
-  /** Texto legible de los errores de una ficha (lote o publicación individual). */
-  private describeErrors(errors: ApiErrors): string {
-    const parts: string[] = [];
-    Object.keys(errors || {}).forEach((field) => {
-      (Array.isArray(errors[field]) ? errors[field] : []).forEach((item) => {
-        const code = String(item.status);
-        if (code === PUBLISH_REQUIREMENTS_CODE) {
-          parts.push(`falta ${FIELD_LABELS[field] || field}`);
-        } else if (code === '5') {
-          parts.push('la ficha ya no existe');
-        } else {
-          parts.push(item.msg || `error ${code}`);
-        }
-      });
-    });
-    return parts.length ? parts.join('; ') : 'error desconocido';
   }
 }

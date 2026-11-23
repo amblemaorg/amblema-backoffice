@@ -1,12 +1,4 @@
-/** Tipos de ficha y sus series (/vademecum/admin/sheet-types, API-12). */
-
-export interface SheetSeries {
-  id: string;
-  name: string;
-  code: string;
-  grades: string[];
-  sort: number;
-}
+/** Tipos de ficha (/vademecum/admin/sheet-types, API-12). */
 
 export interface SheetType {
   id: string;
@@ -19,19 +11,9 @@ export interface SheetType {
   sort: number;
   status: string;
   sheetCount: number;
-  series: SheetSeries[];
 }
 
-/** Serie dentro del payload de alta/edición de un tipo (sin `id` = serie nueva). */
-export interface SheetSeriesInput {
-  id?: string;
-  name: string;
-  code: string;
-  grades: string[];
-  sort: number;
-}
-
-/** Payload de POST/PUT /vademecum/admin/sheet-types: siempre la lista completa de series. */
+/** Payload de POST/PUT /vademecum/admin/sheet-types. */
 export interface SheetTypeInput {
   name: string;
   headerName: string;
@@ -41,5 +23,4 @@ export interface SheetTypeInput {
   sectionText: string | null;
   sort: number;
   status: string;
-  series: SheetSeriesInput[];
 }

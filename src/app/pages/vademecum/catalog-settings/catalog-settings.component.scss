@@ -1,16 +1,11 @@
-.toolbar { display: flex; justify-content: flex-end; margin-bottom: 0.75rem; }
 .form-group { margin-bottom: 0.75rem; }
 .empty-state { text-align: center; padding: 2rem 1rem; color: #8f9bb3; }
 .hint { color: #8f9bb3; }
 .counter { display: block; text-align: right; color: #8f9bb3; }
 fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .form-panel { border: 1px solid #3366ff; border-radius: 0.25rem; padding: 1rem; margin-bottom: 1rem; }
-.confirm-panel { border: 1px solid #ffa100; border-radius: 0.25rem; padding: 1rem; margin-bottom: 1rem; }
-.confirm-panel.danger { border-color: #ff3d71; }
 .actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
 .errors { color: #ff3d71; margin: 0.5rem 0 0; padding-left: 1.25rem; }
-.series-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
-.series-item { border: 1px solid #edf1f7; border-radius: 0.25rem; padding: 0.75rem; margin-bottom: 0.5rem; }
 .color-row { display: flex; gap: 0.5rem; align-items: center; }
 .color-picker { width: 2.5rem; height: 2.5rem; padding: 0; border: 0; background: none; flex: none; }
 .swatch { display: inline-block; width: 1rem; height: 1rem; border-radius: 0.2rem; vertical-align: middle; border: 1px solid #edf1f7; }
@@ -20,3 +15,11 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .key-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
 .key-label { color: #8f9bb3; font-size: 0.8rem; }
 .grades { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+.checks {
+  /* Misma letra que la lista "Seleccione lapso" de Reportes PECA (texto de nb-card) */
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}

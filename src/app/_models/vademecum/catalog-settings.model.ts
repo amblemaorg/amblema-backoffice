@@ -6,12 +6,15 @@ export interface AdminArea {
   sort: number;
   status: string;
   sheetCount: number;
+  /** Tipos de ficha a los que aplica el área (una ficha solo acepta áreas de su tipo, 121). */
+  sheetTypes: { id: string; name: string }[];
 }
 
 export interface AreaInput {
   name: string;
   sort: number;
   status: string;
+  sheetTypeIds: string[];
 }
 
 export interface SiteContent {

@@ -223,6 +223,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: "Docentes",
         link: "/pages/report/teacher-report",
       },
+      {
+        title: "Coevaluación docentes HQS",
+        link: "/pages/report/coevaluation-report",
+      },
+      {
+        title: "Premios Escuela HQS",
+        link: "/pages/report/hqs-award-report",
+      },
 
       {
         title: "Reporte de las olimpíadas de matemáticas y lectura",

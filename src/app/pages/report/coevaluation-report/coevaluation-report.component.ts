@@ -43,7 +43,7 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
     { code: 'excellence', label: 'Docente HQS con Excelencia' },
     { code: 'commitment', label: 'Docente HQS con Compromiso' },
     { code: 'progress', label: 'Docente HQS en Avance' },
-    { code: 'beginning', label: 'Docente HQS en Inicio' },
+    { code: 'beginning', label: 'Docente en Fase Inicial' },
   ];
 
   selectedSchoolYear: SchoolYearEnrolled | null = null;
@@ -211,12 +211,20 @@ export class CoevaluationReportComponent implements OnInit, OnDestroy {
     return `status-${status.replace(/_/g, '-')}`;
   }
 
-  /** "Docente HQS con Excelencia" -> "Excelencia"; "Docente HQS en Avance" -> "En avance". */
+  /**
+   * "Docente HQS con Excelencia" -> "Excelencia";
+   * "Docente HQS en Avance" -> "En avance";
+   * "Docente en Fase Inicial (...)" -> "Fase inicial".
+   */
   shortLevel(label: string | null): string {
     if (!label) {
       return '';
     }
-    const short = label.replace(/^Docente HQS\s+/i, '').replace(/^con\s+/i, '').trim();
+    const short = label
+      .replace(/\s*\([^)]*\)\s*/g, '')
+      .replace(/^Docente\s+(?:HQS|en)\s+/i, '')
+      .replace(/^con\s+/i, '')
+      .trim();
     return short.charAt(0).toUpperCase() + short.slice(1).toLowerCase();
   }
 

@@ -120,9 +120,12 @@ export class CoevaluationReportExport {
       });
   }
 
-  /** "Docente HQS con Excelencia" -> "con Excelencia" */
+  /** "Docente HQS con Excelencia" -> "con Excelencia"; "Docente en Fase Inicial (...)" -> "en Fase Inicial" */
   private shortLevel(label: string): string {
-    return label.replace('Docente HQS ', '');
+    return label
+      .replace(/\s*\([^)]*\)/g, '')
+      .replace(/^Docente(?:\s+HQS)?\s+/i, '')
+      .trim();
   }
 
   private fileName(report: CoevaluationReport, ext: string, scope: CoevaluationExportScope = 'filters'): string {
@@ -397,7 +400,7 @@ export class CoevaluationReportExport {
             'Completadas',
             'Índice %',
             'Nivel',
-            ...levels.map((l) => l.label.replace('Docente HQS ', '').replace(' ', '\n')),
+            ...levels.map((l) => this.shortLevel(l.label).replace(' ', '\n')),
           ]),
           ...report.bySchool.map((s) => [
             s.name,
@@ -438,7 +441,7 @@ export class CoevaluationReportExport {
               ...row.items.map((item) => ({ text: this.num(item.average), alignment: 'center' })),
               { text: this.num(row.totalScore), alignment: 'center' },
               { text: this.num(row.percentage), alignment: 'center' },
-              row.levelLabel ? row.levelLabel.replace('Docente HQS ', '') : '—',
+              row.levelLabel ? this.shortLevel(row.levelLabel) : '—',
             ]),
           ],
         },
@@ -532,7 +535,7 @@ export class CoevaluationReportExport {
         'Grado / Sección',
         'Escuela',
         'Coordinador',
-        'Puntaje (75)',
+        `Puntaje (${report.instrument.maxTotal})`,
         '%',
       ],
     ];
@@ -564,7 +567,7 @@ export class CoevaluationReportExport {
         'Cédula',
         'Grado / Sección',
         'Estatus',
-        'Puntaje (75)',
+        `Puntaje (${report.instrument.maxTotal})`,
         '%',
         'Nivel',
         ...this.flatten(

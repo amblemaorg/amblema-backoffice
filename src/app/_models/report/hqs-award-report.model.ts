@@ -25,6 +25,7 @@ export interface HqsAwardSchool {
   integralIndex: number | null;
   teacherIndex: number | null;
   nCompletedCoevaluations: number;
+  coordinatorIndex: number | null;
   finalIndex: number | null;
   missing: string[];
   missingLabels: string[];

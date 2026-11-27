@@ -109,7 +109,8 @@
               <th class="num">60LM</th>
               <th class="num">Índice Integral</th>
               <th class="num">Índice Docentes HQS</th>
-              <th class="num">Promedio</th>
+              <th class="num">Valoración Coord.</th>
+              <th class="num">Puntaje Global</th>
               <th>Premio</th>
               <th class="center">AmbLeMario</th>
             </tr>
@@ -124,6 +125,7 @@
               <td class="num">{{ formatNumber(school.components.operationsPerMin) }}</td>
               <td class="num">{{ formatNumber(school.integralIndex) }}</td>
               <td class="num">{{ formatNumber(school.teacherIndex) }}</td>
+              <td class="num">{{ formatNumber(school.coordinatorIndex) }}</td>
               <td class="num final">{{ formatNumber(school.finalIndex) }}</td>
               <td>
                 <span class="award-badge" [ngClass]="awardClass(school)">{{ awardText(school) }}</span>
@@ -133,20 +135,22 @@
               </td>
               <td class="center">
                 <nb-icon
-                  *ngIf="school.yearbookDownloadEnabled"
+                  *ngIf="school.yearbookDownloadEnabled; else noYearbook"
                   icon="checkmark-outline"
                   status="success"
                   title="Descarga habilitada"
                 ></nb-icon>
+                <ng-template #noYearbook>—</ng-template>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <p class="table-note">
-        Índice Integral = promedio de IAA, PPM, M2M y 60LM del lapso 3 (máximo 100 cada uno; IAA
-        convertido de 35 puntos a %). Premio: Oro si Índice Integral ≥ 80 e Índice Docentes HQS ≥
-        80; Plata si ambos ≥ 60; Bronce si ambos ≥ 40. Promedio: solo informativo.
+        Índice Integral = promedio de IAA (base 35 → %), PPM, M2M y 60LM del lapso 3 (tope 100; en
+        PPM/M2M/60LM los grados con índice &lt; 40 tienen peso 0,5). Puntaje Global HQS = 40 %
+        Índice Integral + 40 % Índice Docentes HQS + 20 % Valoración del Coordinador. Premio
+        (requiere AmbLeMario habilitado): ORO ≥ 80 %, PLATA ≥ 60 %, BRONCE ≥ 40 %.
       </p>
     </ng-container>
   </nb-card-body>

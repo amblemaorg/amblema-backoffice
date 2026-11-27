@@ -19,9 +19,10 @@ const PDF_FONT_SIZE = 8; // defaultStyle.fontSize del PDF
 const LINE_HEIGHT_FACTOR = 1.17; // Roboto
 const TITLE = '#2e8aaa';
 const NOTE =
-  'Índice Integral = promedio de IAA, PPM, M2M y 60LM del lapso 3 (máximo 100 cada uno; IAA ' +
-  'convertido de 35 puntos a %). Premio: Oro si Índice Integral ≥ 80 e Índice Docentes HQS ≥ 80; ' +
-  'Plata si ambos ≥ 60; Bronce si ambos ≥ 40. Promedio: solo informativo.';
+  'Índice Integral = promedio de IAA (base 35 → %), PPM, M2M y 60LM del lapso 3 (tope 100; en ' +
+  'PPM/M2M/60LM los grados con índice < 40 tienen peso 0,5). Puntaje Global HQS = 40 % Índice ' +
+  'Integral + 40 % Índice Docentes HQS + 20 % Valoración del Coordinador. Premio (requiere ' +
+  'AmbLeMario habilitado): ORO ≥ 80 %, PLATA ≥ 60 %, BRONCE ≥ 40 %.';
 // Mismos colores que las insignias de la pantalla
 const AWARD_COLORS: { [key: string]: string } = {
   gold: '#d4af37',
@@ -274,7 +275,20 @@ export class HqsAwardReportExport {
     return {
       table: {
         headerRows: 1,
-        widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+        widths: [
+          '*',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+          'auto',
+        ],
         body: [
           this.header([
             'Escuela',
@@ -285,7 +299,8 @@ export class HqsAwardReportExport {
             '60LM',
             'Índice\nIntegral',
             'Índice\nDocentes HQS',
-            'Promedio',
+            'Val.\nCoord.',
+            'Puntaje\nGlobal',
             'Premio',
             'AmbLeMario',
           ]),
@@ -298,6 +313,7 @@ export class HqsAwardReportExport {
             { text: this.num(s.components.operationsPerMin), alignment: 'center' },
             { text: this.num(s.integralIndex), alignment: 'center' },
             { text: this.num(s.teacherIndex), alignment: 'center' },
+            { text: this.num(s.coordinatorIndex), alignment: 'center' },
             { text: this.num(s.finalIndex), alignment: 'center', bold: true },
             this.awardCell(s),
             { text: s.yearbookDownloadEnabled ? 'Sí' : '', alignment: 'center' },
@@ -339,18 +355,27 @@ export class HqsAwardReportExport {
       table: {
         headerRows: 2,
         dontBreakRows: true,
-        widths: ['*', 140, 55, 70, 55, 150],
+        widths: ['*', 130, 55, 65, 50, 55, 150],
         body: [
           this.stateBand(
             `${g.name} (${g.schools.length} ${g.schools.length === 1 ? 'escuela' : 'escuelas'})`,
-            6
+            7
           ),
-          this.header(['Escuela', 'Coord.', 'Índice\nIntegral', 'Índice\nDocentes HQS', 'Promedio', 'Premio']),
+          this.header([
+            'Escuela',
+            'Coord.',
+            'Índice\nIntegral',
+            'Índice\nDocentes HQS',
+            'Val.\nCoord.',
+            'Puntaje\nGlobal',
+            'Premio',
+          ]),
           ...g.schools.map((s) => [
             s.name,
             s.coordinator || '—',
             { text: this.num(s.integralIndex), alignment: 'center' },
             { text: this.num(s.teacherIndex), alignment: 'center' },
+            { text: this.num(s.coordinatorIndex), alignment: 'center' },
             { text: this.num(s.finalIndex), alignment: 'center', bold: true },
             this.awardCell(s),
           ]),
@@ -398,7 +423,8 @@ export class HqsAwardReportExport {
         '60LM',
         'Índice Integral',
         'Índice Docentes HQS',
-        'Promedio',
+        'Valoración Coord.',
+        'Puntaje Global',
         'Premio',
         'Falta',
         'AmbLeMario',
@@ -413,6 +439,7 @@ export class HqsAwardReportExport {
         s.components.operationsPerMin,
         s.integralIndex,
         s.teacherIndex,
+        s.coordinatorIndex,
         s.finalIndex,
         s.awardLabel,
         s.missingLabels.join(', '),
@@ -447,7 +474,17 @@ export class HqsAwardReportExport {
 
     const rows: any[][] = [
       ...intro,
-      ['Estado', 'Escuela', 'Coordinador', 'Índice Integral', 'Índice Docentes HQS', 'Promedio', 'Premio', 'Falta'],
+      [
+        'Estado',
+        'Escuela',
+        'Coordinador',
+        'Índice Integral',
+        'Índice Docentes HQS',
+        'Valoración Coord.',
+        'Puntaje Global',
+        'Premio',
+        'Falta',
+      ],
     ];
     groups.forEach((g) =>
       g.schools.forEach((s) =>
@@ -457,13 +494,14 @@ export class HqsAwardReportExport {
           s.coordinator || '',
           s.integralIndex,
           s.teacherIndex,
+          s.coordinatorIndex,
           s.finalIndex,
           s.awardLabel,
           s.missingLabels.join(', '),
         ])
       )
     );
-    this.appendSheet(workbook, 'Por estado', rows, intro.length, [24, 36, 28, 16, 20, 12, 30, 26]);
+    this.appendSheet(workbook, 'Por estado', rows, intro.length, [24, 36, 28, 16, 20, 18, 16, 30, 26]);
   }
 
   private appendSheet(

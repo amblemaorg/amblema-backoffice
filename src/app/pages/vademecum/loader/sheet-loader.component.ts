@@ -54,6 +54,8 @@ const MAX_COMPENDIUM_MB = 200;
  * ganó ~8 % de tiempo y sube el pico de memoria (decodifica imágenes de hasta 3570×4622 px).
  */
 const THUMBNAIL_CONCURRENCY = 1;
+/** Fichas que se suben a la vez en uploadAll; aprovecha varios núcleos del servidor (Ghostscript). */
+const UPLOAD_CONCURRENCY = 4;
 
 interface PageInfo {
   index: number;
@@ -709,7 +711,7 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     }
   }
 
-  /** Sube una por una las fichas pendientes; las que tienen problemas quedan marcadas. */
+  /** Sube en paralelo (hasta UPLOAD_CONCURRENCY a la vez) las fichas pendientes; las que tienen problemas quedan marcadas. */
   async uploadAll(publish: boolean): Promise<void> {
     if (this.batchRunning) {
       return;
@@ -717,11 +719,17 @@ export class SheetLoaderComponent implements OnInit, DoCheck, OnDestroy {
     this.batchRunning = true;
     let ok = 0;
     const queue = this.pendingDrafts;
-    for (const draft of queue) {
-      if (await this.upload(draft, publish)) {
-        ok++;
+    let next = 0;
+    const worker = async () => {
+      while (next < queue.length) {
+        const draft = queue[next++];
+        if (await this.upload(draft, publish)) {
+          ok++;
+        }
       }
-    }
+    };
+    const workers = Math.min(UPLOAD_CONCURRENCY, queue.length);
+    await Promise.all(Array.from({ length: workers }, () => worker()));
     this.batchRunning = false;
     this.releaseWriterIfIdle();
     const failed = queue.length - ok;
